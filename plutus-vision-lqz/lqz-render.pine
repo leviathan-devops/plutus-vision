@@ -44,7 +44,12 @@ f_lqzRender() =>
             _col = _sd == 1 ? lqzColorS : lqzColorB
             // 3+ agreeing sources read brighter — the operator's denser bands
             _al = _cf >= 3 ? math.min(100, lqzBandA + 22) : lqzBandA
-            box.new(bar_index - lqzLeftB, _top, bar_index + lqzRightB, _bot,
+            // LEFT EDGE MUST NEVER GO NEGATIVE. A fixed -500 bar margin is negative on any
+            // history shorter than 500 bars, and the engine DROPS such a box SILENTLY
+            // (measured: 15m fixture = 325 bars -> bar_index-500 = -176 -> boxes=0, no error).
+            // Clamp to the first available bar; short histories then span all they have.
+            _lx = math.max(0, bar_index - lqzLeftB)
+            box.new(_lx, _top, bar_index + lqzRightB, _bot,
                  border_color = na,
                  bgcolor = color.new(_col, _al),
                  text = lqzLabel ? ("LQ " + str.tostring(_cf)) : "",
