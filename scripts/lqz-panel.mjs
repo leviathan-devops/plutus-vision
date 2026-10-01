@@ -129,7 +129,8 @@ for (const d of DELIVERABLES) {
     }
     return JSON.stringify({ ok: rr.ok, held: held.includes(want), title: got, tries: tries + 1,
                             cleared: v && v.cleared, boxes: v && v.boxes, lines: v && v.lines,
-                            labels: v && v.labels });
+                            labels: v && v.labels,
+                            bars: rr.run && rr.run.bars });
   })()`);
   const s = JSON.parse(st);
   if (!s.ok || !s.held) { console.error(`PANEL_GRID_FAIL: ${d.key} — ${st}`); process.exit(1); }
@@ -168,6 +169,10 @@ const manifest = {
       caption: c.label.split("\n")[0],
       sub: `${c.stats.boxes} boxes - ${c.stats.lines} lines - ${c.stats.labels} labels - cleared ${c.stats.cleared}`,
       path: c.path,
+      // THE BARS RECORD: test_panel_rows_are_same_bars asserts these agree across
+      // panels 2-4. Without them the "identical bars" claim is unprovable from disk.
+      bars: { pair: PAIR, timeframe: TF, limit: 1603, bars: c.stats.bars ?? null },
+      title: c.stats.title,
     })),
   ],
 };
