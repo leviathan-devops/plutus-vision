@@ -33,15 +33,15 @@ swp_len = input.int(5, 'Swings', minval=1, group='Liquidity Sweeps')
 swp_opt    = input.string('Only Wicks', 'options'
        , options=['Only Wicks', 'Only Outbreaks & Retest', 'Wicks + Outbreaks & Retest'], group='Liquidity Sweeps')
 
-swp_colBl  = input.color(#089981, 'Bull ', group='Liquidity Sweeps', inline='c1')
-swp_colBr  = input.color(#f23645, 'Bear' , group='Liquidity Sweeps', inline='c2')
-swp_colBl2 = input.color(#08998180,  ''  , group='Liquidity Sweeps', inline='c1')
-swp_colBr2 = input.color(#f2364580,  ''  , group='Liquidity Sweeps', inline='c2')
+swp_colBl = color(na)
+swp_colBr = color(na)
+swp_colBl2 = color(na)
+swp_colBr2 = color(na)
 
 swp_extend = input.bool(true, 'Extend', group='Sweep Area') 
 swp_maxB   = input.int(300, 'Max bars', minval=1, maxval=5000, group='Sweep Area')
-swp_colBl3 = input.color(#08998141, 'Bull ', group='Sweep Area')
-swp_colBr3 = input.color(#f2364541, 'Bear' , group='Sweep Area')
+swp_colBl3 = color(na)
+swp_colBr3 = color(na)
 
 swp_oW = swp_opt == 'Only Wicks'
 swp_oO = swp_opt == 'Only Outbreaks & Retest'
@@ -214,8 +214,8 @@ back = input.int   (360, ' # Bars', minval = 100, maxval = 5000, step = 10, inl
 lqGR = 'Liquidity Detection'
 lqTT = 'Act as a filter while detecting the Liquidity Voids. When set to 0 means no filtering is applied, increasing the value causes the script to check the width of the void compared to a fixed-length ATR value'
 voi_lqTH = input.float(.5, 'Liquidity Voids Threshold', minval = 0, step = .1, group = lqGR, tooltip = lqTT)
-voi_lqBC = input.color(color.new(#089981, 73), 'Bullish', inline = 'VD', group = lqGR)
-voi_lqSC = input.color(color.new(#f23645, 73), 'Bearish', inline = 'VD', group = lqGR)
+voi_lqBC = color(na)
+voi_lqSC = color(na)
 voi_lqTX = input.bool (false, 'Label', inline = 'VD', group = lqGR)
 
 lqFT = 'Toggles the visibility of the Filled Liquidity Voids'
@@ -353,15 +353,15 @@ bsl_liqMar = 10 / input.float (6.9, 'Margin', minval = 4, maxval = 9, step = 0.1
 
 bsl_liqBuy = input.bool (true, 'Buyside Liquidity Zones, Margin', inline = 'Buyside', group = liqGrp)
 bsl_marBuy    = input.float(2.3, '', minval = 1.5, maxval = 10, step = .1, inline = 'Buyside', group = liqGrp)
-bsl_cLIQ_B = input.color (color.new(#4caf50,  0), '', inline = 'Buyside', group = liqGrp)
+bsl_cLIQ_B = color(na)
 
 bsl_liqSel = input.bool (true, 'Sellside Liquidity Zones, Margin', inline = 'Sellside', group = liqGrp)
 bsl_marSel = input.float(2.3, '', minval = 1.5, maxval = 10, step = .1, inline = 'Sellside', group = liqGrp)
-bsl_cLIQ_S = input.color (color.new(#f23645,  0), '', inline = 'Sellside', group = liqGrp)
+bsl_cLIQ_S = color(na)
 
 bsl_lqVoid = input.bool (false, 'Liquidity Voids, Bullish', inline = 'void', group = liqGrp)
-bsl_cLQV_B = input.color (color.new(#4caf50,  0), '', inline = 'void', group = liqGrp)
-bsl_cLQV_S = input.color (color.new(#f23645,  0), 'Bearish', inline = 'void', group = liqGrp)
+bsl_cLQV_B = color(na)
+bsl_cLQV_S = color(na)
 bsl_lqText = input.bool (false, 'Label', inline = 'void', group = liqGrp)
 
 bsl_mode   = input.string('Present', title = 'Mode', options =['Present', 'Historical'], inline = 'MOD', group = liqGrp)

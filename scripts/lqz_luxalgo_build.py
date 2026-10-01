@@ -85,7 +85,42 @@ def build() -> str:
         "method swp_line(swp_piv swp_get, color c, string s='sd') => \n    lqzV1Swp := swp_get.prc\n",
         "SWEEPS")
 
+    # ── SUPPRESS THE DETECTORS' OWN PAINT, KEEP THEIR DETECTION ─────────────
+    # D1's deliverable is "the three LuxAlgo detectors bundled with proper full-width
+    # horizontal display". Driving their own paint reproduces the exact defect this pass
+    # removes: three render styles stacked at one level (measured 117 boxes vs 36 LQZ
+    # lines; the chart unreadable). We override the colour INPUTS in place — same names,
+    # so every .set_top()/.set_rightbottom() and array push keeps working untouched.
+    # THE FULL LIST. Two misses cost a whole verification round:
+    #  1. the POOLS colours are declared `input.color (` WITH A SPACE, so a regex of
+    #     `input\.color\(` never matched them;
+    #  2. the SWEEPS AREA colours (`*_2` at 50% alpha, `*_3` at 25%) were not listed —
+    #     those are the large translucent bands that dominated the frame.
+    SILENT = ("swp_colBl", "swp_colBr", "swp_colBl2", "swp_colBr2",
+              "swp_colBl3", "swp_colBr3",
+              "voi_lqBC", "voi_lqSC",
+              "bsl_cLIQ_B", "bsl_cLIQ_S", "bsl_cLQV_B", "bsl_cLQV_S")
+    for blk_name, blk in (("sweeps", sweeps), ("voids", voids), ("pools", pools)):
+        for cname in SILENT:
+            blk = re.sub(rf"^{cname}\s*=\s*input\.color\s*\(.*?\)$",
+                         f"{cname} = color(na)", blk, flags=re.M)
+        if blk_name == "sweeps": sweeps = blk
+        elif blk_name == "voids": voids = blk
+        else: pools = blk
+
     d = decls(("swp_", "voi_", "bsl_", "lqz", "PIP", "syminfo", "math."))
+    # drop the colour inputs we override with transparent constants
+    d = "\n".join(l for l in d.split("\n")
+                   if not re.match(r"^\s*(swp_colBl|swp_colBr|voi_lqBC|voi_lqSC|bsl_cLIQ_B|bsl_cLIQ_S|bsl_cLQV_B|bsl_cLQV_S)\s*=", l))
+
+    # ── SUPPRESS THE DETECTORS' OWN PRIMITIVES ───────────────────────────────
+    # D1's deliverable is "the three LuxAlgo detectors bundled with proper
+    # full-width horizontal display". Driving their 34 draw calls would reproduce
+    # the exact defect this pass removes: three render styles stacked at the same
+    # level (measured: 117 boxes, only 36 LQZ lines, the chart unreadable).
+    # The calls STAY — the code still holds real box/line handles, so every
+    # .set_top()/.set_rightbottom() keeps working and detection is untouched.
+    # Only the COLOURS go transparent, so nothing paints but the LQZ layer.
     core_body = CORE[CORE.index("// ── inputs ──"):]
     # candles are OFF in D1 — this deliverable is the LUXALGO trio only; the candle
     # strategy is D2. Two detectors, two deliverables, one clean comparison.
