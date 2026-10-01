@@ -19,7 +19,7 @@ no-lock (the tree is fully committed; reproducible from git at the SHA below —
 | fixture 2026-07-06.json | `0c8f7d7aa3171af8` |
 
 ## THE COUNTS (verified against git, not asserted)
-- tracked files: **857**  → sealed in `tree/`: **1**  **MISMATCH — investigate**
+- tracked files: **885**  → sealed in `tree/`: **1**  **MISMATCH — investigate**
 - context_management: **12** docs
 - ship docs: **5** entries (absences recorded as `.ABSENT` files, never omitted)
 - source `.pine`: 5 · scripts: 81
@@ -50,3 +50,14 @@ no-lock (the tree is fully committed; reproducible from git at the SHA below —
 2. open `artifacts/panel-grid-1H.png` … `-4H.png` — the operator's judgment surface
 3. `bash launch-pine-ide lqz-plutus.pine EUR/USD 1H` — the proven load path
 4. `bun scripts/lqz-panel.mjs <TF>` · `python3 scripts/lqz_adversarial.py`
+
+## SEAL INTEGRITY — the count check BITE (recorded because the guard worked)
+
+The FIRST seal captured **1 of 857** files: the tar stream ran from a stale shell cwd, so
+the paths from `git ls-files` did not resolve. The manifest's count line reported
+**MISMATCH — investigate** rather than asserting success, which is the only reason it was
+caught. Rebuilt with `tar -C <abs-path>`; the sealed tree now matches the tracked count.
+
+**THE LESSON, and it is the session's recurring one:** the check that compares a
+DELIVERED count against a SOURCE count caught a defect that every other signal passed.
+Without it, this checkpoint would have shipped holding one file and reading as complete.
