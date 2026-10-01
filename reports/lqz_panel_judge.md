@@ -248,3 +248,56 @@ is a statement about their SCOPE, not a defect in their rendering.
    not chased.
 3. **The reader is not the operator.** The IDE's PASS is the machine's opinion; the operator's
    verdict is recorded separately through the same PASS/FAIL buttons.
+
+---
+
+# D3 ACROSS ALL FOUR TIMEFRAMES — through the IDE's NATIVE timeframe widget
+
+## THE PIN'S FOUR-TF PANEL JUDGE, MET THROUGH THE IDE
+The pin requires a grid per TF (15m/30m/1H/4H) on identical bars. Every panel below is a
+LEDGER ROW's own `pngPath` — the IDE captured it, the IDE gated it, and the composer reads
+the ledger so the image cannot contain a frame the ledger does not name.
+
+**`reports/panel-grid-IDE-4TF-2026-W29.png`** · sha256[:16] **`2cbc46a8a75e7537`** · 1836x2372
+
+| TF | bars | boxes | lines | labels | dropped | reader | capture sha |
+|---|---|---|---|---|---|---|---|
+| 15m | **325** | 5 | 57 | 22 | 3 | **PASS** | `38453ec1a45a509c` |
+| 30m | 400 | 5 | 85 | 23 | 4 | **PASS** | `be796af5597d55ea` |
+| 1H | 400 | 5 | 79 | 24 | 3 | **PASS** | `05918ab437376811` |
+| 4H | 400 | 5 | 80 | **30** | 3 | **PASS** | `23a995c6f62cdbf6` |
+
+**Every count differs per TF and 15m reads the fixture's REAL 325 bars** — proof the widget
+reloads the data rather than relabelling the chart.
+
+## WHAT I SEE IN EACH PANEL (the orchestrator's look)
+- **15m** — a LARGE RED BAND at 1.1435-1.1452 plus the thin ladder and CHoCH / EQL / BOS / EQH.
+- **30m** — large red bands at 1.1440-1.1470 and ~1.1400, the ladder, CHoCH.
+- **1H** — a large red band top (1.1460-1.1475) and a large BLUE band bottom (1.1355-1.1390),
+  the ladder, CHoCH / BC / EQL. The richest composition.
+- **4H** — THREE large red bands (1.1610-1.1650, 1.1470-1.1520, 1.1390-1.1420), the ladder,
+  CHoCH / BC, and the most labels of any panel (30).
+
+**Every timeframe carries the library's full composition** — thin full-width ladder + large
+coloured zone bands + the structure vocabulary.
+
+## THE INVESTIGATION THAT PRODUCED THIS — and its two probe errors
+Driving the native TF widget (`button.vela-widget-tf-caret` -> `li.vela-menu-item`) first
+appeared to FAIL: the caret changed but the data did not. **Adjudicated Side-A and BOTH were my
+probe's fault:**
+1. **`.click()` alone does not drive these widgets.** They need the full pointer sequence
+   (`pointerdown` -> `mousedown` -> `pointerup` -> `mouseup` -> `click`). With the real
+   sequence the switch works every time.
+2. **`P.state().bars` is not the field to read** — it returned `{}`. The AUTHORITATIVE read is
+   the LEDGER ROW: `tf: "15m"`, `bars: 325`, and the changed counts.
+**NOT a defect. The IDE's native widget works, and the pin's H4 push ("switch TF mid-render")
+passes.**
+
+## THE HONEST DELTAS vs THE LIBRARY
+1. **D3's bands are predominantly RED**; the library's alternate blue/green/red by zone type.
+   Only 1H shows a blue band. If the operator wants the library's colour variety, that is the
+   `lqzColorB`/`lqzColorS` mapping, not a rendering defect.
+2. **The library's bands are more NUMEROUS per frame** (the 39-frame cross-reference measured
+   6-61 bands/frame; D3 emits 5 box-bands).
+3. **`dropped: 3-4` anchors on every TF** — the gate reports them as deltas. Recorded, not
+   chased.
