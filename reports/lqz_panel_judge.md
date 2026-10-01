@@ -84,3 +84,51 @@ grid. All panels ran in 1 attempt each after the station restart.
    undeclared 50-line default silently ate 62.
 4. A count is not a look — re-proven. D1's 216 boxes at 4H reads alarming and renders
    clean, because the suppression is a PAINT change and the counts are identical.
+
+---
+
+# THE BAND-HEIGHT DELTA, QUANTIFIED (the operator's lever, measured)
+
+## THE MEASUREMENT (the authority's classifier, band height in px)
+
+| set | n | mean | max | the distribution |
+|---|---|---|---|---|
+| the LIBRARY (5 frames) | 69 | **15.9 px** | **156 px** | BIMODAL: many 1-3 px thin lines **plus** large zones at 16, 17, 17, 44, 70, 150, 156, 32, 42, 46, 107, 122 px |
+| the GRIDS (4 TFs) | 96 | **1.5 px** | 18 px | almost entirely 1-4 px; a single 18 px on 15m |
+
+**RATIO: 8.7x on the maxima.**
+
+## WHAT THIS ACTUALLY MEANS — the finding is sharper than "make bands bigger"
+
+**The library renders TWO kinds of object:**
+1. **thin 1-2 px lines** — one per detected level (the ladder)
+2. **large translucent rectangles (16-156 px tall)** — a ZONE spanning a price range
+
+**The deliverables render (1) and almost never (2).** Every grid's bands measure 1-4 px — they
+carry the ladder but not the zones. So the gap is not a thickness setting; **the deliverables
+are effectively missing a whole layer of the library's picture.**
+
+## THE LEVER — three named inputs in `plutus-vision-lqz/lqz-render.pine`
+
+The emitter ALREADY has the zone-fill code; it is gated almost shut:
+
+```pine
+if lqzFill3 and _cf >= 3 and _span > lqzLineTol
+    box.new(_lx, _hi, bar_index + lqzRightB, _lo,
+         border_color = na, bgcolor = color.new(_col, lqzFillA))
+```
+
+| input | current | what it does | the obvious experiment |
+|---|---|---|---|
+| `lqzFill3` | `true` | gates the fill to bands with **3+ agreeing sources** | lower the source threshold so 2-source zones fill too |
+| `lqzFillA` | `10` | the fill alpha — **very** faint | raise toward the library's visible translucency |
+| `lqzLineTol` | `0.0` | the span a zone needs before it gets rails instead of one line | raise so tiny zones collapse to a line and real zones keep their height |
+
+**A zone's rendered height is already its price span** (`_hi` to `_lo`), so the geometry to draw
+the library's tall bands EXISTS. What is gated is WHICH zones fill and HOW FAINTLY.
+
+## WHY THIS IS THE OPERATOR'S CALL AND NOT MINE
+
+The three inputs are a look decision, not a correctness one. Every value in range renders a
+valid chart. Raising them makes the deliverables *more like the library*; whether that is wanted,
+and by how much, is exactly the judgement the panel grid exists to support.
