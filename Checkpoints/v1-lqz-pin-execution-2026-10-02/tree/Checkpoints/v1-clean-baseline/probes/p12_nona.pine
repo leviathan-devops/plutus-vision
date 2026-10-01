@@ -1,0 +1,7 @@
+//@version=6
+indicator("p12", overlay=true, max_boxes_count=500)
+method swp_isSet(float swp_val) => bool out = not na(swp_val)
+swp_ph = ta.pivothigh(5, 5)
+if swp_ph.swp_isSet()
+    plot(high, "h")
+plot(close, "c")

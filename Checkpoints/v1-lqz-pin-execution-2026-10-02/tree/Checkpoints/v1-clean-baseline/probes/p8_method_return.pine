@@ -1,0 +1,22 @@
+//@version=6
+indicator("p8", overlay=true, max_boxes_count=500)
+type swp_boxBr
+    box swp_bx
+    bool br
+    int dr
+swp_n = bar_index
+method swp_break_box(bool fake, color c3, color c, int d) =>
+    y1 = d == 1 ? high : close
+    y2 = d == 1 ? close : low
+    swp_boxBr.new(
+     box.new(swp_n - 1, y1, swp_n + 1, y2, border_color = color.new(na, na), bgcolor = c3)
+     , line.new(swp_n, y1, swp_n, y2, color = c, width = 3)
+     , false
+     , d)
+var array<swp_boxBr> arr = array.new<swp_boxBr>(1, swp_boxBr.new())
+if bar_index == 10
+    arr.unshift(swp_break_box(true, color.red, color.red, 1))
+for x in arr
+    if not na(x.swp_bx)
+        x.swp_bx.set_right(bar_index)
+plot(close, "c")

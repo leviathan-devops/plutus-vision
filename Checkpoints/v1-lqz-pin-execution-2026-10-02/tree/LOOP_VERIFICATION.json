@@ -1,0 +1,67 @@
+{
+  "sha": "d7e00609973165659b3cf7e2e1bd665a3cf1dcc986bf1bd1cd1a5d8b9d2e7b63",
+  "lines": 1537,
+  "decls": "1",
+  "lux": "5",
+  "lex": "lexcheck: PASS (0 findings)",
+  "four": {
+    "SMC": {
+      "ok": true,
+      "drew": 46,
+      "boxes": 5,
+      "labels": 22,
+      "lines": 19
+    },
+    "SWEEPS": {
+      "ok": true,
+      "drew": 36,
+      "boxes": 12,
+      "labels": 0,
+      "lines": 24
+    },
+    "VOIDS": {
+      "ok": true,
+      "drew": 94,
+      "boxes": 94,
+      "labels": 0,
+      "lines": 0
+    },
+    "POOLS": {
+      "ok": true,
+      "drew": 3,
+      "boxes": 1,
+      "labels": 0,
+      "lines": 2
+    }
+  },
+  "four_ok": true,
+  "full": {
+    "ok": true,
+    "counts": {
+      "plots": 0,
+      "plotPoints": 0,
+      "markers": 0,
+      "boxes": 112,
+      "labels": 22,
+      "lines": 45,
+      "tables": 0,
+      "polylines": 0,
+      "linefills": 0,
+      "trades": 0
+    },
+    "err": ""
+  },
+  "ceiling_max": 474,
+  "ceiling_ok": true,
+  "guards": {
+    "SMC FVG": 1,
+    "SWEEPS": 4,
+    "VOIDS": 6,
+    "POOLS B": 1,
+    "POOLS S": 1
+  },
+  "guards_ok": true,
+  "shapes": 5,
+  "verdict": "ALL GREEN",
+  "audited": "2026-10-01T16:35:42"
+}

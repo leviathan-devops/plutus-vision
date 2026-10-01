@@ -1,0 +1,18 @@
+//@version=6
+indicator("p9", overlay=true, max_boxes_count=500)
+type swp_boxBr
+    box swp_bx
+    bool br
+    int dr
+swp_n = bar_index
+var array<swp_boxBr> arr = array.new<swp_boxBr>(1, swp_boxBr.new())
+if bar_index == 10
+    y1 = high
+    y2 = low
+    arr.unshift(swp_boxBr.new(
+      box.new(swp_n - 1, y1, swp_n + 1, y2, border_color = color.new(na, na), bgcolor = color.red),
+      line.new(swp_n, y1, swp_n, y2, color = color.red, width = 3), false, 1))
+for x in arr
+    if not na(x.swp_bx)
+        x.swp_bx.set_right(bar_index)
+plot(close, "c")
