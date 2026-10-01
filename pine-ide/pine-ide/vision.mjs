@@ -367,11 +367,23 @@ export function captureViaRenderer(chart, host) {
 
 /** Clear every drawing this module (or the operator) put on the chart. */
 export function clearDrawings(chart) {
+  // THE FRAME SWAP MUST ACTUALLY CLEAR. Every drawing this renderer adds is `locked`
+  // so the user cannot drag/delete indicator output — and the store's remove() honours
+  // that lock. Calling remove() on a locked drawing therefore did NOTHING, so each
+  // compile stacked a fresh frame on the last one: the chart read bright and
+  // doubled, and every visual verdict was taken on accumulated layers rather than on
+  // the current compile. Unlock, then remove. (Reported by the operator 2026-10-01:
+  // "the colors are really bright which looks like multiple rounds are stacking".)
   let n = 0;
   try {
     const json = chart.drawings.toJSON();
     const list = (json && json.drawings) || [];
-    for (const d of list) { try { chart.drawings.remove(d.id); n++; } catch { /* already gone */ } }
+    for (const d of list) {
+      try {
+        if (d.locked) chart.drawings.update(d.id, { locked: false });
+      } catch { /* no update path; try the remove anyway */ }
+      try { chart.drawings.remove(d.id); n++; } catch { /* already gone */ }
+    }
   } catch { /* no drawings API state */ }
   return n;
 }
