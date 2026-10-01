@@ -110,7 +110,11 @@ the serialization budget, the full refusal table).
 - **Crash test DONE** (15 inputs, zero defects) and **the second-operator check DONE** — it found
   a rig defect the author missed and the operating manual now closes its doc gap.
 - **No container round.** Every verdict is host-live, not container-grade.
-- **THE RIG DEFECT CARRIED:** the station's half-alive state + the launcher's health predicate
-  reading the lying route. Recorded with the mechanism; NOT fixed (it is the launcher's code,
-  and fixing it was outside this session's scope).
+- **THE RIG DEFECT: the launcher's blindness FIXED (1f2516f).** `pv-ide.sh`'s station check was
+  `up http://127.0.0.1:9741/` — the route that hangs. A working station could be declared dead
+  at launch. Now `station_up()` POSTs a trivial script and requires `"success":true`: A LAUNCH IS
+  A COMPILE, so probe the compile.
+  **STILL CARRIED:** the half-alive state ITSELF is not fixed — the station hangs on `GET /` and
+  `/health` while its work routes answer. Intermittent (GET / answers in 0.0007 s right now), so
+  the fix is proven by the measured mechanism rather than by reproduction. Recorded, not chased.
 - The seal needed FIVE rounds to count correctly; every round was caught by its own count check.
