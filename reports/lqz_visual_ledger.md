@@ -36,3 +36,40 @@ Evidence: `cleared: 58` (D2) and `cleared: 153` (D1) in the live state after the
 5. A fixed -500 bar left margin is NEGATIVE below 500 bars of history and those boxes are DROPPED
    silently — 15m=325 bars meant boxes=0 with no error.
 6. Level volume is not the cluster's problem; 300 vs 1500 levels both gave 0 zones in D1's old form.
+
+
+## W6 — THE PANEL GRID (`reports/panel-grid-1H.png`, 2002x1340)
+
+![panel-grid-1H](panel-grid-1H.png)
+
+[library reference | D1 luxalgo | D2 plutus | D3 vision], captured live over CDP, clipped to the
+chart element. Panels 2-4 run on identical bars (EUR/USD 1H, limit 1603); panel 1 is the
+operator's own GBPUSD capture and is captioned as the reference look, not this fixture.
+
+### What I see, panel by panel
+- **P1 LIBRARY REFERENCE** — the target: a ladder of thin full-width lines + large translucent
+  zone bands ("15m (Unmitigated) | MoM", "4H Liquidity Shield - 2xC - BEAR CONQUERED").
+- **P2 D1 lqz-luxalgo** (117 boxes / 36 lines) — thin lines present, faint bands; the earlier
+  saturation is gone. Reads as a consolidated layer, not three stacked renders.
+- **P3 D2 lqz-plutus** (0 boxes / 58 lines) — **the closest match to the library's ladder.**
+  Dense stacked thin full-width lines, green below price / red above.
+- **P4 D3 plutus-vision-v1** (5 boxes / 79 lines / 21 labels) — thin lines + SMC labels
+  (CHoCH, EQH, EQL, BC) + zone bands; the only panel carrying structure text.
+
+### Honest fidelity deltas for the operator's judgment
+1. **D2's ladder is DENSER than the library's.** The library shows fewer, wider-spaced lines with
+   large zone bands between them; D2 stacks lines tightly. If the operator wants the library's
+   rhythm, that is a spacing/selection change in the emitter, not a bug.
+2. **D3's zone fills still read heavier than the library's** — the SMC boxes are more saturated
+   than the reference's soft bands.
+3. Cosmetic: the grid's footer caption overlaps the bottom-left panel edge by a few pixels.
+
+### The three defects this renderer had to survive (all caught mechanically)
+1. **Every panel identical** (44613 bytes x3) — `setSource` + immediate `run()` races the editor.
+2. **Off by one** — "the frame changed" was too weak a test; each panel froze the PREVIOUS
+   deliverable.
+3. **The real root cause**, named by the assertion: `run()` returns the compiled script's own
+   `run.title`, and the FIRST run after `setSource` compiles the PREVIOUS source because the
+   editor's `flush()` is debounced. Fixed as a FIXED POINT: run until the returned title IS this
+   deliverable (measured: D1 1 run, D2 2 runs, D3 7 runs).
+   The identical-panel guard now makes a non-distinct grid UNWRITABLE.
