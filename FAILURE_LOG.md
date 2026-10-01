@@ -729,3 +729,26 @@ These three are what remain after the wreckage. The indicator renders. The quest
 - **What happened (verbatim):** *"btw i can still delete the rendered indicator elements"* and *"the moving abilitiy is gone thats good but its still interactable i can click and delte them"*; *"this settings menu for the indictaor tells me fuck all. this should be the exact indicator menus of the 4 lux algo bundles together. what is this. fix it"*
 - **Root cause (1):** `locked` was honoured only on the canvas path; three object-tree paths deleted locked drawings unguarded. **(2):** the inputs panel ignored `inline=` (so empty-title colour inputs fell back to raw variable names) and ignored the `// ═══ SECTION ═══` markers (so four indicators' 84 inputs were one flat scroll).
 - **Disposition:** FIXED+PROVEN — EN-032, EN-033. The delete hole was closed at the store (`remove()` refuses locked), not per-caller; the panel now renders four collapsible indicator sections with the source's own groups.
+
+### F-46 — THE LOOK GATE CAUGHT WHAT EVERY COUNT SAID WAS FINE
+
+- **What happened:** the first D3 render reported `COMPILED 2513ms · 39 boxes · 21 lines · 21 labels` —
+  a green gate by any count. Opening the capture showed a BARCODE: dozens of thick translucent slabs
+  stacked wall to wall, candles unreadable. Nothing like the library's 1px lines.
+- **Root cause:** the renderer emitted FILLED BOXES at 0.35×ATR. The library primitive is a LINE
+  (measured: 33 green bands, thickness 1px, 2px where doubled, coverage 99-100 %).
+- **Fix:** `lqz-render.pine` now emits `line.new` (1px) plus a dashed mid-rail, and reserves the
+  filled box for 3+ agreeing sources only. D2 went 39 boxes -> 0 boxes / 50 lines; D3 -> 5 boxes / 50 lines.
+- **Disposition:** FIXED for the LQZ layer. **STILL FAILING** — see F-47.
+
+### F-47 — THE SMC'S OWN FULL-WIDTH ZONE FILLS BURY THE LIQUIDITY LINES
+
+- **What happened:** after F-46 the status strip reads `5 boxes · 50 lines · 21 labels` and the LQZ
+  primitive is correct — but the chart still reads as a barcode. The remaining thick bands are the
+  LuxAlgo SMC's own premium/discount and internal-order-block fills, which are full-width rectangles.
+- **Root cause:** those zones are correct S/D per the operator ("Lux Algo's SMC indicator already
+  handles S/D zones basically perfect") but at full opacity they visually dominate the liquidity
+  layer the operator is trying to READ.
+- **Status:** OPEN. The fix is a render-weight decision on the SMC zones (opacity / off by default),
+  NOT a detection change — and it needs the operator's call because it alters how the S/D looks.
+- **Disposition:** OPEN — D3 is NOT approved and this is why the look gate exists.
