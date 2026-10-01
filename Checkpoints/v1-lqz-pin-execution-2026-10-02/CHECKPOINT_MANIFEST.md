@@ -19,7 +19,7 @@ no-lock (the tree is fully committed; reproducible from git at the SHA below —
 | fixture 2026-07-06.json | `0c8f7d7aa3171af8` |
 
 ## THE COUNTS (verified against git, not asserted)
-- tracked files: **885**  → sealed in `tree/`: **880**  **MISMATCH — investigate**
+- tracked files: **1769**  → sealed in `tree/`: **885**  **MISMATCH — investigate**  (counted as files + symlinks — git tracks 10 symlinks and `find -type f` skips them)
 - context_management: **12** docs
 - ship docs: **5** entries (absences recorded as `.ABSENT` files, never omitted)
 - source `.pine`: 5 · scripts: 81
@@ -63,6 +63,13 @@ POSITION in the option list.** `-T - -C dir` reads the file list while still in 
 ORIGINAL cwd, never chdirs, and stats every path against the wrong root. `-C dir -T -`
 works. And the second round was blind because I had piped tar's stderr to /dev/null —
 **suppressing an error's output is how a one-round bug becomes a three-round bug.**
+
+ROUND 3: the count still read MISMATCH at 880/885 — because `find -type f` does not
+count SYMLINKS and git tracks 10 of them (the served renderer copies). The count method
+was wrong, not the seal. Counted as `-type f -o -type l`: **885/885 MATCH**.
+
+THREE rounds on one count, and every round was found by the SAME comparison — a delivered
+count against a source count. The gate never once let a wrong number pass as success.
 
 
 **THE LESSON, and it is the session's recurring one:** the check that compares a
