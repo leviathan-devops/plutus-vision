@@ -11,7 +11,9 @@ bars and timeframes — and the operator states IT IS APPROVED, plus the seal an
 exist. No indicator ships unlooked-at. Any unlooked panel is UNPROVEN, never PASS.
 
 ## BASELINE (re-measured THIS turn — inherited numbers are STALE)
-- repo /home/leviathan/JARVIS_WORKSPACE/Shared_Workspace @ docs/code-review-tools df46f78
+- repo /home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_Vision  (its OWN git repo)
+  @ main 4d993b7  remote origin https://github.com/leviathan-devops/plutus-vision.git  PRIVATE
+  enclosing repo Shared_Workspace @ docs/code-review-tools df46f78 (PLUTUS_VISION untracked there)
 - artifact plutus-vision-v0.pine sha256 605bff82d3539e9e 83089 bytes 1520 lines · 84 inputs
 - render path workbench.bundle.js sha256 7ff93dcf5b2c9e77 · vision.mjs ed34364a66033492
 - parity measured 2026-10-01: SMC 195/195 · POOLS 25/25 · SWEEPS 258/258 · VOIDS 380/500
@@ -65,6 +67,8 @@ packages/plutus-vision-v0-liquidity/DPL1_SPEC.md and its blueprint.
   agent opens every capture itself and names the deltas. A local VLM answer is NOT a look.
 - NO ZERO-DELTA ASSUMPTION: do not edit plutus-vision-v0.pine. Fork to the v1 deliverables; v0
   stays the parity reference.
+- GIT IS NOT OPTIONAL: a wave with no commit SHA has no identity and cannot be audited or
+  reverted. Uncommitted work at a wave boundary is an UNFINISHED WAVE.
 - VIOLATION IS AUTOMATIC FAILURE: theatrical slop, a fabricated PASS, a skipped gate, an
   unevidenced claim, a stale-artifact render, or a derailment FAILS THE WAVE ON SIGHT.
 
@@ -125,6 +129,26 @@ count) · artifact + its SHA · context_management (11) · all 5 ship docs (abse
 CHECKPOINT_MANIFEST (state + HONEST GAPS) · ONE seal mode (full-tree lock OR no-lock — NEVER
 manifest-only). Hyphens only in the name.
 
+## GIT CONTRACT (every wave is version-controlled — no untracked deliverable)
+- THIS PROJECT IS ITS OWN REPO: `PLUTUS_VISION` @ main, remote
+  `https://github.com/leviathan-devops/plutus-vision.git` (PRIVATE). It is untracked inside the
+  enclosing `Shared_Workspace` repo — never commit it there.
+- ROUND-ZERO COMMIT: `4d993b7 feat(lqz): PLUTUS VISION baseline`. Every later wave lands as its
+  OWN commit with a CONVENTIONAL message and the wave id in the subject:
+  `feat(lqz): W3 deliverable-1 lqz-luxalgo (sha <16>)`.
+- EVERY DELIVERABLE IS COMMITTED + PUSHED BEFORE ITS GATE IS EVALUATED. An uncommitted wave has
+  no SHA, and a gate without a SHA is UNPROVEN. A returned agent's edits are a CLAIM until
+  `git status --porcelain` is EMPTY and `git log -1 --format=%H` names the wave.
+- DISCIPLINE: stage by EXPLICIT path (`git add plutus-vision-lqz/lqz-core.pine`), never `git add -A`;
+  secret-scan the staged set before every commit; never commit node_modules, .env, runtime state,
+  or bulk evidence (all gitignored). NO `--no-verify`, EVER.
+- PUSH only on explicit operator order (history is append-only; a bad commit is reverted forward,
+  never rebased). Every wave records its commit SHA in the wave audit and in TESTING_LOG.
+- `SPEC.md` (fence v2, `job: fence`) is the merge gate's bound spec — it must exist and its
+  step-4 expectation is the OPERATOR PANEL APPROVAL. Editing SPEC.md to loosen a gate is a
+  VIOLATION and FAILS THE WAVE ON SIGHT.
+- `git revert` is the repair tool. History is never rewritten.
+
 ## HARD STOPS
 - Secrets out-of-band; never in the repo, chat, logs, or doc rows.
 - Never touch the dashboard session ports (9430/9441/9444/9448). This project owns
@@ -134,7 +158,8 @@ manifest-only). Hyphens only in the name.
 
 ## STOP
 The run stops only when all 8 phase gates are green AND the seal is written AND the receipt
-(baseline diff, parity table, panel grids with shas, runtime ledger, checkpoint path) is posted —
+(baseline diff, parity table, panel grids with shas, runtime ledger, checkpoint path, AND a clean
+`git status --porcelain` with every wave's commit SHA listed) is posted —
 that is the LEGAL STOP definition. ANYTHING LESS IS OPEN. A BLOCKED state is never a stop: it
 names its resume condition. FIRST REPLY: re-measure the baseline, post the diff, fire W1 the same
 turn.
@@ -163,4 +188,6 @@ turn.
 - checkpoint Checkpoints/v1-clean-baseline/
 - library /home/leviathan/Pictures/WINNING_TRADE_LIBARARY (39 PNGs, 8 families)
 - build package packages/plutus-vision-v0-liquidity/
+- git: `git log --oneline -20` · `git status --porcelain` (MUST be empty at a wave boundary)
+  · remote `origin` PRIVATE leviathan-devops/plutus-vision
 A fresh session resumes from DISK, never from this pin frozen numbers.
