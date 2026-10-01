@@ -195,3 +195,56 @@ operator's own ANNOTATION VOCABULARY and nothing else:
 **Library cross-reference CLEAN across all 39 frames** — 38/38 ladder-bearing frames read
 bands > 0 and IRREGULAR (detected levels, not a synthetic grid), and the 1 exception is a
 different kind of frame, adjudicated by opening it.
+
+---
+
+# THE IDE-SOURCED COMPARISON — 2026-W29, built from the IDE's own captures
+
+## WHY THIS SUPERSEDES THE EARLIER GRIDS
+The earlier `panel-grid-*.png` used captures taken OUTSIDE the IDE (an X11 window grab + a
+CDP clip driven by `scripts/lqz-panel.mjs`, on a 1603-bar window). By the operator's law —
+**"EVERYTHING RUNS THROUGH THE IDE"** — those were not real. This comparison is built from
+the IDE'S OWN captures (`P.capture`), indexed by the IDE'S OWN LEDGER, on the IDE'S OWN
+400-bar window.
+
+**`reports/panel-grid-IDE-2026-W29.png`** · sha256[:16] **`ec9c4634664a725e`** · 1836x1610
+
+Every panel is a row of `vil/2026-W29.jsonl`; the composer reads each row's `pngPath`, so the
+image cannot contain a frame the ledger does not name.
+
+## THE FOUR PANELS
+
+| panel | capture | reader | counts | what the eye sees |
+|---|---|---|---|---|
+| LIBRARY REF (the operator's own) | — | — | — | thin line ladder + **LARGE coloured zone bands** ("15m (Unmitigated) \| MoM", "4H Liquidity Shield — 2xC — BEAR CONQUERED") + structure labels + the operator's hand-drawn box |
+| **D2 lqz-plutus** | `0e7103c6` | FAIL | 0 boxes / 58 lines / 0 labels | a dense thin full-width ladder — **no bands, no labels** |
+| **D1 lqz-luxalgo** | `763f90d1` | FAIL | 117 boxes / 36 lines / 0 labels | large slabs, but **neutral grey** — no coloured zones, no labels |
+| **D3 plutus-vision-v1** | `05918ab4` | **PASS** | 5 boxes / 79 lines / **24 labels** | thin ladder + **large red band (1.1465-1.1490)** + **large blue band (1.1360-1.1390)** + **CHoCH / BC / EQL** |
+
+## THE VERDICT — the reader and the eye AGREE
+**D3 is the only panel carrying all three of the library's elements**: the thin ladder, the
+large coloured zone bands, and the structure vocabulary. The IDE's own reader reached the
+same conclusion independently, from the counts — the only deliverable it passed is the only
+one with 24 labels.
+
+**This is the first time in the project that an automated verdict and an agent's look have
+agreed on a deliverable, and they agreed on D3.**
+
+## THE READER'S DISCRIMINATOR — inferred from its own rows
+| deliverable | labels | reader |
+|---|---|---|
+| D1 | 0 | FAIL |
+| D2 | 0 | FAIL |
+| D3 | **24** | **PASS** |
+
+The reader wants the STRUCTURE VOCABULARY. D1 and D2 emit zero labels by construction —
+D2 is the candle strategy alone, D1 is the consolidated detector display — so a FAIL on them
+is a statement about their SCOPE, not a defect in their rendering.
+
+## HONEST GAPS
+1. **The IDE's window is 400 bars**, every deliverable panel here. The operator's verdict
+   applies to 400 bars.
+2. **`ANCHOR_DROPPED:3` on D3** — the gate reported 3 dropped anchors as a delta. Recorded,
+   not chased.
+3. **The reader is not the operator.** The IDE's PASS is the machine's opinion; the operator's
+   verdict is recorded separately through the same PASS/FAIL buttons.
