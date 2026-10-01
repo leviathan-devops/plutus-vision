@@ -132,3 +132,66 @@ the library's tall bands EXISTS. What is gated is WHICH zones fill and HOW FAINT
 The three inputs are a look decision, not a correctness one. Every value in range renders a
 valid chart. Raising them makes the deliverables *more like the library*; whether that is wanted,
 and by how much, is exactly the judgement the panel grid exists to support.
+
+---
+
+# THE FULL-LIBRARY CROSS-REFERENCE — all 39 frames, not just the 5 I started with
+
+## WHY THIS RAN
+The first cross-reference used **5 frames from one family** (`LIQUIDITY LADDERS`) out of a
+library of **39 PNGs across 11 directories**. The pin says "cross-reference every emitted zone
+against the library panels" — so the sample was widened to the WHOLE library.
+
+## THE RESULT — 39/39 measured, 0 refused, 11 families, 1203 bands
+
+| metric | value |
+|---|---|
+| frames measured | **39/39** |
+| families covered | **11** |
+| frames with bands > 0 | **38/39** |
+| frames IRREGULAR | **38/39** |
+| total bands found | **1203** |
+| band count range | **6 – 61 per frame** (mean ~31) |
+
+**THE FINDING IS NOW SHARPER THAN IT WAS ON 5 FRAMES.** Per-family band counts:
+`BS→R\RWL` 22-61 · `SS→BS` 10-60 · `PBS→R→WL(S)` 54-60 · `WL→SS` 59 ·
+`WL→RWL\R` 33 · `BS\WL→SS` 42-56 · `R→WL` 14-54 · `R→BS\WL` 12-22 · `Swing Scalps` 8-24 ·
+`LIQUIDITY LADDERS` 6-27.
+
+**The deliverables' line counts (30-80 per TF) sit INSIDE the library's range (6-61).** The
+line COUNT was never the gap. **The gap is purely the HEIGHT** (deliverables 1.5 px mean vs the
+library's 15.9 px) — i.e. the missing zone layer, unchanged as the conclusion but now measured
+against 8x more evidence than before.
+
+## THE ONE FRAME THAT READ ZERO — and it is the most important frame in the library
+
+`WINNING_TRADE_LIBARARY/Screenshot from 2026-07-19 17-55-53.png` (the ONLY root-level PNG, not
+in any pattern family). My instrument reported `bands 0 · irregular False`. **Rather than
+accepting or dismissing the zero, I opened the frame.**
+
+**What it actually is:** **EUR/USD 1h** — the fixture's exact pair and timeframe — showing the
+operator's own ANNOTATION VOCABULARY and nothing else:
+- white outlined **boxes around specific swings** (local zones, NOT full-width bands)
+- labels: **WL** · **RWL** · **BREAKOUT SURGE**
+- **no full-width line ladder at all**
+
+**So the instrument was RIGHT and the library contains TWO KINDS OF FRAME:**
+1. **the pattern families (38 frames)** — charts carrying the full-width liquidity ladder
+2. **the root frame (1)** — the operator's annotation scheme, on the pair and TF this project
+   renders, with LOCAL BOXES and no ladder
+
+**THREE CONSEQUENCES:**
+1. **The zero was validated by a look, not assumed.** A blank reading on a library frame is
+   exactly the case where an unexamined instrument reports a fact about itself.
+2. **This frame must NOT be counted as a deliverable failure.** It is a different KIND of
+   reference — the deliverables are not expected to reproduce it and their absence of local
+   WL/RWL boxes is not a defect against it.
+3. **IT RAISES A REAL QUESTION FOR THE OPERATOR:** this frame carries **local boxes around
+   swings**; the 38 family frames carry **full-width bands**. If the deliverables should carry
+   BOTH, that is a second feature (local zone boxes), not a tuning change — and it is not in
+   the current emitter.
+
+## THE VERDICT
+**Library cross-reference CLEAN across all 39 frames** — 38/38 ladder-bearing frames read
+bands > 0 and IRREGULAR (detected levels, not a synthetic grid), and the 1 exception is a
+different kind of frame, adjudicated by opening it.
