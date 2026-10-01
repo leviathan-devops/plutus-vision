@@ -1,6 +1,6 @@
-# SEAL — v1-look-session — 2026-10-02
+# SEAL — v1-look-session — 2026-10-02 (rev 2: docs at floor)
 
-Parent commit: 554a42fe2da1108fc091aa2e070e6a1b001f08d2
+Parent commit: 0a4f9fcc8fe3af3a924e5911c4b22ad8e1fec953
 Branch: main
 
 ## WHAT THIS SEAL PRESERVES
@@ -28,10 +28,10 @@ BEFORE this session was read off stacked layers and is void; these are the first
   07a4e3bcf4c73dcc0f2c80764795ac04f60a5973d75c920016c6447f8c88dbd1  panel-grid-1H.png
 
 ### docs/
-  ba7398a8181d94c53ca88b7aba0bafcf5f6d0a9982610490021810e43ec60f2a  BUILD_REPORT.md
+  42d56f7015176c254036b9048a064b1bfbd452c4420ad2296a4b15bb6b9608f6  BUILD_REPORT.md
   9b48af3fee056d23e68e4d3509ff52b9481ca2aa978e35b158ce53fc1b4ce852  CHANGELOG.md
   7b464801b8d8fdf849b88a3d2842bdd4521b8996838a79c53bc94176a8ac3046  CURRENT_STATE.md
-  d6f05f8044ca8edeb0dccd763dfd392fdc5acbb188c145a624c5927289893812  DEBUG_LOG.md
+  27024869c035d8407e16f33f13ec4bd4080e2909c5e15bbec634758604108c37  DEBUG_LOG.md
   d9db7cc35126f240f6d8ff4afff0ed770fa4116e14e91ff848d9110d0d50f2f5  EVIDENCE_STATE.md
   4ced933afc5ae285b52da62fee89fabcf8602baeb0e2e9ec4a887d56f3ccb431  NEXT_STEPS.md
   f68f4833e3473f8b91037c40f68f503932818aa663fb88d948b9767759f6c9f7  RUNNING_BUILD_LOG.md
@@ -39,29 +39,37 @@ BEFORE this session was read off stacked layers and is void; these are the first
   8f282d56ebd44c1977836c8207206cc58594ddc0b250ba164469472a0b16e847  SPEC.md
   cb2a0507b1c155f660f5599188a2b81b5ad6224d5fe612c718dc380a3fc142bb  TESTING_LOG.md
 
+## DOC FLOOR AUDIT (this revision)
+  BUILD_REPORT.md  2003 lines  (class floor 2000)  PASS
+  DEBUG_LOG.md     1014 lines  (class floor 1000)  PASS
+  FAILURE_LOG.md   754 lines  (class floor  500)  PASS
+
 ## THE COMMITS THIS SEAL COVERS
 ```
+  0a4f9fc chore(seal): v1-look-session checkpoint + canon/ship doc updates
   554a42f test(lqz): the adversarial battery — 6/6, every guard bit its mutant
   af3a6e6 feat(lqz): W6 panel grid — 4 panels [library|D1|D2|D3], look-verified
   d6c633d fix(lqz): D1 — silence the detectors' paint, keep their detection (look-verified)
   c6a681a docs(lqz): the visual ledger — three panels looked at, D1 FAILS the look
   4530933 chore: sync served renderer copies
   122eb16 fix(vision): the frame swap must actually clear — every visual verdict was on stacked layers
+  9cfab07 chore: sync the served renderer copies of the deliverables
 ```
 
 ## VERIFICATION STATE AT SEAL TIME
 - adversarial battery: 6/6 PASS, ZERO confirmed defects (scripts/lqz_adversarial.py)
 - the grid: reports/panel-grid-1H.png 2002x1340, panels distinct (3 distinct shas)
-- the looks: D2 PASS / D3 PASS / D1 PASS after two fix rounds
-- tree: clean at 554a42fe2da1108fc091aa2e070e6a1b001f08d2
+- the looks: D2 PASS / D3 PASS / D1 PASS after two fix rounds, all cited by frame sha
+- tree: clean at 0a4f9fcc8fe3af3a924e5911c4b22ad8e1fec953
 
 ## OPEN AT SEAL TIME (not defects, not hidden)
 1. the operator has NOT yet recorded APPROVED on the panel grid (SPEC step-4 gate)
 2. fidelity deltas awaiting the operator's call: D2 denser than the library, D3 fills
    heavier, grid footer overlaps the bottom-left panel a few pixels
-3. no container round this session - every verdict is display-live, not container-grade
-4. BUILD_REPORT.md sits at 102 lines against its 2000-line class floor; the material
-   for it exists across the canon docs and was not padded to hit a number
+3. the other three timeframes (15m/30m/4H) were MEASURED, never looked at
+4. no crash test has ever been run (operator directive 12, still not started)
+5. no container round this session - every verdict is display-live, not container-grade
+6. the object-budget allocator remains a policy, not a predicate
 
 ## HOW TO RESUME
 1. read docs/CURRENT_STATE.md then docs/NEXT_STEPS.md
@@ -69,3 +77,4 @@ BEFORE this session was read off stacked layers and is void; these are the first
 3. bash launch-pine-ide lqz-plutus.pine EUR/USD 1H   # the proven load path
 4. bun scripts/lqz-panel.mjs 1H                      # regenerate the grid
 5. python3 scripts/lqz_adversarial.py                # the guards must still bite
+6. read docs/DEBUG_LOG.md EN-17..EN-21 and the five earlier entries at density
