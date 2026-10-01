@@ -1,0 +1,80 @@
+{
+  "rendered": "2026-10-01T15:55:21",
+  "engine": "PineTS 0.10.0 :9641",
+  "bars": 451,
+  "frames": {
+    "smc": {
+      "boxes": 5,
+      "boxes_drawn": 5,
+      "lines": 19,
+      "lines_drawn": 0,
+      "labels": 22,
+      "labels_drawn": 22,
+      "sha": "25c2fc9a36c58937"
+    },
+    "sweeps": null,
+    "voids": {
+      "boxes": 94,
+      "boxes_drawn": 94,
+      "lines": 0,
+      "lines_drawn": 0,
+      "labels": 0,
+      "labels_drawn": 0,
+      "sha": "fa6dccff059f71b2"
+    },
+    "pools": {
+      "boxes": 8,
+      "boxes_drawn": 8,
+      "lines": 6,
+      "lines_drawn": 0,
+      "labels": 0,
+      "labels_drawn": 0,
+      "sha": "b7d2b7e3f910310b"
+    },
+    "mrg:smc": {
+      "boxes": 112,
+      "boxes_drawn": 111,
+      "lines": 45,
+      "lines_drawn": 0,
+      "labels": 22,
+      "labels_drawn": 22,
+      "sha": "7d676d5c3e85ed85"
+    },
+    "mrg:sweeps": {
+      "boxes": 107,
+      "boxes_drawn": 106,
+      "lines": 26,
+      "lines_drawn": 0,
+      "labels": 0,
+      "labels_drawn": 0,
+      "sha": "db3e0234c3878200"
+    },
+    "mrg:voids": {
+      "boxes": 95,
+      "boxes_drawn": 94,
+      "lines": 2,
+      "lines_drawn": 0,
+      "labels": 0,
+      "labels_drawn": 0,
+      "sha": "58e0303ae75aa50f"
+    },
+    "mrg:pools": {
+      "boxes": 1,
+      "boxes_drawn": 0,
+      "lines": 2,
+      "lines_drawn": 0,
+      "labels": 0,
+      "labels_drawn": 0,
+      "sha": "abdab5850c04a8e6"
+    },
+    "mrg:full": {
+      "boxes": 112,
+      "boxes_drawn": 111,
+      "lines": 45,
+      "lines_drawn": 0,
+      "labels": 22,
+      "labels_drawn": 22,
+      "sha": "7377f7fe0cac56bb"
+    }
+  }
+}

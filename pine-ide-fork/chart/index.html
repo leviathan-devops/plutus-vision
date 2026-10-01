@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PLUTUS-CHART</title>
+<style>
+  :root {
+    /* old money — deep neutrals, hairline rules, one restrained accent */
+    --ink:        #0B0B0C;
+    --ink-raise:  #101012;
+    --ink-panel:  #121214;
+    --rule:       rgba(255,255,255,0.07);
+    --rule-solid: #1C1C1F;
+    --paper:      #E8E4DC;
+    --paper-dim:  #9A958C;
+    --paper-mute: #6A675F;
+    --brass:      #B99A5B;
+    --up:         #7E9C82;
+    --down:       #9C6B6B;
+    --sans: 'Inter', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'SF Mono', 'IBM Plex Mono', 'Consolas', monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--ink); color: var(--paper);
+    font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow: hidden; }
+  #shell { display: flex; flex-direction: column; height: 100vh; }
+
+  /* ── the bar ─────────────────────────────────────────────── */
+  #bar {
+    display: flex; align-items: center; gap: 14px; flex: 0 0 auto;
+    padding: 0 14px; height: 44px;
+    border-bottom: 1px solid var(--rule);
+    background: linear-gradient(180deg, #101012 0%, #0C0C0E 100%);
+  }
+  .mark { font-size: 11px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--paper-dim); white-space: nowrap; }
+  .mark b { color: var(--paper); font-weight: 600; letter-spacing: 0.30em; }
+  .sep { width: 1px; height: 18px; background: var(--rule); flex: 0 0 auto; }
+  select, button, input {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    color: var(--paper); background: var(--ink-panel);
+    border: 1px solid var(--rule-solid); border-radius: 2px;
+    padding: 5px 9px; cursor: pointer; outline: none;
+  }
+  input { cursor: text; }
+  select:hover, button:hover { border-color: rgba(185,154,91,0.45); }
+  button[data-on="1"] { border-color: var(--brass); color: var(--brass); }
+
+  /* ── BUG-4: the golden-black chrome — no OS-native scrollbars or select arrows ── */
+  * { scrollbar-width: thin; scrollbar-color: #2A2A2E transparent; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #08080A; }
+  ::-webkit-scrollbar-thumb { background: #232326; border: 2px solid #08080A; border-radius: 6px; }
+  ::-webkit-scrollbar-thumb:hover { background: #35353A; }
+  ::-webkit-scrollbar-thumb:active { background: var(--brass); }
+  ::-webkit-scrollbar-corner { background: #08080A; }
+  select {
+    -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='6' viewBox='0 0 9 6'><path d='M1 1l3.5 3.5L8 1' fill='none' stroke='%23B99A5B' stroke-width='1.2' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat; background-position: right 7px center; padding-right: 22px;
+  }
+  button { -webkit-appearance: none; appearance: none; background-image: none; }
+  button:focus { outline: none; }
+  button:focus-visible, select:focus-visible, input:focus-visible { outline: 1px solid var(--brass); outline-offset: 1px; }
+  button:active { background-color: #17171A; }
+  #sym-free { width: 118px; }
+  #study-select { max-width: 190px; }
+  #quotes { margin-left: auto; display: flex; gap: 18px; font-family: var(--mono); font-size: 11px; color: var(--paper-dim); white-space: nowrap; }
+  #quotes span b { color: var(--paper); font-weight: 500; }
+  /* The terminal runs in a 1080px-wide surface window: at that width the bar
+     overflows and the OHLC readout is clipped off the right edge (measured).
+     The free-text symbol box is the power feature, so it yields first. */
+  @media (max-width: 1240px) {
+    #bar { gap: 9px; padding: 0 10px; }
+    #sym-free, #sym-go { display: none; }
+    #study-select { max-width: 150px; }
+  }
+
+  /* ── the KPI cards (spectrum "KPI stat cards", old money) ── */
+  #kpi { display: flex; gap: 1px; flex: 0 0 auto; background: var(--rule-solid); border-bottom: 1px solid var(--rule); }
+  .kpi-card { flex: 1 1 0; background: var(--ink-raise); padding: 7px 12px 8px; }
+  .kpi-k { font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em; color: var(--paper-mute); }
+  .kpi-v { font-family: var(--mono); font-size: 13px; color: var(--paper); margin-top: 2px; }
+  .kpi-v.ok { color: var(--up); } .kpi-v.bad { color: var(--down); }
+
+  /* ── the body: chart + rail ─────────────────────────────── */
+  #body { display: flex; flex: 1 1 auto; min-height: 0; }
+  #chart-wrap { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; min-height: 0; }
+  #chart { flex: 1 1 auto; min-height: 0; }
+  #rail {
+    width: 316px; flex: 0 0 auto; border-left: 1px solid var(--rule);
+    background: var(--ink-raise); overflow-y: auto; display: flex; flex-direction: column;
+  }
+  .panel { border-bottom: 1px solid var(--rule); padding: 9px 12px 11px; }
+  .panel-h { font-family: var(--mono); font-size: 9px; letter-spacing: 0.26em; color: var(--paper-mute); margin-bottom: 7px;
+    display: flex; justify-content: space-between; }
+  .panel-h em { font-style: normal; color: var(--paper-mute); letter-spacing: 0.1em; }
+  .fx-svg { width: 100%; display: block; }
+  #fx-readout { display: flex; gap: 14px; font-family: var(--mono); font-size: 10px; color: var(--paper-dim); margin-top: 6px; }
+  #fx-readout b { color: var(--paper); font-weight: 500; }
+  #study-counts { display: flex; flex-wrap: wrap; gap: 4px; }
+  .kpi-chip { font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; color: var(--paper-dim);
+    border: 1px solid var(--rule-solid); border-radius: 2px; padding: 2px 6px; }
+  .kpi-chip b { color: var(--paper); }
+  .kpi-chip.bad { color: var(--down); border-color: rgba(156,107,107,0.35); }
+  .lg-row { display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 10px; color: var(--paper-dim); padding: 2px 0; }
+  .lg-row i { width: 8px; height: 8px; border-radius: 1px; flex: 0 0 auto; }
+  .lg-row span { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lg-row em { font-style: normal; color: var(--paper-mute); }
+  .lg-empty { font-family: var(--mono); font-size: 10px; color: var(--paper-mute); }
+  .rail-k { font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; color: var(--paper-mute); }
+  .rail-v { font-family: var(--mono); font-size: 11px; color: var(--paper); margin-bottom: 4px; }
+  .rail-note { font-family: var(--sans); font-size: 10.5px; line-height: 1.5; color: var(--paper-mute); }
+  .lad-head, .lad-row { display: grid; grid-template-columns: 46px 1fr 56px 66px; gap: 4px; font-family: var(--mono); font-size: 10px; color: var(--paper-dim); padding: 2px 0; }
+  .lad-head { color: var(--paper-mute); letter-spacing: 0.14em; font-size: 9px; border-bottom: 1px solid var(--rule); }
+  .lad-row .ok { color: var(--up); } .lad-row .bad { color: var(--down); }
+  .ok { color: var(--up); } .bad { color: var(--down); } .warn { color: var(--brass); }
+
+  /* ── the pine source box ────────────────────────────────── */
+  #pine-box { display: none; flex-direction: column; flex: 0 0 auto; border-top: 1px solid var(--rule); background: var(--ink); max-height: 44%; }
+  #pine-box[data-open="1"] { display: flex; }
+  #pine-box .pb-head { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--rule); }
+  #pine-box .pb-head .t { font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; color: var(--paper-mute); }
+  #pine-source { flex: 1 1 auto; width: 100%; min-height: 90px; resize: vertical; background: #0A0A0B; color: var(--paper);
+    border: 0; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11px; line-height: 1.55; padding: 8px 12px; outline: none; }
+
+  /* ── the foot + error ───────────────────────────────────── */
+  #foot { flex: 0 0 auto; display: flex; gap: 18px; padding: 5px 14px; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--paper-mute); white-space: nowrap; overflow: hidden; }
+  #station-line { overflow: hidden; text-overflow: ellipsis; }
+  #error { position: absolute; inset: 0; display: none; padding: 26px; font-family: var(--mono);
+    font-size: 12px; line-height: 1.6; color: var(--paper-dim); background: rgba(11,11,12,0.96); z-index: 20; }
+  #error b { color: var(--brass); }
+</style>
+</head>
+<body>
+<div id="shell">
+  <div id="bar">
+    <div class="mark"><b>PLUTUS</b> &nbsp;·&nbsp; TRADE DESK</div>
+    <div class="sep"></div>
+    <select id="pair" title="Pair">
+      <option value="EURUSD">EUR / USD</option>
+      <option value="GBPUSD">GBP / USD</option>
+      <option value="DXY">DXY</option>
+    </select>
+    <input id="sym-free" placeholder="TVC:DXY" title="Any symbol (TVC:DXY / OANDA:EURUSD / FX:GBPUSD)" />
+    <button id="sym-go" title="Load this symbol">GO</button>
+    <select id="tf" title="Timeframe">
+      <option value="15m">15m</option>
+      <option value="30m">30m</option>
+      <option value="1H" selected>1H</option>
+      <option value="4H">4H</option>
+    </select>
+    <div class="sep"></div>
+    <button id="frame-week" data-on="1" title="Frame the trading week into the anchor">WEEK</button>
+    <button id="ct-trend" title="Draw a trendline (then click twice on the chart)">TREND</button>
+    <button id="ct-box" title="Draw a box (then click twice on the chart)">BOX</button>
+    <button id="ct-clear" title="Clear every drawing + the study layer">CLEAR</button>
+    <div class="sep"></div>
+    <select id="study-select" title="Studies: the pine station's catalog + Vela's native indicators"><option value="">— studies —</option></select>
+    <button id="pine-toggle" title="The Pine source box">PINE ▸</button>
+    <div id="quotes">
+      <span>O <b id="q-o">—</b></span><span>H <b id="q-h">—</b></span>
+      <span>L <b id="q-l">—</b></span><span>C <b id="q-c">—</b></span><span id="q-n">—</span>
+    </div>
+  </div>
+
+  <div id="kpi"></div>
+
+  <div id="body">
+    <div id="chart-wrap">
+      <div id="chart"></div>
+      <div id="pine-box" data-open="0">
+        <div class="pb-head">
+          <span class="t">PINE SOURCE — the station on :9441</span>
+          <button id="pine-run" title="Compile + run + draw through the pine station">▸ RUN</button>
+          <button id="pine-canon" title="Run the CANON indicator (trident v8) by path + sha — CANON IS LAW">CANON</button>
+        </div>
+        <textarea id="pine-source" spellcheck="false"></textarea>
+      </div>
+    </div>
+    <div id="rail">
+      <div class="panel">
+        <div class="panel-h"><span>MARKET</span><em id="fx-market-em">close · weekly frame</em></div>
+        <div id="fx-market"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><span>INDICATORS</span><em>RSI 14 · MACD 12,26,9</em></div>
+        <div id="fx-stack"></div>
+        <div id="fx-readout"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><span>STUDIES</span><em>the station's output</em></div>
+        <div id="study-counts"></div>
+        <div id="legend" style="margin-top:8px"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><span>LADDER</span><em>broker rail · read-only</em></div>
+        <div id="ladder"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><span>BROKER</span><em>:9442</em></div>
+        <div id="broker-panel"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="foot">
+    <span id="f-src">bars —</span><span id="f-win">window —</span><span id="f-engine">vela —</span>
+    <span id="f-draws">drawings 0</span>
+    <span id="station-line">station —</span>
+    <span id="broker-strip" style="margin-left:auto">broker —</span>
+  </div>
+  <div id="error"></div>
+</div>
+
+<script type="module" src="./app.bundle.js"></script>
+</body>
+</html>

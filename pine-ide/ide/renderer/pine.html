@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plutus Vision — Pine IDE</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="tabs/pineshell.css">
+  <script>
+    window.dashboardConfig = {
+      apiBase: 'http://127.0.0.1:9851',
+      wsUrl: 'ws://127.0.0.1:9431',
+      authToken: 'rw_dev_plutus_backtest',
+      pineStation: 'http://127.0.0.1:9741'
+    };
+  </script>
+  <style>
+    /* THE STANDALONE HEIGHT CHAIN.
+       pineshell.css sizes itself with `.pine-shell { height: 100% }` — which
+       resolves to `auto` unless EVERY ancestor has a definite height. Under the
+       dashboard that chain comes from the app shell; here we supply it, or the
+       Vela chart host (flex: 1 1 auto, min-height: 320px) grows unbounded and
+       sizes its canvas to the full content height (measured: 24,677px tall —
+       the plot then renders far outside the viewport and reads as blank).
+       Fixed here: html/body -> 100vh flex row -> host flex:1 min-height:0. */
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body.pine-standalone {
+      height: 100vh; width: 100vw; overflow: hidden;
+      display: flex; flex-direction: row;
+      background: var(--bg-void, #08080A);
+    }
+    #pine-shell-root {
+      flex: 1 1 auto; min-width: 0; min-height: 0;
+      display: flex; flex-direction: row;
+    }
+    #pine-shell-root > * { flex: 1 1 auto; min-width: 0; min-height: 0; }
+  </style>
+</head>
+<body class="pine-standalone">
+  <div class="shell-host" data-shell-host="pine-shell" id="pine-shell-root"></div>
+  <script src="tabs/_shell.js"></script>
+  <script src="tabs/pineshell.js"></script>
+  <!-- _shell.js auto-mounts every [data-shell-host]; a second manual mount() doubled the kernel -->
+</body>
+</html>

@@ -1,0 +1,25 @@
+# dependencies + build output
+node_modules/
+dist/
+*.log
+
+# secrets — never in the tree
+.env
+.env.*
+*.pem
+*.key
+
+# runtime state (never evidence)
+runtime/
+*.db-shm
+*.db-wal
+session.json
+
+# bulk evidence: regenerable from the rig, not source
+vil/recordings/
+parity_frames/
+vision_frames/
+*.mp4
+
+# editor + OS
+.DS_Store

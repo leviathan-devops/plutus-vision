@@ -1,0 +1,251 @@
+{
+ "runId": "VIL-20261001T203228",
+ "tree": "/home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION",
+ "indicatorSha256": "605bff82d3539e9e5e258da30ba4ec80607a3df7749fb5deb5f4402350f95847",
+ "bible": "Bibles/VISION_IN_THE_LOOP_ENGINEERING_BIBLE.md",
+ "scenarios": [
+  {
+   "id": "clean-15m",
+   "design": "PASS",
+   "expectation": "EUR/USD candles across the window; SMC: BOS/CHoCH text labels on swing-structure lines + Strong/Weak High/Low; order-block zones (blue bull / red bear); VOIDS: thin grey stacked slices; POOLS: buyside/sellside liquidity lines + zones; SWEEPS: wick-sweep boxes. Nothing cropped, nothing blank.",
+   "verdict": "PASS",
+   "why": "reader PASS + structure drew 170",
+   "extraction": {
+    "path": "/home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION/vil/shots/merged-EURUSD-15m.png",
+    "bytes": 244431,
+    "magic": "89504e47",
+    "sha256": "a62e6faed8797e8f8d7d00c66dced447ef1d9afb72ae475a1453086e2e5bec00",
+    "pixelStd": 30.31,
+    "ok": true
+   },
+   "structure": {
+    "title": "Plutus Vision v0",
+    "counts": {
+     "plots": 0,
+     "plotPoints": 0,
+     "markers": 0,
+     "boxes": 102,
+     "labels": 22,
+     "lines": 49,
+     "tables": 0,
+     "polylines": 0,
+     "linefills": 0,
+     "trades": 0
+    },
+    "bars": 325,
+    "onChart": 170
+   },
+   "loadError": null,
+   "reader": {
+    "verdict": "PASS",
+    "answers": {
+     "Q1": "YES",
+     "Q2": "YES",
+     "Q3": "YES",
+     "Q4": "YES"
+    },
+    "note": "The chart displays price candlesticks, multiple filled horizontal rectangular zones in various colors (green, red, dark grey), text labels such as BOS and EQBS positioned near or on the zones, and horizontal lines (e.g., a red line and a dotted cyan line) spanning the price area.",
+    "reader": "/home/leviathan/models/gguf/Qwen3.5-4B-Q4_K_M.gguf",
+    "ms": 2440
+   },
+   "channel": "x11-window-grab + run-JSON"
+  },
+  {
+   "id": "clean-30m",
+   "design": "PASS",
+   "expectation": "EUR/USD candles across the window; SMC: BOS/CHoCH text labels on swing-structure lines + Strong/Weak High/Low; order-block zones (blue bull / red bear); VOIDS: thin grey stacked slices; POOLS: buyside/sellside liquidity lines + zones; SWEEPS: wick-sweep boxes. Nothing cropped, nothing blank.",
+   "verdict": "PASS",
+   "why": "reader PASS + structure drew 228",
+   "extraction": {
+    "path": "/home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION/vil/shots/merged-EURUSD-30m.png",
+    "bytes": 245366,
+    "magic": "89504e47",
+    "sha256": "8691b6d02fa9b9944fcc687594ff2210360ebcd72ba55fa5f79bae886b353d0e",
+    "pixelStd": 30.42,
+    "ok": true
+   },
+   "structure": {
+    "title": "Plutus Vision v0",
+    "counts": {
+     "plots": 0,
+     "plotPoints": 0,
+     "markers": 0,
+     "boxes": 150,
+     "labels": 23,
+     "lines": 59,
+     "tables": 0,
+     "polylines": 0,
+     "linefills": 0,
+     "trades": 0
+    },
+    "bars": 3206,
+    "onChart": 228
+   },
+   "loadError": null,
+   "reader": {
+    "verdict": "PASS",
+    "answers": {
+     "Q1": "YES",
+     "Q2": "YES",
+     "Q3": "YES",
+     "Q4": "YES"
+    },
+    "note": "Visible candlesticks, multiple colored filled rectangular zones (green, red, blue), text labels like \"Choch\" and \"BOS\" next to zones, and horizontal lines such as the cyan dotted line.",
+    "reader": "/home/leviathan/models/gguf/Qwen3.5-4B-Q4_K_M.gguf",
+    "ms": 2065
+   },
+   "channel": "x11-window-grab + run-JSON"
+  },
+  {
+   "id": "clean-1H",
+   "design": "PASS",
+   "expectation": "EUR/USD candles across the window; SMC: BOS/CHoCH text labels on swing-structure lines + Strong/Weak High/Low; order-block zones (blue bull / red bear); VOIDS: thin grey stacked slices; POOLS: buyside/sellside liquidity lines + zones; SWEEPS: wick-sweep boxes. Nothing cropped, nothing blank.",
+   "verdict": "PASS",
+   "why": "reader PASS + structure drew 200",
+   "extraction": {
+    "path": "/home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION/vil/shots/merged-EURUSD-1H.png",
+    "bytes": 240517,
+    "magic": "89504e47",
+    "sha256": "6219e5d89ca29b65e3e1658d906f9fe85f3b861edd6871120ab94fc60c2b2afb",
+    "pixelStd": 30.23,
+    "ok": true
+   },
+   "structure": {
+    "title": "Plutus Vision v0",
+    "counts": {
+     "plots": 0,
+     "plotPoints": 0,
+     "markers": 0,
+     "boxes": 122,
+     "labels": 24,
+     "lines": 57,
+     "tables": 0,
+     "polylines": 0,
+     "linefills": 0,
+     "trades": 0
+    },
+    "bars": 1603,
+    "onChart": 200
+   },
+   "loadError": null,
+   "reader": {
+    "verdict": "PASS",
+    "answers": {
+     "Q1": "YES",
+     "Q2": "YES",
+     "Q3": "YES",
+     "Q4": "YES"
+    },
+    "note": "The chart displays price candlesticks, multiple filled horizontal rectangular zones of varying colors, text labels such as BOS and CH placed near or on the zones, and horizontal lines like the BOS line.",
+    "reader": "/home/leviathan/models/gguf/Qwen3.5-4B-Q4_K_M.gguf",
+    "ms": 2009
+   },
+   "channel": "x11-window-grab + run-JSON"
+  },
+  {
+   "id": "clean-4H",
+   "design": "PASS",
+   "expectation": "EUR/USD candles across the window; SMC: BOS/CHoCH text labels on swing-structure lines + Strong/Weak High/Low; order-block zones (blue bull / red bear); VOIDS: thin grey stacked slices; POOLS: buyside/sellside liquidity lines + zones; SWEEPS: wick-sweep boxes. Nothing cropped, nothing blank.",
+   "verdict": "PASS",
+   "why": "reader PASS + structure drew 325",
+   "extraction": {
+    "path": "/home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION/vil/shots/merged-EURUSD-4H.png",
+    "bytes": 250224,
+    "magic": "89504e47",
+    "sha256": "8e4644a5f821b6ee60718b84b77eec966dff7c9b444bcd2af69e6cb967605a77",
+    "pixelStd": 30.41,
+    "ok": true
+   },
+   "structure": {
+    "title": "Plutus Vision v0",
+    "counts": {
+     "plots": 0,
+     "plotPoints": 0,
+     "markers": 0,
+     "boxes": 221,
+     "labels": 30,
+     "lines": 77,
+     "tables": 0,
+     "polylines": 0,
+     "linefills": 0,
+     "trades": 0
+    },
+    "bars": 451,
+    "onChart": 325
+   },
+   "loadError": null,
+   "reader": {
+    "verdict": "PASS",
+    "answers": {
+     "Q1": "YES",
+     "Q2": "YES",
+     "Q3": "YES",
+     "Q4": "YES"
+    },
+    "note": "The chart displays price candlesticks, multiple filled horizontal rectangular zones in red and green, text labels such as BOS and Choch next to the zones, and horizontal lines including a dotted one.",
+    "reader": "/home/leviathan/models/gguf/Qwen3.5-4B-Q4_K_M.gguf",
+    "ms": 2051
+   },
+   "channel": "x11-window-grab + run-JSON"
+  },
+  {
+   "id": "battery-planted-defect",
+   "design": "FAIL",
+   "verdict": "FAIL",
+   "why": "price candlesticks are visible, but no filled horizontal rectangular zones are drawn across the price area.",
+   "extraction": {
+    "path": "/home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION/vil/shots/battery-planted-empty.png",
+    "bytes": 105449,
+    "magic": "89504e47",
+    "sha256": "67248bc21f801adf5dc6fc84bcf451e9a2df9352096ab15542aed799edc14cf1",
+    "pixelStd": 22.72,
+    "ok": true
+   },
+   "structure": {
+    "onChart": 0
+   },
+   "reader": {
+    "verdict": "FAIL",
+    "answers": {
+     "Q1": "YES",
+     "Q2": "NO",
+     "Q3": "NO",
+     "Q4": "YES"
+    },
+    "note": "price candlesticks are visible, but no filled horizontal rectangular zones are drawn across the price area.",
+    "reader": "/home/leviathan/models/gguf/Qwen3.5-4B-Q4_K_M.gguf",
+    "ms": 1746
+   }
+  },
+  {
+   "id": "battery-unjudgeable-black",
+   "design": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "why": "MEASUREMENT: unjudgeable frame (near-uniform)",
+   "extraction": {
+    "path": "/home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION/vil/shots/battery-black.png",
+    "bytes": 1598,
+    "magic": "89504e47",
+    "sha256": "0cc05e91a54d89808d241d28b9d55cce2dfc9beb11674f050fd2647b0c867fbd",
+    "pixelStd": 0.0,
+    "ok": false,
+    "why": "MEASUREMENT: unjudgeable frame (near-uniform)"
+   }
+  },
+  {
+   "id": "battery-dead-channel",
+   "design": "INCONCLUSIVE",
+   "verdict": "INCONCLUSIVE",
+   "why": "TRANSPORT: decode failed (OSError)",
+   "extraction": {
+    "path": "/home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION/vil/shots/battery-truncated.png",
+    "bytes": 3000,
+    "magic": "89504e47",
+    "sha256": "1ee8f5df842e4acbe67600d9f75922da2bdcc42818ca044cf25c0366d804ee6e",
+    "ok": false,
+    "why": "TRANSPORT: decode failed (OSError)"
+   }
+  }
+ ],
+ "overallVerdict": "PASS"
+}
