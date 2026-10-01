@@ -23,3 +23,7 @@ vision_frames/
 
 # editor + OS
 .DS_Store
+
+# runtime state written by the IDE's own pipeline (P.capture / the VIL rail)
+evidence/
+vil/*.jsonl
