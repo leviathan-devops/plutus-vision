@@ -103,12 +103,15 @@ for (const d of DELIVERABLES) {
     // run() after setSource compiles the PREVIOUS source — measured: D1 compiled
     // 'Plutus Vision v1'. Running until the returned title IS this deliverable is
     // the only deterministic form; each attempt is asserted, never assumed.
+    // The budget is 20, not 8: a legitimate panel measured SEVEN runs to land (D3),
+    // and the adversarial battery then watched 8 attempts exhaust without landing at
+    // all. A retry budget one attempt above the worst observed case is a coin flip.
     let rr = null, got = null, tries = 0;
-    for (; tries < 8; tries++) {
+    for (; tries < 20; tries++) {
       rr = await P.run({ silent: true });
       got = rr.run && rr.run.title;
       if (got && got.includes(${JSON.stringify(d.expect)})) break;
-      await new Promise(r => setTimeout(r, 800));   // let the debounced flush land
+      await new Promise(r => setTimeout(r, 700));   // let the debounced flush land
     }
     // run() returns the COMPILED script's own metadata, so its title names exactly
     // which deliverable ran. Asserting it is the only deterministic per-panel
