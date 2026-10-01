@@ -152,3 +152,96 @@ exercised and fixed in place.
    `limit: 1`.
 5. **The second-operator check is not run**: a zero-context subagent has not yet been given
    only the operating docs and asked to drive the rig.
+
+---
+
+# THE OPERATING MANUAL — the three commands, verbatim
+
+**Added after the second-operator check (reports/lqz_second_operator.md).** A zero-context agent
+completed every step but had to read SOURCE to learn the compile API — and it found a rig defect
+in the process. This section exists so the next operator does not repeat either.
+
+## THE RIG CHECK — and WHY `GET /` LIES
+
+```bash
+# THE PORT CHECK (all four)
+for p in 9741 9754 9851 9222; do
+  printf ':%s  ' "$p"
+  curl -s -o /dev/null -w 'http=%{http_code}\n' --max-time 5 "http://127.0.0.1:$p/"
+done
+# EXPECT :9741 200 · :9754 404 (no / route — healthy) · :9851 200 · :9222 200
+
+# THE CHECK THAT ACTUALLY MATTERS — the station is HALF-ALIVE-PRONE.
+curl -s -o /dev/null -w '/        %{http_code} %{time_total}s\n' --max-time 5 http://127.0.0.1:9741/
+curl -s -o /dev/null -w '/cells   %{http_code} %{time_total}s\n' --max-time 5 http://127.0.0.1:9741/cells
+curl -s -o /dev/null -w '/bars    %{http_code} %{time_total}s\n' --max-time 5 "http://127.0.0.1:9741/bars?pair=EUR/USD&timeframe=1H"
+```
+
+**MEASURED, by a zero-context operator: `GET /` and `GET /health` can HANG (http_code=000, curl
+exit 28) while `/catalog`, `/cells`, `/bars` answer 200 and `POST /run` compiles normally.** The
+VIL rail reads the hung route and reports `PINE_STATION_DOWN` — so a rig can be declared dead
+while it works.
+
+**AND THE LAUNCHER USES THE LYING ROUTE:** `pv-ide.sh` has
+`up http://127.0.0.1:9741/ || { echo "STATION_DOWN"; exit 1; }` — `GET /`. **The launcher's health
+predicate is the one route that can hang while the station is functional.**
+
+**THE CORRECT CHECK is the WORK route, not the liveness route:**
+```bash
+curl -s -m 90 -X POST http://127.0.0.1:9741/run -H 'Content-Type: application/json' \
+  -d '{"script":"//@version=6\nindicator(\"t\")\nplot(close)","pair":"EUR/USD","timeframe":"1H","limit":300}' \
+  | python3 -c "import json,sys;d=json.load(sys.stdin);print('OK' if d.get('success') else 'REFUSED', d.get('data',{}).get('title'))"
+```
+**A rig that answers THIS is up, whatever `GET /` says.**
+
+## THE COMPILE — the API the docs did not state
+
+```bash
+# POST :9741/run  {"script": <full Pine source>, "pair", "timeframe", "limit"}
+curl -s -m 90 -X POST http://127.0.0.1:9741/run \
+  -H 'Content-Type: application/json' \
+  -d "{\"script\":$(python3 -c "import json;print(json.dumps(open('lqz-plutus.pine').read()))"),\
+\"pair\":\"EUR/USD\",\"timeframe\":\"1H\",\"limit\":1603}"
+```
+**Returns:** `{success, data:{title, bars, counts:{boxes,lines,labels,…}, sourceSha}}`
+**ASSERT THE TITLE.** It is the compiled script's OWN identity — the only deterministic per-panel
+check in the system. `undefined` means the station is unreachable, not that the panel is empty.
+
+**THE REFUSALS, so a reader knows what normal looks like:**
+| input | response |
+|---|---|
+| empty / null script | `400 :: primary: a script or canon:true is required` |
+| not Pine | `422 :: Unexpected token (2:6)` |
+| unknown identifier | `422 :: <name> is not defined` |
+| absent pair/timeframe | `500 :: no bars cell for … (available: 12 cells listed)` |
+| `limit=1` | `400 :: bars absent (1)` |
+| `limit=0` | **`200` — DOCUMENTED as "keep the full history"** |
+| concurrent load | **serialized ~16 s each; no busy signal — budget ~20 s per compile** |
+
+## THE CAPTURE — and the two ways it goes wrong
+
+```bash
+# THE LIVE GRID (writes reports/panel-grid-<TF>.png; asserts the run title; refuses duplicate panels)
+bun scripts/lqz-panel.mjs 1H      # or 30m / 15m / 4H
+
+# A SINGLE FRAME (the X11 path — the proven one)
+DISPLAY=:3 xdotool search --name "Pine IDE" | head -1     # resolve the window id (CHANGES on relaunch)
+DISPLAY=:3 import -window <ID> -silent /tmp/look.png
+sha256sum /tmp/look.png | cut -c1-16
+# THEN OPEN IT. A capture nobody opened is not evidence.
+```
+
+**TRAP 1 — THE STALE FRAME.** With the station wedged, the page renders the PREVIOUS script. The
+second operator's first capture returned a D3 frame while asking for D1, and caught it only by
+comparing. **The `run.title` assertion is what prevents this** — it is in `lqz-panel.mjs`; hand
+captures must assert too.
+
+**TRAP 2 — THE SERVED COPY.** The browser serves `pine-ide/ide/renderer/`. A rebuilt `.pine` at the
+project root is INVISIBLE until copied there. `bash scripts/verify_served_pine.sh` gates it
+(`SERVED_PINE_OK`).
+
+## THE ONE-PARAGRAPH VERSION
+
+> Check the rig by COMPILING, not by pinging. Assert the run's title. Copy the built `.pine` into
+> `pine-ide/ide/renderer/` before capturing. Resolve the window id fresh. Open every frame you
+> capture. Budget ~20 s per compile — the station serializes.
