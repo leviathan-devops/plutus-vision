@@ -88,6 +88,41 @@ frames = ["5c4285258a36d4b6", "b2b5b5ba552ffc0a", "a0f96c396c8168f7"]
 a6 = all(f in led for f in frames)
 rec("A6 ledger carries the frame shas", a6, f"{sum(f in led for f in frames)}/{len(frames)} shas cited")
 
+# ── A7. THE LIBRARY CROSS-REFERENCE ────────────────────────────────────────
+# The pin's P5 contract: "Cross-reference every emitted zone against the library
+# panels: is the band where the library band is, within tolerance?"
+# The DECISIVE property is not the count — it is IRREGULARITY. A ladder of DETECTED
+# levels has irregular spacing; a synthetic grid has uniform spacing. Both the library
+# and every deliverable grid must read irregular, or the comparison is between two
+# different kinds of object.
+import json as _json, subprocess as _sp
+
+AB = str(ROOT / "scripts/lqz_ab.py")
+LIBDIR = pathlib.Path("/home/leviathan/Pictures/WINNING_TRADE_LIBARARY/LIQUIDITY LADDERS")
+
+def _ab(path, box=None):
+    cmd = ["python3", AB, str(path), "--json"]
+    if box:
+        cmd += ["--box", box]
+    r = _sp.run(cmd, capture_output=True, text=True, timeout=300)
+    if r.returncode != 0:
+        return None
+    return _json.loads(r.stdout)["panel"]
+
+lib = [_ab(f, box="40,60,700,500") for f in sorted(LIBDIR.glob("*.png"))]
+lib = [m for m in lib if m]
+grids = [_ab(ROOT / f"reports/panel-grid-{tf}.png") for tf in ("1H", "30m", "15m", "4H")]
+grids = [m for m in grids if m]
+
+a7 = (len(lib) == 5 and len(grids) == 4
+      and all(m["bands"] > 0 for m in lib)          # the control must SEE bands
+      and all(m["bands"] > 0 for m in grids)        # the subject must too
+      and all(m["irregular"] for m in lib)          # the reference is DETECTED levels
+      and all(m["irregular"] for m in grids))       # and so are the deliverables
+rec("A7 library cross-reference clean", a7,
+    f"library {len(lib)}/5 bands>0 irregular {sum(1 for m in lib if m['irregular'])}/5 · "
+    f"grids {len(grids)}/4 bands>0 irregular {sum(1 for m in grids if m['irregular'])}/4")
+
 # ── VERDICT ────────────────────────────────────────────────────────────────
 passed = sum(1 for _, ok, _ in RESULTS if ok)
 print(f"\nADVERSARIAL VERDICT: {passed}/{len(RESULTS)} PASS")
