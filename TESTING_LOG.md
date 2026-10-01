@@ -379,3 +379,84 @@ Must-fail mutants, not assertions-in-prose:
 - The look matrix covers 1H for all three after the D1 suppression; the other three TFs were
   measured by counts, not looked at.
 - The grid's fidelity deltas are subjective and handed to the operator, not self-adjudicated.
+
+---
+
+## 2026-10-02 (later) — THE PIN EXECUTION · ALL 12 NAMED TESTS + THE AUDIT GATE
+
+### THE AUDIT ARTIFACT
+`reports/LQZ_ADVERSARIAL_AUDIT.txt` — the full pass, on disk, with the artifact shas at
+audit time written into its header (so the audit names WHAT it audited).
+
+## AUDIT GATE: PASS
+
+```
+  [PASS] A1 detector paint suppressed                 live colour inputs=0 transparent=10
+  [PASS] A2 drawing caps raised to 500                per-deliverable: [True, True, True]
+  [PASS] A3 mutant: wrong title refused               exit=1
+  [PASS] A4 mutant: duplicate panels refused          exit=1 guarded
+  [PASS] A5 grid artifact present                     panel-grid-1H.png 523703 bytes
+  [PASS] A6 ledger carries the frame shas             3/3 shas cited
+  [PASS] A7 library cross-reference clean             library 5/5 bands>0 irregular 5/5 · grids 4/4 bands>0 irregular 4/4
+
+ADVERSARIAL VERDICT: 7/7 PASS
+ZERO confirmed defects — every guard bit its mutant
+```
+
+**AUDIT GATE: PASS** — 7/7, zero confirmed defects, artifact on disk.
+
+### WAVE 1 — `bun test scripts/lqz_core.test.ts` → 4 pass / 0 fail / 46 expect
+| named test | selector | result |
+|---|---|---|
+| test_cluster_rejects_beyond_tol (negative, runs first) | `bun test -t test_cluster_rejects_beyond_tol` | pass |
+| test_cluster_merges_within_tol (positive) | `bun test -t test_cluster_merges_within_tol` | pass |
+| test_source_select_is_total (exhaustive) | `bun test -t test_source_select_is_total` | pass |
+Gate: v0 parity ZERO new deltas — verified: `plutus-vision-v0.pine` sha `605bff82d3539e9e`,
+byte-identical to the pin's baseline. **The parity reference was not touched.**
+
+### WAVE 2 — `bun test scripts/lqz_render.test.ts` → 2 pass / 0 fail / 45 expect
+test_zone_spans_full_width · test_colour_by_side. Positive + negative + empty in each.
+Gate: every zone left edge <= bar_index-500 — verified at barIndex **1603** AND at **325**
+(15m's depth) where the clamp holds the edge at 0 rather than going negative.
+
+### WAVES 3/4/5 — `bun test scripts/lqz_ship.test.ts` → 3 pass / 0 fail / 40 expect
+Each asserts the STATION compile (L0) with the run's OWN title AND the source law (L1):
+| deliverable | sha256[:16] | station title asserted |
+|---|---|---|
+| D1 lqz-luxalgo | `b6dda2dae4416ec8` | `LQZ LuxAlgo` |
+| D2 lqz-plutus | `946f4ca21b3ddc0a` | `LQZ Plutus — operator candle liquidity` |
+| D3 plutus-vision-v1 | `d41c6d9ccb1c5f8e` | `Plutus Vision v1` |
+
+### WAVE 6 — `bun test scripts/lqz_w6.test.ts` → 3 pass / 0 fail / 51 expect
+test_panel_grid_complete · test_panel_rows_are_same_bars · test_ab_diff_is_measurable.
+
+### THE PANEL VISUAL JUDGE GATE (L3/L4) — the pin's only deliverable-closing gate
+Four grids, each rendered LIVE from the Pine IDE on :3, each OPENED by the agent:
+
+| TF | grid | sha256[:16] | D1 | D2 | D3 |
+|---|---|---|---|---|---|
+| 1H | reports/panel-grid-1H.png | 07a4e3bc | 117b/36l | 0b/58l | 5b/79l/21L |
+| 30m | reports/panel-grid-30m.png | 0491c90a | 145b/40l | 0b/66l | 5b/85l/19L |
+| 15m | reports/panel-grid-15m.png | 5f4fcbb2 | 97b/30l | 0b/38l | 5b/57l/19L |
+| 4H | reports/panel-grid-4H.png | a653c020 | 216b/50l | 0b/53l | 5b/80l/27L |
+
+Per-panel found/missing/wrong: `reports/lqz_panel_judge.md`.
+**OPERATOR VERDICT: AWAITING — no agent action substitutes for it.**
+
+### THE RUNTIME SEAT (P4) — first person on :3
+`reports/lqz_runtime_forensic.md` (154 L) carries the H1-H7 record: 8 numbered ops each
+with a pre-registered expectation; the silent station death; the cold-page debounce race
+(1/2/7 attempts cold vs 1/1/1 warm); the 15m shallow-history case; the 112-vs-50 cap
+boundary; seven facts RUNNING produced that READING could not.
+
+### THE LIBRARY CROSS-REFERENCE (P5)
+Decisive property: **IRREGULARITY**, not the count. Measured: library 5/5 frames bands>0
+AND irregular · deliverable grids 4/4 bands>0 AND irregular. A uniform spacing would be a
+synthetic grid; irregular spacing is detected levels.
+
+### NOT TESTED (the honest remainder — never reported as pass)
+- **No container round.** Every verdict is host-live, not container-grade.
+- **No rig crash test** beyond `limit=1` (which refuses by name: `bars absent (1)`).
+- **The second-operator check is not run** — no zero-context subagent has driven it.
+- **The band-height delta is unadjudicated** — the operator's call.
+- render vision.mjs sha at test time: `56e9a3eb1d83e43d` · HEAD `d7dc0ce`

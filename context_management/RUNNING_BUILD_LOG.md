@@ -94,3 +94,70 @@ non-distinct grid UNWRITABLE.
    DROPPED silently — 15m (325 bars) gave boxes=0 with no error.
 5. Level volume was never the cluster's problem: 300 and 1500 levels both give 0 zones in
    D1's old form.
+
+## 2026-10-02 (later) — THE PIN EXECUTION: W1-W6 GREEN, FOUR GRIDS, ALL LOOKED AT
+
+**Entered with:** the goal pin's baseline, marked STALE and demanding re-measurement.
+**Left with:** all 12 named tests green, four TF grids rendered live and opened, a 7/7
+adversarial pass with the library cross-reference, and a runtime ledger.
+
+### THE BASELINE DIFF (the pin's first demand — re-measured, posted)
+| metric | pin | measured |
+|---|---|---|
+| repo path | PLUTUS_Vision | **PLUTUS_VISION** (pin case wrong) |
+| git HEAD | 4d993b7 | **75fab5f** at start · **d7dc0ce** now |
+| plutus-vision-v0.pine | 605bff82d3539e9e | **identical — parity reference INTACT** |
+| workbench.bundle.js | 7ff93dcf5b2c9e77 | identical |
+| vision.mjs | ed34364a66033492 | **56e9a3eb1d83e43d** (the frame-swap fix) |
+| parity | SMC 195/195 · POOLS 25/25 · VOIDS 380/500 | **identical** |
+| "SWEEPS 258/258" | 258 | **258 MERGED-ONLY — the source FAILS standalone** |
+| library | 39 PNGs / 8 families | 39 PNGs / 10 dirs |
+| rigs | all live | :9741 200 · :9851 200 · :9222 200 · :9754 404 (no `/` route) |
+
+### THE 12 NAMED TESTS — ALL GREEN
+| wave | tests | result |
+|---|---|---|
+| W1 | test_cluster_merges_within_tol · test_source_select_is_total · test_cluster_rejects_beyond_tol | 4 pass / 0 fail / 46 expect |
+| W2 | test_zone_spans_full_width · test_colour_by_side | 2 pass / 0 fail / 45 expect |
+| W3/W4/W5 | test_d1_bundles_three_sources · test_d2_candle_levels_emit · test_d3_merges_best_with_smc | 3 pass / 0 fail / 40 expect |
+| W6 | test_panel_grid_complete · test_panel_rows_are_same_bars · test_ab_diff_is_measurable | 3 pass / 0 fail / 51 expect |
+
+### THE FOUR GRIDS — rendered live, opened by the agent
+| TF | grid | sha | D1 | D2 | D3 |
+|---|---|---|---|---|---|
+| 1H | panel-grid-1H.png | 07a4e3bc | 117b/36l | 0b/58l | 5b/79l/21L |
+| 30m | panel-grid-30m.png | 0491c90a | 145b/40l | 0b/66l | 5b/85l/19L |
+| 15m | panel-grid-15m.png | 5f4fcbb2 | 97b/30l | 0b/38l | 5b/57l/19L |
+| 4H | panel-grid-4H.png | a653c020 | 216b/50l | 0b/53l | 5b/80l/27L |
+
+Per-panel found/missing/wrong in reports/lqz_panel_judge.md. D2 is the closest to the
+library ladder; D3 is the richest (lines + bands + SMC text); D1 is the sparsest by
+design. **The biggest delta: the library's BANDS are far larger than any deliverable's —
+the emitter's band height is the lever, not the line count.**
+
+### THE THREE INSTRUMENT FAILURES THAT HAD TO BE FIXED BEFORE ANY NUMBER WAS TRUSTWORTHY
+1. **lqz_ab.py v1 matched the target hex per pixel** → read ZERO on the library reference
+   itself, the known-positive control. Cause: the library's bands are PASTEL (#B7DFB9,
+   #9CD6CD) while the target hex is the saturated end of the family. Rewritten to the
+   AUTHORITY's method (measure_ladder.py): saturation>45 AND brightness>55, band iff
+   >40% width span, hue per band.
+2. **The 50% run threshold** was calibrated above its own positive: the five library
+   frames' longest green runs measured 17% · 71% · 20% · 41% · 37%. Threshold set to 15%.
+3. **bun's default test timeout (5 s) is SHORTER than a station compile.** Every
+   station-touching test now carries an explicit 120 s budget.
+
+### THE STATION DIED SILENTLY
+`PINE_STATION_DOWN — TypeError: fetch failed` · pid gone · NO crash in /tmp/pv-station.log.
+The title assertion converted it into a NAMED failure; without it the symptom is "the
+panel is empty", the most misdiagnosable state in the system.
+Restart: pv-ide.sh's station line WITHOUT its `fuser -k` (that kills :9851, the page's own
+server). After the restart every panel landed on the FIRST run — the debounce race is a
+COLD-PAGE artefact (1/2/7 attempts cold, 1/1/1 warm).
+
+### THE WRONG-REPO NEAR-MISS
+A `cd $R && git add … && git commit` chain ran with a STALE shell cwd — the `cd` failed
+with an i/o error and the git commands silently executed in the ENCLOSING
+Shared_Workspace repo. **Verified: no damage** — the parent's HEAD is unchanged
+(df46f78, 0 staged) and PLUTUS_VISION remains untracked there.
+**The remedy now in use: `git -C <abs-path>` with a repo-identity gate (show-toplevel +
+remote + branch) printed before EVERY write.** Never a `cd`-chained git command.

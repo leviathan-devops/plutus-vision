@@ -69,3 +69,15 @@ D3 right-edge W/S clipping. Recorded against the GATE-3 shas above.
 - The full battery matrix (4 deliverables x 4 timeframes) was re-measured for D1 only after
   the suppression; D2/D3 were measured on 1H plus the earlier full matrix.
 - No container round was run this session; every verdict is display-live, not container-grade.
+
+<!-- LQZ-SHA-BLOCK -->
+## THE SHA BLOCK (all read-first docs carry this verbatim)
+| artifact | sha256[:16] |
+|---|---|
+| git HEAD | d7dc0ce |
+| D1 lqz-luxalgo.pine | b6dda2dae4416ec8 |
+| D2 lqz-plutus.pine | 946f4ca21b3ddc0a |
+| D3 plutus-vision-v1.pine | d41c6d9ccb1c5f8e |
+| render vision.mjs | 56e9a3eb1d83e43d |
+| parity reference plutus-vision-v0.pine | 605bff82d3539e9e |
+

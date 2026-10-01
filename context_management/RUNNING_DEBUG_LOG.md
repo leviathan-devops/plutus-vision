@@ -70,3 +70,58 @@ _Purpose: timestamped symptom → cause pairs; full entries in DEBUG_LOG.md._
 - root cause: the budget was set a single attempt above the observed worst case
 - fix: raised to 20
 - lesson: a retry budget that close to the observed maximum is a coin flip, not a guard
+
+## 2026-10-02 (later) — EN-22..EN-27
+
+**EN-22 · the A/B instrument read ZERO on its own control**
+- finding: lqz_ab.py v1 measured 0 bands on the library reference — the known positive
+- root cause: it matched the target hex (#3E8A46 / #7F3613) per pixel; the library's bands
+  are PASTEL (#B7DFB9, #9CD6CD). A hex-match cannot see a translucent band
+- fix: rewritten to the AUTHORITY's method — saturation>45 AND brightness>55, band iff
+  >40% width span, hue per band (scripts/measure_ladder.py is the authority, and an A/B
+  using a different method compares apples to oranges)
+- verification: library control 27 bands/22 green/IRREGULAR True; D2 panel 27/13/True
+- lesson: an instrument is validated on a KNOWN POSITIVE before its output is read
+
+**EN-23 · the run threshold calibrated above its own positive**
+- finding: a 50% width threshold read 0 on a frame that carries bands
+- root cause: the threshold was guessed; the controls' longest green runs are
+  17% · 71% · 20% · 41% · 37% of image width (full-screen captures, so the run is a
+  fraction of the IMAGE, which carries chrome the plot does not)
+- fix: 15%, below the observed minimum with margin
+- verification: all five controls read non-zero afterwards
+- lesson: a threshold must be derived from the control's distribution, never picked
+
+**EN-24 · bun's default 5 s test timeout is shorter than a station compile**
+- finding: all three ship tests timed out at exactly 5000 ms
+- root cause: bun's default; the AbortSignal cannot help because bun's timeout fires first
+- fix: an explicit 120 s budget per station-touching test
+- lesson: the test harness's own limits are part of the system
+
+**EN-25 · the station died silently**
+- finding: PINE_STATION_DOWN, pid gone, no crash logged
+- mechanism: every retry returned run.title === undefined, which does not contain the
+  expected title, so the fixed point burned all 20 attempts and reported a NAMED failure
+- fix: restart the station alone — NOT the launcher, whose opening `fuser -k` on
+  9741/9754/9851 would kill the page's own server
+- lesson: a silent death and an empty chart are identical from counts alone; the named
+  refusal is the only discriminator
+
+**EN-26 · the mutant that did not apply (THIRD occurrence today)**
+- findings: (1) A4's duplicate-panel mutant left D2's MARKER, so the marker guard refused
+  first; (2) D2's barcode mutant used String.replace with a STRING pattern, which
+  replaces only the FIRST occurrence; (3) the W6 same-bars mutant set a panel to "4H"
+  while the manifest ON DISK was from the 4H run — a no-op
+- root cause: each mutant was written against the guard's INTENT, not its PRECONDITIONS
+- fix: every mutant now ASSERTS IT APPLIED before its guard is tested
+- lesson: a must-fail mutant must REACH the guard it tests and must actually CHANGE the
+  state; read the refusal message to see WHICH guard fired
+
+**EN-27 · the wrong-repo git command**
+- finding: a `cd $R && git add && git commit` chain ran in the ENCLOSING repo
+- mechanism: the shell's persistent cwd was stale; `cd` failed with an i/o error and the
+  chain continued, so git operated on whatever repo the cwd was in
+- impact: NONE — verified (parent HEAD unchanged at df46f78, 0 staged)
+- fix: `git -C <abs-path>` for every git operation, plus a repo-identity gate
+  (show-toplevel + remote + branch) printed before every write
+- lesson: never chain git behind a `cd`; a failed `cd` does not stop the chain

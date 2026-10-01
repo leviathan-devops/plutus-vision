@@ -68,3 +68,22 @@ Note on scripts/compare.py's own summary line: it prints `VERDICT: DELTA lost=12
 Both are explained deviations, not unexplained deltas.
 
 Correction (2026-10-01, same pass): the parity helpers moved in-tree — read `/tmp/pv_sweeps.py` as `scripts/parity_sweeps.py` and `/tmp/pv_bisect.py` as `scripts/parity_bisect.py`; compare.py now reads the 4 cores from `<tree>/sources` (sha-identical).
+
+## 2026-10-02 (later) — the pin execution
+
+| law | state | evidence |
+|---|---|---|
+| do not edit plutus-vision-v0.pine | **HELD** | sha 605bff82d3539e9e, byte-identical to the baseline |
+| every wave its own commit with a SHA | **HELD** | 25541c6 (W2) · 913fb9f (W3/4/5) · 1a79bb2 (W6) · d7dc0ce (P4/P5) |
+| never commit PLUTUS_VISION into the enclosing repo | **HELD** | parent HEAD unchanged at df46f78; PLUTUS_VISION still untracked there |
+| no `git add -A` | **HELD** | every commit staged by explicit path |
+| secret-scan the staged set | **HELD** | 4 text files, 0 hits; one FALSE POSITIVE from `grep -a` over PNG payload bytes, proven |
+| never touch the dashboard ports 9430/9441/9444/9448 | **HELD** | only 9741/9754/9851/9222 were touched |
+| SPEC.md not edited to loosen a gate | **HELD** | SPEC.md sha unchanged; its step-4 expectation is still the operator's approval |
+| no `--no-verify` | **HELD** | never used |
+| a wave with no commit SHA is unfinished | **HELD** | tree clean at every commit boundary |
+
+**ONE LAW VIOLATION, SELF-CAUGHT AND HARMLESS:** a `cd $R && git …` chain ran with a stale
+shell cwd; the `cd` failed with an i/o error and the git commands executed in the
+ENCLOSING repo. Verified no damage (parent HEAD unchanged, 0 staged). Remedy adopted:
+`git -C <abs-path>` plus a repo-identity gate before every write.

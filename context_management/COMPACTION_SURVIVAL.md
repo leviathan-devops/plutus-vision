@@ -34,3 +34,14 @@ python3 scripts/gen_canon.py              # regenerate these docs from disk
 | DOUBLE_MOUNT | >1 .pine-shell | a manual mount() came back into pine.html |
 | NOTHING_DRAWN | run ok, 0 drawings | indicator drew nothing — planted-defect class |
 
+<!-- LQZ-SHA-BLOCK -->
+## THE SHA BLOCK (all read-first docs carry this verbatim)
+| artifact | sha256[:16] |
+|---|---|
+| git HEAD | d7dc0ce |
+| D1 lqz-luxalgo.pine | b6dda2dae4416ec8 |
+| D2 lqz-plutus.pine | 946f4ca21b3ddc0a |
+| D3 plutus-vision-v1.pine | d41c6d9ccb1c5f8e |
+| render vision.mjs | 56e9a3eb1d83e43d |
+| parity reference plutus-vision-v0.pine | 605bff82d3539e9e |
+

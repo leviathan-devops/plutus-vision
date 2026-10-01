@@ -113,3 +113,14 @@ _Purpose: the sha chain, the module inventory, the frozen list._
 - fixtures/bars/2026-07-06.json — byte-identical to PLUTUS/LIVE/agent/reference/fixtures/bars/2026-07-06.json
 - Checkpoints/v1-clean-baseline/ — sealed; changes go to the live tree + a new checkpoint
 
+<!-- LQZ-SHA-BLOCK -->
+## THE SHA BLOCK (all read-first docs carry this verbatim)
+| artifact | sha256[:16] |
+|---|---|
+| git HEAD | d7dc0ce |
+| D1 lqz-luxalgo.pine | b6dda2dae4416ec8 |
+| D2 lqz-plutus.pine | 946f4ca21b3ddc0a |
+| D3 plutus-vision-v1.pine | d41c6d9ccb1c5f8e |
+| render vision.mjs | 56e9a3eb1d83e43d |
+| parity reference plutus-vision-v0.pine | 605bff82d3539e9e |
+
