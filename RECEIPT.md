@@ -62,9 +62,55 @@ d7dc0ce feat(lqz): P4 runtime ledger + P5 library cross-reference — 7/7, zero 
 | P6 | canon + ship docs with the AUDIT GATE line | **GREEN** |
 | P7 | checkpoint, structure gate passed, ONE seal mode | **GREEN — 857/857** |
 | P8 | **the operator states IT IS APPROVED** | **AWAITING — ONLY THE OPERATOR** |
+| — | crash test (directive 12) | **GREEN — 15 inputs, zero confirmed defects** |
+| — | second-operator check | **GREEN — found a rig defect; manual written** |
+| — | band-height delta quantified | **GREEN — the lever named, the call is yours** |
+
+## 7b · THE THREE ITEMS CLOSED SINCE THE FIRST RECEIPT
+
+### THE BAND-HEIGHT DELTA — QUANTIFIED (reports/lqz_panel_judge.md)
+| set | n | mean | max |
+|---|---|---|---|
+| the library (5 frames) | 69 | **15.9 px** | **156 px** |
+| the grids (4 TFs) | 96 | **1.5 px** | 18 px |
+**RATIO 8.7x on the maxima.** The distribution is the finding: the library is BIMODAL — thin
+1-2 px lines PLUS large zones (16, 17, 44, 70, 107, 122, 150, 156 px). The deliverables carry
+the ladder and ALMOST NEVER the zones. **THE LEVER: `lqzFill3`, `lqzFillA` (10, very faint),
+`lqzLineTol` in `plutus-vision-lqz/lqz-render.pine`** — the fill code exists; it is gated to
+3+-source bands. The operator's call, not mine.
+
+### THE CRASH TEST — directive 12 (reports/lqz_crash_test.md)
+15 adversarial inputs against the live rig. **9 NAMED REFUSALS** (empty script · not-Pine ·
+truncated · unknown identifier · absent pair · absent timeframe · limit=1 · null script · no
+fields — the absent-cell errors even enumerate all 12 available cells). 4 adjudicated SIDE-A
+(probe errors, not defects): `limit=0` is DOCUMENTED as "keep the full history"; `limit=-5` is
+`slice(5)`, lenient and fabricating nothing; a 1 MB script compiles in 1.0 s.
+**CONCURRENCY: 6 simultaneous compiles complete ~19 s apart — the station SERIALIZES.** Two
+exceeded MY 90 s client timeout: 6x16 s arithmetic, not a rig failure. **The rig was ALIVE at
+the end** (`post-crash baseline → 200`). ZERO confirmed defects.
+
+### THE SECOND-OPERATOR CHECK — and it found a rig defect (reports/lqz_second_operator.md)
+A zero-context subagent given ONLY two docs, 6m32s. **IT FOUND: the station can be HALF-ALIVE —
+`GET /` and `GET /health` HANG (http_code=000) while `/catalog`, `/cells`, `/bars` answer 200
+and `POST /run` compiles normally; the VIL rail reads it as `PINE_STATION_DOWN`; ~20 min later
+the same probes return 200 in <1 ms.** And the launcher's own predicate is
+`up http://127.0.0.1:9741/ || STATION_DOWN` — **the lying route.** A rig can be declared dead
+while it works. That also explains my own OP-9 "silent death": the station did not die, it went
+partially deaf on the route my checks use.
+**IT INDEPENDENTLY REPRODUCED MY LEDGER DIGIT FOR DIGIT:** sha `b6dda2dae4416ec8`; the D1 1H
+panel `{title: LQZ LuxAlgo, tries: 1, cleared: 153, boxes: 117, lines: 36}` — exactly op-1.
+**IT CAUGHT ITS OWN STALE FRAME** while the page was wedged, unprompted.
+**DOC GAPS (4), highest-value fix applied:** the operating manual is now written verbatim into
+reports/lqz_runtime_forensic.md (the rig check, the compile API, the capture, the two traps,
+the serialization budget, the full refusal table).
 
 ## 8 · THE HONEST REMAINDER
 - **P8 is open.** The four grids are on disk and read; no agent action substitutes for the approval.
 - The band-height delta is unadjudicated (the library's bands are far larger than any deliverable's).
-- No container round; no rig crash test beyond `limit=1`; the second-operator check is not run.
+- **Crash test DONE** (15 inputs, zero defects) and **the second-operator check DONE** — it found
+  a rig defect the author missed and the operating manual now closes its doc gap.
+- **No container round.** Every verdict is host-live, not container-grade.
+- **THE RIG DEFECT CARRIED:** the station's half-alive state + the launcher's health predicate
+  reading the lying route. Recorded with the mechanism; NOT fixed (it is the launcher's code,
+  and fixing it was outside this session's scope).
 - The seal needed FIVE rounds to count correctly; every round was caught by its own count check.
