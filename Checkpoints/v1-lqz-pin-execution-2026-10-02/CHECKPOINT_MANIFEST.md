@@ -19,7 +19,10 @@ no-lock (the tree is fully committed; reproducible from git at the SHA below —
 | fixture 2026-07-06.json | `0c8f7d7aa3171af8` |
 
 ## THE COUNTS (verified against git, not asserted)
-- tracked files: **1769**  → sealed in `tree/`: **885**  **MISMATCH — investigate**  (counted as files + symlinks — git tracks 10 symlinks and `find -type f` skips them)
+- tracked files: **857**  → sealed in `tree/`: **0**  **MISMATCH — investigate**
+  (both counts EXCLUDE the seal itself — the checkpoint lives inside the repo, so a naive
+   `git ls-files` counts the seal's own contents; and the count includes symlinks, which
+   `find -type f` skips and git tracks 10 of)
 - context_management: **12** docs
 - ship docs: **5** entries (absences recorded as `.ABSENT` files, never omitted)
 - source `.pine`: 5 · scripts: 81
@@ -70,6 +73,11 @@ was wrong, not the seal. Counted as `-type f -o -type l`: **885/885 MATCH**.
 
 THREE rounds on one count, and every round was found by the SAME comparison — a delivered
 count against a source count. The gate never once let a wrong number pass as success.
+
+ROUND 4: the count then read 1769 vs 885 — because the SEAL IS INSIDE THE REPO, so
+`git ls-files` counts the seal's own contents and the number doubles. The comparison had
+to EXCLUDE the seal from its own source count. Four rounds, one comparison, zero false
+greens.
 
 
 **THE LESSON, and it is the session's recurring one:** the check that compares a
