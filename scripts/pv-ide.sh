@@ -34,7 +34,22 @@ up() { for i in $(seq 1 40); do curl -s -m 1 -o /dev/null "$1" && return 0; slee
 # station :9741 (PineTS) on this tree's fixture
 env -C "$W/pine-ide/pine-station" PINE_STATION_PORT=9741 PINE_STATION_HOST=127.0.0.1 \
   PLUTUS_BARS_FIXTURE="$FIX" PLUTUS_LIVE_ROOT="$W" setsid -f node server.mjs > /tmp/pv-station.log 2>&1 < /dev/null
-up http://127.0.0.1:9741/ || { echo "STATION_DOWN: /tmp/pv-station.log"; exit 1; }
+# THE STATION CHECK PROBES THE WORK ROUTE, NOT THE LIVENESS ROUTE.
+# MEASURED (reports/lqz_second_operator.md): GET / and GET /health on :9741 can HANG —
+# http_code=000, curl exit 28, the FULL client timeout — while /catalog, /cells, /bars
+# answer 200 and POST /run compiles normally. The VIL rail reads the hung route and
+# reports PINE_STATION_DOWN, so a working station is declared dead by every checker that
+# pings `/`. A launch is a COMPILE: probe the compile.
+station_up() {
+  for i in $(seq 1 40); do
+    R=$(curl -s -m 3 -X POST http://127.0.0.1:9741/run -H 'Content-Type: application/json' \
+        -d '{"script":"//@version=6\nindicator(\"probe\")\nplot(close)","pair":"EUR/USD","timeframe":"1H","limit":300}' 2>/dev/null)
+    case "$R" in *'"success":true'*) return 0 ;; esac
+    sleep 0.25
+  done
+  return 1
+}
+station_up || { echo "STATION_DOWN: /tmp/pv-station.log (probed POST /run — GET / can hang on a WORKING station)"; exit 1; }
 # VIL rail :9754 -> station; ledger + evidence inside the tree
 mkdir -p "$W/vil" "$W/evidence"
 env PLUTUS_VIL_PORT=9754 PLUTUS_STATION_URL=http://127.0.0.1:9741 PLUTUS_VIL_DIR="$W/vil" PLUTUS_VIL_EVIDENCE="$W/evidence" \
