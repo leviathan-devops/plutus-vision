@@ -622,3 +622,60 @@ project exists to refuse. **WITHDRAWN pending a look at each variant.**
 **Every `lqzSource` variant must be LOOKED AT before any recommendation.** The count is not the
 evidence; the frame is. Until then, `lqzSource` stays the operator's call **on visual grounds
 that have not yet been gathered.**
+
+---
+
+# THE INVISIBLE LADDER — ROOT CAUSE FOUND, AND THE FIX WORKS FOR D2
+
+## THE ROOT CAUSE, MEASURED
+A controlled A/B at the station (same 325/400 bars the IDE uses), counting FULL-WIDTH lines
+and how many carry a colour:
+
+```
+variant   TF   bars  lines  LADDER  COLOURED   colours
+luxalgo   15m   325    30       5        0    ['None']            ← ZERO coloured
+luxalgo   1H    400    36      22        0    ['None']            ← ZERO coloured
+both      15m   325    33       8        3    ['#7F3613','None']  ← 3 coloured
+both      1H    400    42      28        6    ['#7F3613','None']  ← 6 coloured
+```
+
+**`_col = _sd == 1 ? lqzColorS : lqzColorB` — when `_sd` is NA the ternary yields NA, and an NA
+colour falls through to `vision.mjs:133`'s BRASS default.** So a ladder line with no valid side
+renders as a **faint brass dot at 1px** — which is exactly what the frames have been showing.
+**This is the same class as the grey/gold box defect: an NA reaching a renderer fallback.**
+
+**IT ALSO EXPLAINS THE `both` RESULT WITHOUT CONTRADICTION.** `both` is not "denser because it
+emits more lines"; it is **denser because 3 of its 8 (and 6 of its 28) lines carry a VALID side
+and are therefore VISIBLE.** The count was never the measure — the COLOURED count is.
+
+## THE FIX — the NA guard, applied in the emitter's source
+```pine
+_col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)
+```
+A zone whose side is unknown is still a zone and must be VISIBLE.
+
+## THE VERIFICATION — and it splits the three deliverables
+| deliverable | TF | LADDER | COLOURED | colours |
+|---|---|---|---|---|
+| **D2 lqz-plutus** | 15m | 38 | **38 (100 %)** | `#3E8A46`, `#7F3613` |
+| **D2 lqz-plutus** | 1H | 58 | **58 (100 %)** | `#3E8A46`, `#7F3613` |
+| D1 lqz-luxalgo | 15m | 5 | **0** | `['None']` |
+| D1 lqz-luxalgo | 1H | 22 | **0** | `['None']` |
+
+**D2 WENT FROM 0 → 100 % COLOURED.** The guard works, and D2's ladder is now fully coloured
+where before it fell through to brass.
+
+## D1 REMAINS AT ZERO — the open question, stated precisely
+D1 carries the SAME guard (verified in the file at `lqz-luxalgo.pine:889`), its render block is
+**near-identical to D2's (a 5-line diff, all comments)**, and its colours ARE valid inputs
+(`lqzColorB = input.color(#3E8A46, …)`, `lqzColorS = input.color(#7F3613, …)` at lines 852-853).
+**Yet its ladder lines still carry `None`.** So `lqzColorB` itself must be resolving to NA at
+runtime in D1 — or D1's ladder lines are drawn by a path other than `f_lqzRender()`. **That is
+the next measurement, and it is named rather than guessed.**
+
+## THE HONEST POSITION
+- **The mechanism is established and the fix is PROVEN on D2.**
+- **D1's identical-looking path does not respond** — one deliverable's fix does not transfer,
+  and claiming it did would be the same error this session has already made twice.
+- **No recommendation is made for `lqzSource`** — the COLOURED count now supersedes the raw
+  count, and D1 needs its own investigation before any value is recommended for it.
