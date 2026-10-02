@@ -1157,12 +1157,35 @@ if barstate.islast
 // thickness or fill — the instrument was blind to the defect it was meant to catch.
 // THE LIBRARY EMITS ZONES. WE WERE EMITTING LINES. That is the whole difference.
 //
-// The LuxAlgo three each drew their OWN primitive (box / dotted line / 13-slice
-// stack), so three different render styles collided at one level. This emitter is
-// the ONLY place a liquidity level becomes a pixel — that is the defect removed.
-
-lqzColorB = input.color(#3E9B8F, "Demand zone (below price)", group = "LQZ render")
-lqzColorS = input.color(#B84A4A, "Supply zone (above price)", group = "LQZ render")
+// ── THE THREE-CLASS PALETTE (operator order, 2026-10-02) ──────────────────────
+//   LIQUIDITY = GREEN (always, every band, no exception)
+//   SUPPLY    = RED    (LuxAlgo SMC origin order blocks ONLY)
+//   DEMAND    = BLUE   (LuxAlgo SMC origin order blocks ONLY)
+//
+// WHAT WAS WRONG HERE, and it was mine. The previous contract read
+//   "1 = BUY_SIDE (liquidity ABOVE price -> supply -> red)"
+//   "0 = SELL_SIDE (liquidity BELOW price -> demand -> green)"
+// and the render did `_col = _sd == 1 ? lqzColorS : lqzColorB`. That made EVERY
+// liquidity band red or teal AS IF IT WERE a supply or demand zone — a
+// supply/demand claim the liquidity detector never made and the canon never
+// supports. Measured on the rig: 17 of 27 LQZ bands painted red, which the
+// operator read as "some of the liquidity is incorrectly marked red as if it's
+// a supply zone."
+//
+// THE CANON IS EXPLICIT (Forex SMC Notes, the Liquidity section):
+//   "Liquidity = orders + stop losses"
+//   "Liquidity zones are resting pools of orders that are sitting"
+//   "Liquidity exists in the opposite direction of the trend PRIOR TO the sweep"
+// Buy-side liquidity (above price) and sell-side liquidity (below price) are the
+// SAME CLASS. Both are resting stop orders. Both are swept the same way. Neither
+// is a supply or a demand zone — a supply/demand zone is an INSTITUTIONAL ORDER
+// BLOCK, which is a different object entirely (see the S/D note below).
+//
+// THE SIDE IS RETAINED ONLY AS POSITIONAL DATA (buy-side vs sell-side liquidity,
+// which the canon does distinguish for sweep analysis) — it NEVER selects a colour.
+// Colour is a function of CLASS, and liquidity has exactly one colour.
+lqzColorLq  = input.color(#2E8B57, "Liquidity zone (ALL liquidity is this colour)", group = "LQZ render")
+lqzEdgeLq   = input.color(#3FA46A, "Liquidity edge", group = "LQZ render")
 lqzLineW   = input.int(2, "Edge width (px)", minval = 1, maxval = 4, group = "LQZ render")
 lqzLineTol = input.float(0.0, "Rails draw separately above (x ATR)", minval = 0.0, maxval = 2.0, step = 0.05, group = "LQZ render")
 lqzFillZone = input.bool(true, "Fill every zone (THE library look)", group = "LQZ render")
@@ -1200,12 +1223,14 @@ f_lqzRender() =>
             _hi = array.get(lqzZTop, i)
             _cf = array.get(lqzZConf, i)
             _mid = (_hi + _lo) / 2
-            _col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)
-            // ^ THE NA GUARD. Measured: ALL ladder lines carried colours ['None'] in the
-            //   payload, which means _sd was NA and the ternary yielded NA -- and an NA colour
-            //   falls through to vision.mjs's BRASS default, rendering the ladder as faint
-            //   brass dots at 1px. Same class as the box FILL bug: an NA reaching a renderer
-            //   fallback. A zone whose side is unknown is still a zone and must be visible.
+            // EVERY LIQUIDITY BAND IS GREEN. There is no ternary here, deliberately.
+            // The previous line was `_col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)`
+            // which painted buy-side liquidity RED — a supply/demand claim the detector never
+            // made. `_sd` (buy-side vs sell-side) is POSITIONAL DATA used by E2 for sweep
+            // analysis; it does not select a colour. A zone's colour is a function of its
+            // CLASS, and every zone this emitter produces is liquidity.
+            _col = lqzColorLq
+            _edge = lqzEdgeLq
             _lx = math.max(0, bar_index - lqzLeftB)
             _rx = bar_index + lqzRightB
             _span = _hi - _lo
@@ -1227,7 +1252,7 @@ f_lqzRender() =>
             // THE EDGE: one crisp rail on the FAR side of the zone (the side price meets
             // first). The library draws a single strong edge per band, not a triple-rail
             // cage — the dashed centre line was our invention, not theirs.
-            line.new(_lx, _hi, _rx, _hi, color = _col, width = lqzLineW)
+            line.new(_lx, _hi, _rx, _hi, color = _edge, width = lqzLineW)
             // A dense zone (3+ agreeing sources) gets an INSIDE rail so stacked density
             // stays legible, but only where the band is tall enough to hold one.
             if _cf >= 3 and _span > lqzLineTol * 2

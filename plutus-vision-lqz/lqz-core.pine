@@ -6,8 +6,20 @@
 //     lqzZLevel[]   zone midpoint price
 //     lqzZTop[]     zone upper bound
 //     lqzZBottom[]  zone lower bound
-//     lqzZSide[]    1 = BUY_SIDE  (liquidity ABOVE price -> supply -> red)
-//                   0 = SELL_SIDE (liquidity BELOW price -> demand -> green)
+//     lqzZSide[]    POSITIONAL DATA ONLY — 1 = buy-side liquidity (pool ABOVE price)
+//                   0 = sell-side liquidity (pool BELOW price). NOT A COLOUR, NOT A
+//                   SUPPLY/DEMAND CLASS. Buy-side and sell-side liquidity are the SAME
+//                   CLASS — both are resting stop orders and BOTH RENDER GREEN.
+//                   CANON: "Liquidity = orders + stop losses" · "Liquidity zones are
+//                   resting pools of orders" · "Liquidity exists in the opposite
+//                   direction of the trend PRIOR TO the liquidity sweep."
+//                   A SUPPLY/DEMAND zone is a DIFFERENT object — the LuxAlgo SMC ORIGIN
+//                   ORDER BLOCK: "Identify the candle before the strong move · Draw a box
+//                   around the wicks of that previous candle." Drawn by the SMC section,
+//                   never here. THIS EMITTER IS LIQUIDITY ONLY.
+//                   [CORRECTED 2026-10-02 — the prior header read "1 = BUY_SIDE
+//                   (liquidity ABOVE price -> supply -> red)". That sentence is WHY
+//                   17 of 27 bands painted red. It was wrong, and it was mine.]
 //     lqzZMask[]    bitmask of confirming detectors: 1=L1 luxalgo pools
 //                   2=L2 luxalgo sweeps · 4=L4 luxalgo voids · 8=L8 V2 candles
 //     lqzZConf[]    distinct source count confirming this zone
