@@ -1000,3 +1000,50 @@ left one instance windowless. Fixed: all 13 chrome processes killed by PID, prof
 **one** chrome relit with `DISPLAY=:3` → window `4194307` on :3 → D3 loaded and asserted on
 `sourceSha 82da437af969`. **The law this taught: one chrome per profile, and the launcher's
 kill-then-start order is load-bearing.**
+
+
+---
+
+# THE MID-RENDER TF SWITCH — the last unrun H4 drill, executed (2026-10-02)
+
+**The pin's H4: *"push it: switch TF mid-render · apply an input · toggle lqzSource · starve the
+bars."* Three were run in earlier rounds; this is the fourth.**
+
+## THE DRILL, WITH ITS PRE-REGISTERED EXPECTATION
+
+**Fire a run; 120 ms later — while it is in flight — switch the timeframe.** Acceptable
+outcomes: the shell's guard discards the in-flight run (`WORKSPACE_SWITCHED`), or the run
+completes cleanly on its own TF and the switch re-renders. **Unacceptable: a crash, a silent
+mixed state, or a hang.**
+
+## THE OUTCOME — clean handling, double-read
+
+**The instrument (CDP):**
+```
+run: ok=true · title "Plutus Vision v1" · tf 1H · srcSha 82da437af969   (completed on its own bars)
+foot (polled): "COMPILED 463ms · 5 boxes · 80 lines · 27 labels"
+running: false
+```
+
+**The second reader (the :3 frame, opened):** the timeframe row reads **`4h`** selected, the
+chart shows the **4H window (Jun 4 – Jul 2, `bars 451`)**, and the footer reads
+**`COMPILED 463ms · 0 plots · 5 boxes · 80 lines · 27 labels · bars 451`** — **every number
+identical to the CDP read.** Status line: `FIXTURE · EUR/USD · 4H · 451 bars · rail :9754 ·
+station UP`.
+
+**Verdict: PASS.** The in-flight run finished on 1H; the switch landed; the chart re-rendered on
+4H with a fresh compile; no crash, no mixed state, no hang. **STATE/UI AGREEMENT confirmed as a
+side-effect: the footer's numbers, the status line's bar count, and the run payload all agree.**
+
+## THE H4 LEDGER, COMPLETE
+
+| drill | round | outcome |
+|---|---|---|
+| switch TF mid-render | THIS round | **PASS** — clean completion + re-render, double-read |
+| apply an input | earlier | **PASS** — `lqzLabel` true→false → labels 2→0, the pre-registered expectation met |
+| toggle lqzSource | earlier | **PASS** — `luxalgo` 117/36/0/FAIL vs `both` 117/42/2/PASS |
+| starve the bars | earlier | **PASS** — no fallback band (D1/D2 zero; D3 zero boxes) |
+
+**And the three operator controls, live with real mouse input (previous round): RUN · CAPTURE ·
+GATE — each probed for size + hit-testability, clicked via `Input.dispatchMouseEvent`, outcome
+asserted from the artifact, frame opened by eye.**
