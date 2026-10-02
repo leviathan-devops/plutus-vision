@@ -194,3 +194,21 @@ it may not inherit its dependency's latency.
 the retry loop broke on the previous file's compile and reported its counts. **Fix:** assert
 `sourceSha`. **Lesson:** when two artifacts can share a display name, the per-file identity is
 the only assertion that bites.
+
+## D-XXII 2026-10-02 · the guard necessary-but-not-sufficient; the suite red for the adversary's reason
+
+**1 · The A4 mutant beat the frame guard.** Two panels from one deliverable passed as
+`PANEL_GRID_OK` — the viewport auto-fits per run, so the bytes differ while the grid shows one
+indicator twice. **Adjudicated both ways; Side B real. Fix:** a source-distinctness guard
+(sha256 per deliverable). **Lesson:** assert the property the contract needs — a comparison of
+four sources — not the proxy that usually correlates with it.
+
+**2 · The suite red for the adversary's reason.** `test_panel_rows_are_same_bars` validates the
+manifest the grid produced; the A4 mutant's manifest was the last write to the shared TMP. **The
+test was right; the pollution was the defect.** Fix: `LQZ_PANEL_TMP`.
+
+**3 · A test red since the NA guard.** `test_colour_by_side` pinned the pre-guard line;
+22/24 across 8 files, unnoticed. Now pins the guarded line.
+
+**4 · The run-form trap.** `bun test scripts/` = a FILTER (24 across 8, reaching the sealed
+copies). `bun test ./scripts/` = the PATH (12 across 4). Recorded as the canonical run.

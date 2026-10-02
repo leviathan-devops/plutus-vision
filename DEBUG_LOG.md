@@ -1162,3 +1162,58 @@ display name, the per-file identity is the only assertion that bites.**
 > impression, established that no text had been drawn.
 > And the second: **a liveness route may report its own state; it may not inherit its
 > dependency's latency.**
+
+
+---
+
+# D-XXII · THE GUARD THAT WAS NECESSARY BUT NOT SUFFICIENT — and the suite that was red for the adversary's reason
+
+**Date:** 2026-10-02 · **Surfaces:** `scripts/lqz-panel.mjs` · `scripts/lqz_w6.test.ts` ·
+`scripts/lqz_render.test.ts` · `scripts/lqz_adversarial.py` · **Commits:** `f496f9a`, `bccd247`,
+`36373c3`
+
+## THE FINDING — the A4 mutant proved the frame guard defeats itself
+
+The grid's identical-panel guard refused byte-identical frames — the defect that shipped once
+("three captures, one frame"). A4 planted **two panels from the same deliverable** and the grid
+returned **`PANEL_GRID_OK`, exit 0**.
+
+**Adjudicated both ways first.** *Side A:* the mutant assumes identical sources produce identical
+frames — but the chart's viewport **auto-fits per run**, so frames legitimately differ.
+*Side B:* **the guard's own purpose — "the grid is a lie" — passes undetected when two panels
+render one deliverable with distinct bytes.** A grid reading *[D1-luxalgo | D2-luxalgo]* shows one
+indicator twice and the operator reads it as a comparison. **Real.**
+
+**THE FIX: guard the SOURCES, not only the bytes.** The sha256 of each panel's deliverable must
+be distinct; two panels with one source exit 1. The real grid now prints both lines:
+
+```
+panels distinct:  D1=48bea185626c D2=e30c133199a0 D3=7e3cac8e79ff
+sources distinct: D1=db06b6057412 D2=68881deaca0c D3=82da437af969
+```
+
+## THE SECOND FINDING — the suite was red for the adversary's reason
+
+`test_panel_rows_are_same_bars` went RED after any adversarial run: it correctly validates
+**the manifest the grid produced**, and the A4 mutant's manifest (two panels, one source) was the
+last thing written to the shared `/tmp/lqz-panel`. **The test was right; the pollution was the
+defect.** `lqz-panel.mjs` now honours `LQZ_PANEL_TMP`; the mutants run under their own.
+
+## THE THIRD FINDING — a test red since the NA guard, unnoticed
+
+`test_colour_by_side` pinned the PRE-GUARD line and had been failing since the guard landed
+(the suite ran 22/24 across 8 files, the failure doubled in the sealed copies). It now pins the
+guarded line — **a regression guard for the guard itself.**
+
+## THE RUN-FORM TRAP, re-measured
+
+`bun test scripts/` is a **FILTER**, not a path: it ran **24 tests across 8 files** because the
+walk reaches the **sealed checkpoint's** copies of the same tests. `bun test ./scripts/` is the
+**PATH** form: **the live four, 12 pass · 0 fail.** Canonical run recorded in TESTING_LOG.
+
+## THE LESSON
+
+> **A count is not a render** (D-XXI). **A frame match is not an identity match** (D-XXII). The
+> guard must assert the property the CONTRACT needs — a comparison of four sources — not the
+> proxy that usually correlates with it. And the corollary the adversary taught: **a suite whose
+> fixtures are shared with its adversary will report the adversary's state as the product's.**
