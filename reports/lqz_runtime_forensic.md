@@ -301,3 +301,47 @@ has not produced a new frame.
 **The fix in flight: settle with two `requestAnimationFrame` ticks plus a longer wait before
 capturing** — the same class as the earlier `run.title` debounce, one layer further down the
 pipeline (COMPOSE, not COMPILE).
+
+---
+
+# THE UNRESOLVED CONTRADICTION — the counts and the frame disagree (OPEN)
+
+## THE FACTS, EACH FROM A TOOL RESULT
+1. **THE OPERATOR'S OBSERVATION** (verbatim): *"this grey and gold empty shell indicator
+   whatever this is also needs optimization."* The 15m frame is grey slabs, olive lines, **no
+   ladder, no labels, no indicator legend**.
+2. **THE LEDGER RECORDS**: D1 @ 15m = `boxes 97 · lines 30 · labels 0 · bars 325`, `reader FAIL`.
+3. **THE FRAME SHOWS**: large grey slabs, four faint dotted marks, **no 30 lines, no legend**.
+4. **THE SUPPRESSION IS VERIFIED COMPLETE**: all 24 `box.new` calls in `lqz-luxalgo.pine`
+   account for their colour args (6 use positional `na` for `border_color` + a suppressed
+   `bgcolor`); all six `swp_` constants are `color(na)` (`lqz-luxalgo.pine:36-44`);
+   `swp_break_box` (`lqz-luxalgo.pine:93`) has zero callers.
+5. **THE FILL HYPOTHESIS IS REFUTED**: `lqz-luxalgo-nofill.pine` (`lqzFill3 = false`,
+   `lqzFillA = 0`) was built, SERVED (`fetchHasFalse: true`), HELD by the editor
+   (`editorHoldsFalse: true`), compiled as D1 (`title: LQZ LuxAlgo`, `tries: 1`), and produced
+   **the byte-identical frame** `7fbe8be137f79b35` after a 6 s + 2×`requestAnimationFrame`
+   settle. **Turning the fills off changed nothing.**
+
+## THEREFORE
+**The engine reports 97 boxes and 30 lines; the chart shows neither.** The visible slabs are
+grey with olive lines — Pine's / Vela's DEFAULT box styling — so *something* paints boxes
+without a colour, and the 30 lines do not reach the screen at all.
+
+**These two facts cannot both be true of a correct render.** The gap between the ledger's
+counts and the frame's pixels IS the defect the operator's sentence identified — and it is
+bigger than "the fills are too strong".
+
+## THE EXPERIMENTS THAT WOULD SETTLE IT (named, not guessed)
+1. **A HARD CHART RE-MOUNT** before the capture. The evidence favours a stale composited
+   frame: `P.capture()` returned the same sha across runs whose counts differed, and the frame
+   carries no indicator legend at all — a Vela chart with a drawn study shows its legend.
+2. **READ THE RUN'S OWN `drawings` PAYLOAD** — `P.run()` returns `run.drawings.{boxes,lines,…}`
+   with their colours. Comparing THAT against the screen splits "the engine did not emit" from
+   "the chart did not paint", which no count can.
+3. **`P.state().frames` / `drawings`** — the shell keeps a frames counter and a drawings
+   registry; a mismatch between them and the canvas is the stale-composite signature.
+
+## THE HONEST STATUS
+**OPEN. Not a rendering-preference question and not a calibration question** — a
+counts-vs-pixels contradiction. The operator's "empty shell" is the correct description of the
+symptom; the mechanism is one layer below where I first placed it.
