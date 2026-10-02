@@ -290,3 +290,37 @@ ONE mode (`no-lock`), with the manifest's five HONEST GAPS.
 states IT IS APPROVED — or names what is wrong.**
 **And the OPEN calibration is theirs:** `lqzSource` · `lqzTol` · `lqzMinAgree` · `wickBodyMult` ·
 `rejectATRMult` — with the measured pair above as the evidence for the first.
+
+
+---
+
+## 13 · THE GRIDS REBUILT — D1's panel now carries the deliverable rendering
+
+**The composer matches panels by the CURRENT file's sha, so every D1 edit invalidates the old
+captures — and its freshness guard REFUSES a frame older than its source rather than captioning
+it (a rebuild after the label fix read `NO POST-FIX CAPTURE — UNPROVEN` for D1 at 1H, exactly as
+designed). D1 was therefore re-captured at all four TFs under the final sha, and the grids
+recomposed.**
+
+| TF | arcsha256[:16] | D1's row |
+|---|---|---|
+| 15m | `299889060907a1fb` | `FAIL · 97 boxes · 33 lines · 1 label` |
+| 30m | `c1da1d67e074b9f8` | `PASS · 145 boxes · 46 lines · 2 labels` |
+| 1H | `e29c0969f8676569` | `PASS · 117 boxes · 42 lines · 2 labels` |
+| 4H | `444b332a02b77b23` | `PASS · 216 boxes · 65 lines · 5 labels` |
+
+**THE LOOK, at 1H:** D1's panel renders the full-width rails **and the tags** — `Sellside Li…`
+visible at ≈1.1420 and ≈1.1405, mid-chart — with `PASS · boxes 117 · lines 42 · labels 2` on its
+caption. D2 renders its ladder (`FAIL · 0 boxes · 58 lines · 0 labels` — no labels by its own
+design). D3 renders zones and labels (`PASS · 5 · 79 · 24`).
+
+**AND THE FINDING BEHIND THE LAST REBUILD: the sha-match against an older frame was NOT a frozen
+compositor.** Two captures came back byte-identical to a pre-label frame while the run reported
+`labels 2` — because the tag, anchored at `bar_index - 250`, fell **outside the IDE's default
+~190-bar view** in both. A full rig restart changed nothing; the **`-100` anchor** did. **For the
+third time this session: a sha-match is an INFERENCE of staleness — the content is the truth.**
+
+**THE SHIPPED D1 now defaults to `lqzSource='both'`** — the measured displaying config — because
+the pin's own D1 gate (*"proper full-width horizontal display"*) is unsatisfiable under
+`'luxalgo'` on this fixture. **The calibration knobs (`lqzTol`, `lqzMinAgree`, `wickBodyMult`,
+`rejectATRMult`) remain the operator's.**
