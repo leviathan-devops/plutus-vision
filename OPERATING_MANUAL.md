@@ -45,6 +45,20 @@ curl -s -m 90 -X POST http://127.0.0.1:9741/run \
 **ASSERT THE TITLE.** It is the compiled script's OWN identity — the only deterministic
 per-panel check in the system.
 
+**THE EXPECTED TITLES — the table this manual lacked** (a zero-context operator following a stale
+string declared a good compile FAILED; that happened):
+| deliverable | the title its `indicator()` declares |
+|---|---|
+| `lqz-luxalgo.pine` | **`LQZ LuxAlgo`** |
+| `lqz-plutus.pine` | **`LQZ Plutus — operator candle liquidity`** |
+| `plutus-vision-v1.pine` | **`Plutus Vision v1`** |
+| `plutus-vision-v0.pine` | (the parity reference — never edited) |
+
+**IF A TITLE MISMATCHES, REGENERATE — do not update the consumer.** `scripts/lqz_assemble.py`
+defaults `--title "LQZ"`; regenerating without the flag silently drops the descriptive title,
+which then breaks `scripts/lqz-panel.mjs` (its `expect`) and `scripts/lqz_ship.test.ts:103` at
+once. **Measured, this session:** exactly that happened, and a second operator found it.
+
 **THE REFUSALS, so a reader knows what normal looks like:**
 | input | response |
 |---|---|
@@ -59,11 +73,18 @@ per-panel check in the system.
 ### 1.3 THE CAPTURE — through the IDE
 
 ```bash
-# the grid (four panels from the ledger)
+# THE COMPOSED GRIDS (from the ledger) — writes reports/panel-grid-IDE-<TF>-2026-W29.png
 python3 scripts/lqz_panel_ide.py
+
+# THE OLDER GRID (live X11/CDP) — NOTE: it writes reports/panel-grid-<TF>.png IN THE REPO,
+# overwriting an artifact the RECEIPT cites by sha. Run it only when you intend to replace it.
+bun scripts/lqz-panel.mjs 1H
 
 # a single frame, the X11 path
 DISPLAY=:3 xdotool search --name "Pine IDE" | head -1     # resolve the window id (CHANGES on relaunch)
+# ⚠ TWO CHART WINDOWS EXIST ON :3. "Pine IDE" -> 14680067 is THIS project's IDE.
+#   A second window, "PLUTUS-CHART" (4194307), shows a DIFFERENT study (the trade desk).
+#   A hand-capture can grab the wrong one — always resolve by NAME, never by guessing.
 DISPLAY=:3 import -window <ID> -silent /tmp/look.png
 sha256sum /tmp/look.png | cut -c1-16
 # THEN OPEN IT. A capture nobody opened is not evidence.
@@ -154,7 +175,15 @@ takes the IDE window down and back up (~20 s).
 spaced, plus large translucent zone bands and (on D3) the SMC structure vocabulary — `CHoCH`,
 `BOS`, `EQH`, `EQL`, `BC`. **Candles must stay readable.**
 
-**MEASURED LADDERS (the station, the authoritative instrument):**
+**TWO INSTRUMENTS PRODUCE DIFFERENT COUNTS — know which one you are reading.**
+| instrument | window | what it reports |
+|---|---|---|
+| **the STATION** (`POST :9741/run`) | the `limit` you pass (1603 is the full fixture) | D1 `481 boxes / 182 lines`, D2 `112 lines`, D3 `205 lines / 97 labels` |
+| **the IDE's `lastVision`** | 400 bars by default | D1 `117 / 36`, D2 `58`, D3 `79 / 21` |
+**They are not comparable.** A count that "does not match" is usually a different window, not a
+failure. Always state the instrument and the bar count beside the number.
+
+**MEASURED LADDERS (the station, the authoritative instrument, 325/400 bars as the IDE uses):**
 | deliverable | 15m | 1H |
 |---|---|---|
 | D1 | 2 emitter lines, 0 coloured | 4, 0 |
