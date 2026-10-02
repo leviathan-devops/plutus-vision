@@ -201,3 +201,31 @@ tab-source assignment that did not take.
 A frozen compositor can write a NEW file containing an OLD frame — undetectable by sha or mtime.
 **BUT**: D2's 15m/30m/4H shas matched on the fresh rig, proving those frames were deterministic
 and CORRECT — the "suspected stale" call was a FALSE ALARM.
+
+## 2026-10-02 · the panel-judge segment — the look record, D1's dead knob, the rail's dead-station lie
+
+**Commits:** 4326990 (the look record) · facb519 + 1795231 (D1's label: the dead knob, then the
+anchor) · 469e1b2 (the rail) · 47afc58 (the debug log) · a16e746 + 1795231 (the ledger rows and
+the variant rebuilt).
+
+**DELIVERED.** `reports/lqz_panel_look_record.md` — all four grids opened (15m dcd2598f · 30m
+71320abb · 1H d461941e · 4H 8a3f62f2), every panel recorded as found/missing/wrong with
+coordinates. Bars re-measured: `IDENTICAL_BARS: true` (400 bars, 2026-06-11T15:00 →
+2026-07-06T06:00, three distinct sourceShas). The composer's freshness guard verified in source.
+
+**D1 — three defects found and fixed, each with its measurement.** The `lqzLabel` input was
+DECLARED AND NEVER CONSUMED (`grep -c label.new` = 0); the MECH_VETO at gate.mjs:157 was
+therefore unsatisfiable (`labels=0`, FAIL at every TF). Wiring the emission gave labels 2 but
+ZERO TEXT PIXELS — a pixel scan, not an eye, established that: the label was anchored
+`bar_index + 20`, i.e. 20 bars PAST the last bar and outside the frame. Re-anchored at
+`bar_index - round(lqzLeftB/2)`: measured `t=06-19T20:00, inside: true` for both.
+
+**THE RIG — the rail declared a working station dead.** The station's documented half-alive
+state (its `/health` hangs; `POST /run` compiles) made the rail's `/health` answer at 4.04 s;
+the page's gate client aborts at 2500 ms → `VIL_RAIL_DOWN` → every run failed while the compile
+route was fine. The launcher already knew this lesson; the rail never learned it. Fixed:
+timeout ≠ refusal (`PINE_STATION_SLOW`), probe budget 800 ms, `up` three-valued (true/null,
+never false for a timeout). Verified 4.04 s → 0.001–0.005 s.
+
+**THE ASSERTION LAW, re-learned:** the title assertion is insufficient when two files share a
+title — assert `sourceSha`. That mistake cost one measurement and is recorded.

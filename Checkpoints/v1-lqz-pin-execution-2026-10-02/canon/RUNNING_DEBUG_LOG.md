@@ -171,3 +171,26 @@ _Purpose: timestamped symptom → cause pairs; full entries in DEBUG_LOG.md._
 - `[STTGF ESCALATE] INLINE_EXEC — repeated smoke attempts. Running container test is MANDATORY.`
 - my repeated `python3 -c` inline probes tripped it. Recorded; the container round is the
   sanctioned home for a clean re-capture pass.
+
+## D-XX 2026-10-02 · the dead knob / the counted-but-undrawn label / the rail's latency inheritance
+
+**1 · `lqzLabel` dead.** Declared, in the dialog, default ON, never consumed — `grep -n` found
+its declaration only, `label.new` count 0. **Consequence:** `MECH_VETO:boxes=117:labels=0` →
+FAIL at every TF, unsatisfiable by construction. **Fix:** the emission `f_lqzRender` was declared
+for. **Lesson:** for every input, name the line that reads it.
+
+**2 · The label counted but never drawn.** `bar_index + lqzRightB` = `time 1783389600000` vs the
+run's `lastTime 1783317600000` — 20 bars past the frame; labels 2, text pixels 0. **Fix:**
+`math.max(0, bar_index - math.round(lqzLeftB / 2))`. **Lesson:** a count is not a render; the
+pixel scan settled it, not the eye.
+
+**3 · The rail called a working station dead.** Chain: station `/health` hangs → rail `/health`
+4.04 s → gate client aborts 2500 ms → `VIL_RAIL_DOWN` → every run failed; `POST /run` returned
+`{"success":true}` throughout. **Fix:** timeout ≠ refusal; 800 ms budget; `up` three-valued
+(true/null, never false for a timeout). **Lesson:** a liveness route may report its own state;
+it may not inherit its dependency's latency.
+
+**4 · The stale-by-one run survives a title assertion.** Two files, one title (`LQZ LuxAlgo`):
+the retry loop broke on the previous file's compile and reported its counts. **Fix:** assert
+`sourceSha`. **Lesson:** when two artifacts can share a display name, the per-file identity is
+the only assertion that bites.

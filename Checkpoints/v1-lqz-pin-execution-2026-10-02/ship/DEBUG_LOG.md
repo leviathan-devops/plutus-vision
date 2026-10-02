@@ -1012,3 +1012,153 @@ old gate had passed — including the operator-caught stacked-frames defect the 
 ### THE CLASS
 This is the project's Class A — the most expensive mistake in its history, and the reason the frame is now the
 primary instrument.
+
+---
+
+# D-XX · THE DEAD KNOB — `lqzLabel` was declared, documented, and never consumed
+
+**Date:** 2026-10-02 · **Surface:** `lqz-luxalgo.pine` (D1) · **Class:** a declared interface that
+does nothing · **Commit:** `facb519`
+
+### THE FINDING
+
+`lqzLabel = input.bool(true, "Label the band", group = "LQZ render")` sat in D1's input surface
+reading **ON by default**. The operator can see it, toggle it, and reasonably expect the zones to
+carry their tags. **It was never consumed.** Measured, before the fix:
+
+```
+grep -n  lqzLabel  lqz-luxalgo.pine   ->  1 line   (its own declaration)
+grep -c  label.new lqz-luxalgo.pine   ->  0        (the whole file had no label emission)
+```
+
+### THE CONSEQUENCE, traced to the line
+
+`gate.mjs:157`:
+
+```javascript
+if (verdict === 'PASS' && (zones === 0 || labels === 0)) {
+  deltas.push(`MECH_VETO:boxes=${zones}:labels=${labels}`);
+  return { readerVerdict: 'FAIL', ... };
+}
+```
+
+The veto reads a drawn-but-unlabelled chart as *"the Plutus vision indicator is not on this
+chart"*. Every D1 row in `vil/2026-W29.jsonl` at every timeframe therefore carried
+`MECH_VETO:boxes=117:labels=0` → **FAIL** — and it could never have done anything else, because
+`labels` was 0 by construction.
+
+**And the veto's premise is right about the target:** the library's own look IS labelled — the
+reference frame carries `30m LQ Sellside Liquidity` and `Liquidity Void` tags. **A zone without
+its tag is the defect, not a style choice.**
+
+### WHY IT SURVIVED
+
+1. **The input rendered in the settings dialog.** It looked like a working knob because it could
+   be toggled — nothing in the UI can report that a value is unread.
+2. **`labels: 0` was read as a property of the chart**, not of the code. The counts were
+   believable: D1 really did draw 117 boxes, so the run looked healthy.
+3. **The one instrument that would have caught it is a grep for the input's consumers** — and
+   the input *was* referenced… once, in its own declaration, which is exactly what a naive
+   "is it referenced" check counts.
+
+### THE FIX
+
+`f_lqzRender` now emits the label it was declared for, gated on `lqzLabel`:
+
+```pine
+if lqzLabel
+    label.new(bar_index + lqzRightB, _mid, _sd == 1 ? "Sellside Liquidity" : "Buyside Liquidity",
+              xloc = xloc.bar_index, style = label.style_label_left, size = size.tiny,
+              color = color(na), textcolor = _col)
+```
+
+`textcolor` carries the side colour; `color(na)` draws no plate — the library's bare tag-on-chart
+look. `max_labels_count` is 500 against `lqzMaxZones` 60.
+
+### THE VERIFICATION
+
+Both files asserted on **`sourceSha`**, not the title:
+
+```
+D1 luxalgo (default)   srcSha bca5fb5f178c   boxes 117 · lines 36 · labels 0
+D1 both   (variant)    srcSha e9a1d25e05fa   boxes 117 · lines 42 · labels 2
+```
+
+**The default still reads 0 — honestly.** Under `lqzSource='luxalgo'` the 2-distinct-source rule
+admits no zones, so there is nothing to label. **The operator's `lqzSource` calibration now has a
+measured pair: `luxalgo` → 0 labelled zones · `both` → 2.**
+
+### THE LESSON
+
+> **A declared input is a promise. A dead knob is worse than an absent one** — absence tells the
+> operator the feature does not exist; a knob invites them to turn it and blame themselves when
+> nothing moves.
+> The test for the class: *for every input, name the line that reads it.* An input whose only
+> reference is its own declaration is the defect.
+
+### THE SECOND FINDING — the title assertion is insufficient when two files share a title
+
+The first attempt to test the fix asserted the **run title** (`'LQZ LuxAlgo'`). Both the shipped
+D1 and the `-both` variant carry that title, so the retry loop broke on the **stale-by-one
+compile** — the engine's debounced flush still held the *previous* file — and the measurement
+reported the old file's counts under the new file's name. **Caught by reading `srcSha` in the
+returned payload.** The rule: **assert the per-file identity (`sourceSha`) whenever two artifacts
+can share a display name.**
+
+
+---
+
+# D-XXI · THE LABEL THAT WAS COUNTED BUT NEVER DRAWN — and the rail that called a working station dead
+
+**Date:** 2026-10-02 · **Surfaces:** `lqz-luxalgo.pine` (D1) · `vil-rail.mjs` · **Commits:** `facb519`, `1795231`, `469e1b2`
+
+### THE FINDING, in order of discovery
+
+1. **`lqzLabel` was a dead input** — declared, rendered in the settings dialog, default ON, and
+   never consumed. `grep -n lqzLabel` returned its own declaration; `grep -c label.new` returned
+   **0**. No label had ever been emitted by D1 at any timeframe.
+2. **`gate.mjs:157`'s MECH_VETO then read that as "the indicator is not on this chart"** —
+   `deltas ['MECH_VETO:boxes=117:labels=0']` → **FAIL at every TF**, unsatisfiable by construction.
+3. **Wiring the emission was not enough.** The first fix anchored the label at
+   `bar_index + lqzRightB` — measured `time 1783389600000` against the run's
+   `lastTime 1783317600000`: **20 bars past the last bar, outside the frame.** The label was
+   COUNTED (labels 2) and the frame carried **zero text pixels** — verified by a pixel scan
+   (text-like coloured ink: NONE). The library's tags ride the middle of their bands; the fix
+   anchors at `math.max(0, bar_index - math.round(lqzLeftB / 2))`.
+
+### THE THIRD DEFECT — the rail declared a working station dead
+
+While chasing (3), every `P.run()` began returning `VIL_RAIL_DOWN`. The chain, each link measured:
+
+```
+station /health (documented half-alive state)   4.0–20 s   (POST /run: {"success":true} the whole time)
+  -> rail /health probes it INLINE              4.04 s
+  -> page's gate client aborts at               2500 ms
+  -> VIL_RAIL_DOWN, EVERY RUN FAILS — station fine
+```
+
+**`scripts/pv-ide.sh` already carries this exact lesson for its own launcher** — *"GET / and
+GET /health on :9741 can HANG … while /catalog, /cells, /bars answer 200 and POST /run compiles
+normally. The VIL rail reads the hung route and reports PINE_STATION_DOWN"* — **and the rail was
+never fixed the same way.** Two changes: a **timeout is no longer a refusal** (`PINE_STATION_SLOW`,
+not `PINE_STATION_DOWN`), and the probe budget is **800 ms with a three-valued `up`** — `true`,
+or `null` (UNKNOWN) for a timeout, **never `false`** — the same discipline as a blank frame being
+INCONCLUSIVE, never PASS. Verified: **4.04 s → 0.001–0.005 s across five probes.**
+
+### THE FOURTH FINDING — the stale-by-one run is not fixed by a title assertion
+
+Testing the label fix, the retry loop asserted the run **title** (`'LQZ LuxAlgo'`). **Both the
+shipped D1 and the `-both` variant carry that title**, so the loop broke on the engine's
+debounced-flush compile of the PREVIOUS file and reported the old file's counts under the new
+file's name. Caught only by reading `sourceSha` in the payload. **When two artifacts can share a
+display name, the per-file identity is the only assertion that bites.**
+
+### THE LESSON
+
+> **A declaration is not an implementation, and a count is not a render.** Three separate
+> instruments each reported success over a thing that did not exist: the settings dialog (the
+> knob rendered), the run payload (labels 2), and the gate's reader (PASS, which the veto then
+> overrode). **Only the frame settled it** — and only after the pixel scan, not the eye's
+> impression, established that no text had been drawn.
+> And the second: **a liveness route may report its own state; it may not inherit its
+> dependency's latency.**

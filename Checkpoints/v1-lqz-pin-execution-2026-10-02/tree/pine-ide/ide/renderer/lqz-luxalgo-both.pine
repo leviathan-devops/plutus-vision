@@ -884,7 +884,12 @@ f_lqzRender() =>
             _hi = array.get(lqzZTop, i)
             _cf = array.get(lqzZConf, i)
             _mid = (_hi + _lo) / 2
-            _col = _sd == 1 ? lqzColorS : lqzColorB
+            _col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)
+            // ^ THE NA GUARD. Measured: ALL ladder lines carried colours ['None'] in the
+            //   payload, which means _sd was NA and the ternary yielded NA -- and an NA colour
+            //   falls through to vision.mjs's BRASS default, rendering the ladder as faint
+            //   brass dots at 1px. Same class as the box FILL bug: an NA reaching a renderer
+            //   fallback. A zone whose side is unknown is still a zone and must be visible.
             _lx = math.max(0, bar_index - lqzLeftB)
             // a thin zone collapses onto one line; a real one keeps its two rails
             _span = _hi - _lo
@@ -895,6 +900,25 @@ f_lqzRender() =>
                          color = _col, style = line.style_dashed, width = 1)
             else
                 line.new(_lx, _mid, bar_index + lqzRightB, _mid, color = _col, width = lqzLineW)
+            // THE LABEL — the emission `lqzLabel` was declared for and never got. Measured:
+            //   the input read "declared: 1, referenced: 1" (its own declaration only) and the
+            //   whole file carried ZERO label.new calls, so the run's `labels` count was 0 at
+            //   every timeframe. THE CONSEQUENCE: the gate's MECH_VETO (gate.mjs:157) reads a
+            //   drawn-but-unlabelled chart as "the indicator is not on this chart" and returns
+            //   deltas ['MECH_VETO:boxes=117:labels=0'] -> FAIL, and the LIBRARY's own look is
+            //   labelled ("30m LQ Sellside Liquidity", "Liquidity Void") -- so a zone without
+            //   its tag is the defect, not a style choice. textcolor carries the side colour;
+            //   color(na) draws no plate, matching the library's bare tag-on-chart look.
+            if lqzLabel
+                // ANCHORED INSIDE THE WINDOW, NOT PAST ITS EDGE. Measured: with the label at
+                //   `bar_index + lqzRightB` it carried time 1783389600000 against the run's
+                //   lastTime 1783317600000 -- 20 bars beyond the last bar, past the chart's
+                //   right edge, so it was counted (labels 2) and never drawn. The library's own
+                //   tags sit INSIDE the band, mid-chart. Half the left margin lands it there.
+                label.new(math.max(0, bar_index - math.round(lqzLeftB / 2)), _mid,
+                          _sd == 1 ? "Sellside Liquidity" : "Buyside Liquidity",
+                          xloc = xloc.bar_index, style = label.style_label_left, size = size.tiny,
+                          color = color(na), textcolor = _col)
             // 3+ agreeing sources get a whisper of fill so the dense bands read as one zone
             if lqzFill3 and _cf >= 3 and _span > lqzLineTol
                 box.new(_lx, _hi, bar_index + lqzRightB, _lo,
