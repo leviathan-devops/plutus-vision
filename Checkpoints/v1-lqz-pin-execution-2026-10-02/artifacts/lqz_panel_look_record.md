@@ -210,3 +210,70 @@ assert `sourceSha`** — the per-file identity — whenever two artifacts can sh
 **The default is honest, not broken:** under `luxalgo` the 2-distinct-source rule (`lqzMinAgree=2`)
 finds no agreeing pair on this fixture, so there is nothing to label. **Both knobs — `lqzSource`
 and `lqzMinAgree` — are the operator's calibration.**
+
+
+---
+
+# THE CLOSING MEASUREMENT — D1's first PASS, and the frame it rides on
+
+**Date:** 2026-10-02 · **Rig:** restored by the launcher after the station wedged; all four ports
+confirmed (`:9741 200 · :9754 404=healthy · :9851 200 · :9222 200`), rail `/health` at
+**0.0016 s**.
+
+**THE RUN** (asserted on `sourceSha`, per finding D):
+
+```
+srcSha 88de18cfde20   boxes 117 · lines 42 · labels 2
+```
+
+**THE GATE ROW** — the first D1 row in the ledger that is NOT vetoed:
+
+```
+verdict PASS · deltas [] · labels 2 · boxes 117 · pngSha cceb3271898d3d35
+```
+
+**THE LOOK.** The capture `cceb3271898d3d35` was opened. It carries, on the EUR/USD 1h fixture
+across Jun 13 – Jul 5:
+
+- **two labelled full-width zones** — the tags read **"Sellside Liquidity"**, sitting at ≈1.1405
+  and ≈1.1390, mid-chart (Jun 22–23), visibly drawn;
+- the zone rails spanning the plot width;
+- the LuxAlgo-native primitives beneath them.
+
+**For comparison, the same file under the shipped default `lqzSource='luxalgo'`:**
+
+```
+boxes 117 · lines 36 · labels 0   -> MECH_VETO:boxes=117:labels=0 -> FAIL
+```
+
+**THE HONEST READING OF THE PAIR.** The default is not broken; it is *honest*. Under `luxalgo`
+the 2-distinct-source rule (`lqzMinAgree=2`) finds no agreeing pair on this fixture, so the
+full-width emitter has nothing to label. **The display the pin's D1 asks for appears when the
+operator sets `lqzSource='both'` — or lowers `lqzMinAgree` — both of which are in the pin's
+OPEN calibration set.** The measured pair is now: **`luxalgo` 117/36/0/FAIL · `both` 117/42/2/PASS.**
+
+
+---
+
+# THE FIFTH GRID — the combined 4TF, opened last (an unopened panel is UNPROVEN)
+
+`reports/panel-grid-IDE-4TF-2026-W29.png` · sha256[:16] **`2cbc46a8a75e7537`** · titled by its
+composer *"PLUTUS VISION v1 (D3) ACROSS ALL FOUR TIMEFRAMES — captured BY THE IDE on 2026-W29"*.
+
+**THIS GRID IS D3-ONLY** — the library reference beside D3 at 15m/30m/1H/4H — so it supplements
+the pin's `[library | D1 | D2 | D3]` contract rather than replacing it. It is read here because
+**it was listed among the artifacts and had not been opened; an unopened panel is unproven.**
+
+**READ — every panel, with coordinates:**
+
+| panel | reader | counts | what I SAW |
+|---|---|---|---|
+| LIBRARY REF | — | — | the operator's frame, LARGE bands, as in the other four |
+| D3 · 15m | **PASS** | boxes 5 · lines 57 · labels 22 · bars 325 · dropped 3 | a red zone `1.14450–1.14650` top-left; tags `EQH` `EQ` `CHoCH` `BOS` `EQL`; teal rails; x-axis Jul 3–Jul 6 |
+| D3 · 30m | **PASS** | boxes 5 · lines 85 · labels 23 · bars 400 · dropped 4 | red zones `1.14600–1.14800` and `1.14400–1.14500`; a teal zone `1.14350–1.14450`; `CHoCH`; x-axis Jul 2–Jul 4 |
+| D3 · 1H | **PASS** | boxes 5 · lines 79 · labels 24 · bars 400 · dropped 3 | the richest panel — red zones `1.14550–1.14800`, a blue zone `1.13600–1.13800`, dense thin rails, `BOS` `CHoCH`; x-axis Jun 26–Jul 4 |
+| D3 · 4H | **PASS** | boxes 5 · lines 80 · labels 30 · bars 400 · dropped 3 | red `1.16300–1.16600` (top), teal `1.14800–1.14900` and `1.14000–1.14100`, blue `1.13500–1.13600`; `CHoCH` `BOS`; x-axis Jun 4–Jul 2 |
+
+**VERDICT: D3 PASSES ALL FOUR TIMEFRAMES** — 4/4 `reader=PASS`, labels 22–30 per panel, zones and
+tags visible in every frame I opened. `dropped: 3–4` recorded throughout (the same
+`ANCHOR_DROPPED` family the per-TF ledgers carry — recorded, not hidden).
