@@ -900,6 +900,19 @@ f_lqzRender() =>
                          color = _col, style = line.style_dashed, width = 1)
             else
                 line.new(_lx, _mid, bar_index + lqzRightB, _mid, color = _col, width = lqzLineW)
+            // THE LABEL — the emission `lqzLabel` was declared for and never got. Measured:
+            //   the input read "declared: 1, referenced: 1" (its own declaration only) and the
+            //   whole file carried ZERO label.new calls, so the run's `labels` count was 0 at
+            //   every timeframe. THE CONSEQUENCE: the gate's MECH_VETO (gate.mjs:157) reads a
+            //   drawn-but-unlabelled chart as "the indicator is not on this chart" and returns
+            //   deltas ['MECH_VETO:boxes=117:labels=0'] -> FAIL, and the LIBRARY's own look is
+            //   labelled ("30m LQ Sellside Liquidity", "Liquidity Void") -- so a zone without
+            //   its tag is the defect, not a style choice. textcolor carries the side colour;
+            //   color(na) draws no plate, matching the library's bare tag-on-chart look.
+            if lqzLabel
+                label.new(bar_index + lqzRightB, _mid, _sd == 1 ? "Sellside Liquidity" : "Buyside Liquidity",
+                          xloc = xloc.bar_index, style = label.style_label_left, size = size.tiny,
+                          color = color(na), textcolor = _col)
             // 3+ agreeing sources get a whisper of fill so the dense bands read as one zone
             if lqzFill3 and _cf >= 3 and _span > lqzLineTol
                 box.new(_lx, _hi, bar_index + lqzRightB, _lo,
