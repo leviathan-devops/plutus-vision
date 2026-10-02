@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# ./launch-pine-ide — launch THIS tree's standalone Pine IDE + indicator (works from any checkpoint copy).
+#   ./launch-pine-ide [file.pine] [PAIR] [TF]   ·   ./launch-pine-ide --shot out.png
+exec bash "$(dirname "$(readlink -f "$0")")/scripts/pv-ide.sh" "$@"

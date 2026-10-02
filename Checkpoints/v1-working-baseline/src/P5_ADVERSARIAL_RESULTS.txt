@@ -1,0 +1,4 @@
+plutus-vision-v0 P5 adversarial pass
+engine=PineTS 0.10.0 station :9641
+merged sha=fb752a1c4152817ea82eccd04bf5ae8f0981445367e6ec8a4dcd19ed8eae04d4
+positive=True negative=True full_artifact=True verdict=PASS
