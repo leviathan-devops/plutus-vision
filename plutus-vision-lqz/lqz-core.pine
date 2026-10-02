@@ -43,7 +43,22 @@ lqzSink(price, srcId, side) =>
     // the most recent lqzMaxLevels, which is the window that matters.
     if array.size(lqzLevels) >= lqzMaxLevels
         array.shift(lqzLevels), array.shift(lqzLevelSrc), array.shift(lqzLevelSide), array.shift(lqzLevelBar)
-    array.push(lqzLevels, price), array.push(lqzLevelSrc, srcId), array.push(lqzLevelSide, side), array.push(lqzLevelBar, bar_index), price
+    array.push(lqzLevels, price), array.push(lqzLevelSrc, srcId)
+    // THE SIDE IS DERIVED, NEVER PASSED. Measured 2026-10-02: the detectors disagreed and the
+    // chart showed both sides at the same price. lqzSink call sites passed a hard-coded side —
+    // the POOLS rails passed 1 for BOTH the "buyside rail, above price" AND the "sellside rail,
+    // below price" (lines 161-163), and the VOIDS passed 1 for both _vlo and _vhi (172-173).
+    // The comment said sellside; the argument said buy-side. Result on the rig: 34 LQZ boxes
+    // where the library draws 16, with 14 overlapping pairs — teal INSIDE red and red INSIDE
+    // teal AT THE SAME PRICE. A level cannot be buy-side and sell-side at once.
+    //
+    // THE CONTRACT (header, line 9) is POSITIONAL and is now enforced in ONE place:
+    //   side = 1 (BUY_SIDE,  liquidity ABOVE price -> supply -> red)
+    //   side = 0 (SELL_SIDE, liquidity BELOW price -> demand -> teal)
+    // A detector deriving side from the CANDLE (a sweep's wick direction) contradicts another
+    // deriving it from PRICE. Position is the single truth. The `side` parameter is kept for
+    // provenance but is no longer trusted for paint.
+    array.push(lqzLevelSide, price >= close ? 1 : 0), array.push(lqzLevelBar, bar_index), price
 
 // ═════════════════════════════════════════════════════════════════════════════
 // V2 - THE OPERATOR CANDLE DETECTOR (SMC_Liquidity_Notes.md)
@@ -220,12 +235,25 @@ if barstate.islast
             h4 = false
             h8 = false
             h16 = false
+            // THE MERGE KEY IS PRICE, NOT SIDE. This line was
+            //   `if array.get(lqzLevelSide, j) != sd or pj - hi > lqzTolP`
+            // and it was the root cause of the duplicate-slop chart. Measured 2026-10-02: four
+            // collision pairs, every one of them bands with the SAME low AND the SAME high, one
+            // red one teal — e.g. [1.143872, 1.14415] in both #B84A4A and #3E9B8F. A level that
+            // sits inside the merge tolerance is ONE liquidity zone. Gating the join on side
+            // GUARANTEED those pairs could never merge: opposite side => break => both emit =>
+            // two identical bands stacked, which is exactly the "supply zone in between a
+            // demand and liquidity zones" mess the operator named.
+            //
+            // WHY THE SIDES DISAGREED AT ALL: the side is derived per-sink from
+            // `price >= close`, so the same price sunk on two different bars — one above its
+            // close, one below — got opposite sides. That per-bar reading is noise; the band's
+            // identity is its PRICE. Side is now assigned ONCE, below, from the merged band.
             j = i + 1
             while j < n
                 pj = array.get(lqzLevels, j)
-                if array.get(lqzLevelSide, j) != sd or pj - hi > lqzTolP
+                if pj - hi > lqzTolP
                     break
-                hi := pj
                 sj = array.get(lqzLevelSrc, j)
                 h1 := h1 or sj == 1
                 h2 := h2 or sj == 2
@@ -250,7 +278,16 @@ if barstate.islast
                 array.push(lqzZLevel, (lo + hi) / 2)
                 array.push(lqzZTop, hi)
                 array.push(lqzZBottom, lo)
-                array.push(lqzZSide, sd)
+                // THE SIDE, ASSIGNED ONCE, FROM THE MERGED BAND — not inherited per-sink.
+                // The contract (header line 9) is POSITIONAL, so it is decided here, after the
+                // band exists, from where the band actually sits:
+                //   side 1 = BUY_SIDE  (liquidity ABOVE price -> supply -> red)
+                //   side 0 = SELL_SIDE (liquidity BELOW price -> demand -> teal)
+                // Using the band's own top edge against the CLOSE, not the per-bar sink reading:
+                // a band is one object with one side, and a price level can only be one of them.
+                // Measured 2026-10-02: inheriting `sd` from the first level of the group kept
+                // producing pairs of identical [lo,hi] bands in opposite colours.
+                array.push(lqzZSide, hi >= close ? 1 : 0)
                 array.push(lqzZMask, conf)
                 array.push(lqzZConf, conf)
             i := j

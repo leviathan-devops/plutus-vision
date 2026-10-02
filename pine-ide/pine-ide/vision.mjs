@@ -110,15 +110,20 @@ export function renderVision(chart, run, opts = {}) {
   for (const b of (D.boxes || [])) {
     const a = b?.a, bb = b?.b;
     if (!a || !bb || num(a.time) === null || num(bb.time) === null) continue;
-    // THE FILL READS `bgcolor` — the field Pine boxes ACTUALLY SET.
-    // This read `b.color`, which a Pine box NEVER carries (it sets `bgcolor`), so EVERY box
-    // fell through to the BRASS fallback rgba(185,154,91,0.10) — #B99A5B at 10%. Measured
-    // consequence: 97 boxes at 15m rendered as tan/brass slabs, which the operator named by
-    // eye as "this grey and gold empty shell indicator". Suppressing the Pine `bgcolor` had
-    // no visible effect because this line never looked at it.
-    // The BORDER below was already fixed with this exact guard (see its comment); the FILL
-    // was missed. Now: a box WITH bgcolor uses it; a box with NO colour is TRANSPARENT.
-    const fill = b.bgcolor ? normColor(b.bgcolor, 'rgba(0,0,0,0)') : 'rgba(0,0,0,0)';
+    // THE FILL READS BOTH KEYS. The history, because both readings were wrong on this host:
+    //   v1 read `b.color` only  -> the Pine `bgcolor` never arrived, EVERY box fell to the
+    //                               BRASS fallback, 97 boxes at 15m as tan/brass slabs (the
+    //                               operator's "grey and gold empty shell").
+    //   v2 read `b.bgcolor` only -> this PineTS engine version emits the fill under
+    //                               `color` for LQZ boxes, so bgcolor was ABSENT and every
+    //                               LQZ zone rendered TRANSPARENT. Measured 2026-10-02:
+    //                               39 boxes, boxesWithBgColor = 0, median band thickness
+    //                               2.0px against the library's 5.5px — the zones existed
+    //                               as geometry and never as colour.
+    // BOTH keys are real depending on the emitting path, so read both, preferring `bgcolor`
+    // (the canonical Pine field). A box carrying NEITHER stays transparent — never brass.
+    const fillSrc = b.bgcolor ?? b.color;
+    const fill = fillSrc ? normColor(fillSrc, 'rgba(0,0,0,0)') : 'rgba(0,0,0,0)';
     const d = add('box', {
       anchors: [{ time: a.time, price: Number(a.price) }, { time: bb.time, price: Number(bb.price) }],
       style: {
