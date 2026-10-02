@@ -1047,3 +1047,62 @@ side-effect: the footer's numbers, the status line's bar count, and the run payl
 **And the three operator controls, live with real mouse input (previous round): RUN · CAPTURE ·
 GATE — each probed for size + hit-testability, clicked via `Input.dispatchMouseEvent`, outcome
 asserted from the artifact, frame opened by eye.**
+
+
+---
+
+# TESTING LOG — THE 2026-10-03 CALIBRATION ROUND
+
+## THE TEST PLAN (what was going to be proven, before anything was touched)
+
+| # | scenario | pass token (in a TOOL RESULT) | fail token |
+|---|---|---|---|
+| T1 | the artifact compiles and publishes on the rig | `"ok":true` + a non-zero drawings count | any compile error; `PLUTUS_NO_STORE` |
+| T2 | the box fill renders | `boxesWithColor == boxes` | any box lacking `color`/`bgcolor` |
+| T3 | no price level paints twice | `IDENTICAL_dups == 0` | any duplicate |
+| T4 | no opposite-side overlap | `CROSS_SIDE == 0` | any pair |
+| T5 | liquidity is ONE class | the colour census shows a single liquidity colour | any second liquidity colour |
+| T6 | the LuxAlgo SMC section is untouched | the SMC box shas/inputs unchanged | any SMC edit |
+
+## THE RESULTS (every number from a tool result; nothing estimated)
+
+```
+T1  compile + publish      PASS   sha 0d20e8314ce992fc, boxes 32, labels 24, lines 48
+T2  the box fill renders   PASS   boxesWithColor 39/39  (before: 0/39)
+T3  no duplicate bands     PASS   IDENTICAL_dups 0     (before: n/a — never measured)
+T4  no cross-side overlap  PASS   CROSS_SIDE 0         (before: 8)
+T5  liquidity is one class PASS   #2E8B5773 x27       (before: #B84A4A73 x17 + #3E9B8F73 x10)
+T6  SMC section untouched   PASS   #f77c8033 x3 + #3179f533 x2, unchanged
+```
+
+## THE GEOMETRY INSTRUMENT (one definition, applied to both images)
+
+```python
+def isband(r, g, b):
+    mx, mn = max(r,g,b), min(r,g,b)
+    if mx - mn < 22 or mx < 70: return False
+    return (g >= r and b >= r and g > 80) or (r >= g and r > 110 and b >= g)
+# a vertical column scan at 45% width; contiguous ink runs = the bands
+```
+Applied to `WINNING_TRADE_LIBARARY/LIQUIDITY LADDERS` and to our own capture in the same turn,
+so the comparison is apples-to-apples.
+
+## THE KNOWN-GAP REGISTER (measured, stated, not dressed as a pass)
+
+| gap | state | why |
+|---|---|---|
+| E1 (9 pillars, confluence, ZFP, BoM/MoM, reaction counter, fortress) | **ABSENT** | never built; the grep census reads 0. Scoped in `artifacts/PLUTUS_VISION_V2_E1E2_SPEC.md` |
+| E2 (shape taxonomy, decision matrix, ZFP transitions, day decomposition, speed rule, TF matching) | **ABSENT** | never built; same spec |
+| the LuxAlgo S/D against the canon notes | **UNVERIFIED** | the operator's own words are that the LuxAlgo SMC "already does this perfectly"; no independent check against Forex SMC Notes(1)/(2) was performed — the 5 SMC boxes were not audited for origin-candle correctness |
+| band-count parity with the library | **NOT MATCHED** | library 16 bands/column at W29-ish scale; ours 27. The gap is the DETECTOR's sensitivity (`lqzTol`, `lqzMinAgree`, `lqzSwingLen`), not the renderer — the renderer is now verified correct |
+| the four-timeframe sweep | **NOT RUN this round** | the calibration was measured at 1H W29 only |
+| TradingView-native compile | **NOT RUN** | the PineTS station compiles it here; the real TradingView compiler has not seen this build |
+
+## THE HONEST VERDICT
+The RENDERER is verified: correct palette, correct fill, correct geometry, zero duplicates, zero
+cross-side, liquidity in one class, SMC untouched. The LIQUIDITY DETECTOR reads as accurate to
+the operator's own eye ("the liquidity is extremely accurate… 90 plus accuracy just from looking
+at the chart"), but that is an OPERATOR JUDGMENT, not a measured accuracy figure — no precision/
+recall against a labelled set exists. The SUPPLY/DEMAND accuracy question is UNANSWERED: the LuxAlgo
+SMC was deliberately not touched and never audited. The next honest test is a supply/demand audit
+against Forex SMC Notes(1)/(2), not more visual tuning.

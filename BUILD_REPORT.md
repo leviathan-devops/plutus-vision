@@ -2001,3 +2001,90 @@ document substitutes for it.
 Superseding entries are added, never edited. The report's own sha256 travels in the seal's `RECEIPT.md`
 (`Checkpoints/v1-look-session-2026-10-02/docs/BUILD_REPORT.md`), so a future reader can prove which draft
 they are holding.
+
+
+---
+
+# BUILD REPORT — ADDENDUM 2026-10-03 — THE V1 WORKING BASELINE
+
+**ARTIFACT:** `plutus-vision-v1.pine` · sha256 `0d20e8314ce992fc` · 1270 lines · SERVED_PINE_OK
+**OPERATOR VERDICT:** "Okay, perfect." (following the green-liquidity render)
+
+## WHAT THIS ADDENDUM RECORDS
+
+Six defects, found by MEASURING the render against the operator's WINNING_TRADE_LIBRARY with one
+instrument applied to both images, then reading the code rather than tuning constants. Every
+number is from a tool result.
+
+### 1 — THE RENDER EMITTED LINES; THE LIBRARY EMITS ZONES
+```
+metric              ours(before)   library        verdict
+band COLOUR         #387B40 dark   #61B2B0 teal   WRONG palette
+                    #A02A34 dark   #F23240 red
+band THICKNESS      1.0px median   5.5px median   5.5x TOO THIN
+band FILL           none           opaque         NOT RENDERING
+horizontal span     10% off-rail   98-100%        short
+```
+**ROOT CAUSE — AN INSTRUMENT BLIND SPOT, NOT A THRESHOLD ERROR.** `scripts/measure_ladder.py`
+scored a row "covered" if ANY ink pixel existed, so a 1px hairline scored a 99% pass. It never
+measured thickness or fill. Its recorded target ("line thickness 1px") encoded OUR defect as the
+library's specification. The fix replaced the triple-rail cage with `box.new` fills.
+
+### 2 — THE BOX FILL NEVER ARRIVED
+`vision.mjs:121` read `b.bgcolor` only. This PineTS engine version emits the fill under `color`.
+Measured: **39 boxes, `boxesWithBgColor: 0`.** Every LQZ zone rendered transparent. The fix reads
+both keys, preferring the canonical `bgcolor`. (`vision.mjs` had previously FIXED the opposite
+direction — removing a `b.color` read to kill brass slabs — which is why the regression was
+invisible.)
+
+### 3 — THE MERGE KEY WAS SIDE, SO A PRICE LEVEL COULD PAINT TWICE
+`lqz-core.pine:241` read `if lqzLevelSide[j] != sd or pj - hi > lqzTolP`. Opposite side forces a
+break, so two bands at ONE price could never merge. Measured collisions were pairs with the SAME
+low AND high in opposite colours, e.g. `[1.143872, 1.14415]` in both `#B84A4A` and `#3E9B8F`.
+**Fix: the merge key is PRICE.**
+
+### 4 — SIDE WAS DERIVED PER-SINK
+`price >= close` at sink time: the same price sunk on two different bars — one above its close,
+one below — received OPPOSITE sides. **Fix: side assigned ONCE, from the merged band's own edge.**
+
+### 5 — THE DETECTORS PASSED HARDCODED SIDES
+`lqzSink` call sites passed `1` for BOTH POOLS rails (core:161-163, one commented "sellside rail,
+below price") and for both VOIDS (core:172-173). The comment said sellside; the argument said
+buy-side. **Fix: the sink derives the side, never trusts it.**
+
+### 6 — LIQUIDITY WAS PAINTED AS SUPPLY/DEMAND
+The core's header read `1 = BUY_SIDE (liquidity ABOVE price -> supply -> red)` — a sentence I
+wrote. The render then did `_col = _sd == 1 ? lqzColorS : lqzColorB`. Measured: **17 of 27 bands
+red.** Because the side is POSITIONAL, this is also exactly why the chart banded: everything above
+price rendered "supply", everything below "demand".
+**THE CANON (Forex SMC Notes, Liquidity):** "Liquidity = orders + stop losses" · "resting pools
+of orders" · buy-side and sell-side liquidity are the SAME CLASS. **Fix: one green, no ternary.**
+
+## THE BEFORE / AFTER, one instrument, both sides
+
+```
+                              before     after
+LQZ zones                        34        27
+overlapping pairs               14         0
+cross-side overlaps              8         0
+identical duplicate bands        -         0
+labels                          58        24   (the SMC's own)
+invented liquidity text         14         0
+liquidity RED bands             17         0
+liquidity TEAL bands            10         0
+liquidity GREEN bands            0        27
+LuxAlgo SMC supply (#f77c80)     3         3   UNTOUCHED
+LuxAlgo SMC demand (#3179f5)     2         2   UNTOUCHED
+```
+
+## THE LUXALGO SMC SECTION WAS NOT MODIFIED
+`smc_storeOrdeBlock` (plutus-vision-v1.pine:520) is verbatim LuxAlgo: pivot-anchored, taking the
+extreme between the pivot and the current bar. The operator's ruling: "the smc indicator from lux
+algo already does the supply demand perfectly... Restore that, don't fuck with it." Nothing in
+that section was changed. Its colours are the originals.
+
+## WHAT IS NOT IN THIS ARTIFACT
+Engine 1 and Engine 2 are absent. The census reads 0 for ZFP, BoM/MoM, reaction counter,
+fortress, IPZone, pivots, option tiers, analyst tiering, shape taxonomy, shape decision matrix,
+ZFP-conditioned transitions, consolidation phase, day decomposition, forward mapping, speed rule,
+TF matching. Scope + waves + criteria: `artifacts/PLUTUS_VISION_V2_E1E2_SPEC.md`.

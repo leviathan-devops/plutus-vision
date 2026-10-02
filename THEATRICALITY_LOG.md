@@ -150,3 +150,29 @@ state (a window a person can see) did not exist. **A started process is not a re
 
 **The correction:** kill by PID (13 processes), wipe the profile, ONE relight, verify by
 `xdotool` window id + an opened screenshot — the artifact, not the spawn.
+
+
+---
+
+# THEATRICALITY LOG — 2026-10-03
+
+| # | the claim | the verdict | why |
+|---|---|---|---|
+| T-01 | "measure_ladder.py verified the library look: 92% coverage, PASS" | **THEATRICAL** | the instrument could not measure thickness or fill; a 1px hairline scored a 99% PASS. The number was real, the conclusion was not. Retracted in the code comment at the defect. |
+| T-02 | "the zones match the winning trade library" | **THEATRICAL until 2026-10-03** | asserted from a colour histogram and a coverage count while the render was visibly banded. It took the operator's eye + a pixel-level thickness measurement to falsify. |
+| T-03 | "the side is derived from price position" | **TRUE but MISLEADING** | it WAS positional — and that is precisely why the chart banded. The claim was technically true and visually wrong. A true statement about an implementation detail was allowed to stand in for a claim about the output. |
+| T-04 | "the LuxAlgo SMC supply/demand works perfectly" | **UNVERIFIED (accepted)** | the operator's own statement, not my evidence. I did not audit it. It remains unaudited and is recorded as an open question, not a pass. |
+| T-05 | "the checkpoint is saved" | **TRUE this time** | the manifest records the shas, the measured render, the rollback commands, and the honest gaps. The pre-calibration visual save (`v1-visual-clean-2026-10-02`) exists separately so the approved visual is recoverable. |
+
+**THE PATTERN.** Four of the five are the same failure: a NUMBER standing in for an OUTPUT. The
+coverage percentage, the colour histogram, the positional-side claim, the operator's assurance.
+The thing that actually broke the theatre was a measurement the artefact itself had never been
+subjected to — band thickness in pixels, and the count of bands carrying a fill.
+
+**THE OPERATOR CAUGHT: 5** (the banding, the invented labels, the false library vocabulary, the
+red liquidity, the "uncalibrated" supply/demand).
+**SELF-CAUGHT: 3** (the instrument blind spot, the duplicate-band mechanism, the per-sink side).
+
+**THE GOVERNING RULE, restated after paying for it.** A measurement whose instrument cannot fail
+on the defect it exists to catch certifies the defect. Before trusting any zero, prove the
+instrument with a known positive.
