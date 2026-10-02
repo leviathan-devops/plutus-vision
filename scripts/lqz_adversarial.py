@@ -12,9 +12,16 @@ and only the third attempt named the real cause. So each guard now gets a plante
 defect in a COPY of the script, and a guard that lets the mutant through is itself
 the finding.
 """
+import os
 import pathlib, re, shutil, subprocess, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+
+# MEASURED 2026-10-02: the mutants write a manifest a law-abiding run would never produce
+# (two panels, one source) -- and with a shared /tmp/lqz-panel that mutant manifest is what
+# the w6 test then reads, turning the suite RED for the wrong reason. The mutants get their
+# own TMP; the product honours LQZ_PANEL_TMP (lqz-panel.mjs).
+MUT_ENV = dict(os.environ, LQZ_PANEL_TMP="/tmp/lqz-panel-adv")
 PANEL = ROOT / "scripts/lqz-panel.mjs"
 TMP = pathlib.Path("/tmp/lqz-adv"); TMP.mkdir(exist_ok=True)
 RESULTS = []
@@ -52,7 +59,7 @@ rec("A2 drawing caps raised to 500", all(caps_ok), f"per-deliverable: {caps_ok}"
 m1 = TMP / "m1.mjs"
 s = PANEL.read_text().replace('expect: "LQZ LuxAlgo"', 'expect: "TOTALLY WRONG TITLE"')
 m1.write_text(s)
-r = subprocess.run(["bun", str(m1), "1H"], capture_output=True, text=True, timeout=300, cwd=ROOT)
+r = subprocess.run(["bun", str(m1), "1H"], capture_output=True, text=True, timeout=300, cwd=ROOT, env=MUT_ENV)
 a3 = r.returncode != 0 and "PANEL_GRID_FAIL" in (r.stdout + r.stderr)
 rec("A3 mutant: wrong title refused", a3,
     f"exit={r.returncode} {(r.stdout + r.stderr).strip().splitlines()[-1][:90] if (r.stdout + r.stderr).strip() else ''}")
@@ -71,7 +78,7 @@ s = _src.replace(
     '{ key: "D2", file: "lqz-luxalgo.pine", mark: "LQZ LuxAlgo", expect: "LQZ LuxAlgo",')
 assert s != _src, "A4 mutant did not apply — the test is broken, not the code"
 m2.write_text(s)
-r = subprocess.run(["bun", str(m2), "1H"], capture_output=True, text=True, timeout=300, cwd=ROOT)
+r = subprocess.run(["bun", str(m2), "1H"], capture_output=True, text=True, timeout=300, cwd=ROOT, env=MUT_ENV)
 out = r.stdout + r.stderr
 a4 = r.returncode != 0 and "not distinct" in out
 rec("A4 mutant: duplicate panels refused", a4,

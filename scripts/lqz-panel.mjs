@@ -25,7 +25,13 @@ const TF = Bun.argv[2] || "1H";
 const PAIR = "EUR/USD";
 const IDE = "http://127.0.0.1:9851";
 const OUT = `reports/panel-grid-${TF}.png`;
-const TMP = "/tmp/lqz-panel";
+// THE TMP IS OVERRIDABLE so a MUTANT run never pollutes the real artifacts: the adversarial
+// suite plants mutants that write a manifest a law-abiding run would never produce (two panels,
+// one source) -- and with a shared TMP that mutant manifest is what the w6 test then reads.
+// Measured 2026-10-02: the suite went RED (test_panel_rows_are_same_bars: 2 distinct titles)
+// purely because the last grid run on disk was A4's mutant. LQZ_PANEL_TMP gives each runner
+// its own. Default unchanged for every normal invocation.
+const TMP = process.env.LQZ_PANEL_TMP || "/tmp/lqz-panel";
 await $`mkdir -p ${TMP}`.quiet();
 
 const DELIVERABLES = [
