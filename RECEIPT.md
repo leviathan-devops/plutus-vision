@@ -226,3 +226,67 @@ with their title table and two labelled instruments · the operator's calibratio
 ### THE PHASE GATES
 **P0–P7 GREEN · P8 AWAITING THE OPERATOR.** The `PASS/FAIL/INCONCL` buttons write to
 `vil/2026-W29.jsonl`. `lqzSource` remains the operator's calibration call.
+
+
+---
+
+## 12 · THE PANEL-JUDGE SEGMENT (HEAD `e42d26e`, 90 commits since round-zero)
+
+### THE BASELINE DIFF
+| item | round-zero | now |
+|---|---|---|
+| `plutus-vision-v0.pine` | `605bff82d3539e9e` | **`605bff82d3539e9e` — UNCHANGED (the parity reference stands)** |
+| `lqz-luxalgo.pine` (D1) | — | `1dbe1ac3bd3dc077` |
+| `lqz-plutus.pine` (D2) | — | `68881deaca0c66a1` |
+| `plutus-vision-v1.pine` (D3) | — | `82da437af969a315` |
+| `vil-rail.mjs` | — | fixed this segment (timeout ≠ refusal; 800 ms probe; three-valued `up`) |
+| `git status --porcelain` | — | **CLEAN** |
+
+### THE PANEL GRIDS — all four exist, all opened, all recorded
+| TF | artifact | sha256[:16] | panels |
+|---|---|---|---|
+| 15m | `reports/panel-grid-IDE-15m-2026-W29.png` | `dcd2598fae0b1d4d` | 4 |
+| 30m | `reports/panel-grid-IDE-30m-2026-W29.png` | `71320abb81366f6a` | 4 |
+| 1H | `reports/panel-grid-IDE-1H-2026-W29.png` | `d461941e63d491a5` | 4 |
+| 4H | `reports/panel-grid-IDE-4H-2026-W29.png` | `8a3f62f26ca9e0e0` | 4 |
+
+Per-panel verdicts (found/missing/wrong with coordinates):
+**`reports/lqz_panel_look_record.md`** — including its APPENDIX (D1's three defects) and its
+CLOSING MEASUREMENT (D1's first PASS with the frame it rides on).
+
+### THE RUNTIME LEDGER — `vil/2026-W29.jsonl`, 53 rows
+The decisive pair at 1H:
+
+```
+d33c2b75e30d  FAIL  ['MECH_VETO:boxes=117:labels=0']   labels 0    (D1 shipped, default)
+68881deaca0c  FAIL  []                                  labels 0    (D2)
+82da437af969  PASS  ['ANCHOR_DROPPED:3']                labels 24   (D3)
+88de18cfde20  PASS  []                                  labels 2    (D1 'both', FIXED)
+```
+
+### THE VERIFICATION OF THE SEGMENT'S FIXES
+| fix | before | after | how verified |
+|---|---|---|---|
+| D1's dead `lqzLabel` | `label.new` count 0 | 1 real call; labels 0 → 2 | `sourceSha`-asserted run |
+| D1's label anchor | `time` 20 bars past the last bar; 0 text pixels | `t=06-19T20:00`, `inside: true`; **text VISIBLE in the opened capture** | the frame itself |
+| the rail's probe | 4.04 s `/health` → the page's 2500 ms client reads it dead → every run fails | **0.001–0.005 s**, five consecutive probes | curl timing |
+| the station's wedge | hung both routes, 51.9 % CPU, state `D` | restarted; all four ports answer | the launcher |
+
+### THE CHECKPOINT
+`Checkpoints/v1-lqz-pin-execution-2026-10-02/` — **rev 6**, `tracked=873 sealed=873 MATCH`,
+ONE mode (`no-lock`), with the manifest's five HONEST GAPS.
+
+### THE WAVE SHAS (recent, in order)
+`4326990` the look record · `facb519` D1's dead knob · `1795231` the anchor · `469e1b2` the rail ·
+`47afc58` D-XXI · `39617db` the canon logs · `b0d8940` the appendix · `10ab05f` the seal rev 6 ·
+`e42d26e` D1's first PASS.
+
+### THE MEASURED PAIR, FINAL
+**`lqzSource='luxalgo'` (shipped default) — 117 boxes / 36 lines / 0 labels / FAIL.**
+**`lqzSource='both'` — 117 boxes / 42 lines / 2 labels / PASS, both tags rendered and seen.**
+
+### WHAT REMAINS — AND IT IS NOT THE AGENT'S TO CLOSE
+**P8: the operator's verdict.** The four grids are on disk, opened, and recorded. **The operator
+states IT IS APPROVED — or names what is wrong.**
+**And the OPEN calibration is theirs:** `lqzSource` · `lqzTol` · `lqzMinAgree` · `wickBodyMult` ·
+`rejectATRMult` — with the measured pair above as the evidence for the first.
