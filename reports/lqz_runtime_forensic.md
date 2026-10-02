@@ -732,3 +732,51 @@ project has produced.
 **Both fixed with the same shape: read the field that EXISTS, and give the fallback a value that
 RENDERS.** The class is now named, and the next drawing type that goes missing should be
 checked here first.
+
+---
+
+# D1's ZERO — DIAGNOSED. It is a SUPPLY problem, not a colour problem.
+
+## THE MEASUREMENT THAT SETTLES IT
+Filtering every deliverable's lines by the **emitter's own signature** — `width == 1` AND
+`style ∈ {solid, dashed}` AND a long span (the emitter's rails are `width = lqzLineW` with
+`style_dashed` on the mids; the detectors draw `width: 3` solid and `width: 1` **dotted**):
+
+| deliverable | TF | total lines | **EMITTER lines** | coloured |
+|---|---|---|---|---|
+| **D1 lqz-luxalgo** | 15m | 30 | **2** | **0** |
+| **D1 lqz-luxalgo** | 1H | 36 | **4** | **0** |
+
+**MY EARLIER "LADDER 5 / 22" READING WAS WRONG** — that filter caught the DETECTORS' long lines
+(`width: 3` solid, `width: 1` dotted), which are not the emitter's. **D1's `f_lqzRender()`
+emits 2 lines at 15m and 4 at 1H, and not one carries a colour.**
+
+## SO D1'S DEFECT IS NOT THE COLOUR — IT IS THE SUPPLY
+**`lqzSource = "luxalgo"` produces almost no clusterable levels.** With `lqzZLevel` holding 2-4
+entries, there is nothing for the NA guard to colour. **The guard is correct and present in D1
+(`lqz-luxalgo.pine:889`), the colour constants are valid and unshadowed (lines 852-853, byte-
+identical to D3's), and the render block is near-identical to D2's — and none of it matters
+because the ZONE ARRAY IS NEARLY EMPTY.**
+
+## AND THAT IS EXACTLY WHAT `lqzSource` FIXES — measured
+| `lqzSource` | 15m ladder | coloured |
+|---|---|---|
+| `luxalgo` (as-shipped) | 5 | **0** |
+| `both` | 8 | **3** |
+
+**`both` is D1's fix, and the COLOURED count is the measure that shows it.** The raw count said
+5→8 (+60 %); the coloured count says **0→3** — from *nothing visible* to *three visible lines*.
+**The raw count understated the improvement by describing invisible lines as if they counted.**
+
+## THE CORRECTED PICTURE, ALL THREE DELIVERABLES (15m)
+| deliverable | emitter lines | coloured | state |
+|---|---|---|---|
+| **D2 lqz-plutus** | 38 | **38 (100 %)** | FIXED — the NA guard took it from 0 |
+| **D3 plutus-vision** | 52+ | **100 %** | FIXED — four colours |
+| **D1 lqz-luxalgo** | **2** | **0** | **SUPPLY-STARVED — `lqzSource` is the lever, not the guard** |
+
+## THE THREE DEFECTS, THREE DIFFERENT CLASSES — now all named
+1. **the grey/gold slabs** — a renderer read a field that does not exist (`b.color`) → BRASS
+2. **the invisible ladder (D2/D3)** — an NA value reached a renderer fallback → BRASS
+3. **D1's near-empty ladder** — the SOURCE SELECTION starves the cluster → nothing to render
+**Classes 1 and 2 are fixed. Class 3 is a calibration choice the pin assigns to the operator.**
