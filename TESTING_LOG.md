@@ -759,3 +759,56 @@ indicator inputs) and `indicatorSlices` (`{drawScene, sliceCache, tips}` — the
 machinery, not the studies) — **the dialog's own internals are not reachable from the exposed
 API.** Per H7 the residual is NAMED rather than waved: **DRILL 4's evidence stands on the
 station's own input path, and the dialog UI remains unexercised by this driver.**
+
+
+---
+
+# CORRECTION + DISAMBIGUATION — the parity instruments, measured properly (2026-10-02)
+
+## THE CORRECTION — MY OWN MEASUREMENT ERROR
+
+The re-verification entry above records `compare.py`'s result as `RC=0`. **That was WRONG: the
+`RC=$?` captured the exit of the `| tail` PIPELINE, not of the script.** Measured properly this
+turn:
+
+```
+python3 scripts/compare.py > /tmp/compare.out 2>&1; RC=$?   ->   exit=1
+VERDICT: DELTA lost=121 extra=258
+```
+
+**compare.py exits 1 on any loss** (its own header: *"exits 1 on any loss"*). The corrected
+record stands: **the script IS RED** on the current engine state, per its own contract. **The
+error is recorded rather than quietly overwritten — the correction is the point of keeping the
+log.**
+
+## THE DISAMBIGUATION — TWO INSTRUMENTS, TWO DIFFERENT SUBJECTS
+
+**`verify_four.py` runs the FOUR SUBSYSTEMS INSIDE THE MERGED BUNDLE** (it slices the merged
+file's sections and runs each segment standalone). Measured this turn:
+
+```
+SMC      PASS  boxes=5    labels=22   lines=19
+SWEEPS   PASS  boxes=12   labels=0    lines=24
+VOIDS    PASS  boxes=94   labels=0    lines=0
+POOLS    PASS  boxes=1    labels=0    lines=2
+4/4: 4/4 subsystems executed
+```
+
+**`compare.py` runs the ORIGINAL SOURCES in `sources/`** against the merged.
+
+**⇒ THE SHIPPING LOGIC IS GREEN IN BOTH SENSES THAT MATTER:** the merged bundle's own sweeps
+section runs (**verify_four 4/4**), and the deliverable that ships (**D1**) embeds that logic
+(103 `swp_` references) and runs at every TF. **The failing leg is the comparison INPUT** — the
+standalone `sources/liquidity-sweeps.pine` (UDT-heavy), which fails in Vela's extraction on the
+current engine build. That is F-XX, and its bounds are unchanged.
+
+## WHY THE ENGINE-VERSION THEORY DOES NOT HOLD — checked, not assumed
+
+The pin-the-engine resume condition was probed this turn: **there is no drift to pin back.**
+`package-lock.json` resolves `pinets 0.10.0` and `@luxalgo/vela-pinets 0.2.14`; the disk holds
+**exactly those** (`pinets 0.10.0 · vela-pinets 0.2.14 · vela 0.8.0`). The locked build installed
+on 2026-10-01 16:33. **So the sweeps regression is NOT a version drift** — with the source, the
+fixture and the locked engine all unchanged, the failure is reproducible and the baseline
+`258/258` is not; **F-XX stands as an open, bounded, named residual** with its resume condition
+corrected to: re-measure compare.py when the engine's extraction of UDT-sourced drawing geometry
+is reconciled — the version pin is not the lever.
