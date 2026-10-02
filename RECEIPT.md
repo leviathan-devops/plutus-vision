@@ -142,3 +142,40 @@ files) · the builder's hand-list suppression (missed `voi_lqFC`) · the frozen 
 it) · the grid composer (file-order selection + a hard-coded sha map).
 
 **THE SEAL** is refreshed to rev 3, 869/869.
+
+---
+
+## 10 · SESSION 2 CLOSE — HEAD `81a6f2e`
+
+### THE AUDIT GATE
+**`AUDIT GATE: PASS`** — 7/7, zero confirmed defects, artifact on disk
+(`reports/LQZ_ADVERSARIAL_AUDIT.txt`). **The parity reference is UNCHANGED**
+(`plutus-vision-v0.pine 605bff82d3539e9e`).
+
+### THE TWO RENDERER FIXES — one class, both verified
+| defect | evidence |
+|---|---|
+| the grey/gold slabs — the box FILL read `b.color` (never set) → BRASS | `nonBg 0.40008 → 0.16821` |
+| the invisible ladder — an NA side → NA colour → BRASS at 1px | **D2/D3 0 % → 100 % coloured** |
+
+### THE COMPLETE GRID SET — twelve panels, all post-fix
+D1/D2/D3 × 15m/30m/1H/4H, every title asserted, on a restarted rig where each run succeeded
+first try. Grids: `15m dcd2598f · 30m 71320abb · 1H d461941e · 4H 8a3f62f2`.
+
+### THE SEAL
+`Checkpoints/v1-lqz-pin-execution-2026-10-02/` — **rev 4**, `tracked=870 sealed=870 MATCH`,
+carrying the four grids and the post-fix audit.
+
+### CLASS 3 — D1, the operator's calibration
+`lqzSource='luxalgo'` leaves D1 SUPPLY-STARVED (2 emitter lines at 15m, 0 coloured), **visible
+in the grid as an empty chart**. `lqzTol`/`lqzMinAgree`/`lqzMaxZones` are all inert;
+**`lqzSource='both'` takes it from 0 coloured lines to 3.**
+
+### THE PHASE GATES
+P0-P7 GREEN · **P8 AWAITING THE OPERATOR** (the PASS/FAIL/INCONCL buttons write to
+`vil/2026-W29.jsonl`).
+
+### HONEST GAPS
+No container round · D1's ladder absent by design of `lqzSource` · the composer's freshness
+test is a weak mtime guard · and one correction: D2's matching shas on a fresh rig proved those
+frames were deterministic and CORRECT — the "suspected stale" call was a false alarm.
