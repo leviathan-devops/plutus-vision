@@ -71,9 +71,15 @@ def compose(tf, best, out_dir):
         if not f:
             continue
         want = sha16(R / f)
+        src_mtime = (R / f).stat().st_mtime
         # match on the sha PREFIX (the ledger stores the full 64-hex; we hold 16)
         sha = next((k for k in {kk[0] for kk in best} if k.startswith(want)), None)
         r = best.get((sha, tf)) if sha else None
+        # THE FRESHNESS TEST: the frame must be NEWER than the source it renders.
+        if r:
+            png = pathlib.Path(r["pngPath"])
+            if png.exists() and png.stat().st_mtime < src_mtime:
+                r = None      # a stale frame recorded under a fresh row -- treat as missing
         if not r:
             # NO POST-FIX ROW FOR THIS TF. Say so rather than falling back to an old one.
             panels.append({"cap": nm, "sub": "NO POST-FIX CAPTURE for this TF — UNPROVEN",

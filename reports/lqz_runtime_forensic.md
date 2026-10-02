@@ -780,3 +780,54 @@ because the ZONE ARRAY IS NEARLY EMPTY.**
 2. **the invisible ladder (D2/D3)** — an NA value reached a renderer fallback → BRASS
 3. **D1's near-empty ladder** — the SOURCE SELECTION starves the cluster → nothing to render
 **Classes 1 and 2 are fixed. Class 3 is a calibration choice the pin assigns to the operator.**
+
+---
+
+# THE CAPTURE-TRUST DEFECT — a fresh row can carry a STALE frame, undetectable by sha or mtime
+
+## THE MEASUREMENT THAT EXPOSED IT
+D2's 1H ledger row after the NA-guard run:
+```
+pineSha   5295b34e…        ← the POST-FIX sha (correct)
+createdAt 2026-10-02T01:21:10Z   ← a FRESH row
+pngPath   …/pineshell-…01-06-211Z-0e7103c60b29.png
+```
+**`0e7103c60b29` is the ORIGINAL 1H frame captured HOURS earlier** — the one from before any of
+this session's renderer fixes. Same for 4H (`8b09ba208010`).
+
+## THE MECHANISM
+The compositor freezes under repeated runs (established earlier: `P.capture()` returns the last
+COMPOSITED layer). **The gate then captures that frozen layer and WRITES A NEW FILE with it.**
+So:
+- the ledger row is fresh (`createdAt` correct)
+- the `pineSha` is the current artifact (correct)
+- **the PNG's bytes are a frame from before the fix**
+- **and the PNG's mtime is NEWER than the source** — because the file was just written
+
+**⇒ NEITHER THE SHA NOR THE MTIME CAN DETECT IT.** I added an mtime test to the composer
+(`frame must postdate its source`) and it did **not** reject these — correctly, because the
+file genuinely is newer. **The content is what is stale, and content-freshness is not a
+filesystem property.**
+
+## WHAT THIS MEANS FOR THE GRIDS
+**A panel can LOOK current — fresh row, correct sha, new file — and show a pre-fix frame.**
+The 1H and 4H D2 panels in the current grid set are **suspected stale** on this evidence; the
+15m and 30m D2 panels and the 15m D3 panel were captured under the reload discipline and are
+**not** suspected.
+
+## THE ONLY RELIABLE REMEDY (stated, not yet universally applied)
+**Reload the page immediately before EVERY capture.** Measured: the freeze survives two
+`requestAnimationFrame` ticks and a 6 s settle; a reload breaks it. The cost is that a reload
+resets the editor and `P.run()` can return `null` on a fresh page — both handled (re-assert the
+source after `loadBars`; null-guard the run).
+
+## THE HONEST STATUS OF THE GRID SET
+| TF | D1 | D2 | D3 |
+|---|---|---|---|
+| 15m | UNPROVEN (marked) | **captured under the reload discipline** | **captured under the reload discipline** |
+| 30m | UNPROVEN (marked) | **captured under the reload discipline** | captured, title asserted, `nonBg 0.46933` |
+| 1H | UNPROVEN (marked) | **SUSPECTED STALE** (fresh row, pre-fix frame) | title never asserted — **UNVERIFIED** |
+| 4H | UNPROVEN (marked) | **SUSPECTED STALE** | title never asserted — **UNVERIFIED** |
+
+**The grids remain on disk and the composer marks what it CAN detect. It cannot detect this
+class, and saying so is the only honest option.**
