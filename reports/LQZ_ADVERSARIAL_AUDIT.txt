@@ -1,10 +1,10 @@
-LQZ ADVERSARIAL AUDIT — the full pass
-run: 2026-10-01T22:43:39Z
+LQZ ADVERSARIAL AUDIT — the full pass (POST-FIX)
+run: 2026-10-02T01:43:07Z
 artifact shas at audit time:
-  lqz-luxalgo.pine         b6dda2dae4416ec8
-  lqz-plutus.pine          946f4ca21b3ddc0a
-  plutus-vision-v1.pine    d41c6d9ccb1c5f8e
-  vision.mjs               56e9a3eb1d83e43d
+  lqz-luxalgo.pine         d33c2b75e30da63d
+  lqz-plutus.pine          5295b34e1f9fe2e0
+  plutus-vision-v1.pine    82da437af969a315
+  vision.mjs               d032a26721176649
   plutus-vision-v0.pine    605bff82d3539e9e
   station                  200
 
