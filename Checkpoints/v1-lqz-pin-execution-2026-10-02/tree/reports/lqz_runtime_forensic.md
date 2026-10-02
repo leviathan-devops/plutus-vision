@@ -575,3 +575,396 @@ The 1H-vs-15m gap (**22 → 5** at `luxalgo`; **28 → 8** at `both`) is **not**
 BARS, and 15m carries 325 of them against 1H's 400 — so the same `swp_len` spans far less time
 and fewer structures form. **Every input in the deliverable's surface has now been measured
 against this, and only `lqzSource` moves it.**
+
+---
+
+# H4 PUSH — `lqzSource` toggled LIVE and LOOKED AT. The count and the pixels disagree.
+
+## THE PUSH (the pin's H4: "toggle lqzSource")
+Built `lqz-luxalgo-both.pine` (`lqzSource = "both"`), served by the IDE's own server, fetched
+and HELD by the editor (`fetchHasBoth: true`, `held: true`), compiled as D1 (`title: LQZ
+AluxAlgo`, `tries: 1`), captured fresh (`941f8e44e3834e44`), and **opened**.
+
+## WHAT THE FRAME SHOWS
+`EU EURUSD · FIXTURE · 15m`, candles only across the full price path, and **ONE faint dotted
+line at ~1.14300. No ladder. No bands. No labels.**
+
+## WHAT THE COUNT SAID (the earlier sweep)
+`lqzSource = "both"` at 15m ⇒ **8 full-width ladder lines**, against `luxalgo`'s **5**.
+
+## THE CONTRADICTION — and it is the same class as the grey/gold defect
+**The count says 8; the frame shows 1.** A count describes what a MECHANISM emitted; the frame
+describes what the RENDERER painted. **This project has now been bitten by that gap twice in
+one session** — first with the 97 brass boxes (counts right, fill wrong), now with the ladder
+lines (counts right, pixels absent).
+
+**AND IT INVALIDATES MY OWN EARLIER RECOMMENDATION.** I told the operator `both` "buys +60 %
+ladder at 15m" on the strength of the count. **The frame does not support that claim**, and a
+count-based recommendation that the pixels contradict is exactly the theatrical class this
+project exists to refuse. **WITHDRAWN pending a look at each variant.**
+
+## WHAT IS ACTUALLY ESTABLISHED ABOUT `lqzSource`
+| claim | basis | state |
+|---|---|---|
+| `both` emits 8 ladder lines at 15m vs `luxalgo`'s 5 | the station's `drawings.lines`, full-width filter | **MEASURED** |
+| `both` LOOKS denser at 15m | — | **NOT SUPPORTED BY THE FRAME** |
+| `candles` == `luxalgo` counts | the sweep, and the wiring read (`_need` 1 vs 2) | **MEASURED and explained** |
+
+## THE H4 PUSHES — STATUS
+| push | done? | evidence |
+|---|---|---|
+| switch TF mid-render | **YES** | the native widget drove 15m/30m/1H/4H; counts differ per TF and 15m reads the real 325 bars |
+| apply an input | **YES** | the IDE exposes NO input surface (`hasInputs: false`); inputs are changed in the source, and this session changed `lqzFill3`, `lqzFillA`, `lqzTol`, `lqzMinAgree`, `lqzSwingLen`, `lqzWickMult`, `lqzReject` and `lqzSource` |
+| toggle lqzSource | **YES — and it returned a contradiction** | above |
+| starve the bars | **PARTIAL** | `limit=1` refuses BY NAME (`bars absent (1)`); a live mid-render starvation was not driven |
+
+## THE REMAINDER, NAMED
+**Every `lqzSource` variant must be LOOKED AT before any recommendation.** The count is not the
+evidence; the frame is. Until then, `lqzSource` stays the operator's call **on visual grounds
+that have not yet been gathered.**
+
+---
+
+# THE INVISIBLE LADDER — ROOT CAUSE FOUND, AND THE FIX WORKS FOR D2
+
+## THE ROOT CAUSE, MEASURED
+A controlled A/B at the station (same 325/400 bars the IDE uses), counting FULL-WIDTH lines
+and how many carry a colour:
+
+```
+variant   TF   bars  lines  LADDER  COLOURED   colours
+luxalgo   15m   325    30       5        0    ['None']            ← ZERO coloured
+luxalgo   1H    400    36      22        0    ['None']            ← ZERO coloured
+both      15m   325    33       8        3    ['#7F3613','None']  ← 3 coloured
+both      1H    400    42      28        6    ['#7F3613','None']  ← 6 coloured
+```
+
+**`_col = _sd == 1 ? lqzColorS : lqzColorB` — when `_sd` is NA the ternary yields NA, and an NA
+colour falls through to `vision.mjs:133`'s BRASS default.** So a ladder line with no valid side
+renders as a **faint brass dot at 1px** — which is exactly what the frames have been showing.
+**This is the same class as the grey/gold box defect: an NA reaching a renderer fallback.**
+
+**IT ALSO EXPLAINS THE `both` RESULT WITHOUT CONTRADICTION.** `both` is not "denser because it
+emits more lines"; it is **denser because 3 of its 8 (and 6 of its 28) lines carry a VALID side
+and are therefore VISIBLE.** The count was never the measure — the COLOURED count is.
+
+## THE FIX — the NA guard, applied in the emitter's source
+```pine
+_col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)
+```
+A zone whose side is unknown is still a zone and must be VISIBLE.
+
+## THE VERIFICATION — and it splits the three deliverables
+| deliverable | TF | LADDER | COLOURED | colours |
+|---|---|---|---|---|
+| **D2 lqz-plutus** | 15m | 38 | **38 (100 %)** | `#3E8A46`, `#7F3613` |
+| **D2 lqz-plutus** | 1H | 58 | **58 (100 %)** | `#3E8A46`, `#7F3613` |
+| D1 lqz-luxalgo | 15m | 5 | **0** | `['None']` |
+| D1 lqz-luxalgo | 1H | 22 | **0** | `['None']` |
+
+**D2 WENT FROM 0 → 100 % COLOURED.** The guard works, and D2's ladder is now fully coloured
+where before it fell through to brass.
+
+## D1 REMAINS AT ZERO — the open question, stated precisely
+D1 carries the SAME guard (verified in the file at `lqz-luxalgo.pine:889`), its render block is
+**near-identical to D2's (a 5-line diff, all comments)**, and its colours ARE valid inputs
+(`lqzColorB = input.color(#3E8A46, …)`, `lqzColorS = input.color(#7F3613, …)` at lines 852-853).
+**Yet its ladder lines still carry `None`.** So `lqzColorB` itself must be resolving to NA at
+runtime in D1 — or D1's ladder lines are drawn by a path other than `f_lqzRender()`. **That is
+the next measurement, and it is named rather than guessed.**
+
+## THE HONEST POSITION
+- **The mechanism is established and the fix is PROVEN on D2.**
+- **D1's identical-looking path does not respond** — one deliverable's fix does not transfer,
+  and claiming it did would be the same error this session has already made twice.
+- **No recommendation is made for `lqzSource`** — the COLOURED count now supersedes the raw
+  count, and D1 needs its own investigation before any value is recommended for it.
+
+---
+
+# THE INVISIBLE LADDER — FIXED AND VISUALLY CONFIRMED
+
+## THE FIX, VERIFIED IN THE FRAME
+`729c989a399b69f7` — D3 at 15m, first try, `held` asserted twice (before AND after `loadBars`,
+which can clobber the editor), **`nonBg 0.2853`** against the stale frame's 0.168 and the EMA
+Ribbon default's 0.187. **More content on the canvas — because 56 coloured lines now render.**
+
+**WHAT I SEE, having opened it:** a dense ladder of thin full-width lines spanning
+1.1425 → 1.1460 — green at 1.14250/1.14280/1.14300/1.14350/1.14420/1.14450/1.14500, red-brown
+at 1.14280/1.14360/1.14400/1.14500/1.14550, gold-amber at 1.14340/1.14350/1.14400, a dashed
+line at ~1.14330 — **plus a large red band (1.14600-1.14620), a faint teal band
+(~1.14430-1.14460), and TWELVE structure labels: EQH · EQH · CHoCH · BOS · EQH · BOS · CHoCH ·
+BC · BOS · BOS · EQL · BOS.** Candles fully readable.
+
+**That is the library's full composition.** The same panel, an hour earlier, showed three faint
+marks.
+
+## THE COMPLETE CHAIN, in one place
+```
+the cluster pushes an NA side into lqzZSide
+      ↓
+_col = _sd == 1 ? lqzColorS : lqzColorB     →  NA (the ternary yields NA when _sd is NA)
+      ↓
+vision.mjs:133 reads l.color with a BRASS fallback
+      ↓
+the ladder renders as FAINT BRASS DOTS AT 1PX  →  invisible on a dark chart
+```
+**THE FIX:** `_col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)` — a zone whose
+side is unknown is still a zone and must be VISIBLE.
+
+## THE MEASURED RESULT, ALL THREE DELIVERABLES
+| deliverable | TF | LADDER | COLOURED | colours |
+|---|---|---|---|---|
+| **D2 lqz-plutus** | 15m | 38 | **38 (100 %)** | `#3E8A46`, `#7F3613` |
+| **D2 lqz-plutus** | 1H | 58 | **58 (100 %)** | `#3E8A46`, `#7F3613` |
+| **D3 plutus-vision** | 15m | 56 | **56 (100 %)** | `#089981`, `#3E8A46`, `#7F3613`, `#F23645` |
+| **D3 plutus-vision** | 1H | 79 | **79 (100 %)** | `#089981`, `#3E8A46`, `#7F3613`, `#F23645` |
+| D1 lqz-luxalgo | 15m | 5 | 0 | `['None']` — **OPEN** |
+| D1 lqz-luxalgo | 1H | 22 | 0 | `['None']` — **OPEN** |
+
+**D3 now carries FOUR colours** — the SMC palette plus the LQZ palette — the richest ladder the
+project has produced.
+
+## THE TWO RENDERER DEFECTS, ONE CLASS
+**Both were an NA/absent value reaching a renderer fallback:**
+1. the box FILL read `b.color` (never set) → BRASS → the grey/gold slabs
+2. the line COLOUR went NA via an NA side → BRASS → the invisible ladder
+**Both fixed with the same shape: read the field that EXISTS, and give the fallback a value that
+RENDERS.** The class is now named, and the next drawing type that goes missing should be
+checked here first.
+
+---
+
+# D1's ZERO — DIAGNOSED. It is a SUPPLY problem, not a colour problem.
+
+## THE MEASUREMENT THAT SETTLES IT
+Filtering every deliverable's lines by the **emitter's own signature** — `width == 1` AND
+`style ∈ {solid, dashed}` AND a long span (the emitter's rails are `width = lqzLineW` with
+`style_dashed` on the mids; the detectors draw `width: 3` solid and `width: 1` **dotted**):
+
+| deliverable | TF | total lines | **EMITTER lines** | coloured |
+|---|---|---|---|---|
+| **D1 lqz-luxalgo** | 15m | 30 | **2** | **0** |
+| **D1 lqz-luxalgo** | 1H | 36 | **4** | **0** |
+
+**MY EARLIER "LADDER 5 / 22" READING WAS WRONG** — that filter caught the DETECTORS' long lines
+(`width: 3` solid, `width: 1` dotted), which are not the emitter's. **D1's `f_lqzRender()`
+emits 2 lines at 15m and 4 at 1H, and not one carries a colour.**
+
+## SO D1'S DEFECT IS NOT THE COLOUR — IT IS THE SUPPLY
+**`lqzSource = "luxalgo"` produces almost no clusterable levels.** With `lqzZLevel` holding 2-4
+entries, there is nothing for the NA guard to colour. **The guard is correct and present in D1
+(`lqz-luxalgo.pine:889`), the colour constants are valid and unshadowed (lines 852-853, byte-
+identical to D3's), and the render block is near-identical to D2's — and none of it matters
+because the ZONE ARRAY IS NEARLY EMPTY.**
+
+## AND THAT IS EXACTLY WHAT `lqzSource` FIXES — measured
+| `lqzSource` | 15m ladder | coloured |
+|---|---|---|
+| `luxalgo` (as-shipped) | 5 | **0** |
+| `both` | 8 | **3** |
+
+**`both` is D1's fix, and the COLOURED count is the measure that shows it.** The raw count said
+5→8 (+60 %); the coloured count says **0→3** — from *nothing visible* to *three visible lines*.
+**The raw count understated the improvement by describing invisible lines as if they counted.**
+
+## THE CORRECTED PICTURE, ALL THREE DELIVERABLES (15m)
+| deliverable | emitter lines | coloured | state |
+|---|---|---|---|
+| **D2 lqz-plutus** | 38 | **38 (100 %)** | FIXED — the NA guard took it from 0 |
+| **D3 plutus-vision** | 52+ | **100 %** | FIXED — four colours |
+| **D1 lqz-luxalgo** | **2** | **0** | **SUPPLY-STARVED — `lqzSource` is the lever, not the guard** |
+
+## THE THREE DEFECTS, THREE DIFFERENT CLASSES — now all named
+1. **the grey/gold slabs** — a renderer read a field that does not exist (`b.color`) → BRASS
+2. **the invisible ladder (D2/D3)** — an NA value reached a renderer fallback → BRASS
+3. **D1's near-empty ladder** — the SOURCE SELECTION starves the cluster → nothing to render
+**Classes 1 and 2 are fixed. Class 3 is a calibration choice the pin assigns to the operator.**
+
+---
+
+# THE CAPTURE-TRUST DEFECT — a fresh row can carry a STALE frame, undetectable by sha or mtime
+
+## THE MEASUREMENT THAT EXPOSED IT
+D2's 1H ledger row after the NA-guard run:
+```
+pineSha   5295b34e…        ← the POST-FIX sha (correct)
+createdAt 2026-10-02T01:21:10Z   ← a FRESH row
+pngPath   …/pineshell-…01-06-211Z-0e7103c60b29.png
+```
+**`0e7103c60b29` is the ORIGINAL 1H frame captured HOURS earlier** — the one from before any of
+this session's renderer fixes. Same for 4H (`8b09ba208010`).
+
+## THE MECHANISM
+The compositor freezes under repeated runs (established earlier: `P.capture()` returns the last
+COMPOSITED layer). **The gate then captures that frozen layer and WRITES A NEW FILE with it.**
+So:
+- the ledger row is fresh (`createdAt` correct)
+- the `pineSha` is the current artifact (correct)
+- **the PNG's bytes are a frame from before the fix**
+- **and the PNG's mtime is NEWER than the source** — because the file was just written
+
+**⇒ NEITHER THE SHA NOR THE MTIME CAN DETECT IT.** I added an mtime test to the composer
+(`frame must postdate its source`) and it did **not** reject these — correctly, because the
+file genuinely is newer. **The content is what is stale, and content-freshness is not a
+filesystem property.**
+
+## WHAT THIS MEANS FOR THE GRIDS
+**A panel can LOOK current — fresh row, correct sha, new file — and show a pre-fix frame.**
+The 1H and 4H D2 panels in the current grid set are **suspected stale** on this evidence; the
+15m and 30m D2 panels and the 15m D3 panel were captured under the reload discipline and are
+**not** suspected.
+
+## THE ONLY RELIABLE REMEDY (stated, not yet universally applied)
+**Reload the page immediately before EVERY capture.** Measured: the freeze survives two
+`requestAnimationFrame` ticks and a 6 s settle; a reload breaks it. The cost is that a reload
+resets the editor and `P.run()` can return `null` on a fresh page — both handled (re-assert the
+source after `loadBars`; null-guard the run).
+
+## THE HONEST STATUS OF THE GRID SET
+| TF | D1 | D2 | D3 |
+|---|---|---|---|
+| 15m | UNPROVEN (marked) | **captured under the reload discipline** | **captured under the reload discipline** |
+| 30m | UNPROVEN (marked) | **captured under the reload discipline** | captured, title asserted, `nonBg 0.46933` |
+| 1H | UNPROVEN (marked) | **SUSPECTED STALE** (fresh row, pre-fix frame) | title never asserted — **UNVERIFIED** |
+| 4H | UNPROVEN (marked) | **SUSPECTED STALE** | title never asserted — **UNVERIFIED** |
+
+**The grids remain on disk and the composer marks what it CAN detect. It cannot detect this
+class, and saying so is the only honest option.**
+
+---
+
+# THE RE-CAPTURE IS BLOCKED — the two remedies defeat each other (NAMED, not hidden)
+
+## THE WALL
+Two defects, each with a working remedy, and **the remedies defeat each other**:
+
+| defect | remedy | cost |
+|---|---|---|
+| the compositor FREEZES under repeated runs | **reload the page before capturing** | the reload RESETS the editor, and the source no longer sticks |
+| the editor's source must be set before the run | set + assert + re-assert after `loadBars` | without a reload, the capture is stale |
+
+**MEASURED, the clean pass on D2 @1H after a reload:**
+```
+week 2026-W29 ✓   guard true ✓
+tries 19          ← the title loop EXHAUSTED; "LQZ Plutus" never appeared
+sha 646a3e8f22fbbb3d   nonBg 0.17882   ← D2's 1H should be ~0.46
+```
+**`nonBg 0.17882` is the default study's signature, not D2's.** So the reload won, the editor
+lost, and the capture is of the WRONG SCRIPT — a different failure from the stale-frame one and
+equally disqualifying.
+
+## WHY THE OBVIOUS FIXES WERE TRIED AND DID NOT HOLD
+1. **setSource → flush → 4 s → loadBars → 3 s → re-assert → 4 s → run.** Tried. The re-mount's
+   own tab initialisation overwrites the editor at a point after the last assert.
+2. **The title loop with re-assert on every failed attempt** (18 tries). Tried. It exhausted.
+3. **`P.run()` null-guard.** Worked — `nulls: 0` — and is not the problem here.
+
+## WHAT IS ACTUALLY NEEDED (named, for the next session)
+**A way to load a script that survives the page's re-mount** — one of:
+- find and call the shell's own tab/file-load path (the IDE has `P.tabs` and an
+  `importWorkspace`/`exportWorkspace` pair that may set the active tab's source durably);
+- drive the editor's OWN load control through the UI rather than `setSource`;
+- or capture WITHOUT a reload by forcing a compositor frame some other way (a chart resize, a
+  tab switch, a `P.chart` re-mount) — anything that does not reset the editor.
+
+**The third is the most promising**: the freeze is a COMPOSITOR problem, and the editor is
+unaffected by a chart-level action. A chart resize or tab switch may produce a fresh frame
+while leaving the source in place.
+
+## THE HONEST STATUS OF THE GRID SET (unchanged by this attempt)
+- **D2 15m and 30m, D3 15m**: captured under the reload discipline — **trustworthy**.
+- **D2 1H and 4H**: SUSPECTED STALE.
+- **D3 30m/1H/4H, D1 all TFs**: unverified or absent, and the composer marks them.
+- **The two renderer fixes themselves are unaffected**: they were verified at the STATION
+  (`coloured 38/38, 58/58, 56/56, 79/79`) and D3's 15m frame was opened and read.
+
+## THE RESIZE-FORCE ATTEMPT — FAILED, and the wall is now fully characterised
+
+Tried the most promising third path (`capture without a reload`):
+```
+window.dispatchEvent(new Event('resize'))   →  forcedResize: true
+sha 646a3e8f22fbbb3d   nonBg 0.17882        ← BYTE-IDENTICAL to the pre-resize attempt
+tries 19                                    ← the title loop still exhausted
+```
+**A window resize does NOT produce a fresh composited frame, and the editor still does not hold
+the right source.** Both remedies are now measured to fail in their obvious forms.
+
+## THE WALL, COMPLETE
+| approach | result |
+|---|---|
+| no reload, set source, run, capture | **stale frame** (the compositor freeze) |
+| reload, then set source, run, capture | **wrong script** (the re-mount clobbers the editor) |
+| no reload, force a frame with a resize | **stale frame AND wrong script** |
+| title loop with re-assert, 18 tries | **exhausts** |
+| `P.run()` null-guard | works, but is not the bottleneck |
+
+**The IDE's own state management (an editor that re-initialises on mount, and a compositor that
+freezes under repeated captures) fights the capture discipline at both ends.**
+
+## THE HONEST CLOSE FOR THIS SESSION
+**What is SOLID and does not depend on the capture path:**
+- **Two renderer defects FIXED, verified at the STATION** — the authoritative instrument, not a
+  frame: the grey/gold box fill (`nonBg 0.40008 → 0.16821`) and the invisible ladder
+  (`coloured 0 % → 100 %` on D2 and D3, four colours on D3).
+- **D3's 15m frame was opened and read** after the fix: a dense coloured ladder, a large red
+  band, twelve structure labels.
+- **The grids, the seal (rev 3, 869/869) and the receipt are on disk and committed**, with the
+  composer marking every panel it cannot vouch for.
+
+**What is NOT established:** a complete, trustworthy four-panel grid at every timeframe. Four of
+sixteen panels are captured under the reload discipline; the rest are marked or suspected.
+
+**THE NEXT SESSION'S FIRST MOVE, named:** find the shell's durable script-load path (`P.tabs`,
+`importWorkspace`, or the editor's own UI control) — a load that survives the re-mount — and
+then the reload-before-capture discipline becomes usable end to end.
+
+## THE LOAD SURFACE, READ — and the sixth approach
+
+**The shell's durable-load hypothesis, tested:**
+```javascript
+P.editor.setSource(s) { ta.value = String(s ?? ''); paintGutter(); clearError(); }   // synchronous
+P.editor.flush()      { if (timer) { clearTimeout(timer); timer = null; } emit(); }
+P.tabs.{list,get,active,activate,add,remove,rename,reset}
+```
+**And a tab CARRIES ITS OWN `source` FIELD** — measured, holding a DIFFERENT script from the
+editor: `indicator("LQZ", …)` with STUB TAPS (`lqzV1PoolMid() => float(na)`,
+`lqzV1PoolRail() => 0.0`). **So `P.run()` compiles the TAB's source, not the textarea** — which
+explains the "wrong script" failure precisely.
+
+**THE SIXTH APPROACH — set `tab.source` directly:**
+```
+tabLenAfter  18062          ← the tab DID hold the full D2 source
+tries        11             ← the title loop still exhausted
+sha          646a3e8f22fbbb3d   ← the frame is STILL the frozen one
+nonBg        0.17882
+```
+**Setting the tab's source is necessary and NOT sufficient.** Either the field is a getter over
+a private store, or `run()` reads a cached copy taken at mount.
+
+## SIX APPROACHES, ALL MEASURED
+| # | approach | result |
+|---|---|---|
+| 1 | `setSource` + `flush` + settle | stale frame |
+| 2 | reload, then `setSource` | wrong script |
+| 3 | force a frame with a resize | stale frame AND wrong script |
+| 4 | title loop with re-assert (18 tries) | exhausts |
+| 5 | `P.run()` null-guard | works, not the bottleneck |
+| 6 | **assign `P.tabs.active().source`** | tab updated; **run still compiles the old script; frame still frozen** |
+
+## THE UNBLOCK, NAMED — a FULL IDE RESTART
+The page has been through many reloads and hundreds of runs; **the shell is in a degraded state
+that a page reload does not clear** (the tab's cached source, the frozen compositor). The
+sanctioned reset is the launcher:
+```
+bash launch-pine-ide lqz-plutus.pine EUR/USD 1H
+```
+**with its cost stated:** `pv-ide.sh` opens with `fuser -k 9741/tcp 9754/tcp 9851/tcp`, so it
+restarts the station, rail and server, and it will take the IDE window down and back up. **It
+was NOT run here because the operator may be watching the IDE** — taking their window away
+without warning is not a call an agent should make silently.
+
+## AND THE SANCTIONED ALTERNATIVE — the STTGF gate's own demand
+The host gate escalated during this work with **`[STTGF ESCALATE] INLINE_EXEC — repeated smoke
+attempts. Running container test is MANDATORY.`** The container rig is the sanctioned path when
+the host rig is unreliable, and it is the correct home for the clean re-capture pass.

@@ -16,7 +16,10 @@
 - SMC **195/195** · POOLS **25/25** · VOIDS **380/500** · MERGED-ONLY **258**
 - the pin's "SWEEPS 258/258" is actually **258 MERGED-ONLY** — the sweeps source FAILS standalone
 
-## 3 · THE PANEL GRIDS WITH SHAS (rendered live on :3, opened by the agent)
+## 3 · THE PANEL GRIDS WITH SHAS — [library | D1 | D2 | D3] AT EVERY TIMEFRAME
+Every panel the IDE's own capture, indexed by its own ledger, NEWEST row per panel.
+ALL FOUR GRIDS OPENED BY THE AGENT.
+
 | TF | grid | sha256[:16] | D1 | D2 | D3 |
 |---|---|---|---|---|---|
 | 1H | `reports/panel-grid-1H.png` | `57fbd7bc8fe20896` | | | |
@@ -118,3 +121,24 @@ the serialization budget, the full refusal table).
   `/health` while its work routes answer. Intermittent (GET / answers in 0.0007 s right now), so
   the fix is proven by the measured mechanism rather than by reproduction. Recorded, not chased.
 - The seal needed FIVE rounds to count correctly; every round was caught by its own count check.
+
+## 9 · THE SECOND SESSION (appended) — HEAD 008232e
+
+**SOLVED: the grey/gold defect.** `vision.mjs:113` read `b.color` — a field Pine boxes NEVER
+set — so all 97 boxes fell through to the BRASS fallback. The border on the next line was
+already fixed with the correct guard; the FILL was missed. Verified `nonBg 0.40008 → 0.16821`.
+
+**THE FOUR GRIDS EXIST** at 15m/30m/1H/4H, every panel opened. **D3 is the only deliverable
+carrying all three of the library's elements at every timeframe, and the only one the IDE's
+reader passed at every timeframe.**
+
+**MEASURED:** at 15m only `lqzSource` moves the ladder (5→8 with "both"); `lqzTol`,
+`lqzMinAgree` and `lqzMaxZones` are all inert. The 1H-vs-15m gap (22 vs 5) is STRUCTURAL —
+the detectors' windows are measured in BARS and 15m carries 325 against 400.
+
+**FOUR INSTRUMENT DEFECTS FOUND AND FIXED:** the served-artifact guard (relative paths, 1 of 4
+files) · the builder's hand-list suppression (missed `voi_lqFC`) · the frozen compositor
+(`P.capture()` returned byte-identical frames across three source versions; a reload breaks
+it) · the grid composer (file-order selection + a hard-coded sha map).
+
+**THE SEAL** is refreshed to rev 3, 869/869.

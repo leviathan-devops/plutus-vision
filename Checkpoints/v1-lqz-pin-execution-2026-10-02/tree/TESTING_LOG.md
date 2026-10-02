@@ -516,3 +516,62 @@ The 1H-vs-15m gap (22 vs 5) is STRUCTURAL: the detectors' windows are measured i
 digit for digit and found the launcher's health predicate reads a route that can hang.
 
 HEAD at this entry: `b27bb49`
+
+---
+
+## 2026-10-02 (session 2, close) — THE RENDERER FIXES, THE RESTART, THE COMPLETE GRID SET
+
+### THE AUDIT ARTIFACT
+`reports/LQZ_ADVERSARIAL_AUDIT.txt` — re-run POST-FIX. Its header names the artifact shas at
+audit time: D1/D2/D3 as they stand, `vision.mjs d032a26721176649`,
+**`plutus-vision-v0.pine 605bff82d3539e9e` (the parity reference, UNCHANGED)**.
+
+## AUDIT GATE: PASS
+
+```
+  [PASS] A1 detector paint suppressed                 live colour inputs=0 transparent=10
+  [PASS] A2 drawing caps raised to 500                per-deliverable: [True, True, True]
+  [PASS] A3 mutant: wrong title refused               exit=1
+  [PASS] A4 mutant: duplicate panels refused          exit=1 guarded
+  [PASS] A5 grid artifact present                     panel-grid-1H.png 523703 bytes
+  [PASS] A6 ledger carries the frame shas             3/3 shas cited
+  [PASS] A7 library cross-reference clean             library 5/5 bands>0 irregular 5/5 · grids 4/4 bands>0 irregular 4/4
+
+ADVERSARIAL VERDICT: 7/7 PASS
+ZERO confirmed defects — every guard bit its mutant
+```
+
+**AUDIT GATE: PASS** — 7/7, zero confirmed defects, artifact on disk.
+
+### THE TWO RENDERER DEFECTS — one class, both fixed
+**an NA/absent value reaching a renderer fallback.** Measured, at the station:
+| defect | before | after |
+|---|---|---|
+| the box FILL read `b.color` (never set by Pine boxes) → BRASS → the grey/gold slabs | `nonBg 0.40008` | **`nonBg 0.16821`** |
+| the line COLOUR went NA via an NA side → BRASS at 1px → the invisible ladder | **0 % coloured** | **100 %** on D2 and D3 |
+
+### THE GRID SET — COMPLETE, all twelve panels post-fix
+D1/D2/D3 × 15m/30m/1H/4H, every title asserted, every capture on a RESTARTED rig where each
+run succeeded FIRST TRY. Grids: `15m dcd2598f · 30m 71320abb · 1H d461941e · 4H 8a3f62f2`.
+
+**What the 15m grid shows:** D1 clean but visibly EMPTY (the supply starvation made visible);
+D2 the ladder (green/red/gold full-width lines + a gold band); D3 the richest (dense ladder +
+a large red band + TWELVE structure labels).
+
+### THE UNBLOCK
+The full IDE restart (`bash launch-pine-ide`) cleared a degraded shell state that SIX
+approaches could not: stale frames, wrong scripts, an exhausted title loop, a frozen
+compositor, an unhelpful resize, and a tab-source assignment that did not take.
+
+### CLASS 3 — D1, the operator's calibration
+D1 @ `lqzSource = "luxalgo"` emits **2 emitter lines at 15m, 4 at 1H, and 0 carry a colour** —
+SUPPLY-STARVED, visible in the grid as an empty chart. Measured: `lqzTol`, `lqzMinAgree` and
+`lqzMaxZones` are ALL inert against it; **`lqzSource = "both"` takes it from 0 coloured lines
+to 3.** That is the operator's call.
+
+### NOT TESTED (the honest remainder)
+- **No container round.** Every verdict is host-live.
+- **D1 has no post-fix LADDER** because its supply starves — by design of `lqzSource`, not a
+  rendering fault.
+- The composer's freshness test (frame mtime vs source mtime) is a WEAK guard: it did not
+  reject two frames that proved, by matching shas on a fresh rig, to have been CORRECT anyway.

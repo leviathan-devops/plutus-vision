@@ -695,7 +695,7 @@ if bsl_b_liq_V.size() > 0
 
 // ═══ LQZ core + render ═══
 // ── inputs ──────────────────────────────────────────────────────────────────
-lqzSource   = input.string("luxalgo", "Liquidity detector", options = ["luxalgo", "candles", "both"], group = "LQZ")
+lqzSource   = input.string("both", "Liquidity detector", options = ["luxalgo", "candles", "both"], group = "LQZ")
 lqzTol      = input.float(0.5, "Overlap tolerance (x ATR)", minval = 0.05, maxval = 3.0, step = 0.05, group = "LQZ")
 lqzMinAgree = input.int(2, "Min agreeing sources", minval = 1, maxval = 4, group = "LQZ")
 lqzMaxZones = input.int(60, "Max zones", minval = 5, maxval = 200, group = "LQZ")
@@ -884,12 +884,7 @@ f_lqzRender() =>
             _hi = array.get(lqzZTop, i)
             _cf = array.get(lqzZConf, i)
             _mid = (_hi + _lo) / 2
-            _col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)
-            // ^ THE NA GUARD. Measured: ALL ladder lines carried colours ['None'] in the
-            //   payload, which means _sd was NA and the ternary yielded NA -- and an NA colour
-            //   falls through to vision.mjs's BRASS default, rendering the ladder as faint
-            //   brass dots at 1px. Same class as the box FILL bug: an NA reaching a renderer
-            //   fallback. A zone whose side is unknown is still a zone and must be visible.
+            _col = _sd == 1 ? lqzColorS : lqzColorB
             _lx = math.max(0, bar_index - lqzLeftB)
             // a thin zone collapses onto one line; a real one keeps its two rails
             _span = _hi - _lo
