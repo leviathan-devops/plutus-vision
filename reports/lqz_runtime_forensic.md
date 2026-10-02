@@ -918,3 +918,53 @@ sixteen panels are captured under the reload discipline; the rest are marked or 
 **THE NEXT SESSION'S FIRST MOVE, named:** find the shell's durable script-load path (`P.tabs`,
 `importWorkspace`, or the editor's own UI control) — a load that survives the re-mount — and
 then the reload-before-capture discipline becomes usable end to end.
+
+## THE LOAD SURFACE, READ — and the sixth approach
+
+**The shell's durable-load hypothesis, tested:**
+```javascript
+P.editor.setSource(s) { ta.value = String(s ?? ''); paintGutter(); clearError(); }   // synchronous
+P.editor.flush()      { if (timer) { clearTimeout(timer); timer = null; } emit(); }
+P.tabs.{list,get,active,activate,add,remove,rename,reset}
+```
+**And a tab CARRIES ITS OWN `source` FIELD** — measured, holding a DIFFERENT script from the
+editor: `indicator("LQZ", …)` with STUB TAPS (`lqzV1PoolMid() => float(na)`,
+`lqzV1PoolRail() => 0.0`). **So `P.run()` compiles the TAB's source, not the textarea** — which
+explains the "wrong script" failure precisely.
+
+**THE SIXTH APPROACH — set `tab.source` directly:**
+```
+tabLenAfter  18062          ← the tab DID hold the full D2 source
+tries        11             ← the title loop still exhausted
+sha          646a3e8f22fbbb3d   ← the frame is STILL the frozen one
+nonBg        0.17882
+```
+**Setting the tab's source is necessary and NOT sufficient.** Either the field is a getter over
+a private store, or `run()` reads a cached copy taken at mount.
+
+## SIX APPROACHES, ALL MEASURED
+| # | approach | result |
+|---|---|---|
+| 1 | `setSource` + `flush` + settle | stale frame |
+| 2 | reload, then `setSource` | wrong script |
+| 3 | force a frame with a resize | stale frame AND wrong script |
+| 4 | title loop with re-assert (18 tries) | exhausts |
+| 5 | `P.run()` null-guard | works, not the bottleneck |
+| 6 | **assign `P.tabs.active().source`** | tab updated; **run still compiles the old script; frame still frozen** |
+
+## THE UNBLOCK, NAMED — a FULL IDE RESTART
+The page has been through many reloads and hundreds of runs; **the shell is in a degraded state
+that a page reload does not clear** (the tab's cached source, the frozen compositor). The
+sanctioned reset is the launcher:
+```
+bash launch-pine-ide lqz-plutus.pine EUR/USD 1H
+```
+**with its cost stated:** `pv-ide.sh` opens with `fuser -k 9741/tcp 9754/tcp 9851/tcp`, so it
+restarts the station, rail and server, and it will take the IDE window down and back up. **It
+was NOT run here because the operator may be watching the IDE** — taking their window away
+without warning is not a call an agent should make silently.
+
+## AND THE SANCTIONED ALTERNATIVE — the STTGF gate's own demand
+The host gate escalated during this work with **`[STTGF ESCALATE] INLINE_EXEC — repeated smoke
+attempts. Running container test is MANDATORY.`** The container rig is the sanctioned path when
+the host rig is unreliable, and it is the correct home for the clean re-capture pass.
