@@ -324,3 +324,65 @@ third time this session: a sha-match is an INFERENCE of staleness — the conten
 the pin's own D1 gate (*"proper full-width horizontal display"*) is unsatisfiable under
 `'luxalgo'` on this fixture. **The calibration knobs (`lqzTol`, `lqzMinAgree`, `wickBodyMult`,
 `rejectATRMult`) remain the operator's.**
+
+
+---
+
+## 14 · THE RE-VERIFICATION ROUND — every gate re-run on the current tree (HEAD `733c14e`)
+
+**THE PIN'S LAW: "the orchestrator re-runs every prior gate on the combined tree." This section
+is that re-run — every number measured this round, against the tree at `733c14e`.**
+
+### THE GATES, RE-RUN
+
+| gate | command | result |
+|---|---|---|
+| L1 unit | `bun test ./scripts/` | **12 pass · 0 fail** (PATH form) |
+| L1.5 adversarial | `python3 scripts/lqz_adversarial.py` | **7/7 PASS · ZERO confirmed defects** |
+| L2 parity | `python3 scripts/compare.py` (RC=0) | SMC **195/195** · POOLS **25/25** · VOIDS **380/500** — **exact to the baseline** · SWEEPS a named residual (F-XX) |
+| L3/L4 grids | the four TF IDE grids + the W6 grid | every panel opened and recorded |
+| the stale-artifact guard | `scripts/verify_served_pine.sh` | `SERVED_PINE_OK` |
+
+### THE ROUND FOUND AND FIXED THREE DEFECTS
+
+1. **The frame guard was necessary but not sufficient.** The A4 mutant planted two panels from
+   one deliverable and the grid returned `PANEL_GRID_OK`. **Adjudicated both ways; Side B real.**
+   Fixed with a **SOURCE-distinctness guard** (`bccd247`). The real grid prints both lines:
+   `panels distinct: D1=48bea185626c D2=e30c133199a0 D3=7e3cac8e79ff` ·
+   `sources distinct: D1=db06b6057412 D2=68881deaca0c D3=82da437af969`.
+2. **The suite was red for the adversary's reason.** `test_panel_rows_are_same_bars` validates
+   the manifest the grid produced — and the A4 mutant's manifest was the last write to the shared
+   TMP. **The test was right; the pollution was the defect.** Fixed with `LQZ_PANEL_TMP`
+   (`36373c3`).
+3. **A test red since the NA guard landed, unnoticed.** `test_colour_by_side` pinned the
+   pre-guard line (22/24 across 8). Now pins the guarded line (`f496f9a`).
+
+### THE NAMED RESIDUALS
+
+- **F-XX — the SWEEPS standalone leg** returns `PINE_RUNTIME_ERROR` at all four TFs on the
+  current engine install; the source and fixture are unchanged since round-zero; the pin's
+  `258/258` and this run's `MERGED-ONLY 258` are the same 258. **The deliverables are
+  unaffected** — D1 embeds the sweeps logic (103 refs) and runs; the MERGED runs; v0 is
+  untouched at `605bff82d3539e9e`.
+- Viewports differ per panel (no viewport control in the CDP composer). The 36 native LuxAlgo
+  primitives carry no colour (BRASS fallback). The station wedges under sustained compiles —
+  remedy `scripts/pv-ide.sh`.
+
+### THE WAVE SHAS (this round, in order)
+
+`f496f9a` the stale test · `bccd247` the source guard · `36373c3` the TMP isolation · `4a580f4`
+TESTING_LOG · `bbb80be` FAILURE_LOG · `b8eb1e4` D-XXII + the canon logs · `a39abfd` the W6 grid
+rebuilt · `733c14e` the seal rev 8.
+
+### THE STATE
+
+**103 commits since round-zero · tree CLEAN (0 dirty) ·
+the seal rev 8 (873/873) · the grid shas above · every gate re-run and green where its
+instrument is comparable.**
+
+### WHAT REMAINS — THE PIN'S P8
+
+**The operator's verdict.** The grids are on disk, opened, and recorded:
+`reports/panel-grid-IDE-{15m,30m,1H,4H}-2026-W29.png` and `reports/panel-grid-1H.png`. **The
+operator states IT IS APPROVED — or names what is wrong.** And the OPEN calibration
+(`lqzTol` · `lqzMinAgree` · `wickBodyMult` · `rejectATRMult`) remains theirs.

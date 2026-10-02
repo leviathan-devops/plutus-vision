@@ -662,3 +662,100 @@ source ran, unmatched now that it cannot.
 **AUDIT GATE: PASS** — the adversarial suite is 7/7 with zero confirmed defects, the unit suite is
 12/12, the parity's three comparable legs match the baseline exactly, the fourth carries a named
 engine-era residual, and the sealed checkpoint holds the tree at `873/873 MATCH`.
+
+
+---
+
+# THE STARVATION DRILL — the proof contract's negative case, run (2026-10-02)
+
+**The pin's proof contract:** *"Every check is POSITIVE + NEGATIVE: a planted-defect zone set MUST
+be refused; an empty detector MUST yield zero zones, never a fallback band."* **And the runtime
+seat's H4: "push it: … starve the bars."** This is that drill, run against the deployed station.
+
+## THE PROBE
+
+For each deliverable, `POST :9741/run` at limits 1, 2, 5 and 400 on EUR/USD 1H:
+
+| deliverable | limit=2 | limit=5 | limit=400 | verdict |
+|---|---|---|---|---|
+| D1 `lqz-luxalgo` | boxes 0 · lines 0 · labels 0 | 0 · 0 · 0 | 117 · 42 · 2 | **ZERO at starvation — no fallback** |
+| D2 `lqz-plutus` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 58 · 0 | **ZERO at starvation — no fallback** |
+| D3 `plutus-vision-v1` | boxes **0** · lines 2 · labels 2 | 0 · 2 · 2 | 5 · 79 · 24 | **zero ZONES; see below** |
+
+`limit=1` is refused by the station itself (no bars) — recorded, not a pass.
+
+## THE VERDICT — the contract HOLDS
+
+**No deliverable emits a fallback band at exhaustion.** D1 and D2 emit **nothing at all** at 2–5
+bars. D3 emits **zero boxes** — its zone count is genuinely zero.
+
+## THE ONE OBSERVATION, recorded rather than waved through
+
+D3's 4 primitives at 2 bars are the LuxAlgo SMC's **structure labels** — `"Weak High"` /
+`"Weak Low"` — and their geometry is **degenerate**:
+
+```
+label: {"time": 1783389600000, "price": null, "text": "Weak High", …}
+line:  {"a": {"time": 0, "price": null}, "b": {"time": 1783389600000, "price": null}, …}
+```
+
+**`price: null` on every anchor, and a `time: 0` (epoch) left edge.** These CANNOT render — and
+this is **D-XX's lesson reappearing**: *a count is not a render.* The counts say 2 labels + 2
+lines; the pixels can say nothing, because there is no price to draw at. **It is not a fallback
+band and not a wrong-level zone — it is dead geometry the counts still census.** RECORDED as an
+observation for the operator's read; not fixed here, because the fix belongs to the SMC's own
+starved-feed guard and the deliverable's zone contract is intact.
+
+
+---
+
+# THE H4 DRILL LEDGER — every push in the runtime-seat list, run or named (2026-10-02)
+
+The pin's H4: *"push it: switch TF mid-render · apply an input · toggle lqzSource · starve the
+bars."* This is each drill with its evidence, and the one residual NAMED per H7.
+
+## DRILL 1 · SWITCH TF — RUN
+
+TFs switched between 1H / 15m / 30m / 4H with a capture after every switch, dozens of times this
+session: the four IDE grids exist because of it, and D1's rows read `15m 97/33/1 FAIL ·
+30m 145/46/2 PASS · 1H 117/42/2 PASS · 4H 216/65/5 PASS`. **The mechanism measured mid-flight:**
+`cfg.timeframe` follows the chart's market (`pine-ide.mjs:221`), and `P.loadBars({pair,
+timeframe})` is the setter.
+
+## DRILL 2 · TOGGLE lqzSource — RUN
+
+The measured pair, twice confirmed:
+`lqzSource='luxalgo'` → 117/36/**0** → **MECH_VETO → FAIL** · `lqzSource='both'` → 117/42/**2** →
+**PASS**. The variant was built, served, run, captured, and LOOKED AT.
+
+## DRILL 3 · STARVE THE BARS — RUN
+
+The starvation drill (separate entry above): D1/D2 emit **nothing** at 2–5 bars; D3 emits zero
+boxes. **No fallback band anywhere.**
+
+## DRILL 4 · APPLY AN INPUT — RUN, by the mechanical equivalent
+
+**The pre-registered expectation: the label count goes 2 → 0 when `lqzLabel` is off.** Measured
+directly through the deployed station:
+
+```
+lqzLabel=true  (the shipped default):  boxes=117  lines=42  labels=2
+lqzLabel=false (the toggle applied):   boxes=117  lines=42  labels=0
+```
+
+**The knob works. And the gate's law is CONSISTENT with it:** `boxes>0 · labels=0` is exactly
+what `gate.mjs:157`'s MECH_VETO refuses — so the operator's own toggle produces an unlabelled
+chart AND the gate refuses it, which is the same law that failed the old shipped default. **The
+knob, the default, and the veto now agree about what "unlabelled" means.**
+
+## THE NAMED RESIDUAL · THE SETTINGS DIALOG ITSELF — UNRUN
+
+**The pin's H2 names "the settings dialog" as a first-person op. It was attempted and could not
+be reached:** clicking `[title="Indicator settings"]` opens the chart's *Indicators browser*
+(Symbol Search / Indicators / Change timeframe), and the legend's ⚙ button (found, rect
+`918,49 15x13`, clicked with a full pointer sequence) opened nothing. The renderer's exposed
+surface carries `settingsDialog` (null prototype), `input` (the mouse handler, not the
+indicator inputs) and `indicatorSlices` (`{drawScene, sliceCache, tips}` — the render slice
+machinery, not the studies) — **the dialog's own internals are not reachable from the exposed
+API.** Per H7 the residual is NAMED rather than waved: **DRILL 4's evidence stands on the
+station's own input path, and the dialog UI remains unexercised by this driver.**
