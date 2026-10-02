@@ -878,3 +878,43 @@ while leaving the source in place.
 - **D3 30m/1H/4H, D1 all TFs**: unverified or absent, and the composer marks them.
 - **The two renderer fixes themselves are unaffected**: they were verified at the STATION
   (`coloured 38/38, 58/58, 56/56, 79/79`) and D3's 15m frame was opened and read.
+
+## THE RESIZE-FORCE ATTEMPT — FAILED, and the wall is now fully characterised
+
+Tried the most promising third path (`capture without a reload`):
+```
+window.dispatchEvent(new Event('resize'))   →  forcedResize: true
+sha 646a3e8f22fbbb3d   nonBg 0.17882        ← BYTE-IDENTICAL to the pre-resize attempt
+tries 19                                    ← the title loop still exhausted
+```
+**A window resize does NOT produce a fresh composited frame, and the editor still does not hold
+the right source.** Both remedies are now measured to fail in their obvious forms.
+
+## THE WALL, COMPLETE
+| approach | result |
+|---|---|
+| no reload, set source, run, capture | **stale frame** (the compositor freeze) |
+| reload, then set source, run, capture | **wrong script** (the re-mount clobbers the editor) |
+| no reload, force a frame with a resize | **stale frame AND wrong script** |
+| title loop with re-assert, 18 tries | **exhausts** |
+| `P.run()` null-guard | works, but is not the bottleneck |
+
+**The IDE's own state management (an editor that re-initialises on mount, and a compositor that
+freezes under repeated captures) fights the capture discipline at both ends.**
+
+## THE HONEST CLOSE FOR THIS SESSION
+**What is SOLID and does not depend on the capture path:**
+- **Two renderer defects FIXED, verified at the STATION** — the authoritative instrument, not a
+  frame: the grey/gold box fill (`nonBg 0.40008 → 0.16821`) and the invisible ladder
+  (`coloured 0 % → 100 %` on D2 and D3, four colours on D3).
+- **D3's 15m frame was opened and read** after the fix: a dense coloured ladder, a large red
+  band, twelve structure labels.
+- **The grids, the seal (rev 3, 869/869) and the receipt are on disk and committed**, with the
+  composer marking every panel it cannot vouch for.
+
+**What is NOT established:** a complete, trustworthy four-panel grid at every timeframe. Four of
+sixteen panels are captured under the reload discipline; the rest are marked or suspected.
+
+**THE NEXT SESSION'S FIRST MOVE, named:** find the shell's durable script-load path (`P.tabs`,
+`importWorkspace`, or the editor's own UI control) — a load that survives the re-mount — and
+then the reload-before-capture discipline becomes usable end to end.
