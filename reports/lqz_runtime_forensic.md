@@ -451,3 +451,53 @@ the ones that control whether levels EXIST at all, and they are the next measure
 - **the 15m ladder: an UPSTREAM SUPPLY problem**, one stage before the cluster — named, with the
   measurement that proves it, and with two candidate levers ruled out by experiment rather than
   argument.
+
+---
+
+# 15m — THE CORRECTION, AND D1'S REAL LEVER SURFACE
+
+## CORRECTION TO THE ENTRY ABOVE (append-only; the earlier reading stands as what was believed)
+The previous entry said "the LQZ zone array is EMPTY at 15m". **That was WRONG** — it was drawn
+from a 3-line sample. Counting **full-width** lines properly (a ladder line's `a.time` is ~500
+bars before its `b.time`):
+
+```
+as-shipped, D1 @ 15m (325 bars):   boxes 97 · lines 30 · LADDER 5 · labels 0
+```
+
+**FIVE ladder lines exist.** The 30 = 25 detector markers + **5 ladder lines**. The ladder is
+**sparse, not absent** — and 5 against the library's 30-60 bands per frame is exactly the
+"15m needs optimization" the operator named.
+
+## D1'S ACTUAL INPUT SURFACE (measured from the file, not assumed)
+```
+698  lqzSource   = "luxalgo"   ← THE TAPS ONLY — D1 does not use the V2 candle detector
+699  lqzTol      = 0.5         ← measured INERT at 15m (4 variants, byte-identical)
+700  lqzMinAgree = 2           ← measured INERT at 15m
+701  lqzMaxZones = 60          ← only 5 emitted, so the cap is NOT the limit
+852  lqzColorB / 853 lqzColorS / 854 lqzLineW / 855 lqzLineTol
+857  lqzFillA    = 10          ← NOTE: `lqzFill3` DOES NOT EXIST IN D1
+858  lqzLeftB    = 500 / 859 lqzRightB / 860 lqzThickE / 861 lqzLabel
+```
+
+**TWO OF MY OWN EARLIER CLAIMS DIE HERE:**
+1. **`lqzFill3` does not exist in `lqz-luxalgo.pine`.** My "nofill" variant replaced a pattern
+   that was not there — so that experiment never tested what its commit message claimed. It
+   still disproved the fill hypothesis (the render was byte-identical), but for a reason I
+   mis-stated.
+2. **`lqzSwingLen` / `lqzWickMult` / `lqzReject` are not in D1 either** — the V2 detector's
+   swing inputs live in `plutus-vision-lqz/lqz-core.pine` (D2/D3). Sweeping them against D1
+   found zero matches, which is a fact about my probe, not about the deliverable.
+
+## WHERE 15m's SPARSITY ACTUALLY LIVES
+- `lqzSource = "luxalgo"` ⇒ the zones are clustered from **the three detectors' taps**.
+- `lqzMaxZones = 60` and only **5** are emitted ⇒ **the cap is not binding**.
+- The cluster's own knobs are inert ⇒ **the levels that arrive are few**.
+**So the supply is upstream of every lever in D1's surface**, and the honest next step is to
+count the TAP values at 15m versus 1H — not to keep turning knobs that are measured to do
+nothing.
+
+## STATUS
+- **grey/gold: FIXED** (`vision.mjs:121`, `nonBg 0.40008 → 0.16821`).
+- **15m ladder: SPARSE (5 lines vs the library's 30-60 bands)**, cause located upstream of every
+  input in the deliverable, with three candidate levers ruled out by measurement.
