@@ -575,3 +575,50 @@ The 1H-vs-15m gap (**22 → 5** at `luxalgo`; **28 → 8** at `both`) is **not**
 BARS, and 15m carries 325 of them against 1H's 400 — so the same `swp_len` spans far less time
 and fewer structures form. **Every input in the deliverable's surface has now been measured
 against this, and only `lqzSource` moves it.**
+
+---
+
+# H4 PUSH — `lqzSource` toggled LIVE and LOOKED AT. The count and the pixels disagree.
+
+## THE PUSH (the pin's H4: "toggle lqzSource")
+Built `lqz-luxalgo-both.pine` (`lqzSource = "both"`), served by the IDE's own server, fetched
+and HELD by the editor (`fetchHasBoth: true`, `held: true`), compiled as D1 (`title: LQZ
+AluxAlgo`, `tries: 1`), captured fresh (`941f8e44e3834e44`), and **opened**.
+
+## WHAT THE FRAME SHOWS
+`EU EURUSD · FIXTURE · 15m`, candles only across the full price path, and **ONE faint dotted
+line at ~1.14300. No ladder. No bands. No labels.**
+
+## WHAT THE COUNT SAID (the earlier sweep)
+`lqzSource = "both"` at 15m ⇒ **8 full-width ladder lines**, against `luxalgo`'s **5**.
+
+## THE CONTRADICTION — and it is the same class as the grey/gold defect
+**The count says 8; the frame shows 1.** A count describes what a MECHANISM emitted; the frame
+describes what the RENDERER painted. **This project has now been bitten by that gap twice in
+one session** — first with the 97 brass boxes (counts right, fill wrong), now with the ladder
+lines (counts right, pixels absent).
+
+**AND IT INVALIDATES MY OWN EARLIER RECOMMENDATION.** I told the operator `both` "buys +60 %
+ladder at 15m" on the strength of the count. **The frame does not support that claim**, and a
+count-based recommendation that the pixels contradict is exactly the theatrical class this
+project exists to refuse. **WITHDRAWN pending a look at each variant.**
+
+## WHAT IS ACTUALLY ESTABLISHED ABOUT `lqzSource`
+| claim | basis | state |
+|---|---|---|
+| `both` emits 8 ladder lines at 15m vs `luxalgo`'s 5 | the station's `drawings.lines`, full-width filter | **MEASURED** |
+| `both` LOOKS denser at 15m | — | **NOT SUPPORTED BY THE FRAME** |
+| `candles` == `luxalgo` counts | the sweep, and the wiring read (`_need` 1 vs 2) | **MEASURED and explained** |
+
+## THE H4 PUSHES — STATUS
+| push | done? | evidence |
+|---|---|---|
+| switch TF mid-render | **YES** | the native widget drove 15m/30m/1H/4H; counts differ per TF and 15m reads the real 325 bars |
+| apply an input | **YES** | the IDE exposes NO input surface (`hasInputs: false`); inputs are changed in the source, and this session changed `lqzFill3`, `lqzFillA`, `lqzTol`, `lqzMinAgree`, `lqzSwingLen`, `lqzWickMult`, `lqzReject` and `lqzSource` |
+| toggle lqzSource | **YES — and it returned a contradiction** | above |
+| starve the bars | **PARTIAL** | `limit=1` refuses BY NAME (`bars absent (1)`); a live mid-render starvation was not driven |
+
+## THE REMAINDER, NAMED
+**Every `lqzSource` variant must be LOOKED AT before any recommendation.** The count is not the
+evidence; the frame is. Until then, `lqzSource` stays the operator's call **on visual grounds
+that have not yet been gathered.**
