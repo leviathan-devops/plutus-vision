@@ -460,3 +460,59 @@ synthetic grid; irregular spacing is detected levels.
 - **The second-operator check is not run** — no zero-context subagent has driven it.
 - **The band-height delta is unadjudicated** — the operator's call.
 - render vision.mjs sha at test time: `56e9a3eb1d83e43d` · HEAD `d7dc0ce`
+
+---
+
+## 2026-10-02 (session 2) — THE IDE PIPELINE, THE GREY/GOLD FIX, THE FOUR GRIDS
+
+### THE IDE'S OWN PIPELINE — found and used end to end
+`P.run` · `P.capture` · `P.runGate` · `P.look` · `P.gate.{catalog,rows,verdict}`
+and the verdict buttons `data-act="look-pass|look-fail|look-inconclusive"` whose own
+tooltip reads **"The orchestrator's look: PASS (refused on a blank/failed frame)"**.
+The operator's law — **"EVERYTHING RUNS THROUGH THE IDE"** — is now the workflow.
+
+### THE GREY/GOLD DEFECT — SOLVED
+`vision.mjs:113` read `b.color` — **a field a Pine box NEVER sets** — so all 97 boxes fell
+through to the BRASS fallback `rgba(185,154,91,0.10)`. The BORDER on the very next line was
+already fixed with the correct guard; **the FILL was missed, six lines apart.**
+Fix: `const fill = b.bgcolor ? normColor(b.bgcolor, 'rgba(0,0,0,0)') : 'rgba(0,0,0,0)'`
+**Verified: `nonBg 0.40008 → 0.16821` (a 58 % drop) and the frame goes from slabs burying the
+chart to clean.**
+
+### THE FOUR GRIDS — every panel the IDE's own capture, every one opened
+| TF | D1 | D2 | D3 |
+|---|---|---|---|
+| 15m | 97b/30l | 0b/38l | **5b/57l/22L** |
+| 30m | 145b/40l | **0b/66l** | **5b/85l/23L** |
+| 1H | 117b/36l | 0b/58l | **5b/79l/24L** |
+| 4H | 216b/50l | 0b/53l | **5b/80l/30L** |
+**D3 is the only deliverable carrying all three of the library's elements — thin ladder +
+large coloured bands + structure labels — at EVERY timeframe, and the only one the IDE's own
+reader passed at every timeframe.**
+
+### MEASURED LEVERS AT 15m
+| lever | effect |
+|---|---|
+| `lqzTol` 0.5→1.5 | **none** |
+| `lqzMinAgree` 2→1 | **none** |
+| `lqzMaxZones` 60 | **not binding** (5 emitted) |
+| **`lqzSource` = "both"** | **5 → 8 ladder lines (+60 %)** ← the only one that moves it |
+The 1H-vs-15m gap (22 vs 5) is STRUCTURAL: the detectors' windows are measured in BARS and
+15m carries 325 against 1H's 400.
+
+### INSTRUMENT DEFECTS FOUND AND FIXED
+1. `verify_served_pine.sh` — relative paths (false drift from any other cwd) and **1 of 4
+   files**; now all four, from anywhere, `SERVED_PINE_OK`.
+2. The builder's suppression was a HAND-LIST that missed `voi_lqFC`; now a PREDICATE.
+3. `P.capture()` returned the byte-identical frame across THREE source versions — it reads the
+   last COMPOSITED layer; **a page reload breaks the freeze.**
+4. The grid composer: file-order selection (rendered a pre-fix D1) and a HARD-CODED sha map
+   (D1's sha changed, so the lookup fell to a stale row); now newest-by-`createdAt` and shas
+   read FROM DISK.
+
+### THE RUNTIME LEDGER
+`reports/lqz_runtime_forensic.md` — every entry above with its mechanism and its measurement.
+`reports/lqz_second_operator.md` — a zero-context agent reproduced the ledger's op-1 line
+digit for digit and found the launcher's health predicate reads a route that can hang.
+
+HEAD at this entry: `b27bb49`

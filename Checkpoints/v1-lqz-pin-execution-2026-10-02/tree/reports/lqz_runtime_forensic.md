@@ -152,3 +152,426 @@ exercised and fixed in place.
    `limit: 1`.
 5. **The second-operator check is not run**: a zero-context subagent has not yet been given
    only the operating docs and asked to drive the rig.
+
+---
+
+# THE OPERATING MANUAL — the three commands, verbatim
+
+**Added after the second-operator check (reports/lqz_second_operator.md).** A zero-context agent
+completed every step but had to read SOURCE to learn the compile API — and it found a rig defect
+in the process. This section exists so the next operator does not repeat either.
+
+## THE RIG CHECK — and WHY `GET /` LIES
+
+```bash
+# THE PORT CHECK (all four)
+for p in 9741 9754 9851 9222; do
+  printf ':%s  ' "$p"
+  curl -s -o /dev/null -w 'http=%{http_code}\n' --max-time 5 "http://127.0.0.1:$p/"
+done
+# EXPECT :9741 200 · :9754 404 (no / route — healthy) · :9851 200 · :9222 200
+
+# THE CHECK THAT ACTUALLY MATTERS — the station is HALF-ALIVE-PRONE.
+curl -s -o /dev/null -w '/        %{http_code} %{time_total}s\n' --max-time 5 http://127.0.0.1:9741/
+curl -s -o /dev/null -w '/cells   %{http_code} %{time_total}s\n' --max-time 5 http://127.0.0.1:9741/cells
+curl -s -o /dev/null -w '/bars    %{http_code} %{time_total}s\n' --max-time 5 "http://127.0.0.1:9741/bars?pair=EUR/USD&timeframe=1H"
+```
+
+**MEASURED, by a zero-context operator: `GET /` and `GET /health` can HANG (http_code=000, curl
+exit 28) while `/catalog`, `/cells`, `/bars` answer 200 and `POST /run` compiles normally.** The
+VIL rail reads the hung route and reports `PINE_STATION_DOWN` — so a rig can be declared dead
+while it works.
+
+**AND THE LAUNCHER USES THE LYING ROUTE:** `pv-ide.sh` has
+`up http://127.0.0.1:9741/ || { echo "STATION_DOWN"; exit 1; }` — `GET /`. **The launcher's health
+predicate is the one route that can hang while the station is functional.**
+
+**THE CORRECT CHECK is the WORK route, not the liveness route:**
+```bash
+curl -s -m 90 -X POST http://127.0.0.1:9741/run -H 'Content-Type: application/json' \
+  -d '{"script":"//@version=6\nindicator(\"t\")\nplot(close)","pair":"EUR/USD","timeframe":"1H","limit":300}' \
+  | python3 -c "import json,sys;d=json.load(sys.stdin);print('OK' if d.get('success') else 'REFUSED', d.get('data',{}).get('title'))"
+```
+**A rig that answers THIS is up, whatever `GET /` says.**
+
+## THE COMPILE — the API the docs did not state
+
+```bash
+# POST :9741/run  {"script": <full Pine source>, "pair", "timeframe", "limit"}
+curl -s -m 90 -X POST http://127.0.0.1:9741/run \
+  -H 'Content-Type: application/json' \
+  -d "{\"script\":$(python3 -c "import json;print(json.dumps(open('lqz-plutus.pine').read()))"),\
+\"pair\":\"EUR/USD\",\"timeframe\":\"1H\",\"limit\":1603}"
+```
+**Returns:** `{success, data:{title, bars, counts:{boxes,lines,labels,…}, sourceSha}}`
+**ASSERT THE TITLE.** It is the compiled script's OWN identity — the only deterministic per-panel
+check in the system. `undefined` means the station is unreachable, not that the panel is empty.
+
+**THE REFUSALS, so a reader knows what normal looks like:**
+| input | response |
+|---|---|
+| empty / null script | `400 :: primary: a script or canon:true is required` |
+| not Pine | `422 :: Unexpected token (2:6)` |
+| unknown identifier | `422 :: <name> is not defined` |
+| absent pair/timeframe | `500 :: no bars cell for … (available: 12 cells listed)` |
+| `limit=1` | `400 :: bars absent (1)` |
+| `limit=0` | **`200` — DOCUMENTED as "keep the full history"** |
+| concurrent load | **serialized ~16 s each; no busy signal — budget ~20 s per compile** |
+
+## THE CAPTURE — and the two ways it goes wrong
+
+```bash
+# THE LIVE GRID (writes reports/panel-grid-<TF>.png; asserts the run title; refuses duplicate panels)
+bun scripts/lqz-panel.mjs 1H      # or 30m / 15m / 4H
+
+# A SINGLE FRAME (the X11 path — the proven one)
+DISPLAY=:3 xdotool search --name "Pine IDE" | head -1     # resolve the window id (CHANGES on relaunch)
+DISPLAY=:3 import -window <ID> -silent /tmp/look.png
+sha256sum /tmp/look.png | cut -c1-16
+# THEN OPEN IT. A capture nobody opened is not evidence.
+```
+
+**TRAP 1 — THE STALE FRAME.** With the station wedged, the page renders the PREVIOUS script. The
+second operator's first capture returned a D3 frame while asking for D1, and caught it only by
+comparing. **The `run.title` assertion is what prevents this** — it is in `lqz-panel.mjs`; hand
+captures must assert too.
+
+**TRAP 2 — THE SERVED COPY.** The browser serves `pine-ide/ide/renderer/`. A rebuilt `.pine` at the
+project root is INVISIBLE until copied there. `bash scripts/verify_served_pine.sh` gates it
+(`SERVED_PINE_OK`).
+
+## THE ONE-PARAGRAPH VERSION
+
+> Check the rig by COMPILING, not by pinging. Assert the run's title. Copy the built `.pine` into
+> `pine-ide/ide/renderer/` before capturing. Resolve the window id fresh. Open every frame you
+> capture. Budget ~20 s per compile — the station serializes.
+
+---
+
+# OPERATOR-CAUGHT · "this grey and gold empty shell indicator — whatever this is"
+
+## THE OBSERVATION
+The operator, looking at the live IDE, named two defects in one sentence:
+1. **"grey and gold"** — the frame's dominant colour is not the specified palette.
+2. **"empty shell"** — the frame carries no readable content.
+3. **"whatever this is"** — the frame does not identify itself.
+
+## THE MECHANISM — three parts, each verified
+### (a) The slabs are the LQZ FILL LAYER, not detector paint
+- All six `swp_` colour constants are confirmed suppressed (`lqz-luxalgo.pine:36-44`, all `color(na)`).
+- `swp_break_box` (`lqz-luxalgo.pine:93`) is DEFINED AND HAS **NO CALLERS** — the method grep
+  returns only the definition line, so the sweep boxes never draw.
+- What remains is the emitter's own fill (`lqz-render.pine`, transplanted to D1 line ~900):
+  `box.new(_lx, _hi, …, _lo, bgcolor = color.new(_col, lqzFillA))`
+
+### (b) THE COLOUR MATHS PRODUCES "grey and gold" EXACTLY
+| input | value | at alpha 10/255 ≈ 4 % over a dark chart reads as |
+|---|---|---|
+| `lqzColorB` (demand) | `#3E8A46` | dark **GREY**-green |
+| `lqzColorS` (supply) | `#7F3613` | dark **GREY-GOLD** |
+So the two colours the operator named are the palette at 4 % opacity — the fill is meant to
+be a whisper UNDER a ladder, and reads as grey slabs when the ladder is thin.
+
+### (c) WHY 15m IS THE WORST — and why the operator caught it there
+15m carries **325 bars** (the fixture's real depth) against 400 at 30m/1H/4H, and its zones
+span the WIDEST price ranges. So:
+- the fills are the LARGEST at 15m, and
+- the ladder is the SPARSEST (D1 30 lines, D3 57 lines vs 50/85 at 4H).
+**The subordinate layer becomes the only visible one.** "Empty shell" is the correct word.
+
+## THE FIX — two inputs, and they are the operator's calibration
+```pine
+lqzFill3 = input.bool(false, "Fill bands with 3+ sources")   ← was true
+lqzFillA = input.int(0, "Fill alpha (3+ sources)")           ← was 10
+```
+Variant built and SERVED BY THE IDE'S OWN SERVER (`pine-ide/ide/renderer/lqz-luxalgo-nofill.pine`,
+verified by fetching it back: `lqzFill3 = input.bool(false`, `lqzFillA = input.int(0`).
+
+## THE IDENTIFIABILITY DEFECT — "whatever this is"
+A chart-only capture carries **no indicator name** unless the renderer draws a legend. The
+operator could not tell D1 from D2 from D3 on a frame that is only slabs.
+**This is a REAL, SEPARATE defect**: the panel judge's panels must identify themselves in the
+frame, not only in the composer's caption above them.
+
+## THE CAPTURE-LAG DEFECT (found while demonstrating the fix)
+`P.capture()` returned the **byte-identical previous frame** (`7fbe8be137f79b35`) THREE TIMES
+across three different runs whose ledger rows recorded D1's correct counts (97 boxes / 30
+lines). The capture reads the last COMPOSITED layer; under back-to-back runs the compositor
+has not produced a new frame.
+**The fix in flight: settle with two `requestAnimationFrame` ticks plus a longer wait before
+capturing** — the same class as the earlier `run.title` debounce, one layer further down the
+pipeline (COMPOSE, not COMPILE).
+
+---
+
+# THE UNRESOLVED CONTRADICTION — the counts and the frame disagree (OPEN)
+
+## THE FACTS, EACH FROM A TOOL RESULT
+1. **THE OPERATOR'S OBSERVATION** (verbatim): *"this grey and gold empty shell indicator
+   whatever this is also needs optimization."* The 15m frame is grey slabs, olive lines, **no
+   ladder, no labels, no indicator legend**.
+2. **THE LEDGER RECORDS**: D1 @ 15m = `boxes 97 · lines 30 · labels 0 · bars 325`, `reader FAIL`.
+3. **THE FRAME SHOWS**: large grey slabs, four faint dotted marks, **no 30 lines, no legend**.
+4. **THE SUPPRESSION IS VERIFIED COMPLETE**: all 24 `box.new` calls in `lqz-luxalgo.pine`
+   account for their colour args (6 use positional `na` for `border_color` + a suppressed
+   `bgcolor`); all six `swp_` constants are `color(na)` (`lqz-luxalgo.pine:36-44`);
+   `swp_break_box` (`lqz-luxalgo.pine:93`) has zero callers.
+5. **THE FILL HYPOTHESIS IS REFUTED**: `lqz-luxalgo-nofill.pine` (`lqzFill3 = false`,
+   `lqzFillA = 0`) was built, SERVED (`fetchHasFalse: true`), HELD by the editor
+   (`editorHoldsFalse: true`), compiled as D1 (`title: LQZ LuxAlgo`, `tries: 1`), and produced
+   **the byte-identical frame** `7fbe8be137f79b35` after a 6 s + 2×`requestAnimationFrame`
+   settle. **Turning the fills off changed nothing.**
+
+## THEREFORE
+**The engine reports 97 boxes and 30 lines; the chart shows neither.** The visible slabs are
+grey with olive lines — Pine's / Vela's DEFAULT box styling — so *something* paints boxes
+without a colour, and the 30 lines do not reach the screen at all.
+
+**These two facts cannot both be true of a correct render.** The gap between the ledger's
+counts and the frame's pixels IS the defect the operator's sentence identified — and it is
+bigger than "the fills are too strong".
+
+## THE EXPERIMENTS THAT WOULD SETTLE IT (named, not guessed)
+1. **A HARD CHART RE-MOUNT** before the capture. The evidence favours a stale composited
+   frame: `P.capture()` returned the same sha across runs whose counts differed, and the frame
+   carries no indicator legend at all — a Vela chart with a drawn study shows its legend.
+2. **READ THE RUN'S OWN `drawings` PAYLOAD** — `P.run()` returns `run.drawings.{boxes,lines,…}`
+   with their colours. Comparing THAT against the screen splits "the engine did not emit" from
+   "the chart did not paint", which no count can.
+3. **`P.state().frames` / `drawings`** — the shell keeps a frames counter and a drawings
+   registry; a mismatch between them and the canvas is the stale-composite signature.
+
+## THE HONEST STATUS
+**OPEN. Not a rendering-preference question and not a calibration question** — a
+counts-vs-pixels contradiction. The operator's "empty shell" is the correct description of the
+symptom; the mechanism is one layer below where I first placed it.
+
+---
+
+# SOLVED — "this grey and gold empty shell indicator" — the root cause
+
+## THE DEFECT (one line, in the RENDERER, not the Pine)
+`pine-ide/pine-ide/vision.mjs:113` read:
+```javascript
+const fill = normColor(b.color, 'rgba(185,154,91,0.10)');
+//                       └─ a field a Pine box NEVER sets   └─ BRASS #B99A5B @ 10 %
+```
+**Pine boxes set `bgcolor`. They never set `color`.** So the read was ALWAYS undefined and
+**every one of the 97 boxes fell through to the BRASS fallback** — which is exactly the
+**gold** the operator named, over the dark chart's **grey**.
+
+**The BORDER on the very next line was already fixed with the correct guard** (its comment
+reads *"was BRASS: the tan-striped VOIDS stacks"*) — **the FILL was missed.** One drawing type
+was fixed and its sibling was not, in the same 6-line block.
+
+## WHY EVERY EARLIER FIX FAILED TO MOVE THE PIXELS
+- Suppressing the Pine `bgcolor` constants (12, then 13 with `voi_lqFC`) changed nothing —
+  **this line never looked at `bgcolor`.**
+- Setting `lqzFill3=false` / `lqzFillA=0` changed nothing — **the LQZ fills were never the
+  slabs.**
+- The slabs were brass REGARDLESS of what the Pine said, because the fill was being read from
+  a field that does not exist.
+
+## THE FIX
+```javascript
+const fill = b.bgcolor ? normColor(b.bgcolor, 'rgba(0,0,0,0)') : 'rgba(0,0,0,0)';
+```
+A box WITH `bgcolor` uses it; a box with NO colour is TRANSPARENT. Mirrors the border's own
+existing guard, one line above.
+
+## THE VERIFICATION (a fresh frame, not a cached one)
+| | before | after |
+|---|---|---|
+| capture sha | `8dc32e29c460176e` | **`3dafa3f2497661f6`** |
+| `nonBg` | **0.40008** | **0.16821** ← a 58 % drop |
+| the frame | grey/brass slabs burying the chart | **clean; candles fully readable** |
+
+The `nonBg` drop is the measurement: 97 brass boxes leaving the canvas.
+
+## THE TWO INSTRUMENT DEFECTS THIS EXPOSED (both fixed or named)
+1. **THE FROZEN COMPOSITOR.** `P.capture()` returned the byte-identical frame
+   `7fbe8be137f79b35` across THREE different source versions, with `nonBg` stuck at 0.40008 —
+   it reads the last COMPOSITED layer. **A page reload is the remedy**; the freeze survived
+   two `requestAnimationFrame` ticks and a 6 s settle. **Any capture without a reload is
+   suspect.**
+2. **THE REMEDY FOR (1) WAS ALSO THE REMEDY FOR THE BUG** — the reload picked up the fixed
+   `vision.mjs`, which the frozen page had been serving from memory all along.
+
+## THE REMAINDER — the same class, one drawing type over (OPEN)
+The **30 lines** still do not render: the payload carries `lineColours: ["(none)"]` and
+`vision.mjs:133` reads `l.color` with a `BRASS` fallback. **The station's drawing→payload
+conversion drops the line's colour**, so the emitter's `color = _col` never reaches the
+renderer. **The fix is the same shape**: make the station carry the colour, or make the
+renderer read the field that IS carried. Until then the ladder renders as faint brass dots
+on a clean chart instead of the library's ladder.
+
+---
+
+# 15m — WHERE THE LADDER ACTUALLY GOES (measured, and it is NOT the cluster)
+
+## THE MEASUREMENT THAT REFRAMES IT
+`POST :9741/run` on D1 @ 15m (325 bars) returns **30 lines — and NONE of them is a ladder line**:
+```
+colour distribution: {'null': 30}
+  [0] width:3 style:solid   a.time == b.time   ← a VERTICAL marker, 3-bar span
+  [1] width:1 style:dotted  a→b spans 3 bars
+  [2] width:3 style:solid   a.time == b.time   ← vertical
+```
+The LQZ emitter draws `line.new(_lx, _hi, bar_index + lqzRightB, _hi, …)` — a **full-width**
+line, whose `a.time` would be ~500 bars before `b.time`. **No such line exists in the payload.**
+⇒ `f_lqzRender()` emitted NOTHING, which happens only when `array.size(lqzZLevel) == 0`.
+**The LQZ zone array is EMPTY at 15m.**
+
+The 30 `null`-coloured lines are the DETECTORS' marker lines. Their `null` colour is **correct**:
+their colour constants are `color(na)` by this session's suppression.
+
+## THE LEVERS DO NOT MOVE IT — four variants, identical counts
+| variant | boxes | lines | labels |
+|---|---|---|---|
+| as-shipped (`lqzMinAgree=2`, `lqzTol=0.5`) | 97 | 30 | 0 |
+| `lqzMinAgree=1` (any band clusters) | 97 | 30 | 0 |
+| `lqzTol=1.5` (wider cluster window) | 97 | 30 | 0 |
+| `lqzMinAgree=1` + `lqzTol=1.5` | 97 | 30 | 0 |
+
+**Byte-identical.** So the zone array was empty BEFORE the cluster ran: the problem is not how
+levels are CLUSTERED, it is that no levels ARRIVE. The cluster's own knobs cannot fix an
+empty input, and neither of the two inputs the pin lists as the operator's calibration is
+implicated.
+
+## WHAT THAT MEANS FOR THE PIN'S OPEN CALIBRATION
+The pin names `lqzTol · lqzMinAgree · wickBodyMult · rejectATRMult` as the operator's open
+calibration. **Two of them (`lqzTol`, `lqzMinAgree`) are now measured to have ZERO effect at
+15m** — not because they are wrong, but because nothing reaches them. **Calibrating them at
+15m would be calibrating a disconnected stage.**
+The other two — `lqzWickMult` / `lqzReject` (the V2 candle detector's swing parameters) — are
+the ones that control whether levels EXIST at all, and they are the next measurement.
+
+## STATUS
+- **grey/gold slabs: FIXED** (`vision.mjs:121`, verified `nonBg 0.40008 → 0.16821`).
+- **the 15m ladder: an UPSTREAM SUPPLY problem**, one stage before the cluster — named, with the
+  measurement that proves it, and with two candidate levers ruled out by experiment rather than
+  argument.
+
+---
+
+# 15m — THE CORRECTION, AND D1'S REAL LEVER SURFACE
+
+## CORRECTION TO THE ENTRY ABOVE (append-only; the earlier reading stands as what was believed)
+The previous entry said "the LQZ zone array is EMPTY at 15m". **That was WRONG** — it was drawn
+from a 3-line sample. Counting **full-width** lines properly (a ladder line's `a.time` is ~500
+bars before its `b.time`):
+
+```
+as-shipped, D1 @ 15m (325 bars):   boxes 97 · lines 30 · LADDER 5 · labels 0
+```
+
+**FIVE ladder lines exist.** The 30 = 25 detector markers + **5 ladder lines**. The ladder is
+**sparse, not absent** — and 5 against the library's 30-60 bands per frame is exactly the
+"15m needs optimization" the operator named.
+
+## D1'S ACTUAL INPUT SURFACE (measured from the file, not assumed)
+```
+698  lqzSource   = "luxalgo"   ← THE TAPS ONLY — D1 does not use the V2 candle detector
+699  lqzTol      = 0.5         ← measured INERT at 15m (4 variants, byte-identical)
+700  lqzMinAgree = 2           ← measured INERT at 15m
+701  lqzMaxZones = 60          ← only 5 emitted, so the cap is NOT the limit
+852  lqzColorB / 853 lqzColorS / 854 lqzLineW / 855 lqzLineTol
+857  lqzFillA    = 10          ← NOTE: `lqzFill3` DOES NOT EXIST IN D1
+858  lqzLeftB    = 500 / 859 lqzRightB / 860 lqzThickE / 861 lqzLabel
+```
+
+**TWO OF MY OWN EARLIER CLAIMS DIE HERE:**
+1. **`lqzFill3` does not exist in `lqz-luxalgo.pine`.** My "nofill" variant replaced a pattern
+   that was not there — so that experiment never tested what its commit message claimed. It
+   still disproved the fill hypothesis (the render was byte-identical), but for a reason I
+   mis-stated.
+2. **`lqzSwingLen` / `lqzWickMult` / `lqzReject` are not in D1 either** — the V2 detector's
+   swing inputs live in `plutus-vision-lqz/lqz-core.pine` (D2/D3). Sweeping them against D1
+   found zero matches, which is a fact about my probe, not about the deliverable.
+
+## WHERE 15m's SPARSITY ACTUALLY LIVES
+- `lqzSource = "luxalgo"` ⇒ the zones are clustered from **the three detectors' taps**.
+- `lqzMaxZones = 60` and only **5** are emitted ⇒ **the cap is not binding**.
+- The cluster's own knobs are inert ⇒ **the levels that arrive are few**.
+**So the supply is upstream of every lever in D1's surface**, and the honest next step is to
+count the TAP values at 15m versus 1H — not to keep turning knobs that are measured to do
+nothing.
+
+## STATUS
+- **grey/gold: FIXED** (`vision.mjs:121`, `nonBg 0.40008 → 0.16821`).
+- **15m ladder: SPARSE (5 lines vs the library's 30-60 bands)**, cause located upstream of every
+  input in the deliverable, with three candidate levers ruled out by measurement.
+
+---
+
+# THE SUPPLY LEVER, MEASURED — `lqzSource` is the one that moves 15m
+
+## THE MEASUREMENT (full-width ladder lines only; a marker line's a→b spans 3 bars, a ladder
+## line's spans ~500)
+| `lqzSource` | TF | boxes | lines | **LADDER** |
+|---|---|---|---|---|
+| `luxalgo` (as-shipped) | **15m** | 97 | 30 | **5** |
+| `luxalgo` (as-shipped) | **1H** | 117 | 36 | **22** |
+| `both` (+ candle detector) | **15m** | 97 | 33 | **8** |
+
+## THE TWO FACTS THIS ESTABLISHES
+1. **THE SPARSITY IS TIME-FRAME-SHAPED AND LARGE.** The SAME detectors produce **22** ladder
+   lines at 1H and **5** at 15m — a **4.4× difference**. The detectors' windows are measured in
+   BARS (`swp_len = 5`), so at 15m the same bar-count covers far less TIME and fewer structures
+   form; the fixture also carries **325 bars at 15m against 400 at 1H**.
+2. **`lqzSource = "both"` IS A WORKING LEVER.** Adding the V2 candle detector to the LuxAlgo
+   taps takes 15m from **5 → 8 ladder lines (+60 %)**. It is the first input measured to move
+   the 15m ladder AT ALL — `lqzTol`, `lqzMinAgree` and `lqzMaxZones` are all measured inert.
+
+## WHY THIS IS THE OPERATOR'S CALL, NOT MINE
+`lqzSource` is one of the four inputs the pin assigns to the operator's calibration. The
+measurement says what each value DOES; it does not say which look is wanted. Three options with
+their measured consequences:
+- **`luxalgo`** — 5 ladder lines at 15m. The taps only; the detector display alone.
+- **`both`** — 8 ladder lines at 15m (+60 %). Adds the candle detector's levels.
+- **`candles`** — the candle detector alone; untested at 15m in this sweep.
+
+## THE HONEST REMAINDER
+- The 1H-vs-15m gap (22 vs 5) is NOT fully explained by `lqzSource` — `both` recovers only part
+  of it. The detectors' **bar-based** windows are the structural cause and they are upstream of
+  every input in the deliverable.
+- **`lqzWickMult` / `lqzReject` remain unmeasured against a deliverable that HAS them** (D2/D3,
+  via `lqz-core.pine`). Sweeping them against D1 found zero matches, which was a fact about the
+  probe.
+
+---
+
+# THE `luxalgo == candles` COUNT — RESOLVED, NOT A DEFECT
+
+## THE OBSERVATION THAT LOOKED LIKE A RED FLAG
+`lqzSource = "luxalgo"` and `lqzSource = "candles"` returned **byte-identical counts** at BOTH
+timeframes (5 ladder lines at 15m, 22 at 1H), while `both` returned MORE (8 and 28). Two
+sources producing identical results, yet their union producing more than either, is not
+arithmetically impossible — but it warranted a read rather than a verdict.
+
+## THE WIRING, READ
+```pine
+735  lqzV1Enabled = lqzSource == "luxalgo" or lqzSource == "both"
+760  lqzV2Enabled = lqzSource == "candles" or lqzSource == "both"
+761  if lqzV2Enabled and lqzSource == "luxalgo"        ← a guard for a mutually-exclusive case
+762      runtime.error("lqzSource cannot be both 'luxalgo' and V2-active")
+827  _need = lqzSource == "candles" ? 1 : lqzMinAgree
+```
+**The selection is correctly gated.** `luxalgo` ⇒ V1 taps only; `candles` ⇒ V2 detector only;
+`both` ⇒ both. The line-761 guard is unreachable by construction, which is what a guard for a
+mutually-exclusive case should be.
+
+## WHY THE COUNTS COINCIDE
+`candles` clusters with `_need = 1` (ANY band); `luxalgo` clusters with `_need = lqzMinAgree = 2`.
+They return the same count **because the levels that arrive already carry `conf ≥ 2`** — so
+lowering the admission threshold to 1 admits nothing that was not already admitted.
+**`both` returns more because it UNIONS two level sets, not because a threshold moved.**
+All three readings are mutually consistent. **The "red flag" was a coincidence read as a
+contradiction.**
+
+## WHAT THIS LEAVES
+The 1H-vs-15m gap (**22 → 5** at `luxalgo`; **28 → 8** at `both`) is **not** a wiring fault and
+**not** an admission-threshold fault. It is structural: the detectors' windows are measured in
+BARS, and 15m carries 325 of them against 1H's 400 — so the same `swp_len` spans far less time
+and fewer structures form. **Every input in the deliverable's surface has now been measured
+against this, and only `lqzSource` moves it.**

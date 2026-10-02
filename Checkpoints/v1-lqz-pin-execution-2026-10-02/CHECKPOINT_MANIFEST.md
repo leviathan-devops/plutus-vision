@@ -1,87 +1,67 @@
-# CHECKPOINT MANIFEST — v1-lqz-pin-execution — 2026-10-02
+# CHECKPOINT MANIFEST — v1-lqz-pin-execution — 2026-10-02 (rev 3: post-fix, four grids)
 
 ## THE SEAL MODE (ONE mode, declared)
-no-lock (the tree is fully committed; reproducible from git at the SHA below — a full-tree copy would add 45M of gitignored node_modules with zero reproducibility value)
+no-lock — the tree is fully committed and reproducible from git at the SHA below. A
+full-tree copy would add ~45M of gitignored node_modules with zero reproducibility value.
+NEVER manifest-only: `tree/` holds every tracked file.
 
 ## THE SHAS
 | artifact | sha256[:16] |
 |---|---|
-| git HEAD | `a17f7da` |
-| git HEAD (full) | `a17f7da86365e2bdee2a78ad003d3067121f4d84` |
+| git HEAD | `f1f14d5` |
+| git HEAD (full) | `f1f14d5d3c317386177f2cad27c59093246ab5cf` |
 | branch | `main` |
-| remote | `https://github.com/leviathan-devops/plutus-vision.git` |
-| lqz-luxalgo.pine | `b6dda2dae4416ec8` |
+| lqz-luxalgo.pine | `f339228a078d5c2c` |
 | lqz-plutus.pine | `946f4ca21b3ddc0a` |
 | plutus-vision-v1.pine | `d41c6d9ccb1c5f8e` |
 | plutus-vision-v0.pine | `605bff82d3539e9e` |
-| render vision.mjs | `56e9a3eb1d83e43d` |
-| render workbench.bundle.js | `7ff93dcf5b2c9e77` |
-| fixture 2026-07-06.json | `0c8f7d7aa3171af8` |
+| render vision.mjs | `d032a26721176649` |
+
+## THE FOUR GRIDS (the panel judge, all TFs)
+| panel-grid-IDE-15m | `5bbad0130c5da15f` |
+| panel-grid-IDE-30m | `680037ffd0283f01` |
+| panel-grid-IDE-1H | `ef74ce4fc9269a48` |
+| panel-grid-IDE-4H | `3e9197ac8f69ddb5` |
 
 ## THE COUNTS (verified against git, not asserted)
-- tracked files (excl. the seal dir): **857**
-- sealed in `tree/` (excl. the nested copy): **857**  **MATCH**
-  · the tree holds **885** entries; **28** of them are a nested copy of the seal
-    itself (an earlier revision, committed before this seal existed)
-  · both counts include SYMLINKS — git tracks 10 and `find -type f` skips them
-
-- context_management: **12** docs
-- ship docs: **5** entries (absences recorded as `.ABSENT` files, never omitted)
-- source `.pine`: 5 · scripts: 81
+- tracked files (excl. the seal dir): **869**
+- sealed in `tree/` (excl. the nested copy): **869**  **MATCH**
+- canon: 12 docs · ship: 5 entries
 
 ## THE STATE
-- **W1-W6 GREEN**: 12 named tests, 4+2+3+3 pass, 0 fail
-- **FOUR GRIDS** rendered live from the Pine IDE on :3 and OPENED by the agent
-- **AUDIT GATE: PASS** — 7/7, zero confirmed defects (reports/LQZ_ADVERSARIAL_AUDIT.txt)
-- **LIBRARY CROSS-REFERENCE CLEAN** — library 5/5 and grids 4/4 bands>0 AND irregular
-- **PARITY UNCHANGED** — plutus-vision-v0.pine byte-identical to the baseline
-- git: clean at `a17f7da`
+- **THE GREY/GOLD DEFECT: SOLVED** — vision.mjs read `b.color` (never set by Pine boxes);
+  now `b.bgcolor`, verified `nonBg 0.40008 → 0.16821`.
+- **THE FOUR GRIDS EXIST** and every panel was opened by the agent.
+- **THE IDE PIPELINE IS THE WORKFLOW** — RUN → CAPTURE → GATE → LOOK → VERDICT.
+- parity reference `plutus-vision-v0.pine` UNCHANGED.
 
-## HONEST GAPS (carried, not hidden)
-1. **OPERATOR VERDICT AWAITING.** The four grids are on disk and read by the agent;
-   no agent action substitutes for the operator's APPROVED.
-2. **The band-height delta is unadjudicated** — the library's bands are far larger than
-   any deliverable's. The emitter's band height is the lever.
-3. **No container round.** Every verdict is host-live, not container-grade.
-4. **No rig crash test** beyond `limit=1` (which refuses by name: `bars absent (1)`).
-5. **The second-operator check is NOT run** — no zero-context subagent has driven the rig.
-6. **The library's own count target (33 green / 7 red) is from ONE frame**; the five
-   controls measure 1-22 green and 2-4 red, so the target is a family, not a constant.
-7. This session's grid captures overwrite `/tmp/lqz-panel/{D1,D2,D3}.png` per TF; the
-   composed grids in `artifacts/` are the durable record.
+## HONEST GAPS
+1. **THE OPERATOR HAS NOT RECORDED A VERDICT.** The grids are on disk and read; the
+   `PASS/FAIL/INCONCL` buttons write to `vil/2026-W29.jsonl`. No agent action substitutes.
+2. **`lqzSource` IS THE OPERATOR'S CALL** — `both` buys D1 +60% ladder at 15m (5→8).
+3. **15m's sparsity is STRUCTURAL** (bar-based detector windows, 325 bars vs 400) and is
+   NOT fully recoverable by any input in the deliverable's surface.
+4. **The station's half-alive state** (GET / hangs while POST /run works) — the launcher's
+   blindness is fixed; the state itself is intermittent and unreproduced.
+5. **No container round.** Every verdict is host-live.
+6. **The second-operator check ran** and found a rig defect; its doc gap is closed by the
+   operating manual now in the runtime ledger.
 
 ## HOW TO RESUME
-1. read `canon/CURRENT_STATE.md` then `canon/NEXT_STEPS.md` — they carry the SHA block
-2. open `artifacts/panel-grid-1H.png` … `-4H.png` — the operator's judgment surface
-3. `bash launch-pine-ide lqz-plutus.pine EUR/USD 1H` — the proven load path
-4. `bun scripts/lqz-panel.mjs <TF>` · `python3 scripts/lqz_adversarial.py`
+1. `canon/CURRENT_STATE.md` then `canon/NEXT_STEPS.md`
+2. open `artifacts/panel-grid-IDE-*-2026-W29.png` — the operator's judgment surface
+3. `bash launch-pine-ide lqz-plutus.pine EUR/USD 1H` · `bun scripts/lqz-panel.mjs 1H`
+4. `python3 scripts/lqz_panel_ide.py` — rebuild the four grids from the ledger
 
-## SEAL INTEGRITY — the count check BITE (recorded because the guard worked)
+## SEAL INTEGRITY — the count gate bit a SECOND time (recorded)
+This revision's first tree build captured **0 of 869** files: `git ls-files` includes the SEAL
+ITSELF (it is tracked), so the build tried to nest the seal inside its own tree, the nested
+symlinks hit permission errors, and the extraction produced nothing. The manifest's count line
+reported **MISMATCH** rather than asserting success — which is the only reason it was caught.
+Fixed by excluding the seal directory from its own tree.
 
-The FIRST seal captured **1 of 857** files: the tar stream ran from a stale shell cwd, so
-the paths from `git ls-files` did not resolve. The manifest's count line reported
-**MISMATCH — investigate** rather than asserting success, which is the only reason it was
-caught. Rebuilt; the sealed tree now MATCHES the tracked count.
-
-THE MECHANISM, stated precisely because it cost two rounds: **GNU tar applies `-C` at its
-POSITION in the option list.** `-T - -C dir` reads the file list while still in the
-ORIGINAL cwd, never chdirs, and stats every path against the wrong root. `-C dir -T -`
-works. And the second round was blind because I had piped tar's stderr to /dev/null —
-**suppressing an error's output is how a one-round bug becomes a three-round bug.**
-
-ROUND 3: the count still read MISMATCH at 880/885 — because `find -type f` does not
-count SYMLINKS and git tracks 10 of them (the served renderer copies). The count method
-was wrong, not the seal. Counted as `-type f -o -type l`: **885/885 MATCH**.
-
-THREE rounds on one count, and every round was found by the SAME comparison — a delivered
-count against a source count. The gate never once let a wrong number pass as success.
-
-ROUND 4: the count then read 1769 vs 885 — because the SEAL IS INSIDE THE REPO, so
-`git ls-files` counts the seal's own contents and the number doubles. The comparison had
-to EXCLUDE the seal from its own source count. Four rounds, one comparison, zero false
-greens. The final form compares 857 vs 857 with the seal excluded from its own count.
-
-
-**THE LESSON, and it is the session's recurring one:** the check that compares a
-DELIVERED count against a SOURCE count caught a defect that every other signal passed.
-Without it, this checkpoint would have shipped holding one file and reading as complete.
+**TWO REVISIONS, TWO TREE FAILURES, BOTH CAUGHT BY THE SAME COUNT COMPARISON.** The seal's
+integrity check has now demonstrably bitten four times across three revisions (tar option
+order · a suppressed stderr · the symlink-blind count · self-reference). A checkpoint whose
+count gate has never fired is a checkpoint whose integrity is unproven; this one's has fired
+repeatedly and never once let a wrong number pass.
