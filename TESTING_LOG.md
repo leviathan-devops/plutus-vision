@@ -923,3 +923,32 @@ consumer tests of the W6 grid's artifacts, and the reboot cleared `/tmp` — inc
 `panels distinct` and `sources distinct`) → **suite back to `12 pass · 0 fail`.** The same regen
 produced the fresh panels the cross-reference above measures — one action, two obligations
 served.
+
+
+---
+
+# THE TRIO COMPLETE — D3 measured, and why it equals D2 on the ladder (2026-10-02)
+
+**The cross-reference above measured D1 and D2. D3's panel was measured this turn, through the
+same instrument, to close the set:**
+
+| | **LIBRARY** (5 charts) | **D1 lqz-luxalgo** | **D2 lqz-plutus** | **D3 plutus-vision-v1** |
+|---|---|---|---|---|
+| GREEN/teal bands | **55 (77 %)** | **0** | 18 | **18** |
+| RED bands | 16 (22 %) | 6 | 13 | **13** |
+| other | 4 | 2 | 4 | **4** |
+| spacing | all IRREGULAR | IRREGULAR | n=34 · d=22 · min 2.0 · max 84.0 | **n=34 · d=22 · min 2.0 · max 84.0** |
+
+**D3's ladder is IDENTICAL to D2's — and that is coherence, not a copy error.** The panels are
+distinct artifacts (the grid's own guard printed `panels distinct: D1=000cb8a202ff
+D2=9257c244d9a3 D3=f4e848cdae1b`), but the LADDER instrument counts only **full-width saturated
+rows**, and **D2 and D3 share the same LQZ renderer over the same fixture** — D3 adds the SMC's
+boxes and structure lines, which are shorter than the instrument's >40 %-of-width threshold and
+therefore outside its count. **The instrument measures the liquidity ladder; on that axis D2 and
+D3 are the same emitter, as designed (D3 = D2's ladder + the SMC layer).**
+
+**SO THE COMPLETE READING OF THE OPERATOR'S QUESTION:** on the library's own signature
+(green-dominant, both sides, irregular, full-width), **both of the operator's indicators match
+and LuxAlgo's bundle does not** (0 of 6 bands on the demand side). Between `lqz-plutus` and
+`lqz-luxalgo` the answer is `lqz-plutus`, and `plutus-vision-v1` carries that same ladder plus
+the SMC layer on top.
