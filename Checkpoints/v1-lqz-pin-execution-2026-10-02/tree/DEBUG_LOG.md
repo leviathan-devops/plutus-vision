@@ -1217,3 +1217,48 @@ walk reaches the **sealed checkpoint's** copies of the same tests. `bun test ./s
 > guard must assert the property the CONTRACT needs — a comparison of four sources — not the
 > proxy that usually correlates with it. And the corollary the adversary taught: **a suite whose
 > fixtures are shared with its adversary will report the adversary's state as the product's.**
+
+
+---
+
+# D-XXIII · THE FILL THAT CANNOT FIRE — "Fill bands with 3+ sources" measured dead at 1H
+
+**Date:** 2026-10-02 · **Surface:** the LQZ render's fill inputs (D1 `873`-adjacent; D3 `1123`-1129) ·
+**Trigger:** the operator's read of D1 on the live chart — *"just some horizontal red lines. I
+don't see any real liquidity zones."*
+
+## THE MEASUREMENT
+
+Tested directly against the station, D3 at 1H/400 bars, two alphas:
+
+```
+lqzFillA = 10 (as shipped):  boxes 5 · lines 79 · labels 24 · filled-boxes-in-payload = 0
+lqzFillA = 30 (heavier):     boxes 5 · lines 79 · labels 24 · filled-boxes-in-payload = 0
+```
+
+**Zero filled boxes in the payload at either alpha.** The fill's GATE is `_cf >= 3` (three
+distinct agreeing sources), it is HARD-CODED, and no zone on this fixture's 1H clears it — the
+zones are 2-source (`lqzMinAgree=2` admits them; a fill-eligible zone would need three detectors
+agreeing at one level). **The alpha input therefore controls a code path this fixture never
+reaches: a knob whose effect is invisible, not because it is unwired (D-XX's class) but because
+its PRECONDITION never occurs.**
+
+## THE LOOK, AND WHY THE OPERATOR'S READ IS FAIR
+
+The operator's complaint is accurate about D1: at 1H it draws **117 native slivers** (median 11
+bars — unreadable ticks) and only **2 clustered full-width zones**. The library's measured look
+(`lqz-luxalgo.pine:873`) is **1px bands, 2px where doubled, coverage 99-100 %, 33 green + 7 red** —
+and the design history at `:874` records that THICK filled slabs were tried first and rejected:
+*"the chart was a barcode: thick translucent slabs stacked wall to wall, candles unreadable."*
+
+**So the "zones" in the library are those 1px lines STACKED — which is exactly what D3 draws**
+(dense ladder + the red cluster at the top of the frame). **D3 is the correct surface for the
+operator's "real liquidity zones" reading; D1's sparse native output is not.**
+
+## THE OPTION SPACE, stated honestly
+
+- **Visible fill slab** would require either (a) a code change to lower the fill's `_cf` gate
+  (a render decision), or (b) a fixture where 3 detectors agree at one level (a data fact).
+  **Neither is a calibration the operator can reach from the inputs dialog today.**
+- **The D-XX discipline applies:** a knob whose precondition never fires is recorded, never
+  claimed as working. `lqzFillA` is live but its gate is unreached at 1H.

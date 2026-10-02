@@ -859,3 +859,191 @@ reason it was not permanent.**
 `CURRENT_STATE` cleared 200 from its regenerated head alone (203). The remaining docs receive
 hand-written sections inside their markers (the writer's report follows this entry) so the floor
 holds **across** regenerations, never by a longer generated head.
+
+
+---
+
+# THE LIBRARY CROSS-REFERENCE — the pin's adversarial law, run (2026-10-02, post-reboot)
+
+**The pin: *"Cross-reference every emitted zone against the library panels: is the band where
+the library band is, within tolerance?"* Triggered by the operator's question: between the two
+LQZ indicators, which is more accurate — `lqz-plutus` (theirs) or `lqz-luxalgo` (LuxAlgo's
+three bundled).**
+
+## THE INSTRUMENT
+
+`scripts/measure_ladder.py` — pixel forensics, no eye, no VLM: rows classified by
+**saturation + brightness** (the chart background is a gradient, so modal-colour fails); a row
+whose saturated pixels span **>40 % of the width** is a ladder line (**full-width is the
+qualification**); adjacent rows group into bands (thickness counted); each band's modal colour
+classes GREEN/teal · RED · other; the centre-to-centre spacing census decides irregular
+(detected levels) vs regular (a fixed grid).
+
+## THE SUBJECTS
+
+- **Reference: the operator's FIVE `WINNING_TRADE_LIBARARY/LIQUIDITY LADDERS` hand-charts.**
+- **D1 `lqz-luxalgo` and D2 `lqz-plutus` panels from ONE grid run** (`bun scripts/lqz-panel.mjs
+  1H` → `/tmp/lqz-panel/{D1,D2}.png`) — identical bars (EUR/USD 1H), same chrome, same session.
+
+## THE DATA
+
+| | LIBRARY (5 charts) | D1 lqz-luxalgo | D2 lqz-plutus |
+|---|---|---|---|
+| GREEN/teal bands | **55 (77 %)** | **0** | 18 (58 %) |
+| RED bands | 16 (22 %) | 6 (100 %) | 13 (42 %) |
+| green per chart | 4 · 22 · 8 · 9 · 4 | 0 | 18 |
+| spacing | all 5 IRREGULAR | IRREGULAR | IRREGULAR |
+| coverage (row %) | 65–74 | 43–92 | 89–92 |
+| distinct levels | 14/14 | 6/7 | 22/34 |
+
+## THE VERDICT
+
+**D2 (`lqz-plutus`) is the closer match to the library, on the structural dimension that
+matters: SIDES.** D1 rendered **zero green/demand bands** on this fixture (0 of 6) while **every
+one of the five library charts is green-dominant** (all five G > R; aggregate 3.4:1). D2 emits
+both sides with a green lean and the densest level detection (22 distinct spacings vs D1's 6).
+
+## THE CAVEATS, stated with the verdict
+
+1. The library charts are **GBPUSD 15m**; the panels are **EUR/USD 1H** — this measures the
+   ladder's CHARACTER (sides, density, irregularity, coverage), never level-for-level identity.
+2. The fixture is a **downtrend** (1.16 → 1.13), which biases any detector toward the supply
+   side — part of D1's all-red mix is regime, part is algorithm; D2 found both sides anyway.
+3. D1's two brass (#B69859) bands are the known no-colour fallback class (D-XX family), still
+   unfixed.
+4. n=5 references — direction, not proof.
+
+## THE ROUND ALSO FIXED — the reboot-cleared manifest
+
+The post-reboot suite read `9 pass · 3 fail` (`test_panel_grid_complete`,
+`test_panel_rows_are_same_bars`, `test_ab_diff_is_measurable`). **Mechanism: the three are
+consumer tests of the W6 grid's artifacts, and the reboot cleared `/tmp` — including
+`/tmp/lqz-panel/manifest.json`.** The fix is the regeneration the tests' own contract assumes:
+`bun scripts/lqz-panel.mjs 1H` → `PANEL_GRID_OK` (with the distinctness guards printing
+`panels distinct` and `sources distinct`) → **suite back to `12 pass · 0 fail`.** The same regen
+produced the fresh panels the cross-reference above measures — one action, two obligations
+served.
+
+
+---
+
+# THE TRIO COMPLETE — D3 measured, and why it equals D2 on the ladder (2026-10-02)
+
+**The cross-reference above measured D1 and D2. D3's panel was measured this turn, through the
+same instrument, to close the set:**
+
+| | **LIBRARY** (5 charts) | **D1 lqz-luxalgo** | **D2 lqz-plutus** | **D3 plutus-vision-v1** |
+|---|---|---|---|---|
+| GREEN/teal bands | **55 (77 %)** | **0** | 18 | **18** |
+| RED bands | 16 (22 %) | 6 | 13 | **13** |
+| other | 4 | 2 | 4 | **4** |
+| spacing | all IRREGULAR | IRREGULAR | n=34 · d=22 · min 2.0 · max 84.0 | **n=34 · d=22 · min 2.0 · max 84.0** |
+
+**D3's ladder is IDENTICAL to D2's — and that is coherence, not a copy error.** The panels are
+distinct artifacts (the grid's own guard printed `panels distinct: D1=000cb8a202ff
+D2=9257c244d9a3 D3=f4e848cdae1b`), but the LADDER instrument counts only **full-width saturated
+rows**, and **D2 and D3 share the same LQZ renderer over the same fixture** — D3 adds the SMC's
+boxes and structure lines, which are shorter than the instrument's >40 %-of-width threshold and
+therefore outside its count. **The instrument measures the liquidity ladder; on that axis D2 and
+D3 are the same emitter, as designed (D3 = D2's ladder + the SMC layer).**
+
+**SO THE COMPLETE READING OF THE OPERATOR'S QUESTION:** on the library's own signature
+(green-dominant, both sides, irregular, full-width), **both of the operator's indicators match
+and LuxAlgo's bundle does not** (0 of 6 bands on the demand side). Between `lqz-plutus` and
+`lqz-luxalgo` the answer is `lqz-plutus`, and `plutus-vision-v1` carries that same ladder plus
+the SMC layer on top.
+
+
+---
+
+# THE THREE-CONTROL LIVE TEST — vision-hotseat on the operator's path (2026-10-02)
+
+**The operator's standing order, recorded verbatim: "UNIT TESTS ARE THEATRICAL BULLSHIT. VISION
+IN THE LOOP. LIVE DASHBOARD TEST. THATS THE ONLY THING THAT MATTERS OR COUNTS."** This round
+executed the vision-hotseat protocol against the Pine IDE's own controls — real CDP mouse
+events, outcomes polled, every frame opened.
+
+## THE THREE CONTROLS, EACH: PROBE → REAL CLICK → OUTCOME FROM THE ARTIFACT
+
+| control | probe (size + hit-test) | the click | outcome asserted from | verdict |
+|---|---|---|---|---|
+| **▶ RUN** | `57×23`, `elementFromPoint` = itself | `Input.dispatchMouseEvent` mouseMoved→mousePressed→mouseReleased at (39, 481) | a FRESH compile: **`COMPILED 392ms`** (prior 422ms), D3's counts intact — and the :3 frame I opened shows the same numbers | **PASS** |
+| **◎ CAPTURE** | `85×23`, hit-test self | real click at (116, 481) | a FRESH evidence PNG **`evidence/pineshell-2026-W29-1790943075820.png`**, opened: D3's ladder + CHoCH/BOS/EQL, Jun 26–Jul 4 | **PASS** |
+| **⚑ GATE** | `64×23`, hit-test self | real click at (196, 481) | a NEW LEDGER ROW on disk: `82da437af969 · 1H · reader=PASS · deltas=[ANCHOR_DROPPED:3]`, **created 12 s before the read** | **PASS** |
+
+**No JS `.click()` was used anywhere. Every outcome was polled, never sleep-and-hoped. The
+second reader (my own eyes on the PNG) agreed with the instrument on every frame.**
+
+**THE DETERMINISM CHECK, third occurrence:** the CAPTURE's sha (`8c1fe08fd6a5`) matched an
+earlier D3 frame — so it was **verified fresh by opening it**, not assumed from the sha. It is
+the current render. **A sha-match is an inference; the content is the truth.**
+
+## THE ONE CONTROL DELIBERATELY UNTESTED
+
+**PASS / FAIL / INCONCL. — the operator's verdict.** The mechanism is the same control path
+proven three times above, but a machine press would impersonate the operator's judgment. The
+buttons write `orchestratorVerdict`; the press is theirs.
+
+## THE UNIT — 127 FOUND, FIXED, PROVEN
+
+The hardening unit's first live run: the launcher completed (**station, rail, server all up**)
+then exited **127** at its final line — `timeout 120 bun scripts/pv-load.mjs` — because `bun`
+lives in `~/.bun/bin`, absent from the unit's PATH. **The unit reported `failed` while the rig
+was half-up: loud but misleading.** Fixed with `Environment=PATH=…:~/.bun/bin:…`; re-run
+through systemd: **`start exit: 0`, `active (exited)`, all four ports 200.**
+
+## THE RELIGHT — the display was emptied by a profile race, not by the reboot
+
+After the unit's failed run the display showed nothing. Root cause, measured: **two chrome
+generations on ONE profile** (the unit's chrome + a repair-launch chrome) — the profile lock
+left one instance windowless. Fixed: all 13 chrome processes killed by PID, profile wiped,
+**one** chrome relit with `DISPLAY=:3` → window `4194307` on :3 → D3 loaded and asserted on
+`sourceSha 82da437af969`. **The law this taught: one chrome per profile, and the launcher's
+kill-then-start order is load-bearing.**
+
+
+---
+
+# THE MID-RENDER TF SWITCH — the last unrun H4 drill, executed (2026-10-02)
+
+**The pin's H4: *"push it: switch TF mid-render · apply an input · toggle lqzSource · starve the
+bars."* Three were run in earlier rounds; this is the fourth.**
+
+## THE DRILL, WITH ITS PRE-REGISTERED EXPECTATION
+
+**Fire a run; 120 ms later — while it is in flight — switch the timeframe.** Acceptable
+outcomes: the shell's guard discards the in-flight run (`WORKSPACE_SWITCHED`), or the run
+completes cleanly on its own TF and the switch re-renders. **Unacceptable: a crash, a silent
+mixed state, or a hang.**
+
+## THE OUTCOME — clean handling, double-read
+
+**The instrument (CDP):**
+```
+run: ok=true · title "Plutus Vision v1" · tf 1H · srcSha 82da437af969   (completed on its own bars)
+foot (polled): "COMPILED 463ms · 5 boxes · 80 lines · 27 labels"
+running: false
+```
+
+**The second reader (the :3 frame, opened):** the timeframe row reads **`4h`** selected, the
+chart shows the **4H window (Jun 4 – Jul 2, `bars 451`)**, and the footer reads
+**`COMPILED 463ms · 0 plots · 5 boxes · 80 lines · 27 labels · bars 451`** — **every number
+identical to the CDP read.** Status line: `FIXTURE · EUR/USD · 4H · 451 bars · rail :9754 ·
+station UP`.
+
+**Verdict: PASS.** The in-flight run finished on 1H; the switch landed; the chart re-rendered on
+4H with a fresh compile; no crash, no mixed state, no hang. **STATE/UI AGREEMENT confirmed as a
+side-effect: the footer's numbers, the status line's bar count, and the run payload all agree.**
+
+## THE H4 LEDGER, COMPLETE
+
+| drill | round | outcome |
+|---|---|---|
+| switch TF mid-render | THIS round | **PASS** — clean completion + re-render, double-read |
+| apply an input | earlier | **PASS** — `lqzLabel` true→false → labels 2→0, the pre-registered expectation met |
+| toggle lqzSource | earlier | **PASS** — `luxalgo` 117/36/0/FAIL vs `both` 117/42/2/PASS |
+| starve the bars | earlier | **PASS** — no fallback band (D1/D2 zero; D3 zero boxes) |
+
+**And the three operator controls, live with real mouse input (previous round): RUN · CAPTURE ·
+GATE — each probed for size + hit-testability, clicked via `Input.dispatchMouseEvent`, outcome
+asserted from the artifact, frame opened by eye.**
