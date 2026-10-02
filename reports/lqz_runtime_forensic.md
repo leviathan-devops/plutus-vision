@@ -501,3 +501,40 @@ nothing.
 - **grey/gold: FIXED** (`vision.mjs:121`, `nonBg 0.40008 → 0.16821`).
 - **15m ladder: SPARSE (5 lines vs the library's 30-60 bands)**, cause located upstream of every
   input in the deliverable, with three candidate levers ruled out by measurement.
+
+---
+
+# THE SUPPLY LEVER, MEASURED — `lqzSource` is the one that moves 15m
+
+## THE MEASUREMENT (full-width ladder lines only; a marker line's a→b spans 3 bars, a ladder
+## line's spans ~500)
+| `lqzSource` | TF | boxes | lines | **LADDER** |
+|---|---|---|---|---|
+| `luxalgo` (as-shipped) | **15m** | 97 | 30 | **5** |
+| `luxalgo` (as-shipped) | **1H** | 117 | 36 | **22** |
+| `both` (+ candle detector) | **15m** | 97 | 33 | **8** |
+
+## THE TWO FACTS THIS ESTABLISHES
+1. **THE SPARSITY IS TIME-FRAME-SHAPED AND LARGE.** The SAME detectors produce **22** ladder
+   lines at 1H and **5** at 15m — a **4.4× difference**. The detectors' windows are measured in
+   BARS (`swp_len = 5`), so at 15m the same bar-count covers far less TIME and fewer structures
+   form; the fixture also carries **325 bars at 15m against 400 at 1H**.
+2. **`lqzSource = "both"` IS A WORKING LEVER.** Adding the V2 candle detector to the LuxAlgo
+   taps takes 15m from **5 → 8 ladder lines (+60 %)**. It is the first input measured to move
+   the 15m ladder AT ALL — `lqzTol`, `lqzMinAgree` and `lqzMaxZones` are all measured inert.
+
+## WHY THIS IS THE OPERATOR'S CALL, NOT MINE
+`lqzSource` is one of the four inputs the pin assigns to the operator's calibration. The
+measurement says what each value DOES; it does not say which look is wanted. Three options with
+their measured consequences:
+- **`luxalgo`** — 5 ladder lines at 15m. The taps only; the detector display alone.
+- **`both`** — 8 ladder lines at 15m (+60 %). Adds the candle detector's levels.
+- **`candles`** — the candle detector alone; untested at 15m in this sweep.
+
+## THE HONEST REMAINDER
+- The 1H-vs-15m gap (22 vs 5) is NOT fully explained by `lqzSource` — `both` recovers only part
+  of it. The detectors' **bar-based** windows are the structural cause and they are upstream of
+  every input in the deliverable.
+- **`lqzWickMult` / `lqzReject` remain unmeasured against a deliverable that HAS them** (D2/D3,
+  via `lqz-core.pine`). Sweeping them against D1 found zero matches, which was a fact about the
+  probe.
