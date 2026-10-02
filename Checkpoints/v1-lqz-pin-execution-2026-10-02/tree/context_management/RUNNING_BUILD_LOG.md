@@ -161,3 +161,43 @@ Shared_Workspace repo. **Verified: no damage** — the parent's HEAD is unchange
 (df46f78, 0 staged) and PLUTUS_VISION remains untracked there.
 **The remedy now in use: `git -C <abs-path>` with a repo-identity gate (show-toplevel +
 remote + branch) printed before EVERY write.** Never a `cd`-chained git command.
+
+## 2026-10-02 (session 2, close) — TWO RENDERER FIXES, A RESTART, TWELVE PANELS
+
+**THE SESSION'S ARC:** the operator's law "EVERYTHING RUNS THROUGH THE IDE" → the IDE's own
+pipeline found and used → two renderer defects fixed → the capture path degraded → a restart
+unblocked it → the complete grid set.
+
+### THE IDE'S OWN PIPELINE
+`P.run` · `P.capture` · `P.runGate` · `P.look` · `P.gate.{catalog,rows,verdict}` and the verdict
+buttons whose own tooltip reads "The orchestrator's look: PASS (refused on a blank/failed
+frame)". Writes to `vil/2026-W29.jsonl`.
+
+### THE TWO RENDERER DEFECTS — one class: an NA/absent value reaching a renderer fallback
+1. **the grey/gold slabs** — `vision.mjs:113` read `b.color`, a field Pine boxes NEVER set, so
+   all 97 boxes fell through to BRASS `rgba(185,154,91,0.10)`. **The border on the next line was
+   already fixed with the correct guard; the FILL was missed, six lines apart.** Fixed →
+   `nonBg 0.40008 → 0.16821`.
+2. **the invisible ladder** — the cluster pushes an NA side → `_col = _sd == 1 ? …` yields NA →
+   `vision.mjs:133` falls back to BRASS at 1px → faint dots. Fixed with
+   `_col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)` → **D2/D3 0 % → 100 %
+   coloured** (38/38, 58/58, 56/56, 79/79; D3 carries FOUR colours).
+
+### THE COMPLETE GRID SET — twelve panels, all post-fix
+D1/D2/D3 × 15m/30m/1H/4H. Grids: `15m dcd2598f · 30m 71320abb · 1H d461941e · 4H 8a3f62f2`.
+**D3 is the only deliverable carrying all three of the library's elements at every TF.**
+
+### CLASS 3 — D1, the operator's calibration
+`lqzSource='luxalgo'` leaves D1 with **2 emitter lines at 15m, 4 at 1H, 0 coloured** —
+SUPPLY-STARVED, visible in the grid as an empty chart. `lqzTol`/`lqzMinAgree`/`lqzMaxZones` are
+ALL inert against it; **`lqzSource='both'` takes it from 0 coloured to 3.**
+
+### THE UNBLOCK
+The full IDE restart cleared a degraded shell state that SIX approaches could not: stale
+frames, wrong scripts, an exhausted title loop, a frozen compositor, an unhelpful resize, and a
+tab-source assignment that did not take.
+
+### THE CAPTURE-TRUST DEFECT (recorded, and partially retracted)
+A frozen compositor can write a NEW file containing an OLD frame — undetectable by sha or mtime.
+**BUT**: D2's 15m/30m/4H shas matched on the fresh rig, proving those frames were deterministic
+and CORRECT — the "suspected stale" call was a FALSE ALARM.
