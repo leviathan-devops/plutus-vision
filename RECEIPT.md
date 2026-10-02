@@ -386,3 +386,50 @@ instrument is comparable.**
 `reports/panel-grid-IDE-{15m,30m,1H,4H}-2026-W29.png` and `reports/panel-grid-1H.png`. **The
 operator states IT IS APPROVED — or names what is wrong.** And the OPEN calibration
 (`lqzTol` · `lqzMinAgree` · `wickBodyMult` · `rejectATRMult`) remains theirs.
+
+
+---
+
+## 15 · THE CANON AT THE FLOOR — the doc contract, mechanized (HEAD `b4b54fd`)
+
+**The pin's canon gate — *"200+ lines, >=3 file:line refs, the 5 read-first docs agree on the
+SHA"* — is now a COMMAND, not a reading:**
+
+```
+$ bash scripts/canon_gate.sh
+GATE: PASS   (exit 0)
+```
+
+**Every doc 203–290 lines · every doc 3–7 file:line refs · the SHA block identical across the
+five read-first docs · the block's D1 `db06b60574125039` == disk.**
+
+### WHAT IT TOOK, IN ORDER
+
+1. **THE AUDIT found the gate RED** — 9 of 12 docs under the floor; the hand-carried SHA block
+   stale by several artifacts; the read-first docs carrying no block.
+2. **THE INCIDENT:** re-running the canonical generator (`gen_canon.py`, *"re-run after every
+   milestone"*) cost **642 lines across 12 files** — `RUNNING_BUILD_LOG` 255 → 23 on a doc
+   titled *"append-only"*, with `write_text` called unconditionally at line 410. **Recovered
+   from git, recorded rather than hidden.**
+3. **THE REPAIR, in code — three parts:** append-safety (history below `LQZ:APPEND-BELOW`),
+   hand-preservation (`LQZ:CANON-HAND` blocks), and the **generated SHA block** for the five
+   read-first docs. **The regen survival test passes: after the fill, a full regen kept every
+   hand section (the docs grew by the refreshed heads).**
+4. **THE FILL:** a writer desk expanded the eight under-floor docs (54→284, 34→241, 162→290,
+   74→235, 112→250, 104→270, 195→248, 167→247) from the real material — the gates, the
+   adjudications, the commit ledger, the invariants.
+5. **THE REFS PASS — and its own corrections:** three of MY anchors landed off-target
+   (`lqz_adversarial.py:60`→`:67`, `gen_canon.py:438`→`:453`, `compare.py:6`→`:16` — the last was
+   actually `verify_four.py`'s line, a file mix-up caught by the same mechanical check). **The
+   claim must land on the line; the gate reads it.**
+
+### THE COMMITS OF THIS ROUND
+
+`346d6bd` the starvation drill · `1c64f20` the H4 drill ledger · `185a718` the RC correction ·
+`d3a3c81` the canon audit + repair record · `6cd40a2` the canon gate as a command · `1f09368`
+the canon fill · `7745e05` the generator's three fixes · `b4b54fd` the seal rev 10.
+
+### THE STATE
+
+**113 commits since round-zero · tree CLEAN · seal rev 10 (`874/874 MATCH`) ·
+`SERVED_PINE_OK` · `CANON GATE: PASS` · the pins re-run green.**
