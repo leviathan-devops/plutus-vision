@@ -75,6 +75,9 @@ def compose(tf, best, out_dir):
         sha = next((k for k in {kk[0] for kk in best} if k.startswith(want)), None)
         r = best.get((sha, tf)) if sha else None
         if not r:
+            # NO POST-FIX ROW FOR THIS TF. Say so rather than falling back to an old one.
+            panels.append({"cap": nm, "sub": "NO POST-FIX CAPTURE for this TF — UNPROVEN",
+                           "path": None, "stale": True})
             continue
         c = r["counts"]
         panels.append({
@@ -82,6 +85,7 @@ def compose(tf, best, out_dir):
             "sub": f"{r.get('readerVerdict')} · boxes {c['boxes']} · lines {c['lines']} · labels {c['labels']} · bars {c['bars']}",
             "path": str(pathlib.Path(r["pngPath"])),
             "created": str(r.get("createdAt") or "")[:19],
+            "stale": False,
         })
     if len(panels) < 4:
         print(f"  {tf}: only {len(panels)} panels — SKIPPED")
@@ -104,6 +108,12 @@ def compose(tf, best, out_dir):
         col, row = i % 2, i // 2
         x = GAP + col * (W + GAP)
         y = 40 + GAP + row * (H + HEAD + GAP)
+        if p.get("stale") or not p.get("path"):
+            d.rectangle([x, y, x + W, y + HEAD + H], outline=(120, 60, 60), width=2)
+            d.text((x + 12, y + HEAD + H // 2 - 8), "NO POST-FIX CAPTURE", font=fb, fill=(220, 120, 120))
+            d.text((x + 7, y + 4), p["cap"], font=fb, fill=(226, 232, 240))
+            d.text((x + 7, y + 21), p["sub"], font=fs, fill=(220, 120, 120))
+            continue
         im = Image.open(p["path"]).convert("RGB")
         s = min(W / im.width, H / im.height)
         im = im.resize((max(1, int(im.width * s)), max(1, int(im.height * s))), Image.LANCZOS)
