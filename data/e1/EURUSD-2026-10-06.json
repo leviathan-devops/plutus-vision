@@ -1,0 +1,56 @@
+{
+ "schema": "trident-e1/1",
+ "pair": "EUR/USD",
+ "target_week": "2026-10-06",
+ "spot": null,
+ "data_as_of": "2026-10-02",
+ "sources": {
+  "ARM_selftest": {
+   "status": "OK",
+   "detail": "6/6 control strikes, finish=stop"
+  },
+  "S1_investinglive": {
+   "status": "[NO DATA]",
+   "reason": "no options-table image found in the page HTML"
+  },
+  "S2_treasury": {
+   "status": "OK",
+   "detail": "table reachable but no rows parsed"
+  },
+  "S3_fred": {
+   "status": "[NO DATA]",
+   "reason": "unreachable: The read operation timed out"
+  },
+  "S4_eia": {
+   "status": "[NO DATA]",
+   "reason": "did not resolve to a PDF (got https://ir.eia.gov/secure/wpsr/wpsrsummary.pdf?Policy=eyJTdG)"
+  },
+  "S5_forexfactory": {
+   "status": "OK",
+   "detail": "181 calendar events via CDP"
+  },
+  "S6_fed_h10": {
+   "status": "OK",
+   "detail": "H.10 page, 130 rates"
+  },
+  "S7_yahoo_dxy": {
+   "status": "OK",
+   "detail": "DXY history page via CDP (53 mentions)"
+  },
+  "S8_tradingview": {
+   "status": "OK",
+   "detail": "0 MA periods"
+  },
+  "S9_forex_com": {
+   "status": "OK",
+   "detail": "research page via CDP (0 mentions)"
+  }
+ },
+ "levels": [],
+ "zones": [],
+ "shapes": {},
+ "notes": [
+  "No zone assembly here: PHASE 1 produces the DATA layer only. Zones are built by PHASE 2 (e1-render.pine) from the OHLC pillars; this file's job is the web-sourced dimension, which the OHLC cannot supply."
+ ],
+ "temporal_boundary_utc": "2026-10-02T21:00:00"
+}

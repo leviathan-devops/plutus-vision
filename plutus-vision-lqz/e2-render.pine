@@ -1,0 +1,106 @@
+// ═════════════════════════════════════════════════════════════════════════════
+//  E2 RENDER — the predicted price path.  ADDED 2026-10-03, never edits v1.
+//
+//  THE CONTRACT (the pin, PHASE 3):
+//    · ONE thick freehand polyline through the Monday-anchored day anchors.
+//    · IT IS ONE LINE. NOT A FILLED AREA. That single decision is what stops the
+//      chart becoming a mess — 27 thin green liquidity bands + 5 degree-banded E1
+//      zones + a FILLED forecast ribbon is unreadable; + ONE line is not.
+//    · The ALTERNATIVE chain is a thin dashed ghost, never a second solid line.
+//    · Opacity ~55: it is a FORECAST and must never read as price.
+//    · A shape with no anchoring zone is NOT DRAWN (Rule 1, canon zero-tolerance).
+//
+//  IT CONSUMES ONLY the E2 output shape (days[] with a shape, a key zone and a
+//  confidence) — the same contract e2_engine.py emits. It never reads the v1 arrays.
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ── INPUTS ──────────────────────────────────────────────────────────────────
+e2Enabled   = input.bool(true, "Show the E2 predicted price path", group = "E2 path")
+e2Opacity   = input.int(55, "Path opacity (a forecast, not price)", minval = 10, maxval = 90, group = "E2 path")
+e2Width     = input.int(3, "Brush width (px)", minval = 1, maxval = 6, group = "E2 path")
+e2ShowGhost = input.bool(true, "Show the alternative chain (dashed ghost)", group = "E2 path")
+e2ShowTags  = input.bool(true, "Tag each day with its shape", group = "E2 path")
+
+// ── THE PALETTE — deliberately NOT a class colour ───────────────────────────
+// The path is a FORECAST, not a zone. It borrows a neutral luminous tone so it
+// never reads as supply (red), demand (blue), liquidity (green) or an E1 degree
+// (amber/violet). One hue, no class meaning — a forecast that looks like a zone
+// is a forecast a trader will act on as if it were a level.
+e2ColPath   = input.color(#00E5FF, "Forecast path", group = "E2 colours")
+e2ColGhost  = input.color(#8A8FA3, "Alternative chain (ghost)", group = "E2 colours")
+
+// ── THE PAYLOAD ─────────────────────────────────────────────────────────────
+// The E2 payload is created by the BUILD as typed arrays (array.new<float>() + push),
+// the pattern plutus-vision-v1.pine already compiles under. An injected
+// `array.from([])` literal FAILS the PineTS transpiler — "Syntax error at input '['"
+// — because an empty list carries no element type to infer. Measured 2026-10-03.
+e2DayX      = e2_injected_x
+e2DayY      = e2_injected_y
+e2DayShape  = e2_injected_shape
+e2DayConf   = e2_injected_conf
+e2GhostX    = e2_injected_ghost_x
+e2GhostY    = e2_injected_ghost_y
+e2Refusal   = e2_injected_refusal
+
+// ── THE RENDER ──────────────────────────────────────────────────────────────
+f_e2Render() =>
+    _n = array.size(e2DayX)
+
+    // THE REFUSAL IS VISIBLE. A silent empty chart reads as "the engine ran and found
+    // nothing"; a NAMED refusal on the chart reads as "the engine refused to guess".
+    if e2Refusal != "" and e2Enabled
+        label.new(bar_index - 120, high, "E2 REFUSED · " + e2Refusal,
+             xloc = xloc.bar_index, size = size.small,
+             color = color.new(color.red, 22), textcolor = color.new(color.red, 90))
+
+    if e2Enabled and _n >= 2
+        // THE LINE. ONE polyline, drawn as a freehand brush: a line per segment with
+        // a round join reads as a single continuous stroke rather than a chain of
+        // bars. A filled area is DELIBERATELY absent — see the contract at the top.
+        for i = 0 to _n - 2
+            if i >= _n - 1
+                break
+            x0 = array.get(e2DayX, i)
+            y0 = array.get(e2DayY, i)
+            x1 = array.get(e2DayX, i + 1)
+            y1 = array.get(e2DayY, i + 1)
+            line.new(x0, y0, x1, y1,
+                 xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity),
+                 width = e2Width)
+
+        // THE DOT + TAG at each day anchor. The tag is the SHAPE, not a zone
+        // classification: this is what the engine PREDICTS, and it must be
+        // readable as a prediction.
+        if e2ShowTags
+            for i = 0 to _n - 1
+                if i >= _n
+                    break
+                _s = array.get(e2DayShape, i)
+                _c = array.get(e2DayConf, i)
+                // RULE 1 AT THE RENDER: no shape, no dot. A prediction with no
+                // anchoring zone is a fabrication and is never drawn.
+                _anchored = array.get(e2DayShape, i) != ""
+                if _anchored
+                    label.new(array.get(e2DayX, i), array.get(e2DayY, i),
+                         str.tostring(_s) + " " + str.tostring(int(_c)) + "%",
+                         xloc = xloc.bar_time, style = label.style_label_down,
+                         size = size.tiny,
+                         color = color(na),
+                         textcolor = color.new(e2ColPath, math.min(100, e2Opacity + 30)))
+
+        // THE ALTERNATIVE — a THIN DASHED GHOST, never a second solid line. The
+        // canon requires an alternative for every primary chain; drawing it as a
+        // second heavy line would be two forecasts fighting for the eye.
+        _gn = array.size(e2GhostX)
+        if e2ShowGhost and _gn >= 2
+            for i = 0 to _gn - 2
+                if i >= _gn - 1
+                    break
+                line.new(array.get(e2GhostX, i), array.get(e2GhostY, i),
+                     array.get(e2GhostX, i + 1), array.get(e2GhostY, i + 1),
+                     xloc = xloc.bar_time, color = color.new(e2ColGhost, e2Opacity - 20),
+                     width = 1, style = line.style_dashed)
+    0
+
+if barstate.islast
+    f_e2Render()
