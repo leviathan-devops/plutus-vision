@@ -245,3 +245,59 @@ project root is INVISIBLE until copied there. `bash scripts/verify_served_pine.s
 > Check the rig by COMPILING, not by pinging. Assert the run's title. Copy the built `.pine` into
 > `pine-ide/ide/renderer/` before capturing. Resolve the window id fresh. Open every frame you
 > capture. Budget ~20 s per compile — the station serializes.
+
+---
+
+# OPERATOR-CAUGHT · "this grey and gold empty shell indicator — whatever this is"
+
+## THE OBSERVATION
+The operator, looking at the live IDE, named two defects in one sentence:
+1. **"grey and gold"** — the frame's dominant colour is not the specified palette.
+2. **"empty shell"** — the frame carries no readable content.
+3. **"whatever this is"** — the frame does not identify itself.
+
+## THE MECHANISM — three parts, each verified
+### (a) The slabs are the LQZ FILL LAYER, not detector paint
+- All six `swp_` colour constants are confirmed suppressed (`lqz-luxalgo.pine:36-44`, all `color(na)`).
+- `swp_break_box` (`lqz-luxalgo.pine:93`) is DEFINED AND HAS **NO CALLERS** — the method grep
+  returns only the definition line, so the sweep boxes never draw.
+- What remains is the emitter's own fill (`lqz-render.pine`, transplanted to D1 line ~900):
+  `box.new(_lx, _hi, …, _lo, bgcolor = color.new(_col, lqzFillA))`
+
+### (b) THE COLOUR MATHS PRODUCES "grey and gold" EXACTLY
+| input | value | at alpha 10/255 ≈ 4 % over a dark chart reads as |
+|---|---|---|
+| `lqzColorB` (demand) | `#3E8A46` | dark **GREY**-green |
+| `lqzColorS` (supply) | `#7F3613` | dark **GREY-GOLD** |
+So the two colours the operator named are the palette at 4 % opacity — the fill is meant to
+be a whisper UNDER a ladder, and reads as grey slabs when the ladder is thin.
+
+### (c) WHY 15m IS THE WORST — and why the operator caught it there
+15m carries **325 bars** (the fixture's real depth) against 400 at 30m/1H/4H, and its zones
+span the WIDEST price ranges. So:
+- the fills are the LARGEST at 15m, and
+- the ladder is the SPARSEST (D1 30 lines, D3 57 lines vs 50/85 at 4H).
+**The subordinate layer becomes the only visible one.** "Empty shell" is the correct word.
+
+## THE FIX — two inputs, and they are the operator's calibration
+```pine
+lqzFill3 = input.bool(false, "Fill bands with 3+ sources")   ← was true
+lqzFillA = input.int(0, "Fill alpha (3+ sources)")           ← was 10
+```
+Variant built and SERVED BY THE IDE'S OWN SERVER (`pine-ide/ide/renderer/lqz-luxalgo-nofill.pine`,
+verified by fetching it back: `lqzFill3 = input.bool(false`, `lqzFillA = input.int(0`).
+
+## THE IDENTIFIABILITY DEFECT — "whatever this is"
+A chart-only capture carries **no indicator name** unless the renderer draws a legend. The
+operator could not tell D1 from D2 from D3 on a frame that is only slabs.
+**This is a REAL, SEPARATE defect**: the panel judge's panels must identify themselves in the
+frame, not only in the composer's caption above them.
+
+## THE CAPTURE-LAG DEFECT (found while demonstrating the fix)
+`P.capture()` returned the **byte-identical previous frame** (`7fbe8be137f79b35`) THREE TIMES
+across three different runs whose ledger rows recorded D1's correct counts (97 boxes / 30
+lines). The capture reads the last COMPOSITED layer; under back-to-back runs the compositor
+has not produced a new frame.
+**The fix in flight: settle with two `requestAnimationFrame` ticks plus a longer wait before
+capturing** — the same class as the earlier `run.title` debounce, one layer further down the
+pipeline (COMPOSE, not COMPILE).
