@@ -90,6 +90,12 @@ sha256sum /tmp/look.png | cut -c1-16
 # THEN OPEN IT. A capture nobody opened is not evidence.
 ```
 
+**THE SHA IS AN IDENTITY, NOT A FRESHNESS SIGNAL.** The render is DETERMINISTIC — the same script
+on the same bars produces the same bytes. **Two runs of the same deliverable SHOULD share a sha.**
+A staleness test that compares a frame's sha against a PREVIOUS frame's sha measures CHANGE, not
+freshness, and will cry wolf on every correct re-run. **To judge freshness, compare the frame's
+CONTENT against expectations** — the station's counts, and `nonBg`'s known range per deliverable.
+
 ---
 
 ## 2 · THE IDE'S OWN PIPELINE (the operator's law: EVERYTHING RUNS THROUGH THE IDE)
@@ -136,10 +142,30 @@ const c = await P.capture(); const g = await P.runGate();
 | **1** | **THE SERVED COPY.** The browser serves `pine-ide/ide/renderer/`. A rebuilt `.pine` at the project root is INVISIBLE until copied there. | `cp <f>.pine pine-ide/ide/renderer/` then `bash scripts/verify_served_pine.sh` → `SERVED_PINE_OK` |
 | **2** | **THE TAB CARRIES ITS OWN `source`.** `P.run()` compiles the TAB's source, not the editor's textarea — measured holding a DIFFERENT script (stub taps). | set `P.tabs.active().source = src` **and** `P.editor.setSource(src)` |
 | **3** | **THE DEBOUNCED FLUSH.** `setSource` + an immediate `run()` can compile the PREVIOUS source. Measured: 7 runs needed once. | a FIXED POINT — run until the returned title IS this deliverable, asserted every attempt (budget ≥ 3× the observed worst case) |
-| **4** | **THE FROZEN COMPOSITOR.** `P.capture()` returns the last COMPOSITED layer — measured returning the byte-identical frame across THREE source versions. Two `requestAnimationFrame` ticks and a 6 s settle did NOT break it. | **a page reload before capturing** — and after a reload, wait LONGER than 14 s for the mount, and re-assert the source (the re-mount clobbers the editor) |
+| **4** | **THE FROZEN COMPOSITOR.** `P.capture()` returns the last COMPOSITED layer — measured returning the byte-identical frame across THREE source versions. Two `requestAnimationFrame` ticks and a 6 s settle did NOT break it. | **`export → reload → import`** — see §3.1. A plain reload breaks the freeze but CLOBBERS the editor; the import defeats the clobber. **The two remedies compose.** |
 | **5** | **`P.run()` RETURNS NULL** on a fresh page (a mount race). | null-guard the call and retry |
 | **6** | **A FRESH ROW CAN CARRY A STALE FRAME.** A frozen compositor writes a NEW file with OLD content — the `createdAt` is fresh, the `pineSha` is current, the PNG's mtime is NEWER than the source. **sha and mtime are both blind.** | reload before EVERY capture; and distrust a frame whose `nonBg` is far from its deliverable's known range |
 | **7** | **THE ENGINE'S 50-LINE DEFAULT.** An undeclared `max_lines_count` silently discards zones (measured: 112 requested, 50 drawn). | declare `max_{lines,labels,boxes}_count = 500` in every `indicator()` |
+
+### 3.1 THE DURABLE LOAD — `export → reload → import` (the remedy for TRAP 4)
+
+**The shell's persistence pair solves the freeze AND the clobber at once:**
+```javascript
+const src = await (await fetch('/lqz-plutus.pine', {cache:'no-store'})).text();
+P.editor.setSource(src); P.editor.flush();
+P.tabs.active().source = src;                  // 1 · load
+const ws = P.exportWorkspace();                // 2 · export (~19 KB, the source inside)
+await call("Page.reload", {ignoreCache:true}); // 3 · RELOAD — fresh compositor
+// ... wait for the mount (LONGER than 14 s) ...
+await P.importWorkspace(ws);                   // 4 · IMPORT — the source restored
+const rr = await P.run({silent:true});         // 5 · run — FIRST TRY, title asserted
+await P.capture();
+```
+**MEASURED:** `tabSrcLen 18132 · hasGuard true · hasTitle true · title "LQZ Plutus — operator
+candle liquidity" in 1 try · nonBg 0.45467`.
+
+**`exportWorkspace()` SYNCS the editor into the tab; `importWorkspace(state)` RESTORES the tabs.**
+Use this instead of the bare reload whenever a capture must be trusted.
 
 ---
 
