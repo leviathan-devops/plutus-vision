@@ -952,3 +952,51 @@ D3 are the same emitter, as designed (D3 = D2's ladder + the SMC layer).**
 and LuxAlgo's bundle does not** (0 of 6 bands on the demand side). Between `lqz-plutus` and
 `lqz-luxalgo` the answer is `lqz-plutus`, and `plutus-vision-v1` carries that same ladder plus
 the SMC layer on top.
+
+
+---
+
+# THE THREE-CONTROL LIVE TEST — vision-hotseat on the operator's path (2026-10-02)
+
+**The operator's standing order, recorded verbatim: "UNIT TESTS ARE THEATRICAL BULLSHIT. VISION
+IN THE LOOP. LIVE DASHBOARD TEST. THATS THE ONLY THING THAT MATTERS OR COUNTS."** This round
+executed the vision-hotseat protocol against the Pine IDE's own controls — real CDP mouse
+events, outcomes polled, every frame opened.
+
+## THE THREE CONTROLS, EACH: PROBE → REAL CLICK → OUTCOME FROM THE ARTIFACT
+
+| control | probe (size + hit-test) | the click | outcome asserted from | verdict |
+|---|---|---|---|---|
+| **▶ RUN** | `57×23`, `elementFromPoint` = itself | `Input.dispatchMouseEvent` mouseMoved→mousePressed→mouseReleased at (39, 481) | a FRESH compile: **`COMPILED 392ms`** (prior 422ms), D3's counts intact — and the :3 frame I opened shows the same numbers | **PASS** |
+| **◎ CAPTURE** | `85×23`, hit-test self | real click at (116, 481) | a FRESH evidence PNG **`evidence/pineshell-2026-W29-1790943075820.png`**, opened: D3's ladder + CHoCH/BOS/EQL, Jun 26–Jul 4 | **PASS** |
+| **⚑ GATE** | `64×23`, hit-test self | real click at (196, 481) | a NEW LEDGER ROW on disk: `82da437af969 · 1H · reader=PASS · deltas=[ANCHOR_DROPPED:3]`, **created 12 s before the read** | **PASS** |
+
+**No JS `.click()` was used anywhere. Every outcome was polled, never sleep-and-hoped. The
+second reader (my own eyes on the PNG) agreed with the instrument on every frame.**
+
+**THE DETERMINISM CHECK, third occurrence:** the CAPTURE's sha (`8c1fe08fd6a5`) matched an
+earlier D3 frame — so it was **verified fresh by opening it**, not assumed from the sha. It is
+the current render. **A sha-match is an inference; the content is the truth.**
+
+## THE ONE CONTROL DELIBERATELY UNTESTED
+
+**PASS / FAIL / INCONCL. — the operator's verdict.** The mechanism is the same control path
+proven three times above, but a machine press would impersonate the operator's judgment. The
+buttons write `orchestratorVerdict`; the press is theirs.
+
+## THE UNIT — 127 FOUND, FIXED, PROVEN
+
+The hardening unit's first live run: the launcher completed (**station, rail, server all up**)
+then exited **127** at its final line — `timeout 120 bun scripts/pv-load.mjs` — because `bun`
+lives in `~/.bun/bin`, absent from the unit's PATH. **The unit reported `failed` while the rig
+was half-up: loud but misleading.** Fixed with `Environment=PATH=…:~/.bun/bin:…`; re-run
+through systemd: **`start exit: 0`, `active (exited)`, all four ports 200.**
+
+## THE RELIGHT — the display was emptied by a profile race, not by the reboot
+
+After the unit's failed run the display showed nothing. Root cause, measured: **two chrome
+generations on ONE profile** (the unit's chrome + a repair-launch chrome) — the profile lock
+left one instance windowless. Fixed: all 13 chrome processes killed by PID, profile wiped,
+**one** chrome relit with `DISPLAY=:3` → window `4194307` on :3 → D3 loaded and asserted on
+`sourceSha 82da437af969`. **The law this taught: one chrome per profile, and the launcher's
+kill-then-start order is load-bearing.**

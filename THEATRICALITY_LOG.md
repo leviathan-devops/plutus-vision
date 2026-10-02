@@ -123,3 +123,30 @@ The rail is a TOOL, not prose. The paths that were cheaper than the honest path 
 - **Form:** EN-014 declared the interaction lock "PARTIAL PRODUCT" and the inputs panel "PARTIAL PRODUCT — mechanic proven, appearance unobserved", while BUILD_REPORT listed the settings panel under "built".
 - **Substance missing:** (a) the lock was enforced on one path of four, so delete still worked — the operator found it; (b) the panel's labels were raw variable names — the operator screenshotted it.
 - **Disposition:** OPERATOR-CAUGHT (F-46). Both closed at the root: the lock at `remove()`, the panel via `inline=` + section markers. **A UI feature is not "working" because its mechanism ran — it is working when it renders correctly and resists the user.**
+
+
+## T-01 · 2026-10-02 · the unit-start as a verification (SELF-CORRECTED, OPERATOR-ADJACENT)
+
+**The artifact:** I "tested" the hardening unit by starting it — and when it exited 127, I
+treated the episode as a unit problem and went debugging, while the ACTUAL product (the IDE on
+:3) sat windowless and the operator had to ask *"where the fuck is the pine ide"*.
+
+**The theatrical form:** treating the unit's exit code as the subject, when the subject is the
+LIVE DASHBOARD. The exit code was a symptom; the empty display was the failure. **The operator's
+ruling landed the same hour: "UNIT TESTS ARE THEATRICAL BULLSHIT. VISION IN THE LOOP. LIVE
+DASHBOARD TEST. THATS THE ONLY THING THAT MATTERS OR COUNTS."**
+
+**The correction, measured:** the three-control live test above (RUN/CAPTURE/GATE — real mouse,
+artifact-asserted, second-read), and the unit re-proven by the only standard that counts — its
+end state observed (all four ports + the window on :3), not its exit code.
+
+## T-02 · 2026-10-02 · the double-chrome race (SELF-CORRECTED)
+
+**The artifact:** a "repair" launch of the chrome while the unit's chrome still held the
+profile — one windowless instance, an empty display, and two processes fighting over a lock.
+
+**The form:** the repair's OWN command succeeded (a chrome process started!) while the product
+state (a window a person can see) did not exist. **A started process is not a rendered window.**
+
+**The correction:** kill by PID (13 processes), wipe the profile, ONE relight, verify by
+`xdotool` window id + an opened screenshot — the artifact, not the spawn.
