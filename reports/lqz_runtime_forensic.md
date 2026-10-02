@@ -345,3 +345,62 @@ bigger than "the fills are too strong".
 **OPEN. Not a rendering-preference question and not a calibration question** — a
 counts-vs-pixels contradiction. The operator's "empty shell" is the correct description of the
 symptom; the mechanism is one layer below where I first placed it.
+
+---
+
+# SOLVED — "this grey and gold empty shell indicator" — the root cause
+
+## THE DEFECT (one line, in the RENDERER, not the Pine)
+`pine-ide/pine-ide/vision.mjs:113` read:
+```javascript
+const fill = normColor(b.color, 'rgba(185,154,91,0.10)');
+//                       └─ a field a Pine box NEVER sets   └─ BRASS #B99A5B @ 10 %
+```
+**Pine boxes set `bgcolor`. They never set `color`.** So the read was ALWAYS undefined and
+**every one of the 97 boxes fell through to the BRASS fallback** — which is exactly the
+**gold** the operator named, over the dark chart's **grey**.
+
+**The BORDER on the very next line was already fixed with the correct guard** (its comment
+reads *"was BRASS: the tan-striped VOIDS stacks"*) — **the FILL was missed.** One drawing type
+was fixed and its sibling was not, in the same 6-line block.
+
+## WHY EVERY EARLIER FIX FAILED TO MOVE THE PIXELS
+- Suppressing the Pine `bgcolor` constants (12, then 13 with `voi_lqFC`) changed nothing —
+  **this line never looked at `bgcolor`.**
+- Setting `lqzFill3=false` / `lqzFillA=0` changed nothing — **the LQZ fills were never the
+  slabs.**
+- The slabs were brass REGARDLESS of what the Pine said, because the fill was being read from
+  a field that does not exist.
+
+## THE FIX
+```javascript
+const fill = b.bgcolor ? normColor(b.bgcolor, 'rgba(0,0,0,0)') : 'rgba(0,0,0,0)';
+```
+A box WITH `bgcolor` uses it; a box with NO colour is TRANSPARENT. Mirrors the border's own
+existing guard, one line above.
+
+## THE VERIFICATION (a fresh frame, not a cached one)
+| | before | after |
+|---|---|---|
+| capture sha | `8dc32e29c460176e` | **`3dafa3f2497661f6`** |
+| `nonBg` | **0.40008** | **0.16821** ← a 58 % drop |
+| the frame | grey/brass slabs burying the chart | **clean; candles fully readable** |
+
+The `nonBg` drop is the measurement: 97 brass boxes leaving the canvas.
+
+## THE TWO INSTRUMENT DEFECTS THIS EXPOSED (both fixed or named)
+1. **THE FROZEN COMPOSITOR.** `P.capture()` returned the byte-identical frame
+   `7fbe8be137f79b35` across THREE different source versions, with `nonBg` stuck at 0.40008 —
+   it reads the last COMPOSITED layer. **A page reload is the remedy**; the freeze survived
+   two `requestAnimationFrame` ticks and a 6 s settle. **Any capture without a reload is
+   suspect.**
+2. **THE REMEDY FOR (1) WAS ALSO THE REMEDY FOR THE BUG** — the reload picked up the fixed
+   `vision.mjs`, which the frozen page had been serving from memory all along.
+
+## THE REMAINDER — the same class, one drawing type over (OPEN)
+The **30 lines** still do not render: the payload carries `lineColours: ["(none)"]` and
+`vision.mjs:133` reads `l.color` with a `BRASS` fallback. **The station's drawing→payload
+conversion drops the line's colour**, so the emitter's `color = _col` never reaches the
+renderer. **The fix is the same shape**: make the station carry the colour, or make the
+renderer read the field that IS carried. Until then the ladder renders as faint brass dots
+on a clean chart instead of the library's ladder.

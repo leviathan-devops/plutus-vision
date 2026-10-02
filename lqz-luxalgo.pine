@@ -220,7 +220,7 @@ voi_lqTX = input.bool (false, 'Label', inline = 'VD', group = lqGR)
 
 lqFT = 'Toggles the visibility of the Filled Liquidity Voids'
 voi_lqVF = input.bool (true, 'Filled Liquidity Voids', inline = 'FL', group = lqGR, tooltip = lqFT)
-voi_lqFC = input.color(color.new(#787b86, 73), '', inline = 'FL', group = lqGR)
+voi_lqFC = color(na)
 
 //-----------------------------------------------------------------------------}
 // User Defined Types

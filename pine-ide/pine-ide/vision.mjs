@@ -110,7 +110,15 @@ export function renderVision(chart, run, opts = {}) {
   for (const b of (D.boxes || [])) {
     const a = b?.a, bb = b?.b;
     if (!a || !bb || num(a.time) === null || num(bb.time) === null) continue;
-    const fill = normColor(b.color, 'rgba(185,154,91,0.10)');
+    // THE FILL READS `bgcolor` — the field Pine boxes ACTUALLY SET.
+    // This read `b.color`, which a Pine box NEVER carries (it sets `bgcolor`), so EVERY box
+    // fell through to the BRASS fallback rgba(185,154,91,0.10) — #B99A5B at 10%. Measured
+    // consequence: 97 boxes at 15m rendered as tan/brass slabs, which the operator named by
+    // eye as "this grey and gold empty shell indicator". Suppressing the Pine `bgcolor` had
+    // no visible effect because this line never looked at it.
+    // The BORDER below was already fixed with this exact guard (see its comment); the FILL
+    // was missed. Now: a box WITH bgcolor uses it; a box with NO colour is TRANSPARENT.
+    const fill = b.bgcolor ? normColor(b.bgcolor, 'rgba(0,0,0,0)') : 'rgba(0,0,0,0)';
     const d = add('box', {
       anchors: [{ time: a.time, price: Number(a.price) }, { time: bb.time, price: Number(bb.price) }],
       style: {

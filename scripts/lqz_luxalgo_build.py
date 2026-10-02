@@ -96,12 +96,18 @@ def build() -> str:
     #     `input\.color\(` never matched them;
     #  2. the SWEEPS AREA colours (`*_2` at 50% alpha, `*_3` at 25%) were not listed —
     #     those are the large translucent bands that dominated the frame.
-    SILENT = ("swp_colBl", "swp_colBr", "swp_colBl2", "swp_colBr2",
-              "swp_colBl3", "swp_colBr3",
-              "voi_lqBC", "voi_lqSC",
-              "bsl_cLIQ_B", "bsl_cLIQ_S", "bsl_cLQV_B", "bsl_cLQV_S")
+    # A PREDICATE, not an enumeration. The hand-list missed `voi_lqFC` (the VOIDS
+    # FILL, #787b86 @ alpha 73) and that single omission rendered as the grey slabs
+    # the operator caught by eye. A predicate cannot miss a constant the sources add.
+    import re as _re
+    COLOUR_RE = _re.compile(r"^((?:swp_|voi_|bsl_)[A-Za-z0-9_]*)\s*=\s*input\.color")
+    SILENT = None  # superseded by the predicate below
     for blk_name, blk in (("sweeps", sweeps), ("voids", voids), ("pools", pools)):
-        for cname in SILENT:
+        for line in blk.split("\n"):
+            m = COLOUR_RE.match(line)
+            if not m:
+                continue
+            cname = m.group(1)
             blk = re.sub(rf"^{cname}\s*=\s*input\.color\s*\(.*?\)$",
                          f"{cname} = color(na)", blk, flags=re.M)
         if blk_name == "sweeps": sweeps = blk
