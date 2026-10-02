@@ -1154,3 +1154,39 @@ THE KNOWN-GAP REGISTER
   | | | a zone. This is the one deliverable not demonstrated. |
   | TradingView-native compile | NOT RUN | the PineTS station compiled it here |
   | band thickness vs the library | MEASURED | 1.9x thicker; a runtime dial, not code |
+
+## 2026-10-03 — THE SMOKE FIXTURE: WHAT IT PROVED AND WHAT IT CAUGHT
+
+scripts/smoke_e1_payload.py writes six zones to data/e1-smoke/ (NEVER data/e1/) with
+ids prefixed SMOKE- and a WARNING field, so a fixture can never be mistaken for a
+canon score. The build reads it through PV2_DATA_DIR, so the real builder stays
+honest.
+
+WHAT IT PROVED (live rig, EURUSD 1H W29, sha 45e5d09809e4a26b):
+  the score -> band mapping is correct on a real frame —
+    13/14 -> EXTREME   11/14 -> HEAVY   9/14 -> MODERATE_HEAVY
+     7/14 -> MODERATE   5/14 -> LIGHT    2/14 -> (MINIMAL) ABSENT
+  and MINIMAL painting NOTHING is confirmed, not assumed.
+
+WHAT IT CAUGHT: the E1 zone BOXES do not render. The frame gained six labels and the
+box census stayed at 32 with a colour census of {#3179f533:2, #f77c8033:3,
+#2E8B5773:27} — nothing in the E1 degree ramp. Recorded as F-17, OPEN.
+
+THE LESSON THIS FIXTURE PROVES ABOUT ITSELF: its first version inspected LABELS,
+and labels passed on a frame whose zones were invisible. The instrument has to look
+at the GEOMETRY, not at the annotation about the geometry.
+
+## 2026-10-03 — THE RIG CACHE INVALIDATED THE F-17 MEASUREMENTS (F-18)
+
+`run()` returns a cached payload unless the page is hard-reloaded. Two different builds
+returned the identical sourceSha and the identical census — six SMOKE labels on the build
+that has none. Every F-17 probe after the first was therefore reading stale bytes, and the
+conclusion "the E1 boxes do not render" is NOT ESTABLISHED.
+
+RE-VERIFICATION PROTOCOL, now binding for this rig:
+  about:blank -> /pine.html -> verify the EDITOR holds the build under test -> run ->
+  record the returned sha AND the editor's held-source marker together -> read the census.
+  A returned sha that does not match the held source is VOID.
+
+F-17 REMAINS OPEN AND UNMEASURED. The degree-band mapping is proven (labels). The box path
+is unproven. The next attempt starts with the protocol above, not with another hypothesis.

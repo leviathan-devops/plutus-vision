@@ -39,7 +39,7 @@ V1 = ROOT / "plutus-vision-v1.pine"
 E1 = ROOT / "plutus-vision-lqz" / "e1-render.pine"
 E2 = ROOT / "plutus-vision-lqz" / "e2-render.pine"
 OUT = ROOT / "plutus-vision-v2.pine"
-DATA = ROOT / "data" / "e1"
+DATA = pathlib.Path(os.environ.get("PV2_DATA_DIR", ROOT / "data" / "e1"))
 
 # the v1 seal. The build REFUSES to run if v1 has drifted.
 V1_SEALED_SHA = "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1"

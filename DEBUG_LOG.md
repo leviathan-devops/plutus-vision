@@ -1458,3 +1458,94 @@ measured with `grep -c`, which counts LINES.
 modification. The artifact was right; the instrument was wrong.
 **LESSON** a test that measures a different quantity than the baseline is a false alarm,
 and a false alarm that fires on a hard stop is worse than no alarm at all.
+
+### F-17 · THE E1 ZONE BOXES DO NOT RENDER — ONLY THEIR LABELS
+**SYMPTOM** with a six-zone smoke payload the frame gained six SMOKE labels but the
+box census stayed at 32, and a colour census of every box read
+`{#3179f533:2, #f77c8033:3, #2E8B5773:27}` — no E1 degree colour anywhere.
+**CAUSE** not yet isolated. The degree BAND is proven correct (13->EXTREME, 11->HEAVY,
+9->MODERATE_HEAVY, 7->MODERATE, 5->LIGHT, 2->MINIMAL-paints-nothing), so the score ->
+band -> colour path works. The failure is between the band and the emitted geometry.
+The prime suspect is the coordinate form: v1's LQZ boxes are emitted with
+`xloc = xloc.bar_index` (confirmed: the payload carries `"xloc":"bt"` only for the
+v1 boxes that DO render), while `f_e1Render` emits its boxes with
+`xloc.bar_time` and millisecond bounds. A box whose x-loc disagrees with the
+coordinate payload is dropped by the renderer rather than drawn.
+**WHY IT MATTERS** this is the one thing the smoke fixture existed to catch: the
+labels passing is exactly the "a test that cannot fail" shape, and a renderer that
+only proved it can print text is not a verified renderer.
+**STATUS** OPEN. The next step is to re-emit the E1 boxes in the same coordinate
+form v1's rendering boxes use, and re-run the smoke to watch the box census move
+from 32 to 37 (27 liquidity + 5 SMC + 5 E1 degree zones, MINIMAL excluded).
+**LESSON** a fixture proves only what the instrument looks at. The first fixture
+looked at LABELS and would have declared the render working on a chart where the
+zones were invisible.
+
+### F-17 UPDATE — TWO HYPOTHESES TESTED, NEITHER IS THE CAUSE
+Both were plausible and both are now RULED OUT by measurement. Recording them so the
+next attempt does not repeat them.
+
+**HYPOTHESIS 1 (tested, FALSE) — "the zones are off-screen."** The first fixture placed
+six zones at 1.1350-1.1580 while the EURUSD 1H W29 frame renders ~1.1350-1.1480, so
+three of the six sat above the chart. THE FIXTURE WAS THE BUG: all six were moved
+inside the visible range (1.1364-1.1470) and the box census stayed at 32 with the
+colour census unchanged. So it is not a visibility problem.
+
+**HYPOTHESIS 2 (tested, FALSE) — "box.new needs bar-index x, not milliseconds."** v1's
+LQZ boxes emit bar-index coordinates and come back `"xloc":"bt"`; the E1 boxes were
+emitting raw millisecond bounds. The anchor is now converted once —
+`_bAnchor = math.round(_anchor / 1000 / timeframe.in_seconds())` — and the boxes carry
+`xloc = xloc.bar_index` exactly as v1's do. THE CENSUS DID NOT MOVE. So it is not the
+coordinate space either.
+
+**WHAT REMAINS, stated as the next investigation and NOT as a conclusion.** The band
+logic is proven (13→EXTREME, 11→HEAVY, 9→MODERATE_HEAVY, 7→MODERATE, 5→LIGHT,
+2→MINIMAL-paints-nothing), so the value reaches the render and reaches a label. What is
+unaccounted for is why `box.new` inside `f_e1Render` yields nothing while `label.new`
+inside the SAME loop, one statement earlier, does. The three candidates, in the order
+they should be tried:
+  1. **The build STRIPS the call.** `strip_decl` removes lines matching
+     `^<name> = array.from(` — but if the regex also matched something else in the
+     module, the box.new line could be absent from the GENERATED file while present in
+     the source. CHECK FIRST: does `plutus-vision-v2.pine` literally contain
+     `f_e1Render` and a `box.new` inside it? That is a one-command grep and it should
+     have been the FIRST check rather than the fifth.
+  2. **`e1ShowFill` is false at run time** — the fill is gated on an input default.
+     A `false` default would make box.new unreachable without an error.
+  3. **The engine caps box.new when the bounds are degenerate** (e.g. `_lx == _rx` when
+     the bar-index conversion lands outside the loaded window).
+
+**THE LESSON, which is the same one as always.** Five hypotheses were spent before
+checking the cheapest: is the code I am testing even in the artifact? One grep on the
+GENERATED file answers that. I tested the source's intent and measured the artifact's
+behaviour, and never reconciled the two.
+
+### F-18 · THE RIG'S run() CACHES — MY LAST MEASUREMENTS WERE NOT INDEPENDENT
+**SYMPTOM** two different builds (plutus-vision-v2.pine, which carries ZERO zones, and
+plutus-vision-v2-smoke.pine, which carries six) returned the IDENTICAL sourceSha
+`7dd11653db8db498` AND the identical drawing census — including six SMOKE labels on the
+build that contains no smoke zones at all.
+**CAUSE** `PlutusPineShell.run()` returns a cached result unless the page is hard-reloaded.
+**MECHANISM** every `run()` after the first within a page session returned the FIRST run's
+payload. So a measurement taken without a reload is not a measurement of the artifact that
+was loaded — it is a measurement of whatever ran first.
+**WHY IT MATTERS HERE** it invalidates the last several F-17 probes. Each "still 32 boxes"
+reading could have been the stale result of a run from several attempts earlier. The
+conclusion "the E1 boxes do not render" is therefore NOT ESTABLISHED — it is a conclusion
+drawn from an instrument that was returning cached bytes.
+**THE LESSON, and it is the same lesson as ST-13a and F-01:** prove the instrument is
+reading the CURRENT state before trusting what it says. The rig's own skill warns about
+SERVED-PINE-DRIFT across three layers — this is the fourth: the RUNTIME CACHE.
+
+**THE CORRECT PROTOCOL, to use for F-17 and every future run here:**
+  1. Page.navigate to about:blank, then back to /pine.html  (clears the runtime)
+  2. Verify `P.editor.getSource()` contains the marker of the build under test
+  3. Run, and record BOTH the returned sourceSha AND the editor's own held-source marker
+  4. Only then read the drawing census
+A run whose returned sha does not correspond to the editor's held source is void.
+
+**F-17's TRUE STATUS: OPEN AND UNMEASURED.** What IS established, from runs before the
+caching was understood: the score -> band mapping is correct (13 EXTREME, 11 HEAVY,
+9 MODERATE_HEAVY, 7 MODERATE, 5 LIGHT, 2 paints nothing) and the LABEL path renders. What
+is NOT established: whether the box path renders. No measurement taken so far is trustworthy
+enough to close it.
