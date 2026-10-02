@@ -812,3 +812,50 @@ fixture and the locked engine all unchanged, the failure is reproducible and the
 `258/258` is not; **F-XX stands as an open, bounded, named residual** with its resume condition
 corrected to: re-measure compare.py when the engine's extraction of UDT-sourced drawing geometry
 is reconciled — the version pin is not the lever.
+
+
+---
+
+# THE CANON AUDIT + THE GENERATOR REPAIR (2026-10-02)
+
+## THE AUDIT — the pin's doc gate, measured
+
+**The pin's canon gate: "200+ lines, >=3 file:line refs, the 5 read-first docs agree on the
+SHA."** Measured against disk: **9 of 12 docs were UNDER the 200-line floor** (BUILD_STATE 126 ·
+CANON_MANIFEST 28 · CHANGELOG 49 · COMPACTION_SURVIVAL 47 · DECISION_CHAIN 45 · EVIDENCE_STATE
+83 · NEXT_STEPS 86 · POST-COMPACTION_PROMPT 70 · TASK_QUEUE 54), the manifest's SHA block read
+**D1 `b6dda2dae441`** while D1 had long moved to `db06b6057412`, and the read-first docs carried
+**no block at all**.
+
+## THE INCIDENT — the canonical generator clobbered its own docs
+
+The canon is GENERATED (`scripts/gen_canon.py`, *"re-run after every milestone"*). Re-running it
+as maintenance cost **642 lines across 12 files**: `RUNNING_BUILD_LOG` fell **255 → 23** and
+`RUNNING_DEBUG_LOG` **214 → 29** — docs whose own titles say **"append-only"**, while
+`gen_canon.py:410` called `write_text` unconditionally.
+
+**RECOVERED, NOT LOST:** all twelve files were committed (`git checkout HEAD -- context_management/`
+restored them; 255/214/231 verified back). **The incident is recorded rather than quietly
+overwritten — a generator that says "append" and clobbers is a data-loss bug, and git is the only
+reason it was not permanent.**
+
+## THE REPAIR — the contract enforced in code, three parts
+
+1. **APPEND-SAFE:** `CHANGELOG` / `RUNNING_BUILD_LOG` / `RUNNING_DEBUG_LOG` now keep their entire
+   history below a `<!-- LQZ:APPEND-BELOW -->` marker; the generated head refreshes each run.
+   **Measured after the fix: 281 / 246 / 74 lines — history kept AND head refreshed.**
+2. **HAND-PRESERVING:** every other doc keeps its `<!-- LQZ:CANON-HAND -->` … `<!--
+   /LQZ:CANON-HAND -->` blocks verbatim while the generated inventory refreshes around them.
+   (The manifest already carried a marker convention — `<!-- LQZ-SHA-BLOCK -->` — this
+   generalises it.)
+3. **THE SHA BLOCK IS GENERATED:** the 5 read-first docs (`POST-COMPACTION_PROMPT`,
+   `CURRENT_STATE`, `BUILD_STATE`, `EVIDENCE_STATE`, `NEXT_STEPS`) now receive a verbatim SHA
+   block **stamped from disk on every run** — the pin's *"the 5 read-first docs agree on the
+   SHA"* is now mechanically true instead of hand-carried. **Measured: all five carry the block,
+   D1 reading `db06b60574125039`.**
+
+## THE FLOORS — the fill
+
+`CURRENT_STATE` cleared 200 from its regenerated head alone (203). The remaining docs receive
+hand-written sections inside their markers (the writer's report follows this entry) so the floor
+holds **across** regenerations, never by a longer generated head.
