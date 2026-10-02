@@ -220,7 +220,13 @@ async function stationFetch(route, { method = 'GET', body } = {}, timeoutMs = 12
     }
     return { ok: res.ok && json.success !== false, status: res.status, json };
   } catch (e) {
-    return { ok: false, status: 0, code: 'PINE_STATION_DOWN', error: `${e.name}: ${e.message}`, station: STATION };
+    // A TIMEOUT IS NOT A REFUSAL. MEASURED 2026-10-02: the station's documented HALF-ALIVE
+    // state (the launcher's own comment, scripts/pv-ide.sh: "GET / and GET /health on :9741 can
+    // HANG ... while /catalog, /cells, /bars answer 200 and POST /run compiles normally") made
+    // /health take 4.0 s. Both a timeout and a refusal returned PINE_STATION_DOWN, so a WORKING
+    // station was reported dead. Split them: SLOW is UNKNOWN, DOWN is a real refusal.
+    const slow = e && (e.name === 'TimeoutError' || e.name === 'AbortError');
+    return { ok: false, status: 0, code: slow ? 'PINE_STATION_SLOW' : 'PINE_STATION_DOWN', error: `${e.name}: ${e.message}`, station: STATION };
   }
 }
 
@@ -375,10 +381,19 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'OPTIONS') return send(res, 204, {});
   try {
     if (route === '/health') {
-      const st = await stationFetch('/health', {}, 4000);
+      // BOUNDED SO THE RAIL'S OWN LIVENESS NEVER INHERITS ITS DEPENDENCY'S LATENCY.
+      // MEASURED 2026-10-02: with the station in its documented half-alive state (see
+      // stationFetch's note) this route answered at 4.04 s because the probe budget was
+      // 4000 ms. The page's gate client (gate.mjs resolveBase) aborts at 2500 ms, so it read
+      // a live rail as dead -- code VIL_RAIL_DOWN -- and EVERY RUN FAILED while the station's
+      // compile route was fine. 800 ms: a station that cannot answer that fast is reported
+      // UNKNOWN (up: null, PINE_STATION_SLOW), never declared down -- the same discipline as
+      // a blank frame being INCONCLUSIVE, never PASS.
+      const st = await stationFetch('/health', {}, 800);
+      const stationUp = st.ok ? true : (st.code === 'PINE_STATION_SLOW' ? null : false);
       return ok(res, {
         service: 'vil-rail', version: VERSION, pid: process.pid, port: PORT, uptimeMs: Date.now() - STARTED,
-        station: { url: STATION, up: st.ok, health: st.ok ? st.json.data : null, code: st.ok ? null : st.code, error: st.ok ? null : st.error },
+        station: { url: STATION, up: stationUp, health: st.ok ? st.json.data : null, code: st.ok ? null : st.code, error: st.ok ? null : st.error },
         vilDir: VIL_DIR, evidenceDir: EVIDENCE_DIR, pineDir: PINE_DIR, roots: artifactRoots(),
         canon: Object.fromEntries(Object.entries(CANON).map(([k, v]) => [k, { path: v.path, present: fs.existsSync(v.path), sha256: v.sha256 }])),
       });
