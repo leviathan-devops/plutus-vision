@@ -859,3 +859,67 @@ reason it was not permanent.**
 `CURRENT_STATE` cleared 200 from its regenerated head alone (203). The remaining docs receive
 hand-written sections inside their markers (the writer's report follows this entry) so the floor
 holds **across** regenerations, never by a longer generated head.
+
+
+---
+
+# THE LIBRARY CROSS-REFERENCE — the pin's adversarial law, run (2026-10-02, post-reboot)
+
+**The pin: *"Cross-reference every emitted zone against the library panels: is the band where
+the library band is, within tolerance?"* Triggered by the operator's question: between the two
+LQZ indicators, which is more accurate — `lqz-plutus` (theirs) or `lqz-luxalgo` (LuxAlgo's
+three bundled).**
+
+## THE INSTRUMENT
+
+`scripts/measure_ladder.py` — pixel forensics, no eye, no VLM: rows classified by
+**saturation + brightness** (the chart background is a gradient, so modal-colour fails); a row
+whose saturated pixels span **>40 % of the width** is a ladder line (**full-width is the
+qualification**); adjacent rows group into bands (thickness counted); each band's modal colour
+classes GREEN/teal · RED · other; the centre-to-centre spacing census decides irregular
+(detected levels) vs regular (a fixed grid).
+
+## THE SUBJECTS
+
+- **Reference: the operator's FIVE `WINNING_TRADE_LIBARARY/LIQUIDITY LADDERS` hand-charts.**
+- **D1 `lqz-luxalgo` and D2 `lqz-plutus` panels from ONE grid run** (`bun scripts/lqz-panel.mjs
+  1H` → `/tmp/lqz-panel/{D1,D2}.png`) — identical bars (EUR/USD 1H), same chrome, same session.
+
+## THE DATA
+
+| | LIBRARY (5 charts) | D1 lqz-luxalgo | D2 lqz-plutus |
+|---|---|---|---|
+| GREEN/teal bands | **55 (77 %)** | **0** | 18 (58 %) |
+| RED bands | 16 (22 %) | 6 (100 %) | 13 (42 %) |
+| green per chart | 4 · 22 · 8 · 9 · 4 | 0 | 18 |
+| spacing | all 5 IRREGULAR | IRREGULAR | IRREGULAR |
+| coverage (row %) | 65–74 | 43–92 | 89–92 |
+| distinct levels | 14/14 | 6/7 | 22/34 |
+
+## THE VERDICT
+
+**D2 (`lqz-plutus`) is the closer match to the library, on the structural dimension that
+matters: SIDES.** D1 rendered **zero green/demand bands** on this fixture (0 of 6) while **every
+one of the five library charts is green-dominant** (all five G > R; aggregate 3.4:1). D2 emits
+both sides with a green lean and the densest level detection (22 distinct spacings vs D1's 6).
+
+## THE CAVEATS, stated with the verdict
+
+1. The library charts are **GBPUSD 15m**; the panels are **EUR/USD 1H** — this measures the
+   ladder's CHARACTER (sides, density, irregularity, coverage), never level-for-level identity.
+2. The fixture is a **downtrend** (1.16 → 1.13), which biases any detector toward the supply
+   side — part of D1's all-red mix is regime, part is algorithm; D2 found both sides anyway.
+3. D1's two brass (#B69859) bands are the known no-colour fallback class (D-XX family), still
+   unfixed.
+4. n=5 references — direction, not proof.
+
+## THE ROUND ALSO FIXED — the reboot-cleared manifest
+
+The post-reboot suite read `9 pass · 3 fail` (`test_panel_grid_complete`,
+`test_panel_rows_are_same_bars`, `test_ab_diff_is_measurable`). **Mechanism: the three are
+consumer tests of the W6 grid's artifacts, and the reboot cleared `/tmp` — including
+`/tmp/lqz-panel/manifest.json`.** The fix is the regeneration the tests' own contract assumes:
+`bun scripts/lqz-panel.mjs 1H` → `PANEL_GRID_OK` (with the distinctness guards printing
+`panels distinct` and `sources distinct`) → **suite back to `12 pass · 0 fail`.** The same regen
+produced the fresh panels the cross-reference above measures — one action, two obligations
+served.
