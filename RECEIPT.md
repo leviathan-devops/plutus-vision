@@ -433,3 +433,60 @@ the canon fill · `7745e05` the generator's three fixes · `b4b54fd` the seal re
 
 **113 commits since round-zero · tree CLEAN · seal rev 10 (`874/874 MATCH`) ·
 `SERVED_PINE_OK` · `CANON GATE: PASS` · the pins re-run green.**
+
+
+---
+
+## 16 · THE POST-REBOOT + LIVE-TEST ROUNDS (HEAD `ae2a480`, 120 commits)
+
+### THE REBOOT — what crashed, what died, what was hardened
+
+**CRASHED:** a git commit died mid-write at the shutdown — three EMPTY objects and a dangling
+ref (`f71328e`). **REPAIRED:** HEAD reset to the last good commit, the index rebuilt, the empty
+objects swept, `DEBUG_LOG.md` restored (1264 lines, all 7 D-XX entries intact). **`fsck`
+HEALTHY; every commit since round-zero intact.**
+**DIED:** only the Vision rig — **HARDENED: `plutus-vision.service`** (systemd user unit
+wrapping `scripts/pv-ide.sh`), **enabled**, its first live run found and fixed (`bun` absent from
+the unit PATH → `Environment=PATH` added), **re-proven: `start exit: 0`, all four ports 200.**
+**SURVIVED:** the `:3` display (`jwam-display.service`), the dashboard's stack
+(`plutus-dashboard.service`) — both units — and all committed work.
+
+### THE VISION-IN-THE-LOOP ROUND (the operator's standing order)
+
+> *"UNIT TESTS ARE THEATRICAL BULLSHIT. VISION IN THE LOOP. LIVE DASHBOARD TEST. THATS THE ONLY
+> THING THAT MATTERS OR COUNTS."*
+
+**THE THREE OPERATOR CONTROLS — real CDP mouse events, outcomes asserted from artifacts:**
+| control | probe | outcome |
+|---|---|---|
+| ▶ RUN | 57×23, hit-test self | fresh **`COMPILED 392ms`** + the opened :3 frame agreeing |
+| ◎ CAPTURE | 85×23, hit-test self | a fresh **evidence PNG**, opened (D3 ladder + tags) |
+| ⚑ GATE | 64×23, hit-test self | a **new ledger row 12 s old**, read from disk (`reader=PASS`) |
+
+**THE H4 LEDGER, COMPLETE — all four drills run:**
+switch-TF-mid-render (**PASS** — clean completion + re-render on 4H, every number double-read) ·
+apply-an-input (`lqzLabel` 2→0) · toggle-lqzSource (the measured pair) · starve-the-bars (no
+fallback band).
+
+**THE THEATRICALITY_LOG** created with T-01 (the unit-start treated as verification —
+SELF-CORRECTED, operator-adjacent) and T-02 (the double-chrome profile race — SELF-CORRECTED).
+
+### THE LIBRARY CROSS-REFERENCE (the pin's adversarial law, run)
+
+`scripts/measure_ladder.py` on the operator's **5 hand-charts** vs **D1/D2/D3 panels from one
+identical-bars run**: library **55 green / 16 red** (all five green-dominant) · D1 **0 / 6** ·
+D2 **18 / 13** · D3 **18 / 13**. **Verdict: the operator's indicators match the library's
+green-dominant signature; LuxAlgo's bundle does not (zero demand-side bands).** Caveats
+(GBPUSD 15m vs EUR/USD 1H; the downtrend regime; the brass fallback; n=5) logged with it.
+
+### THE WAVE SHAS OF THESE ROUNDS
+
+`8edeae2` the cross-reference · `966b182` the trio completion · `af9e025` the grid regen ·
+`49af583` the live test + THEATRICALITY_LOG · `ae2a480` the mid-render drill · the repair chain
+(`7ab81bf` region) · the unit fix (outside the repo, at `~/.config/systemd/user/`).
+
+### STATE
+
+**120 commits · tree CLEAN · seal rev 11 · the rig up + reboot-proof · D3 on :3 ·
+`12 pass · 0 fail` · `CANON GATE: PASS` · `SERVED_PINE_OK` · v0 UNCHANGED at
+`605bff82d3539e9e`.**
