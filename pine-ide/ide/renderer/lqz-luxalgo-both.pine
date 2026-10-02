@@ -910,7 +910,13 @@ f_lqzRender() =>
             //   its tag is the defect, not a style choice. textcolor carries the side colour;
             //   color(na) draws no plate, matching the library's bare tag-on-chart look.
             if lqzLabel
-                label.new(bar_index + lqzRightB, _mid, _sd == 1 ? "Sellside Liquidity" : "Buyside Liquidity",
+                // ANCHORED INSIDE THE WINDOW, NOT PAST ITS EDGE. Measured: with the label at
+                //   `bar_index + lqzRightB` it carried time 1783389600000 against the run's
+                //   lastTime 1783317600000 -- 20 bars beyond the last bar, past the chart's
+                //   right edge, so it was counted (labels 2) and never drawn. The library's own
+                //   tags sit INSIDE the band, mid-chart. Half the left margin lands it there.
+                label.new(math.max(0, bar_index - math.round(lqzLeftB / 2)), _mid,
+                          _sd == 1 ? "Sellside Liquidity" : "Buyside Liquidity",
                           xloc = xloc.bar_index, style = label.style_label_left, size = size.tiny,
                           color = color(na), textcolor = _col)
             // 3+ agreeing sources get a whisper of fill so the dense bands read as one zone
