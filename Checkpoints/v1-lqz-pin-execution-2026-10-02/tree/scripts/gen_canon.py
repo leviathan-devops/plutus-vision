@@ -406,9 +406,64 @@ d += ["| when (2026-10-01 UTC) | symptom | cause | DEBUG_LOG |", "|---|---|---|-
       "| ~16:18 | tan striped VOIDS | brass default border | EN-021 (OPEN) |", ""]
 docs["RUNNING_DEBUG_LOG"] = d
 
+# ── THE SHA BLOCK — injected into the 5 READ-FIRST docs, verbatim and identical ─────────────
+# The pin's canon gate: "the 5 read-first docs agree on the SHA". Hand-carrying it let it go
+# stale (the last hand block read D1 b6dda2dae441 while D1 had long moved). It is GENERATED
+# now, so every regen re-stamps all five from the same disk read.
+READ_FIRST = ("POST-COMPACTION_PROMPT", "CURRENT_STATE", "BUILD_STATE", "EVIDENCE_STATE", "NEXT_STEPS")
+SHA_FILES = ["lqz-luxalgo.pine", "lqz-plutus.pine", "plutus-vision-v1.pine", "plutus-vision-v0.pine"]
+sha_block = ["", "## THE SHA BLOCK (all read-first docs carry this verbatim)", "",
+             "| artifact | sha256[:16] |", "|---|---|"]
+for _f in SHA_FILES:
+    _p = W / _f
+    sha_block.append(f"| {_f} | `{sha(_p, 16)}` |" if _p.exists() else f"| {_f} | ABSENT |")
+sha_block.append("")
+for _n in READ_FIRST:
+    docs[_n] = list(docs[_n]) + sha_block
+
+# ── THE WRITE — APPEND-SAFE, HAND-SECTION PRESERVING ────────────────────────────
+# MEASURED 2026-10-02: this loop used to `write_text` UNCONDITIONALLY, so a regen clobbered
+# the "append-only" docs outright -- RUNNING_BUILD_LOG fell 255 → 23 lines, RUNNING_DEBUG_LOG
+# 214 → 29, 642 lines across 12 files. The docs' own titles said "append-only" and the code
+# disagreed with them. THE CONTRACT NOW, in code:
+#   · the APPEND docs keep their entire history below a marker; the generated head refreshes.
+#   · the OVERWRITE docs keep every hand-written section between CANON-HAND markers; the
+#     generated inventory refreshes around it. (The manifest already carried a marker
+#     convention -- <!-- LQZ-SHA-BLOCK --> -- this generalises it.)
+APPEND_DOCS = {"CHANGELOG", "RUNNING_BUILD_LOG", "RUNNING_DEBUG_LOG"}
+APPEND_MARK = "<!-- LQZ:APPEND-BELOW -->"
+HAND_OPEN, HAND_CLOSE = "<!-- LQZ:CANON-HAND -->", "<!-- /LQZ:CANON-HAND -->"
+
+
+def preserved_hand(text):
+    """every CANON-HAND block in `text`, in order."""
+    out, i = [], 0
+    while True:
+        a = text.find(HAND_OPEN, i)
+        if a < 0:
+            break
+        b = text.find(HAND_CLOSE, a)
+        if b < 0:
+            break
+        out.append(text[a:b + len(HAND_CLOSE)])
+        i = b + len(HAND_CLOSE)
+    return out
+
+
 for name, body in docs.items():
-    (C / f"{name}.md").write_text("\n".join(body) + "\n")
-    print(f"{name:24} {len(body):4} lines")
+    p = C / f"{name}.md"
+    gen = "\n".join(body) + "\n"
+    if p.exists():
+        old = p.read_text()
+        if name in APPEND_DOCS:
+            hist = old.split(APPEND_MARK, 1)[1] if APPEND_MARK in old else old
+            gen = gen + "\n" + APPEND_MARK + "\n" + hist
+        else:
+            hand = preserved_hand(old)
+            if hand:
+                gen = gen + "\n\n" + "\n\n".join(hand) + "\n"
+    p.write_text(gen)
+    print(f"{name:24} {gen.count(chr(10)):4} lines")
 (C / "CANON_MANIFEST.md").write_text("\n".join(
     ["# CANON MANIFEST — PLUTUS VISION", f"Generated: {NOW}", f"Indicator sha256: {PSHA}",
      "Generator: scripts/gen_canon.py (re-run after every milestone)", "Docs:"] +

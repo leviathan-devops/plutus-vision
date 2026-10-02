@@ -1,4 +1,4 @@
-# CHECKPOINT MANIFEST — v1-lqz-pin-execution — 2026-10-02 (rev 9: the drills + the re-verification)
+# CHECKPOINT MANIFEST — v1-lqz-pin-execution — 2026-10-02 (rev 10: the canon at the floor, the gate green)
 
 ## THE SEAL MODE (ONE mode, declared)
 no-lock — fully committed and reproducible from git at the SHA below. NEVER manifest-only.
@@ -6,33 +6,25 @@ no-lock — fully committed and reproducible from git at the SHA below. NEVER ma
 ## THE SHAS
 | artifact | sha256[:16] |
 |---|---|
-| git HEAD | `1c64f20` |
+| git HEAD | `7745e05` |
 | lqz-luxalgo.pine | `db06b60574125039` |
 | lqz-plutus.pine | `68881deaca0c66a1` |
 | plutus-vision-v1.pine | `82da437af969a315` |
 | plutus-vision-v0.pine | `605bff82d3539e9e` |
 
-## THE EVIDENCE, condensed
-- unit `bun test ./scripts/`: **12 pass . 0 fail** · adversarial: **7/7, ZERO confirmed defects**
-- parity: SMC **195/195** . POOLS **25/25** . VOIDS **380/500** exact to the baseline · SWEEPS named (F-XX)
-- the starvation drill: **no fallback band** at 2-5 bars (D1/D2 zero; D3 zero boxes)
-- the lqzLabel toggle: **labels 2 -> 0**, the pre-registered expectation met
-- the settings-dialog op: **UNRUN, NAMED** (the exposed renderer surface lacks the dialog internals)
+## THE GATES, ALL RE-RUN
+- **CANON GATE: PASS** (exit 0) — every doc 203–290 lines, 3–7 file:line refs each, the SHA block identical across the 5 read-first and matching disk
+- unit `bun test ./scripts/`: **12 pass · 0 fail** · adversarial: **7/7, ZERO confirmed defects**
+- parity: SMC **195/195** · POOLS **25/25** · VOIDS **380/500** exact · SWEEPS named (F-XX) · `verify_four.py` **4/4**
+- starvation drill: no fallback band · the lqzLabel toggle: labels 2 → 0
 
 ## THE COUNTS
-- tracked (excl. the seal): **873** → sealed: **873**  **MATCH**
-
-## THE JUDGMENT SURFACES
-- `panel-grid-1H.png`  `6c01eec3592c75b2`
-- `panel-grid-IDE-15m-2026-W29.png`  `299889060907a1fb`
-- `panel-grid-IDE-1H-2026-W29.png`  `e29c0969f8676569`
-- `panel-grid-IDE-30m-2026-W29.png`  `c1da1d67e074b9f8`
-- `panel-grid-IDE-4H-2026-W29.png`  `444b332a02b77b23`
-- `panel-grid-IDE-4TF-2026-W29.png`  `2cbc46a8a75e7537`
+- tracked (excl. the seal): **874** → sealed: **874**  **MATCH**
+- canon: 12 · ship: 5
 
 ## HONEST GAPS
 1. **THE OPERATOR HAS NOT RECORDED A VERDICT** — the pin's P8.
-2. **THE SETTINGS DIALOG OP IS UNRUN** — H2's op, attempted, unreachable via the exposed surface; the mechanical equivalent is the evidence.
-3. **THE SWEEPS STANDALONE LEG** fails on the current engine install (F-XX; the deliverables unaffected).
-4. **D3's structure labels at starvation carry null prices** — dead geometry the counts still census (recorded).
-5. **Viewports differ per panel**; the 36 native LuxAlgo primitives render via BRASS; the station wedges under sustained compiles (remedy `scripts/pv-ide.sh`).
+2. **F-XX — the sweeps standalone leg** (engine-era; the deliverables unaffected).
+3. **The settings-dialog op is UNRUN** (unreachable from the exposed surface).
+4. **Viewports differ per panel**; the 36 native primitives render via BRASS.
+5. **The station wedges under sustained compiles** — remedy `scripts/pv-ide.sh`.
