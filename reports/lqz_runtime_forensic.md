@@ -831,3 +831,50 @@ source after `loadBars`; null-guard the run).
 
 **The grids remain on disk and the composer marks what it CAN detect. It cannot detect this
 class, and saying so is the only honest option.**
+
+---
+
+# THE RE-CAPTURE IS BLOCKED — the two remedies defeat each other (NAMED, not hidden)
+
+## THE WALL
+Two defects, each with a working remedy, and **the remedies defeat each other**:
+
+| defect | remedy | cost |
+|---|---|---|
+| the compositor FREEZES under repeated runs | **reload the page before capturing** | the reload RESETS the editor, and the source no longer sticks |
+| the editor's source must be set before the run | set + assert + re-assert after `loadBars` | without a reload, the capture is stale |
+
+**MEASURED, the clean pass on D2 @1H after a reload:**
+```
+week 2026-W29 ✓   guard true ✓
+tries 19          ← the title loop EXHAUSTED; "LQZ Plutus" never appeared
+sha 646a3e8f22fbbb3d   nonBg 0.17882   ← D2's 1H should be ~0.46
+```
+**`nonBg 0.17882` is the default study's signature, not D2's.** So the reload won, the editor
+lost, and the capture is of the WRONG SCRIPT — a different failure from the stale-frame one and
+equally disqualifying.
+
+## WHY THE OBVIOUS FIXES WERE TRIED AND DID NOT HOLD
+1. **setSource → flush → 4 s → loadBars → 3 s → re-assert → 4 s → run.** Tried. The re-mount's
+   own tab initialisation overwrites the editor at a point after the last assert.
+2. **The title loop with re-assert on every failed attempt** (18 tries). Tried. It exhausted.
+3. **`P.run()` null-guard.** Worked — `nulls: 0` — and is not the problem here.
+
+## WHAT IS ACTUALLY NEEDED (named, for the next session)
+**A way to load a script that survives the page's re-mount** — one of:
+- find and call the shell's own tab/file-load path (the IDE has `P.tabs` and an
+  `importWorkspace`/`exportWorkspace` pair that may set the active tab's source durably);
+- drive the editor's OWN load control through the UI rather than `setSource`;
+- or capture WITHOUT a reload by forcing a compositor frame some other way (a chart resize, a
+  tab switch, a `P.chart` re-mount) — anything that does not reset the editor.
+
+**The third is the most promising**: the freeze is a COMPOSITOR problem, and the editor is
+unaffected by a chart-level action. A chart resize or tab switch may produce a fresh frame
+while leaving the source in place.
+
+## THE HONEST STATUS OF THE GRID SET (unchanged by this attempt)
+- **D2 15m and 30m, D3 15m**: captured under the reload discipline — **trustworthy**.
+- **D2 1H and 4H**: SUSPECTED STALE.
+- **D3 30m/1H/4H, D1 all TFs**: unverified or absent, and the composer marks them.
+- **The two renderer fixes themselves are unaffected**: they were verified at the STATION
+  (`coloured 38/38, 58/58, 56/56, 79/79`) and D3's 15m frame was opened and read.
