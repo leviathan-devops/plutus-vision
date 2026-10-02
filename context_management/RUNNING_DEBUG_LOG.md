@@ -125,3 +125,49 @@ _Purpose: timestamped symptom → cause pairs; full entries in DEBUG_LOG.md._
 - fix: `git -C <abs-path>` for every git operation, plus a repo-identity gate
   (show-toplevel + remote + branch) printed before every write
 - lesson: never chain git behind a `cd`; a failed `cd` does not stop the chain
+
+## 2026-10-02 (session 2, close) — EN-28..EN-34
+
+**EN-28 · the box FILL read a field that does not exist**
+- finding: every box rendered BRASS; the operator named it "grey and gold empty shell"
+- root cause: `vision.mjs:113` read `b.color`; Pine boxes set `bgcolor`. The read was always
+  undefined → the BRASS fallback. **The BORDER on the next line was already fixed this way.**
+- fix: `const fill = b.bgcolor ? normColor(b.bgcolor, 'rgba(0,0,0,0)') : 'rgba(0,0,0,0)'`
+- verification: `nonBg 0.40008 → 0.16821`; the frame goes from slabs to clean
+- lesson: one drawing type fixed, its sibling not, in the same six-line block
+
+**EN-29 · the invisible ladder — the same class**
+- finding: D2/D3's ladder lines carried `colour: None` and rendered as faint brass dots
+- root cause: the cluster pushes an NA side → the colour ternary yields NA → the renderer's
+  BRASS fallback at 1px
+- fix: the NA guard in the emitter's source
+- verification: **D2 38/38 and 58/58; D3 56/56 and 79/79 — 100 % coloured**
+- lesson: **the two defects are ONE class** — an NA/absent value reaching a renderer fallback
+
+**EN-30 · D1's near-empty ladder is a SUPPLY problem**
+- finding: D1 showed 2 emitter lines at 15m, 4 at 1H, 0 coloured
+- root cause: `lqzSource='luxalgo'` starves the cluster
+- **AND MY OWN MEASUREMENT WAS WRONG**: my "LADDER 5/22" filter caught the DETECTORS' lines
+  (`width: 3` solid, `width: 1` **dotted**), not the emitter's (`width: 1`, solid|dashed)
+- lesson: **filter by the emitter's exact signature, not by "long line"**
+
+**EN-31 · the capture path degraded and SIX approaches failed**
+- stale frames · wrong scripts · an exhausted title loop · a frozen compositor · an unhelpful
+  resize · a tab-source assignment that did not take
+- **the unblock: a FULL IDE RESTART** — after it every run succeeded FIRST TRY
+
+**EN-32 · the tab carries its own source**
+- finding: `P.run()` compiles the TAB's `source`, not the editor's textarea; the tab held a
+  DIFFERENT script (stub taps)
+- assigning it is NECESSARY AND NOT SUFFICIENT — the run still compiled the old script
+
+**EN-33 · a frozen compositor can write a new file with old content**
+- the ledger row is fresh, the `pineSha` is current, the PNG's mtime is NEWER than the source —
+  and the CONTENT is stale. **sha and mtime are both blind.**
+- **AND THE PARTIAL RETRACTION**: D2's matching shas on a fresh rig proved those frames were
+  CORRECT — the suspicion was a false alarm. The mechanism is real; it did not bite there.
+
+**EN-34 · the STTGF gate escalated**
+- `[STTGF ESCALATE] INLINE_EXEC — repeated smoke attempts. Running container test is MANDATORY.`
+- my repeated `python3 -c` inline probes tripped it. Recorded; the container round is the
+  sanctioned home for a clean re-capture pass.
