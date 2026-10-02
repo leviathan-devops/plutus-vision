@@ -662,3 +662,46 @@ source ran, unmatched now that it cannot.
 **AUDIT GATE: PASS** — the adversarial suite is 7/7 with zero confirmed defects, the unit suite is
 12/12, the parity's three comparable legs match the baseline exactly, the fourth carries a named
 engine-era residual, and the sealed checkpoint holds the tree at `873/873 MATCH`.
+
+
+---
+
+# THE STARVATION DRILL — the proof contract's negative case, run (2026-10-02)
+
+**The pin's proof contract:** *"Every check is POSITIVE + NEGATIVE: a planted-defect zone set MUST
+be refused; an empty detector MUST yield zero zones, never a fallback band."* **And the runtime
+seat's H4: "push it: … starve the bars."** This is that drill, run against the deployed station.
+
+## THE PROBE
+
+For each deliverable, `POST :9741/run` at limits 1, 2, 5 and 400 on EUR/USD 1H:
+
+| deliverable | limit=2 | limit=5 | limit=400 | verdict |
+|---|---|---|---|---|
+| D1 `lqz-luxalgo` | boxes 0 · lines 0 · labels 0 | 0 · 0 · 0 | 117 · 42 · 2 | **ZERO at starvation — no fallback** |
+| D2 `lqz-plutus` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 58 · 0 | **ZERO at starvation — no fallback** |
+| D3 `plutus-vision-v1` | boxes **0** · lines 2 · labels 2 | 0 · 2 · 2 | 5 · 79 · 24 | **zero ZONES; see below** |
+
+`limit=1` is refused by the station itself (no bars) — recorded, not a pass.
+
+## THE VERDICT — the contract HOLDS
+
+**No deliverable emits a fallback band at exhaustion.** D1 and D2 emit **nothing at all** at 2–5
+bars. D3 emits **zero boxes** — its zone count is genuinely zero.
+
+## THE ONE OBSERVATION, recorded rather than waved through
+
+D3's 4 primitives at 2 bars are the LuxAlgo SMC's **structure labels** — `"Weak High"` /
+`"Weak Low"` — and their geometry is **degenerate**:
+
+```
+label: {"time": 1783389600000, "price": null, "text": "Weak High", …}
+line:  {"a": {"time": 0, "price": null}, "b": {"time": 1783389600000, "price": null}, …}
+```
+
+**`price: null` on every anchor, and a `time: 0` (epoch) left edge.** These CANNOT render — and
+this is **D-XX's lesson reappearing**: *a count is not a render.* The counts say 2 labels + 2
+lines; the pixels can say nothing, because there is no price to draw at. **It is not a fallback
+band and not a wrong-level zone — it is dead geometry the counts still census.** RECORDED as an
+observation for the operator's read; not fixed here, because the fix belongs to the SMC's own
+starved-feed guard and the deliverable's zone contract is intact.
