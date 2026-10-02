@@ -1370,3 +1370,91 @@ fixes were blocked by history that predates them.
 **LESSON** a gate that measures cumulative history cannot be satisfied by a single corrective
 commit — the imbalance is only fixable by rebalancing the branch. The bypass was disclosed
 rather than hidden, but the ratio is real debt.
+
+
+---
+
+## 2026-10-03 — THE V2 BUILD: every defect, symptom → cause → fix → proof
+
+### F-08 · e1MaxZones WAS DECLARED BUT NEVER CONSULTED
+**SYMPTOM** ST-6d failed: "the module clamps the zone count — 1 references".
+**CAUSE** the input existed as a default; nothing read it. A cap that is only a
+default is not a cap.
+**MECHANISM** the pin's "at most six" is a HARD STOP. An unenforced cap means a 40-zone
+payload paints all forty and the operator sees the mess the pin exists to prevent.
+**FIX** the break is inside the push branch; the survivors are the highest-confluence
+zones, never an arbitrary prefix.
+**PROOF** ST-6d now reads 3 references and the clamp is inside the loop.
+
+### F-09 · EVERY FORWARD-MAP CAME BACK EMPTY
+**SYMPTOM** ST-13 reported "0 links" and PASSED — vacuously, because "0 <= 5".
+**CAUSE** forward_map passed `zmap[anchor]` — a Zone OBJECT — where `_next_target`
+expects a zone ID. The lookup compared `z.id == <Zone>` and never matched.
+**MECHANISM** the chain silently terminated on iteration 0 and reported an honest-looking
+empty result. Nothing crashed. This is the most dangerous class of defect in a forecast:
+it looks like "no structure this week" when it is "the code never ran".
+**FIX** pass the id. ST-13 gained ST-13a0, which asserts the fixture produces a chain
+BEFORE asserting the bound — a test that passes on an empty result is not a test.
+**PROOF** the fixture now yields a real 2-link chain, BS → RWL at the hard wall,
+cumulative 59.5%.
+
+### F-10 · tf_match REJECTED THE CANON'S OWN TABLE
+**SYMPTOM** ST-13f failed: "4H can target 4H and 1H".
+**CAUSE** the first version accepted only UPWARD moves, so 4H → 1H was false.
+**MECHANISM** the canon's §6.5 table is bidirectional — a higher timeframe zone
+CONTAINS lower-timeframe liquidity. Rejecting the downward step makes the table
+unusable, because most chains start at the HTF and aim at the entry timeframe.
+**FIX** `-1 <= d <= 2`: one step down always, two up is the cap.
+**PROOF** 8 of 8 tf pairs now match the canon; 15m → 4H correctly refused.
+
+### F-11 · A DUPLICATE tf_match SHADOWED THE FIX
+**SYMPTOM** F-10's fix appeared to have no effect — 4H → 1H was still false.
+**CAUSE** two `def tf_match` existed; the STALE one sat later in the file and won.
+**MECHANISM** Python rebinds a name silently. A corrected definition that is shadowed
+by the original is a fix that never runs, and it looks exactly like a fix that failed.
+**FIX** the stale copy was cut. `grep` now shows one definition.
+
+### F-12 · transition() INVENTED A SHAPE WHERE NO RULE APPLIED
+**SYMPTOM** the chain read `BS -> SS  default continuation` — a non-answer wearing a
+confidence number.
+**CAUSE** every unmatched input fell through to a blanket default.
+**MECHANISM** the canon's zero-tolerance code forbids inventing a shape. A silent
+fallback is an invented shape wearing low confidence.
+**FIX** transition now returns None; forward_map terminates the chain. A shorter honest
+chain beats a longer fabricated one.
+
+### F-13 · THE FETCH LAYER NAVIGATED THE OPERATOR'S OWN BROWSER
+**SYMPTOM** the operator, verbatim: "Why the fuck is ForexFactory on the display that is
+exclusively for Pine IDE? This should never happen."
+**CAUSE** cdp_fetch attached to the Chrome on :9222 — the browser the Pine IDE owns —
+picked whatever page was open, and NAVIGATED it.
+**MECHANISM** a fetch that hijacks a page it does not own is a capability grab. On this
+host the IDE's display is the operator's workspace.
+**FIX** a dedicated headless Chrome: --headless=new, a throwaway profile, a port it
+binds itself, killed on exit. The dead CDP_ENDPOINT constant naming :9222 is deleted.
+**LESSON** written into the source so it cannot regress: THE FETCH LAYER NEVER TOUCHES
+A BROWSER IT DID NOT LAUNCH, AND NEVER RENDERS ONTO A DISPLAY.
+
+### F-14 · array.from([]) DOES NOT TRANSPILE
+**SYMPTOM** "Failed to transpile Pine Script version 6: Syntax error at input '['".
+**CAUSE** an injected empty list literal carries no element type to infer.
+**MECHANISM** v1 already compiles using array.new<T>() + push. The payload followed a
+shape the engine rejects.
+**FIX** typed arrays plus push. **PROOF** v2 transpiles.
+
+### F-15 · THE TRANSPILER HAS NEITHER str.split NOR tonumber
+**SYMPTOM** the run died with "tonumber is not defined".
+**CAUSE** the ISO-week anchor was parsed inside Pine.
+**MECHANISM** v1 contains zero uses of either, so there was no working example to copy.
+A string-parsing library the engine does not have is a rewrite, not a fix.
+**FIX** the anchor is computed in Python (which has datetime) and injected as a
+millisecond value. THE ENGINE OWNS THE CALENDAR; PINE ONLY DRAWS.
+
+### F-16 · FOUR ST-9a FAILURES THAT WERE THE PROBE'S FAULT
+**SYMPTOM** "LuxAlgo SMC unchanged — 308/226" fired the pin's H1 HARD STOP.
+**CAUSE** the test counted OCCURRENCES with re.findall; the baseline the pin froze was
+measured with `grep -c`, which counts LINES.
+**MEASUREMENT THAT DECIDED IT** v1's sha matched the seal exactly and git reported no
+modification. The artifact was right; the instrument was wrong.
+**LESSON** a test that measures a different quantity than the baseline is a false alarm,
+and a false alarm that fires on a hard stop is worse than no alarm at all.

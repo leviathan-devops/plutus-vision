@@ -1106,3 +1106,51 @@ at the chart"), but that is an OPERATOR JUDGMENT, not a measured accuracy figure
 recall against a labelled set exists. The SUPPLY/DEMAND accuracy question is UNANSWERED: the LuxAlgo
 SMC was deliberately not touched and never audited. The next honest test is a supply/demand audit
 against Forex SMC Notes(1)/(2), not more visual tuning.
+
+
+---
+
+## 2026-10-03 — THE V2 BUILD: the plan and the results
+
+THE PLAN, in the pin's order — each wave's tests run BEFORE the next wave exists:
+  WAVE 1  ST-1..ST-5   the adversarial cases first: no fabrication, the temporal
+                        boundary, the notional trap, the arm control, the DEAD ARM.
+  WAVE 2  ST-6..ST-9b  the ≤6 cap, the degree bands, the Monday anchor, and the
+                        v1 floor — which is the hard stop on the whole build.
+  WAVE 3  ST-10..ST-13  anchoring, THE HARD-WALL RULE, the day decomposition with
+                        the +1 day speed rule, the chain bounds.
+  WAVE 3b ST-14..ST-17 the render: one line not a filled area, the dashed ghost,
+                        Rule 1 at the render, no hard-coded timestamps.
+
+THE RESULTS
+  scripts/e1_tests.py         14/14   PASS
+  scripts/e1_render_tests.py   23/23   PASS
+  scripts/e2_tests.py         29/29   PASS
+  scripts/e2_render_tests.py   18/18   PASS
+  TOTAL                        66/66   PASS, every assertion paired with a
+                                       negative control.
+
+THE DENSITY INSTRUMENT AND ITS OWN CONTROL
+  scripts/measure_density.py draws 4 synthetic bands of known 5px thickness and
+  reads them back before it is allowed to measure anything. This exists because the
+  previous instrument could not: it scored a row "covered" if ANY ink pixel existed,
+  so a 1px hairline scored a 99% PASS and the library's "1px" target was recorded from
+  our own defect. AN INSTRUMENT THAT CANNOT FAIL ITS CONTROL CERTIFIES THE DEFECT.
+
+  MEASURED, our chart against the operator's library, same instrument both sides:
+    band COUNT     ours 21   library 14 (range 4-22)   -> IN RANGE
+    median THICK   ours 14.0px  library 7.5px           -> ours 1.9x thicker
+    ink column     ours 37.1%  library 55.1%            -> ours LESS ink
+  THE CORRECTION: my "very dense" was an EYEBALL claim and the measurement contradicts
+  it on count. The real delta is THICKNESS, and lqzTol / lqzThickE are RUNTIME INPUTS
+  in the v1 module — tuning them is an operator dial, not a code edit, so the seal
+  holds.
+
+THE KNOWN-GAP REGISTER
+  | gap | state | why |
+  |---|---|---|
+  | no E1 zone has ever rendered | OPEN | every source returned [NO DATA] on this |
+  | | | host. The refusal is correct; the pipeline has not yet been SHOWN producing |
+  | | | a zone. This is the one deliverable not demonstrated. |
+  | TradingView-native compile | NOT RUN | the PineTS station compiled it here |
+  | band thickness vs the library | MEASURED | 1.9x thicker; a runtime dial, not code |

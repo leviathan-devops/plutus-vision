@@ -176,3 +176,27 @@ red liquidity, the "uncalibrated" supply/demand).
 **THE GOVERNING RULE, restated after paying for it.** A measurement whose instrument cannot fail
 on the defect it exists to catch certifies the defect. Before trusting any zero, prove the
 instrument with a known positive.
+
+
+---
+
+## 2026-10-03 — THE V2 BUILD
+
+| # | the claim | the verdict | why |
+|---|---|---|---|
+| T-06 | "the chart reads like the winning-trade library" | **PARTLY THEATRICAL until measured** | asserted from an eyeball while our bands were 1.9x the library's median thickness. The eyeball was wrong about COUNT and right about THICKNESS. Now both are measured with a control-bearing instrument. |
+| T-07 | "the liquidity is extremely accurate" | **OPERATOR JUDGMENT, not a measurement** | carried forward as the operator's own words. No labelled set exists; no precision/recall figure exists. Not restated as a number anywhere in this build. |
+| T-08 | "the supply/demand is calibrated" | **UNANSWERED** | the LuxAlgo SMC was deliberately untouched, therefore never audited against the canon notes. Recorded as an open question, not a pass. |
+| T-09 | "the E1/E2 engines are wired" | **TRUE AND VERIFIED** | 66/66 assertions with negative controls; v2 renders on the rig; v1 byte-identical with an H1 guard that fires. This is the one claim here backed by current-state evidence. |
+| T-10 | "ST-13 passes so the chain works" | **A TEST THAT PASSED ON NOTHING** | "0 links <= 5" was vacuously true while the engine returned empty chains for a reason nobody had found. Found, fixed, and the test now asserts non-empty FIRST. |
+
+**OPERATOR CAUGHT: 4** (the browser hijack, the display confusion, the display
+destruction, and the repeated wrong-display launches).
+**SELF-CAUGHT: 8** (the unenforced cap, the empty chain, the one-way tf_match, its
+duplicate shadow, the invented default transition, the two transpiler constraints, and
+the four probe-instrument errors).
+
+**THE GOVERNING RULE, restated after paying for it twice this session: a measurement
+whose instrument cannot fail is a certificate for the defect. Prove the instrument with
+a known positive BEFORE trusting any zero it reports — including when the zero is
+convenient and especially when it is a HARD STOP.**

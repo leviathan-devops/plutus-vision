@@ -2088,3 +2088,43 @@ Engine 1 and Engine 2 are absent. The census reads 0 for ZFP, BoM/MoM, reaction 
 fortress, IPZone, pivots, option tiers, analyst tiering, shape taxonomy, shape decision matrix,
 ZFP-conditioned transitions, consolidation phase, day decomposition, forward mapping, speed rule,
 TF matching. Scope + waves + criteria: `artifacts/PLUTUS_VISION_V2_E1E2_SPEC.md`.
+
+---
+
+## 2026-10-03 — THE V2 BUILD (E1 + E2 ON THE SEALED v1 BASELINE)
+
+ARTIFACTS
+  plutus-vision-v1.pine   sha 0d20e8314ce992fc   UNTOUCHED — the sealed foundation
+  plutus-vision-v2.pine   sha dfb22f5acb484cfd   v1 verbatim + the E1 and E2 engines
+
+THE INVARIANT, MECHANICALLY ENFORCED
+  The build refuses to run if v1 moves: `HARD STOP H1 — v1 HAS MOVED`.
+  PROVEN by tampering: appending one line to v1 made the build exit with the seal
+  and the on-disk sha side by side. v1 was then restored to 0d20e8314ce992fc exactly.
+  The three protected layer counts re-checked after every build:
+  LuxAlgo SMC 226 · SMC order blocks 6 · LQZ bands 4.
+
+WHAT WAS BUILT
+  PHASE 1  scripts/e1_fetch.py — nine sources, ONE model call, pure code elsewhere.
+           ST-1..ST-5 = 14 assertions. The dead-arm test is the anti-theatre one:
+           with the model stopped, the script exits 0, writes a valid file, and
+           records [NO DATA] on the options pillar. Zero fabricated levels.
+  PHASE 2  plutus-vision-lqz/e1-render.pine — the institutional pressure map.
+           At most six zones, tinted by PRESSURE DEGREE, Monday-anchored, both
+           horizontal bounds computed. ST-6..ST-9b = 23 assertions.
+  PHASE 3  scripts/e2_engine.py + plutus-vision-lqz/e2-render.pine — the shape
+           chain and ONE paintbrush polyline. ST-10..ST-13 = 29, ST-14..ST-17 = 18.
+  TOTAL    66 assertions across four suites, every one paired with a negative
+           control so a passing result means the instrument could have failed.
+
+THE RIG RUN (EURUSD 1H W29)
+  COMPILED · bars 400 · boxes 32 · labels 26 · lines 48
+  boxes 32 equals v1's 32 — the E1 map added ZERO zones because the fetch recorded
+  [NO DATA] on every source, and labels rose 24 to 26 for the two honest additions:
+  the Monday anchor and the red on-chart refusal. With no data the indicator draws
+  no zone and no path, and says so, rather than inventing either.
+
+THE KNOWN GAP, STATED
+  No E1 zone has ever rendered, because no source returned usable data on this host.
+  The refusal is correct behaviour; the pipeline has not yet been shown producing a
+  zone. That is the one deliverable this build does NOT yet demonstrate.
