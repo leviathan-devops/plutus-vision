@@ -210,3 +210,44 @@ assert `sourceSha`** — the per-file identity — whenever two artifacts can sh
 **The default is honest, not broken:** under `luxalgo` the 2-distinct-source rule (`lqzMinAgree=2`)
 finds no agreeing pair on this fixture, so there is nothing to label. **Both knobs — `lqzSource`
 and `lqzMinAgree` — are the operator's calibration.**
+
+
+---
+
+# THE CLOSING MEASUREMENT — D1's first PASS, and the frame it rides on
+
+**Date:** 2026-10-02 · **Rig:** restored by the launcher after the station wedged; all four ports
+confirmed (`:9741 200 · :9754 404=healthy · :9851 200 · :9222 200`), rail `/health` at
+**0.0016 s**.
+
+**THE RUN** (asserted on `sourceSha`, per finding D):
+
+```
+srcSha 88de18cfde20   boxes 117 · lines 42 · labels 2
+```
+
+**THE GATE ROW** — the first D1 row in the ledger that is NOT vetoed:
+
+```
+verdict PASS · deltas [] · labels 2 · boxes 117 · pngSha cceb3271898d3d35
+```
+
+**THE LOOK.** The capture `cceb3271898d3d35` was opened. It carries, on the EUR/USD 1h fixture
+across Jun 13 – Jul 5:
+
+- **two labelled full-width zones** — the tags read **"Sellside Liquidity"**, sitting at ≈1.1405
+  and ≈1.1390, mid-chart (Jun 22–23), visibly drawn;
+- the zone rails spanning the plot width;
+- the LuxAlgo-native primitives beneath them.
+
+**For comparison, the same file under the shipped default `lqzSource='luxalgo'`:**
+
+```
+boxes 117 · lines 36 · labels 0   -> MECH_VETO:boxes=117:labels=0 -> FAIL
+```
+
+**THE HONEST READING OF THE PAIR.** The default is not broken; it is *honest*. Under `luxalgo`
+the 2-distinct-source rule (`lqzMinAgree=2`) finds no agreeing pair on this fixture, so the
+full-width emitter has nothing to label. **The display the pin's D1 asks for appears when the
+operator sets `lqzSource='both'` — or lowers `lqzMinAgree` — both of which are in the pin's
+OPEN calibration set.** The measured pair is now: **`luxalgo` 117/36/0/FAIL · `both` 117/42/2/PASS.**
