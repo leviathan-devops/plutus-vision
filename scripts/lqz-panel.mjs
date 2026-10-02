@@ -156,6 +156,22 @@ if (uniq.size !== captured.length) {
 }
 console.log("panels distinct: " + shas.map((s, i) => `${captured[i].key}=${s.slice(0, 12)}`).join(" "));
 
+// ── THE SOURCE-DISTINCTNESS GUARD ───────────────────────────────────────────
+// MEASURED, the A4 mutant (2026-10-02): two panels rendering the SAME deliverable can still
+// produce DISTINCT frames -- the chart's viewport auto-fits per run -- so the frame guard
+// above PASSES while the grid shows one indicator twice. The mutant planted D2 as a copy of
+// D1 (file, mark and expected title alike) and the grid returned PANEL_GRID_OK, exit 0.
+// The grid's contract is a COMPARISON: four panels, four sources. Two panels with one source
+// is the same lie in a different costume, and the guard's job is the comparison, not just the
+// bytes. The mutant now exits 1 at this line.
+const srcShas = await Promise.all(captured.map(async (c) =>
+  (await $`sha256sum ${c.file}`.text()).split(" ")[0]));
+if (new Set(srcShas).size !== captured.length) {
+  console.error("PANEL_GRID_FAIL: panels are not distinct at the SOURCE — two panels render the SAME source: " + srcShas.map((s, i) => `${captured[i].key}=${s.slice(0, 12)}`).join(" "));
+  process.exit(1);
+}
+console.log("sources distinct: " + srcShas.map((s, i) => `${captured[i].key}=${s.slice(0, 12)}`).join(" "));
+
 // ── the grid, composed and captioned ────────────────────────────────────────
 // The panel metadata travels as JSON, never interpolated into the Python source:
 // a caption with a newline in it is a Python syntax error, and that cost a run.
