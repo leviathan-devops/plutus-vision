@@ -538,3 +538,40 @@ their measured consequences:
 - **`lqzWickMult` / `lqzReject` remain unmeasured against a deliverable that HAS them** (D2/D3,
   via `lqz-core.pine`). Sweeping them against D1 found zero matches, which was a fact about the
   probe.
+
+---
+
+# THE `luxalgo == candles` COUNT — RESOLVED, NOT A DEFECT
+
+## THE OBSERVATION THAT LOOKED LIKE A RED FLAG
+`lqzSource = "luxalgo"` and `lqzSource = "candles"` returned **byte-identical counts** at BOTH
+timeframes (5 ladder lines at 15m, 22 at 1H), while `both` returned MORE (8 and 28). Two
+sources producing identical results, yet their union producing more than either, is not
+arithmetically impossible — but it warranted a read rather than a verdict.
+
+## THE WIRING, READ
+```pine
+735  lqzV1Enabled = lqzSource == "luxalgo" or lqzSource == "both"
+760  lqzV2Enabled = lqzSource == "candles" or lqzSource == "both"
+761  if lqzV2Enabled and lqzSource == "luxalgo"        ← a guard for a mutually-exclusive case
+762      runtime.error("lqzSource cannot be both 'luxalgo' and V2-active")
+827  _need = lqzSource == "candles" ? 1 : lqzMinAgree
+```
+**The selection is correctly gated.** `luxalgo` ⇒ V1 taps only; `candles` ⇒ V2 detector only;
+`both` ⇒ both. The line-761 guard is unreachable by construction, which is what a guard for a
+mutually-exclusive case should be.
+
+## WHY THE COUNTS COINCIDE
+`candles` clusters with `_need = 1` (ANY band); `luxalgo` clusters with `_need = lqzMinAgree = 2`.
+They return the same count **because the levels that arrive already carry `conf ≥ 2`** — so
+lowering the admission threshold to 1 admits nothing that was not already admitted.
+**`both` returns more because it UNIONS two level sets, not because a threshold moved.**
+All three readings are mutually consistent. **The "red flag" was a coincidence read as a
+contradiction.**
+
+## WHAT THIS LEAVES
+The 1H-vs-15m gap (**22 → 5** at `luxalgo`; **28 → 8** at `both`) is **not** a wiring fault and
+**not** an admission-threshold fault. It is structural: the detectors' windows are measured in
+BARS, and 15m carries 325 of them against 1H's 400 — so the same `swp_len` spans far less time
+and fewer structures form. **Every input in the deliverable's surface has now been measured
+against this, and only `lqzSource` moves it.**
