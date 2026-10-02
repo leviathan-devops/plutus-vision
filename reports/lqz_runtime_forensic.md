@@ -404,3 +404,50 @@ conversion drops the line's colour**, so the emitter's `color = _col` never reac
 renderer. **The fix is the same shape**: make the station carry the colour, or make the
 renderer read the field that IS carried. Until then the ladder renders as faint brass dots
 on a clean chart instead of the library's ladder.
+
+---
+
+# 15m — WHERE THE LADDER ACTUALLY GOES (measured, and it is NOT the cluster)
+
+## THE MEASUREMENT THAT REFRAMES IT
+`POST :9741/run` on D1 @ 15m (325 bars) returns **30 lines — and NONE of them is a ladder line**:
+```
+colour distribution: {'null': 30}
+  [0] width:3 style:solid   a.time == b.time   ← a VERTICAL marker, 3-bar span
+  [1] width:1 style:dotted  a→b spans 3 bars
+  [2] width:3 style:solid   a.time == b.time   ← vertical
+```
+The LQZ emitter draws `line.new(_lx, _hi, bar_index + lqzRightB, _hi, …)` — a **full-width**
+line, whose `a.time` would be ~500 bars before `b.time`. **No such line exists in the payload.**
+⇒ `f_lqzRender()` emitted NOTHING, which happens only when `array.size(lqzZLevel) == 0`.
+**The LQZ zone array is EMPTY at 15m.**
+
+The 30 `null`-coloured lines are the DETECTORS' marker lines. Their `null` colour is **correct**:
+their colour constants are `color(na)` by this session's suppression.
+
+## THE LEVERS DO NOT MOVE IT — four variants, identical counts
+| variant | boxes | lines | labels |
+|---|---|---|---|
+| as-shipped (`lqzMinAgree=2`, `lqzTol=0.5`) | 97 | 30 | 0 |
+| `lqzMinAgree=1` (any band clusters) | 97 | 30 | 0 |
+| `lqzTol=1.5` (wider cluster window) | 97 | 30 | 0 |
+| `lqzMinAgree=1` + `lqzTol=1.5` | 97 | 30 | 0 |
+
+**Byte-identical.** So the zone array was empty BEFORE the cluster ran: the problem is not how
+levels are CLUSTERED, it is that no levels ARRIVE. The cluster's own knobs cannot fix an
+empty input, and neither of the two inputs the pin lists as the operator's calibration is
+implicated.
+
+## WHAT THAT MEANS FOR THE PIN'S OPEN CALIBRATION
+The pin names `lqzTol · lqzMinAgree · wickBodyMult · rejectATRMult` as the operator's open
+calibration. **Two of them (`lqzTol`, `lqzMinAgree`) are now measured to have ZERO effect at
+15m** — not because they are wrong, but because nothing reaches them. **Calibrating them at
+15m would be calibrating a disconnected stage.**
+The other two — `lqzWickMult` / `lqzReject` (the V2 candle detector's swing parameters) — are
+the ones that control whether levels EXIST at all, and they are the next measurement.
+
+## STATUS
+- **grey/gold slabs: FIXED** (`vision.mjs:121`, verified `nonBg 0.40008 → 0.16821`).
+- **the 15m ladder: an UPSTREAM SUPPLY problem**, one stage before the cluster — named, with the
+  measurement that proves it, and with two candidate levers ruled out by experiment rather than
+  argument.
