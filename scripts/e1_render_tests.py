@@ -129,17 +129,26 @@ def st8_monday_anchor() -> None:
     # which Python parses as (A and B) or C — a precedence mistake that reported two
     # existing functions as missing. Presence is now a plain membership test.
     # Probe defect, found 2026-10-03 (second pass): the test looked for `f_e1LeftMs() =>`
-    # — EMPTY parens — while the function is declared `f_e1LeftMs(anchorMs) =>` because
-    # it takes the anchor. Two functions the pin requires were reported missing because
-    # the probe could not spell a parameter. The test now accepts either form.
-    for fn in ("f_e1AnchorMs", "f_e1LeftMs", "f_e1RightMs"):
-        defined = re.search(rf"{fn}\s*\([^)]*\)\s*=>", src) is not None
-        record(f"ST-8b  {fn} is defined", defined,
-               "both horizontal bounds derive from the computed anchor")
-
-    record("ST-8c  both bounds derive from the anchor",
-           "anchorMs - e1BackWeeks" in src and "anchorMs + (e1FwdWeeks" in src,
-           "hindsight -2 weeks / foresight +3 weeks, both computed")
+    # — EMPTY parens — while the function was declared `f_e1LeftMs(anchorMs) =>`.
+    # Probe defect, THIRD pass, and the one that mattered: the module was then REFACTORED
+    # to compute the anchor in PYTHON (the PineTS transpiler has neither str.split nor
+    # tonumber — measured), so the helper functions are gone and the bounds are computed
+    # inline against a local `_anchor`. The old greps matched names that no longer exist.
+    # The assertion now checks the ARITHMETIC and that both bounds share ONE anchor.
+    # The LHS and RHS names DIFFER (`_lx = _anchor - …`), so the anchor is the CAPTURED
+    # right-hand side, not the assigned name.
+    left = re.search(r"_[A-Za-z0-9]+\s*=\s*(_[A-Za-z0-9]+)\s*-\s*e1BackWeeks\s*\*\s*604800000", src)
+    right = re.search(r"_[A-Za-z0-9]+\s*=\s*(_[A-Za-z0-9]+)\s*\+\s*\(\s*e1FwdWeeks\s*\+\s*1\s*\)", src)
+    anchored = re.search(r"(_[A-Za-z0-9]+)\s*=\s*e1_anchor_ms", src)
+    same = bool(left and right and anchored and
+                left.group(1) == right.group(1) == anchored.group(1))
+    record("ST-8c  both bounds derive from the SAME computed anchor", same,
+           f"{(left.group(1) if left else '?')} -/+ N weeks x 604800000 ms")
+    record("ST-8b  the anchor comes from the injected payload, not a literal",
+           "e1_anchor_ms" in src,
+           "e2_engine.py owns the calendar; Pine only draws")
+    record("ST-8f  a missing anchor falls back to bar time, never to a pinned date",
+           "e1_anchor_ms > 0 ?" in src, "no anchor -> the bar's own time")
 
     record("ST-8d  the anchor is drawn on the chart so the Monday is visible",
            "line.new(_anchor" in src, "a dashed anchor line at the Monday")
