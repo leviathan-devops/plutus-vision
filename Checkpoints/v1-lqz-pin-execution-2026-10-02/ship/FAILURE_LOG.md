@@ -752,3 +752,61 @@ These three are what remain after the wreckage. The indicator renders. The quest
 - **Status:** OPEN. The fix is a render-weight decision on the SMC zones (opacity / off by default),
   NOT a detection change — and it needs the operator's call because it alters how the S/D looks.
 - **Disposition:** OPEN — D3 is NOT approved and this is why the look gate exists.
+
+
+---
+
+# F-XX · THE SWEEPS STANDALONE LEG — an engine-era regression, named and bounded
+
+**Date:** 2026-10-02 · **Surface:** `scripts/compare.py`'s SWEEPS leg · **Severity:** MEDIUM
+(tooling) / NONE (deliverables) · **State:** OPEN — named residual, not chased
+
+## THE FAILURE, verbatim
+
+```
+SWEEPS  ok=False counts=null err=Cannot read properties of undefined (reading 'get_left')
+=== geometry parity (source drawing present in merged?) ===
+  SWEEPS  SOURCE FAILED — cannot compare
+```
+
+Reproduced **directly** against the station, bypassing compare.py, at **all four timeframes**
+(`1H · 15m · 30m · 4H` — HTTP 422, `PINE_RUNTIME_ERROR`) — so the failure is **absolute, not
+data-shaped**.
+
+## THE BASELINE IT BREAKS
+
+The pin's measured parity (2026-10-01): `SMC 195/195 · POOLS 25/25 · SWEEPS 258/258 · VOIDS
+380/500`. **This run: SMC 195/195 · POOLS 25/25 · VOIDS 380/500 — all three EXACT — and SWEEPS
+cannot run.** The other three legs prove the instrument; the fourth is a real delta.
+
+## THE ADJUDICATION (both ways, before any conclusion)
+
+**SIDE A — is the input wrong?** No: the source is **unchanged since round-zero** (`git log --
+sources/liquidity-sweeps.pine` → the single baseline commit `4d993b7`), and the fixture is
+unchanged since round-zero too. The same bytes ran before.
+
+**SIDE B — a real defect?** Yes, in the **tooling chain**. The `get_left` symbol belongs to
+**Vela's drawing extraction** (`velaPinets 0.2.14`), not to the Pine source. The only moving part
+since the baseline measurement is the **engine's install** (`pinets` package mtime
+`2026-10-01 16:33`). The mechanism: a drawing whose geometry resolves to `undefined` at extraction
+time — an engine-internal fragility, outside this repo's files.
+
+## THE CORRELATION THAT PROVES THE READING
+
+The pin's baseline records `SWEEPS 258/258`. This run records `MERGED-ONLY drawings: 258`. **The
+same 258** — the sweeps' drawings, matched when the source ran, unmatched now that it cannot.
+The number does not move because the drawings do not move; only the comparator changed.
+
+## THE BOUNDS — why this does not touch the deliverables
+
+1. **D1 (`lqz-luxalgo.pine`) embeds the sweeps logic** — 103 references to `swp_` — **and runs**:
+   measured today at every TF (117 boxes / 42 lines / 2 labels / PASS at 1H).
+2. **The MERGED bundle — the shipping ancestry — runs**: `ok · boxes 486 · labels 97 · lines 275`.
+3. **v0 parity is untouched**: `plutus-vision-v0.pine` is UNCHANGED at `605bff82d3539e9e` and was
+   never a leg of this comparison.
+
+## RESUME CONDITION
+
+Re-measure `compare.py` after the engine's install is reconciled (pin `pinets`/`velaPinets` to
+the build the baseline used, or take the extraction up-issue to the engine). **Do not edit the
+sweeps source to route around an extraction error** — that would be treating a symptom.

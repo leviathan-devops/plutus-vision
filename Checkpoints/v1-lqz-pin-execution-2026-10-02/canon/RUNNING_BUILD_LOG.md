@@ -229,3 +229,27 @@ never false for a timeout). Verified 4.04 s → 0.001–0.005 s.
 
 **THE ASSERTION LAW, re-learned:** the title assertion is insufficient when two files share a
 title — assert `sourceSha`. That mistake cost one measurement and is recorded.
+
+## 2026-10-02 · the re-verification round — every gate re-run, two defects found and fixed
+
+**Commits:** f496f9a (the stale test) · bccd247 (the source-distinctness guard) · 36373c3 (the
+TMP isolation) · 4a580f4 (TESTING_LOG) · the FAILURE_LOG entry.
+
+**THE ROUND'S EVIDENCE.** Unit suite: `bun test ./scripts/` → **12 pass · 0 fail.** Adversarial:
+`lqz_adversarial.py` → **7/7 PASS, zero confirmed defects, every guard bit its mutant.** Parity:
+SMC **195/195** · POOLS **25/25** · VOIDS **380/500** — **exact matches to the pin's baseline** —
+with SWEEPS a named engine-era residual (FAILURE_LOG F-XX; source and fixture unchanged; the
+`get_left` symbol is Vela's extraction; the pin's 258/258 and this run's MERGED-ONLY 258 are the
+same 258).
+
+**THE TWO DEFECTS THIS ROUND FOUND.**
+1. **The frame guard was necessary but not sufficient** — A4's duplicate-deliverable mutant passed
+   it. Fixed with a SOURCE-distinctness guard (commit bccd247). The real grid prints both
+   `panels distinct` and `sources distinct`.
+2. **The suite was red for the adversary's reason** — the mutant's manifest polluted the shared
+   TMP. Fixed with `LQZ_PANEL_TMP` (commit 36373c3).
+Plus the third: a test red since the NA guard (commit f496f9a).
+
+**THE W6 GRID** (`reports/panel-grid-1H.png`, 2002x1340) rebuilt on the final D1 and LOOKED AT:
+the library reference beside D1 (117 boxes · 42 lines · 2 labels), D2's full-width ladder, D3's
+ladder + CHoCH/BOS/EQL labels — "panels 2-4 captured live over CDP ... never a cached frame."

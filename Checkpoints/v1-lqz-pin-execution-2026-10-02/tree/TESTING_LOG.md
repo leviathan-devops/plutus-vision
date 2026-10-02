@@ -575,3 +575,90 @@ to 3.** That is the operator's call.
   rendering fault.
 - The composer's freshness test (frame mtime vs source mtime) is a WEAK guard: it did not
   reject two frames that proved, by matching shas on a fresh rig, to have been CORRECT anyway.
+
+
+---
+
+# THE RE-VERIFICATION ROUND — every gate re-run on the CURRENT tree (2026-10-02)
+
+The pin's law: *"the orchestrator re-runs every prior gate on the combined tree."* Every number
+below was produced THIS TURN, against the tree at its current sha.
+
+## L1 · THE UNIT SUITE — `bun test ./scripts/`
+
+```
+12 pass · 0 fail · Ran 12 tests across 4 files
+```
+
+**THE RUN FORM IS THE LAW (a measured trap):** `bun test scripts/` is a **FILTER**, not a path —
+it ran 24 tests across 8 files because the walk reaches the SEALED CHECKPOINT'S copies of the
+same tests. `bun test ./scripts/` is the **PATH** form and runs the live four. **Canonical run:
+`bun test ./scripts/`.**
+
+**TWO DEFECTS THIS RUN SURFACED, BOTH FIXED:**
+
+1. **`test_colour_by_side` was RED since the NA guard landed** — it pinned the PRE-GUARD string
+   (`_col = _sd == 1 ? lqzColorS : lqzColorB`) while the source carries the guard
+   (`lqz-luxalgo.pine:887`). The expectation now pins the guarded line, which makes it a
+   regression guard for the guard itself. **Commit `f496f9a`.**
+2. **`test_panel_rows_are_same_bars` went RED after any adversarial run** — it correctly
+   validates *the manifest the grid produced*, and the A4 mutant's manifest (two panels, one
+   source) was the last thing written to the shared `/tmp/lqz-panel`. **The test was right; the
+   pollution was the defect.** `lqz-panel.mjs` now honours `LQZ_PANEL_TMP` and the mutants run
+   under their own. **Commit `36373c3`.**
+
+## L1.5 · THE ADVERSARIAL SUITE — `python3 scripts/lqz_adversarial.py`
+
+```
+[PASS] A1 detector paint suppressed                 live colour inputs=0 transparent=10
+[PASS] A2 drawing caps raised to 500                per-deliverable: [True, True, True]
+[PASS] A3 mutant: wrong title refused               exit=1 PANEL_GRID_FAIL: D1
+[PASS] A4 mutant: duplicate panels refused          exit=1 guarded
+[PASS] A5 grid artifact present                     panel-grid-1H.png
+[PASS] A6 ledger carries the frame shas             3/3 shas cited
+[PASS] A7 library cross-reference clean             library 5/5 bands>0 irregular 5/5
+
+ADVERSARIAL VERDICT: 7/7 PASS
+ZERO confirmed defects — every guard bit its mutant
+```
+
+**A4 FOUND A REAL DEFECT AND THE GUARD WAS STRENGTHENED (commit `bccd247`).** Adjudicated both
+ways first: Side A — the mutant assumes identical sources produce identical frames, but the
+chart's viewport auto-fits per run, so frames legitimately differ. Side B — **the frame guard's
+own purpose ("the grid is a lie") passes undetected when two panels render one deliverable with
+distinct bytes.** Real. **The fix: a SOURCE-distinctness guard** — the sha256 of each panel's
+deliverable must be distinct. The real grid now prints both lines:
+
+```
+panels distinct:  D1=48bea185626c D2=e30c133199a0 D3=7e3cac8e79ff
+sources distinct: D1=db06b6057412 D2=68881deaca0c D3=82da437af969
+```
+
+## L2 · THE PARITY TABLE — `python3 scripts/compare.py` (RC=0)
+
+| subsystem | baseline (2026-10-01) | now | verdict |
+|---|---|---|---|
+| SMC | 195/195 | **195/195** | **EXACT MATCH** |
+| POOLS | 25/25 | **25/25** | **EXACT MATCH** |
+| VOIDS | 380/500 | **380/500** | **EXACT MATCH** |
+| SWEEPS | 258/258 | **PINE_RUNTIME_ERROR** | **REGRESSION — NAMED RESIDUAL** |
+| MERGED (the shipping ancestry) | — | ok · boxes 486 · labels 97 · lines 275 | runs |
+
+**THE SWEEPS RESIDUAL, adjudicated and named.** The sweeps source fails with
+`Cannot read properties of undefined (reading 'get_left')` on **all four timeframes** — an
+absolute, not data-shaped, failure. **Adjudicated both ways:** (Side A) the source is UNCHANGED
+since round-zero (one commit, `4d993b7`) and the fixture is unchanged; (Side B) the failure is
+therefore in the **tooling chain** — the `get_left` symbol belongs to Vela's drawing extraction
+(`velaPinets 0.2.14`), and the only moving part since the baseline measurement is the engine's
+install (mtime 2026-10-01 16:33). **The impact on the deliverables is NONE** — D1 embeds the
+sweeps logic (103 references) and RUNS, and the MERGED bundle runs. **Recorded in FAILURE_LOG.**
+
+**AND THE CORRELATION THAT PROVES THE READING:** the pin's baseline `SWEEPS 258/258` and this
+run's `MERGED-ONLY drawings: 258` are **the same 258** — the sweeps' drawings, matched when the
+source ran, unmatched now that it cannot.
+
+## THE AUDIT GATE
+
+**AUDIT GATE: PASS** — the adversarial suite is 7/7 with zero confirmed defects, the unit suite is
+12/12, the parity's three comparable legs match the baseline exactly, the fourth carries a named
+engine-era residual, and the sealed checkpoint holds the tree at `873/873 MATCH`.

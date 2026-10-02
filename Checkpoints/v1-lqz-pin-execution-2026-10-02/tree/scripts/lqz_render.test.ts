@@ -95,8 +95,11 @@ test("test_zone_spans_full_width", () => {
 });
 
 test("test_colour_by_side", () => {
-  // the law in the SOURCE: a ternary on the side, supply=1
-  expect(src).toContain("_col = _sd == 1 ? lqzColorS : lqzColorB");
+  // THE LAW, as it now stands: the NA GUARD wraps the side ternary. Measured 2026-10-02: this
+  //   expectation read the PRE-GUARD form and had been RED since the guard landed -- the suite
+  //   reported 22/24 across 8 files with this test failing in both the live and the sealed copy.
+  //   The guard is now part of the law it pins, so the exact line is the expectation.
+  expect(src).toContain("_col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)");
   expect(src).toContain("lqzColorB = input.color(#3E8A46");
   expect(src).toContain("lqzColorS = input.color(#7F3613");
 
