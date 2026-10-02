@@ -968,3 +968,50 @@ without warning is not a call an agent should make silently.
 The host gate escalated during this work with **`[STTGF ESCALATE] INLINE_EXEC — repeated smoke
 attempts. Running container test is MANDATORY.`** The container rig is the sanctioned path when
 the host rig is unreliable, and it is the correct home for the clean re-capture pass.
+
+---
+
+# GAP #3 CLOSED — THE DURABLE LOAD FOUND, and a correction it forced
+
+## THE SOLUTION: `export → reload → import`
+The shell exposes a persistence PAIR that I had not tried:
+```javascript
+exportWorkspace() { const at = tabs.active(); if (at) at.source = editor.getSource();
+                    return { v:1, tabs:[…{id,name,lane,ref,source}], activeTab, market }; }
+importWorkspace(state) { … tabs.reset(list, st.activeTab); … }   // restores the tabs from state
+```
+**`exportWorkspace` SYNCS the editor into the tab; `importWorkspace` RESTORES the tabs from a
+state object.** So the cycle that satisfies BOTH remedies at once is:
+
+```
+1  load the deliverable (setSource + tabs.active().source = src)
+2  const ws = P.exportWorkspace()          // 19146 bytes, the source inside
+3  Page.reload()                            // fresh COMPOSITOR (the freeze broken)
+4  await P.importWorkspace(ws)              // the SOURCE restored (the clobber defeated)
+5  run + capture
+```
+
+**MEASURED, on the real page:**
+```
+tabSrcLen 18132   hasGuard true   hasTitle true   editorLen 18132
+title "LQZ Plutus — operator candle liquidity"   tries: 1     ← FIRST TRY
+nonBg 0.45467                                                ← D2@1H's level
+```
+
+**This closes gap #3** — the manual's remedy no longer contradicts its own ledger: the reload
+breaks the compositor freeze, and the import defeats the editor clobber. **The two remedies no
+longer defeat each other; they compose.**
+
+## AND THE CORRECTION IT FORCED — determinism, not staleness
+The frame came back as **`0e7103c60b29f3b7`** — the very sha I once flagged **"SUSPECTED STALE"**.
+
+**It is correct.** The render is **DETERMINISTIC**: the same script on the same bars produces the
+same bytes. **My staleness test compared a frame's sha against a PREVIOUS frame's sha** — which
+detects CHANGE, not freshness. Two runs of the same deliverable SHOULD agree.
+
+**THE CORRECT TEST is not "did the sha change" but "does the frame's content match what this
+deliverable should produce" — and the only reliable instruments for that are the STATION's counts
+and `nonBg`'s known range per deliverable.** The sha is an identity, not a freshness signal.
+
+**This is the SECOND time this session I inferred staleness from a difference that was actually
+determinism.** Both times the artifact was fine and the INFERENCE was wrong.
