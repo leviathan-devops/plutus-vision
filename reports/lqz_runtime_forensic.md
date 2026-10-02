@@ -679,3 +679,56 @@ the next measurement, and it is named rather than guessed.**
   and claiming it did would be the same error this session has already made twice.
 - **No recommendation is made for `lqzSource`** — the COLOURED count now supersedes the raw
   count, and D1 needs its own investigation before any value is recommended for it.
+
+---
+
+# THE INVISIBLE LADDER — FIXED AND VISUALLY CONFIRMED
+
+## THE FIX, VERIFIED IN THE FRAME
+`729c989a399b69f7` — D3 at 15m, first try, `held` asserted twice (before AND after `loadBars`,
+which can clobber the editor), **`nonBg 0.2853`** against the stale frame's 0.168 and the EMA
+Ribbon default's 0.187. **More content on the canvas — because 56 coloured lines now render.**
+
+**WHAT I SEE, having opened it:** a dense ladder of thin full-width lines spanning
+1.1425 → 1.1460 — green at 1.14250/1.14280/1.14300/1.14350/1.14420/1.14450/1.14500, red-brown
+at 1.14280/1.14360/1.14400/1.14500/1.14550, gold-amber at 1.14340/1.14350/1.14400, a dashed
+line at ~1.14330 — **plus a large red band (1.14600-1.14620), a faint teal band
+(~1.14430-1.14460), and TWELVE structure labels: EQH · EQH · CHoCH · BOS · EQH · BOS · CHoCH ·
+BC · BOS · BOS · EQL · BOS.** Candles fully readable.
+
+**That is the library's full composition.** The same panel, an hour earlier, showed three faint
+marks.
+
+## THE COMPLETE CHAIN, in one place
+```
+the cluster pushes an NA side into lqzZSide
+      ↓
+_col = _sd == 1 ? lqzColorS : lqzColorB     →  NA (the ternary yields NA when _sd is NA)
+      ↓
+vision.mjs:133 reads l.color with a BRASS fallback
+      ↓
+the ladder renders as FAINT BRASS DOTS AT 1PX  →  invisible on a dark chart
+```
+**THE FIX:** `_col = na(_sd) ? lqzColorB : (_sd == 1 ? lqzColorS : lqzColorB)` — a zone whose
+side is unknown is still a zone and must be VISIBLE.
+
+## THE MEASURED RESULT, ALL THREE DELIVERABLES
+| deliverable | TF | LADDER | COLOURED | colours |
+|---|---|---|---|---|
+| **D2 lqz-plutus** | 15m | 38 | **38 (100 %)** | `#3E8A46`, `#7F3613` |
+| **D2 lqz-plutus** | 1H | 58 | **58 (100 %)** | `#3E8A46`, `#7F3613` |
+| **D3 plutus-vision** | 15m | 56 | **56 (100 %)** | `#089981`, `#3E8A46`, `#7F3613`, `#F23645` |
+| **D3 plutus-vision** | 1H | 79 | **79 (100 %)** | `#089981`, `#3E8A46`, `#7F3613`, `#F23645` |
+| D1 lqz-luxalgo | 15m | 5 | 0 | `['None']` — **OPEN** |
+| D1 lqz-luxalgo | 1H | 22 | 0 | `['None']` — **OPEN** |
+
+**D3 now carries FOUR colours** — the SMC palette plus the LQZ palette — the richest ladder the
+project has produced.
+
+## THE TWO RENDERER DEFECTS, ONE CLASS
+**Both were an NA/absent value reaching a renderer fallback:**
+1. the box FILL read `b.color` (never set) → BRASS → the grey/gold slabs
+2. the line COLOUR went NA via an NA side → BRASS → the invisible ladder
+**Both fixed with the same shape: read the field that EXISTS, and give the fallback a value that
+RENDERS.** The class is now named, and the next drawing type that goes missing should be
+checked here first.
