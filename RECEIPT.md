@@ -179,3 +179,50 @@ P0-P7 GREEN · **P8 AWAITING THE OPERATOR** (the PASS/FAIL/INCONCL buttons write
 No container round · D1's ladder absent by design of `lqzSource` · the composer's freshness
 test is a weak mtime guard · and one correction: D2's matching shas on a fresh rig proved those
 frames were deterministic and CORRECT — the "suspected stale" call was a false alarm.
+
+---
+
+## 11 · SESSION 2 — THE LAST TECHNICAL BLOCKER CLOSED (HEAD `ff33d0b`)
+
+### GAP #3 CLOSED — THE DURABLE LOAD
+A second operator (a zero-context subagent given ONLY the docs) returned **INSUFFICIENT** and was
+right: the manual prescribed "reload before every capture" while the same ledger recorded that the
+reload resets the editor — **the two remedies defeated each other**, and its own text said so.
+
+**THE SOLUTION — the shell's persistence pair, which composes them:**
+```
+load → P.exportWorkspace()  (19146 bytes, the source inside)
+     → Page.reload()        (fresh COMPOSITOR — the freeze broken)
+     → P.importWorkspace()  (the SOURCE restored — the clobber defeated)
+     → run + capture        (FIRST TRY, title asserted)
+```
+**Measured:** `tabSrcLen 18132 · hasGuard true · hasTitle true · title "LQZ Plutus — operator
+candle liquidity" in 1 try · nonBg 0.45467`.
+
+### THE DEFECT THE SECOND OPERATOR FOUND — in the author's own tooling
+**D2's title was `LQZ`, not `LQZ Plutus — operator candle liquidity`.** Root cause, traced to
+the line: `scripts/lqz_assemble.py:49` defaults `--title "LQZ"`, so regenerating D2 with
+`--candles` and no `--title` **silently dropped it.** Consequences: **the grid command ABORTED**
+(`lqz-panel.mjs`'s `expect`), **the ship test was broken** (`lqz_ship.test.ts:103`), and the
+ledger's H1 table was stale enough to make an operator declare a GOOD compile failed.
+**FIXED and verified: `bun scripts/lqz-panel.mjs 1H` → `PANEL_GRID_OK`, all three titles.**
+
+### THE CORRECTION IT FORCED
+**THE SHA IS AN IDENTITY, NOT A FRESHNESS SIGNAL.** The render is deterministic — the same script
+on the same bars produces the same bytes. A staleness test comparing a frame's sha against a
+PREVIOUS frame's sha measures **change**, not freshness, and cries wolf on every correct re-run.
+**Twice this session I inferred staleness from determinism.** To judge freshness, compare CONTENT
+against expectations — the station's counts and `nonBg`'s known range.
+
+### THE MANUAL
+**`OPERATING_MANUAL.md` (232 lines)** — extracted from the 970-line forensic ledger where the
+guidance was buried at line 158. Six sections: the three commands · the IDE's own pipeline · **seven
+traps each with its remedy** · **§3.1 the durable load** · the restart procedure · the deliverables
+with their title table and two labelled instruments · the operator's calibration.
+
+### THE SEAL
+`Checkpoints/v1-lqz-pin-execution-2026-10-02/` — **rev 5**, `tracked=872 sealed=872 MATCH`.
+
+### THE PHASE GATES
+**P0–P7 GREEN · P8 AWAITING THE OPERATOR.** The `PASS/FAIL/INCONCL` buttons write to
+`vil/2026-W29.jsonl`. `lqzSource` remains the operator's calibration call.
