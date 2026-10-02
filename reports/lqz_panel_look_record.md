@@ -144,3 +144,69 @@ the operator's choice is made against a measured pair rather than a claim.
    measured alternative.
 6. **THE OPERATOR'S EYES ARE THE FINAL GATE.** Nothing here substitutes for them. This record
    is what the agent saw; the verdict is theirs.
+
+
+---
+
+# APPENDIX — D1's three defects, found AFTER the looks above, each with its measurement
+
+**The looks in §2 were of the state as it was.** Three defects were then found and fixed; they
+are recorded here because a look record that does not carry the fixes is a record of a system
+that no longer exists.
+
+## A · `lqzLabel` — DECLARED, IN THE DIALOG, DEFAULT ON, NEVER CONSUMED
+
+```
+grep -n  lqzLabel  lqz-luxalgo.pine   ->  1 line    (its own declaration)
+grep -c  label.new lqz-luxalgo.pine   ->  0         (no emission existed at all)
+```
+
+**The consequence, traced to the line — `gate.mjs:157`:**
+
+```javascript
+if (verdict === 'PASS' && (zones === 0 || labels === 0)) {   // MECH_VETO
+  deltas.push(`MECH_VETO:boxes=${zones}:labels=${labels}`);  // -> FAIL
+```
+
+**D1 could never pass: `labels` was 0 by construction.** ← Commit `facb519`.
+
+## B · THE LABEL WAS COUNTED BUT NEVER DRAWN
+
+Wiring the emission gave `labels 2` — and **a pixel scan found ZERO text pixels**. The label
+carried `time 1783389600000` against the run's `lastTime 1783317600000`: **20 bars PAST the last
+bar, outside the frame.** The library's tags ride the middle of their bands.
+**Re-anchored at `math.max(0, bar_index - math.round(lqzLeftB / 2))`** — measured
+`t=06-19T20:00, inside: true` for both. ← Commit `1795231`.
+
+## C · THE RIG — THE RAIL CALLED A WORKING STATION DEAD
+
+While chasing B, every run began returning `VIL_RAIL_DOWN`. The chain, each link measured:
+
+```
+station /health (half-alive)          4.0–20 s      POST /run: {"success":true} throughout
+  -> rail /health probes it INLINE     4.04 s
+  -> page's gate client aborts at      2500 ms
+  -> VIL_RAIL_DOWN — EVERY RUN FAILED, station fine
+```
+
+`scripts/pv-ide.sh` already carried this exact lesson for its own launcher; **the rail never
+learned it.** Fixed: a timeout is not a refusal (`PINE_STATION_SLOW`), 800 ms budget, `up` is
+three-valued — `true`, or `null` (UNKNOWN) for a timeout, **never `false`**. ← Commit `469e1b2`.
+
+## D · THE ASSERTION THAT DOES NOT BITE — two files, one title
+
+The retry loop asserted the run **title** (`'LQZ LuxAlgo'`). **Both the shipped D1 and the
+`-both` variant carry that title**, so the loop broke on the engine's debounced-flush compile of
+the PREVIOUS file and reported the old file's counts under the new file's name. **The fix is to
+assert `sourceSha`** — the per-file identity — whenever two artifacts can share a display name.
+
+## THE OPERATOR'S MEASURED PAIR, as it now stands
+
+| config | boxes | lines | labels | zones visible |
+|---|---|---|---|---|
+| `lqzSource='luxalgo'` (default) | 117 | 36 | **0** | the native primitives only; the LQZ full-width emitter admits no zones under the 2-source rule |
+| `lqzSource='both'` | 117 | 42 | **2** | + 2 labelled full-width zones (`Sellside Liquidity`) |
+
+**The default is honest, not broken:** under `luxalgo` the 2-distinct-source rule (`lqzMinAgree=2`)
+finds no agreeing pair on this fixture, so there is nothing to label. **Both knobs — `lqzSource`
+and `lqzMinAgree` — are the operator's calibration.**
