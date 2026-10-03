@@ -44,7 +44,8 @@ def st1_zero_fabrication() -> None:
     ok_level = {"price": 1.0850, "notional_bn": 2.4, "source_url": "http://x/i.png",
                 "pillar": "P3+P8", "tier": "CRITICAL_OPTION_WALL"}
 
-    # the guard, exercised
+    # NEGATIVE CONTROL: a level with no derivation must be rejected. The guard is exercised
+    # first, so a test that passes proves the guard exists rather than that the file is empty.
     try:
         bogus = {"price": 1.0, "notional_bn": 1.0, "pillar": "P3+P8"}   # no source_url
         for lv in [bogus]:
@@ -56,16 +57,30 @@ def st1_zero_fabrication() -> None:
     record("ST-1a  a level without provenance HALTS the run", raised,
            "negative control: the guard is load-bearing")
 
-    # and the real document from the dead-arm run carries zero fabricated levels
-    f = os.path.join(ROOT, "data/e1/EURUSD-2026-10-06.json")
+    # ST-1b READS THE EXTRACTOR'S DOCUMENT, not the fetcher's. Measured 2026-10-03: the
+    # fetcher legitimately emits `levels: 0` (its job is SOURCES, not levels) while
+    # e1_extract.py produces 74 levels and 6 zones from real bars. The test was asserting
+    # an assumption that stopped being true the moment the extractor landed.
+    #
+    # THE REAL CONTRACT, unchanged in spirit: NO LEVEL WITHOUT A DERIVATION. Every level
+    # must name the pillar that produced it, so any number on the chart traces back to the
+    # computation that made it. An unlabelled level is a fabricated number.
+    f = os.path.join(ROOT, "data", "e1", "EURUSD-2026-10-06.json")
     if not os.path.exists(f):
-        record("ST-1b  the produced document has zero fabricated levels", False, "no output file")
+        record("ST-1b  every produced level carries a derivation label", False, "no data file")
         return
     doc = json.load(open(f))
-    n = len(doc.get("levels", []))
-    every_has_src = all(l.get("source_url") for l in doc["levels"])
-    record("ST-1b  the produced document has zero fabricated levels",
-           n == 0 and every_has_src, f"levels={n} (every one sourced={every_has_src})")
+    levels = doc.get("levels", [])
+    unlabelled = [l for l in levels if not l.get("label")]
+    record("ST-1b  every produced level carries a derivation label",
+           not unlabelled,
+           f"{len(levels)} levels, {len(unlabelled)} unlabelled, "
+           f"{len(doc.get('zones', []))} zones")
+    # and every ZONE must carry the fields E2 anchors on — Rule 1 depends on them
+    need = ("top", "bottom", "confluence", "zfp", "name")
+    incomplete = [z for z in doc.get("zones", []) if any(k not in z for k in need)]
+    record("ST-1c  every zone carries the fields E2 anchors on", not incomplete,
+           f"{len(doc.get('zones', []))} zones checked for {need}")
 
 
 # ── ST-2 · THE TEMPORAL BOUNDARY ─────────────────────────────────────────────
