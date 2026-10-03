@@ -1286,7 +1286,60 @@ var array<float> e2_injected_ghost_x = array.new<float>()
 var array<float> e2_injected_ghost_y = array.new<float>()
 e1_injected_anchor_ms = 1791144000000
 e1_injected_week_tag = "2026-W41"
-e2_injected_refusal = "E2_NO_ZONES: the E1 data file carries no zone array — the fetch layer recorded every source as [NO DATA] for this week"
+e2_injected_refusal = ""
+
+e1_injected_top.push(100.831)
+e1_injected_top.push(100.852)
+e1_injected_top.push(100.918)
+e1_injected_top.push(101.226)
+e1_injected_top.push(101.267)
+e1_injected_top.push(101.281)
+e1_injected_bottom.push(100.831)
+e1_injected_bottom.push(100.852)
+e1_injected_bottom.push(100.916)
+e1_injected_bottom.push(101.226)
+e1_injected_bottom.push(101.267)
+e1_injected_bottom.push(101.281)
+e1_injected_confluence.push(4)
+e1_injected_confluence.push(4)
+e1_injected_confluence.push(4)
+e1_injected_confluence.push(4)
+e1_injected_confluence.push(4)
+e1_injected_confluence.push(4)
+e1_injected_zfp.push(40)
+e1_injected_zfp.push(40)
+e1_injected_zfp.push(40)
+e1_injected_zfp.push(40)
+e1_injected_zfp.push(40)
+e1_injected_zfp.push(40)
+e1_injected_id.push("LIGH_DEMAND_100.83")
+e1_injected_id.push("LIGH_DEMAND_100.85")
+e1_injected_id.push("LIGH_DEMAND_100.92")
+e1_injected_id.push("LIGH_SUPPLY_101.23")
+e1_injected_id.push("LIGH_SUPPLY_101.27")
+e1_injected_id.push("LIGH_SUPPLY_101.28")
+e2_injected_x.push(1791316800000)
+e2_injected_x.push(1791403200000)
+e2_injected_x.push(1791489600000)
+e2_injected_x.push(1791576000000)
+e2_injected_x.push(1791662400000)
+e2_injected_y.push(100.831)
+e2_injected_y.push(100.852)
+e2_injected_y.push(100.918)
+e2_injected_y.push(100.918)
+e2_injected_y.push(100.918)
+e2_injected_shape.push("R")
+e2_injected_shape.push("WL")
+e2_injected_shape.push("SS")
+e2_injected_shape.push("SS")
+e2_injected_shape.push("SS")
+e2_injected_conf.push(60)
+e2_injected_conf.push(60)
+e2_injected_conf.push(55)
+e2_injected_conf.push(55)
+e2_injected_conf.push(55)
+e2_injected_ghost_x.push(100.852)
+e2_injected_ghost_y.push(100.852)
 
 // ═════════════════════════════════════════════════════════════════════════════
 //  E1 RENDER — the institutional pressure map.  ADDED 2026-10-03, never edits v1.
@@ -1620,6 +1673,12 @@ f_e2Render() =>
         // THE ALTERNATIVE — a THIN DASHED GHOST, never a second solid line. The
         // canon requires an alternative for every primary chain; drawing it as a
         // second heavy line would be two forecasts fighting for the eye.
+        // THE LOOP BOUND IS NOT `_gn - 2`. Pine evaluates `0 to -1` as a WRAP — it does not
+        // produce an empty range, it runs from 0 up to the loop cap. Measured 2026-10-03: the
+        // ghost carried ONE point, `_gn - 2` evaluated to -1, and the loop painted 399 ghost
+        // lines against a 500-line budget — a single alternative chain consumed the whole
+        // chart's line allowance. The `if _gn >= 2` guard below is the real bound and it must
+        // come FIRST, before the range is computed.
         _gn = array.size(e2GhostX)
         if e2ShowGhost and _gn >= 2
             for i = 0 to _gn - 2

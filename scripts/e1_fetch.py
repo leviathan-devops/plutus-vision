@@ -187,6 +187,13 @@ def headless_fetch(url: str, timeout: int = 40) -> tuple[bool, str]:
 
     proc = subprocess.Popen(
         [chrome, "--headless=new", f"--remote-debugging-port={port}",
+         # MEASURED 2026-10-03: without this Chrome REJECTS the DevTools WebSocket with
+         # `403 Forbidden — Rejected an incoming WebSocket connection from the
+         # http://127.0.0.1:<port> origin`, and every CDP fetch silently returned a
+         # 362-byte error string that the ledger recorded as "the site said no". A fetch
+         # layer that cannot tell ITS OWN fault from a site's refusal is not measuring
+         # anything. The flag is not optional.
+         "--remote-allow-origins=*",
          f"--user-data-dir={profile}", "--no-first-run", "--no-default-browser-check",
          "--disable-gpu", "--no-sandbox", "--disable-dev-shm-usage",
          "--window-size=1920,1080", "about:blank"],

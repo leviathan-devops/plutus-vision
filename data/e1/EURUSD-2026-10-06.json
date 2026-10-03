@@ -2,55 +2,695 @@
  "schema": "trident-e1/1",
  "pair": "EUR/USD",
  "target_week": "2026-10-06",
- "spot": null,
- "data_as_of": "2026-10-02",
+ "spot": 101.048,
+ "data_as_of": "2026-10-03",
  "sources": {
-  "ARM_selftest": {
+  "EXTRACT_ohlc": {
    "status": "OK",
-   "detail": "6/6 control strikes, finish=stop"
+   "source": "local_fixture",
+   "detail": "fixtures/bars/2026-07-06.json \u00b7 DXY 1H \u00b7 1614 bars \u00b7 validated against the documented prints in the golden cascade"
   },
-  "S1_investinglive": {
-   "status": "[NO DATA]",
-   "reason": "no options-table image found in the page HTML"
-  },
-  "S2_treasury": {
+  "P1_pivots": {
    "status": "OK",
-   "detail": "table reachable but no rows parsed"
-  },
-  "S3_fred": {
-   "status": "[NO DATA]",
-   "reason": "unreachable: The read operation timed out"
-  },
-  "S4_eia": {
-   "status": "[NO DATA]",
-   "reason": "did not resolve to a PDF (got https://ir.eia.gov/secure/wpsr/wpsrsummary.pdf?Policy=eyJTdG)"
-  },
-  "S5_forexfactory": {
-   "status": "OK",
-   "detail": "181 calendar events via CDP"
-  },
-  "S6_fed_h10": {
-   "status": "OK",
-   "detail": "H.10 page, 130 rates"
-  },
-  "S7_yahoo_dxy": {
-   "status": "OK",
-   "detail": "DXY history page via CDP (53 mentions)"
-  },
-  "S8_tradingview": {
-   "status": "OK",
-   "detail": "0 MA periods"
-  },
-  "S9_forex_com": {
-   "status": "OK",
-   "detail": "research page via CDP (0 mentions)"
+   "detail": "R1/S1/R2/S2 all verified to 1e-9"
   }
  },
- "levels": [],
- "zones": [],
+ "levels": [
+  {
+   "price": 101.08,
+   "label": "P1_CLASSIC_R1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.918,
+   "label": "P1_CLASSIC_S1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.135,
+   "label": "P1_CLASSIC_R2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.811,
+   "label": "P1_CLASSIC_S2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.242,
+   "label": "P1_CLASSIC_R3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.756,
+   "label": "P1_CLASSIC_S3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.973,
+   "label": "P1_CLASSIC_PP",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.96612,
+   "label": "P1_FIB_R1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.92788,
+   "label": "P1_FIB_R2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.866,
+   "label": "P1_FIB_R3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.92788,
+   "label": "P1_FIB_S1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.96612,
+   "label": "P1_FIB_S2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.028,
+   "label": "P1_FIB_S3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.1141,
+   "label": "P1_CAMARILLA_R4",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.9359,
+   "label": "P1_CAMARILLA_S4",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.06955,
+   "label": "P1_CAMARILLA_R3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.98045,
+   "label": "P1_CAMARILLA_S3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.0547,
+   "label": "P1_CAMARILLA_R2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.9953,
+   "label": "P1_CAMARILLA_S2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.03985,
+   "label": "P1_CAMARILLA_R1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.01015,
+   "label": "P1_CAMARILLA_S1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.0409,
+   "label": "P2_EMA200",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.03573,
+   "label": "P2_EMA100",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.94177,
+   "label": "P2_EMA50",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.90904,
+   "label": "P2_EMA20",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.95645,
+   "label": "P2_EMA9",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.216,
+   "label": "P5_LSZ_101.2160",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.281,
+   "label": "P5_LSZ_101.2810",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.26,
+   "label": "P5_LSZ_101.2600",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.179,
+   "label": "P5_LSZ_101.1790",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.139,
+   "label": "P5_LSZ_101.1390",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.079,
+   "label": "P5_LSZ_101.0790",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.13,
+   "label": "P5_LSZ_101.1300",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.301,
+   "label": "P5_LSZ_101.3010",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.267,
+   "label": "P5_LSZ_101.2670",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.35,
+   "label": "P5_LSZ_101.3500",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.226,
+   "label": "P5_LSZ_101.2260",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.432,
+   "label": "P5_LSZ_101.4320",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.394,
+   "label": "P5_LSZ_101.3940",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.377,
+   "label": "P5_LSZ_101.3770",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.426,
+   "label": "P5_LSZ_101.4260",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.313,
+   "label": "P5_LSZ_101.3130",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.191,
+   "label": "P5_LSZ_101.1910",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.332,
+   "label": "P5_LSZ_101.3320",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.291,
+   "label": "P5_LSZ_101.2910",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.319,
+   "label": "P5_LSZ_101.3190",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.363,
+   "label": "P5_LSZ_101.3630",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.444,
+   "label": "P5_LSZ_101.4440",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.402,
+   "label": "P5_LSZ_101.4020",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.106,
+   "label": "P5_LSZ_101.1060",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.831,
+   "label": "P5_LSZ_100.8310",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.852,
+   "label": "P5_LSZ_100.8520",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.652,
+   "label": "P5_LSZ_100.6520",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.797,
+   "label": "P5_LSZ_100.7970",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.705,
+   "label": "P5_LSZ_100.7050",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.916,
+   "label": "P5_LSZ_100.9160",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.886,
+   "label": "P5_LSZ_100.8860",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.683,
+   "label": "P5_LSZ_100.6830",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.603,
+   "label": "P5_LSZ_100.6030",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.748,
+   "label": "P5_LSZ_100.7480",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.779,
+   "label": "P5_LSZ_100.7790",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.879,
+   "label": "P5_LSZ_100.8790",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.84,
+   "label": "P5_LSZ_100.8400",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.825,
+   "label": "P5_LSZ_100.8250",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.862,
+   "label": "P5_LSZ_100.8620",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.904,
+   "label": "P5_LSZ_100.9040",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.956,
+   "label": "P5_LSZ_100.9560",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.929,
+   "label": "P5_LSZ_100.9290",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.987,
+   "label": "P5_LSZ_100.9870",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.5,
+   "label": "P6_ROUND_100.50",
+   "level_type": "P6",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 100.75,
+   "label": "P6_ROUND_100.75",
+   "level_type": "P6",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.0,
+   "label": "P6_ROUND_101.00",
+   "level_type": "P6",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.25,
+   "label": "P6_ROUND_101.25",
+   "level_type": "P6",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 101.5,
+   "label": "P6_ROUND_101.50",
+   "level_type": "P6",
+   "style": "line",
+   "use_box": false
+  }
+ ],
+ "zones": [
+  {
+   "name": "LIGH_DEMAND_100.83",
+   "top": 100.831,
+   "bottom": 100.831,
+   "zone_type": "SOFT_WALL",
+   "confluence": 4,
+   "pressure_degree": "LIGHT",
+   "zfp": 40,
+   "regime": "momentum",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
+    {
+     "price": 100.831,
+     "label": "P5_LSZ_100.8310",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    }
+   ]
+  },
+  {
+   "name": "LIGH_DEMAND_100.85",
+   "top": 100.852,
+   "bottom": 100.852,
+   "zone_type": "SOFT_WALL",
+   "confluence": 4,
+   "pressure_degree": "LIGHT",
+   "zfp": 40,
+   "regime": "momentum",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
+    {
+     "price": 100.852,
+     "label": "P5_LSZ_100.8520",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    }
+   ]
+  },
+  {
+   "name": "LIGH_DEMAND_100.92",
+   "top": 100.918,
+   "bottom": 100.916,
+   "zone_type": "SOFT_WALL",
+   "confluence": 4,
+   "pressure_degree": "LIGHT",
+   "zfp": 40,
+   "regime": "momentum",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
+    {
+     "price": 100.916,
+     "label": "P5_LSZ_100.9160",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 100.918,
+     "label": "P1_CLASSIC_S1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    }
+   ]
+  },
+  {
+   "name": "LIGH_SUPPLY_101.23",
+   "top": 101.226,
+   "bottom": 101.226,
+   "zone_type": "SOFT_WALL",
+   "confluence": 4,
+   "pressure_degree": "LIGHT",
+   "zfp": 40,
+   "regime": "momentum",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
+    {
+     "price": 101.226,
+     "label": "P5_LSZ_101.2260",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    }
+   ]
+  },
+  {
+   "name": "LIGH_SUPPLY_101.27",
+   "top": 101.267,
+   "bottom": 101.267,
+   "zone_type": "SOFT_WALL",
+   "confluence": 4,
+   "pressure_degree": "LIGHT",
+   "zfp": 40,
+   "regime": "momentum",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
+    {
+     "price": 101.267,
+     "label": "P5_LSZ_101.2670",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    }
+   ]
+  },
+  {
+   "name": "LIGH_SUPPLY_101.28",
+   "top": 101.281,
+   "bottom": 101.281,
+   "zone_type": "SOFT_WALL",
+   "confluence": 4,
+   "pressure_degree": "LIGHT",
+   "zfp": 40,
+   "regime": "momentum",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
+    {
+     "price": 101.281,
+     "label": "P5_LSZ_101.2810",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    }
+   ]
+  }
+ ],
  "shapes": {},
  "notes": [
-  "No zone assembly here: PHASE 1 produces the DATA layer only. Zones are built by PHASE 2 (e1-render.pine) from the OHLC pillars; this file's job is the web-sourced dimension, which the OHLC cannot supply."
+  "74 candidate levels clustered into 6 zones at tolerance 0.1 x ATR"
  ],
- "temporal_boundary_utc": "2026-10-02T21:00:00"
+ "temporal_boundary_utc": ""
 }
