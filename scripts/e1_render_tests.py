@@ -135,15 +135,21 @@ def st8_monday_anchor() -> None:
     # tonumber — measured), so the helper functions are gone and the bounds are computed
     # inline against a local `_anchor`. The old greps matched names that no longer exist.
     # The assertion now checks the ARITHMETIC and that both bounds share ONE anchor.
-    # The LHS and RHS names DIFFER (`_lx = _anchor - …`), so the anchor is the CAPTURED
-    # right-hand side, not the assigned name.
-    left = re.search(r"_[A-Za-z0-9]+\s*=\s*(_[A-Za-z0-9]+)\s*-\s*e1BackWeeks\s*\*\s*604800000", src)
-    right = re.search(r"_[A-Za-z0-9]+\s*=\s*(_[A-Za-z0-9]+)\s*\+\s*\(\s*e1FwdWeeks\s*\+\s*1\s*\)", src)
-    anchored = re.search(r"(_[A-Za-z0-9]+)\s*=\s*e1_anchor_ms", src)
-    same = bool(left and right and anchored and
-                left.group(1) == right.group(1) == anchored.group(1))
-    record("ST-8c  both bounds derive from the SAME computed anchor", same,
-           f"{(left.group(1) if left else '?')} -/+ N weeks x 604800000 ms")
+    # Probe defect, fourth pass: F-17's fix changed the ARITHMETIC — the anchor is now
+    # converted to a bar index via `_barsBack`, and both bounds are CLAMPED into the
+    # loaded window, so the old greps (which looked for a raw-millisecond subtraction)
+    # match nothing. The property the pin requires is unchanged: the left edge is the
+    # anchor minus hindsight, the right edge is the anchor plus foresight, and both come
+    # from the SAME bar. Assert that, not the spelling.
+    # No backreferences here: the left bound nests math.max(math.min(...)) and the right
+    # nests math.max(...), so a single group cannot be matched on both sides. The variable
+    # names are fixed by the module, so match them literally.
+    left = re.search(r"_lx\s*=\s*math\.max\(\s*0\s*,\s*math\.min\(\s*bar_index\s*,\s*_bAnchor\s*-", src)
+    right = re.search(r"_rx\s*=\s*math\.max\(\s*bar_index\s*\+\s*1\s*,\s*_bAnchor\s*\+", src)
+    anchored = re.search(r"_bAnchor\s*=\s*bar_index\s*-\s*_barsBack", src)
+    same = bool(left and right and anchored)
+    record("ST-8c  both bounds derive from the SAME computed anchor bar", same,
+           "_bAnchor = bar_index - barsBack; both bounds clamped into the window")
     record("ST-8b  the anchor comes from the injected payload, not a literal",
            "e1_anchor_ms" in src,
            "e2_engine.py owns the calendar; Pine only draws")

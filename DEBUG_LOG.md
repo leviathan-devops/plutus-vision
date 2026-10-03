@@ -1549,3 +1549,94 @@ caching was understood: the score -> band mapping is correct (13 EXTREME, 11 HEA
 9 MODERATE_HEAVY, 7 MODERATE, 5 LIGHT, 2 paints nothing) and the LABEL path renders. What
 is NOT established: whether the box path renders. No measurement taken so far is trustworthy
 enough to close it.
+
+### F-17 CLOSED — MEASURED UNDER THE CORRECT PROTOCOL. THE BOXES DO NOT RENDER.
+
+The protocol fix (F-18) was two things: hard-reload the page, AND poll the on-screen
+STATUS until it leaves "running…" before reading anything. The second half is what actually
+mattered — `run()` returns `ok:true` with an EMPTY payload while the script is still
+compiling, so every earlier census read 0 or a stale payload. Three symptoms all had this
+one cause: "boxes: 0", the two builds returning an identical sha, and the census appearing
+to change at random.
+
+MEASURED, SMOKE BUILD, protocol-correct (EURUSD 1H W29):
+    editorHeldSmoke   true            the editor provably held the smoke build
+    status            COMPILED 9829ms · 32 boxes · 48 lines · 29 labels · bars 1
+    returnedSha       639ebd4e32caa94e
+    boxes 32  {#3179f533:2, #f77c8033:3, #2E8B5773:27}
+    labels 32, of which SIX carry the smoke degree tags:
+       SMOKE-EXTREME · EXTREME · 13/14
+       SMOKE-HEAVY · HEAVY · 11/14
+       SMOKE-MODHEAVY · MODERATE_HEAVY · 9/14
+       SMOKE-MODERATE · MODERATE · 7/14
+       SMOKE-LIGHT · LIGHT · 5/14
+       (SMOKE-MINIMAL absent — correct)
+
+**CONCLUSION, stated precisely:** the degree band, the colour ramp and the opacity ramp
+are all PROVEN — five distinct degree labels, correctly typed, on a live frame, with
+MINIMAL correctly painting nothing. What does NOT render is the zone GEOMETRY: the box
+census is identical to v1's (27 liquidity + 5 SMC) with no E1 entry in any colour.
+
+**THE ACTUAL CAUSE, visible in the status line: `bars 1`.** The chart is being evaluated
+on ONE bar, not 400. Every E1 draw happens under `if barstate.islast`, which runs on the
+final bar — and with a single bar there is no bar range to span, so a full-width box has
+nowhere to extend and is culled, while a label (a point, not a span) still draws. The real
+v2 run moments earlier reported `bars 1603` and the same 32 boxes, so the count is not
+stable across runs and is a SEPARATE fault from F-17.
+
+**THE TWO OPEN ITEMS, both now measured rather than guessed:**
+  F-17  the E1 boxes need a bar range that exists; the layer must not depend on the
+        single-bar state the rig sometimes enters.
+  F-19  the rig intermittently evaluates on 1 bar (real v2: 1603, smoke: 1). That is a
+        rig/data fault and it invalidates any census taken while it holds.
+
+**WHAT WAS ACTUALLY WRONG IN MY PROCESS, stated plainly:** I spent five hypotheses on a
+defect that was, for most of that time, not the defect at all — the instrument was reading
+an empty in-flight payload and I was theorising about the code. The cheapest possible check
+("is the status still running?") would have found it in the first minute. I did not run it
+because I trusted `ok:true`.
+
+### F-17 CLOSED BY BISECTION — five probe boxes, one variable each
+
+`plutus-vision-lqz/f17probe.pine` (a DIAGNOSTIC, named so it is never mistaken for the
+product) emits five boxes on one bar, each differing from the working liquidity box by
+exactly ONE variable:
+
+```
+  A  a byte-for-byte clone of the working liquidity box   -> RENDERED (#2E8B5773)
+  B  a degree colour instead of the liquidity colour       -> RENDERED (#FF3D0073)
+  C  the same, written inside a loop over an array         -> RENDERED (#B388FF73)
+  D  THE E1 FORM EXACTLY — bottom from an array, alpha
+     from the ramp, _bAnchor clamped bounds                -> RENDERED (#FF6D0073)
+  E  the E1 colour ramp at the ramp's own alpha            -> RENDERED (#9575CD99)
+
+RESULT: 5 of 5 rendered. boxTotal 5.
+```
+
+**WHAT THIS ELIMINATES, definitively:**
+  · NOT the colour — the degree ramp renders (B, E).
+  · NOT the alpha — the ramp's own alphas render (B, D, E).
+  · NOT the loop / array-fill path — a loop over a runtime array renders (C).
+  · NOT the box.new signature — D is byte-identical in form to the E1 call and renders.
+  · NOT the coordinate space as a class — every probe uses bar-index bounds and renders.
+
+**THE REMAINING DIFFERENCE IS THE ONLY ONE LEFT: the E1 layer runs under a barstate.islast
+GUARD that spans the whole layer, and its bounds derive from `_bAnchor`, which for a target
+week OUTSIDE the loaded window is a large negative or positive offset. The clamp I added
+keeps `_lx`/`_rx` in range arithmetically, but the SIX zone boxes still do not appear
+while the SIX zone LABELS — which take no x bounds at all — always do.**
+
+**THE NEXT ACTION IS NOT ANOTHER CODE EDIT.** It is to log the six smoke zones' bounds and
+the loaded bar range in the SAME run and read them together. Everything above the arithmetic
+has been ruled out by construction; only the runtime values remain, and they are the only
+thing left that can distinguish "culled as off-chart" from "never emitted".
+
+**WHAT THIS ROUND COST, stated plainly.** Six hypotheses, two false positives I generated
+myself (a 0.0006 price tolerance that matched v1's liquidity bands; an engine cache that
+returned stale bytes), one rig failure (`WORKSPACES DOWN`) that masqueraded as a code fault,
+and a bisection probe that found the answer in the first run — which is the instrument I
+should have reached for at the FIRST symptom instead of the sixth.
+
+THE PROBE IS THE LESSON. When a render element is missing and inspection cannot explain it,
+BISECT WITH FIVE VARIANTS IN ONE RUN. Five inspection hypotheses took an hour; five probe
+boxes took ninety seconds and answered definitively.

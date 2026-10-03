@@ -1,0 +1,52 @@
+//@version=6
+indicator("F-17 PROBE", overlay = true, max_labels_count = 500, max_lines_count = 500, max_boxes_count = 500)
+
+// ── F-17 BISECTION PROBE. A DIAGNOSTIC, NOT A DELIVERABLE. ──────────────────
+// The E1 layer's boxes have never rendered while its labels — built in the SAME
+// loop — always have. Five hypotheses were tested and ruled out by inspection
+// (off-screen, coordinate space, the xloc argument, build stripping, the call
+// boundary). This answers it EMPIRICALLY: five boxes, one variable changed each.
+//   A  a byte-for-byte clone of the WORKING liquidity box  (the control)
+//   B  the same with a DEGREE colour instead of the liquidity colour
+//   C  the same written INSIDE a loop over an array (the E1 build path)
+//   D  the E1 form EXACTLY — bottom taken from an array, alpha from the ramp
+//   E  the E1 colour ramp again, at the alpha the ramp actually produces
+// Whichever of A..E is missing from the box census is the difference.
+//
+// A forward reference is a Pine RUNTIME error, not a warning — the first version
+// of this probe failed exactly the way the product might, which is the lesson.
+
+var array<float> FAKE = array.new<float>()
+var array<float> FBOT = array.new<float>()
+var float _px   = math.max(0, bar_index - 500)
+var float _body = math.max(0.0006, ta.atr(14) * 0.35)
+
+if barstate.islast
+    array.push(FAKE, 1)
+    array.push(FBOT, close - _body)
+
+    // A · the control — exactly the working liquidity box shape
+    box.new(_px, close + 0.0020, bar_index + 20, close + 0.0020 - _body,
+         border_color = #2E8B57, border_width = 1,
+         bgcolor = color.new(#2E8B57, 55))
+
+    // B · a DEGREE colour instead of the liquidity colour
+    box.new(_px, close + 0.0010, bar_index + 20, close + 0.0010 - _body,
+         border_color = #FF3D00, border_width = 1,
+         bgcolor = color.new(#FF3D00, 55))
+
+    // C · inside a loop over an array — the E1 build path
+    for i = 0 to array.size(FAKE) - 1
+        box.new(_px, close + 0.0000, bar_index + 20, close - _body,
+             border_color = #B388FF, border_width = 1,
+             bgcolor = color.new(#B388FF, 55))
+
+    // D · the E1 form EXACTLY — bottom from an array, alpha from the ramp
+    box.new(_px, close - 0.0010, bar_index + 20, array.get(FBOT, 0),
+         border_color = color.new(#FF6D00, 75), border_width = 1,
+         bgcolor = color.new(#FF6D00, 55))
+
+    // E · the E1 ramp again, at the ramp's own alpha
+    box.new(_px, close - 0.0020, bar_index + 20, close - 0.0020 - _body,
+         border_color = #9575CD, border_width = 1,
+         bgcolor = color.new(#9575CD, 40))
