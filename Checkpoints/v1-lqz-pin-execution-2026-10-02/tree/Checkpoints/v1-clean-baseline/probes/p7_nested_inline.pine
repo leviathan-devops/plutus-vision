@@ -1,0 +1,15 @@
+//@version=6
+indicator("p7", overlay=true, max_boxes_count=500)
+type swp_boxBr
+    box swp_bx
+    bool br
+    int dr
+swp_extend = input.bool(true, 'Extend')
+var array<swp_boxBr> swp_aBoxBr = array.new<swp_boxBr>(1, swp_boxBr.new())
+if bar_index == 10
+    swp_aBoxBr.unshift(swp_boxBr.new(box.new(bar_index-1, high, bar_index+1, low), false, 1))
+if swp_extend
+    for swp_bx in swp_aBoxBr
+        if not na(swp_bx.swp_bx)
+            swp_bx.swp_bx.set_right(bar_index)
+plot(close, "c")

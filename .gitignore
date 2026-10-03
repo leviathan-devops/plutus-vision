@@ -23,3 +23,12 @@ vision_frames/
 
 # editor + OS
 .DS_Store
+
+# runtime state written by the IDE's own pipeline
+# evidence/ accumulates one PNG per capture and is reproducible by re-capturing.
+# vil/*.jsonl is NOT ignored: it is the VERDICT LEDGER -- the operator's own record, a few
+# rows per week, and the artifact the gate rows are read back from. That is a record, not
+# accumulating state.
+evidence/
+__pycache__/
+*.pyc

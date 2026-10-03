@@ -1,0 +1,19 @@
+import { InputOptions } from './types';
+/**
+ * Builtin source-series names a runtime `input.source` override may carry.
+ * Overrides cross a serialization boundary (host constructor map, worker
+ * postMessage), so a source override arrives as the series NAME — never the
+ * series itself. Also used by the meta scanner (scanInputs) to type-detect
+ * source defaults.
+ */
+export declare const SOURCE_BUILTINS: Set<string>;
+/**
+ * Dereference a builtin source NAME to the named series' current-bar value.
+ * Returns `undefined` when the name is not a builtin or the series is absent —
+ * callers fall back to the declared default. Reading `.get(0)` per bar matches
+ * exactly what the transpiler's `input.param(<series>)` wrapping produces for
+ * the un-overridden default, so both paths stay value-identical.
+ */
+export declare function resolveSourceName(context: any, name: string): number | undefined;
+export declare function parseInputOptions(args: any[]): Partial<InputOptions>;
+export declare function resolveInput(context: any, options: Partial<InputOptions>): any;

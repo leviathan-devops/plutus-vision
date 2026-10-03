@@ -1,0 +1,68 @@
+{
+ "limit": 1603,
+ "sources": {
+  "SMC": {
+   "ok": true,
+   "counts": {
+    "plots": 0,
+    "plotPoints": 0,
+    "markers": 0,
+    "boxes": 5,
+    "labels": 97,
+    "lines": 93,
+    "tables": 0,
+    "polylines": 0,
+    "linefills": 0,
+    "trades": 0
+   }
+  },
+  "SWEEPS": {
+   "ok": false,
+   "counts": null
+  },
+  "VOIDS": {
+   "ok": true,
+   "counts": {
+    "plots": 0,
+    "plotPoints": 0,
+    "markers": 0,
+    "boxes": 500,
+    "labels": 0,
+    "lines": 0,
+    "tables": 0,
+    "polylines": 0,
+    "linefills": 0,
+    "trades": 0
+   }
+  },
+  "POOLS": {
+   "ok": true,
+   "counts": {
+    "plots": 0,
+    "plotPoints": 0,
+    "markers": 0,
+    "boxes": 15,
+    "labels": 0,
+    "lines": 10,
+    "tables": 0,
+    "polylines": 0,
+    "linefills": 0,
+    "trades": 0
+   }
+  }
+ },
+ "merged": {
+  "plots": 0,
+  "plotPoints": 0,
+  "markers": 0,
+  "boxes": 486,
+  "labels": 97,
+  "lines": 275,
+  "tables": 0,
+  "polylines": 0,
+  "linefills": 0,
+  "trades": 0
+ },
+ "lost": 121,
+ "extra": 258
+}

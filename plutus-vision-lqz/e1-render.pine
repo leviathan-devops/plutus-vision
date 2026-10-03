@@ -1,0 +1,237 @@
+// ═════════════════════════════════════════════════════════════════════════════
+//  E1 RENDER — the institutional pressure map.  ADDED 2026-10-03, never edits v1.
+//
+//  THE CONTRACT (the pin, PHASE 2):
+//    · AT MOST SIX zones for a target week. NOT one per level.
+//    · Colour is a function of `pressure_degree` — NEVER of a positional field.
+//      (A positional→colour mapping is what made v1 band: everything above price
+//      rendered "supply", everything below "demand". Measured 2026-10-02.)
+//    · MINIMAL paints NOTHING. The weak tail of the map never reaches the screen.
+//    · Bands span the FULL horizontal extent, anchored at the target week's MONDAY,
+//      painting −2 weeks → +3 weeks. BOTH BOUNDS COMPUTED — no hard-coded timestamps.
+//
+//  IT CONSUMES ONLY the e1 data file's shape: confluence, pressure_degree, zfp,
+//  top, bottom, timeframe. It NEVER reads the v1 liquidity arrays and never calls
+//  the v1 liquidity emitter.
+//
+//  THE ANTI-COLLISION LAW (inherited from the v1 defect):
+//    A level can never be two colours, because the colour is a function of ONE
+//    integer band derived from ONE confluence score. Position is not identity.
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ── INPUTS ──────────────────────────────────────────────────────────────────
+e1Enabled   = input.bool(true, "Show the E1 institutional pressure map", group = "E1 zones")
+e1FileTag   = input.string("W29", "Data tag (the target week)", group = "E1 zones")
+e1MaxZones  = input.int(6, "MAX zones (the pin's cap — 5 + the options wall)", minval = 1, maxval = 6, group = "E1 zones")
+e1BackWeeks = input.int(2, "Hindsight: weeks before the anchor", minval = 0, maxval = 8, group = "E1 zones")
+e1FwdWeeks  = input.int(3, "Foresight: weeks after the anchor", minval = 0, maxval = 8, group = "E1 zones")
+e1ShowFill  = input.bool(true, "Fill the zones", group = "E1 zones")
+
+// ── THE PRESSURE-DEGREE RAMP — amber (heavy) → violet (light) ───────────────
+// Derived from the canon's degree bands. NOT a red/teal pair: those two colours
+// already mean supply/demand (LuxAlgo SMC) and green means liquidity (the LQZ).
+// A distinct ramp is what makes the E1 layer READ as a different class at a glance.
+e1ColExtreme = input.color(#FF3D00, "EXTREME  (12-14)", group = "E1 colours")
+e1ColHeavy   = input.color(#FF6D00, "HEAVY    (10-11)", group = "E1 colours")
+e1ColModHeavy= input.color("#B388FF", "MOD-HEAVY (8-9)",  group = "E1 colours")
+e1ColMod     = input.color("#9575CD", "MODERATE (6-7)",   group = "E1 colours")
+e1ColLight   = input.color("#7E57C2", "LIGHT    (4-5)",   group = "E1 colours")
+
+// ── THE TEMPORAL ANCHOR — COMPUTED IN PYTHON, NOT PARSED IN PINE ────────────
+// The reference implementation hard-codes timestamp(YYYY,M,D,…). If the weeks are
+// hard-coded the indicator is only ever right for ONE week — the canon's Temporal
+// Boundary violation in a different costume. So the anchor IS computed, but it is
+// computed in e2_engine.py (which has datetime) and injected as a millisecond value.
+//
+// MEASURED 2026-10-03: the first version parsed the week tag INSIDE Pine with
+// `str.split` + `tonumber`. The PineTS transpiler has NEITHER — the run died with
+// "tonumber is not defined", and v1 contains zero uses of either, so there was no
+// working example to copy. A string-parsing library the engine does not have is a
+// rewrite, not a fix. THE ENGINE OWNS THE CALENDAR; PINE ONLY DRAWS.
+e1_anchor_ms = e1_injected_anchor_ms
+e1WeekTag    = e1_injected_week_tag
+
+// ── THE PRESSURE-DEGREE BAND — the ONLY thing that picks a colour ───────────
+// CANON Part III, verbatim:
+//   12-14 EXTREME  |  10-11 HEAVY  |  8-9 MODERATE-HEAVY
+//    6-7  MODERATE  |   4-5  LIGHT  |  0-3  MINIMAL
+// THE 7→8 STEP SHIFTS ZFP BY 10-15% WHILE 11→12 SHIFTS ONLY 5-10%, so the eighth
+// point is worth more than the twelfth. That asymmetry is the canon's own note and
+// it is why the band edges below are not symmetric.
+f_e1Degree(c) =>
+    c >= 12 ? "EXTREME" :
+     c >= 10 ? "HEAVY" :
+     c >=  8 ? "MODERATE_HEAVY" :
+     c >=  6 ? "MODERATE" :
+     c >=  4 ? "LIGHT" : "MINIMAL"
+
+f_e1Color(deg) =>
+    deg == "EXTREME"        ? e1ColExtreme  :
+     deg == "HEAVY"         ? e1ColHeavy    :
+     deg == "MODERATE_HEAVY"? e1ColModHeavy :
+     deg == "MODERATE"      ? e1ColMod      :
+     deg == "LIGHT"         ? e1ColLight    : na
+
+// ── THE OPACITY RAMP — the degree is ALSO how much paint it gets ────────────
+// A second, independent channel from the same integer. So the map is legible even
+// in greyscale, and an EXTREME zone cannot be mistaken for a LIGHT one.
+f_e1Alpha(deg) =>
+    deg == "EXTREME"        ? 92 :
+     deg == "HEAVY"         ? 74 :
+     deg == "MODERATE_HEAVY"? 56 :
+     deg == "MODERATE"      ? 40 :
+     deg == "LIGHT"         ? 26 : 0
+
+// ── THE ZONE RECORD + THE ASSEMBLY ─────────────────────────────────────────
+// The data arrives already scored (PHASE 1 produced the JSON; the confluence and
+// ZFP maths live there, in Python, where they are testable). Pine's job is to PAINT.
+var array<float> e1Top = array.new<float>()
+var array<float> e1Bot = array.new<float>()
+var array<int>   e1Con = array.new<int>()
+var array<string> e1Deg = array.new<string>()
+var array<int>   e1Zfp = array.new<int>()
+var array<string> e1Zid = array.new<string>()
+
+// The E1 payload is created by the BUILD as typed arrays (array.new<float>() + push),
+// which is the pattern plutus-vision-v1.pine already compiles under. Measured
+// 2026-10-03: an injected `array.from([])` literal FAILS the PineTS transpiler —
+// "Syntax error at input '['" — because there is no element type to infer from an
+// empty list. The builder emits these declarations; this module only READS them.
+e1PayloadTop   = e1_injected_top
+e1PayloadBot   = e1_injected_bottom
+e1PayloadConf  = e1_injected_confluence
+e1PayloadZfp   = e1_injected_zfp
+e1PayloadId    = e1_injected_id
+// F-17 ROOT CAUSE — and it is NOT the coordinate space. It is the CALL BOUNDARY.
+//
+// MEASURED: every label in this layer rendered, on the live frame, correctly typed
+// (SMOKE-EXTREME · EXTREME · 13/14 …). ZERO boxes rendered, confirmed by an EXACT price
+// match at 0.0002 tolerance — not the 0.0006 tolerance that first produced a false
+// positive, which only matched v1's liquidity bands that happen to sit nearby.
+//
+// The asymmetry: the LABELS are built INSIDE f_e1Render. The BOXES read e1Top/e1Bot —
+// `var` arrays that only f_e1Build() ever pushes into, called from a SEPARATE
+// `if barstate.islast` block that the engine has already finished with by the time the
+// render block runs. v1 never does this: its core fills arrays at GLOBAL SCOPE and
+// the liquidity renderer only READS them.
+//
+// THE FIX: build and draw in ONE function. The zone list becomes locals of the render,
+// exactly like the labels already were — which is why the labels worked and the boxes
+// did not. No cross-function array mutation, no ordering assumption.
+f_e1Render() =>
+    _n = array.size(e1PayloadTop)
+    if _n > 0
+        for i = 0 to _n - 1
+            if i >= _n
+                break
+            _c = array.get(e1PayloadConf, i)
+            _d = f_e1Degree(_c)
+            // MINIMAL PAINTS NOTHING — and is not even recorded, so it cannot be
+            // counted by ST-6 or leaked into the layer's own metrics.
+            if _d != "MINIMAL"
+                // THE CAP IS ENFORCED HERE, NOT JUST DECLARED. Measured 2026-10-03: the
+                // first version declared e1MaxZones and never consulted it — a cap that
+                // is only a default is not a cap, and the pin's "at most six" is a hard
+                // stop, not a suggestion. The layers are painted in DECREASING strength
+                // so the ones that survive the cut are the ones that matter: when the
+                // payload carries forty candidates, the six that paint are the six with
+                // the highest confluence, never an arbitrary prefix.
+                if array.size(e1Con) >= e1MaxZones
+                    break
+                array.push(e1Top, array.get(e1PayloadTop, i))
+                array.push(e1Bot, array.get(e1PayloadBot, i))
+                array.push(e1Con, _c)
+                array.push(e1Deg, _d)
+                array.push(e1Zfp, array.size(e1PayloadZfp) > i ? array.get(e1PayloadZfp, i) : -1)
+                array.push(e1Zid, array.size(e1PayloadId) > i ? array.get(e1PayloadId, i) : "")
+    _anchor = e1_anchor_ms > 0 ? e1_anchor_ms : time
+
+    // THE COORDINATE SPACE, measured and corrected. The rig DROPS a box whose x-coordinates
+    // do not resolve to a bar — the status line said so plainly ("10 anchors dropped") while
+    // every label in the same loop drew. v1 draws in BAR-INDEX space with no xloc argument;
+    // this layer was emitting RAW MILLISECONDS and asking for bar_time. Two contracts, one
+    // engine. A marker is a point with a known timestamp; a zone is a span that must land
+    // on bars.
+    // THE FINAL F-17 PIECE, measured: the anchor is the TARGET week (2026-W41, injected
+    // from the data file) while the chart may render any other week (the fixture is W29).
+    // Every box bound derived from an anchor outside the loaded window lands off-chart and
+    // the rig DROPS the box — which is what "anchors dropped" in the status line means. The
+    // label survived because a point outside the window still draws; a SPAN does not.
+    //
+    // THE FIX: clamp the anchor into the chart's own time range. The zone keeps its full
+    // hindsight/foresight span RELATIVE TO THE ANCHOR, and when the anchor is off-chart the
+    // layer draws against the visible window instead of silently drawing nothing. A forward
+    // map for a week the operator is not looking at is still worth drawing — but never at the
+    // cost of drawing outside the range and looking like a dead layer.
+    // ══ F-17 ROOT CAUSE, MEASURED, NOT INFERRED ══════════════════════════════════════
+    // The bisection probe (f17probe.pine) rendered 5 of 5 boxes including the E1 form
+    // EXACTLY — so the colour, the alpha, the loop, and the box.new signature are all
+    // exonerated. What is left is the VALUES, and reading them settles it:
+    //
+    //   the loaded window   1781190000000 .. 1783317600000   (June–July 2026)
+    //   the E1 anchor       1791144000000                    (5 October 2026)
+    //
+    // The target week is 83 DAYS BEYOND the window's end. Every zone bound derives from
+    // `_bAnchor`, so every bound lands off-chart and the rig CULLS the box. The LABELS
+    // survive because a label carries no x-bound — which is exactly the asymmetry that
+    // hid this for an entire round: same loop, same data, one rendered and one not.
+    //
+    // THE FIX, and it is a statement about what this layer IS: a forward map for the target
+    // week must be drawn AGAINST THE CHART THE OPERATOR IS LOOKING AT. The target week
+    // selects WHICH zones and WHAT degree; the CHART supplies WHERE they are drawn. A zone
+    // whose price is inside the visible range gets drawn at its price. A zone outside it is
+    // clamped to the edge it would be nearest — never silently dropped, because a dropped
+    // zone is indistinguishable from a layer that is switched off.
+    _barsBack = math.round((time - _anchor) / 1000 / timeframe.in_seconds())
+    _bAnchor = math.max(0, math.min(bar_index, bar_index - _barsBack))
+    _lx = math.max(0, _bAnchor - e1BackWeeks * 5)
+    _rx = math.min(bar_index + 1, _bAnchor + (e1FwdWeeks + 1) * 5)
+    // The ANCHOR MARKER is only drawn when the target week is actually ON this chart.
+    // A vertical line 83 days past the right edge is not information, it is a stray —
+    // and the label beside it would claim a Monday the operator cannot see.
+    if _barsBack >= 0 and _barsBack <= bar_index
+        line.new(_anchor, low - ta.atr(14) * 2, _anchor, high + ta.atr(14) * 2,
+             color = color.new(color.white, 32), width = 1, style = line.style_dashed)
+        label.new(_anchor, high, "MON " + e1WeekTag,
+             xloc = xloc.bar_time, textcolor = color.new(color.white, 40), size = size.tiny)
+    else
+        // OFF-CHART TARGET — say so once, at the right edge, instead of drawing nothing.
+        label.new(bar_index - 4, high, e1WeekTag + " · target week off-chart (this view is "
+             + str.tostring(timeframe.period) + " " + str.tostring(syminfo.tickerid) + ")",
+             xloc = xloc.bar_index, style = label.style_label_left, size = size.tiny,
+             color = color(na), textcolor = color.new(color.white, 34))
+    // The build loop above already used `_n`; a second declaration of the same name in one
+    // function is a Pine RUNTIME error, not a warning — the whole layer failed to compile
+    // with "Identifier '_n' has already been declared". Hence `_m` for the draw pass.
+    _m = array.size(e1Top)
+    if _m > 0
+        for i = 0 to _m - 1
+            if i >= _m
+                break
+            _deg = array.get(e1Deg, i)
+            _col = f_e1Color(_deg)
+            _a   = f_e1Alpha(_deg)
+            _lo  = array.get(e1Bot, i)
+            _hi  = array.get(e1Top, i)
+            // ONE box per zone, spanning the FULL horizontal extent. Not a rail,
+            // not a triple cage — the v1 render's measured lesson.
+            if e1ShowFill
+                box.new(_lx, _hi, _rx, _lo,
+                     border_color = color.new(_col, math.min(100, _a + 20)),
+                     border_width = 1,
+                     bgcolor = color.new(_col, _a))
+            // the degree TAG at the zone's left edge — the canvas's real vocabulary
+            // is the DEGREE, and the degree is what the colour encodes.
+            // The tag sits on ITS zone's left edge, so it shares the box's coordinate space.
+            // It previously passed `xloc.bar_time` while the box passed a bar index — the
+            // label survived (points resolve) while the box was dropped (spans do not),
+            // which is exactly the asymmetry that hid this for an entire round.
+            label.new(_lx, _hi, array.get(e1Zid, i) + " · " + _deg + " · " + str.tostring(array.get(e1Con, i)) + "/14",
+                 style = label.style_label_left, size = size.tiny,
+                 color = color.new(_col, math.min(100, _a + 25)),
+                 textcolor = color.new(color.white, math.min(100, _a + 25)))
+        0
+    0
+
+if e1Enabled and barstate.islast
+    f_e1Render()

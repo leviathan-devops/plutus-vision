@@ -1,0 +1,81 @@
+{
+  "sha": "fb752a1c4152817ea82eccd04bf5ae8f0981445367e6ec8a4dcd19ed8eae04d4",
+  "lines": 1510,
+  "decls": "1",
+  "lux": "5",
+  "lex": "lexcheck: PASS (0 findings)",
+  "four": {
+    "SMC": {
+      "ok": true,
+      "drew": 46,
+      "boxes": 5,
+      "labels": 22,
+      "lines": 19,
+      "err": ""
+    },
+    "SWEEPS": {
+      "ok": true,
+      "drew": 36,
+      "boxes": 12,
+      "labels": 0,
+      "lines": 24,
+      "err": ""
+    },
+    "VOIDS": {
+      "ok": true,
+      "drew": 94,
+      "boxes": 94,
+      "labels": 0,
+      "lines": 0,
+      "err": ""
+    },
+    "POOLS": {
+      "ok": true,
+      "drew": 3,
+      "boxes": 1,
+      "labels": 0,
+      "lines": 2,
+      "err": ""
+    }
+  },
+  "full": {
+    "ok": true,
+    "counts": {
+      "plots": 0,
+      "plotPoints": 0,
+      "markers": 0,
+      "boxes": 112,
+      "labels": 22,
+      "lines": 45,
+      "tables": 0,
+      "polylines": 0,
+      "linefills": 0,
+      "trades": 0
+    },
+    "err": "",
+    "drew": 179
+  },
+  "probe": [
+    "RUN_OK sha=fb752a1c4152817e bars=300 ms=186",
+    "counts {\"plots\":0,\"plotPoints\":0,\"markers\":0,\"boxes\":112,\"labels\":22,\"lines\":45,\"tables\":0,\"polylines\":0,\"linefills\":0,\"trades\":0}",
+    "warnings 0",
+    "RENDERED"
+  ],
+  "frames": [
+    "mrg-full.png",
+    "mrg-pools.png",
+    "mrg-smc.png",
+    "mrg-sweeps.png",
+    "mrg-voids.png",
+    "src-pools.png",
+    "src-smc.png",
+    "src-voids.png"
+  ],
+  "audit_artifacts": [],
+  "checkpoints": [
+    "plutus-vision-v0-round-zero",
+    "plutus-vision-v0-station-verified"
+  ],
+  "station_alive": true,
+  "audited": "2026-10-01T15:59:32"
+}
