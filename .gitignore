@@ -30,3 +30,5 @@ vision_frames/
 # rows per week, and the artifact the gate rows are read back from. That is a record, not
 # accumulating state.
 evidence/
+__pycache__/
+*.pyc
