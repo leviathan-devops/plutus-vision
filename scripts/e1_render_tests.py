@@ -141,12 +141,17 @@ def st8_monday_anchor() -> None:
     # match nothing. The property the pin requires is unchanged: the left edge is the
     # anchor minus hindsight, the right edge is the anchor plus foresight, and both come
     # from the SAME bar. Assert that, not the spelling.
-    # No backreferences here: the left bound nests math.max(math.min(...)) and the right
-    # nests math.max(...), so a single group cannot be matched on both sides. The variable
-    # names are fixed by the module, so match them literally.
-    left = re.search(r"_lx\s*=\s*math\.max\(\s*0\s*,\s*math\.min\(\s*bar_index\s*,\s*_bAnchor\s*-", src)
-    right = re.search(r"_rx\s*=\s*math\.max\(\s*bar_index\s*\+\s*1\s*,\s*_bAnchor\s*\+", src)
-    anchored = re.search(r"_bAnchor\s*=\s*bar_index\s*-\s*_barsBack", src)
+    # Probe defect, fifth pass: the anchor arithmetic changed again with the F-17 fix —
+    # `_bAnchor` is now CLAMPED into the loaded window
+    # (`math.max(0, math.min(bar_index, bar_index - _barsBack))`) because the target week
+    # can sit 83 days past the chart's right edge. The property under test has not changed:
+    # BOTH bounds derive from the SAME anchor bar. Match the shape as written now, and fall
+    # back to the unclamped form so the assertion tests the property in EITHER revision.
+    anchored = re.search(r"_bAnchor\s*=\s*math\.max\(0,\s*math\.min\(\s*bar_index\s*,\s*"
+                         r"bar_index\s*-\s*_barsBack\s*\)\s*\)", src) \
+            or re.search(r"_bAnchor\s*=\s*bar_index\s*-\s*_barsBack", src)
+    left = re.search(r"_lx\s*=\s*math\.max\(0,\s*_bAnchor\s*-", src)
+    right = re.search(r"_rx\s*=\s*math\.min\(\s*bar_index\s*\+\s*1,\s*_bAnchor\s*\+", src)
     same = bool(left and right and anchored)
     record("ST-8c  both bounds derive from the SAME computed anchor bar", same,
            "_bAnchor = bar_index - barsBack; both bounds clamped into the window")

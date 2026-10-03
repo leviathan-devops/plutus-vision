@@ -17,6 +17,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -140,7 +141,15 @@ def st4_arm_control() -> None:
     NEGATIVE CONTROL: the control table's own strikes are compared — an arm that
     returns empty or finish=length FAILS."""
     png = E._control_image_png()
-    ok, raw, fr = E.arm_read_image(png, budget=180)
+    ok, raw, fr = E.arm_read_image(png, budget=120)
+    # ONE retry, and only for a load that exceeded its budget. The arm is a 3 GB model on
+    # CPU; a cold load legitimately outruns the first budget. This is not a fallback — the
+    # pass condition is unchanged (6/6 strikes, finish=stop); it distinguishes "the arm is
+    # still loading" from "the arm is not honest", which the sixth instance of this class
+    # (see DEBUG_LOG F-18, F-20) would otherwise conflate.
+    if not ok and ("budget" in raw or "unreachable" in raw or "timed out" in raw):
+        time.sleep(25)
+        ok, raw, fr = E.arm_read_image(png, budget=240)
     record("ST-4a  the arm answered the control table", ok, f"finish={fr}")
     if not ok:
         return
