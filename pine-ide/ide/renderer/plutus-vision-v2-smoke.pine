@@ -1286,7 +1286,7 @@ var array<float> e2_injected_ghost_x = array.new<float>()
 var array<float> e2_injected_ghost_y = array.new<float>()
 e1_injected_anchor_ms = 1791144000000
 e1_injected_week_tag = "2026-W41"
-e2_injected_refusal = "E2_NO_CHAIN: run scripts/e2_engine.py against a populated zone map; the forecast path stays empty until it has zones to anchor to"
+e2_injected_refusal = ""
 
 e1_injected_top.push(1.147)
 e1_injected_top.push(1.145)
@@ -1318,6 +1318,28 @@ e1_injected_id.push("SMOKE-MODHEAVY")
 e1_injected_id.push("SMOKE-MODERATE")
 e1_injected_id.push("SMOKE-LIGHT")
 e1_injected_id.push("SMOKE-MINIMAL")
+e2_injected_x.push(1791316800000)
+e2_injected_x.push(1791403200000)
+e2_injected_x.push(1791489600000)
+e2_injected_x.push(1791576000000)
+e2_injected_x.push(1791662400000)
+e2_injected_y.push(1.139)
+e2_injected_y.push(1.147)
+e2_injected_y.push(1.147)
+e2_injected_y.push(1.147)
+e2_injected_y.push(1.147)
+e2_injected_shape.push("BS")
+e2_injected_shape.push("RWL")
+e2_injected_shape.push("RWL")
+e2_injected_shape.push("RWL")
+e2_injected_shape.push("RWL")
+e2_injected_conf.push(60)
+e2_injected_conf.push(85)
+e2_injected_conf.push(85)
+e2_injected_conf.push(85)
+e2_injected_conf.push(85)
+e2_injected_ghost_x.push(1.147)
+e2_injected_ghost_y.push(1.147)
 
 // ═════════════════════════════════════════════════════════════════════════════
 //  E1 RENDER — the institutional pressure map.  ADDED 2026-10-03, never edits v1.

@@ -91,6 +91,12 @@ f_e2Render() =>
         // THE ALTERNATIVE — a THIN DASHED GHOST, never a second solid line. The
         // canon requires an alternative for every primary chain; drawing it as a
         // second heavy line would be two forecasts fighting for the eye.
+        // THE LOOP BOUND IS NOT `_gn - 2`. Pine evaluates `0 to -1` as a WRAP — it does not
+        // produce an empty range, it runs from 0 up to the loop cap. Measured 2026-10-03: the
+        // ghost carried ONE point, `_gn - 2` evaluated to -1, and the loop painted 399 ghost
+        // lines against a 500-line budget — a single alternative chain consumed the whole
+        // chart's line allowance. The `if _gn >= 2` guard below is the real bound and it must
+        // come FIRST, before the range is computed.
         _gn = array.size(e2GhostX)
         if e2ShowGhost and _gn >= 2
             for i = 0 to _gn - 2

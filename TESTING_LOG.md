@@ -1190,3 +1190,28 @@ RE-VERIFICATION PROTOCOL, now binding for this rig:
 
 F-17 REMAINS OPEN AND UNMEASURED. The degree-band mapping is proven (labels). The box path
 is unproven. The next attempt starts with the protocol above, not with another hypothesis.
+
+## 2026-10-03 — BOTH ENGINES RENDER ON THE LIVE RIG (final measured state)
+
+SMOKE BUILD (six fixture zones, six degree bands, target week 2026-10-06), EURUSD 1H W29,
+a fresh page reload and ONE run:
+
+    COMPILED · 38 boxes · bars 1603
+    38 = v1's 32 (27 liquidity + 5 SMC) + the SIX E1 degree zones      → F-17 CLOSED
+    shape tags present: BS 60%, RWL 85% x4                              → E2 renders
+    the E1 colour ramp present on the chart: #FF3D00 / #B388FF / #FF6D00 / #9575CD
+    anchors dropped 10 → 3                                                → off-chart strays gone
+
+THE ENGINE'S OWN OUTPUT, on the same fixture (scripts/wire_e2.py --data data/e1-smoke):
+    zones_in=5  days=5  ghost=1  refusal=none
+    chain: BS → RWL @ SMOKE-EXTREME
+BS into a zone with ZFP 18 (< 20, a HARD WALL) producing RWL — THE canon's §6.4.1 rule,
+exercised end-to-end through the engine, the builder and the renderer.
+
+THE REAL BUILD, same week, no fixture: `refusal=E2_NO_ZONES: the E1 data file carries no
+zone array — the fetch layer recorded every source as [NO DATA] for this week`. Empty path,
+empty zones, and the refusal stated on the chart. THAT is the contract behaving.
+
+WHAT IS STILL NOT DEMONSTRATED, stated plainly: no E1 zone has EVER come from a live source.
+Every zone on the chart is the labelled SMOKE fixture. The pipeline is proven from the payload
+in; the nine web sources are NOT yet proven to produce a zone. That remains the one open item.

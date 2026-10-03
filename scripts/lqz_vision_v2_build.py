@@ -40,6 +40,7 @@ E1 = ROOT / "plutus-vision-lqz" / "e1-render.pine"
 E2 = ROOT / "plutus-vision-lqz" / "e2-render.pine"
 OUT = ROOT / "plutus-vision-v2.pine"
 DATA = pathlib.Path(os.environ.get("PV2_DATA_DIR", ROOT / "data" / "e1"))
+E2D = pathlib.Path(os.environ.get("PV2_E2_DIR", ROOT / "data" / "e2"))
 
 # the v1 seal. The build REFUSES to run if v1 has drifted.
 V1_SEALED_SHA = "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1"
@@ -119,12 +120,41 @@ def build_payload() -> tuple[str, str]:
     add("e1_injected_zfp", "int", [int(z.get("zfp", 0)) for z in zones])
     add("e1_injected_id", "string", [f'"{z.get("name", "Z")}"' for z in zones])
 
-    # the E2 arrays start EMPTY unless the engine ran. The refusal is carried as a
-    # string, so an absent chain is stated on the chart instead of silently vanishing.
-    for n, ty in (("e2_injected_x", "float"), ("e2_injected_y", "float"),
-                   ("e2_injected_shape", "string"), ("e2_injected_conf", "int"),
-                   ("e2_injected_ghost_x", "float"), ("e2_injected_ghost_y", "float")):
-        decls.append(f"var array<{ty}> {n} = array.new<{ty}>()")
+    # ── THE E2 PAYLOAD: whatever scripts/wire_e2.py computed, verbatim. ────────────
+    # Every value here is the ENGINE's output. This build never classifies a shape,
+    # never picks a transition and never invents a confidence — it only carries them.
+    # An absent or refused engine run leaves the arrays EMPTY and sets the refusal,
+    # so the chart states the refusal rather than drawing a fabricated path.
+    e2doc = {"days": [], "ghost": [], "refusal": ""}
+    e2files = sorted(E2D.glob("*-e2.json"))
+    if e2files:
+        try:
+            e2doc = json.loads(e2files[0].read_text())
+        except Exception as exc:                                  # a bad file is NOT a chain
+            e2doc = {"days": [], "ghost": [],
+                      "refusal": f"E2_BAD_PAYLOAD: {str(exc)[:80]}"}
+
+    # The day anchors: x from the engine's +1-day timestamps, y from the zone the day
+    # is anchored to. A day with NO anchoring zone contributes no point — Rule 1 at the
+    # boundary, so an unanchored forecast can never reach the chart.
+    zmap = {z.get("name"): z for z in zones}
+    days, ghosts = [], []
+    for d in e2doc.get("days", []):
+        z = zmap.get(d.get("zone"))
+        if z is None:                       # unanchored -> not drawn
+            continue
+        days.append((d.get("x"), z.get("top"), d.get("shape"), d.get("conf")))
+    for g in e2doc.get("ghost", []):
+        z = zmap.get(g.get("zone"))
+        if z is not None:
+            ghosts.append((z.get("top"), z.get("top")))
+
+    add("e2_injected_x", "float", [d[0] for d in days])
+    add("e2_injected_y", "float", [d[1] for d in days])
+    add("e2_injected_shape", "string", [f'"{d[2]}"' for d in days])
+    add("e2_injected_conf", "int", [int(d[3]) for d in days])
+    add("e2_injected_ghost_x", "float", [g[0] for g in ghosts])
+    add("e2_injected_ghost_y", "float", [g[1] for g in ghosts])
 
     # THE ANCHOR is computed HERE, in Python, because the PineTS transpiler has
     # neither `str.split` nor `tonumber` (measured 2026-10-03: "tonumber is not
@@ -135,14 +165,15 @@ def build_payload() -> tuple[str, str]:
     decls.append(f"e1_injected_anchor_ms = {anchor_ms}")
     decls.append(f'e1_injected_week_tag = "{week_tag}"')
 
-    # THE REFUSAL STRING. The E2 module READS it, so it must be declared even when
-    # the engine produced a chain. An absent chain is STATED on the chart, never
-    # silently swallowed — a silently empty chart reads as "the engine found nothing",
-    # which is a different claim from "the engine refused to guess".
-    refusal_lit = refusal or (
-        "E2_NO_CHAIN: run scripts/e2_engine.py against a populated zone map; the "
-        "forecast path stays empty until it has zones to anchor to")
-    decls.append(f'e2_injected_refusal = "{refusal_lit}"')
+    # THE REFUSAL STRING comes from the ENGINE, verbatim. This build never invents a reason.
+    # When the engine produced a chain the refusal is empty; when it refused, its own words are
+    # carried onto the chart, because "the engine refused to guess" and "there is no structure"
+    # are different claims and the operator must be able to tell them apart.
+    engine_refusal = e2doc.get("refusal") or ""
+    if not days and not engine_refusal:
+        engine_refusal = ("E2_NO_ANCHORS: the engine produced days but none carried an "
+                          "anchoring zone, so Rule 1 forbids drawing them")
+    decls.append(f'e2_injected_refusal = "{engine_refusal}"')
     return "\n".join(decls), "\n".join(pushes)
 
 

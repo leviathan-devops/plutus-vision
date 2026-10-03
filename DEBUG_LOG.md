@@ -1640,3 +1640,21 @@ should have reached for at the FIRST symptom instead of the sixth.
 THE PROBE IS THE LESSON. When a render element is missing and inspection cannot explain it,
 BISECT WITH FIVE VARIANTS IN ONE RUN. Five inspection hypotheses took an hour; five probe
 boxes took ninety seconds and answered definitively.
+
+### F-20 · THE RIG ACCUMULATES DRAWINGS ACROSS RUNS (not a layer defect)
+**SYMPTOM** the E2 census read 101 path lines and 399 ghost lines for a FIVE-DAY chain that
+should paint 4 segments, and 500 labels / 500 lines — both at the declared cap.
+**MEASUREMENT** after a clean page reload and 4 runs, the shape tags enumerate as
+`BS 60%, RWL 85%` repeating — 5 tags PER RUN, multiplying. A single run yields 4 path segments.
+**CAUSE** the shell's drawing store is not cleared between runs; every `line.new` / `label.new`
+accumulates. This is not specific to the E2 layer: v1's own 24 SMC tags behave identically
+and were the source of the earlier `labels 26`/`32` readings that I first read as real.
+**CONSEQUENCE FOR EVERY CENSUS** absolute drawing counts on this rig are not per-run counts.
+The PER-RUN count must be derived by DIFFERENCE between two consecutive runs, or by reading the
+status line immediately after ONE run in a fresh session.
+**FIX APPLIED** the ghost loop's bound is now guarded before the range is computed
+(`if e2ShowGhost and _gn >= 2` precedes `for i = 0 to _gn - 2`), because Pine evaluates
+`0 to -1` as a WRAP: with one ghost point the original bound painted 399 lines against a
+500-line budget — one alternative chain consuming the whole chart's allowance.
+**LESSON** the fifth instance of the same family: a count on this rig is only meaningful when
+the run is counted, not when the store is read.

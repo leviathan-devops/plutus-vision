@@ -1,0 +1,8 @@
+{
+ "week": "2026-10-06",
+ "monday": "2026-10-06",
+ "zones_in": 0,
+ "refusal": "E2_NO_ZONES: the E1 data file carries no zone array \u2014 the fetch layer recorded every source as [NO DATA] for this week",
+ "days": [],
+ "ghost": []
+}
