@@ -1,0 +1,18 @@
+{
+  "port": 9741,
+  "pid": 641480,
+  "url": "http://127.0.0.1:9741",
+  "merged_ok": true,
+  "merged_counts": {
+    "plots": 0,
+    "plotPoints": 0,
+    "markers": 0,
+    "boxes": 142,
+    "labels": 22,
+    "lines": 49,
+    "tables": 0,
+    "polylines": 0,
+    "linefills": 0,
+    "trades": 0
+  }
+}

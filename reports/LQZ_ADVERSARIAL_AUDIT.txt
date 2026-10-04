@@ -1,0 +1,20 @@
+LQZ ADVERSARIAL AUDIT — the full pass (POST-FIX)
+run: 2026-10-02T01:43:07Z
+artifact shas at audit time:
+  lqz-luxalgo.pine         d33c2b75e30da63d
+  lqz-plutus.pine          5295b34e1f9fe2e0
+  plutus-vision-v1.pine    82da437af969a315
+  vision.mjs               d032a26721176649
+  plutus-vision-v0.pine    605bff82d3539e9e
+  station                  200
+
+  [PASS] A1 detector paint suppressed                 live colour inputs=0 transparent=10
+  [PASS] A2 drawing caps raised to 500                per-deliverable: [True, True, True]
+  [PASS] A3 mutant: wrong title refused               exit=1 PANEL_GRID_FAIL: D1 — {"ok":false,"error":"after 20 runs still compiled 'LQZ LuxAlgo'"}
+  [PASS] A4 mutant: duplicate panels refused          exit=1 guarded
+  [PASS] A5 grid artifact present                     panel-grid-1H.png 523703 bytes
+  [PASS] A6 ledger carries the frame shas             3/3 shas cited
+  [PASS] A7 library cross-reference clean             library 5/5 bands>0 irregular 5/5 · grids 4/4 bands>0 irregular 4/4
+
+ADVERSARIAL VERDICT: 7/7 PASS
+ZERO confirmed defects — every guard bit its mutant

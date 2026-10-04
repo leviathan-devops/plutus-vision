@@ -1,0 +1,32 @@
+# dependencies + build output
+node_modules/
+dist/
+*.log
+
+# secrets — never in the tree
+.env
+.env.*
+*.pem
+*.key
+
+# runtime state (never evidence)
+runtime/
+*.db-shm
+*.db-wal
+session.json
+
+# bulk evidence: regenerable from the rig, not source
+vil/recordings/
+parity_frames/
+vision_frames/
+*.mp4
+
+# editor + OS
+.DS_Store
+
+# runtime state written by the IDE's own pipeline
+# evidence/ accumulates one PNG per capture and is reproducible by re-capturing.
+# vil/*.jsonl is NOT ignored: it is the VERDICT LEDGER -- the operator's own record, a few
+# rows per week, and the artifact the gate rows are read back from. That is a record, not
+# accumulating state.
+evidence/

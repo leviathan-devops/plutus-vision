@@ -231,7 +231,11 @@
                 console.log('[TradeCanvas] Viewport synced:', vw + 'x' + vh);
             }
             _viewportSynced = true;
-        }).catch(function() {});
+        // // RECORDED, not swallowed: a bridge that never answers left the canvas unscaled
+        // with no trace while the watchdog retried forever.
+        }).catch(function (e) {
+            console.warn('[TradeCanvas] viewport sync failed:', (e && e.message) || e);
+        })
     }
     function startWatchdog() {
         if (watchdogTimer) return;
@@ -472,7 +476,11 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type, x, y, button, buttons })
-        }).catch(function() {}); // fire-and-forget
+        // // fire-and-forget, but NOT silently: a click that never reached the bridge is
+        // indistinguishable from one the user never made.
+        }).catch(function (e) {
+            console.warn('[TradeCanvas] input dispatch failed:', (e && e.message) || e);
+        }) // fire-and-forget
     }
 
     // ==================== INIT ====================
@@ -522,7 +530,11 @@
                         _viewportSynced = false;  // re-sync to the new size
                         syncViewport();
                     }
-                }).catch(function() {});
+                // // RECORDED: a pane resize that never reached the bridge left the chart at
+                // the old scale with nothing to explain it.
+                }).catch(function (e) {
+                    console.warn('[TradeCanvas] setViewport failed:', (e && e.message) || e);
+                })
             }
         }
         if (typeof ResizeObserver !== 'undefined' && container) {

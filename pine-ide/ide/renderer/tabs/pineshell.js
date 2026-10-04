@@ -19,7 +19,7 @@
         beside the journal/pine-station children, and stopped on quit:
           var vilRail = require('child_process').spawn(process.execPath, [path.join(__dirname,'..','pine-ide','vil-rail.mjs')], { stdio: ['ignore','pipe','pipe'] });
           vilRail.stdout.on('data', d => console.log('[MAIN] vil-rail:', String(d).trim()));
-          // on quit: try { vilRail.kill('SIGTERM'); } catch {}
+          // on quit: signal the rail with SIGTERM, inside a guarded call
      5. OPTIONAL (the LOOK): window.PlutusPineShellConfig = { readerUrl: 'http://127.0.0.1:PORT/vision' }
         — a reader endpoint accepting POST {image_base64, task} → {verdict, text, model}.
         Absent ⇒ the row records readerVerdict PENDING + delta READER_ABSENT (never PASS).

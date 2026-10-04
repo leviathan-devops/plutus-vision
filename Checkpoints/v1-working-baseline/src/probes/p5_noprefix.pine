@@ -1,0 +1,13 @@
+//@version=6
+indicator("p5", overlay=true, max_boxes_count=500)
+type swp_boxBr
+    box swp_bx
+    bool br
+var array<swp_boxBr> swp_aBoxBr = array.new<swp_boxBr>(1, swp_boxBr.new())
+if bar_index == 10
+    swp_aBoxBr.unshift(swp_boxBr.new(box.new(bar_index-1, high, bar_index+1, low), false))
+for swp_bxi = 0 to swp_aBoxBr.size() - 1
+    swp_zref = swp_aBoxBr.get(swp_bxi)
+    if not na(swp_zref.swp_bx)
+        swp_zref.swp_bx.set_right(bar_index)
+plot(close, "c")
