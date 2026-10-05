@@ -15,7 +15,7 @@
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ── INPUTS ──────────────────────────────────────────────────────────────────
-e2Enabled   = input.bool(false, "Show the E2 predicted price path", group = "E2 path")
+e2Enabled   = input.bool(true, "Show the E2 predicted price path", group = "E2 path")
 e2Opacity   = input.int(55, "Path opacity (a forecast, not price)", minval = 10, maxval = 90, group = "E2 path")
 e2Width     = input.int(3, "Brush width (px)", minval = 1, maxval = 6, group = "E2 path")
 e2ShowGhost = input.bool(true, "Show the alternative chain (dashed ghost)", group = "E2 path")
@@ -45,6 +45,17 @@ e2Refusal   = e2_injected_refusal
 // ── THE RENDER ──────────────────────────────────────────────────────────────
 f_e2Render() =>
     _n = array.size(e2DayX)
+    // THE COORDINATE SPACE. The E2 days are FUTURE timestamps (the target week, after the
+    // chart's last bar). `line.new(xloc=bar_time)` with a future offset does NOT draw (the vela
+    // renderer clamps at the last bar). So each day TIMESTAMP becomes a bar_index position —
+    // `bar_index + round((t - time)/bar_ms)` — the space the E1 zones render in. The conversion
+    // is INLINE (PineTS rejects a local typed helper `f(float x) =>`).
+    _bm = math.max(1, timeframe.in_seconds() * 1000)
+    _x0 = bar_index + math.round((array.get(e2DayX, 0) - time) / _bm)
+    _x1 = bar_index + math.round((array.get(e2DayX, 1) - time) / _bm)
+    _x2 = _n >= 3 ? bar_index + math.round((array.get(e2DayX, 2) - time) / _bm) : _x1
+    _x3 = _n >= 4 ? bar_index + math.round((array.get(e2DayX, 3) - time) / _bm) : _x2
+    _x4 = _n >= 5 ? bar_index + math.round((array.get(e2DayX, 4) - time) / _bm) : _x3
 
     // THE REFUSAL IS VISIBLE. A silent empty chart reads as "the engine ran and found
     // nothing"; a NAMED refusal on the chart reads as "the engine refused to guess".
@@ -55,27 +66,19 @@ f_e2Render() =>
 
     if e2Enabled and _n >= 2
         // THE LINE. ONE polyline, drawn as a freehand brush. THE LOOP IS UNROLLED — measured
-        // 2026-10-05: the vela PineTS renderer, on a `for` loop of `line.new(..., xloc=bar_time)`
-        // carrying FUTURE offsets, OVER-DRAWS (a constant +1721 lines) AND SUPPRESSES every label
-        // on the chart (the E1 zone tags vanish; census 1666 with 0 on-screen). The SAME segments
-        // drawn as explicit (unrolled) `line.new` calls render correctly (census 1735, the E1 tags
-        // visible). Up to 5 day-anchors -> 4 segments; each guarded so a short week never
-        // over-indexes. This is the renderer's constraint, not a Pine one.
-        line.new(array.get(e2DayX, 0), array.get(e2DayY, 0),
-             array.get(e2DayX, 1), array.get(e2DayY, 1),
-             xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity), width = e2Width)
+        // 2026-10-05: a `for` loop of `line.new` carrying FUTURE offsets OVER-DRAWS + SUPPRESSES
+        // every label. The SEGMENTS are drawn as explicit calls, in bar_index space.
+        line.new(_x0, array.get(e2DayY, 0), _x1, array.get(e2DayY, 1),
+             xloc = xloc.bar_index, color = color.new(e2ColPath, e2Opacity), width = e2Width)
         if _n >= 3
-            line.new(array.get(e2DayX, 1), array.get(e2DayY, 1),
-                 array.get(e2DayX, 2), array.get(e2DayY, 2),
-                 xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity), width = e2Width)
+            line.new(_x1, array.get(e2DayY, 1), _x2, array.get(e2DayY, 2),
+                 xloc = xloc.bar_index, color = color.new(e2ColPath, e2Opacity), width = e2Width)
         if _n >= 4
-            line.new(array.get(e2DayX, 2), array.get(e2DayY, 2),
-                 array.get(e2DayX, 3), array.get(e2DayY, 3),
-                 xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity), width = e2Width)
+            line.new(_x2, array.get(e2DayY, 2), _x3, array.get(e2DayY, 3),
+                 xloc = xloc.bar_index, color = color.new(e2ColPath, e2Opacity), width = e2Width)
         if _n >= 5
-            line.new(array.get(e2DayX, 3), array.get(e2DayY, 3),
-                 array.get(e2DayX, 4), array.get(e2DayY, 4),
-                 xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity), width = e2Width)
+            line.new(_x3, array.get(e2DayY, 3), _x4, array.get(e2DayY, 4),
+                 xloc = xloc.bar_index, color = color.new(e2ColPath, e2Opacity), width = e2Width)
 
         // THE DOT + TAG at each day anchor. The tag is the SHAPE, not a zone
         // classification: this is what the engine PREDICTS, and it must be
@@ -90,30 +93,27 @@ f_e2Render() =>
                 // anchoring zone is a fabrication and is never drawn.
                 _anchored = array.get(e2DayShape, i) != ""
                 if _anchored
-                    label.new(array.get(e2DayX, i), array.get(e2DayY, i),
+                    label.new(bar_index + math.round((array.get(e2DayX, i) - time) / _bm),
+                         array.get(e2DayY, i),
                          str.tostring(_s) + " " + str.tostring(int(_c)) + "%",
-                         xloc = xloc.bar_time, style = label.style_label_down,
+                         xloc = xloc.bar_index, style = label.style_label_down,
                          size = size.tiny,
                          color = color(na),
                          textcolor = color.new(e2ColPath, math.min(100, e2Opacity + 30)))
 
-        // THE ALTERNATIVE — a THIN DASHED GHOST, never a second solid line. The
-        // canon requires an alternative for every primary chain; drawing it as a
-        // second heavy line would be two forecasts fighting for the eye.
-        // THE LOOP BOUND IS NOT `_gn - 2`. Pine evaluates `0 to -1` as a WRAP — it does not
-        // produce an empty range, it runs from 0 up to the loop cap. Measured 2026-10-03: the
-        // ghost carried ONE point, `_gn - 2` evaluated to -1, and the loop painted 399 ghost
-        // lines against a 500-line budget — a single alternative chain consumed the whole
-        // chart's line allowance. The `if _gn >= 2` guard below is the real bound and it must
-        // come FIRST, before the range is computed.
+        // THE ALTERNATIVE — a THIN DASHED GHOST, never a second solid line.
+        // THE LOOP BOUND IS NOT `_gn - 2`. Pine evaluates `0 to -1` as a WRAP. The `if _gn >= 2`
+        // guard is the real bound and it must come FIRST, before the range is computed.
         _gn = array.size(e2GhostX)
         if e2ShowGhost and _gn >= 2
             for i = 0 to _gn - 2
                 if i >= _gn - 1
                     break
-                line.new(array.get(e2GhostX, i), array.get(e2GhostY, i),
-                     array.get(e2GhostX, i + 1), array.get(e2GhostY, i + 1),
-                     xloc = xloc.bar_time, color = color.new(e2ColGhost, e2Opacity - 20),
+                line.new(bar_index + math.round((array.get(e2GhostX, i) - time) / _bm),
+                     array.get(e2GhostY, i),
+                     bar_index + math.round((array.get(e2GhostX, i + 1) - time) / _bm),
+                     array.get(e2GhostY, i + 1),
+                     xloc = xloc.bar_index, color = color.new(e2ColGhost, e2Opacity - 20),
                      width = 1, style = line.style_dashed)
     0
 

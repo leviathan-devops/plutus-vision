@@ -206,12 +206,11 @@ f_e1Render() =>
                 _top = array.get(e1PayloadTop, i)
                 _bot = array.get(e1PayloadBot, i)
                 _mid = (_top + _bot) / 2
-                // THE LABEL X — VISIBLE. The zone box spans 2 weeks BACK to 3 weeks FORWARD
-                // (`_lx` .. `_rx`); its MIDPOINT (`(_lx+_rx)/2` = anchor + ~120 bars) sits in the
-                // future where no bars exist, so the tag was drawn OFF-SCREEN and read as "no
-                // labels" (measured 2026-10-05). Anchor the tag near the zone's LEFT edge — on
-                // the visible bars — so every zone's tag reads on the chart.
-                _lxmid = _bAnchor - 20
+                // THE LABEL X — VISIBLE + FULLY READABLE. The label style is `label_left` (the
+                // text runs LEFT from the anchor). Anchored at `_bAnchor - 20` (near the last
+                // real bar), the long text ("Name | Degree | NN% ZFP") ran PAST the right edge and
+                // was cut. Anchored WELL left of the anchor, the whole tag reads on the chart.
+                _lxmid = _bAnchor - 150
                 // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
                 box.new(_lx, _top, _rx, _bot,
                      bgcolor = f_e1Zfill(_cat, _deg),
