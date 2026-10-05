@@ -89,9 +89,32 @@ def bars_for(pair, timeframe):
                 }
                 for b in raw
             ]
-            return bars, None
+            return _prediction_space(bars), None
     have = sorted({f"{norm_pair(c.get('pair'))} {c.get('timeframe')}" for c in cells})
     return None, ("FIXTURE_CELL_ABSENT", f"{want_pair} {want_tf} — the fixture carries {', '.join(have)}")
+
+# ── THE PREDICTION SPACE (2026-07-05) ────────────────────────────────────────
+# The fixture is deliberately TRUNCATED at the ANALYSIS POINT (`anchorMs`, Monday pre-London):
+# "bars past the anchor are ABSENT". The E1 institutional-pressure zones and the E2 forecast
+# path are BOTH predictions for the week AHEAD — i.e. FUTURE of the last bar. The vela chart
+# clamps at the last bar, so a future `line.new`/`box.new` never draws. The chart therefore
+# carries the target week's space: `PREDICTION_BARS` flat (at the last close) bars appended
+# after the anchor, so the zones + path render IN that space, exactly as the operator sees the
+# forecast for the coming week. Flat, zero-volume, and OUTSIDE the fixture file — the build's
+# analysis series is never touched.
+PREDICTION_BARS = int(os.environ.get("PV_PREDICTION_BARS", "126"))
+
+def _prediction_space(bars):
+    if not bars or PREDICTION_BARS <= 0:
+        return bars
+    step = (bars[-1]["time"] - bars[-2]["time"]) if len(bars) >= 2 else 3600000
+    c = bars[-1]["close"]
+    out = list(bars)
+    t = bars[-1]["time"]
+    for _ in range(PREDICTION_BARS):
+        t += step
+        out.append({"time": t, "open": c, "high": c, "low": c, "close": c, "volume": 0})
+    return out
 
 
 class Handler(SimpleHTTPRequestHandler):
