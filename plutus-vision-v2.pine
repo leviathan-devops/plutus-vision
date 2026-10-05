@@ -1575,10 +1575,13 @@ f_e1Render() =>
                 // was cut. Anchored WELL left of the anchor, the whole tag reads on the chart.
                 _lxmid = _bAnchor - 150
                 // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
+                // A THICKER BORDER + a more OPAQUE fill so the E1 pressure zones DOMINATE the
+                // many v1 liquidity lines behind them (the operator: the E1 zones must be the
+                // read, the v1 the context).
                 box.new(_lx, _mid + _hw, _rx, _mid - _hw,
-                     bgcolor = f_e1Zfill(_cat, _deg),
+                     bgcolor = color.new(f_e1Zbord(_cat, _deg), 45),
                      border_color = f_e1Zbord(_cat, _deg),
-                     border_width = 2,
+                     border_width = 4,
                      border_style = line.style_solid)
                 // THE LABEL — the v8 idiom, `style_none`. The earlier "no labels" defect was
                 // NOT the style: it was the 500-label render cap (the v1 SMC layer emits ~1663
