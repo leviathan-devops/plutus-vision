@@ -231,3 +231,11 @@ differ". The prices are price-invariant (the payload's levels), the bounds are r
 (the bar_index anchor). The render uses `_lx`/`_rx` (bar_index-derived) rather than the payload's
 literal `tsL`/`tsR`, but the EFFECTIVE bounds are what the criterion tests — and they differ.
 `pine-ide/pine-ide/pine-ide.mjs:197` carries the replay re-run hook. No defect.
+
+## 2026-10-05 (7) — A6 RE-DRIVEN: the empty payload refuses loudly (exit 1)
+
+Re-ran the builder with an empty payload dir (`PV2_DATA_DIR=/tmp/pv2-empty PV2_PAIR=DXY`):
+`HARD STOP — PV2_PAIR=DXY matched no payload in /tmp/pv2-empty`, **exit 1** — a loud refusal,
+never a silent empty render. The built artifact is untouched (`471a7849a18f7bf0`). H4's four
+runtime ops are now ALL driven this session: A1/C11 (replay) · A3 (dead arm → `[NO DATA]`×9) ·
+A6 (empty payload → exit 1) · A7 (Sunday → Monday). No defect.
