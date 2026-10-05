@@ -38,8 +38,13 @@ class SourceDown(Exception):
 
 
 # ── S1/S2 — THE OHLC BARS (local: the fixture the engine scores on) ────────────────
-def harvest_bars(_week: str, symbol: str = "DXY", timeframe: str = "1H") -> dict:
+def harvest_bars(week: str = "", symbol: str = "DXY", timeframe: str = "1H") -> dict:
     files = sorted(FIXTURES.glob("*.json"))
+    if week:                                   # the WEEK selector (audit 2026-10-05: it was ignored)
+        hit = [f for f in files if week in f.stem]
+        if not hit:
+            raise SourceDown(f"NO_FIXTURE: no fixture for week {week}")
+        files = hit
     if not files:
         raise SourceDown("NO_FIXTURE: fixtures/bars is empty")
     d = json.loads(files[-1].read_text())
@@ -63,8 +68,12 @@ def harvest_weekly_open(week: str) -> dict:
     if op is None:
         raise SourceDown("WEEK_OPEN_UNAVAILABLE: the first bar carries no open")
     t = first.get("timestamp") if isinstance(first, dict) else None
-    return {"data": [{"price": float(op), "t": t, "label": "weekly_open"}],
-            "label": f"weekly_open {float(op):.4f}"}
+    try:                                          # a non-numeric open ("N/A") must not crash
+        opf = float(op)
+    except (TypeError, ValueError) as e:
+        raise SourceDown(f"WEEK_OPEN_UNAVAILABLE: non-numeric open ({e})") from e
+    return {"data": [{"price": opf, "t": t, "label": "weekly_open"}],
+            "label": f"weekly_open {opf:.4f}"}
 
 
 # ── S1..S9 — THE CANONICAL WEB HARVEST, DELEGATED to e1_fetch.py ────────────────────
@@ -74,7 +83,7 @@ def harvest_web(week: str, live: bool = False) -> dict:
     try:
         import e1_fetch as F
     except Exception as e:
-        raise SourceDown(f"FETCH_MODULE_MISSING: {str(e)[:80]}") from e
+        raise SourceDown(f"FETCH_MODULE_MISSING: {str(e)[:200]}") from e
     if not live:
         raise SourceDown("WEB_DRY: pass --live to hit the network (the nine web sources)")
     cutoff = F.boundary_for(week)
@@ -84,7 +93,7 @@ def harvest_web(week: str, live: bool = False) -> dict:
             levels = fn(cutoff)
             out[name] = {"status": "OK", "count": len(levels)}
         except Exception as e:                              # any source failure is [NO DATA]
-            out[name] = {"status": "DOWN", "reason": f"{type(e).__name__}: {str(e)[:70]}"}
+            out[name] = {"status": "DOWN", "reason": f"{type(e).__name__}: {str(e)[:200]}"}
     up = sum(1 for v in out.values() if v["status"] == "OK")
     return {"data": out, "label": f"web {up}/{len(out)} sources"}
 
@@ -109,7 +118,7 @@ def harvest_all(week: str, workers: int = 8, live: bool = False) -> dict:
                 out[name] = {"data": [], "label": "[NO DATA]", "reason": str(e), "status": "DOWN"}
             except Exception as e:
                 out[name] = {"data": [], "label": "[NO DATA]",
-                             "reason": f"UNEXPECTED: {str(e)[:80]}", "status": "DOWN"}
+                             "reason": f"UNEXPECTED: {str(e)[:200]}", "status": "DOWN"}
     # the web harvest (the canonical nine) — one pillar group, network-gated
     try:
         out["web"] = {**harvest_web(week, live), "status": "OK"}

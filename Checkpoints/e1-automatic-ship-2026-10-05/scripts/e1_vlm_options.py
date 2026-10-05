@@ -40,11 +40,13 @@ class ArmDead(Exception):
 
 
 def health(timeout: int = 5) -> dict:
-    """The auth probe — the arm must ANSWER with a model list, not merely have a port open."""
+    """The auth probe — the arm must ANSWER with a model list on GET /v1/models (the local
+    llama-server's endpoint; NOT /health), not merely have a port open. `urlopen` raises
+    HTTPError on any non-2xx, so a 401/403/500 never reaches the body read."""
     try:
         req = urllib.request.Request(ARM + "/v1/models")
         with urllib.request.urlopen(req, timeout=timeout) as r:
-            return {"ok": True, "body": r.read(400).decode("utf-8", "replace")}
+            return {"ok": True, "body": r.read().decode("utf-8", "replace")}   # full body (not 400B)
     except Exception as e:
         raise ArmDead(f"VLM_ARM_DEAD: {type(e).__name__}: {str(e)[:80]}") from e
 
@@ -119,8 +121,10 @@ def main(argv: list[str]) -> int:
         print(json.dumps(strikes, indent=2) if strikes else "[NO DATA] — the arm answered, no table")
         return 0
     except ArmDead as e:
+        # a dead arm is [NO DATA] for the PIPELINE (e1_sources catches it), but the standalone
+        # CLI must be LOUD — exit 2 so a caller can tell a dead arm from a successful-but-empty run.
         print(f"[NO DATA] {e}", file=sys.stderr)
-        return 0                                     # a dead arm is NOT a crash — it is [NO DATA]
+        return 2
 
 
 if __name__ == "__main__":

@@ -567,3 +567,36 @@ The auditor worried a "legitimate small value" would trigger. For FX/DXY the spo
 
 **FINDING 2 (MEDIUM, latent) — a zero `ref` would ZeroDivisionError:** FIXED — `if not ref:
 return 0`. REF_RANGE is hardcoded safe, but a future edit must not crash. ST-19 still 10/0.
+
+---
+
+## 2026-10-05 — the e1_vlm_options + e1_sources scan (P5 completion)
+
+**e1_vlm_options.py — 3 HIGH / 2 MEDIUM / 1 LOW. FIXES + ADJUDICATIONS:**
+- **FIX [high]** the `main()` dead-arm exit: returned 0, making a dead arm indistinguishable from
+  success. Now returns **2** (loud) — a standalone probe can tell a dead arm from a successful run.
+  (The PIPELINE is unaffected: e1_sources catches ArmDead → [NO DATA].)
+- **FIX [high/medium]** the docstring said "ping :8010/health" but `health()` pings `/v1/models`;
+  corrected the docstring. Also removed the `r.read(400)` truncation (the full model list).
+- **ADJUDICATE [high] "no HTTP status check":** PROBE-ERROR — `urlopen` RAISES HTTPError on any
+  non-2xx, so a 401/403/500 never reaches `json.loads`/`parse_strikes`. Verified: the arm
+  answers 200 no-auth; a closed port raises.
+- **ADJUDICATE [medium] "URLError wrapped in ArmDead like a service failure":** a network failure
+  and a dead arm both mean "no strikes" for the honesty law → [NO DATA]. Kept.
+- **ADJUDICATE [low] "_fetch_chain_image is a stub":** TRUE and NAMED (S3 not wired) — honest.
+
+---
+
+## 2026-10-05 — the e1_sources scan findings (P5)
+
+**3 findings, 2 FIXED + 1 adjudicated:**
+- **FIX [high]** `harvest_bars` took `_week` and IGNORED it (always read the latest fixture). Now
+  it SELECTS the week's fixture (or raises NO_FIXTURE). Real — a multi-week fixture set would
+  silently return the wrong week.
+- **FIX [high]** `harvest_weekly_open` did `float(op)` unguarded — a non-numeric open ("N/A")
+  raised a raw ValueError. Now wrapped → SourceDown.
+- **FIX [medium]** the error truncations `[:70]/[:80]` widened to `[:200]` (keep the diagnostic).
+- **ADJUDICATE [high] "the web pillar doesn't distinguish SourceDown vs UNEXPECTED":** the reason
+  string already differs; both → DOWN. Kept.
+- **ADJUDICATE [medium] "lexicographic fixture sort":** with one fixture, moot; the WEEK selector
+  (above) removes the ambiguity. Kept.
