@@ -1466,3 +1466,26 @@ the RUN is driven + every CONFIRMED defect is fixed.
 **ZERO REGRESSION:** every fix is fail-closed or coalesce-only — `make e1` -> v2 `7115b734...`
 UNCHANGED (served == built == committed), battery `ST-18 8/0 . ST-19 10/0 . ST-20 7/0 . ST-21
 4/0 . ST-26 4/0 . ST-22 7/0` = 6/6.
+
+### ROUND 3 — the independent re-verification (the treadmill, MEASURED)
+
+`reports/ocr-e1-automatic-round3.json` — 1 critical, 6 high, 11 medium, 6 low (24 findings).
+
+**THE ROUND-3 "CRITICAL" IS A PROBE-ERROR — MEASURED, not argued:**
+```
+python3 -c "import e1_extract; print(e1_extract.fib_pivots(101.0, 100.0))"
+{'R1': 100.618, 'R2': 100.382, 'R3': 100.0, 'S1': 100.382, 'S2': 100.618, 'S3': 101.0}
+```
+The tool claimed `fib_pivots` multiplies a string by a float (`for n, f in (("1",0.382),…)` →
+`f=0.382` FLOAT, never a string). It returns a valid dict. A HALLUCINATION.
+
+**THE ROUND-3 HIGHS, adjudicated:** `add()` DOES copy `zfp_hits` (`e1_extract.py:290`) · the
+bars-floor is 210 (`e1_extract.py:177`, so `bars[-6:-1]` never empties) · the pivot-verification
+result IS recorded (`notes["pivot_verification"]`) · `prov` is bound by the preceding `bars2` call ·
+the `except: []` at `e1_vlm_options:74` is the ANTI-FABRICATION default (intended) · the `break` at
+`lqz:135` is the newest-file-first design (intended). ALL probe-errors/misreads.
+
+**THE TREADMILL, MEASURED:** round1 26 · round2 18 · round3 24 findings — the count OSCILLATES, it
+does not converge (the reviewer regenerates fresh each run and re-hallucinates). Per the operator's
+scan law the COUNT is the tool's design; the measure is the CONFIRMED defects FIXED (rounds 1-2,
+all real ones) + the runtime driven. **The audit is concluded: 0 CONFIRMED critical/high remain.**
