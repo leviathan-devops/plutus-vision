@@ -1866,3 +1866,30 @@ SEE context_management/NEXT_STEPS.md:1 for the active work.
 - **THE LESSON:** the vela PineTS renderer has a hard, undocumented label+line budget; a cap raise
   past it does not just drop labels — it OVER-DRAWS and kills all of them. The renderer is the
   constraint, not the Pine source.
+
+## EN-102 — the E1 label budget: the SMC layer consumed it (2026-10-05)
+
+- **THE FINDING:** the operator: "there are no labels anywhere on the E1 zones." The labels WERE
+  in the payload (`e1_injected_id` = the 5 role names) and the render called `label.new` for each,
+  yet none showed.
+- **THE ROOT CAUSE (two-fold):**
+  1. THE SMC LAYER FILLS THE LABEL BUDGET. The v1 SMC draws swing-STRUCTURE labels
+     (`plutus-vision-v1.pine:102 showStructureInput = true`) + HIGH/LOW-swing labels
+     (`:110 showHighLowSwingsInput = true`) — hundreds of labels on 1614 bars. At
+     `max_labels_count = 500` they consumed the ENTIRE budget, so the E1 tags (drawn AFTER the SMC,
+     at `e1-render.pine:222`) were silently dropped. (The census reading exactly 500/600 = a
+     saturated cap.)
+  2. THE LABEL X WAS OFF-SCREEN. `_lxmid = (_lx + _rx)/2` put the tag at the zone's MIDPOINT =
+     `_bAnchor + ~120 bars` (the zones span 2 weeks back to 3 weeks forward) — ~5 days into the
+     FUTURE where no bars exist, so even when budget allowed, the tag was off-screen right.
+- **THE FIX (in the GENERATED v2 only — `scripts/lqz_vision_v2_build.py`):** cap 500 -> 600; the
+  SMC's two label families (structure + H/L swings) turned OFF; the E1 label x moved to
+  `_bAnchor - 20` (on the visible bars).
+- **THE HARD CONSTRAINT (found while verifying):** the vela PineTS renderer is INCONSISTENT — the
+  same v2 renders sometimes (500-600 labels, the zones + tags) and sometimes OVER-DRAWS the E2
+  future-offset `line.new` loop (a constant +1721 lines) and suppresses EVERY label, and sometimes
+  TIMES OUT. A label-cap raise past its (undocumented) budget triggers the over-draw. The
+  renderer — not the Pine source — is the binding constraint on the E2 path density.
+- **THE LESSON:** when labels vanish, check the CAP SATURATION (a prior layer filling the budget)
+  and the X VISIBILITY before suspecting the label form. And the vela PineTS renderer cannot take
+  a dense future-offset line path.
