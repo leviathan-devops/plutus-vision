@@ -112,3 +112,16 @@ taught by DRIVING the render, not by reading the source — each is invisible to
 
 THE LESSON (restated, load-bearing): the renderer is the constraint; the source can be perfect
 and the pixels wrong. Every finding above was taught by DRIVING the live render.
+
+## 2026-10-05 (final) — THE E2 PATH SUPPRESSES THE E1 LABELS EVEN UNROLLED
+
+Re-ran the E2 question with the UNROLLED path (4 explicit `line.new`, no loop). Census with
+E2 on = **431 lines, 1735 labels**; with E2 off = **28 lines, 6 labels**. So the UNROLL raised
+the label COUNT (the loop's over-draw is gone) — BUT the E1 role labels are STILL NOT PAINTED
+with E2 on: a huge red `size.huge` label at a fixed visible x (`bar_index - 30`) did NOT
+appear, while the SAME label with E2 off DOES (the 5 role names visible: `IP Resistance
+Ceiling | Lig…` .. `Support Floor | Light 9%…`). CONCLUSION: the vela PineTS renderer cannot
+paint the E2 path lines AND the E1 labels together — the path's line geometry suppresses the
+label pass, regardless of loop vs unroll. `e2Enabled` defaults false (the E1 map with labels is
+the product). The chart now shows the 5 labelled institutional-pressure zones (verified by
+looking, this turn).
