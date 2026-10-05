@@ -43,20 +43,26 @@ def compute_momentum(monday: dt.date, pair: str = "DXY") -> float:
     oscillation while the actual week rallied to the resistance. The momentum is now the
     normalised recent slope of the CHART's own bars (the same fixture pv-server serves, the
     SAME-BARS law): the net move of the last N bars divided by the mean true range, clamped.
-    A missing/insufficient series returns 0.0 (a neutral, never an invented trend)."""
-    import glob as _glob
+    A missing/insufficient series returns 0.0 (a neutral, never an invented trend).
+
+    AUDIT 2026-10-06 (ocr): (1) the caller now passes the E1 file's OWN pair — the DXY
+    default silently anchored a non-DXY week to the wrong market; (2) `mon_ms` is
+    timezone-AWARE UTC, because a naive `timestamp()` reads midnight as LOCAL time and
+    shifts the window cutoff by the host's UTC offset (the bars are UTC millis)."""
     cands = [ROOT / "fixtures" / "bars" / f"{monday.isoformat()}.json",
              ROOT / "fixtures" / "bars" / "dxy-full-to-jul21.json",
              ROOT / "fixtures" / "bars" / "2026-07-06.json"]
-    mon_ms = int(dt.datetime(monday.year, monday.month, monday.day).timestamp() * 1000)
+    mon_ms = int(dt.datetime(monday.year, monday.month, monday.day,
+                             tzinfo=dt.timezone.utc).timestamp() * 1000)
     for c in cands:
         if not c.exists():
             continue
         try:
             doc = json.loads(c.read_text())
-        except Exception:
+        except Exception as exc:
+            print(f"  [momentum] skipped {c.name}: {type(exc).__name__}: {str(exc)[:60]}")
             continue
-        cell = next((x for x in (doc.get("cells") or []) if str(x.get("pair")).upper() == pair
+        cell = next((x for x in (doc.get("cells") or []) if str(x.get("pair")).upper() == pair.upper()
                      and str(x.get("timeframe")) == "1H"), None)
         if not cell:
             continue
@@ -126,12 +132,20 @@ def main() -> int:
     monday = dt.date.fromisoformat(week)
 
     zones, refusal = load_zones(data_dir)
-    out = {"week": week, "monday": monday.isoformat(), "zones_in": len(zones),
+    # THE PAIR (audit 2026-10-06): the momentum must read the SAME market as the zones.
+    # The DXY default silently anchored a non-DXY week to the wrong market's bars.
+    PAIR = "DXY"
+    if files:
+        try:
+            PAIR = str(json.loads(files[0].read_text()).get("pair") or "DXY").upper()
+        except Exception:
+            pass
+    out = {"week": week, "monday": monday.isoformat(), "pair": PAIR, "zones_in": len(zones),
            "refusal": refusal, "days": [], "ghost": []}
 
     if not refusal:
         try:
-            mom = compute_momentum(monday)
+            mom = compute_momentum(monday, pair=PAIR)
             chain = forward_map(zones, mom, monday)
             out["momentum"] = round(mom, 4)
             if chain.refusal:
@@ -142,7 +156,8 @@ def main() -> int:
                 for i, d in enumerate(chain.days):
                     dx = dt.date.fromisoformat(d["date"])
                     out["days"].append({
-                        "x": int(dt.datetime(dx.year, dx.month, dx.day).timestamp() * 1000),
+                        "x": int(dt.datetime(dx.year, dx.month, dx.day,
+                                            tzinfo=dt.timezone.utc).timestamp() * 1000),
                         "shape": d["shape"],
                         "conf": d["confidence"],
                         "zone": d["key_zone"],

@@ -348,9 +348,10 @@ def _next_target(zones: list[Zone], current_id: str, direction: int,
 
     §6.6 step 3 extends the chain "shape by shape through the trading week", and
     §6.4.1 conditions the next shape on the TARGET zone's ZFP — so the walk must be
-    able to go DOWN as well as up. Deliberately simple and deterministic: confluence
-    first, nearest on a tie (a forecast whose next step depends on floating-point
-    ties is not reproducible).
+    able to go DOWN as well as up. Deliberately simple and deterministic: NEAREST first,
+    confluence breaking a tie (audit 2026-10-06: the doc claimed "confluence first" but the
+    key has always been `(distance, -confluence)` — distance dominates, and a forecast whose
+    next step depends on floating-point ties is not reproducible).
 
     THE REACH (fix 2026-10-06). The operator's play-forward exposed that a
     "violent directional move" (WL / BS / RWL — the canon's own words) was walking to
