@@ -913,7 +913,7 @@ def main() -> int:
     # sources.json BEFORE this extractor). Merge its per-source status into the payload's
     # provenance. ADDITIVE — the zones stay OHLC-derived (blueprint §7: the harvest is the
     # web dimension the OHLC cannot supply); a down source is [NO DATA], never a fabrication.
-    _harvest = out_dir / "sources.json"
+    _harvest = ROOT / "data" / "harvest" / "sources.json"
     if _harvest.exists():
         try:
             _h = json.loads(_harvest.read_text())

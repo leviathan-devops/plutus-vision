@@ -68,7 +68,11 @@ def _f(v) -> float:
 def _payload_files() -> list:
     # NEWEST-FIRST so files[0] is the most recent week; filtered by PAIR then WEEK. A set WEEK
     # that matches NOTHING FAILS CLOSED — the earlier `or fs` silently fell back (audit 2026-10-05).
-    fs = sorted(DATA.glob("*.json"), reverse=True)
+    # A PAYLOAD file carries a YYYY-MM-DD week token in its stem — exclude anything else (the
+    # harvest's `sources.json` broke the pick: `sorted()[0]` chose it, broke the E2 anchor match,
+    # and the build FAILED SILENTLY to a stale served copy. audit 2026-10-05.)
+    fs = [f for f in sorted(DATA.glob("*.json"), reverse=True)
+          if re.search(r"\d{4}-\d{2}-\d{2}", f.stem)]
     if PAIR:
         hit = [f for f in fs if f.stem.startswith(PAIR.replace("/", ""))]
         if not hit:
@@ -323,7 +327,7 @@ def build() -> str:
     #   2. the SMC's two noisiest label families (swing STRUCTURE + HIGH/LOW swings) are turned
     #      OFF in the v2, freeing the budget for the E1 zone tags. The E1 pressure map is the
     #      product; the SMC structure labels are secondary. (Re-enable by flipping these to true.)
-    v1 = v1.replace("max_labels_count = 500", "max_labels_count = 2000")
+    v1 = v1.replace("max_labels_count = 500", "max_labels_count = 3000")
     v1 = v1.replace("showStructureInput              = input.bool(true",
                     "showStructureInput              = input.bool(false")
     v1 = v1.replace("showHighLowSwingsInput          = input.bool(true",
