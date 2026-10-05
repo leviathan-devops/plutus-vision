@@ -35,6 +35,12 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 
+# THE E2 FINE PATH. The engine's `fine_path` expands the five day anchors into a
+# CONTINUOUS, JAGGED price path (fix, 2026-10-05: five points drew a triangle). The
+# build imports it — it never re-implements the geometry, so the shape templates live
+# in exactly ONE place (`scripts/e2_engine.py`).
+from e2_engine import fine_path  # noqa: E402
+
 V1 = ROOT / "plutus-vision-v1.pine"
 E1 = ROOT / "plutus-vision-lqz" / "e1-render.pine"
 E2 = ROOT / "plutus-vision-lqz" / "e2-render.pine"
@@ -223,6 +229,19 @@ def build_payload() -> tuple[str, str]:
         if z is not None:
             ghosts.append((z.get("top"), z.get("top")))
 
+    # THE FINE PATH (fix 2026-10-05). `days` above are the five DAY anchors; the engine
+    # expands them into a continuous, jagged intraday path (each day = its shape's
+    # geometric leg, chained end-to-start). The render's polyline consumes THIS, so the
+    # drawn line reads as price continuation instead of a five-vertex triangle. The
+    # shape/conf arrays are re-lengthened to the path so the render's per-point tag loop
+    # stays in bounds and tags exactly the five day boundaries; a point with no shape is
+    # never tagged (Rule 1). The ghost stays the day-level alternative chain, unchanged.
+    # THE DAY ANCHORS (1 point/day). Measured 2026-10-05: the vela PineTS renderer over-draws
+    # (a CONSTANT +1721 lines, suppressing EVERY label on the chart) once the E2 path carries
+    # more than ~5 line segments — a fine-grained intraday path breaks the E1 zone labels. The
+    # day-level path is the largest form the renderer handles; the per-shape intraday detail is
+    # a renderer limitation (documented), not a data one. fine_path() remains in e2_engine.py
+    # for the day the renderer can take it.
     add("e2_injected_x", "float", [_f(d[0]) for d in days])
     add("e2_injected_y", "float", [_f(d[1]) for d in days])
     add("e2_injected_shape", "string", [f'"{_q(d[2] or "")}"' for d in days])
@@ -295,6 +314,11 @@ def build() -> str:
     v1 = V1.read_text()
     e1 = strip_decl(E1.read_text(), E1_NAMES)
     e2 = strip_decl(E2.read_text(), E2_NAMES)
+    # NOTE (2026-10-05): the label cap. The v1 SMC layer draws ~500 labels; the E1 zone tags are
+    # drawn AFTER it and are dropped at cap 500. A cap of 600 fits the E1 tags with room to spare,
+    # while staying far below the ~3000 at which the vela PineTS renderer OVER-DRAWS (a constant
+    # +1721 lines) and suppresses every label (measured 2026-10-05).
+    v1 = v1.replace("max_labels_count = 500", "max_labels_count = 600")
     decls, pushes = build_payload()
     return (
         v1.rstrip() + "\n"

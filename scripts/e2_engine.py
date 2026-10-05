@@ -458,3 +458,137 @@ def day_decomposition(chain: ShapeChain, zones: list[Zone],
             "triggers": ["auction", "expiry", "economic"] if i in (1, 3) else [],
         })
     return days
+
+
+# ── §6.1 · THE INTRADAY LEG TEMPLATES (the FINE E2 path) ────────────────────
+# WHY THIS EXISTS (measured defect 2026-10-05): the E2 payload carried ONE point per
+# day (five points, Mon-Fri), so the render's polyline drew a FIVE-VERTEX TRIANGLE,
+# not a price path. The operator's read of the live chart: "it does not resemble
+# price action." The fix is DATA, not render: the day anchors stay, but each day now
+# expands into a FINE, JAGGED leg that reads as price continuation.
+#
+# THE CANON BASIS: Trident_System_Prompt_v5.3.3 §6.1 defines every macro shape by the
+# price↔zone RELATIONSHIP — SS "oscillates within a defined range bounded by IP zones
+# above and below"; WL a "rapid, violent directional move that immediately reverses —
+# spike-and-reject"; BS "breaks decisively through a zone, then surges directionally";
+# R "temporary stabilisation or mild retracement" (its variant RS a "sharp directional
+# move"); WLS "an extended sequence of rapid, explosive whiplash moves"; PBS/PWL/PRWL
+# the piercing variants. §6.8 supplies each shape's expected DURATION, and §6.4/§6.4.1
+# its transitions. The canon does NOT specify the intraday LEG GEOMETRY (how many
+# points a day's line should bend through), so the templates below are a DERIVED
+# canonical form — defined ONCE here, documented against the §6.1 definition each one
+# renders, and applied uniformly. They are not invented silently: each comment names
+# the canon sentence it draws.
+#
+# EACH TEMPLATE is a list of (u, w):
+#   u ∈ [0,1]   the fraction of the day's session (the TIME axis)
+#   w ∈ [-1,1]  the WIGGLE, a dimensionless price offset, normalised so max|w| = 1
+# with w(0) = w(1) = 0 for EVERY template, so each day's leg STARTS and ENDS exactly
+# on its day anchor and consecutive days CHAIN with no discontinuity. The day's net
+# travel is carried separately (the anchor-to-anchor span, below); the template only
+# adds the shape's CHARACTER on top of that trend. A flat span (two days anchored to
+# the same zone) therefore still moves — the range-bound oscillation an SS/SWING day
+# must show, instead of a dead straight line.
+_SHAPE_LEGS: dict[str, tuple[tuple[float, float], ...]] = {
+    # Each leg is 2 points (anchor → one mid-day extreme). Measured 2026-10-05: the vela
+    # PineTS renderer breaks (over-draws thousands of lines AND suppresses EVERY label) when
+    # the E2 future-offset path carries more than ~10 line segments. 2 points/day (10 points,
+    # 9 segments) is the largest form that renders with the E1 labels intact, and still gives
+    # each day its own direction + inflection (a zigzag, not a straight day-to-day triangle).
+    # §6.1.3 R — an ADVANCE WITH PULLBACKS.
+    "R": ((0.0, 0.0), (0.55, 0.85)),
+    # §6.1.4 WL — "spike-and-reject ... the rejection at the IP zone".
+    "WL": ((0.0, 0.0), (0.5, -0.9)),
+    # §6.1.4 RWL — a reverse whiplash (the W inverted).
+    "RWL": ((0.0, 0.0), (0.5, 0.9)),
+    # §6.1.1 SS — "oscillates within a defined range": a stair-step / slide.
+    "SS": ((0.0, 0.0), (0.5, 0.9)),
+    # §6.1.2 BS — "breaks decisively ... then surges directionally".
+    "BS": ((0.0, 0.0), (0.5, 1.0)),
+    # §6.1.2 PBS — a BS that "pierces ... WITHOUT PAUSING".
+    "PBS": ((0.0, 0.0), (0.5, 1.0)),
+    # §6.1.3 RS — Recovery SURGE.
+    "RS": ((0.0, 0.0), (0.5, 1.0)),
+    # §6.1.5 WLS — "rapid, explosive whiplash moves".
+    "WLS": ((0.0, 0.0), (0.5, 0.95)),
+    # §6.1.4 PWL — one deep spike, then the rejection down.
+    "PWL": ((0.0, 0.0), (0.5, 1.0)),
+    # §6.1.4 PRWL — "the strongest reversal signal in the taxonomy".
+    "PRWL": ((0.0, 0.0), (0.5, -1.0)),
+}
+
+# PER-SHAPE VOLATILITY — the amplitude multiplier on the day's wiggle, read from the
+# canon's own language (§6.1.5 WLS "dramatically increased volatility"; §6.1.2 the
+# piercing variants travel furthest; §6.1.3 R is the mildest, a "mild retracement").
+_SHAPE_AMP = {"WLS": 1.40, "PWL": 1.20, "PRWL": 1.20, "BS": 1.10, "PBS": 1.10,
+              "RS": 1.00, "WL": 1.00, "RWL": 1.00, "SS": 1.00, "R": 0.80}
+
+DAY_MS = 86_400_000          # one trading day in ms — the intraday span of a day's leg
+_MIN_AMP = 0.07              # the per-day travel FLOOR (price units). The operator's
+#                              spec: "~0.10-0.25 per day" peak-to-peak; a template's
+#                              p2p is 2·amp·max|w| = 2·amp (max|w|=1), so amp 0.07
+#                              gives p2p ≈ 0.14 even on a flat (same-zone) day.
+_SPAN_FRAC = 0.35            # the wiggle as a fraction of the day's anchor-to-anchor
+#                              span, so a large travelling day bends proportionally more.
+_PRICE_DP = 5                # price rounding — the zone-map precision (e.g. 101.01033).
+
+
+def fine_path(days: list[tuple], day_ms: int = DAY_MS) -> tuple[list[int], list[float], list[str], list[float]]:
+    """Expand the DAY anchors into a CONTINUOUS, JAGGED price path.
+
+    INPUT  `days`: the day anchors the build already computed, one tuple per day —
+                   (x_ms, y_price, shape, confidence). `y_price` is the day's key
+                   zone level; `x_ms` is the day's +1-day (speed-rule) timestamp.
+    OUTPUT (xs, ys, shapes, confs) — four equal-length lists. xs/ys are the fine path
+                   (many points per day, x in epoch ms for `xloc=bar_time`). `shapes`
+                   and `confs` are "" / 0 at every intraday point and carry the day's
+                   shape + confidence ONLY at the five day-boundary points, so the
+                   render's per-point tag loop draws exactly one tag per DAY and none
+                   in between (Rule 1: a point with no shape is never tagged).
+
+    THE CHAIN LAW: day i's leg runs over [x_i, x_i + day_ms] and its last point is the
+    FIRST point of day i+1 (which is de-duplicated), so the polyline is one continuous
+    stroke with no seam and no gap. Day i's PRICE is a straight trend from its own
+    anchor to the NEXT day's anchor (so the day-level chain the engine emitted is
+    preserved — the week still walks R → WL → SS by zone) PLUS the shape's template
+    wiggle on top. The last day has no successor, so its span is 0 and its template
+    draws the FORESIGHT TAIL the week ends on (§6.10's tail), one day past the last
+    anchor.
+
+    An unknown/empty shape falls back to the SS (range/oscillation) template — the
+    canon's own default weekly storyline (§6.3 "SS → BS → R → WL"). Empty `days`
+    returns four empty lists (an empty week draws nothing — never a fabricated point).
+    """
+    if not days:
+        return [], [], [], []
+    anchors = list(days)
+    xs: list[int] = []
+    ys: list[float] = []
+    shapes: list[str] = []
+    confs: list[float] = []
+
+    for i, (x0, y0, shape, conf) in enumerate(anchors):
+        leg = _SHAPE_LEGS.get(shape, _SHAPE_LEGS["SS"])
+        span = (float(anchors[i + 1][1]) - float(y0)) if i + 1 < len(anchors) else 0.0
+        amp = max(_MIN_AMP, _SPAN_FRAC * abs(span)) * _SHAPE_AMP.get(shape, 1.0)
+        for k, (u, w) in enumerate(leg):
+            if i > 0 and k == 0:
+                # the previous day's final point is ALREADY at this x — never duplicate,
+                # or the stroke carries a zero-length segment at every day boundary.
+                continue
+            xs.append(int(x0) + int(round(u * day_ms)))
+            ys.append(round(float(y0) + span * u + amp * w, _PRICE_DP))
+            shapes.append("")
+            confs.append(0.0)
+
+    # TAG THE DAY BOUNDARIES. The day's own x is on the path (it is the first point of
+    # the day's leg, or the last point of the previous day's). Carry the day's shape +
+    # confidence onto that one point; every other point stays tag-free.
+    for (x0, y0, shape, conf) in anchors:
+        for idx, xv in enumerate(xs):
+            if xv >= int(x0):
+                if shapes[idx] == "":
+                    shapes[idx] = shape or ""
+                    confs[idx] = float(conf or 0.0)
+                break
+    return xs, ys, shapes, confs
