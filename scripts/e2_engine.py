@@ -490,31 +490,30 @@ def day_decomposition(chain: ShapeChain, zones: list[Zone],
 # the same zone) therefore still moves — the range-bound oscillation an SS/SWING day
 # must show, instead of a dead straight line.
 _SHAPE_LEGS: dict[str, tuple[tuple[float, float], ...]] = {
-    # Each leg is 2 points (anchor → one mid-day extreme). Measured 2026-10-05: the vela
-    # PineTS renderer breaks (over-draws thousands of lines AND suppresses EVERY label) when
-    # the E2 future-offset path carries more than ~10 line segments. 2 points/day (10 points,
-    # 9 segments) is the largest form that renders with the E1 labels intact, and still gives
-    # each day its own direction + inflection (a zigzag, not a straight day-to-day triangle).
-    # §6.1.3 R — an ADVANCE WITH PULLBACKS.
-    "R": ((0.0, 0.0), (0.55, 0.85)),
-    # §6.1.4 WL — "spike-and-reject ... the rejection at the IP zone".
-    "WL": ((0.0, 0.0), (0.5, -0.9)),
-    # §6.1.4 RWL — a reverse whiplash (the W inverted).
-    "RWL": ((0.0, 0.0), (0.5, 0.9)),
+    # Each leg is 3 points: anchor -> mid-day extreme -> anchor. The 3-point form gives every
+    # day its own direction + inflection (a jagged path, not a straight day-to-day line), keeps
+    # the day's anchor x present (every tag sits on a real anchor), and makes a flat-span day
+    # still oscillate (the mid-day extreme differs from the shared anchor). Measured 2026-10-05.
+    # §6.1.3 R — "temporary stabilisation or mild retracement": an ADVANCE WITH PULLBACKS.
+    "R": ((0.0, 0.0), (0.45, 0.85), (1.0, 0.0)),
+    # §6.1.4 WL — "spike-and-reject ... the rejection at the IP zone": a W.
+    "WL": ((0.0, 0.0), (0.5, -0.9), (1.0, 0.0)),
+    # §6.1.4 RWL — a reverse whiplash: the W inverted (an M).
+    "RWL": ((0.0, 0.0), (0.5, 0.9), (1.0, 0.0)),
     # §6.1.1 SS — "oscillates within a defined range": a stair-step / slide.
-    "SS": ((0.0, 0.0), (0.5, 0.9)),
+    "SS": ((0.0, 0.0), (0.5, 0.9), (1.0, 0.0)),
     # §6.1.2 BS — "breaks decisively ... then surges directionally".
-    "BS": ((0.0, 0.0), (0.5, 1.0)),
+    "BS": ((0.0, 0.0), (0.45, 1.0), (1.0, 0.0)),
     # §6.1.2 PBS — a BS that "pierces ... WITHOUT PAUSING".
-    "PBS": ((0.0, 0.0), (0.5, 1.0)),
-    # §6.1.3 RS — Recovery SURGE.
-    "RS": ((0.0, 0.0), (0.5, 1.0)),
-    # §6.1.5 WLS — "rapid, explosive whiplash moves".
-    "WLS": ((0.0, 0.0), (0.5, 0.95)),
+    "PBS": ((0.0, 0.0), (0.5, 1.0), (1.0, 0.0)),
+    # §6.1.3 RS — Recovery SURGE: a sharp move back toward pre-breakout level.
+    "RS": ((0.0, 0.0), (0.5, 1.0), (1.0, 0.0)),
+    # §6.1.5 WLS — "rapid, explosive whiplash moves": the violent oscillation.
+    "WLS": ((0.0, 0.0), (0.5, 0.95), (1.0, 0.0)),
     # §6.1.4 PWL — one deep spike, then the rejection down.
-    "PWL": ((0.0, 0.0), (0.5, 1.0)),
+    "PWL": ((0.0, 0.0), (0.5, 1.0), (1.0, 0.0)),
     # §6.1.4 PRWL — "the strongest reversal signal in the taxonomy".
-    "PRWL": ((0.0, 0.0), (0.5, -1.0)),
+    "PRWL": ((0.0, 0.0), (0.5, -1.0), (1.0, 0.0)),
 }
 
 # PER-SHAPE VOLATILITY — the amplitude multiplier on the day's wiggle, read from the
