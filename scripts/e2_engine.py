@@ -136,9 +136,15 @@ def classify(bars_momentum: float, zones: list[Zone], tf_valid: bool = True) -> 
         mtop = (med.top + med.bottom) / 2
         return "R", min(mids, key=lambda z: abs(((z.top + z.bottom) / 2) - mtop)).id
     # 4 · WLS — 3+ zones within 0.30-0.50
-    tight = [z for z in solid if abs(z.top - solid[0].top) <= 0.5]
-    if len(tight) >= 3:
-        return "WLS", solid[0].id
+    # AUDIT 2026-10-06: this measured the spread from `solid[0]` — the INPUT's first zone —
+    # so the same zone set in a different order classified differently. Sort by PRICE first,
+    # then test the max-min spread of a 3-zone window (deterministic, order-independent).
+    ordered = sorted(solid, key=lambda z: (z.top + z.bottom))
+    for i in range(len(ordered) - 2):
+        win = ordered[i:i + 3]
+        spread = max(z.top for z in win) - min(z.top for z in win)
+        if 0.30 <= spread <= 0.50:
+            return "WLS", win[0].id
     # 5 · SS — both bounds below 30%
     weak = [z for z in solid if z.zfp < 30]
     if len(weak) >= 2:
@@ -162,8 +168,8 @@ def classify(bars_momentum: float, zones: list[Zone], tf_valid: bool = True) -> 
 #  what happens next. A powerful BS with extreme momentum that hits a Hard Wall
 #  (ZFP < 20%) will STILL produce an RWL — because the wall is DENSER than the move."
 
-def transition(current: str, target_zfp: int) -> tuple[str, str, float]:
-    """Returns (next_shape, condition, confidence).
+def transition(current: str, target_zfp: int) -> "tuple[str, str, float] | None":
+    """Returns (next_shape, condition, confidence), or None when no §6.4.1 row matches.
 
     THE ONE SENTENCE THAT IS THE WHOLE OF §6.4.1: density beats momentum, always.
     It is a fast car hitting a concrete wall. The wall's density exceeds the car's

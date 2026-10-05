@@ -129,9 +129,36 @@ def main() -> int:
     if not week:
         print("  no target week resolved; pass --week YYYY-MM-DD")
         return 2
-    monday = dt.date.fromisoformat(week)
+    try:
+        monday = dt.date.fromisoformat(week)
+    except ValueError:
+        # AUDIT 2026-10-06: a malformed --week raised a traceback and wrote NO payload. The
+        # refusal contract requires a NAMED refusal payload, not a crash.
+        bad = {"week": week, "monday": None, "pair": "DXY", "zones_in": 0,
+               "refusal": f"E2_BAD_WEEK: {week!r} is not YYYY-MM-DD", "days": [], "ghost": []}
+        (pathlib.Path(args.out)).mkdir(parents=True, exist_ok=True)
+        (pathlib.Path(args.out) / "BAD_WEEK-e2.json").write_text(json.dumps(bad, indent=1))
+        print(f"  E2_BAD_WEEK: {week!r}")
+        return 1
+    # AUDIT 2026-10-06: only files[0] was ever used (the first SORTED entry). Select the
+    # file whose name carries the resolved week so a directory with several weeks does not
+    # silently anchor to the wrong one.
+    matched = [f for f in files if week in f.stem] if files else []
+    if matched:
+        files = matched
 
-    zones, refusal = load_zones(data_dir)
+    try:
+        zones, refusal = load_zones(data_dir)
+    except Exception as exc:
+        # AUDIT 2026-10-06: a corrupt/mistyped E1 file raised out of the FabricationRefused
+        # handler and wrote NO payload. The contract is a NAMED refusal, never a crash.
+        bad = {"week": week, "monday": monday.isoformat(), "pair": "DXY", "zones_in": 0,
+               "refusal": f"E2_BAD_DATA: {type(exc).__name__}: {str(exc)[:80]}",
+               "days": [], "ghost": []}
+        pathlib.Path(args.out).mkdir(parents=True, exist_ok=True)
+        (pathlib.Path(args.out) / "BAD_DATA-e2.json").write_text(json.dumps(bad, indent=1))
+        print(f"  E2_BAD_DATA: {str(exc)[:70]}")
+        return 1
     # THE PAIR (audit 2026-10-06): the momentum must read the SAME market as the zones.
     # The DXY default silently anchored a non-DXY week to the wrong market's bars.
     PAIR = "DXY"
