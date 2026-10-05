@@ -554,3 +554,16 @@ fix removes the mislabel without altering the render. Suites: 6 PASS.
 **THE CLASS (F-48):** a `--pair` flag that is accepted but ignored — the silent-mislabel defect.
 The honest state is now single-pair (DXY) end-to-end; the four-pair generalisation (W8) still
 needs per-pair WINDOW calibration (the zone filter `0.35` is DXY-calibrated; EURUSD needs its own).
+
+---
+
+## 2026-10-05 — the verboo re-scan findings (2 in e1_category.py)
+
+**FINDING 1 (HIGH) — "abs(spot) < 1e-9 too aggressive":** PROBE-ERROR / DOMAIN-INAPPLICABLE.
+The auditor worried a "legitimate small value" would trigger. For FX/DXY the spot is ≥ ~0.5;
+1e-9 is nanometer-scale. The check cleanly separates MISSING (None/0/NaN) from VALID. Kept
+(with the domain rationale). The original fix (from `== 0` to `< 1e-9`) stands — it closed the
+1e-15 bypass the PRECEDING audit found.
+
+**FINDING 2 (MEDIUM, latent) — a zero `ref` would ZeroDivisionError:** FIXED — `if not ref:
+return 0`. REF_RANGE is hardcoded safe, but a future edit must not crash. ST-19 still 10/0.

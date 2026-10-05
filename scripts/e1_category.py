@@ -77,6 +77,8 @@ def zfp(top: float, bottom: float, pair: str = "DXY") -> int:
     zoneW as a percentage of the pair's typical weekly range. NOT the engine's internal
     zfp_for() (which is the canon's base+modifiers); the label shows THIS one."""
     ref = REF_RANGE.get(pair, REF_RANGE_DEFAULT)
+    if not ref:                       # a ref of 0 would ZeroDivisionError — refuse the label
+        return 0                      # (REF_RANGE is hardcoded safe, but a future edit must not crash)
     return round((top - bottom) / ref * 100.0)
 
 
