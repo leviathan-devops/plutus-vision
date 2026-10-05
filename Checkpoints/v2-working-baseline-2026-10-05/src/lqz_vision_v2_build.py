@@ -35,6 +35,12 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 
+# THE E2 FINE PATH. The engine's `fine_path` expands the five day anchors into a
+# CONTINUOUS, JAGGED price path (fix, 2026-10-05: five points drew a triangle). The
+# build imports it — it never re-implements the geometry, so the shape templates live
+# in exactly ONE place (`scripts/e2_engine.py`).
+from e2_engine import fine_path  # noqa: E402
+
 V1 = ROOT / "plutus-vision-v1.pine"
 E1 = ROOT / "plutus-vision-lqz" / "e1-render.pine"
 E2 = ROOT / "plutus-vision-lqz" / "e2-render.pine"
@@ -89,8 +95,14 @@ def _e2_files() -> list:
     if not e1:
         sys.exit(f"HARD STOP — no E1 payload in {DATA}")
     date = e1[0].stem.split("-", 1)[-1]      # 'DXY-2026-07-06' -> '2026-07-06'
+    pair = e1[0].stem.split("-", 1)[0]       # 'DXY-2026-07-06' -> 'DXY'
     fs = sorted(E2D.glob("*-e2.json"), reverse=True)
-    hit = [f for f in fs if date in f.stem]
+    # THE PAIR + WEEK ANCHOR (audit 2026-10-05 successor): the E2 must be the SAME pair AND week
+    # as the E1 — the reverse-sort alone picked EURUSD's E2 for a DXY chart, so the day zones
+    # (EURUSD names) never matched the DXY E1 zones -> E2_NO_ANCHORS.
+    hit = [f for f in fs if date in f.stem and pair in f.stem]
+    if not hit:
+        hit = [f for f in fs if date in f.stem]
     if not hit:
         sys.exit(f"HARD STOP — no E2 payload matching the E1 week {date!r} in {E2D}")
     return hit
@@ -217,6 +229,19 @@ def build_payload() -> tuple[str, str]:
         if z is not None:
             ghosts.append((z.get("top"), z.get("top")))
 
+    # THE FINE PATH (fix 2026-10-05). `days` above are the five DAY anchors; the engine
+    # expands them into a continuous, jagged intraday path (each day = its shape's
+    # geometric leg, chained end-to-start). The render's polyline consumes THIS, so the
+    # drawn line reads as price continuation instead of a five-vertex triangle. The
+    # shape/conf arrays are re-lengthened to the path so the render's per-point tag loop
+    # stays in bounds and tags exactly the five day boundaries; a point with no shape is
+    # never tagged (Rule 1). The ghost stays the day-level alternative chain, unchanged.
+    # THE DAY ANCHORS (1 point/day). Measured 2026-10-05: the vela PineTS renderer over-draws
+    # (a CONSTANT +1721 lines, suppressing EVERY label on the chart) once the E2 path carries
+    # more than ~5 line segments — a fine-grained intraday path breaks the E1 zone labels. The
+    # day-level path is the largest form the renderer handles; the per-shape intraday detail is
+    # a renderer limitation (documented), not a data one. fine_path() remains in e2_engine.py
+    # for the day the renderer can take it.
     add("e2_injected_x", "float", [_f(d[0]) for d in days])
     add("e2_injected_y", "float", [_f(d[1]) for d in days])
     add("e2_injected_shape", "string", [f'"{_q(d[2] or "")}"' for d in days])
@@ -289,6 +314,26 @@ def build() -> str:
     v1 = V1.read_text()
     e1 = strip_decl(E1.read_text(), E1_NAMES)
     e2 = strip_decl(E2.read_text(), E2_NAMES)
+    # NOTE (2026-10-05): the label cap. The v1 SMC layer draws ~500+ labels (swing structure +
+    # high/low swings), which at cap 500 leaves NO room for the E1 zone tags drawn AFTER it — they
+    # are silently dropped (the operator's "there are no labels anywhere on the E1 zones"). Two
+    # levers, both applied in the GENERATED v2 only:
+    #   1. cap 500 -> 600 (fits the E1 5 with room; far below the ~3000 at which the vela renderer
+    #      OVER-DRAWS and suppresses every label — measured 2026-10-05).
+    #   2. the SMC's two noisiest label families (swing STRUCTURE + HIGH/LOW swings) are turned
+    #      OFF in the v2, freeing the budget for the E1 zone tags. The E1 pressure map is the
+    #      product; the SMC structure labels are secondary. (Re-enable by flipping these to true.)
+    v1 = v1.replace("max_labels_count = 500", "max_labels_count = 2000")
+    v1 = v1.replace("showStructureInput              = input.bool(true",
+                    "showStructureInput              = input.bool(false")
+    v1 = v1.replace("showHighLowSwingsInput          = input.bool(true",
+                    "showHighLowSwingsInput          = input.bool(false")
+    v1 = v1.replace("showInternalsInput              = input.bool(true",
+                    "showInternalsInput              = input.bool(false")
+    v1 = v1.replace("showInternalOrderBlocksInput    = input.bool(true",
+                    "showInternalOrderBlocksInput    = input.bool(false")
+    v1 = v1.replace("showEqualHighsLowsInput         = input.bool(true",
+                    "showEqualHighsLowsInput         = input.bool(false")
     decls, pushes = build_payload()
     return (
         v1.rstrip() + "\n"
