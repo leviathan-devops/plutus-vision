@@ -47,9 +47,15 @@ class Zone:
     @property
     def degree(self) -> str:
         c = self.confluence
-        return ("EXTREME" if c >= 12 else "HEAVY" if c >= 10 else
-                "MODERATE_HEAVY" if c >= 8 else "MODERATE" if c >= 6 else
-                "LIGHT" if c >= 4 else "MINIMAL")
+        deg = ("EXTREME" if c >= 12 else "HEAVY" if c >= 10 else
+               "MODERATE_HEAVY" if c >= 8 else "MODERATE" if c >= 6 else
+               "LIGHT" if c >= 4 else "MINIMAL")
+        # DEGREES is the canon's six-degree vocabulary the render's colour ladder branches on
+        # (audit 2026-10-06: the constant was declared but never read). This assertion makes
+        # it live — a ladder edit that invented a seventh degree would silently fall through
+        # the render's tower to the LIGHT default (a wrong-colour), so it is refused HERE.
+        assert deg in DEGREES, f"degree {deg!r} is not in the canon's DEGREES {DEGREES}"
+        return deg
 
     @property
     def is_hard_wall(self) -> bool:
@@ -94,7 +100,7 @@ class FabricationRefused(Exception):
 # ── §6.2 · THE CLASSIFICATION DECISION MATRIX — priority order ──────────────
 # "applied IN SEQUENCE — the highest priority match wins and classification stops"
 
-def classify(bars_momentum: float, zones: list[Zone], tf_valid: bool = True) -> tuple[str, str]:
+def classify(bars_momentum: float, zones: list[Zone]) -> tuple[str, str]:
     """Returns (shape, anchoring_zone_id). The anchor is REQUIRED.
 
     The priority order is not arbitrary — each position fixes a specific
