@@ -116,7 +116,7 @@ transcript. Where a finding rests on an image, the file is the evidence.
 > setup verboo cusotm provider in my omp models list and add all its models 
 > 
 > https://code.verboo.ai/router/v1
-> vbk_pro_440d86b47bc5f8d9bb9fdbb71cb0c12abc391c89
+> vbk_pro_REDACTED
 
 ### U-004 · 2026-09-20T22:38:36.471Z
 
@@ -1807,13 +1807,13 @@ operator never saw; it is where the cost was actually incurred and recognised to
 | 0010 | `bash` | locate omp config | `cat ~/.config/omp/omp.jsonc 2>/dev/null || cat ~/.config/omp/omp.json 2>/dev/null || echo NO_OMP_CONFIG; echo ===; ls ~/…` |
 | 0011 | `read` | read models.yml | `/home/leviathan/.omp/agent/models.yml` |
 | 0012 | `read` | read omp config | `/home/leviathan/.omp/agent/config.yml` |
-| 0013 | `bash` | list verboo models | `export VERBOO_API_KEY='vbk_pro_440d86b47bc5f8d9bb9fdbb71cb0c12abc391c89'; curl -s https://code.verboo.ai/router/v1/model…` |
-| 0014 | `bash` | full verboo model roster | `export VERBOO_API_KEY='vbk_pro_440d86b47bc5f8d9bb9fdbb71cb0c12abc391c89'; curl -s https://code.verboo.ai/router/v1/model…` |
-| 0015 | `bash` | probe verboo chat completion | `export VERBOO_API_KEY='vbk_pro_440d86b47bc5f8d9bb9fdbb71cb0c12abc391c89'; curl -s https://code.verboo.ai/router/v1/chat/…` |
+| 0013 | `bash` | list verboo models | `export VERBOO_API_KEY='vbk_pro_REDACTED'; curl -s https://code.verboo.ai/router/v1/model…` |
+| 0014 | `bash` | full verboo model roster | `export VERBOO_API_KEY='vbk_pro_REDACTED'; curl -s https://code.verboo.ai/router/v1/model…` |
+| 0015 | `bash` | probe verboo chat completion | `export VERBOO_API_KEY='vbk_pro_REDACTED'; curl -s https://code.verboo.ai/router/v1/chat/…` |
 | 0016 | `read` | check key script format | `/home/leviathan/.omp/agent/bin/poolside-key.sh` |
 | 0017 | `read` | read omp .env | `/home/leviathan/.omp/agent/.env` |
 | 0018 | `write` | create verboo key script | `/home/leviathan/.omp/agent/bin/verboo-key.sh` |
-| 0019 | `bash` | store verboo key, verify resolver | `printf '%s\n' 'VERBOO_API_KEY=vbk_pro_440d86b47bc5f8d9bb9fdbb71cb0c12abc391c89' >> /home/leviathan/.omp/agent/.env && ch…` |
+| 0019 | `bash` | store verboo key, verify resolver | `printf '%s\n' 'VERBOO_API_KEY=vbk_pro_REDACTED' >> /home/leviathan/.omp/agent/.env && ch…` |
 | 0020 | `edit` | add verboo provider block | `` |
 | 0021 | `edit` | enable verboo in models picker | `` |
 | 0022 | `edit` | drop duplicated poolside line | `` |
