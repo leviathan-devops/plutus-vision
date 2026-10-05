@@ -18,16 +18,16 @@
    "trail": [
     "Pivot Verification: W CLASSIC \u2014 H=101.59500 L=100.55800 C=100.87800 | PP=101.01033 R1=101.46267 S1=100.42567 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
     "Pivot Verification: W FIB \u2014 H=101.59500 L=100.55800 C=100.87800 | PP=101.01033 R1=101.40647 S1=100.61420 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
-    "Pivot Verification: W CAMARILLA \u2014 H=101.59500 L=100.55800 C=100.87800 | PP=nan R1=100.97306 S1=100.78294 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
+    "Pivot Verification: W CAMARILLA \u2014 H=101.59500 L=100.55800 C=100.87800 R1=100.97306 S1=100.78294 | FORMULA: PASS | R4>R3>R2>R1>C>S1>S2>S3>S4: PASS | RANGE CHECK: PASS",
     "Pivot Verification: D1 CLASSIC \u2014 H=101.59500 L=101.19000 C=101.40700 | PP=101.39733 R1=101.60467 S1=101.19967 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
     "Pivot Verification: D1 FIB \u2014 H=101.59500 L=101.19000 C=101.40700 | PP=101.39733 R1=101.55204 S1=101.24262 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
-    "Pivot Verification: D1 CAMARILLA \u2014 H=101.59500 L=101.19000 C=101.40700 | PP=nan R1=101.44412 S1=101.36987 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
+    "Pivot Verification: D1 CAMARILLA \u2014 H=101.59500 L=101.19000 C=101.40700 R1=101.44412 S1=101.36987 | FORMULA: PASS | R4>R3>R2>R1>C>S1>S2>S3>S4: PASS | RANGE CHECK: PASS",
     "Pivot Verification: D2 CLASSIC \u2014 H=101.43000 L=100.55800 C=100.97300 | PP=100.98700 R1=101.41600 S1=100.54400 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
     "Pivot Verification: D2 FIB \u2014 H=101.43000 L=100.55800 C=100.97300 | PP=100.98700 R1=101.32010 S1=100.65390 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
-    "Pivot Verification: D2 CAMARILLA \u2014 H=101.43000 L=100.55800 C=100.97300 | PP=nan R1=101.05293 S1=100.89307 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
+    "Pivot Verification: D2 CAMARILLA \u2014 H=101.43000 L=100.55800 C=100.97300 R1=101.05293 S1=100.89307 | FORMULA: PASS | R4>R3>R2>R1>C>S1>S2>S3>S4: PASS | RANGE CHECK: PASS",
     "Pivot Verification: D3 CLASSIC \u2014 H=100.99200 L=100.60300 C=100.87800 | PP=100.82433 R1=101.04567 S1=100.65667 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
     "Pivot Verification: D3 FIB \u2014 H=100.99200 L=100.60300 C=100.87800 | PP=100.82433 R1=100.97293 S1=100.67574 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS",
-    "Pivot Verification: D3 CAMARILLA \u2014 H=100.99200 L=100.60300 C=100.87800 | PP=nan R1=100.91366 S1=100.84234 | FORMULA: PASS | R1>PP>S1: PASS | RANGE CHECK: PASS"
+    "Pivot Verification: D3 CAMARILLA \u2014 H=100.99200 L=100.60300 C=100.87800 R1=100.91366 S1=100.84234 | FORMULA: PASS | R4>R3>R2>R1>C>S1>S2>S3>S4: PASS | RANGE CHECK: PASS"
    ]
   },
   "P2_ma_grid": {
@@ -2062,7 +2062,7 @@
  ],
  "zones": [
   {
-   "name": "LIGH_DEMAND_100.85",
+   "name": "IP Support Floor",
    "top": 100.852,
    "bottom": 100.705,
    "zone_type": "SOFT_WALL",
@@ -2199,10 +2199,11 @@
      "style": "line",
      "use_box": false
     }
-   ]
+   ],
+   "ladder_name": "LIGH_DEMAND_100.85"
   },
   {
-   "name": "MODE_DEMAND_101.01",
+   "name": "Mid-Range Support",
    "top": 101.01033,
    "bottom": 100.862,
    "zone_type": "SOFT_WALL",
@@ -2409,10 +2410,11 @@
      "style": "line",
      "use_box": false
     }
-   ]
+   ],
+   "ladder_name": "MODE_DEMAND_101.01"
   },
   {
-   "name": "MODE_SUPPLY_101.18",
+   "name": "Equilibrium Zone",
    "top": 101.18425,
    "bottom": 101.03573,
    "zone_type": "SOFT_WALL",
@@ -2549,10 +2551,11 @@
      "style": "line",
      "use_box": false
     }
-   ]
+   ],
+   "ladder_name": "MODE_SUPPLY_101.18"
   },
   {
-   "name": "MODE_SUPPLY_101.33",
+   "name": "Upper IP Resistance",
    "top": 101.33275,
    "bottom": 101.191,
    "zone_type": "SOFT_WALL",
@@ -2717,10 +2720,11 @@
      "style": "line",
      "use_box": false
     }
-   ]
+   ],
+   "ladder_name": "MODE_SUPPLY_101.33"
   },
   {
-   "name": "LIGH_SUPPLY_101.40",
+   "name": "IP Resistance Ceiling",
    "top": 101.39733,
    "bottom": 101.35,
    "zone_type": "SOFT_WALL",
@@ -2780,7 +2784,8 @@
      "style": "line",
      "use_box": false
     }
-   ]
+   ],
+   "ladder_name": "LIGH_SUPPLY_101.40"
   }
  ],
  "shapes": {},

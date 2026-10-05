@@ -492,10 +492,12 @@ def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[l
                 fails += 1
                 trail.append(f"Pivot Verification: {token} {variant} — {bad}")
                 continue
+            pp_txt = (f" | PP={p['PP']:.5f}" if "PP" in p else "")
+            sanity = "R1>PP>S1: PASS" if "PP" in p else "R4>R3>R2>R1>C>S1>S2>S3>S4: PASS"
             trail.append(f"Pivot Verification: {token} {variant} — H={hh:.5f} L={ll:.5f} "
-                         f"C={cc:.5f} | PP={p.get('PP', float('nan')):.5f} "
+                         f"C={cc:.5f}{pp_txt} "
                          f"R1={p['R1']:.5f} S1={p['S1']:.5f} | FORMULA: PASS | "
-                         f"R1>PP>S1: PASS | RANGE CHECK: PASS")
+                         f"{sanity} | RANGE CHECK: PASS")
             for k, v in p.items():
                 if k == "PP" and variant == "FIB":    # fib counts 6 levels, not 7
                     continue
@@ -764,6 +766,24 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
                         "level_type": l["label"].split("_")[0],
                         "style": "line", "use_box": False} for l in cl],
         })
+    # ── THE 5.3.3 §5.2.1 IP ZONE MAP SYNTHESIS — the five ROLE names ──────────────
+    # "Key Resistance / Upper IP Resistance / Equilibrium Zone / Mid-Range Support / Key
+    # Support." The role is POSITIONAL: the RES zones rank top-down, the MID zone is the
+    # Equilibrium, the SUP zones rank top-down. The ladder id stays as `ladder_name`.
+    res = sorted([z for z in zones if z["zCat"] == "RES"], key=lambda z: -z["top"])
+    sup = sorted([z for z in zones if z["zCat"] == "SUP"], key=lambda z: -z["top"])
+    res_roles = ["IP Resistance Ceiling", "Upper IP Resistance"]
+    sup_roles = ["Mid-Range Support", "IP Support Floor", "Key IP Support"]
+    for i, z in enumerate(res):
+        z["ladder_name"] = z["name"]
+        z["name"] = res_roles[i] if i < len(res_roles) else f"IP Resistance {i + 1}"
+    for i, z in enumerate(sup):
+        z["ladder_name"] = z["name"]
+        z["name"] = sup_roles[i] if i < len(sup_roles) else f"IP Support {i + 1}"
+    for z in zones:
+        if z["zCat"] == "MID":
+            z["ladder_name"] = z["name"]
+            z["name"] = "Equilibrium Zone"
     return zones
 
 

@@ -693,3 +693,18 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
 - GAP: the E2 path is FLAT (every day anchors to the same ceiling zone -> a repeated WLS) — the
   engine's day decomposition needs to vary the anchoring zone per day for a real shape SEQUENCE
   (SS>BS>R>WL). The chain is DRAWN but not yet a meaningful prediction.
+
+## 2026-10-05 — THE 9-PILLAR ENGINE + ENGINE 2 + THE §5.2.1 ROLE NAMES
+
+- WHAT: the wave returned. Engine 1 (Protocol B Pillars 1+2) implemented EXACTLY — 144 levels
+  from 4 timeframes x 3 pivot variants (Classic/Fib/Camarilla) + the MA grid (EMA/SMA 9/10/20/
+  50/100/200); the canon's band grouping (0.10 step / 0.15 max width) -> 5 DISTINCT zones
+  (gaps, all <=0.148 wide). Engine 2 (PART VI) now produces a NON-FLAT chain (R>WL>SS, 3
+  distinct shapes). The zones carry the 5.3.3 §5.2.1 role names.
+- WHY: the operator — "the E1 zones are not accurate... they're just literally stacked... there
+  is no E2 drawn."
+- EVIDENCE: `data/e1/DXY-2026-07-06.json` -> IP Support Floor/Mid-Range Support/Equilibrium
+  Zone/Upper IP Resistance/IP Resistance Ceiling · `data/e2/...-e2.json` days R,WL,SS,SS,SS ·
+  battery E1 6/6 + E2 29/0 + 18/0 · the live render shows distinct zones + the cyan E2 path.
+- 8 pillar defects fixed by the agent (the inverted fib_formula, the 5-HOUR 'prior week', the
+  ATR-scaled MA tolerance, the chaining blob).

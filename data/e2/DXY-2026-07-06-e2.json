@@ -6,41 +6,51 @@
  "days": [
   {
    "x": 1783368000000,
-   "shape": "WLS",
+   "shape": "R",
    "conf": 60.0,
-   "zone": "IP Resistance Ceiling",
+   "zone": "IP Support Floor",
    "day": "Mon"
   },
   {
    "x": 1783454400000,
-   "shape": "WLS",
+   "shape": "WL",
    "conf": 60.0,
-   "zone": "IP Resistance Ceiling",
+   "zone": "Mid-Range Support",
    "day": "Tue"
   },
   {
    "x": 1783540800000,
-   "shape": "WLS",
-   "conf": 60.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 55.0,
+   "zone": "IP Support Floor",
    "day": "Wed"
   },
   {
    "x": 1783627200000,
-   "shape": "WLS",
-   "conf": 60.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 55.0,
+   "zone": "IP Support Floor",
    "day": "Thu"
   },
   {
    "x": 1783713600000,
-   "shape": "WLS",
-   "conf": 60.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 55.0,
+   "zone": "IP Support Floor",
    "day": "Fri"
   }
  ],
- "ghost": [],
- "chain": [],
- "phase": "LATE"
+ "ghost": [
+  {
+   "zone": "Mid-Range Support",
+   "to": "BS",
+   "zfp": 40,
+   "conf": 70.0
+  }
+ ],
+ "chain": [
+  "R->WL@Mid-Range Support",
+  "WL->SS@IP Support Floor"
+ ],
+ "phase": "MID"
 }
