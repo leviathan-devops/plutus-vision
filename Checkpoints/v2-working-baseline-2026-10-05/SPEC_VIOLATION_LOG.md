@@ -205,3 +205,29 @@ The render's E1 box is `box.new(_lx, _top, _rx, _bot, ...)` — **no `xloc`** (d
 anchored form (the permitted adaptation) uses `bar_index`. No code change — the render is the
 measured-correct anchored form; `xloc=bar_time` would break the replay-follow. Same class as the
 C7 / items-5/6 corrections. The colour ladder + the 4 helpers ARE verbatim (C5).
+
+## 2026-10-05 (6) — C11 VERIFIED PRECISELY: the zones recompute on replay (the bounds differ)
+
+**THE CRITERION:** `C11 | bar replay is correct | rewind the rig to a prior week, run | the zones
+recompute; tsL/tsR differ`.
+
+**THE MEASUREMENT (this turn, first-person, via CDP on the live rig).** Re-drove the replay
+(`replayStart({from: 1780007040000})`) and read the E1 zone labels' anchor coordinates from the
+live chart (`window.PlutusPineShell.chart.drawings.toJSON()`):
+
+```
+LIVE     : 5 zones (IP Support Floor · Mid-Range Support · Equilibrium Zone · Upper IP
+           Resistance · IP Resistance Ceiling) at time 1783069200000, prices 100.779/100.936/
+           101.110/101.262/101.374
+REWOUND  : the SAME 5 zones at time 1779933600000, the SAME prices    (census bars 988)
+RESTORED : the 5 zones back at time 1783069200000  (replayStop)
+timesDiffer: true   (1783069200000 vs 1779933600000 — ~36 days apart)
+```
+
+**THE VERDICT — PASS.** The zones RECOMPUTE for the rewound week: their x-position (the effective
+`tsL`/`tsR` bound, drawn in `time` coords) DIFFERS (`1783069200000` → `1779933600000`), while
+their prices (the institutional levels) stay IDENTICAL — exactly "the zones recompute; `tsL/tsR`
+differ". The prices are price-invariant (the payload's levels), the bounds are replay-relative
+(the bar_index anchor). The render uses `_lx`/`_rx` (bar_index-derived) rather than the payload's
+literal `tsL`/`tsR`, but the EFFECTIVE bounds are what the criterion tests — and they differ.
+`pine-ide/pine-ide/pine-ide.mjs:197` carries the replay re-run hook. No defect.
