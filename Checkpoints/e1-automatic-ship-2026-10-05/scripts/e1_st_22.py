@@ -68,13 +68,18 @@ def test_vlm_dead_arm() -> None:
     finally:
         V.ARM = orig
 
-    # ── the arm is UP on this host (:8010) ────────────────────────────────────────────
+    # ── the arm probe: INFRA, not a property (the hermeticity law) ─────────────────────
+    # The anti-fabrication PROPERTY is proven by ST-22a-e (a malformed answer -> []). Whether
+    # the LIVE arm at :8010 is reachable is an INFRA fact — a hermetic container (or CI) has no
+    # arm, and that must NOT fail the suite. Set E1_REQUIRE_ARM=1 to assert it on a host rig.
+    import os as _os
     try:
         V.health(timeout=3)
-        up = True
+        _arm = "up"
     except V.ArmDead:
-        up = False
-    record("ST-22f  the arm answers the auth probe (:8010)", up, "")
+        _arm = "absent"
+    record("ST-22f  the arm probe (informational; E1_REQUIRE_ARM=1 to require)",
+           _os.environ.get("E1_REQUIRE_ARM") != "1" or _arm == "up", f"arm {_arm}")
 
 
 def check_e1_vlm_dead_arm() -> None:

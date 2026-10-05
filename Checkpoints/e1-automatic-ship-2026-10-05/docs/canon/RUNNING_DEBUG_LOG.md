@@ -600,3 +600,40 @@ return 0`. REF_RANGE is hardcoded safe, but a future edit must not crash. ST-19 
   string already differs; both → DOWN. Kept.
 - **ADJUDICATE [medium] "lexicographic fixture sort":** with one fixture, moot; the WEEK selector
   (above) removes the ambiguity. Kept.
+
+---
+
+## 2026-10-05 — P5 CORPUS PASS COMPLETE (every E1 script scanned)
+
+Every E1 script scanned via the verboo lane: e1_week · e1_category · e1_judge · e1_extract ·
+e1_vlm_options · e1_sources. The findings across the WHOLE corpus:
+
+**FIXED (10 real findings):** judge thread-safety · bool bar_time · near-zero spot · broad
+except · redundant dict · --pair mislabel · zfp ref guard · vlm CLI exit-0-on-dead-arm · the
+/health docstring · the harvest week selector · the float(op) guard · widened truncations.
+
+**ADJUDICATED (5 — probe-errors/style):** "no HTTP status check" (urlopen raises) ·
+"abs(spot)<<1e-9" (no FX price is) · "validation-order" (impossible) · "ValueError catch"
+(defensive) · "web pillar vs local distinction" (reason differs).
+
+**THE CORPUS-CLEAN STATE:** every confirmed defect fixed + pinned; the residuals are medium/low
+advisory. P5 (a full corpus pass) is satisfied.
+
+---
+
+## 2026-10-05 — THE CONTAINER PROOF (W9's "container rig") + a defect it FOUND
+
+**THE CONTAINER RUN:** all six acceptance suites run HERMETICALLY in a fresh `python:3.12-slim`
+container (`e5b4b2dc73cf`, Python 3.12.14) — **6/6 GREEN**. This is the container layer of W9,
+complementing the host-live render (the operator's sanctioned metric).
+
+**THE DEFECT THE CONTAINER FOUND (why a host-green battery is not enough):** ST-22 (the
+anti-fabrication suite) reported **6/1 in the container but 7/0 on the host**. The failing case:
+**ST-22f** asserted the LIVE VLM arm answers on `:8010` — reachable from the host, ABSENT in a
+clean container. That is the NON-HERMETIC gate class: an infra-availability check masquerading as
+a property test. FIXED: ST-22f is now INFRA (informational; `E1_REQUIRE_ARM=1` to require it),
+so the anti-fabrication PROPERTY (ST-22a-e) is proven regardless of the arm. Both runs: 7/0.
+
+**THE LESSON (the class):** a green battery can hide an environment dependency; only the FRESH
+container exposes it. This is exactly the container-testing law — the tool earned its place by
+finding what the host suite could not.
