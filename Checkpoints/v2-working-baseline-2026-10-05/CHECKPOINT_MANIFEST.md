@@ -16,6 +16,9 @@ fixed (the E2 path loop was suppressing the label pass; the SMC filled the budge
 | `desktop/pine-ide` | the Tauri desktop launcher | ONE-COMMAND, 2.9x lighter than Chrome |
 
 ## THE STATE (what this checkpoint IS)
+- **the spec + the plan + the blueprint** — `spec/plutus-vision-e1-automatic_DPL1_SPEC.md` (the
+  BINDING authority, APPROVED 0/8, carrying the corrected C7 command †) · `spec/06-WAVES.md`
+  (`WAVES: 10`) · `spec/MASTER_BLUEPRINT.md` · `spec/00-INDEX.md`.
 - `plutus-vision-v2.pine` = the SEALED v1 baseline + the E1 institutional-pressure layer +
   the E2 predicted path (togglable).
 - The E1 zones render as **5 DISTINCT bands** (no stacking) with the **5.3.3 §5.2.1 role
