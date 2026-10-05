@@ -239,3 +239,23 @@ Re-ran the builder with an empty payload dir (`PV2_DATA_DIR=/tmp/pv2-empty PV2_P
 never a silent empty render. The built artifact is untouched (`471a7849a18f7bf0`). H4's four
 runtime ops are now ALL driven this session: A1/C11 (replay) · A3 (dead arm → `[NO DATA]`×9) ·
 A6 (empty payload → exit 1) · A7 (Sunday → Monday). No defect.
+
+## 2026-10-05 (8) — H4 EXTREME: the replay to the VERY FIRST bar refuses loudly (a retained frame)
+
+**THE PROBE (H4 "push it" — the replay to the degenerate boundary).** Drove the replay to the
+earliest bar (`replayStart({from: replayBounds().first})` → cursor `1775041200000`, `remaining
+1613`, 1 bar shown) and read the status region.
+
+**THE OBSERVED (verbatim):**
+```
+LIVE      : COMPILED 1694ms · 0 plots · 34 boxes · 28 lines · 6 labels · 0 markers · 0 segs · bars 1614
+AT 1 BAR  : PINE_BARS_ABSENT — bars unusable from inline bars: 1 candles (need ≥2) · frame retained (18:16:52Z)
+RESTORED  : COMPILED 1759ms · 0 plots · 34 boxes · 28 lines · 6 labels · 0 markers · 0 segs · bars 1614
+```
+
+**THE VERDICT — PASS (the loud-fail law at the degenerate boundary).** At 1 candle the render
+REFUSES BY NAME (`PINE_BARS_ABSENT`, "bars unusable … need ≥2") and RETAINS the previous frame
+("frame retained") — never a silent blank, never a crash, never a fabricated zone. The zone labels
+persist (the retained frame), and on `replayStop` the census returns (`bars 1614`). This is the
+`LOUD FAIL OR CLEAR PASS` law working at the extreme: a degenerate input names its failure and
+keeps the last good state. No defect — a positive finding (the boundary is guarded).
