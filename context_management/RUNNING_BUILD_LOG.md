@@ -677,3 +677,19 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
 - NEXT: (1) the zones ACCURATE to the week's price action (the degrees from the 9-source engine,
   not the structural weight); (2) the ACTIVE-week dynamic render; (3) the ENGINE-2 shape chain
   on the chart (absent).
+
+## 2026-10-05 — THE E2 SHAPE CHAIN DRAWN (was absent) + the roles' confluence floor
+
+- WHAT: the E2 shape-chain path now renders on the chart (the "WLS" day label + the path).
+  Fixed two blockers: (1) the roles' confluence was floored to 5 (the E2 engine refuses zones
+  scoring < 4, so every role read ALL_MINIMAL and nothing anchored); (2) `_e2_files()` now anchors
+  to the E1's PAIR + week (the reverse-sort picked EURUSD's E2 for a DXY chart -> E2_NO_ANCHORS).
+- WHY: the operator — "the engine two shape chain prediction also needs to be drawn visibly on the
+  chart. I don't see that anywhere right now."
+- HOW: `scripts/e1_extract.py` (the confluence floor) + `scripts/wire_e2.py` (the DXY chain:
+  zones_in=5, days=5) + `scripts/lqz_vision_v2_build.py:97` (the pair anchor).
+- EVIDENCE: `data/e2/DXY-2026-07-06-e2.json` (5 days) · the v2 e2 arrays populated ·
+  `evidence/v2-e2-shapechain.png`.
+- GAP: the E2 path is FLAT (every day anchors to the same ceiling zone -> a repeated WLS) — the
+  engine's day decomposition needs to vary the anchoring zone per day for a real shape SEQUENCE
+  (SS>BS>R>WL). The chain is DRAWN but not yet a meaningful prediction.

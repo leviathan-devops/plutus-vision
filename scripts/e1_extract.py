@@ -412,6 +412,11 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
                        ("technical", "options", "analyst", "structural", "psychological", "regime")))))
         else:
             top, bot, conf = bhi, blo, 4
+        # THE INSTITUTIONAL FLOOR — a ROLE is a key zone even when its band's raw level
+        # confluence is thin (measured 2026-10-05: the E2 engine refuses zones scoring
+        # < 4, so every role read ALL_MINIMAL and no shape could anchor). The role is
+        # institutionally significant; carry it at >= 5 so the render + E2 both anchor.
+        conf = max(conf, 5)
         deg = band_of(int(min(CONFLUENCE_CAP, conf + role_weight[nm])))
         if deg == "MINIMAL":
             deg = "MODERATE"

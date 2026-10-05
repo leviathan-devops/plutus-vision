@@ -1,0 +1,46 @@
+{
+ "week": "2026-07-06",
+ "monday": "2026-07-06",
+ "zones_in": 5,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1783368000000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Mon"
+  },
+  {
+   "x": 1783454400000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Tue"
+  },
+  {
+   "x": 1783540800000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Wed"
+  },
+  {
+   "x": 1783627200000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Thu"
+  },
+  {
+   "x": 1783713600000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [],
+ "chain": [],
+ "phase": "LATE"
+}

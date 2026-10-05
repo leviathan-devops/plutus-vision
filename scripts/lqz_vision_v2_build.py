@@ -89,8 +89,14 @@ def _e2_files() -> list:
     if not e1:
         sys.exit(f"HARD STOP — no E1 payload in {DATA}")
     date = e1[0].stem.split("-", 1)[-1]      # 'DXY-2026-07-06' -> '2026-07-06'
+    pair = e1[0].stem.split("-", 1)[0]       # 'DXY-2026-07-06' -> 'DXY'
     fs = sorted(E2D.glob("*-e2.json"), reverse=True)
-    hit = [f for f in fs if date in f.stem]
+    # THE PAIR + WEEK ANCHOR (audit 2026-10-05 successor): the E2 must be the SAME pair AND week
+    # as the E1 — the reverse-sort alone picked EURUSD's E2 for a DXY chart, so the day zones
+    # (EURUSD names) never matched the DXY E1 zones -> E2_NO_ANCHORS.
+    hit = [f for f in fs if date in f.stem and pair in f.stem]
+    if not hit:
+        hit = [f for f in fs if date in f.stem]
     if not hit:
         sys.exit(f"HARD STOP — no E2 payload matching the E1 week {date!r} in {E2D}")
     return hit
