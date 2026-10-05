@@ -792,3 +792,20 @@ EVIDENCE: e2_tests pass=36 fail=0 · e1_st pass=8 fail=0 · v1 0d20e8314ce992fc 
   · evidence/e2-playforward-2026-10-06/play-forward-DXY-jul6-11.mp4 (36 frames).
 OPEN: the E2's DIRECTION is still the momentum's call (the -0.10 momentum says down-first; the
 actual rallied first) - a prediction limitation, named, not a defect.
+
+## 2026-10-06 · THE ADVERSARIAL LOOP (A1-A7) — 9/9 PASS against v2 9befde36
+Run first-person on the CURRENT tree (the P5 corpus-exhaustion pass):
+  A2 classify      102.0->RES, 100.5->SUP                                     PASS
+  A4 floor 226     grep -cE 'pv_alerts|smc_' plutus-vision-v1.pine == 226      PASS
+  A5 seal tamper   append to v1 -> exit=1, "HARD STOP H1 - v1 HAS MOVED"       PASS
+  A6 empty payload PV2_DATA_DIR=<empty> -> exit=1, "HARD STOP - matched no payload"  PASS
+  A7 Sunday        resolve(Sun 2026-07-05) -> 2026-07-06 (Mon); control Mon->Mon PASS
+  A1 replay rewind replayStart -> bars 2007->1608; replayStop -> restored      PASS
+  A3 dead arm      e1_sources.py --no-arm -> exit 0                            PASS
+  CLEAN build      exit 0, "v1 verified untouched" (ZERO misfire)              PASS
+  v1 SEAL          sha256 0d20e8314ce992fc                                     PASS
+THE ONE INITIAL "FAIL" (A7) WAS A PROBE ERROR, not a defect: the probe checked for the ISO
+string while resolve() returns a ms dict; the ms 1783296000000 IS 2026-07-06. Two-sided
+adjudication: Side A (probe wrong) YES, Side B (real defect) NO. Re-probed with the correct
+check -> PASS. THE FRONTIER (unswept): the E2's DIRECTION (the momentum's sign) - a prediction
+limitation, named, not a defect.
