@@ -5,9 +5,9 @@
 #   make e1-visual   the served-vs-built comparison (FAILS on a stale deploy)
 #
 # The week is the CHART's target week. Override per run:
-#   make e1 WEEK=2026-07-06 PAIR=EUR/USD
+#   make e1 WEEK=2026-07-06 PAIR=DXY
 
-PAIR ?= EUR/USD
+PAIR ?= DXY
 WEEK ?= 2026-07-06
 PY   ?= python3
 RENDERER := pine-ide/ide/renderer

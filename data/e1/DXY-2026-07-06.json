@@ -1,6 +1,6 @@
 {
  "schema": "trident-e1/1",
- "pair": "EUR/USD",
+ "pair": "DXY",
  "target_week": "2026-07-06",
  "spot": 101.048,
  "data_as_of": "2026-10-05",
@@ -606,7 +606,7 @@
    "poi_tier": 1,
    "zCat": "SUP",
    "zTir": "T2",
-   "zfp_label": 10,
+   "zfp_label": 0,
    "degree_v8": "LIGHT",
    "bom_fresh_flag": null,
    "timeframe": "1H",
