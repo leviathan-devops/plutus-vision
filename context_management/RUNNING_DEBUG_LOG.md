@@ -662,3 +662,25 @@ battery 6/6.
 
 **THE LESSON (the class):** parallel inputs selected by INDEPENDENT "newest" heuristics can silently
 mix — the coupling (E2 follows E1's week) must be EXPLICIT, never inferred from a shared sort.
+
+---
+
+## 2026-10-05 — THE RUNTIME SEAT, H1 RE-VERIFIED FIRST-PERSON (a fresh live render)
+
+**H1 — the served render re-operated on the live rig:** I loaded the SERVED `plutus-vision-v2.pine`
+(fetched from `:9851/plutus-vision-v2.pine`, sha `7115b734`) into the Pine IDE editor (`textarea.pine-src`
++ RUN), and it **COMPILED 2617ms · 0 plots · 37 boxes · 500 lines · 500 labels · 2 anchors dropped ·
+bars 1614** on the **DXY 1H** chart (`FIXTURE · DXY · 1H · 1614 bars`, price ~101 — matching the E1
+zone data). Capture: `evidence/h1-live-reverify-2026-10-05.png`.
+
+**THE FINDING (a real one, from RUNNING, not reading):** the IDE's DEFAULT fixture is EUR/USD
+(~1.14) while the E1 data is DXY (~101) — loaded blind, the DXY-anchored zones render off-scale (a
+wall of colour at 1.14). FIXED operationally: the chart's symbol picker carries "DXY · the pipeline's
+bundled week (FIXTURE)"; selecting it puts the chart on DXY and the zones land at their real prices
+(100.83-101.28). **The lesson:** the render is symbol-scoped — the operator's look (C16) must be on
+the DXY fixture, never the default.
+
+**H6 — the runtime ledger:** what RUNNING taught that READING could not: (1) the served v2 loads +
+compiles + renders live (the deliverable is real); (2) the EURUSD/DXY scale mismatch is an
+OPERATIONAL gotcha (the IDE defaults to EURUSD); (3) the "2 anchors dropped" is exactly the C10
+residual, observed live.
