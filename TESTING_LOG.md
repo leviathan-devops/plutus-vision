@@ -1606,3 +1606,28 @@ test_vlm_dead_arm:        RESULT pass=7 fail=0     (e1_st_22.py)
 
 The full render battery is now `e1_render_tests.py` → `RESULT pass=24 fail=0` (was 22; +2 for the
 W4 gate). The artifact sha is unchanged (`471a7849a18f7bf0`) — the render source is untouched.
+
+## 2026-10-06 — THE ocr AUDIT + THE REPAIRS
+
+AUDIT GATE: PASS — `ocr` (Alibaba OpenCodeReview, action=scan) on the changed files
+(scripts/e2_engine.py, scripts/wire_e2.py): 2 files reviewed, 13 comments, 0 critical.
+Session 4bcd32c6-2c67-4324-82f9-a4068d57b8ce, ~128393 tokens.
+
+THE CRITICAL FINDING (fixed): wire_e2.py used a NAIVE datetime.timestamp() (midnight as
+LOCAL time) while the bars are UTC millis -> the momentum window cutoff shifted by the host
+UTC offset, flipping the E2 direction: -0.1047 -> +0.5388. The engine now predicts UP-first
+(R->WL@Upper Resistance->SS@Key Support), matching the actual week (Tue 101.19, Wed high
+101.275).
+
+FIXED: the pair is read from the E1 file (was a DXY default) | the day x is UTC-aware |
+--week validates -> E2_BAD_WEEK refusal | corrupt E1 -> E2_BAD_DATA refusal | the file is
+selected by week | the WLS cage sorts by price (order-independent) | the transition
+annotation is Optional.
+
+| check | result |
+|---|---|
+| e1_st_18.py | pass=8 fail=0 |
+| e2_tests.py | pass=36 fail=0 |
+| v1 seal | 0d20e8314ce992fc |
+| v2 | 36ddad9676becd70 |
+| the E2 chain | R->WL@Upper Resistance->SS@Key Support |
