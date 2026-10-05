@@ -343,3 +343,25 @@ TRADING WEEK** (never the canon's Apr example), the **LSZ removed** (LAW-04/R01)
    render machinery), from the DYNAMIC current-week payload (`e1_injected_*`).
 2. `make e1` -> the v2 file = the sealed v1 baseline + the dynamic E1 layer.
 3. Deploy to the IDE; render on the current-week fixture; capture; the operator looks (C16).
+
+---
+
+## 2026-10-05 — THE V2 BASELINE SAVED; THE ACTIVE WORK (3 fronts)
+
+**SAVED:** the V2 working baseline (the E1 zones on the V1 baseline) — capture
+`evidence/v1e1-roles-degrees.png`; the checkpoint `Checkpoints/v2-working-baseline-*`.
+
+**THE ACTIVE WORK (the operator's directive, verbatim):** "get this accurate because the zones
+need to be made accurate to the actual price action of the week. The dynamic rendering for the
+active trading week needs to be rendered and then the engine two shape chain prediction also
+needs to be drawn visibly on the chart."
+
+1. **ZONES ACCURATE TO THE WEEK.** The 5 roles span the week, but the DEGREES come from the role
+   structural weight (not the 9-source engine). Build the engine synthesis so the degrees reflect
+   the week's real institutional pressure. Also: the zones must be the ACTIVE trading week's, not
+   the fixture's bundled window.
+2. **THE DYNAMIC ACTIVE-WEEK RENDER.** The render must follow the operator's LIVE week — the
+   extract + the anchor must resolve to the current week (the anchor is `bar_index`; the data
+   must be the live week's).
+3. **THE ENGINE-2 SHAPE CHAIN ON THE CHART.** The macro shape chain (SS>BS>R>WL etc.) is NOT
+   drawn. `data/e2/` carries the E2 payload; the render must draw it (the shapes/labels visibly).

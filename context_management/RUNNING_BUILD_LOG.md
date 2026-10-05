@@ -659,3 +659,21 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
   `_deg = array.get(e1PayloadDeg, i)`.
 - EVIDENCE: `plutus-vision-v2.pine` 1664 lines · deployed · live census 37 boxes · 20 labels ·
   bars 1614 · capture `evidence/v1e1-roles-degrees.png`.
+
+## 2026-10-05 — THE V2 WORKING BASELINE (E1 zones on the V1 baseline) + the knowledge graph
+
+- WHAT: the deliverable is now the CANON render on the V1 baseline — `plutus-vision-v2.pine`
+  (1664 lines) = the sealed v1 baseline + the E1 layer (5 labeled institutional zones:
+  IP Resistance Ceiling|Heavy → IP Support Floor|Moderate-Heavy, spread across the week, red/
+  orange/teal by zCat). Plus the PLUTUS_VISION knowledge graph (L1 semantica 347/316 + L2
+  arsumbris 10 cards @ 0 diagnostics + the `plutus-vision-au` binding + the map).
+- WHY: the operator's correction — V1 + E1 TOGETHER (not E1 alone), the E1 data dynamic to the
+  week (no stale canon data), the 5 institutional roles (not the raw ladder), the canon
+  machinery (labels at the mid, calcZFP).
+- HOW: `synthesize_institutional_zones()` (the 5 roles from the week) + the canon render + the
+  degree through the payload. The KG holds the laws/rulings/mechanism.
+- EVIDENCE: v1 seal 0d20e831 (OK) · v2 5c4db077 · battery 6/6 · live census 37 boxes 20 labels
+  · capture `evidence/v1e1-roles-degrees.png`.
+- NEXT: (1) the zones ACCURATE to the week's price action (the degrees from the 9-source engine,
+  not the structural weight); (2) the ACTIVE-week dynamic render; (3) the ENGINE-2 shape chain
+  on the chart (absent).

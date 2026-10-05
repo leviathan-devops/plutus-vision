@@ -2128,3 +2128,56 @@ THE KNOWN GAP, STATED
   No E1 zone has ever rendered, because no source returned usable data on this host.
   The refusal is correct behaviour; the pipeline has not yet been shown producing a
   zone. That is the one deliverable this build does NOT yet demonstrate.
+
+---
+
+## 2026-10-05 — THE V2 WORKING BASELINE (the E1 institutional zones on the V1 baseline)
+
+**The built:** `plutus-vision-v2.pine` (1664 lines) = the SEALED v1 baseline (sha 0d20e831…,
+HARD STOP H1 armed) + the E1 layer. The E1 layer renders the 5 INSTITUTIONAL ROLES of the
+Trident 5.3.3 IP Zone Map (section 5.2.1), each with the canon colour + degree:
+`IP Resistance Ceiling | Heavy | 3% ZFP` (red) · `Upper IP Resistance | Moderate-Heavy` (red) ·
+`Equilibrium Zone | Moderate-Heavy | 20% ZFP` (orange #FF9800) · `Mid-Range Support | Moderate`
+(teal) · `IP Support Floor | Moderate-Heavy | 6% ZFP` (teal). Plus the PLUTUS_VISION knowledge
+graph (L1 semantica 347 entities / 316 relationships; L2 arsumbris 10 cards — 6 LAWS + 3 RULINGS
++ 1 MECHANISM — at 0 diagnostics; the `plutus-vision-au` OMP binding; the map).
+
+**The why:** the operator's correction 2026-10-05 — the deliverable is V1 + E1 TOGETHER (never
+E1-alone), the E1 data DYNAMIC to the current trading week (never stale canon data), the 5
+INSTITUTIONAL ROLES (not the raw confluence ladder), the canon render VERBATIM with the LSZ
+removed.
+
+**The how:** `scripts/e1_extract.py` gains `synthesize_institutional_zones()` — the 5 roles
+spanning the week's own range, snapped to the real levels, `zCat` = RES|MID|SUP by position, the
+degree = confluence + the role structural weight. The build injects `e1_injected_degree`; the
+render (`plutus-vision-lqz/e1-render.pine`) consumes it. The v1 seal is verified untouched.
+
+**The evidence:**
+- v1 seal `0d20e8314ce992fc23e27f1b97fed76b…` (OK, HARD STOP H1 not tripped)
+- v2 `5c4db077bc4d089b…` (1664 lines); served == built
+- battery 6/6 pass (ST-18 8/0 · ST-19 10/0 · ST-20 7/0 · ST-21 4/0 · ST-26 4/0 · ST-22 7/0)
+- the full code audit (verboo lane): round-1 1 critical (the E1/E2 week-mix) + 4 high → FIXED;
+  round-2 0 criticals; the artifacts `reports/ocr-e1-automatic*.json`
+- the live render: census 37 boxes · 20 labels · bars 1614 (DXY); captures
+  `evidence/v1e1-roles-degrees.png`
+
+**The verification (pasted):** `make e1` -> `data/e1/DXY-2026-07-06.json` (5 role-named zones,
+100.60-101.50) -> `plutus-vision-v2.pine` (v1 verified untouched) -> deployed -> the live census.
+The container proof (python:3.12-slim): 6/6 suites hermetic.
+
+**The honest notes:** (1) the degrees follow the canon's STRUCTURAL SHAPE (the role weight) +
+the week's confluence — NOT yet the 9-source engine synthesis (the goal's nine-source payload);
+(2) the zones are anchored to the fixture's window, not yet the operator's LIVE active week;
+(3) the ENGINE-2 shape chain is NOT rendered on the chart yet.
+
+---
+
+## THE ANCHORS (file:line)
+
+- `context_management/CURRENT_STATE.md:1` — the current render state (the v2 baseline).
+- `context_management/NEXT_STEPS.md:1` — the active 3 fronts.
+- `scripts/e1_extract.py:372` — the 5-role synthesis.
+- `plutus-vision-v2.pine:1` — the artifact (v1 + E1).
+- `Checkpoints/v2-working-baseline-2026-10-05/CHECKPOINT_MANIFEST.md:1` — the checkpoint.
+- `data/e1/DXY-2026-07-06.json:1` — the 5-role payload.
+verification: the battery 6/6; the audit gate PASS (`reports/ocr-e1-automatic.json:1`).

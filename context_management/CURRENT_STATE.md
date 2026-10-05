@@ -369,3 +369,42 @@ the map `reports/Knowledge_Graph_Map.md`. The graph HOLDS the deliverable defini
 
 **STATUS:** the render is being rebuilt to V1 + E1 (dynamic). The E1 layer's machinery is canon-
 correct (zfill/zbord/pressureLbl/calcZFP, the colour ladder, labels at tsMid). The KG holds the law.
+
+---
+
+## 2026-10-05 (later) — THE V2 WORKING BASELINE — the E1 zones on the V1 baseline
+
+**THE RENDER (the deliverable):** `plutus-vision-v2.pine` (1664 lines, sha `5c4db077bc4d089b…`)
+= the SEALED v1 baseline (`plutus-vision-v1.pine`, sha `0d20e831…`, OK) + the E1 layer. The E1
+layer renders the **5 institutional roles** of Trident 5.3.3 §5.2.1 — `IP Resistance Ceiling |
+Heavy` → `IP Support Floor | Moderate-Heavy` — spread across the week (100.60-101.50), red/orange/
+teal by `zCat` (RES|MID|SUP), the label at the zone mid, `calcZFP`, the LSZ removed. `scripts/
+e1_extract.py:372` `synthesize_institutional_zones()` produces the roles from the week's own data.
+
+**THE KNOWLEDGE GRAPH:** L1 semantica (347 entities / 316 rels, `.omp/graph-intelligence/layers/
+semantica/kg.json`) + L2 arsumbris (`.arsumbris/`, the daemon socket `~/.arsumbris/au-engine/run/
+3533896ff2f68389.sock`, **10 cards** — `laws/LAW-01..06` · `rulings/R01..03` · `mechanisms/M01`,
+**0 diagnostics**) + the OMP binding `plutus-vision-au` + the map `reports/Knowledge_Graph_Map.md`.
+
+**THE GATE:** battery 6/6 pass · the v1 seal intact · the audit gate PASS (the verboo lane,
+`reports/ocr-e1-automatic*.json`).
+
+**THE ACTIVE WORK (the operator's next directive):** (1) the zones ACCURATE to the week's price
+action (the degrees from the 9-source engine); (2) the ACTIVE-week dynamic render; (3) the
+ENGINE-2 shape chain drawn on the chart (absent). See `NEXT_STEPS.md`.
+
+---
+
+## 2026-10-05 — THE VISUAL CHECKPOINT LIBRARY (the operator's ruling)
+
+**EVERY checkpoint now carries a VISUAL ARTIFACT** (`visual/runtime-state.png`) — a screenshot of
+the LIVE runtime state. The skill `saving-checkpoints` is updated (STEP 8 = the mandatory visual
+capture + the verify gate). The ship doc `VISUAL_CHECKPOINTS_LOG.md` is the LIBRARY (a visual
+history of the build through its iterations, for recognition + restore from visual semantics — the
+foundation for later visually-semantically-integrated graphs).
+
+**THE CHECKPOINTS:**
+- `Checkpoints/v1-ship-approved-working-baseline/` — the operator's approved V1 (renamed from
+  `v1-working-baseline`); visual sha `e7f10ef97111735d`.
+- `Checkpoints/v2-working-baseline-2026-10-05/` — the V2 working baseline (the 5 E1 zones on the V1
+  baseline); visual sha `$(sha256sum Checkpoints/v2-working-baseline-2026-10-05/visual/runtime-state.png | cut -c1-16)`.

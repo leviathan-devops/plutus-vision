@@ -61,3 +61,13 @@ refinement) lands on top of it. NEVER a manifest-only lock.
 2. `dist/plutus-vision-v1.pine` — the approved deliverable; the refinement target.
 3. The library: `/home/leviathan/Pictures/WINNING_TRADE_LIBARARY` (39 PNGs, 8 families) — the
    visual + accuracy reference for the refinement.
+
+---
+
+## 2026-10-05 — RENAMED + THE VISUAL ARTIFACT (the operator's ruling)
+- RENAMED `v1-working-baseline` → `v1-ship-approved-working-baseline` (the operator: "the checkpoint
+  name should literally say V1 Ship Approved Working Baseline. So that we don't confuse it").
+- ADDED `visual/runtime-state.png` (sha `e7f10ef97111735d`) — the LIVE runtime render of the v1
+  baseline (the candle liquidity + LuxAlgo SMC; 31 boxes · 13 labels). MANDATORY per the updated
+  saving-checkpoints skill (every checkpoint carries a visual artifact).
+- The library: `VISUAL_CHECKPOINTS_LOG.md`.

@@ -1489,3 +1489,28 @@ the `except: []` at `e1_vlm_options:74` is the ANTI-FABRICATION default (intende
 does not converge (the reviewer regenerates fresh each run and re-hallucinates). Per the operator's
 scan law the COUNT is the tool's design; the measure is the CONFIRMED defects FIXED (rounds 1-2,
 all real ones) + the runtime driven. **The audit is concluded: 0 CONFIRMED critical/high remain.**
+
+---
+
+## 2026-10-05 — TEST RESULT — the V2 working baseline (SCRIPT + CONTAINER + HOST)
+
+### SCRIPT (the battery)
+- **The run:** `make e1` (the build + the 6 acceptance suites).
+- **The output:** `RESULT pass=7 fail=0` (ST-18 8/0) · `SUITES: PASS (6)`.
+- **The verdict:** PASS.
+- **The artifacts:** `data/e1/DXY-2026-07-06.json`, `plutus-vision-v2.pine`.
+
+### CONTAINER (the W9 rig)
+- **The run:** the six suites in a fresh `python:3.12-slim` container (`e5b4b2dc73cf`).
+- **The output:** `ST-18 8/0 · ST-19 10/0 · ST-20 7/0 · ST-21 4/0 · ST-26 4/0 · ST-22 7/0` = 6/6.
+- **The verdict:** PASS (hermetic; found + fixed ST-22's non-hermeticity).
+
+### HOST (the live render)
+- **The run:** the served `plutus-vision-v2.pine` loaded into the Pine IDE (:9851 + :9222 CDP).
+- **The output:** `COMPILED 2905ms · 0 plots · 37 boxes · 41 lines · 20 labels · bars 1614`.
+- **The verdict:** PASS (the 5 labeled institutional zones render on the DXY chart).
+
+### AUDIT GATE
+- **AUDIT GATE: PASS** — the verboo-lane scan (`reports/ocr-e1-automatic.json` round-1:
+  1 critical + 4 high; `-round2`: 0 criticals). The critical (the E1/E2 week-mix) FIXED + re-proven.
+  The artifact on disk; the confirmed defects fixed.

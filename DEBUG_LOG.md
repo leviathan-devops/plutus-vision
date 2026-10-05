@@ -1658,3 +1658,110 @@ status line immediately after ONE run in a fresh session.
 500-line budget — one alternative chain consuming the whole chart's allowance.
 **LESSON** the fifth instance of the same family: a count on this rig is only meaningful when
 the run is counted, not when the store is read.
+
+## EN-90 — the E1 build DROPPED the V1 baseline (2026-10-05)
+
+- **THE FINDING:** the operator: "the entire V1 baseline is missing right now and it is just
+  rendering the institutional pressure zone." The build `plutus-vision-e1-automatic.pine` was
+  the canon IP block STANDALONE.
+- **THE ROOT CAUSE:** I ported the canon `trident_v8.pine` as an E1-only indicator, treating
+  "port the renderer" as "build the E1 renderer alone" — dropping the operator's V1 baseline
+  (the candle-liquidity + LuxAlgo SMC layer). The correct architecture was already in
+  `plutus-vision-v2.pine` (v1 lines 1-1358 + the E1 layer 1359+).
+- **THE FIX:** the deliverable = the sealed v1 baseline + the E1 layer APPENDED in one file,
+  one `indicator()`. Now `plutus-vision-v2.pine` = 1664 lines (v1 + E1).
+- **THE VERIFICATION:** `plutus-vision-v2.pine` grep: the v1 marker present (2), the E1 marker
+  present (5), `show_lsz`=0. The battery 6/6.
+- **THE LESSON:** "port the renderer" means the RENDER MACHINERY, added ON TOP OF the existing
+  baseline — never a standalone replacement. See the KG card `laws/LAW-02-v1-plus-e1-together.md`.
+
+## EN-91 — the render carried the CANON's stale Apr example data (2026-10-05)
+
+- **THE FINDING:** the operator: "it also has the stale options strike target from the canon
+  that is completely irrelevant to the current week ... you've copy pasted the exact data from
+  the original Canon."
+- **THE ROOT CAUSE:** the canon `trident_v8.pine` hardcodes the Apr 20-24 2026 example week
+  (DXY zones 97.97-99.23, EU 1.1520-1.1720, the option strikes). I copied those verbatim, so
+  the zones landed at prices the current chart never visits.
+- **THE FIX:** the E1 payload is DERIVED for the current week (`scripts/e1_extract.py`, week
+  2026-07-06); the anchor is the chart's last bar. No hardcoded week.
+- **THE VERIFICATION:** `data/e1/DXY-2026-07-06.json` -> 5 role-named zones in the week's range
+  (100.60-101.50, spot 101.048).
+- **THE LESSON:** the canon's DATA is an example, not truth. The canon's MACHINERY is the port.
+  See `laws/LAW-03-e1-dynamic-week.md`.
+
+## EN-92 — the E1 render was a derived ladder (off-screen labels, band inflation) (2026-10-05)
+
+- **THE FINDING:** the operator: "There's two IP zones out of five ... They're missing the
+  labels." The render showed 2 colour blobs with no labels.
+- **THE ROOT CAUSE:** the old `plutus-vision-lqz/e1-render.pine` used (1) band inflation
+  (`_band = math.max(_top-_bot, _mid*0.0008)`) which crammed thin zones, and (2) labels at
+  `_lx` (the zone's LEFT edge) with `style_label_left` — the text extended OFF-SCREEN left.
+  It also recomputed the degree from the raw confluence (every zone -> LIGHT).
+- **THE FIX:** the canon render — `box.new(_lx, _top, _rx, _bot, bgcolor=zfill, border=zbord)`
+  with the label at the zone MID (`_lxmid`), `label.style_none`, the
+  `<name> | <degree> | <zfp>% ZFP` label, `f_e1CalcZFP`; top/bottom as-is (no inflation).
+- **THE VERIFICATION:** the live census 37 boxes, 20 labels; the render shows
+  "IP Resistance Ceiling | Heavy | 3% ZFP" etc.
+- **THE LESSON:** the label belongs at the zone MID (the canon), never the left edge; the zone
+  height is real, never inflated.
+
+## EN-93 — the degree never reached the render (confluence -> all LIGHT) (2026-10-05)
+
+- **THE FINDING:** the 5 roles spanned correctly but all read LIGHT.
+- **THE ROOT CAUSE:** the render's `f_e1Degree(_c)` recomputed the degree from the RAW
+  confluence (2-4/14 -> LIGHT). The synthesis's `degree_v8` (the role-weighted degree) was
+  computed but never injected into the payload.
+- **THE FIX:** inject `e1_injected_degree` (`scripts/lqz_vision_v2_build.py:187`) + the render
+  consumes it (`plutus-vision-lqz/e1-render.pine:204`, `_deg = array.get(e1PayloadDeg, i)`);
+  the synthesis adds the role STRUCTURAL WEIGHT (the canon's pattern: extremes HEAVY).
+- **THE VERIFICATION:** the injected degree = HEAVY/MODERATE-HEAVY/MODERATE-HEAVY/MODERATE/
+  MODERATE-HEAVY; the live render shows the canon degrees.
+- **THE LESSON:** a computed field that is never wired is a silent no-op. Trace the value from
+  the producer to the CONSUMER.
+
+## EN-94 — the ST-22 suite was NOT hermetic (container-found) (2026-10-05)
+
+- **THE FINDING:** the container run (python:3.12-slim) showed ST-22 at 6/1 while the host
+  showed 7/0.
+- **THE ROOT CAUSE:** ST-22f asserted the LIVE VLM arm answers on :8010 — reachable on the host,
+  ABSENT in a clean container. An infra-availability check masquerading as a property test.
+- **THE FIX:** ST-22f is now INFRA (informational; `E1_REQUIRE_ARM=1` to require it).
+- **THE VERIFICATION:** 7/0 both on the host and in the container.
+- **THE LESSON:** a green battery can hide an environment dependency; only the FRESH container
+  exposes it.
+
+## EN-95 — the E1/E2 payloads could select DIFFERENT weeks (the audit critical) (2026-10-05)
+
+- **THE FINDING:** the full code audit (verboo lane) flagged CRITICAL: `_e2_files()` silently
+  returned a wrong-week E2 file.
+- **THE ROOT CAUSE:** `if hit: fs = hit` with no else — a set WEEK that matched nothing left
+  `fs` unchanged (every file). The E1 and E2 selectors picked their weeks INDEPENDENTLY; a bare
+  rebuild produced E1=July + E2=October.
+- **THE FIX:** `_e2_files()` is ANCHORED to the E1 payload's OWN week (`e1[0].stem.split("-",1)[-1]`);
+  a no-match FAILS CLOSED (HARD STOP).
+- **THE VERIFICATION:** POSITIVE (E1=July -> E2=July) + NEGATIVE (no match -> HARD STOP);
+  round-2 audit: 0 criticals. v2 sha unchanged.
+- **THE LESSON:** parallel inputs selected by INDEPENDENT "newest" heuristics can silently mix;
+  the coupling must be EXPLICIT.
+
+---
+
+## THE ANCHORS (file:line)
+
+- `scripts/e1_extract.py:372` — the 5-role synthesis.
+- `scripts/lqz_vision_v2_build.py:187` — the degree injection.
+- `plutus-vision-lqz/e1-render.pine:204` — the render's degree consumer.
+- `context_management/CURRENT_STATE.md:1` — the corrected state.
+- `laws/LAW-02-v1-plus-e1-together.md:1` — the KG law.
+verification: `make e1` 6/6; the audit gate PASS.
+
+### MORE ANCHORS (file:line)
+
+- context_management/RUNNING_DEBUG_LOG.md:1 — the session debug record.
+- context_management/CURRENT_STATE.md:1 — the corrected render state.
+- Checkpoints/v2-working-baseline-2026-10-05/CHECKPOINT_MANIFEST.md:1 — the checkpoint.
+- reports/ocr-e1-automatic-round2.json:1 — the audit (round-2, 0 criticals).
+- VISUAL_CHECKPOINTS_LOG.md:1 — the visual library.
+verification: the round-2 audit 0 criticals; the battery 6/6; the live render 20 labels.
+SEE context_management/NEXT_STEPS.md:1 for the active work.

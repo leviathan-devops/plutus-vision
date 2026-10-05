@@ -727,3 +727,15 @@ per the pin · C16 (the operator's look). NONE is a defect; each is a scoped res
   calcZFP/label-at-tsMid/the colour ladder), NOT the example's stale DATA. The data is DYNAMIC.
   And the E1 layer sits ON TOP OF the v1 baseline — never alone.
 - EVIDENCE: operator rulings R01/R02/R03 (now cards in the KG).
+
+## 2026-10-05 — the E1-alone / stale-data / ladder / degree-chain defects (5 fixed)
+
+- SYMPTOM: the render showed 2 colour blobs, no labels, at stale prices, E1-alone (no v1 baseline).
+- ROOT CAUSE: (1) ported the IP block standalone (dropped v1); (2) copied the canon's Apr example;
+  (3) the derived-ladder render (band inflation + off-screen labels); (4) the degree recomputed
+  from raw confluence (all LIGHT); (5) the E1/E2 week-mix (the audit critical).
+- FIX: v2 = v1 + E1; the dynamic week (extract); the canon render (label at mid, calcZFP); the
+  synthesized degree through the payload; the week-anchoring + fail-closed.
+- LESSON: verify by LOOKING, not counting; the canon's MACHINERY ports, its DATA does not; a
+  computed field must be traced to its CONSUMER.
+- EVIDENCE: `plutus-vision-v2.pine` · `data/e1/DXY-2026-07-06.json` (5 roles) · the live render.
