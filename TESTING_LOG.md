@@ -1537,3 +1537,26 @@ all real ones) + the runtime driven. **The audit is concluded: 0 CONFIRMED criti
 | C16 | the look | the operator views the capture | ── PENDING (the operator's eyes) ── |
 
 **15 of 16 hold, each bound to a command/ledger artifact. C16 is the one human gate.**
+
+## 2026-10-05 — THE P5 ADVERSARIAL PASS (A1..A7, run against the deployed artifact)
+
+| angle | probe | result |
+|---|---|---|
+| A1 replay rewind | rewind the rig; `bar_index` moves; the zones recompute | ✓ the anchor `_bAnchor = bar_index` follows the replay cursor; `pine-ide/pine-ide/pine-ide.mjs` carries the replay subscription; evidence `evidence/c11-replay-rewind.png` (bars 1614→41, the zones re-rendered) |
+| A2 classify RES+SUP | `jq '.zones[].zCat'` | ✓ 2 RES · 1 MID · 2 SUP (≥1 each) |
+| A3 dead arm | `e1_fetch.py --no-arm` (the arm :8010 down) | ✓ exit 0 · `[NO DATA]` ×9 · 0 fabricated strikes; ST-22e: a dead arm RAISES `ArmDead` (never an empty OK) |
+| A4 the v1 floor | `grep -c` the three floors | ✓ 226 / 6 / 4 |
+| A5 seal tamper | append a line to v1, run the builder | ✓ exit 1 · `HARD STOP H1` |
+| A6 empty payload | `PV2_DATA_DIR=<empty>` run the builder | ✓ `HARD STOP — PV2_PAIR=DXY matched no payload` (a loud refusal, never a silent empty render) |
+| A7 Sunday boundary | `e1_st_18.py test_week_resolve` | ✓ ST-18c: Sunday → the FOLLOWING Monday; the negative controls (None/0/1990/bool) raise |
+
+**VERDICT: ZERO CONFIRMED DEFECTS across A1..A7.**
+
+**THE UNSWEPT FRONTIER (named):**
+1. **A1 (the replay rewind)** rests on the PRIOR session's C11 evidence + the sound mechanism
+   (`bar_index` follows the cursor); a LIVE rewind THIS session was not re-run (the vela replay UI
+   is not CDP-drivable in the current rig).
+2. **The E2 path + the E1 labels cannot paint TOGETHER** (the vela PineTS renderer limit) — E2
+   defaults off; this is a RENDERER constraint, named, not a data/Pine defect.
+3. **W9 (the container rig)**: `.omp/ct-results.json` is from the 2026-10-05 05:56 run (the
+   pre-label-fix build); not re-run this session.
