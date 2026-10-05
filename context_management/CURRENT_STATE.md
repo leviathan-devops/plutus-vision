@@ -408,3 +408,17 @@ foundation for later visually-semantically-integrated graphs).
   `v1-working-baseline`); visual sha `e7f10ef97111735d`.
 - `Checkpoints/v2-working-baseline-2026-10-05/` — the V2 working baseline (the 5 E1 zones on the V1
   baseline); visual sha `$(sha256sum Checkpoints/v2-working-baseline-2026-10-05/visual/runtime-state.png | cut -c1-16)`.
+
+---
+
+## 2026-10-05 (the engine wave) — THE EXACT 5.3.3 ENGINE
+
+**THE E1 ENGINE** (`scripts/e1_extract.py`): Protocol B Pillars 1+2 — 144 levels (4 TF × 3 pivot
+variants + the MA grid) → 5 distinct zones with the §5.2.1 role names. **THE E2 ENGINE**
+(`scripts/e2_engine.py`): PART VI, 7 divergences fixed, the chain R→WL→SS draws on the chart.
+**THE RENDER:** `plutus-vision-v2.pine` sha `30644902` = the sealed v1 baseline + the E1 layer +
+the E2 path. Battery E1 6/6 + E2 29/0 + 18/0. The v1 seal `0d20e831…` intact.
+
+**THE REMAINING (the honest residuals):** the degrees cap at LIGHT/MODERATE because the `options`
++ `analyst` dimensions are 0 (the W6/W7 web sources are stubs — a DATA gap, not a code bug); the
+render is the fixture week (2026-07-06), not a live-fetched active week.

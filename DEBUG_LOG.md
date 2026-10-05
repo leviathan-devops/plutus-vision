@@ -1765,3 +1765,26 @@ verification: `make e1` 6/6; the audit gate PASS.
 - VISUAL_CHECKPOINTS_LOG.md:1 — the visual library.
 verification: the round-2 audit 0 criticals; the battery 6/6; the live render 20 labels.
 SEE context_management/NEXT_STEPS.md:1 for the active work.
+
+## EN-96 — the E1 zones were a range-partition blob (2026-10-05)
+
+- **THE FINDING:** the operator: "they're just literally stacked on top of each other" — the zones
+  were contiguous slices of the price range with no gaps, not distinct institutional zones.
+- **THE ROOT CAUSE:** (1) the clustering tolerance `0.10 × ATR ≈ 0.005` collapsed zones to
+  zero-width points; (2) the level set was BARS-ONLY (not the prompt's 9 pillars); (3) too-wide
+  grouping chained the dense set into one blob.
+- **THE FIX:** the exact Protocol B Pillars 1+2 (144 levels) + the canon band grouping (0.10 step /
+  0.15 max width) → 5 distinct zones (`scripts/e1_extract.py:694-720`).
+- **THE VERIFICATION:** the payload shows 5 distinct ranges with gaps; the live render shows 5
+  distinct bands.
+- **THE LESSON:** the E1 zones must trace to the PROMPT's pillars; a range-partition is not a zone.
+
+## EN-97 — Engine 2 emitted a FLAT chain (2026-10-05)
+
+- **THE FINDING:** the E2 path was a flat line (5 identical `WLS` days).
+- **THE ROOT CAUSE:** `_next_target` searched UPWARD only → any reversing shape (WL/RWL) found no
+  target → the chain died at link 1. Plus 6 more divergences from PART VI.
+- **THE FIX:** `scripts/e2_engine.py` — the direction-aware walk + the §6.4.1 temporal completion +
+  the §6.8 durations (7 fixes).
+- **THE VERIFICATION:** the chain is now R→WL→SS (3 distinct shapes); E2 suites 29/0 + 18/0.
+- **THE LESSON:** an upward-only walk cannot model a reversing week.
