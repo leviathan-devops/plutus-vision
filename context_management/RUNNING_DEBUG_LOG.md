@@ -584,3 +584,19 @@ return 0`. REF_RANGE is hardcoded safe, but a future edit must not crash. ST-19 
 - **ADJUDICATE [medium] "URLError wrapped in ArmDead like a service failure":** a network failure
   and a dead arm both mean "no strikes" for the honesty law → [NO DATA]. Kept.
 - **ADJUDICATE [low] "_fetch_chain_image is a stub":** TRUE and NAMED (S3 not wired) — honest.
+
+---
+
+## 2026-10-05 — the e1_sources scan findings (P5)
+
+**3 findings, 2 FIXED + 1 adjudicated:**
+- **FIX [high]** `harvest_bars` took `_week` and IGNORED it (always read the latest fixture). Now
+  it SELECTS the week's fixture (or raises NO_FIXTURE). Real — a multi-week fixture set would
+  silently return the wrong week.
+- **FIX [high]** `harvest_weekly_open` did `float(op)` unguarded — a non-numeric open ("N/A")
+  raised a raw ValueError. Now wrapped → SourceDown.
+- **FIX [medium]** the error truncations `[:70]/[:80]` widened to `[:200]` (keep the diagnostic).
+- **ADJUDICATE [high] "the web pillar doesn't distinguish SourceDown vs UNEXPECTED":** the reason
+  string already differs; both → DOWN. Kept.
+- **ADJUDICATE [medium] "lexicographic fixture sort":** with one fixture, moot; the WEEK selector
+  (above) removes the ambiguity. Kept.
