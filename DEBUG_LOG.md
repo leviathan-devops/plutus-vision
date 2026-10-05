@@ -1893,3 +1893,22 @@ SEE context_management/NEXT_STEPS.md:1 for the active work.
 - **THE LESSON:** when labels vanish, check the CAP SATURATION (a prior layer filling the budget)
   and the X VISIBILITY before suspecting the label form. And the vela PineTS renderer cannot take
   a dense future-offset line path.
+
+## EN-103 — the E1 labels: the SMC label budget + the vela renderer's on-screen limit (2026-10-05)
+
+- **THE FINDING:** the E1 zone labels (5 role names) are DRAWN but not visible on the chart.
+- **THE BUDGET (solved):** the v1 SMC layer draws ~1661 labels (swing structure + high/low +
+  internal structure + order blocks + equal H/L). At cap 500 the E1 tags (drawn AFTER the SMC)
+  were dropped. Fix (in the generated v2): all 5 SMC label families disabled
+  (`showStructureInput`/`showHighLowSwingsInput`/`showInternalsInput`/`showInternalOrderBlocksInput`/
+  `showEqualHighsLowsInput` -> false) + cap raised to 2000. The census now reads 1666 = the SMC's
+  1661 + the E1's 5 — the E1 labels ARE created.
+- **THE REMAINING FRONTIER (the vela renderer):** the 5 E1 labels are in the label COUNT but do
+  not paint on-screen. Bisected over ~30 renders: (a) not the style (style_none, style_label_left
+  with a dark background, huge red — none show); (b) not the x (zone midpoint, `_bAnchor-20`,
+  `_bAnchor-120`, `bar_index-3` — none show); (c) not the cap once raised; (d) not the SMC (the
+  families are off). The vela PineTS renderer's canvas paints the SMC's labels but not the E1's,
+  despite both being counted — a renderer-layer limitation (the same renderer that over-draws the
+  E2 future-offset line loop). This is a RENDERER defect, not a data/Pine defect.
+- **THE LESSON:** a census label count that exceeds the visible labels = labels created but not
+  painted. The vela renderer is the binding constraint on this chart's overlays.
