@@ -230,13 +230,31 @@ def st9b_modules_diff_clean() -> None:
                a == b, "identical" if a == b else f"DRIFT {len(a)} vs {len(b)} bytes")
 
 
+def test_render_port() -> None:
+    """THE W4 GATE (the objective's `test_render_port`): the render ports v8's
+    named helpers (>=4: zfill/zbord/pressureLbl/calcZFP) AND the built artifact
+    carries NO hard-coded `timestamp(2026...)`.
+
+    POSITIVE + NEGATIVE: the helpers present (positive); the literal absent (negative)."""
+    pin = read_pin()
+    helpers = [h for h in ("zfill", "zbord", "pressureLbl", "calcZFP") if h in pin]
+    record("W4a  the v8 named helpers present (>=4)", len(helpers) >= 4,
+           f"{len(helpers)}/4: {', '.join(helpers)}")
+    v2p = os.path.join(ROOT, "plutus-vision-v2.pine")
+    v2 = open(v2p).read() if os.path.exists(v2p) else ""
+    lits = re.findall(r"timestamp\(\s*2026", v2)
+    record("W4b  no timestamp(2026...) in the built artifact", not lits,
+           f"{len(lits)} literal(s)" if lits else "every bound is computed");
+
+
 def main() -> int:
     tests = [("ST-6", st6_six_zones), ("ST-7", st7_degree_derived),
              ("ST-8", st8_monday_anchor), ("ST-9", st9_v1_floor),
-             ("ST-9b", st9b_modules_diff_clean)]
+             ("ST-9b", st9b_modules_diff_clean),
+             ("test_render_port", test_render_port)]
     want = (sys.argv[1].upper() if len(sys.argv) > 1 else None)
     for name, fn in tests:
-        if want and not name.startswith(want):
+        if want and not name.upper().startswith(want):
             continue
         print(f"\n── {name} ──")
         try:

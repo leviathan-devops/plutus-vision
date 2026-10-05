@@ -1532,7 +1532,7 @@ all real ones) + the runtime driven. **The audit is concluded: 0 CONFIRMED criti
 | C11 | bar replay correct | the rig rewind | FIXED + proven (this log, 2026-10-05) ✓ |
 | C12 | a dead source is honest | stop the arm, run `make e1` | exit 0; the options pillar reads `[NO DATA]` ✓ |
 | C13 | no fabricated level | the JSON, every level | `144/144` levels carry a derivation label ✓ |
-| C14 | the suite is green | the 4 suites | e1_st 6/6 · e1_render_tests 22/0 · e2_tests 36/0 · e2_render_tests 18/0 ✓ |
+| C14 | the suite is green | the 4 suites | e1_st 6/6 · e1_render_tests 24/0 · e2_tests 36/0 · e2_render_tests 18/0 ✓ |
 | C15 | the LSZ preserved | `sha256sum reference/trident_v8_lsz.pine` | `db24a18cc8cdd234` (unchanged; it lives in reference/ only — 0 lsz refs in the v2) ✓ |
 | C16 | the look | the operator views the capture | ── PENDING (the operator's eyes) ── |
 
@@ -1586,3 +1586,23 @@ Re-drove the replay + read the E1 zone labels' anchor times from the live chart:
 `1783069200000` → REWOUND `1779933600000` (`timesDiffer: true`)**; the prices stay identical
 (`100.779/100.936/101.110/101.262/101.374`); the census `bars 1614 → 988 → 1614` (restored). The
 zones recompute with different bounds on replay — C11 PASS. See `SPEC_VIOLATION_LOG` (6).
+
+### 2026-10-05 — THE G3 NAMED-TEST SURFACE COMPLETED (all 7 selectable by name)
+
+The objective's PROOF CONTRACT names 7 tests "selectable by name". `test_render_port` (the W4
+gate) had NO selectable entry point — the W4 battery ran only as the whole `e1_render_tests.py`
+suite. ADDED a `test_render_port` selector (the W4 gate: the ≥4 named helpers present + no
+`timestamp(2026…)` in the built artifact). All 7 now run by name:
+
+```
+test_week_resolve:        RESULT pass=8 fail=0     (e1_st_18.py)
+test_classify_gap:        RESULT pass=10 fail=0    (e1_st_19.py)
+test_extract_contract:    RESULT pass=7 fail=0     (e1_st_20.py)
+test_render_port:         RESULT pass=2 fail=0     (e1_render_tests.py)  <- NEW selector
+test_build_seal:          RESULT pass=4 fail=0     (e1_st_21.py)
+test_harvest_dead_source: RESULT pass=4 fail=0     (e1_st_26.py)
+test_vlm_dead_arm:        RESULT pass=7 fail=0     (e1_st_22.py)
+```
+
+The full render battery is now `e1_render_tests.py` → `RESULT pass=24 fail=0` (was 22; +2 for the
+W4 gate). The artifact sha is unchanged (`471a7849a18f7bf0`) — the render source is untouched.

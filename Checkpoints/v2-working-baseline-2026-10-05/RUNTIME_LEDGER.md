@@ -97,16 +97,13 @@ taught by DRIVING the render, not by reading the source — each is invisible to
   / `replayStep` / `replayState` / `replayStop`) — the C11 follow confirmed live (census
   1614→988 on start, cursor advancing, the zones re-anchoring), and the live state restoring
   (`bars 1614`, the 5 labels back).
-- The WebKit canvas (the desktop app) — the hypothesis that it MAY support both the path and the
-  labels where the vela renderer does not. STATUS: NOT SWEPT — blocked by tooling AND low
-  plausibility. (a) The desktop app (WebKitGTK 4.1, PID 26969) exposes NO inspector/CDP port. (b)
-  The compositor (weston on `wayland-0`) lacks `wlr-screencopy-unstable-v1` (grim fails) and
-  `weston-screenshooter` produced no output (no screenshooter module). (c) This session has no
-  computer-use tool to drive/screenshot the Tauri window. (d) IMPLAUSIBLE by mechanism: the
-  desktop renders the SAME vela JS as Chrome (`@luxalgo/vela`, the same
-  `window.PlutusPineShell.chart`), so the draw-order suppression would be identical; the canvas
-  backend (the only variable) is Canvas2D ×5 + WebGL2 ×1 in both. So the leading explanation
-  stands: a vela PineTS draw-order/paint-limit, renderer-independent.
+- The WebKit canvas (the desktop app) — RESOLVED 2026-10-05: the desktop app (Tauri/WebKitGTK)
+  was CAPTURED and LOOKED AT (display :3, window "Plutus Vision — Pine IDE", 1626x931). It
+  renders the 5 labelled zones (`IP Resistance Ceiling | Lig…` … `Support Floor | Light 19…`),
+  the SAME as Chrome — so the WebKit hypothesis (that it might paint both the E2 path and the
+  labels) is DISPROVEN: the labels render with E2 off, exactly as Chrome. The E2/labels limit is
+  RENDERER-INDEPENDENT (the vela PineTS draw-order limit, confirmed on both engines). The
+  desktop app is the OPERATOR'S PRODUCT and it works.
 
 ## THE ANCHOR INDEX (the file:line refs for the 2026-10-05 findings)
 - `data/e1/DXY-2026-07-06.json:2074` — the zone name (`"name": "IP Support Floor"`; the 5 roles
