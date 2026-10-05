@@ -392,3 +392,60 @@ semantica/kg.json`) + L2 arsumbris (`.arsumbris/`, the daemon socket `~/.arsumbr
 **THE ACTIVE WORK (the operator's next directive):** (1) the zones ACCURATE to the week's price
 action (the degrees from the 9-source engine); (2) the ACTIVE-week dynamic render; (3) the
 ENGINE-2 shape chain drawn on the chart (absent). See `NEXT_STEPS.md`.
+
+---
+
+## 2026-10-05 — THE VISUAL CHECKPOINT LIBRARY (the operator's ruling)
+
+**EVERY checkpoint now carries a VISUAL ARTIFACT** (`visual/runtime-state.png`) — a screenshot of
+the LIVE runtime state. The skill `saving-checkpoints` is updated (STEP 8 = the mandatory visual
+capture + the verify gate). The ship doc `VISUAL_CHECKPOINTS_LOG.md` is the LIBRARY (a visual
+history of the build through its iterations, for recognition + restore from visual semantics — the
+foundation for later visually-semantically-integrated graphs).
+
+**THE CHECKPOINTS:**
+- `Checkpoints/v1-ship-approved-working-baseline/` — the operator's approved V1 (renamed from
+  `v1-working-baseline`); visual sha `e7f10ef97111735d`.
+- `Checkpoints/v2-working-baseline-2026-10-05/` — the V2 working baseline (the 5 E1 zones on the V1
+  baseline); visual sha `$(sha256sum Checkpoints/v2-working-baseline-2026-10-05/visual/runtime-state.png | cut -c1-16)`.
+
+---
+
+## 2026-10-05 (the engine wave) — THE EXACT 5.3.3 ENGINE
+
+**THE E1 ENGINE** (`scripts/e1_extract.py`): Protocol B Pillars 1+2 — 144 levels (4 TF × 3 pivot
+variants + the MA grid) → 5 distinct zones with the §5.2.1 role names. **THE E2 ENGINE**
+(`scripts/e2_engine.py`): PART VI, 7 divergences fixed, the chain R→WL→SS draws on the chart.
+**THE RENDER:** `plutus-vision-v2.pine` sha `30644902` = the sealed v1 baseline + the E1 layer +
+the E2 path. Battery E1 6/6 + E2 29/0 + 18/0. The v1 seal `0d20e831…` intact.
+
+**THE REMAINING (the honest residuals):** the degrees cap at LIGHT/MODERATE because the `options`
++ `analyst` dimensions are 0 (the W6/W7 web sources are stubs — a DATA gap, not a code bug); the
+render is the fixture week (2026-07-06), not a live-fetched active week.
+
+---
+
+## 2026-10-05 (later) — THE E1 ZONES RENDER WITH LABELS + A DESKTOP APP
+
+**THE E1 LABEL DEFECT — FIXED (two layers):**
+1. THE BUDGET: the v1 SMC layer draws ~1661 labels (swing structure + high/low + internal
+   structure + order blocks + equal H/L); the E1 tags draw AFTER and were dropped. Fix:
+   `scripts/lqz_vision_v2_build.py:326` disables all 5 SMC label families + raises the cap to
+   2000 (in the GENERATED v2 only; v1 seal intact).
+2. THE RENDERER: the E2 predicted-path drew segments with a Pine `for`-loop of
+   `line.new(xloc=bar_time)`; on the vela PineTS renderer that loop SUPPRESSES the entire label
+   pass. Fix: `plutus-vision-lqz/e2-render.pine` UNROLLS the loop into 4 explicit lines AND
+   `e2Enabled` defaults FALSE (the E1 map with labels is the product).
+**VERIFIED (looked):** the served v2 (sha `37f430b8`) renders the 5 distinct E1 zone bands + all
+5 labels (IP Resistance Ceiling … IP Support Floor | Light 9% ZFP).
+
+**THE DESKTOP APP:** `desktop/` — a Tauri (Rust + libwebkit2gtk-4.1) first-class desktop app,
+`pine-ide` from any cwd, on the operator's real GNOME Wayland session. MEASURED 572 MB RSS vs the
+legacy full-Chrome 1685 MB (2.9x). `.desktop` entry installed.
+
+**THE E1 DATA (from the prior wave):** the anchor derives from the chart's last bar (not a hardcoded
+week); a live path exists (`e1_fetch.py --live`); the E2 path = each day's shape expanded into its
+geometric leg (was a 5-vertex triangle).
+
+**THE NAMED CONSTRAINT:** the vela PineTS renderer cannot paint the E2 path AND the E1 labels
+together — one or the other. `e2Enabled` default false.

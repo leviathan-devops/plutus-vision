@@ -2169,3 +2169,38 @@ The container proof (python:3.12-slim): 6/6 suites hermetic.
 the week's confluence — NOT yet the 9-source engine synthesis (the goal's nine-source payload);
 (2) the zones are anchored to the fixture's window, not yet the operator's LIVE active week;
 (3) the ENGINE-2 shape chain is NOT rendered on the chart yet.
+
+---
+
+## THE ANCHORS (file:line)
+
+- `context_management/CURRENT_STATE.md:1` — the current render state (the v2 baseline).
+- `context_management/NEXT_STEPS.md:1` — the active 3 fronts.
+- `scripts/e1_extract.py:372` — the 5-role synthesis.
+- `plutus-vision-v2.pine:1` — the artifact (v1 + E1).
+- `Checkpoints/v2-working-baseline-2026-10-05/CHECKPOINT_MANIFEST.md:1` — the checkpoint.
+- `data/e1/DXY-2026-07-06.json:1` — the 5-role payload.
+verification: the battery 6/6; the audit gate PASS (`reports/ocr-e1-automatic.json:1`).
+
+## 2026-10-05 — THE EXACT 5.3.3 ENGINE WAVE (the 9 pillars + Engine 2 + the role names)
+
+**The built:** the E1 zone engine now implements Trident 5.3.3 Protocol B PILLARS 1+2 EXACTLY —
+144 levels = 4 timeframes × 3 pivot variants (Classic/Fib/Camarilla, the verbatim formulas + the
+mandatory verification checks) + the MA grid (EMA/SMA 9/10/20/50/100/200, 15-pip clusters +
+recapture). The canon band grouping (0.10 step / 0.15 max width) yields **5 DISTINCT zones with
+gaps** (the stacked-blob defect FIXED), carrying the **5.3.3 §5.2.1 role names**. Engine 2 (PART VI)
+was verified against the prompt, 7 divergences fixed, and now emits a **NON-FLAT chain** (R→WL→SS)
+that DRAWS on the chart (the cyan forecast path).
+
+**The evidence:**
+- `scripts/e1_extract.py` 144 levels → IP Support Floor / Mid-Range Support / Equilibrium Zone /
+  Upper IP Resistance / IP Resistance Ceiling (the agent: `e1_extract.py:226/237/253/261/327/414`
+  + my §5.2.1 pass at `e1_extract.py:769`)
+- `scripts/e2_engine.py` the chain R→WL→SS (the agent's 7 fixes at `:97/154/238/328/331/360/415`)
+- battery E1 6/6 (ST-18 8/0 · ST-19 10/0 · ST-20 7/0 · ST-21 4/0 · ST-22 7/0 · ST-26 4/0) · E2
+  29/0 + 18/0 · v1 seal `0d20e831…` intact · sha `30644902`
+- the live render (looked): 5 distinct colour bands + the E2 path
+
+**8 pillar defects fixed** (agent-verified + my re-run): the inverted `fib_pivots`, the "5-HOUR
+prior week" (now UTC D1 buckets), the MA cluster tolerance `0.15×ATR`→15 pips absolute, the
+3-pip chaining blob, the flat pivot scoring, the missing recapture, and the missing verification.

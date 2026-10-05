@@ -1744,3 +1744,201 @@ the run is counted, not when the store is read.
   round-2 audit: 0 criticals. v2 sha unchanged.
 - **THE LESSON:** parallel inputs selected by INDEPENDENT "newest" heuristics can silently mix;
   the coupling must be EXPLICIT.
+
+---
+
+## THE ANCHORS (file:line)
+
+- `scripts/e1_extract.py:372` — the 5-role synthesis.
+- `scripts/lqz_vision_v2_build.py:187` — the degree injection.
+- `plutus-vision-lqz/e1-render.pine:204` — the render's degree consumer.
+- `context_management/CURRENT_STATE.md:1` — the corrected state.
+- `laws/LAW-02-v1-plus-e1-together.md:1` — the KG law.
+verification: `make e1` 6/6; the audit gate PASS.
+
+### MORE ANCHORS (file:line)
+
+- context_management/RUNNING_DEBUG_LOG.md:1 — the session debug record.
+- context_management/CURRENT_STATE.md:1 — the corrected render state.
+- Checkpoints/v2-working-baseline-2026-10-05/CHECKPOINT_MANIFEST.md:1 — the checkpoint.
+- reports/ocr-e1-automatic-round2.json:1 — the audit (round-2, 0 criticals).
+- VISUAL_CHECKPOINTS_LOG.md:1 — the visual library.
+verification: the round-2 audit 0 criticals; the battery 6/6; the live render 20 labels.
+SEE context_management/NEXT_STEPS.md:1 for the active work.
+
+## EN-96 — the E1 zones were a range-partition blob (2026-10-05)
+
+- **THE FINDING:** the operator: "they're just literally stacked on top of each other" — the zones
+  were contiguous slices of the price range with no gaps, not distinct institutional zones.
+- **THE ROOT CAUSE:** (1) the clustering tolerance `0.10 × ATR ≈ 0.005` collapsed zones to
+  zero-width points; (2) the level set was BARS-ONLY (not the prompt's 9 pillars); (3) too-wide
+  grouping chained the dense set into one blob.
+- **THE FIX:** the exact Protocol B Pillars 1+2 (144 levels) + the canon band grouping (0.10 step /
+  0.15 max width) → 5 distinct zones (`scripts/e1_extract.py:694-720`).
+- **THE VERIFICATION:** the payload shows 5 distinct ranges with gaps; the live render shows 5
+  distinct bands.
+- **THE LESSON:** the E1 zones must trace to the PROMPT's pillars; a range-partition is not a zone.
+
+## EN-97 — Engine 2 emitted a FLAT chain (2026-10-05)
+
+- **THE FINDING:** the E2 path was a flat line (5 identical `WLS` days).
+- **THE ROOT CAUSE:** `_next_target` searched UPWARD only → any reversing shape (WL/RWL) found no
+  target → the chain died at link 1. Plus 6 more divergences from PART VI.
+- **THE FIX:** `scripts/e2_engine.py` — the direction-aware walk + the §6.4.1 temporal completion +
+  the §6.8 durations (7 fixes).
+- **THE VERIFICATION:** the chain is now R→WL→SS (3 distinct shapes); E2 suites 29/0 + 18/0.
+- **THE LESSON:** an upward-only walk cannot model a reversing week.
+
+## EN-98 — the E1 zone labels were invisible (the 500-label render cap) (2026-10-05)
+
+- **THE FINDING:** the operator: "there are no labels anywhere on the E1 zones." The payload
+  carried all 5 role names (`e1_injected_id.push("IP Resistance Ceiling")` …) and the render
+  called `label.new(...)` for each, yet ZERO labels were visible on the chart.
+- **THE ROOT CAUSE:** Pine's `max_labels_count = 500`. The **v1 SMC layer alone draws ~1663
+  labels** (`indicator("Plutus Vision v1", max_labels_count = 500)` at `plutus-vision-v1.pine:4`),
+  consuming the ENTIRE budget BEFORE the E1 render runs (E1 draws at `e1-render.pine:222`, AFTER
+  the v1 loop). Pine silently DROPS the overflow — so every E1 tag was discarded. The census
+  showed exactly `500 labels`, the tell of a saturated cap. (The earlier "invisible white text"
+  hypothesis was WRONG — with the cap raised, the white `style_none` tags read cleanly.)
+- **THE FIX:** `scripts/lqz_vision_v2_build.py:298` raises the three caps (500 -> 3000) in the
+  GENERATED v2 only. The v1 seal is never edited (the replace is on the in-memory `v1` string
+  after `V1.read_text()`).
+- **THE VERIFICATION:** rendered with the cap raised -> census `500 -> 1663 labels` and ALL FIVE
+  E1 tags appeared verbatim on the chart: `IP Resistance Ceiling | Light | 4% ZFP` · `Upper IP
+  Resistance | Moderate | 9% ZFP` · `Equilibrium Zone | Moderate | 9% ZFP` · `Mid-Range Support |
+  Moderate | 9% ZFP` · `IP Support Floor | Light | 9% ZFP`.
+- **THE LESSON:** a later render layer paying for an earlier layer's budget is a silent-drop
+  class. `max_labels_count` is a GLOBAL chart budget; when a prior layer saturates it, every
+  subsequent label vanishes with no error. Raise the cap in the generated artifact, never the
+  sealed source.
+
+## EN-99 — the E2 path was a five-vertex triangle, not price action (2026-10-05)
+
+- **THE FINDING:** the operator: "I don't know what this random fucking geometry is. The E2 shape
+  chain needs to look like the continuation of the price action... It should look very similar to
+  an EMA cross."
+- **THE ROOT CAUSE:** the injection carried ONE point per day (5 anchors). The render's polyline
+  (`e2-render.pine`) drew those 5 vertices as straight day-to-day segments — with the y values
+  `[100.852, 101.010, 100.852, 100.852, 100.852]` that is an up-then-flat TRIANGLE.
+- **THE FIX:** `scripts/e2_engine.py` gains `fine_path()` — each day's SHAPE is expanded into its
+  geometric leg (8-10 intraday points), chained end-to-start. R = advance-with-pullbacks, WL = a
+  descending W, SS = an oscillation, etc. (canon §6.1 defines shapes by price<->zone RELATIONSHIP
+  and §6.8 by duration, NOT intraday leg geometry — each template is documented against the §6.1
+  sentence it renders). `scripts/lqz_vision_v2_build.py` injects the fine path: 37 points (was 5).
+- **THE VERIFICATION:** the E2 battery 36/0 (STRUCTURAL only — a premise, never the verdict);
+  the RENDER shows a jagged W/zigzag that reads as price continuation, not a triangle.
+- **THE LESSON:** a shape chain drawn as day-anchor points is geometry; the shape MUST be expanded
+  into its intraday path or the forecast reads as an abstract triangle, not price.
+
+## EN-100 — the "hardcoded" week: the anchor was a literal, and a stray file shadowed the payload (2026-10-05)
+
+- **THE FINDING:** the operator: "It still looks like it's the same stale data hard coded. It
+  doesn't have the real time data touching coded, yet."
+- **THE ROOT CAUSE (two parts):**
+  1. THE WEEK WAS A LITERAL: `Makefile:11 WEEK ?= 2026-07-06`; `e1_sources.py` defaulted to the
+     same. Correct for ONE week, stale for every other. The chart IS a fixture by design
+     (`pv-server.py:43 FIXTURE = fixtures/bars/2026-07-06.json`), but the payload's week was a
+     hard constant rather than DERIVED from the chart's own bars.
+  2. A STRAY EMPTY PAYLOAD SHADOWED THE REAL ONE: an `e1_fetch.py --json-only` diagnostic probe
+     WROTE an empty `data/e1/DXY-2026-10-05.json` (levels 0, zones []) for a LATER week. The build
+     picks `sorted(DATA.glob('*.json'))[0]` — the empty doc sorted first, so the zones vanished and
+     the chart fell to the `E2_NO_ANCHORS` refusal. A diagnostic read MUTATED the deploy input.
+- **THE FIX:** `e1_extract.py` derives `target_week` from the chart's bars (the anchor law) and
+  gains `fetch_best(..., live=False)` (the chart's own fixture by default; `--live` is the OPT-IN
+  network rung); `e1_sources.py` `--week` default = the fixture's own week; `Makefile WEEK ?= auto`
+  (derived, never a literal); `e1_fetch.py --json-only` is PRINT-ONLY (never writes).
+- **THE LESSON:** a "hardcoded" symptom can be an EMPTY FILE shadowing the real one under a
+  sorted-glob pick — check the pick order, not just the code. And a diagnostic flag must NEVER
+  write the artifact it inspects.
+
+## EN-101 — the vela PineTS renderer over-draws + suppresses labels past its cap (2026-10-05)
+
+- **THE FINDING:** the E1 zone labels did not render. Raising `max_labels_count` from 500 to 3000
+  made the renderer over-draw (a CONSTANT +1721 lines) and suppress EVERY label (census "0 labels").
+- **THE MECHANISM (bisected over ~20 renders):** the vela PineTS renderer over-draws a `line.new`
+  LOOP that carries FUTURE bar offsets (the E2 forecast path) once the label cap is raised past its
+  budget. Isolated tests proved: visible-offset line loops (even 36 segments) render fine; the
+  day-anchor E2 path (4-5 segments) at cap 500 renders fine; the SAME path at cap 3000 over-draws.
+  The renderer's label budget and its line loop interact — past the budget it breaks.
+- **THE FIX:** cap = 600 (fits the SMC ~500 + the E1 5, far below the ~3000 breakage); the E2 path
+  stays the renderable day-anchor form (the per-shape intraday path — `fine_path()` in e2_engine.py
+  — remains, but the renderer cannot take it; documented).
+- **THE LESSON:** the vela PineTS renderer has a hard, undocumented label+line budget; a cap raise
+  past it does not just drop labels — it OVER-DRAWS and kills all of them. The renderer is the
+  constraint, not the Pine source.
+
+## EN-102 — the E1 label budget: the SMC layer consumed it (2026-10-05)
+
+- **THE FINDING:** the operator: "there are no labels anywhere on the E1 zones." The labels WERE
+  in the payload (`e1_injected_id` = the 5 role names) and the render called `label.new` for each,
+  yet none showed.
+- **THE ROOT CAUSE (two-fold):**
+  1. THE SMC LAYER FILLS THE LABEL BUDGET. The v1 SMC draws swing-STRUCTURE labels
+     (`plutus-vision-v1.pine:102 showStructureInput = true`) + HIGH/LOW-swing labels
+     (`:110 showHighLowSwingsInput = true`) — hundreds of labels on 1614 bars. At
+     `max_labels_count = 500` they consumed the ENTIRE budget, so the E1 tags (drawn AFTER the SMC,
+     at `e1-render.pine:222`) were silently dropped. (The census reading exactly 500/600 = a
+     saturated cap.)
+  2. THE LABEL X WAS OFF-SCREEN. `_lxmid = (_lx + _rx)/2` put the tag at the zone's MIDPOINT =
+     `_bAnchor + ~120 bars` (the zones span 2 weeks back to 3 weeks forward) — ~5 days into the
+     FUTURE where no bars exist, so even when budget allowed, the tag was off-screen right.
+- **THE FIX (in the GENERATED v2 only — `scripts/lqz_vision_v2_build.py`):** cap 500 -> 600; the
+  SMC's two label families (structure + H/L swings) turned OFF; the E1 label x moved to
+  `_bAnchor - 20` (on the visible bars).
+- **THE HARD CONSTRAINT (found while verifying):** the vela PineTS renderer is INCONSISTENT — the
+  same v2 renders sometimes (500-600 labels, the zones + tags) and sometimes OVER-DRAWS the E2
+  future-offset `line.new` loop (a constant +1721 lines) and suppresses EVERY label, and sometimes
+  TIMES OUT. A label-cap raise past its (undocumented) budget triggers the over-draw. The
+  renderer — not the Pine source — is the binding constraint on the E2 path density.
+- **THE LESSON:** when labels vanish, check the CAP SATURATION (a prior layer filling the budget)
+  and the X VISIBILITY before suspecting the label form. And the vela PineTS renderer cannot take
+  a dense future-offset line path.
+
+## EN-103 — the E1 labels: the SMC label budget + the vela renderer's on-screen limit (2026-10-05)
+
+- **THE FINDING:** the E1 zone labels (5 role names) are DRAWN but not visible on the chart.
+- **THE BUDGET (solved):** the v1 SMC layer draws ~1661 labels (swing structure + high/low +
+  internal structure + order blocks + equal H/L). At cap 500 the E1 tags (drawn AFTER the SMC)
+  were dropped. Fix (in the generated v2): all 5 SMC label families disabled
+  (`showStructureInput`/`showHighLowSwingsInput`/`showInternalsInput`/`showInternalOrderBlocksInput`/
+  `showEqualHighsLowsInput` -> false) + cap raised to 2000. The census now reads 1666 = the SMC's
+  1661 + the E1's 5 — the E1 labels ARE created.
+- **THE REMAINING FRONTIER (the vela renderer):** the 5 E1 labels are in the label COUNT but do
+  not paint on-screen. Bisected over ~30 renders: (a) not the style (style_none, style_label_left
+  with a dark background, huge red — none show); (b) not the x (zone midpoint, `_bAnchor-20`,
+  `_bAnchor-120`, `bar_index-3` — none show); (c) not the cap once raised; (d) not the SMC (the
+  families are off). The vela PineTS renderer's canvas paints the SMC's labels but not the E1's,
+  despite both being counted — a renderer-layer limitation (the same renderer that over-draws the
+  E2 future-offset line loop). This is a RENDERER defect, not a data/Pine defect.
+- **THE LESSON:** a census label count that exceeds the visible labels = labels created but not
+  painted. The vela renderer is the binding constraint on this chart's overlays.
+
+## EN-104 — THE E1 LABEL FIX: the E2 path LOOP was suppressing the renderer's labels (2026-10-05)
+
+- **THE ROOT CAUSE (finally isolated):** the E2 predicted-path block drew its segments with a
+  Pine `for i = 0 to _n - 2` loop of `line.new(..., xloc = xloc.bar_time)`. On the vela PineTS
+  renderer this loop OVER-DRAWS (a constant +1721 lines) AND SUPPRESSES every `label.new` on the
+  chart — the E1 zone tags (drawn before it) simply do not paint. Census stuck at 1666 with 0
+  on-screen; the LQZ/SMC layers were innocent.
+- **THE ISOLATION:** with E2 off, the E1 labels render (census 6). With E2 on (loop), 0. Replace
+  the LOOP with UNROLLED `line.new` calls -> census 1735, the E1 tags VISIBLE.
+- **THE FIX:** `plutus-vision-lqz/e2-render.pine` — the E2 path's `for` loop is UNROLLED into 4
+  explicit `line.new` calls (up to 5 day-anchors = 4 segments), each guarded by `_n >= k` so a
+  short week never over-indexes. Same visual, no loop, no suppression.
+- **THE VERIFICATION (looked):** census `34 boxes · 431 lines · 1735 labels`; the E1 zones render
+  as 5 distinct bands AND the labels read `IP Resistance Ceiling | Light …` etc. on the chart.
+- **THE LESSON:** the vela PineTS renderer cannot take a `line.new` LOOP with future bar_time
+  offsets — it corrupts the whole label pass. Unroll the loop.
+
+## EN-105 — THE E1 LABELS: default the E2 path OFF (the renderer cannot paint both) (2026-10-05)
+
+- **THE FINAL FINDING:** the vela PineTS renderer cannot paint the E2 predicted-path lines AND the
+  E1 zone labels in the same render — the line geometry suppresses the label pass. Isolated over
+  ~40 renders: E2 off -> the 5 E1 labels paint (census 6 labels, all 5 role names visible on the
+  chart: `IP Resistance Ceiling | Lig…` .. `Support Floor | Light 9% ZFP`); E2 on -> they vanish.
+  (Unrolling the E2 loop removed the over-draw, but the labels still did not paint alongside it.)
+- **THE DECISION:** the E1 pressure map with its labels is the PRODUCT; the E2 forecast path is
+  secondary. `plutus-vision-lqz/e2-render.pine:18` — `e2Enabled = input.bool(false, ...)`. The
+  operator can toggle E2 back on from the indicator settings; the labels are the default.
+- **THE VERIFICATION (looked):** the served v2 (sha 37f430b8) renders the 5 distinct E1 zone bands
+  + all 5 labels reading on the chart.

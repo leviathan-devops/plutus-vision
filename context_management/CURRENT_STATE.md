@@ -422,3 +422,30 @@ the E2 path. Battery E1 6/6 + E2 29/0 + 18/0. The v1 seal `0d20e831…` intact.
 **THE REMAINING (the honest residuals):** the degrees cap at LIGHT/MODERATE because the `options`
 + `analyst` dimensions are 0 (the W6/W7 web sources are stubs — a DATA gap, not a code bug); the
 render is the fixture week (2026-07-06), not a live-fetched active week.
+
+---
+
+## 2026-10-05 (later) — THE E1 ZONES RENDER WITH LABELS + A DESKTOP APP
+
+**THE E1 LABEL DEFECT — FIXED (two layers):**
+1. THE BUDGET: the v1 SMC layer draws ~1661 labels (swing structure + high/low + internal
+   structure + order blocks + equal H/L); the E1 tags draw AFTER and were dropped. Fix:
+   `scripts/lqz_vision_v2_build.py:326` disables all 5 SMC label families + raises the cap to
+   2000 (in the GENERATED v2 only; v1 seal intact).
+2. THE RENDERER: the E2 predicted-path drew segments with a Pine `for`-loop of
+   `line.new(xloc=bar_time)`; on the vela PineTS renderer that loop SUPPRESSES the entire label
+   pass. Fix: `plutus-vision-lqz/e2-render.pine` UNROLLS the loop into 4 explicit lines AND
+   `e2Enabled` defaults FALSE (the E1 map with labels is the product).
+**VERIFIED (looked):** the served v2 (sha `37f430b8`) renders the 5 distinct E1 zone bands + all
+5 labels (IP Resistance Ceiling … IP Support Floor | Light 9% ZFP).
+
+**THE DESKTOP APP:** `desktop/` — a Tauri (Rust + libwebkit2gtk-4.1) first-class desktop app,
+`pine-ide` from any cwd, on the operator's real GNOME Wayland session. MEASURED 572 MB RSS vs the
+legacy full-Chrome 1685 MB (2.9x). `.desktop` entry installed.
+
+**THE E1 DATA (from the prior wave):** the anchor derives from the chart's last bar (not a hardcoded
+week); a live path exists (`e1_fetch.py --live`); the E2 path = each day's shape expanded into its
+geometric leg (was a 5-vertex triangle).
+
+**THE NAMED CONSTRAINT:** the vela PineTS renderer cannot paint the E2 path AND the E1 labels
+together — one or the other. `e2Enabled` default false.

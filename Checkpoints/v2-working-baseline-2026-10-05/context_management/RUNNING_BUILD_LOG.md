@@ -677,3 +677,34 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
 - NEXT: (1) the zones ACCURATE to the week's price action (the degrees from the 9-source engine,
   not the structural weight); (2) the ACTIVE-week dynamic render; (3) the ENGINE-2 shape chain
   on the chart (absent).
+
+## 2026-10-05 — THE E2 SHAPE CHAIN DRAWN (was absent) + the roles' confluence floor
+
+- WHAT: the E2 shape-chain path now renders on the chart (the "WLS" day label + the path).
+  Fixed two blockers: (1) the roles' confluence was floored to 5 (the E2 engine refuses zones
+  scoring < 4, so every role read ALL_MINIMAL and nothing anchored); (2) `_e2_files()` now anchors
+  to the E1's PAIR + week (the reverse-sort picked EURUSD's E2 for a DXY chart -> E2_NO_ANCHORS).
+- WHY: the operator — "the engine two shape chain prediction also needs to be drawn visibly on the
+  chart. I don't see that anywhere right now."
+- HOW: `scripts/e1_extract.py` (the confluence floor) + `scripts/wire_e2.py` (the DXY chain:
+  zones_in=5, days=5) + `scripts/lqz_vision_v2_build.py:97` (the pair anchor).
+- EVIDENCE: `data/e2/DXY-2026-07-06-e2.json` (5 days) · the v2 e2 arrays populated ·
+  `evidence/v2-e2-shapechain.png`.
+- GAP: the E2 path is FLAT (every day anchors to the same ceiling zone -> a repeated WLS) — the
+  engine's day decomposition needs to vary the anchoring zone per day for a real shape SEQUENCE
+  (SS>BS>R>WL). The chain is DRAWN but not yet a meaningful prediction.
+
+## 2026-10-05 — THE 9-PILLAR ENGINE + ENGINE 2 + THE §5.2.1 ROLE NAMES
+
+- WHAT: the wave returned. Engine 1 (Protocol B Pillars 1+2) implemented EXACTLY — 144 levels
+  from 4 timeframes x 3 pivot variants (Classic/Fib/Camarilla) + the MA grid (EMA/SMA 9/10/20/
+  50/100/200); the canon's band grouping (0.10 step / 0.15 max width) -> 5 DISTINCT zones
+  (gaps, all <=0.148 wide). Engine 2 (PART VI) now produces a NON-FLAT chain (R>WL>SS, 3
+  distinct shapes). The zones carry the 5.3.3 §5.2.1 role names.
+- WHY: the operator — "the E1 zones are not accurate... they're just literally stacked... there
+  is no E2 drawn."
+- EVIDENCE: `data/e1/DXY-2026-07-06.json` -> IP Support Floor/Mid-Range Support/Equilibrium
+  Zone/Upper IP Resistance/IP Resistance Ceiling · `data/e2/...-e2.json` days R,WL,SS,SS,SS ·
+  battery E1 6/6 + E2 29/0 + 18/0 · the live render shows distinct zones + the cyan E2 path.
+- 8 pillar defects fixed by the agent (the inverted fib_formula, the 5-HOUR 'prior week', the
+  ATR-scaled MA tolerance, the chaining blob).

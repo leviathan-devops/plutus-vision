@@ -206,15 +206,25 @@ f_e1Render() =>
                 _top = array.get(e1PayloadTop, i)
                 _bot = array.get(e1PayloadBot, i)
                 _mid = (_top + _bot) / 2
-                _lxmid = math.round((_lx + _rx) / 2)
+                // THE LABEL X — VISIBLE. The zone box spans 2 weeks BACK to 3 weeks FORWARD
+                // (`_lx` .. `_rx`); its MIDPOINT (`(_lx+_rx)/2` = anchor + ~120 bars) sits in the
+                // future where no bars exist, so the tag was drawn OFF-SCREEN and read as "no
+                // labels" (measured 2026-10-05). Anchor the tag near the zone's LEFT edge — on
+                // the visible bars — so every zone's tag reads on the chart.
+                _lxmid = _bAnchor - 20
                 // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
                 box.new(_lx, _top, _rx, _bot,
                      bgcolor = f_e1Zfill(_cat, _deg),
                      border_color = f_e1Zbord(_cat, _deg),
                      border_width = 2,
                      border_style = line.style_solid)
+                // THE LABEL — the v8 idiom, `style_none`. The earlier "no labels" defect was
+                // NOT the style: it was the 500-label render cap (the v1 SMC layer emits ~1663
+                // labels and consumed the whole budget, so every E1 tag drawn after it was
+                // silently dropped — measured 2026-10-05). With the cap raised in the builder
+                // (lqz_vision_v2_build.py) the white tags read cleanly on the zone fills.
                 _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(f_e1CalcZFP(_top, _bot, _e1Pair)) + "% ZFP"
-                label.new(_lxmid, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
+                label.new(_lxmid, _mid, _lbl, style = label.style_label_left, textcolor = color.white, color = color.new(#0A0E12, 5), size = size.small)
     0
 
 if e1Enabled and barstate.islast
