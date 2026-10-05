@@ -1556,13 +1556,19 @@ f_e1Render() =>
                 _top = array.get(e1PayloadTop, i)
                 _bot = array.get(e1PayloadBot, i)
                 _mid = (_top + _bot) / 2
+                // THE RENDERED BAND. The cluster spans [bottom, top] (~0.15 = the canon's
+                // confluence band). FIVE contiguous 0.15 bands read as ONE wall (the operator:
+                // "stacked on top of each other"). Render each zone as a NARROW band at its
+                // confluence CENTRE, so the five institutional levels read as DISTINCT levels with
+                // visible gaps — a level you can see, not a fill you cannot read.
+                _hw = 0.02
                 // THE LABEL X — VISIBLE + FULLY READABLE. The label style is `label_left` (the
                 // text runs LEFT from the anchor). Anchored at `_bAnchor - 20` (near the last
                 // real bar), the long text ("Name | Degree | NN% ZFP") ran PAST the right edge and
                 // was cut. Anchored WELL left of the anchor, the whole tag reads on the chart.
                 _lxmid = _bAnchor - 150
                 // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
-                box.new(_lx, _top, _rx, _bot,
+                box.new(_lx, _mid + _hw, _rx, _mid - _hw,
                      bgcolor = f_e1Zfill(_cat, _deg),
                      border_color = f_e1Zbord(_cat, _deg),
                      border_width = 2,
