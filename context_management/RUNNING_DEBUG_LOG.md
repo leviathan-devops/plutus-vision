@@ -684,3 +684,27 @@ the DXY fixture, never the default.
 compiles + renders live (the deliverable is real); (2) the EURUSD/DXY scale mismatch is an
 OPERATIONAL gotcha (the IDE defaults to EURUSD); (3) the "2 anchors dropped" is exactly the C10
 residual, observed live.
+
+---
+
+## 2026-10-05 — THE ADVERSARIAL CORPUS PASS (A1-A7), ZERO CONFIRMED DEFECTS
+
+**A6 (the empty payload), verified LIVE this turn** — an E1 payload with `{"zones": []}` + an E2
+with no days → the build emits **0 `e1_injected_top.push`** (NO fabricated zone) + a refusal, and
+`build()` returns the string without writing (the real v2 stays `7115b734`). The loud-fail law
+holds.
+
+**THE FULL A1-A7 PASS (the frontier named):**
+| angle | probe | verdict |
+|---|---|---|
+| A1 replay rewind | the C11 fix — bars 1614→41 on a step (`evidence/c11-replay-rewind.png`) | PASS |
+| A2 classify RES+SUP | ST-19 10/0 (both classes present) | PASS |
+| A3 dead arm | ST-22 7/0 (a dead arm RAISES, 0 fabricated) | PASS |
+| A4 floor 226/6/4 | the build's V1_FLOOR (SMC 226 · OB 6 · LQZ 4) | PASS |
+| A5 seal tamper | ST-21 4/0 (HARD STOP H1 on a tamper) | PASS |
+| A6 empty payload | 0 pushes + a refusal (verified this turn) | PASS |
+| A7 Sunday boundary | ST-18 8/0 (Sun → the FOLLOWING Monday) | PASS |
+
+**ZERO CONFIRMED DEFECTS.** The unswept frontier (named, not hidden): C10 (2 anchors dropped — E2/v1,
+not E1) · W6 (1/8 sources wired; S3-S9 honest [NO DATA]) · W8 (four pairs) + W10 (split) deferred
+per the pin · C16 (the operator's look). NONE is a defect; each is a scoped residual.
