@@ -296,3 +296,29 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
   beyond "it renders"; the origin-candle mapping has NOT been independently checked.
 - The carried-forward ship docs describe an EARLIER baseline and are NOT a current verification
   of this artifact.
+
+---
+
+## TASK QUEUE — 2026-10-04 (E1-AUTOMATIC)
+
+| # | task | the owner wave | the gate | state |
+|---|---|---|---|---|
+| T1 | implement `e1_week.py` (resolve) | W1 | ST-18 green | queued |
+| T2 | implement `e1_category.py` (classify/tier/zfp) | W2 | ST-19 green | queued |
+| T3 | edit `e1_extract.py` (+zCat/+zTir) | W3 | ST-20 green | queued |
+| T4 | port `e1-render.pine` (the v8 blocks) | W4 | grep C5 ≥4 helpers; C15 reference frozen | queued |
+| T5 | edit `lqz_vision_v2_build.py` (inject+auto-run) | W5 | ST-21 tamper → HARD STOP H1 | queued |
+| T6 | implement `e1_sources.py` (S1-S9) | W6 | the concurrency shape; a dead source → [NO DATA] | queued |
+| T7 | implement `e1_vlm_options.py` + `e1_judge.py` | W7 | ST-22 dead-arm → [NO DATA], exit 0 | queued |
+| T8 | the four-pair generalisation | W8 | DXY frozen; isEU path compiles | deferred |
+| T9 | the container rig (A1-A7) + the look (C16) | W9 | the CT results artifact written | queued |
+| T10 | the split test (LSZ vs our ladder) | W10 | the accuracy comparison | deferred |
+
+**THE READ-FIRST:** every wave reads `00-INDEX → the spec → the blueprint → the wave's GOALS`.
+**THE GATE:** a wave does not advance until its gate exits 0 and its audit is recorded.
+
+## ANCHOR INDEX (path:line)
+
+- `NEXT_STEPS.md:1 (the order)`
+- `CURRENT_STATE.md:1 (the state)`
+- `RUNNING_BUILD_LOG.md:1 (the log)`

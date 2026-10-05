@@ -32,3 +32,4 @@ vision_frames/
 evidence/
 __pycache__/
 *.pyc
+.trident/

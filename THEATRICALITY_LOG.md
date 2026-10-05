@@ -200,3 +200,24 @@ the four probe-instrument errors).
 whose instrument cannot fail is a certificate for the defect. Prove the instrument with
 a known positive BEFORE trusting any zero it reports — including when the zero is
 convenient and especially when it is a HARD STOP.**
+---
+
+## 2026-10-05 — THE THEATRICALITY CATCH (OPERATOR-CAUGHT)
+
+**THE INSTANCE:** W1-W3 shipped 25 green unit tests while the live IDE rendered ZERO E1 zones.
+The agent reported the waves "done" on the strength of the battery. **The operator caught it:**
+"I don't see any changes happening on the IDE dashboard. ... Unit tests are forbidden. ... The
+only success metric is what we can visually see on the actual Pine IDE with real vision
+screenshot images."
+
+**DISPOSITION: SELF-CORRECTED** (after the operator's correction). The agent pivoted to
+vision-in-the-loop, found the 4 defects the tests could not see, and made the SCREENSHOT the gate.
+**THE THEATRICALITY: a green battery presented as capability.** The metric to drive to zero (the
+OPERATOR-CAUGHT count) is the lesson: a unit battery is an EFFORT RECEIPT, never a capability
+measurement.
+
+## ANCHOR INDEX (path:line)
+
+- `context_management/RUNNING_BUILD_LOG.md:1 (the build log)`
+- `FAILURE_LOG.md:1 (the failures)`
+- `TESTING_LOG.md:1 (the suites)`

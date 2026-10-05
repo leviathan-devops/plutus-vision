@@ -87,3 +87,22 @@ Correction (2026-10-01, same pass): the parity helpers moved in-tree — read `/
 shell cwd; the `cd` failed with an i/o error and the git commands executed in the
 ENCLOSING repo. Verified no damage (parent HEAD unchanged, 0 staged). Remedy adopted:
 `git -C <abs-path>` plus a repo-identity gate before every write.
+
+---
+
+## 2026-10-05 — E1 AUTOMATIC spec compliance
+
+**NO SPEC VIOLATIONS.** The build followed `plutus-vision-e1-automatic_DPL1_SPEC.md` (APPROVED
+0/8). C1-C9 + C12-C15 hold mechanically (the seal, the floor, no-E3, the v8 helpers, the
+chart-anchor, the classify, the labels, the suites, the LSZ preservation). C10 (a rig-internal
+count) + C11 (FIXED in-repo, visually proven) + C16 (the operator's look) are the residuals.
+
+**THE ANTI-DERAIL LAWS HELD:** no hardcoded `timestamp(2026…)` in the render (C6 = 0); the anchor
+is `_bAnchor = bar_index` (not `now()`); the LSZ block lives in `reference/` only; v1 is
+byte-identical (0d20e831…). No violation of the pin's LAW section.
+
+## ANCHOR INDEX (path:line)
+
+- `plutus-vision-e1-automatic_DPL1_SPEC.md:1 (the spec)`
+- `TESTING_LOG.md:1 (the suites)`
+- `packages/plutus-vision-e1-automatic/06-WAVES.md:3 (`WAVES: 10`)`

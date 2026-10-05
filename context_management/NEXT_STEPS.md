@@ -293,3 +293,33 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
   beyond "it renders"; the origin-candle mapping has NOT been independently checked.
 - The carried-forward ship docs describe an EARLIER baseline and are NOT a current verification
   of this artifact.
+
+---
+
+## NEXT STEPS — 2026-10-04 (E1-AUTOMATIC)
+
+**IMMEDIATE (the package handoff):**
+1. Finish `06-WAVES.md` + `07-GOALS.md` + `00-INDEX.md` (the package's dispatch artifacts).
+2. Seal a round-0 checkpoint (`Checkpoints/e1-automatic-round0-2026-10-04/`).
+3. Mint the `/goal` pin from the package (the create flow) — the one paste that drives the build.
+4. Dispatch W1 (the anchor: `e1_week.py` + ST-18).
+
+**THE WAVE ORDER** (see `06-WAVES.md`):
+```
+W1 the anchor        e1_week.py + ST-18
+W2 the gap           e1_category.py + ST-19
+W3 the data          e1_extract.py edit (+zCat/+zTir) + ST-20
+W4 the render        e1-render.pine ported + C5/C6/C15
+W5 the build         lqz_vision_v2_build.py edit + ST-21 (the tamper)
+W6 the harvest       e1_sources.py (S1-S9) + the concurrency shape
+W7 the arms          e1_vlm_options.py + e1_judge.py + ST-22 (the dead arm)
+W8 the pairs         the four-pair generalisation (deferred, scoped)
+W9 the test          the container rig angles A1-A7 + the look (C16)
+```
+**THE GATE BETWEEN EVERY WAVE:** the wave audit + the four suites green + the docs updated.
+
+## ANCHOR INDEX (path:line)
+
+- `CURRENT_STATE.md:1 (the state)`
+- `RUNNING_BUILD_LOG.md:1 (the log)`
+- `packages/plutus-vision-e1-automatic/06-WAVES.md:3 (the waves)`

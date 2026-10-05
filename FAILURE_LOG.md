@@ -827,3 +827,32 @@ sweeps source to route around an extraction error** — that would be treating a
 MEANING I asserted instead of deriving. Price is what a zone is; class is what colour means;
 position is not identity. Every one of these was found by reading the code against a measurement,
 not by tuning a constant. The constant-tuning path would have found none of them.
+
+---
+
+## 2026-10-05 — E1 AUTOMATIC: the failures found BY RUNNING (the hot seat)
+
+**THE CLASS: unit-green, screen-dead.** W1-W3 passed 25 unit tests while the live IDE rendered
+ZERO E1 zones. The tests validated a library; the capability was unverified. Fixed by driving the
+render and LOOKING (the operator's directive: unit tests are forbidden as the success metric).
+
+**F-31 (wrong week):** the extractor read `fixtures/bars/2026-07-06.json` but wrote the payload as
+`target_week: 2026-10-06`; the build anchored to OCTOBER while the chart showed JULY → every zone
+91 days off-chart → culled. FIX: regenerate for the fixture's week.
+**F-32 (span collapse):** `e1BackWeeks * 5` assumed DAILY bars; on a 1H chart that is 10 hours.
+FIX: `432000 / timeframe.in_seconds()`.
+**F-33 (zero-height hairline):** the extracted zones are `top == bottom`, so `box.new` drew an
+invisible 1px line. FIX: inflate to a band (`mid * 0.0008`).
+**F-34 (pair mismatch):** the zones are DXY prices (100.x) but the chart was EURUSD (~1.14). FIX:
+the chart must show DXY.
+**F-35 (replay not re-run):** the shell had `autoRun` but no replay subscription — 300 replay
+steps moved the cursor while the census stayed `bars 1614`. FIX: subscribe to `replay:step`, feed
+the bars up to the cursor, re-run. PROVEN: `bars 1614 → 41`.
+**F-36 (fabricated-strike class):** `parse_strikes` accepted `bool`/`NaN`/`Infinity` — a fake
+level. FIX: reject bool + require `math.isfinite`. (The audit caught this one.)
+
+## ANCHOR INDEX (path:line)
+
+- `context_management/RUNNING_DEBUG_LOG.md:1 (the findings)`
+- `TESTING_LOG.md:1 (the suites)`
+- `DEBUG_LOG.md:1 (the bug record)`

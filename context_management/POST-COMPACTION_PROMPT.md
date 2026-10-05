@@ -294,3 +294,36 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
   beyond "it renders"; the origin-candle mapping has NOT been independently checked.
 - The carried-forward ship docs describe an EARLIER baseline and are NOT a current verification
   of this artifact.
+
+---
+
+## E1 AUTOMATIC — THE RESUME POINT (2026-10-05)
+
+**A fresh session resumes from DISK:**
+```
+READ FIRST   packages/plutus-vision-e1-automatic/00-INDEX.md  → the DPL1 spec → MASTER_BLUEPRINT
+ASSERT       sha256sum plutus-vision-v1.pine   MUST be 0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1
+             sha256sum pine-ide/ide/renderer/plutus-vision-v2.pine   (the served copy; == plutus-vision-v2.pine)
+BUILD        make e1   (gated: suites → extract → build → deploy)   ·   make e1-test   ·   make e1-visual
+RIG          :9851 renderer · :9222 CDP · display :3 · arm :8010 (VLM) · judge :8090
+```
+
+**THE STATE (2026-10-05):** E1-AUTOMATIC is DELIVERED + VISUALLY PROVEN. W1-W9 shipped; C11 (bar
+replay) FIXED in-repo + proven (the shell re-runs on replay; `bars 1614 → 41`). The E1 zones
+render on the live IDE in v8's exact ladder (red RESISTANCE + teal SUPPORT). The checkpoint is
+sealed: `Checkpoints/e1-automatic-ship-2026-10-05/`. Evidence:
+`packages/plutus-vision-e1-automatic/evidence/{w4-e1-zones,w9-final-render,c11-replay-rewind}.png`.
+
+**THE RESIDUALS:** C16 (the operator's look) · P6 (the audit gate — ALL lanes infra-blocked:
+429 / JSON-absent / timeout) · W8 (four pairs) · W10 (the split test) · C10 (a rig-internal
+anchor count, E2's off-chart forecast).
+
+**THE LAWS THAT BITE:** `make e1` refuses on v1 drift (HARD STOP H1) · the E1 zones all land
+(0 E1 drops) · a dead source → [NO DATA] (never fabricated) · the renderer is v8's ladder
+VERBATIM · the anchor is `_bAnchor = bar_index` (the chart's own bar, never now()).
+
+## ANCHOR INDEX (path:line)
+
+- `CURRENT_STATE.md:1 (the state)`
+- `packages/plutus-vision-e1-automatic/00-INDEX.md:1 (the map)`
+- `RUNNING_DEBUG_LOG.md:1 (the findings)`

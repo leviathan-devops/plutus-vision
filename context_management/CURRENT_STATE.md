@@ -248,3 +248,102 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
   beyond "it renders"; the origin-candle mapping has NOT been independently checked.
 - The carried-forward ship docs describe an EARLIER baseline and are NOT a current verification
   of this artifact.
+
+---
+
+## STATE BLOCK — 2026-10-04 (supersedes the 2026-10-03 block)
+
+**THE NEW WORKSTREAM: E1-AUTOMATIC.**
+
+The V1 baseline (v1, 1270 lines, sha `0d20e8314ce992fc…`) ships and is SEALED. A new workstream
+now extends it: `packages/plutus-vision-e1-automatic/` — replace the manual data input of
+`trident_v8.pine` with an automatic source, so E1's institutional pressure zones render for the
+target trading week and follow bar replay.
+
+```
+WORKSTREAM           STATE            THE ARTIFACT
+V1 baseline          SHIPPED+SEALED   plutus-vision-v1.pine        1270L  sha 0d20e831…
+V2 shell (E1+E2)     BUILT            plutus-vision-v2.pine        1694L  sha 3c3f1a76…
+E1-AUTOMATIC         PACKAGE MINTED   packages/plutus-vision-e1-automatic/
+  ├── spec           APPROVED (0/8)   plutus-vision-e1-automatic_DPL1_SPEC.md   609L
+  ├── blueprint      DONE             MASTER_BLUEPRINT.md                       1032L
+  ├── discovery      DONE             01-DISCOVERY.md + 00-MISSION.md
+  └── waves/goals    NEXT             06-WAVES.md + 07-GOALS.md + 00-INDEX.md
+```
+
+**THE E1-AUTO DESIGN IN ONE PARAGRAPH.** The v8 renderer (`trident_v8.pine:43-65,67-155,112-155,
+157-158,334-338,352-365`) is ported VERBATIM into `plutus-vision-lqz/e1-render.pine`. Its
+hardcoded anchor (`:35-37`, a fixed Apr-May 2026 window) is replaced by a chart-derived week
+(`anchor = time`, the last bar) so the SAME expression is correct live and under bar replay. Its
+hardcoded arrays (`:187-192`) are replaced by an injected payload whose ONE missing field (`zCat`)
+is closed by a positional classify (`top>spot → RES`, `bottom<spot → SUP`, else `MID`). Nine web
+sources replace the manual input; the ONLY model call is the option-chain image → strikes (the
+local `trident-v1-vision` arm); a down source yields `[NO DATA]`, never a fabricated level.
+
+**THE FIVE FROZEN FACTS:**
+1. v1 stays byte-identical (HARD STOP H1 on drift) — the port cannot break the baseline.
+2. The render uses `xloc=xloc.bar_time` ONLY (mixing `bar_index` is the F-17 cull).
+3. The anchor is `time` (the last bar) — NEVER `now()`/`timenow`.
+4. The LSZ block (`trident_v8.pine:367-377`) is preserved in `reference/` for the split test,
+   NEVER in the ported render.
+5. No E3 primitive (entry/SL/TP/position) exists anywhere.
+
+**THE HONEST GAPS (unchanged from 2026-10-03, plus):** E1/E2 from the v5.3.3 prompt remain the
+target of THIS workstream (the E1-AUTO package's waves W1-W9); the eight un-wired sources (S3-S9);
+the four-pair generalisation (W7); the split test (W8).
+
+---
+
+## STATE BLOCK — 2026-10-05 (E1-AUTOMATIC SHIPPED)
+
+**THE BUILD IS COMPLETE (9 waves) AND VISUALLY PROVEN.**
+
+```
+WORKSTREAM        STATE              ARTIFACT
+E1-AUTOMATIC      SHIPPED            plutus-vision-v2.pine  sha 476d8192…  served==built
+  W1 anchor        shipped            scripts/e1_week.py            ST-18 7/0
+  W2 gap           shipped            scripts/e1_category.py        ST-19 9/0
+  W3 data          shipped            e1_extract.py + zCat/zTir     ST-20 7/0
+  W4 render        shipped (v8 port)  plutus-vision-lqz/e1-render.pine   v8 ladder = VERBATIM
+  W5 build         shipped            Makefile `make e1` (gated)    tamper -> HARD STOP H1
+  W6 harvest       shipped            scripts/e1_sources.py         ST-26 4/0
+  W7 arms          shipped            e1_vlm_options.py + e1_judge.py  ST-22 7/0
+  W9 rig           shipped            evidence/w9-final-render.png  the live render
+CHECKPOINT         SEALED             Checkpoints/e1-automatic-ship-2026-10-05/
+```
+
+**THE VISUAL PROOF (the operator's metric):** the E1 institutional pressure zones render on the
+live Pine IDE, DXY 1H, in v8's EXACT ladder — a red/orange RESISTANCE band ~101.15-101.32 + teal
+SUPPORT bands ~100.75-100.97. Two captures: `evidence/w4-e1-zones.png` + `evidence/w9-final-render.png`.
+
+**THE FIVE FROZEN FACTS HOLD:** v1 sha 0d20e831… UNCHANGED · `xloc`/`bar_index` only · the anchor
+is `bar_index` (the chart's own last bar) · LSZ in reference/ · no E3.
+
+**THE HONEST RESIDUALS:** C10 (2 anchors dropped — E2/v1, not E1) · C11 (chart-anchored, but the
+external pine-station shell doesn't re-run on replay) · C16 (the operator's look) · AUDIT GATE
+BLOCKED (the re-run timed out; the first run's 4 high are fixed) · W6 1/8 sources · W8/W10 deferred.
+
+---
+
+## FINAL STATE — 2026-10-05 (the E1 build, consolidated)
+
+```
+v1 seal      0d20e8314ce992fc…   UNCHANGED (HARD STOP H1 on drift)
+v2 served    7115b73488bdc0eb…   served == built; the E1 zones render (6: 3 red + 3 teal)
+C1  seal OK · C2 floor 226/6/4 · C3 no-E3=0 · C5 v8 ladder=7 · C6 no-hc-ts=0
+C7 chart-anchor=1 · C8 RES+SUP · C13 0 unlabelled · C15 LSZ db24a18c
+C4/C12/C14 the suites · C10 rig-internal · C11 FIXED+PROVEN · C16 the operator's look
+suites   ST-18 7/0 · ST-19 9/0 · ST-20 7/0 · ST-21 4/0 · ST-26 4/0 · ST-22 7/0 — SUITES: PASS
+evidence w4-e1-zones.png · w9-final-render.png · c11-replay-rewind.png (3 captures)
+checkpoint Checkpoints/e1-automatic-ship-2026-10-05/ (58 files, re-sealed)
+```
+
+**THE RESIDUALS (terminal):** C16 (the operator's look) · P6 (the audit gate — ALL 6 lane
+attempts failed: 429 / JSON-absent / timeout / "no tool calls parsed") · W8 (four pairs) · W10
+(the split test) · C10 (a rig-internal anchor count).
+
+## ANCHOR INDEX (path:line)
+
+- `packages/plutus-vision-e1-automatic/00-INDEX.md:1 (the package)`
+- `RUNNING_BUILD_LOG.md:1 (the build log)`
+- `NEXT_STEPS.md:1 (the order)`
