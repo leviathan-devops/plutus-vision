@@ -63,7 +63,7 @@ Read: `laws/LAW-05-5.3.3-authority.md`. Quote it in any completion claim (see `R
 
 Read: `laws/LAW-06-sources-auto.md`. Quote it in any completion claim (see `README.md:1`).
 
-### RULINGS — the operator's rulings
+### RULINGS — the operator s rulings
 
 #### `rulings/R01-lsz-removed.md`
 
@@ -88,6 +88,16 @@ Read: `rulings/R02-no-stale-data.md`. Quote it in any completion claim (see `REA
 - **anchor**: operator ruling, 2026-10-05
 
 Read: `rulings/R03-e1-on-top-v1.md`. Quote it in any completion claim (see `README.md:1`).
+
+### MECHANISMS — the working machinery
+
+#### `mechanisms/M01-five-institutional-roles.md`
+
+- **id**: M01 · **type**: pv-state
+- **summary**: The E1 zones are the 5 INSTITUTIONAL ROLES (5.3.3 section 5.2.1), synthesized from the week.
+- **anchor**: scripts/e1_extract.py:372
+
+Read: `mechanisms/M01-five-institutional-roles.md`. Quote it in any completion claim (see `README.md:1`).
 
 ## Diagnostics
 
