@@ -120,10 +120,6 @@ def classify(bars_momentum: float, zones: list[Zone], tf_valid: bool = True) -> 
     for z in solid:
         if z.is_hard_wall and bars_momentum < 0:
             return "WL", z.id
-    # 6 · RWL — after a BS: violent reversal through the origin, Hard Wall
-    for z in solid:
-        if z.is_hard_wall and z.reactions >= 4:
-            return "RWL", z.id
     # 3 · R — stabilises at a mid-range zone (ZFP 20-40%), < 1 session
     for z in solid:
         if 20 <= z.zfp <= 40:
@@ -136,6 +132,13 @@ def classify(bars_momentum: float, zones: list[Zone], tf_valid: bool = True) -> 
     weak = [z for z in solid if z.zfp < 30]
     if len(weak) >= 2:
         return "SS", weak[0].id
+    # 6 · RWL — after a BS: violent reversal through the origin, Hard Wall rejection.
+    #      §6.2 puts RWL LAST (priority 6). The earlier build checked it THIRD, so a
+    #      Hard Wall with 4+ reactions was classified RWL even when R, WLS or SS
+    #      matched a higher priority — a priority inversion against the canon's order.
+    for z in solid:
+        if z.is_hard_wall and z.reactions >= 4:
+            return "RWL", z.id
 
     # nothing matched a signature — refuse rather than default to something plausible
     raise FabricationRefused(
@@ -170,17 +173,16 @@ def transition(current: str, target_zfp: int) -> tuple[str, str, float]:
     if current == "SS" and target_zfp > ZFP_BREAKOUT:
         return ("BS", f"target zfp {target_zfp} > {ZFP_BREAKOUT} = breakout", 80.0)
     if current == "BS":
-        # The canon's BS row does not stop at 60. A Breakout Surge that reaches a
-        # target between 40 and 60 is still a BS: the §6.4.1 table's "R" row is the
-        # 20-40 BAND, and 40-60 is the same surge one step on. Without this the engine
-        # fell through to "default continuation", which is a non-answer dressed as
-        # one — and it produced the exact shape the canon forbids: a continuation
-        # assumed where no rule applied.
         if 40 < target_zfp <= 60:
-            return ("BS", f"target zfp {target_zfp} in 40-60 = the surge continues "
-                           f"into the next zone", 70.0)
-        if target_zfp < 20:
-            return ("SS", f"target zfp {target_zfp} < 20: the surge is contained", 55.0)
+            # §6.4.1 lists NO BS row for 40-60. §6.4 (the generic Transition Rules
+            # table the prompt itself supplies) covers it verbatim: "BS → PBS — the
+            # zone fails with extreme momentum; distant target". A target BEYOND the
+            # mid-range band (20-40) is failing, so the BS cascades. The earlier build
+            # filled this gap with an invented "BS 40-60 → BS" CONTINUATION row — a
+            # transition the prompt does not contain, and one that also collided with
+            # the no-self-loop guard. It is replaced by the canon's own row.
+            return ("PBS", f"target zfp {target_zfp} beyond the 20-40 mid-range = "
+                           f"the zone fails (§6.4 BS→PBS)", 65.0)
     if current == "SS":
         return ("SS", "both bounds < 30 = SS continues", 70.0)
     if current == "WLS":
@@ -245,17 +247,24 @@ def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
     chain = ShapeChain(current=current, anchor_zone_ids=[anchor])
     zmap = {z.id: z for z in zones}
 
-    # STEP 3 — extend the chain, with the per-link audit trail and the two bounds
-    seen = {current}
+    # STEP 3 — extend the chain, with the per-link audit trail and the two bounds.
+    # DIRECTION OF TRAVEL: seeded from the classification momentum, then flipped by a
+    # reversal shape. §6.4.1 conditions the NEXT shape on the TARGET zone's ZFP, and
+    # the target is only reachable if the walk follows the direction the current shape
+    # implies (a rejection goes the OTHER way). The earlier build walked upward only,
+    # so every reversing shape lost its target and the chain died at link 1.
+    direction = 1 if bars_momentum >= 0 else -1
     for _ in range(MAX_CHAIN_LENGTH - 1):
-        # the TARGET zone is the next one the move will meet, by position.
+        if current in _REVERSALS:
+            direction = -direction      # a rejection reverses the move that reached it
+        # the TARGET zone is the next one the move will meet, in `direction`.
         # DEFECT FOUND AND FIXED 2026-10-03: this passed `zmap[anchor]` — a Zone
         # OBJECT — where _next_target expects a zone ID. The lookup compared
         # `z.id == <Zone>` and never matched, so the loop silently broke on
         # iteration 0 and every chain came back EMPTY while ST-13a still passed,
         # because "0 links <= 5" is vacuously true. A test that passes on an empty
         # result is not a test.
-        nxt = _next_target(zones, anchor)
+        nxt = _next_target(zones, anchor, direction)
         if nxt is None:
             break
         if not tf_match(tf_source, nxt.timeframe):
@@ -268,18 +277,42 @@ def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
             # Terminating here is the honest outcome.
             break
         shape, cond, conf = tr
-        if shape in seen:
+        if shape == current:
+            # No self-loop. "SS continues" is a STATE, not a link; the §6.3 chains that
+            # revisit a shape (SS→BS→SS→BS, WLS→BS→WLS) do so ACROSS other shapes —
+            # which the old `seen` guard wrongly forbade. Only an immediate A→A stops.
             break
 
         link = Link(from_shape=current, to_shape=shape, trigger_zone_id=nxt.id,
                     trigger_zone_zfp=nxt.zfp, condition=cond, confidence=conf)
         chain.chain.append(link)
         chain.anchor_zone_ids.append(nxt.id)
-        seen.add(shape)
         current = shape
         anchor = nxt.id
         if chain.cumulative() < MIN_CHAIN_CONFIDENCE:
             break                       # §6.6 — terminate, do not pad
+
+    # §6.4.1 · TEMPORAL COMPLETION. The zone-walk extends the chain only when a NEW
+    # zone is reachable. When it stalls, the canon still reclassifies the terminal
+    # shape on TIME alone:
+    #   "R | Persists > 1 full session | SS (reclassify, NOT continue R)"
+    #   "WL | No opposite momentum    | SS"
+    #   "RWL | any                    | SS"
+    # None of those rows needs a new target zone, so the reclassification is anchored to
+    # the SAME zone (Rule 1 holds) and is applied at the WEEK layer. Without it, a map
+    # with no second zone ends on one shape and the day decomposition is necessarily
+    # flat (an R — a <1-session shape — drawn five times), which §6.8 and §6.4.1 forbid.
+    _TEMPORAL = {"R": "SS", "WL": "SS", "RWL": "SS"}
+    if current in _TEMPORAL:
+        z_anchor = zmap.get(anchor)
+        if z_anchor is not None:
+            succ = _TEMPORAL[current]
+            chain.chain.append(Link(
+                from_shape=current, to_shape=succ, trigger_zone_id=anchor,
+                trigger_zone_zfp=z_anchor.zfp,
+                condition=(f"§6.4.1 temporal: {current} unresolved past its canon "
+                           f"duration at {anchor} → reclassify to {succ}"),
+                confidence=60.0))
 
     # STEP 4 — the alternative chain, ALWAYS
     chain.alternative = _alternative(zones, zmap, chain)
@@ -292,31 +325,72 @@ def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
     return chain
 
 
-def _next_target(zones: list[Zone], current_id: str) -> Zone | None:
-    """The next zone the price will meet: the strongest one on the far side of the
-    current one. Deliberately simple and deterministic — a forecast whose next step
-    depends on floating-point ties is not reproducible."""
+_REVERSALS = ("WL", "RWL", "PWL", "PRWL")
+
+
+def _next_target(zones: list[Zone], current_id: str, direction: int) -> Zone | None:
+    """The next zone the price meets: the strongest one IN THE DIRECTION OF TRAVEL.
+
+    §6.6 step 3 extends the chain "shape by shape through the trading week", and
+    §6.4.1 conditions the next shape on the TARGET zone's ZFP — so the walk must be
+    able to go DOWN as well as up. Deliberately simple and deterministic: confluence
+    first, nearest on a tie (a forecast whose next step depends on floating-point
+    ties is not reproducible).
+
+    DEFECT FOUND AND FIXED 2026-10-05: the first build searched UPWARD only
+    (`z.bottom > cur.top`). Any chain whose price reverses — a WL, a RWL — found no
+    target and stopped at link 1, so the week came back as one repeat of the terminal
+    shape (the flat 'R, WL, WL, WL, WL' day sequence)."""
     cur = next((z for z in zones if z.id == current_id), None)
     if cur is None:
         return None
-    above = [z for z in zones if z.bottom > cur.top and z.degree != "MINIMAL"]
-    return max(above, key=lambda z: z.confluence) if above else None
+    pool = [z for z in zones if z.id != cur.id and z.degree != "MINIMAL"]
+    if direction > 0:
+        pool = [z for z in pool if z.bottom >= cur.top]
+    elif direction < 0:
+        pool = [z for z in pool if z.top <= cur.bottom]
+    if not pool:
+        return None
+    # "the NEXT zone the price meets" (§6.6 step 3 / §6.8's BS→"Next Resistance")
+    # is the NEAREST one in the direction of travel; confluence breaks a tie.
+    return min(pool, key=lambda z: (abs((z.bottom + z.top) - (cur.bottom + cur.top)),
+                                    -z.confluence))
 
 
 def _alternative(zones: list[Zone], zmap: dict, chain: ShapeChain) -> list[Link]:
-    """§6.6 step 4 — for EVERY primary chain, an alternative with its decision zone."""
+    """§6.6 step 4 — for EVERY primary chain, at least one alternative that activates
+    if the DECISION ZONE behaves oppositely. The decision zone is the first link's
+    target; the threshold is the §6.4.1 band boundary, and the shape is the canon's
+    OTHER branch for that band. The report can then say "if X fails above 45%, the
+    alternative applies" — an actionable branch, not a single path that must be
+    believed or discarded whole.
+
+    DEFECT FOUND AND FIXED 2026-10-05: the earlier build produced a single link from a
+    contrived `min/max` band fudge (`min(hardwall+1, max(hardwall, zfp-25))`), which
+    could return the SAME branch as the primary. The branch is now the canon's
+    opposite outcome for the decision zone's own band."""
     if not chain.chain:
         return []
     first = chain.chain[0]
     z = zmap.get(first.trigger_zone_id)
     if z is None:
         return []
-    alt_shape, alt_cond, alt_conf = transition(first.from_shape,
-                                              min(ZFP_HARDWALL + 1, max(ZFP_HARDWALL, z.zfp - 25)))
+    if z.zfp < ZFP_HARDWALL:
+        # primary called the zone a Hard Wall (rejection); alternative = it fails
+        alt_shape, threshold, why, conf = "PBS", f"ZFP > {ZFP_BREAKOUT}", \
+            "the wall FAILS (cascade) — it does not reject", 60.0
+    elif z.zfp > ZFP_BREAKOUT:
+        # primary called the zone a failing zone (continuation); alternative = rejection
+        alt_shape, threshold, why, conf = "RWL", f"ZFP < {ZFP_HARDWALL}", \
+            "the zone HOLDS (Hard Wall rejection) — it does not fail", 85.0
+    else:
+        # primary called the zone a mid-range pause; alternative = it breaks
+        alt_shape, threshold, why, conf = "BS", f"ZFP > {ZFP_BREAKOUT}", \
+            "the mid-range zone FAILS (breakout) — it does not pause", 70.0
     return [Link(from_shape=first.from_shape, to_shape=alt_shape,
                  trigger_zone_id=z.id, trigger_zone_zfp=z.zfp,
-                 condition=f"ALTERNATIVE: if {z.id} fails below {ZFP_HARDWALL} → {alt_cond}",
-                 confidence=alt_conf)]
+                 condition=f"ALTERNATIVE: DECISION ZONE {z.id} {threshold} → {why}",
+                 confidence=conf)]
 
 
 def consolidation_phase(z: Zone) -> str:
@@ -332,18 +406,44 @@ def consolidation_phase(z: Zone) -> str:
     return "MID"
 
 
+# §6.8 — the canon's EXPECTED DURATION per shape, in sessions (the low end of each
+# range, so the mapping never over-claims a short shape's persistence).
+_DURATION = {"SS": 2, "BS": 1, "PBS": 1, "WLS": 2, "R": 1, "WL": 1, "RWL": 1,
+             "RS": 1, "PWL": 1, "PRWL": 1}
+
+
 def day_decomposition(chain: ShapeChain, zones: list[Zone],
                       monday: dt.date) -> list[dict]:
     """§6.6 step 5 — Mon-Fri, each with shape, bias, key zone, triggers, confidence.
+
+    THE SHAPE OCCUPIES ITS SESSIONS (§6.8). The earlier build mapped one chain shape
+    per day-index and then padded the tail with the LAST shape, so a 1-link chain drew
+    "WL, WL, WL, WL" — a <1-session shape stretched across four sessions, which §6.8's
+    own duration column forbids. The week is now built by giving each shape its canon
+    duration; the TERMINAL shape carries any remaining tail (it is the state price is
+    in at the week's end) and a longer chain truncates to the five sessions.
 
     THE TRADING SPEED RULE (§6.10): "+1 day to expected timing" and "assume price
     moves at 30-50% of the speed you think it will". Applied here as an EXPLICIT
     +1 day offset on the date so a reader can see it, not as a hidden adjustment."""
     days, names = [], ["Mon", "Tue", "Wed", "Thu", "Fri"]
     shapes = [chain.current] + [l.to_shape for l in chain.chain]
+    seq: list[str] = []
+    for s in shapes:
+        seq.extend([s] * max(1, _DURATION.get(s, 1)))
+    if not seq:
+        seq = [""]
+    while len(seq) < len(names):
+        seq.append(seq[-1])
+    seq = seq[:len(names)]
+    # each day's zone + confidence come from the LINK that produced ITS shape (the
+    # first link that reaches it, so a revisited shape names a real trigger zone).
+    by_to: dict = {}
+    for l in chain.chain:
+        by_to.setdefault(l.to_shape, l)
     for i, name in enumerate(names):
-        shape = shapes[i] if i < len(shapes) else shapes[-1]
-        link = next((l for l in chain.chain if l.to_shape == shape), None)
+        shape = seq[i]
+        link = by_to.get(shape)
         key_zone = link.trigger_zone_id if link else (chain.anchor_zone_ids[0]
                                                       if chain.anchor_zone_ids else "")
         conf = link.confidence if link else 60.0

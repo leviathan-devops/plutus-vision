@@ -46,8 +46,29 @@ CLUSTER_ATR_MULT = 0.10       # canon: levels within 0.10-0.15 cluster into one 
 MAX_ZONES = 6                 # the pin's cap: five plus at most one options wall
 CONFLUENCE_CAP = 14
 
-# P2 weights — canon: "200 (3.0) · 100 (2.0) · 50 (1.5) · 20 (1.0) · 9/10 (0.5)"
-MA_WEIGHTS = {200: 3.0, 100: 2.0, 50: 1.5, 20: 1.0, 9: 0.5}
+# ── PILLAR 1 · THE SCORING GRANULARITIES (Trident 5.3.3 §3.1 Pillar 1 step 9 AND the
+# Synthesis Engine table line 1469: "Technical | Exact match (within 3 pips) | Zone match
+# (within 10 pips) | No match"). Expressed in PIPS so the same rule holds on the DXY index
+# and on a 4-decimal pair (Part IX: the pair translation is DIRECTIONAL, not arithmetic).
+PIP = {"DXY": 0.01, "EUR/USD": 0.0001, "GBP/USD": 0.0001}
+EXACT_PIPS = 3                # canon: "Exact match within 3 pips = 2 pts"
+ZONE_PIPS = 10                # canon: "Zone match within 10 pips = 1 pt"
+LEGACY_BONUS = 0.5            # canon Pillar 1 step 9: "LEGACY BONUS of +0.5"
+# The extended-depth window (Pillar 1 step 3): "Check if current DXY range overlaps with any
+# historical range from the past 2-4 months" — and Pillar 5's 90/180-day conditional extension.
+HIST_LOOKBACK_DAYS = (60, 120)   # 2-4 months
+HIST_MAX_WEEKS = 4               # bounded: the canon never says "all of them"
+
+# ── PILLAR 2 · THE MA GRID (Trident 5.3.3 §3.2) ──────────────────────────────
+# "Extract ALL available MA values: EMA/SMA 9, 10, 20, 50, 100, 200."
+MA_PERIODS = (9, 10, 20, 50, 100, 200)
+MA_MAJOR = (50, 100, 200)     # canon recapture: "a major MA (50, 100, 200)"
+# weights — canon: "200 (3.0) · 100 (2.0) · 50 (1.5) · 20 (1.0) · 9/10 (0.5)"
+MA_WEIGHTS = {200: 3.0, 100: 2.0, 50: 1.5, 20: 1.0, 10: 0.5, 9: 0.5}
+# canon: "Detect confluence clusters where 3+ MAs converge within 0.15 DXY points"
+MA_CLUSTER_PIPS = 15.0
+MA_RECAPTURE_BONUS = 2.0      # canon: "flag that level as RECAPTURE ZONE with +2 bonus"
+MA_RECAPTURE_SESSIONS = 3     # canon: "recently (within 3 sessions) crossed above a major MA"
 
 # ZFP base by zone type — canon Part III Pillar 9
 ZFP_BASE = {"HARD_WALL": (5, 15), "STANDARD_WALL": (15, 30), "SOFT_WALL": (30, 50),
@@ -209,20 +230,24 @@ def classic_pivots(h: float, l: float, c: float) -> dict:
 
 
 def verify_classic(p: dict, h: float, l: float) -> list[str]:
-    """THE ZERO-TOLERANCE ARITHMETIC CHECK. A single miscalculated pivot cascades into
-    every zone that references it, so an unverified set is never emitted."""
-    bad = []
-    for k, v, tol in (("R1", p["R1"], 2 * p["PP"] - l), ("S1", p["S1"], 2 * p["PP"] - h),
-                      ("R2", p["R2"], p["PP"] + (h - l)), ("S2", p["S2"], p["PP"] - (h - l))):
-        if abs(v - tol) > 1e-9:
-            bad.append(f"{k}={v:.6f} expected {tol:.6f}")
-    return bad
+    """Back-compat shim — the full four-check verification lives in `verify_pivot`."""
+    return verify_pivot("CLASSIC", p, h, l, p.get("PP", 0.0))
 
 
-def fib_pivots(h: float, l: float) -> dict:
+def fib_pivots(h: float, l: float, c: float) -> dict:
+    """Trident 5.3.3 §3.1 Pillar 1 step 5, VERBATIM:
+        PP = (H + L + C) / 3
+        R1 = PP + 0.382 × (H - L)   S1 = PP - 0.382 × (H - L)
+        R2 = PP + 0.618 × (H - L)   S2 = PP - 0.618 × (H - L)
+        R3 = PP + 1.000 × (H - L)   S3 = PP - 1.000 × (H - L)
+    THE DEFECT THIS REPLACES (measured 2026-10-05): the earlier build anchored the levels on
+    the extremes (`R1 = H - rng × 0.382`), which produced R1 BELOW PP and made R3 == L,
+    S3 == H — the Fibonacci ladder inverted, the exact swap the canon's Symmetry Check hunts."""
+    pp = (h + l + c) / 3.0
     rng = h - l
-    return {f"R{n}": h - rng * f for n, f in (("1", 0.382), ("2", 0.618), ("3", 1.000))} | \
-           {f"S{n}": l + rng * f for n, f in (("1", 0.382), ("2", 0.618), ("3", 1.000))}
+    return {**{f"R{n}": pp + f * rng for n, f in (("1", 0.382), ("2", 0.618), ("3", 1.000))},
+            **{f"S{n}": pp - f * rng for n, f in (("1", 0.382), ("2", 0.618), ("3", 1.000))},
+            "PP": pp}
 
 
 def camarilla(h: float, l: float, c: float) -> dict:
@@ -231,6 +256,135 @@ def camarilla(h: float, l: float, c: float) -> dict:
             "R3": c + rng * 1.1 / 4, "S3": c - rng * 1.1 / 4,
             "R2": c + rng * 1.1 / 6, "S2": c - rng * 1.1 / 6,
             "R1": c + rng * 1.1 / 12, "S1": c - rng * 1.1 / 12}
+
+
+def verify_pivot(variant: str, p: dict, h: float, l: float, c: float,
+                 rel_tol: float = 1e-9) -> list[str]:
+    """THE MANDATORY PIVOT VERIFICATION (Trident 5.3.3 §3.1 Pillar 1 step 8) — all four
+    checks the canon names, per variant, returning the failed check names ([] == PASS):
+
+      FORMULA CHECK (ALL)      R1+L=2PP · S1+H=2PP · R2-PP=H-L · PP-S2=H-L
+      SYMMETRY CHECK (FIB ONLY) R1-PP == PP-S1 == 0.382(H-L) ; R2-PP == PP-S2 == 0.618(H-L)
+      SANITY CHECK (ALL)       R1>PP>S1 · R2>R1>PP · S1>S2>S3
+      RANGE CONSISTENCY        Classic R2-S2=2(H-L) · Fib R2-S2=1.236(H-L) · Cam R4-S4=1.1(H-L)
+
+    ⚠ The canon is explicit that Classic pivots are ASYMMETRIC by design — R1-PP ≠ PP-S1 is
+    correct, so no symmetry check is applied to Classic or Camarilla. Camarilla defines no PP;
+    its sanity ladder is R4>R3>R2>R1>C>S1>S2>S3>S4 (that variant IS symmetric about C)."""
+    rng = h - l
+    bad: list[str] = []
+
+    def eq(x: float, y: float) -> bool:
+        return abs(x - y) <= rel_tol * max(1.0, abs(y))
+
+    if variant == "CLASSIC":
+        pp = p["PP"]
+        for k, lhs, rhs in (("R1", p["R1"] + l, 2 * pp), ("S1", p["S1"] + h, 2 * pp),
+                            ("R2", p["R2"] - pp, rng), ("S2", pp - p["S2"], rng)):
+            if not eq(lhs, rhs):
+                bad.append(f"FORMULA {k}: {lhs:.6f} != {rhs:.6f}")
+        if not (p["R1"] > pp > p["S1"]):
+            bad.append("SANITY R1>PP>S1")
+        if not (p["R2"] > p["R1"] > pp):
+            bad.append("SANITY R2>R1>PP")
+        if not (p["S1"] > p["S2"] > p["S3"]):
+            bad.append("SANITY S1>S2>S3")
+        if not eq(p["R2"] - p["S2"], 2 * rng):
+            bad.append("RANGE R2-S2 != 2x(H-L)")
+    elif variant == "FIB":
+        pp = p["PP"]
+        for n, f in (("1", 0.382), ("2", 0.618)):
+            up, dn = p[f"R{n}"] - pp, pp - p[f"S{n}"]
+            if not eq(up, f * rng) or not eq(dn, f * rng):
+                bad.append(f"FORMULA R{n}/S{n}")
+            if not eq(up, dn):                       # the SYMMETRY check, FIB only
+                bad.append(f"SYMMETRY R{n}-PP != PP-S{n}")
+        if not (eq(p["R3"] - pp, rng) and eq(pp - p["S3"], rng)):
+            bad.append("FORMULA R3/S3")
+        if not (p["R1"] > pp > p["S1"] and p["R2"] > p["R1"] > pp
+                and p["R3"] > p["R2"] and p["S1"] > p["S2"] > p["S3"]):
+            bad.append("SANITY ladder")
+        if not eq(p["R2"] - p["S2"], 1.236 * rng):
+            bad.append("RANGE R2-S2 != 1.236x(H-L)")
+    elif variant == "CAMARILLA":
+        for k, f in (("4", 1.1 / 2), ("3", 1.1 / 4), ("2", 1.1 / 6), ("1", 1.1 / 12)):
+            if not eq(p[f"R{k}"], c + rng * f):
+                bad.append(f"FORMULA R{k}")
+            if not eq(p[f"S{k}"], c - rng * f):
+                bad.append(f"FORMULA S{k}")
+        ladder = (p["R4"], p["R3"], p["R2"], p["R1"], c, p["S1"], p["S2"], p["S3"], p["S4"])
+        if any(ladder[i] <= ladder[i + 1] for i in range(len(ladder) - 1)):
+            bad.append("SANITY R4>R3>R2>R1>C>S1>S2>S3>S4")
+        if not eq(p["R4"] - p["S4"], 1.1 * rng):
+            bad.append("RANGE R4-S4 != 1.1x(H-L)")
+    return bad
+
+
+PIVOT_VARIANTS = (("CLASSIC", classic_pivots), ("FIB", fib_pivots), ("CAMARILLA", camarilla))
+
+
+# ── THE SERIES DATA SOURCES THE PILLARS READ ─────────────────────────────────
+def daily_bars(bars: list[dict]) -> list[dict]:
+    """Aggregate the analysis bars into UTC D1 buckets — the prior week's and each prior
+    trading day's HLC the canon's Pillar 1 consumes ("Prior week + prior day DXY High, Low,
+    Close"). The earlier build read `bars[-5:]` — FIVE HOURS of the 1H series mislabelled
+    'the prior completed week', so the weekly pivot set was computed from five hours."""
+    by_day: dict[str, dict] = {}
+    order: list[str] = []
+    for b in bars:
+        d = dt.datetime.fromtimestamp(b["t"] / 1000, dt.timezone.utc).date().isoformat()
+        cur = by_day.get(d)
+        if cur is None:
+            by_day[d] = {"d": d, "o": b["o"], "h": b["h"], "l": b["l"], "c": b["c"], "t": b["t"]}
+            order.append(d)
+        else:
+            cur["h"] = max(cur["h"], b["h"])
+            cur["l"] = min(cur["l"], b["l"])
+            cur["c"] = b["c"]
+            cur["t"] = b["t"]
+    return [by_day[k] for k in order]
+
+
+def ema_series(values: list[float], n: int) -> list[float | None]:
+    """The EMA aligned 1:1 with `values` (head padded None) — seeded with an SMA of the
+    first n, the same convention `ema()` uses, but index-addressable so the RECAPTURE
+    detector can read the MA as of any session's end."""
+    out: list[float | None] = [None] * len(values)
+    if len(values) < n:
+        return out
+    k = 2.0 / (n + 1)
+    prev = sum(values[:n]) / n
+    out[n - 1] = prev
+    for i in range(n, len(values)):
+        prev = values[i] * k + prev * (1 - k)
+        out[i] = prev
+    return out
+
+
+def sma_series(values: list[float], n: int) -> list[float | None]:
+    out: list[float | None] = [None] * len(values)
+    if len(values) < n:
+        return out
+    s = sum(values[:n])
+    out[n - 1] = s / n
+    for i in range(n, len(values)):
+        s += values[i] - values[i - n]
+        out[i] = s / n
+    return out
+
+
+def session_end_indices(bars: list[dict]) -> list[int]:
+    """The bar index closing each UTC session, oldest→newest."""
+    ends: list[int] = []
+    prev: str | None = None
+    for i, b in enumerate(bars):
+        d = dt.datetime.fromtimestamp(b["t"] / 1000, dt.timezone.utc).date().isoformat()
+        if prev is not None and d != prev:
+            ends.append(i - 1)
+        prev = d
+    if bars:
+        ends.append(len(bars) - 1)
+    return ends
 
 
 # ── THE ZONE ASSEMBLY ────────────────────────────────────────────────────────
@@ -257,63 +411,152 @@ def zfp_for(zone_type: str, zfp_hits: int) -> int:
     return int(max(2.0, min(98.0, base)))
 
 
-def build_levels(bars: list[dict]) -> tuple[list[dict], dict]:
+def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[list[dict], dict]:
     """Compute every candidate level from the fetched series, with its dimension scores."""
     a = atr(bars) or 0.0005
     closes = [b["c"] for b in bars]
     notes: dict = {}
-
-    # P1 · the prior COMPLETED week (the canon uses the prior range, never the live bar)
-    week = bars[-PIVOT_WEEK_DAYS - 1:-1]
-    wh, wl, wc = (max(b["h"] for b in week), min(b["l"] for b in week),
-                   week[-1]["c"])
-    p = classic_pivots(wh, wl, wc)
-    bad = verify_classic(p, wh, wl)
-    if bad:
-        notes["pivot_verification"] = f"FAILED: {bad[:3]}"
-    else:
-        notes["pivot_verification"] = "R1/S1/R2/S2 all verified to 1e-9"
-    fib = fib_pivots(wh, wl)
-    cam = camarilla(wh, wl, wc)
+    pip = PIP.get(pair, 0.01)
+    exact_tol, zone_tol = EXACT_PIPS * pip, ZONE_PIPS * pip
 
     levels: list[dict] = []
 
     def add(price: float, name: str, technical: float, structural: float = 0.0,
-            psychological: float = 0.0, zfp_hits: int = 0) -> None:
+            psychological: float = 0.0, options: float = 0.0, analyst: float = 0.0,
+            bonus: float = 0.0, zfp_hits: int = 0, extended: bool = False,
+            recapture: bool = False) -> None:
         if not price or price <= 0:
             return
         levels.append({
             "price": round(price, 5), "label": name,
-            "technical": technical, "options": 0.0, "analyst": 0.0,
+            "technical": technical, "options": options, "analyst": analyst,
             "structural": structural, "psychological": psychological,
+            "bonus": bonus, "extended": extended, "recapture": recapture,
             "zfp_hits": zfp_hits, "regime": 0.0,
         })
 
-    # P1 pivots — an exact prior-week extreme match is worth the full 2
-    for k, v in p.items():
-        hit = abs(v - wh) < 3e-5 or abs(v - wl) < 3e-5
-        add(v, f"P1_CLASSIC_{k}", 2.0 if hit else 1.0, 1.0 if hit else 0.0)
-    for k, v in fib.items():
-        add(v, f"P1_FIB_{k}", 1.0)
-    for k, v in cam.items():
-        hit = abs(v - wc) < 3e-5
-        add(v, f"P1_CAMARILLA_{k}", 2.0 if hit else 1.0)
+    # ═══ PILLAR 1 · THE MULTI-TIMEFRAME PIVOT ENGINE (Trident 5.3.3 §3.1) ═══════════
+    # "3 pivot variants × 2 timeframes = 6 complete pivot sets (42 calculated levels)."
+    # Classic (7) + Fibonacci (6) + Camarilla (8) = 21 per set × 2 timeframes = 42.
+    # Weekly  = the prior COMPLETED week's HLC (Mon-Fri, weekend buckets excluded).
+    # Daily   = "each of the last 3 trading days of the prior week" — the canon: "Do NOT
+    #           limit daily data extraction to only the last trading day."
+    # Extended= step 3: prior weeks in the past 2-4 months whose range OVERLAPS the current
+    #           range; their coincident levels carry the canon's LEGACY BONUS (+0.5).
+    days = daily_bars(bars)
+    week_mon = dt.date.fromisoformat(week) if week else None
+    tradable = [d for d in days if dt.date.fromisoformat(d["d"]).weekday() < 5
+                and (week_mon is None or dt.date.fromisoformat(d["d"]) < week_mon)]
+    prior_week = tradable[-PIVOT_WEEK_DAYS:]
 
-    # P2 · the weighted MA grid. The canon's Technical dimension is worth 2 points when
-    # the pivots AND the MAs CONCUR at one level — not when a lone pivot exists. Scoring
-    # each pillar on its own level (the first version) capped every cluster at 2/12, which
-    # is MINIMAL, and the chart drew nothing at all. The dimension is a CONVERGENCE, so
-    # the MAs are scored by how many of them stack within the canon's tolerance.
-    for n, w in MA_WEIGHTS.items():
-        e = ema(closes, n)
-        if e:
-            add(e[-1], f"P2_EMA{n}", 0.0)
-    ma_levels = [lvl for lvl in levels if lvl["label"].startswith("P2_")]
+    # (token, h, l, c, extended) — the canon's six sets plus the bounded extended scan.
+    sets: list[tuple[str, float, float, float, bool]] = []
+    if prior_week:
+        sets.append(("W", max(d["h"] for d in prior_week), min(d["l"] for d in prior_week),
+                     prior_week[-1]["c"], False))
+        for i, d in enumerate(prior_week[-3:]):
+            sets.append((f"D{i + 1}", d["h"], d["l"], d["c"], False))
+        # step 3 — the range-overlap scan over the 2-4 month window (bounded, canon-capped)
+        wh, wl = sets[0][1], sets[0][2]
+        lo_d = (week_mon or dt.date.fromisoformat(tradable[-1]["d"])) - dt.timedelta(
+            days=HIST_LOOKBACK_DAYS[1])
+        hi_d = (week_mon or dt.date.fromisoformat(tradable[-1]["d"])) - dt.timedelta(
+            days=HIST_LOOKBACK_DAYS[0])
+        buckets: dict[tuple[int, int], list[dict]] = {}
+        for d in tradable:
+            dd = dt.date.fromisoformat(d["d"])
+            if lo_d <= dd < hi_d:
+                buckets.setdefault(dd.isocalendar()[:2], []).append(d)
+        hist = []
+        for key in sorted(buckets):
+            ds = buckets[key]
+            hh, ll, cc = max(x["h"] for x in ds), min(x["l"] for x in ds), ds[-1]["c"]
+            if ll <= wh and hh >= wl:             # the ranges OVERLAP — canon step 3
+                hist.append((hh, ll, cc))
+        for i, (hh, ll, cc) in enumerate(hist[-HIST_MAX_WEEKS:]):
+            sets.append((f"H{i + 1}", hh, ll, cc, True))
+
+    # The exact price ANCHORS the canon scores against (Pillar 5's listed sources: "prior
+    # closes, HWC/LWC, extremes"): the current sets' H/L/C. A pivot landing on one is an
+    # EXACT MATCH by the canon's own granularity — 3 pips = 2 pts, 10 pips = 1 pt.
+    anchors = [v for (_, hh, ll, cc, ext) in sets if not ext for v in (hh, ll, cc)]
+    extremes = [v for (_, hh, ll, cc, ext) in sets if not ext for v in (hh, ll)]
+
+    trail: list[str] = []
+    fails = 0
+    for (token, hh, ll, cc, ext) in sets:
+        for variant, fn in PIVOT_VARIANTS:
+            p = fn(hh, ll, cc)
+            bad = verify_pivot(variant, p, hh, ll, cc)
+            if bad:
+                fails += 1
+                trail.append(f"Pivot Verification: {token} {variant} — {bad}")
+                continue
+            trail.append(f"Pivot Verification: {token} {variant} — H={hh:.5f} L={ll:.5f} "
+                         f"C={cc:.5f} | PP={p.get('PP', float('nan')):.5f} "
+                         f"R1={p['R1']:.5f} S1={p['S1']:.5f} | FORMULA: PASS | "
+                         f"R1>PP>S1: PASS | RANGE CHECK: PASS")
+            for k, v in p.items():
+                if k == "PP" and variant == "FIB":    # fib counts 6 levels, not 7
+                    continue
+                da = min(abs(v - x) for x in anchors) if anchors else 1e9
+                tech = (2.0 if da <= exact_tol else 1.0 if da <= zone_tol else 0.0)
+                de = min(abs(v - x) for x in extremes) if extremes else 1e9
+                struct = (2.0 if de <= exact_tol else 1.0 if de <= zone_tol else 0.0)
+                add(v, f"P1_{variant}_{token}_{k}", tech, struct, extended=ext)
+    notes["pivot_timeframes"] = len(sets)
+    notes["pivot_sets"] = len(sets) * len(PIVOT_VARIANTS)
+    notes["pivot_verification"] = (
+        f"{len(sets) * len(PIVOT_VARIANTS) - fails}/{len(sets) * len(PIVOT_VARIANTS)} pivot "
+        f"sets PASS the mandatory formula+symmetry+sanity+range verification "
+        f"({len(sets)} timeframes x {len(PIVOT_VARIANTS)} variants)"
+        if sets else "no prior week in the series")
+    notes["pivot_verification_trail"] = trail
+    # step 9, second clause — "Levels from extended historical data that coincide with
+    # current levels get a LEGACY BONUS of +0.5."
+    cur_p1 = [l["price"] for l in levels if l["label"].startswith("P1_") and not l["extended"]]
+    legacy = 0
+    for l in levels:
+        if l["extended"] and any(abs(l["price"] - x) <= zone_tol for x in cur_p1):
+            l["bonus"] = LEGACY_BONUS
+            legacy += 1
+    notes["legacy_bonus_levels"] = legacy
+
+    # ═══ PILLAR 2 · THE MOVING-AVERAGE CONFLUENCE GRID (Trident 5.3.3 §3.2) ════════
+    # "Extract ALL available MA values: EMA/SMA 9, 10, 20, 50, 100, 200." Weights 200=3.0,
+    # 100=2.0, 50=1.5, 20=1.0, 9/10=0.5. Confluence: 3+ MAs converging within 0.15 DXY
+    # points = 2 pts; a double = 1 pt; a lone MA = 0.5 pts. The earlier build used
+    # `0.15 * ATR` (~0.0075) — the canon's 0.15 is an ABSOLUTE DXY distance, so nothing ever
+    # clustered. RECAPTURE: price crossed above a major MA (50/100/200) within 3 sessions.
+    ma_tol = MA_CLUSTER_PIPS * pip
+    for n in MA_PERIODS:
+        for kind, series in (("EMA", ema_series(closes, n)), ("SMA", sma_series(closes, n))):
+            if series and series[-1] is not None:
+                add(series[-1], f"P2_{kind}{n}", 0.0)
+    ma_levels = [l for l in levels if l["label"].startswith("P2_")]
     for i, lvl in enumerate(ma_levels):
-        stack = [o for j, o in enumerate(ma_levels) if i != j
-                 and abs(o["price"] - lvl["price"]) <= 0.15 * a]
-        # 2 MAs agreeing = the canon's "clustering of 3+ MAs → 2 points"; 1 MA = 1 point
-        lvl["technical"] = 2.0 if len(stack) >= 2 else (1.0 if stack else 0.0)
+        size = 1 + sum(1 for j, o in enumerate(ma_levels)
+                       if j != i and abs(o["price"] - lvl["price"]) <= ma_tol)
+        lvl["technical"] = 2.0 if size >= 3 else (1.0 if size == 2 else 0.5)
+
+    # the recapture detector — a cross ABOVE a major MA within the last 3 sessions
+    ends = session_end_indices(bars)[-MA_RECAPTURE_SESSIONS - 1:]
+    recaptured: dict[str, bool] = {}
+    for n in MA_MAJOR:
+        for kind, series in (("EMA", ema_series(closes, n)), ("SMA", sma_series(closes, n))):
+            hit = False
+            for x, y in zip(ends, ends[1:]):
+                if series[x] is None or series[y] is None:
+                    continue
+                if closes[x] <= series[x] and closes[y] > series[y]:   # crossed above
+                    hit = True
+                    break
+            recaptured[f"P2_{kind}{n}"] = hit
+    for lvl in ma_levels:
+        if recaptured.get(lvl["label"]):
+            lvl["recapture"] = True
+            lvl["bonus"] = MA_RECAPTURE_BONUS                  # canon: "+2 bonus"
+    notes["ma_recapture"] = sorted(k for k, v in recaptured.items() if v)
 
     # P5 · the structural extremes that actually swept — the canon's LSZ. The dimension
     # is scored by REPETITION: "a level reached on 2 separate dates → +1.5, 3+ dates → +2.0,
@@ -439,6 +682,7 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
 def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> list[dict]:
     """Cluster the scored levels into zones, then score each CLUSTER by summing its
     dimensions. Independent evidence adds; it does not compete."""
+    pip = PIP.get(pair, 0.01)
     # ── THE CONFLUENCE SUM: independent dimensions ADD, they do not compete ──────
     # THE MISSING STEP, MEASURED 2026-10-03: 112 candidate levels were produced and the
     # best of them scored 2.0/12, so every zone was discarded and the chart drew nothing.
@@ -451,27 +695,33 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
     # So: cluster first (by price), THEN score each cluster by summing the best score per
     # dimension across its members. A round number that is ALSO a Camarilla R1 and also sits
     # on an MA is a genuinely strong zone; the same round number alone is not.
-    # THE SPEC'S TOLERANCE (5.3.3 Pillar 1: "exact match within 3 pips = 2 pts; Zone match
-    # within 10 pips = 1 pt"; Pillar 2: MA confluence "within 0.15 DXY points"). It is
-    # ABSOLUTE DXY points, NOT ATR-scaled — the earlier `0.10 * ATR` evaluated to ~0.005 and
-    # every zone collapsed to a zero-width point (the operator: "just literally stacked on
-    # top of each other"). 3 pips = the spec's exact-match granularity; clusters only levels
-    # that ARE one level (a 10-15 pip window greedily chains the dense set into one mega-zone).
-    tol = 0.03 if pair == "DXY" else 0.0003
-    # THE SPREAD WINDOW. Measured 2026-10-05: widening this to 1.2 did NOT change the zones —
-    # the top-6 by confluence cluster at 100.83-101.28 regardless, because the 74 levels are
-    # concentrated there. Kept at 0.35 (the engine's own window); the clustering is a property
-    # of the level set, not this filter.
+    # ── THE CANON'S ZONE ASSEMBLY ALGORITHM, steps 3-4 VERBATIM ──────────────────
+    # "MANDATORY LEVEL CLUSTERING SCAN: … count how many other levels fall within 0.15 DXY
+    #  points. A 'cluster' is 3+ levels within a 0.15 DXY band. Flag every cluster as
+    #  HIGH-DENSITY ZONE. Flag pairs within 0.10 DXY as TIGHT CONFLUENCE."
+    # "4. Group into zones where levels cluster within 0.10-0.15 DXY points."
+    #
+    # THE DEFECT THIS REPLACES (measured 2026-10-05, and confirmed with the enlarged pillar
+    # set): a 3-pip single-link pass CHAINS across the whole live window — every level within
+    # 3 pips of its neighbour joins the same zone — so the 144-level set collapsed to ONE
+    # 0.70-wide blob (the operator: "just literally stacked on top of each other"). The canon
+    # groups within a 0.10-0.15 band, i.e. a zone IS at most 0.15 wide, so the grouping is
+    # bounded by BOTH the step tolerance and the band width.
+    tol = 10.0 * pip          # canon step 3: "pairs within 0.10 DXY" = TIGHT CONFLUENCE
+    band = 15.0 * pip         # canon step 3/4: the 0.15 DXY band IS a zone's max width
+    min_members = 1           # a lone scored level is still a level; band prunes weak zones
+    # THE SPREAD WINDOW. Kept at 0.35 (the engine's own render window); the grouping below is
+    # now a property of the canon's band, not of this filter.
     live = sorted((l for l in levels if abs(l["price"] - spot) <= 0.35),
                   key=lambda l: l["price"])
-    # ONE clustering pass (the earlier duplicate first-pass was dead — audit 2026-10-05). `tol`
-    # keeps its max(...,0.0005) floor from above; the old second pass dropped it.
     clusters: list[list[dict]] = []
     for l in live:
-        if clusters and abs(l["price"] - clusters[-1][-1]["price"]) <= tol:
+        if clusters and (l["price"] - clusters[-1][-1]["price"] <= tol
+                         and l["price"] - clusters[-1][0]["price"] <= band):
             clusters[-1].append(l)
         else:
             clusters.append([l])
+    clusters = [cl for cl in clusters if len(cl) >= min_members]
 
     zones = []
     for cl in clusters:
@@ -480,7 +730,7 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
                                           "psychological", "regime")))
         base = sum(best[d] for d in ("technical", "options", "analyst", "structural",
                                      "psychological", "regime"))
-        bonus = min(2.0, best["structural"] * 0.66)     # the structural bonus, capped at +2
+        bonus = min(2.0, best["structural"] * 0.66 + best.get("bonus", 0.0))  # + legacy/recapture
         conf = int(min(CONFLUENCE_CAP, round(base + bonus)))
         deg = band_of(conf)
         if deg == "MINIMAL":
@@ -542,7 +792,7 @@ def main() -> int:
         return 0
 
     spot = bars[-1]["c"]
-    levels, notes = build_levels(bars)
+    levels, notes = build_levels(bars, args.pair, week)
     # THE SPEC'S METHOD (5.3.3 Part III Protocol B): the IP zones = where the pillars' LEVELS
     # CONFLUENCE — cluster the scored levels by price, score each cluster by the 6D sum.
     # (The earlier `synthesize_institutional_zones` range-bands were WRONG — a partition of the
@@ -554,14 +804,24 @@ def main() -> int:
         "spot": round(spot, 5), "data_as_of": dt.date.today().isoformat(),
         "sources": {
             "EXTRACT_ohlc": {"status": "OK", "source": source, "detail": provenance},
-            "P1_pivots": {"status": "OK", "detail": notes.get("pivot_verification", "")},
+            "P1_pivots": {"status": "OK", "detail": notes.get("pivot_verification", ""),
+                          "sets": notes.get("pivot_sets", 0),
+                          "legacy_bonus_levels": notes.get("legacy_bonus_levels", 0),
+                          "trail": notes.get("pivot_verification_trail", [])},
+            "P2_ma_grid": {"status": "OK", "mas": len(MA_PERIODS) * 2,
+                           "cluster_tol_pips": MA_CLUSTER_PIPS,
+                           "recapture": notes.get("ma_recapture", [])},
         },
         "levels": [{"price": l["price"], "label": l["label"],
                     "level_type": l["label"].split("_")[0], "style": "line",
-                    "use_box": False} for l in levels],
+                    "use_box": False,
+                    "technical": l["technical"], "structural": l["structural"],
+                    "psychological": l["psychological"], "regime": l["regime"],
+                    "bonus": l.get("bonus", 0.0), "recapture": l.get("recapture", False),
+                    "extended": l.get("extended", False)} for l in levels],
         "zones": zones, "shapes": {},
-        "notes": [f"{len(levels)} candidate levels clustered into {len(zones)} zones at "
-                  f"tolerance {CLUSTER_ATR_MULT} x ATR"],
+        "notes": [f"{len(levels)} candidate levels clustered into {len(zones)} zones",
+                  notes.get("pivot_verification", "")],
         "temporal_boundary_utc": "",
     }
     path.write_text(json.dumps(doc, indent=1))
