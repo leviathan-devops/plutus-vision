@@ -1,6 +1,6 @@
 # CHECKPOINT MANIFEST — v2-working-baseline-2026-10-05 (updated)
 
-**Date:** 2026-10-05 · **Project:** PLUTUS VISION · **git HEAD:** e64f1fa
+**Date:** 2026-10-05 · **Project:** PLUTUS VISION · **git HEAD:** 3918ca3
 **Seal mode:** NO-LOCK (mutable working snapshot; the v1 SHA is checked by every build — the H1 guard is the seal)
 **Milestone:** THE E1 ZONES RENDER WITH LABELS — the v2 working baseline, the E1 label defect
 fixed (the E2 path loop was suppressing the label pass; the SMC filled the budget).
@@ -30,6 +30,14 @@ fixed (the E2 path loop was suppressing the label pass; the SMC filled the budge
 - the live render (looked): the 5 labelled zones on the DXY chart, census 34 boxes · 28 lines ·
   6 labels (E2 off).
 - the desktop app: `pine-ide` from any cwd; 572 MB RSS vs Chrome 1685 MB.
+- **A1 (the live replay rewind) — RE-DRIVEN this session.** The vela replay control is reachable
+  at `window.PlutusPineShell.chart.replayControl.ctrl`; `replayStart({from})` → the C11 handler
+  fed the truncated series (census `bars 1614 → 988`), `replayStep()` ×3 → the cursor advanced
+  (`remaining 626 → 623`, census `→ 991`) and the E1 zones re-anchored; `replayStop()` → `bars 1614`
+  (the 5 labels back). The replay-follow is CONFIRMED live. Evidence: `RUNTIME_LEDGER.md` (the A1
+  entry) + `.omp/ct-results.json` (the A1 scenario).
+- the W9 artifact: `.omp/ct-results.json` — `overallVerdict: PASS`, 7/7 angles (A1-A7), artifact
+  sha `471a7849a18f7bf0`, the v1 seal `0d20e8314ce992fc`.
 
 ## THE KNOWN CONSTRAINT (named)
 - The vela PineTS renderer cannot paint the E2 path lines AND the E1 zone labels together — the
