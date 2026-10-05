@@ -199,9 +199,13 @@ check probes `POST /run` for exactly the reason above.
 
 **Read this before Step 0: it is the answer to "how far did the last session get".**
 
+> HISTORICAL — this ledger is the **v0-LIQUIDITY** milestone, NOT the live **E1-AUTOMATIC** build.
+> The E1 build's own phase status lives in `RUNNING_BUILD_LOG.md` + `TESTING_LOG.md` (the literal
+> `AUDIT GATE:` line + `reports/ocr-e1-automatic*.json`).
+
 | phase | gate | state |
 |---|---|---|
-| P0 ABSORB | baseline re-measured | **green** — every number came from disk |
+| P0 ABSORB | baseline re-measured | **green (v0)** — every number came from disk |
 | P1 SPEC | the package on disk | **green** — `packages/plutus-vision-v0-liquidity/{DPL1_SPEC,WAVE_PLAN,BLUEPRINT}.md` |
 | P2 PREFLIGHT | the checklist | **green** |
 | P3 EXECUTE | waves audited; v0 parity unchanged | **green** — `605bff82d3539e9e` untouched |

@@ -59,8 +59,8 @@ def harvest_bars(week: str = "", symbol: str = "DXY", timeframe: str = "1H") -> 
 
 
 # ── S6 — THE WEEKLY OPEN (derived from the bars) ───────────────────────────────────
-def harvest_weekly_open(week: str) -> dict:
-    bars = harvest_bars(week)["data"]
+def harvest_weekly_open(week: str, symbol: str = "DXY") -> dict:
+    bars = harvest_bars(week, symbol)["data"]
     if not bars:
         raise SourceDown("WEEK_OPEN_UNAVAILABLE: no bars to derive the open from")
     first = bars[0]
@@ -82,8 +82,8 @@ def harvest_web(week: str, live: bool = False) -> dict:
     Requiring network; a dry run (live=False) records the sources as [NO DATA: dry]."""
     try:
         import e1_fetch as F
-    except Exception as e:
-        raise SourceDown(f"FETCH_MODULE_MISSING: {str(e)[:200]}") from e
+    except ImportError as e:      # ONLY a missing module is FETCH_MODULE_MISSING (audit 2026-10-05);
+        raise SourceDown(f"FETCH_MODULE_MISSING: {str(e)[:200]}") from e  # a syntax error MUST surface
     if not live:
         raise SourceDown("WEB_DRY: pass --live to hit the network (the nine web sources)")
     cutoff = F.boundary_for(week)

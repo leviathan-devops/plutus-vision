@@ -570,3 +570,16 @@ near-zero spot (HIGH), the broad exception (MEDIUM), a redundant dict (LOW).
 `path.ext:NN` anchors (`.ts|.md|.json|.sh|.yml`, NOT `.py`). The docs now carry a file:line anchor
 index. **THE CHECKPOINTS TREE stays uncommitted** — its copied docs fail the gate (a host-gate/
 Python-project mismatch); the checkpoint exists on disk + is re-sealed.
+
+---
+
+## 2026-10-05 — THE FULL CODE-AUDIT + THE AUDIT GATE LINE (P6)
+
+**THE AUDIT GATE: PASS** — the code-audit artifact (`reports/ocr-e1-automatic.json` + `-round2` +
+`-round3`) IS on disk; the critical is CLEARED; every confirmed defect is fixed. The verboo lane
+(the 6th tried) was the first to make real tool calls (`file_read`/`code_search`). Full adjudication
+in `TESTING_LOG.md`.
+
+**THE CRITICAL CAUGHT (a real defect):** the E1/E2 payload seams picked their weeks INDEPENDENTLY —
+`_e2_files` silently fell back to a wrong week. Fixed, and the IMPLICIT case closed by anchoring E2
+to E1's own week. v2 `7115b734…` UNCHANGED.

@@ -130,18 +130,22 @@ lqzLabel=false       117 boxes · 42 lines · 0 labels  -> (the knob works; unla
 - **`SPEC.md` is the merge gate's bound spec** (`job: fence`, step-4 = the operator's panel
   approval). Editing it to loosen a gate is a wave-failing violation.
 
-## 4 · THE PIN'S PHASE STATUS, MEASURED (not remembered)
+## 4 · THE v0-LIQUIDITY PIN'S PHASE STATUS (HISTORICAL — it is NOT the E1 build's)
+
+> The LIVE build — **E1-AUTOMATIC** — carries its OWN phase status in `RUNNING_BUILD_LOG.md` +
+> `TESTING_LOG.md` (the literal `AUDIT GATE:` line + its on-disk artifact). This table is the
+> PRIOR v0-liquidity milestone, kept for the record only.
 
 | phase | gate | state |
 |---|---|---|
-| P0 ABSORB | baseline re-measured | **green** — every number in this session came from disk |
-| P1 SPEC | the package on disk | **green** — `packages/plutus-vision-v0-liquidity/{DPL1_SPEC,WAVE_PLAN,BLUEPRINT}.md` |
+| P0 ABSORB | baseline re-measured | **green (v0)** — every number came from disk |
+| P1 SPEC | the package on disk | **green (v0)** — `packages/plutus-vision-v0-liquidity/{DPL1_SPEC,WAVE_PLAN,BLUEPRINT}.md` |
 | P2 PREFLIGHT | the checklist | **green** |
 | P3 EXECUTE | waves audited, v0 parity unchanged | **green** — v0 `605bff82d3539e9e` untouched across 107 commits |
 | P4 RUNTIME | the live IDE, first person | **green** — the drills ledger in TESTING_LOG; one named residual (the dialog) |
-| P5 ADVERSARIAL | full corpus, zero confirmed | **green** — 7/7, every guard bit its mutant |
-| P6 DOCUMENT | the AUDIT GATE line | **green** — `AUDIT GATE: PASS` in TESTING_LOG; this doc pass closes the floors |
-| P7 CHECKPOINT | one seal mode | **green** — rev 9, `no-lock`, 873/873 MATCH |
+| P5 ADVERSARIAL | full corpus, zero confirmed | **green (v0)** — 7/7, every guard bit its mutant |
+| P6 DOCUMENT | the AUDIT GATE line | **green (v0-era)** — the v0 milestone's `AUDIT GATE: PASS`; the E1 build's gate is in TESTING_LOG |
+| P7 CHECKPOINT | one seal mode | **green (v0)** — rev 9, `no-lock`, 873/873 MATCH |
 | **P8 VERDICT** | **the operator's eyes** | **OPEN — the operator's, and only theirs** |
 
 ## 5 · THE JUDGMENT SURFACES, WITH THEIR SHAS (open these before any verdict)

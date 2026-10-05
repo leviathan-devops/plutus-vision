@@ -17,7 +17,7 @@ no branch on the anchor itself.
 THE WEEKDAY CONVENTION (the FX trading week).
   Mon..Fri  the bar's own week; mon = bar - weekday*day
   Saturday  post-close, still the just-finished week; mon = bar - 5 days
-  Sunday    pre-open (Sydney opens the new week Sunday evening); mon = the FOLLOWING Monday
+  Sunday    the just-finished week stands (Sydney opens the new week Sunday evening); mon = the FOLLOWING Monday
 
 IMPLEMENTS THE BLUEPRINT: MASTER_BLUEPRINT.md §4.2 / §18.1.
 SPEC: plutus-vision-e1-automatic_DPL1_SPEC.md §5 item 1 (the anchor).
@@ -32,6 +32,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import numbers
 import sys
 
 DAY_MS = 86_400_000
@@ -60,7 +61,7 @@ def resolve(
     Raises E1WeekInvalid on a missing / non-positive / implausible bar_time — the loud
     fail, so a chart with no valid bar can never render a fabricated week.
     """
-    if not bar_time_ms or isinstance(bar_time_ms, bool) or not isinstance(bar_time_ms, int) \
+    if not bar_time_ms or isinstance(bar_time_ms, bool) or not isinstance(bar_time_ms, numbers.Integral) \
             or bar_time_ms <= 0:
         raise E1WeekInvalid("E1_WEEK_INVALID — bar_time missing or non-positive")
 

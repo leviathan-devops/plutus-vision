@@ -55,6 +55,8 @@ def parse_strikes(resp: dict) -> list:
     """Extract the strike array from a chat-completion response. ANY failure -> [].
     A malformed answer is NOT a fabricated strike."""
     try:
+        if not resp.get("choices"):              # an empty choices list is a malformed answer -> []
+            return []
         txt = resp["choices"][0]["message"]["content"]
         m = re.search(r"\[.*\]", txt, re.S)
         if not m:
