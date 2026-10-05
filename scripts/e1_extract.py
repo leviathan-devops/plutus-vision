@@ -451,7 +451,13 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
     # So: cluster first (by price), THEN score each cluster by summing the best score per
     # dimension across its members. A round number that is ALSO a Camarilla R1 and also sits
     # on an MA is a genuinely strong zone; the same round number alone is not.
-    tol = max(CLUSTER_ATR_MULT * a, 0.0005)
+    # THE SPEC'S TOLERANCE (5.3.3 Pillar 1: "exact match within 3 pips = 2 pts; Zone match
+    # within 10 pips = 1 pt"; Pillar 2: MA confluence "within 0.15 DXY points"). It is
+    # ABSOLUTE DXY points, NOT ATR-scaled — the earlier `0.10 * ATR` evaluated to ~0.005 and
+    # every zone collapsed to a zero-width point (the operator: "just literally stacked on
+    # top of each other"). 3 pips = the spec's exact-match granularity; clusters only levels
+    # that ARE one level (a 10-15 pip window greedily chains the dense set into one mega-zone).
+    tol = 0.03 if pair == "DXY" else 0.0003
     # THE SPREAD WINDOW. Measured 2026-10-05: widening this to 1.2 did NOT change the zones —
     # the top-6 by confluence cluster at 100.83-101.28 regardless, because the 74 levels are
     # concentrated there. Kept at 0.35 (the engine's own window); the clustering is a property
@@ -537,10 +543,11 @@ def main() -> int:
 
     spot = bars[-1]["c"]
     levels, notes = build_levels(bars)
-    # THE 5 INSTITUTIONAL ROLES (5.3.3 s5.2.1) — the deliverable's zones. `assemble` (the raw
-    # confluence ladder) stays for the record; the render consumes the ROLES so the chart reads
-    # as the canon: spread across the week's range, one role per band, RES|MID|SUP by position.
-    zones = synthesize_institutional_zones(levels, bars, spot, args.pair)
+    # THE SPEC'S METHOD (5.3.3 Part III Protocol B): the IP zones = where the pillars' LEVELS
+    # CONFLUENCE — cluster the scored levels by price, score each cluster by the 6D sum.
+    # (The earlier `synthesize_institutional_zones` range-bands were WRONG — a partition of the
+    # range, not zones; the operator: "they're just literally stacked on top of each other".)
+    zones = assemble(levels, atr(bars) or 0.0005, spot, args.pair)
     week_mon = dt.date.fromisoformat(week)
     doc = {
         "schema": "trident-e1/1", "pair": args.pair, "target_week": week,

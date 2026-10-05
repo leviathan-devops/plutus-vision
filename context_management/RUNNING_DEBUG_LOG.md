@@ -739,3 +739,19 @@ per the pin · C16 (the operator's look). NONE is a defect; each is a scoped res
 - LESSON: verify by LOOKING, not counting; the canon's MACHINERY ports, its DATA does not; a
   computed field must be traced to its CONSUMER.
 - EVIDENCE: `plutus-vision-v2.pine` · `data/e1/DXY-2026-07-06.json` (5 roles) · the live render.
+
+## 2026-10-05 — THE ZONES ARE OVER-CLUSTERED (the operator: "just literally stacked on top of each other")
+
+- SYMPTOM: the E1 zones render as a wall of stacked bars filling the price range — NOT distinct
+  institutional zones. The E2 path was a flat line.
+- ROOT CAUSE (measured): (1) the clustering tolerance was `CLUSTER_ATR_MULT * atr` = `0.10 * ~0.05`
+  ≈ **0.005** — every zone collapsed to a zero-width POINT; (2) the level set is BARS-ONLY
+  (`build_levels` uses pivots/MA/LSZ/round — NOT the prompt's 9 pillars' data sources), so it is
+  partial + over-dense (74 levels); (3) a too-wide window then merges them into 2 mega-blobs.
+- THE SPEC (5.3.3): Engine 1 = the 9-PILLAR 6D hybrid (Protocol B) — Pillar 1 "exact within 3 pips
+  = 2 pts, zone within 10 pips = 1 pt"; Pillar 2 "MA confluence within 0.15 DXY points"; the zones
+  = where the pillars' levels CONFLUENCE (not a range partition). The code implements a partial,
+  bars-only version.
+- FIX IN FLIGHT: a wave implementing Protocol B's Pillars 1+2 (exact formulas) + Engine 2 (the shape
+  chain) per the prompt. The tolerance set to 3 pips (the spec's exact-match granularity).
+- LESSON: the E1 zones must trace to the PROMPT's pillars — bars-only levels are not the spec.
