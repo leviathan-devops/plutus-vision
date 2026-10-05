@@ -49,6 +49,16 @@
     "P2_EMA50",
     "P2_SMA50"
    ]
+  },
+  "local_ohlc": {
+   "status": "OK"
+  },
+  "local_weekly_open": {
+   "status": "OK"
+  },
+  "web_harvest": {
+   "status": "DOWN",
+   "label": "[NO DATA]"
   }
  },
  "levels": [
