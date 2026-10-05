@@ -323,11 +323,17 @@ def build() -> str:
     #   2. the SMC's two noisiest label families (swing STRUCTURE + HIGH/LOW swings) are turned
     #      OFF in the v2, freeing the budget for the E1 zone tags. The E1 pressure map is the
     #      product; the SMC structure labels are secondary. (Re-enable by flipping these to true.)
-    v1 = v1.replace("max_labels_count = 500", "max_labels_count = 600")
+    v1 = v1.replace("max_labels_count = 500", "max_labels_count = 2000")
     v1 = v1.replace("showStructureInput              = input.bool(true",
                     "showStructureInput              = input.bool(false")
     v1 = v1.replace("showHighLowSwingsInput          = input.bool(true",
                     "showHighLowSwingsInput          = input.bool(false")
+    v1 = v1.replace("showInternalsInput              = input.bool(true",
+                    "showInternalsInput              = input.bool(false")
+    v1 = v1.replace("showInternalOrderBlocksInput    = input.bool(true",
+                    "showInternalOrderBlocksInput    = input.bool(false")
+    v1 = v1.replace("showEqualHighsLowsInput         = input.bool(true",
+                    "showEqualHighsLowsInput         = input.bool(false")
     decls, pushes = build_payload()
     return (
         v1.rstrip() + "\n"

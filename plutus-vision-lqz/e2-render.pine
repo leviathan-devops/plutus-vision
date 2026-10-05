@@ -54,19 +54,28 @@ f_e2Render() =>
              color = color.new(color.red, 22), textcolor = color.new(color.red, 90))
 
     if e2Enabled and _n >= 2
-        // THE LINE. ONE polyline, drawn as a freehand brush: a line per segment with
-        // a round join reads as a single continuous stroke rather than a chain of
-        // bars. A filled area is DELIBERATELY absent — see the contract at the top.
-        for i = 0 to _n - 2
-            if i >= _n - 1
-                break
-            x0 = array.get(e2DayX, i)
-            y0 = array.get(e2DayY, i)
-            x1 = array.get(e2DayX, i + 1)
-            y1 = array.get(e2DayY, i + 1)
-            line.new(x0, y0, x1, y1,
-                 xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity),
-                 width = e2Width)
+        // THE LINE. ONE polyline, drawn as a freehand brush. THE LOOP IS UNROLLED — measured
+        // 2026-10-05: the vela PineTS renderer, on a `for` loop of `line.new(..., xloc=bar_time)`
+        // carrying FUTURE offsets, OVER-DRAWS (a constant +1721 lines) AND SUPPRESSES every label
+        // on the chart (the E1 zone tags vanish; census 1666 with 0 on-screen). The SAME segments
+        // drawn as explicit (unrolled) `line.new` calls render correctly (census 1735, the E1 tags
+        // visible). Up to 5 day-anchors -> 4 segments; each guarded so a short week never
+        // over-indexes. This is the renderer's constraint, not a Pine one.
+        line.new(array.get(e2DayX, 0), array.get(e2DayY, 0),
+             array.get(e2DayX, 1), array.get(e2DayY, 1),
+             xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity), width = e2Width)
+        if _n >= 3
+            line.new(array.get(e2DayX, 1), array.get(e2DayY, 1),
+                 array.get(e2DayX, 2), array.get(e2DayY, 2),
+                 xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity), width = e2Width)
+        if _n >= 4
+            line.new(array.get(e2DayX, 2), array.get(e2DayY, 2),
+                 array.get(e2DayX, 3), array.get(e2DayY, 3),
+                 xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity), width = e2Width)
+        if _n >= 5
+            line.new(array.get(e2DayX, 3), array.get(e2DayY, 3),
+                 array.get(e2DayX, 4), array.get(e2DayY, 4),
+                 xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity), width = e2Width)
 
         // THE DOT + TAG at each day anchor. The tag is the SHAPE, not a zone
         // classification: this is what the engine PREDICTS, and it must be

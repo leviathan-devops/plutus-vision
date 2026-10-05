@@ -1912,3 +1912,20 @@ SEE context_management/NEXT_STEPS.md:1 for the active work.
   E2 future-offset line loop). This is a RENDERER defect, not a data/Pine defect.
 - **THE LESSON:** a census label count that exceeds the visible labels = labels created but not
   painted. The vela renderer is the binding constraint on this chart's overlays.
+
+## EN-104 — THE E1 LABEL FIX: the E2 path LOOP was suppressing the renderer's labels (2026-10-05)
+
+- **THE ROOT CAUSE (finally isolated):** the E2 predicted-path block drew its segments with a
+  Pine `for i = 0 to _n - 2` loop of `line.new(..., xloc = xloc.bar_time)`. On the vela PineTS
+  renderer this loop OVER-DRAWS (a constant +1721 lines) AND SUPPRESSES every `label.new` on the
+  chart — the E1 zone tags (drawn before it) simply do not paint. Census stuck at 1666 with 0
+  on-screen; the LQZ/SMC layers were innocent.
+- **THE ISOLATION:** with E2 off, the E1 labels render (census 6). With E2 on (loop), 0. Replace
+  the LOOP with UNROLLED `line.new` calls -> census 1735, the E1 tags VISIBLE.
+- **THE FIX:** `plutus-vision-lqz/e2-render.pine` — the E2 path's `for` loop is UNROLLED into 4
+  explicit `line.new` calls (up to 5 day-anchors = 4 segments), each guarded by `_n >= k` so a
+  short week never over-indexes. Same visual, no loop, no suppression.
+- **THE VERIFICATION (looked):** census `34 boxes · 431 lines · 1735 labels`; the E1 zones render
+  as 5 distinct bands AND the labels read `IP Resistance Ceiling | Light …` etc. on the chart.
+- **THE LESSON:** the vela PineTS renderer cannot take a `line.new` LOOP with future bar_time
+  offsets — it corrupts the whole label pass. Unroll the loop.
