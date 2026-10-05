@@ -338,6 +338,12 @@ def build() -> str:
                     "showInternalOrderBlocksInput    = input.bool(false")
     v1 = v1.replace("showEqualHighsLowsInput         = input.bool(true",
                     "showEqualHighsLowsInput         = input.bool(false")
+    # THE v1 LIQUIDITY WALL. The baseline's LQZ layer fills every liquidity zone (green) and
+    # tracks up to 60 — a wall that buries the E1 pressure zones (the operator: "everything I
+    # can see is rejected"). The E1 map is the product; the v1 liquidity is context. Turn the
+    # FILL off (edges only) and cap the zones so the E1 zones read.
+    v1 = v1.replace('lqzFillZone = input.bool(true', 'lqzFillZone = input.bool(false')
+    v1 = v1.replace('lqzMaxZones = input.int(60', 'lqzMaxZones = input.int(14')
     decls, pushes = build_payload()
     return (
         v1.rstrip() + "\n"

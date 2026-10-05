@@ -867,7 +867,7 @@ alertcondition(smc_currentAlerts.bearishFairValueGap,       'Bearish FVG',      
 lqzSource   = input.string("candles", "Liquidity detector", options = ["luxalgo", "candles", "both"], group = "LQZ")
 lqzTol      = input.float(0.5, "Overlap tolerance (x ATR)", minval = 0.05, maxval = 3.0, step = 0.05, group = "LQZ")
 lqzMinAgree = input.int(2, "Min agreeing sources", minval = 1, maxval = 4, group = "LQZ")
-lqzMaxZones = input.int(60, "Max zones", minval = 5, maxval = 200, group = "LQZ")
+lqzMaxZones = input.int(14, "Max zones", minval = 5, maxval = 200, group = "LQZ")
 lqzMaxLevels = input.int(1500, "Max tracked levels", minval = 100, maxval = 6000, group = "LQZ")
 
 // ── state ───────────────────────────────────────────────────────────────────
@@ -1188,7 +1188,7 @@ lqzColorLq  = input.color(#2E8B57, "Liquidity zone (ALL liquidity is this colour
 lqzEdgeLq   = input.color(#3FA46A, "Liquidity edge", group = "LQZ render")
 lqzLineW   = input.int(2, "Edge width (px)", minval = 1, maxval = 4, group = "LQZ render")
 lqzLineTol = input.float(0.0, "Rails draw separately above (x ATR)", minval = 0.0, maxval = 2.0, step = 0.05, group = "LQZ render")
-lqzFillZone = input.bool(true, "Fill every zone (THE library look)", group = "LQZ render")
+lqzFillZone = input.bool(false, "Fill every zone (THE library look)", group = "LQZ render")
 lqzFillA    = input.int(45, "Fill opacity (0=clear, 100=solid)", minval = 0, maxval = 100, group = "LQZ render")
 lqzThickE   = input.float(0.35, "Thinnest band (x ATR)", minval = 0.0, maxval = 2.0, step = 0.1, group = "LQZ render")
 lqzLeftB  = input.int(500, "Left margin (bars)", minval = 1, maxval = 500, group = "LQZ render")
@@ -1569,27 +1569,24 @@ f_e1Render() =>
                 // confluence CENTRE, so the five institutional levels read as DISTINCT levels with
                 // visible gaps — a level you can see, not a fill you cannot read.
                 _hw = 0.02
-                // THE LABEL X — VISIBLE + FULLY READABLE. The label style is `label_left` (the
-                // text runs LEFT from the anchor). Anchored at `_bAnchor - 20` (near the last
-                // real bar), the long text ("Name | Degree | NN% ZFP") ran PAST the right edge and
-                // was cut. Anchored WELL left of the anchor, the whole tag reads on the chart.
-                _lxmid = _bAnchor - 150
+                // THE LABEL X — VISIBLE. The zone box spans `_lx`..`_rx` (2 weeks back to 3 weeks
+                // forward), so its geometric MID sits in the FUTURE where the label is clipped.
+                // Place the tag on the visible bars, left of the last bar (the reference `style_none`
+                // white text at the zone's price).
+                _lxmid = bar_index - 100
                 // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
                 // A THICKER BORDER + a more OPAQUE fill so the E1 pressure zones DOMINATE the
                 // many v1 liquidity lines behind them (the operator: the E1 zones must be the
                 // read, the v1 the context).
                 box.new(_lx, _mid + _hw, _rx, _mid - _hw,
-                     bgcolor = color.new(f_e1Zbord(_cat, _deg), 45),
+                     bgcolor = color.new(f_e1Zbord(_cat, _deg), 55),
                      border_color = f_e1Zbord(_cat, _deg),
-                     border_width = 4,
+                     border_width = 2,
                      border_style = line.style_solid)
-                // THE LABEL — the v8 idiom, `style_none`. The earlier "no labels" defect was
-                // NOT the style: it was the 500-label render cap (the v1 SMC layer emits ~1663
-                // labels and consumed the whole budget, so every E1 tag drawn after it was
-                // silently dropped — measured 2026-10-05). With the cap raised in the builder
-                // (lqz_vision_v2_build.py) the white tags read cleanly on the zone fills.
+                // THE LABEL — the reference idiom: at the MID, style_none, white, size.normal.
+                // A subtle dark backing keeps the white text legible on the zone fill.
                 _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(f_e1CalcZFP(_top, _bot, _e1Pair)) + "% ZFP"
-                label.new(_lxmid, _mid, _lbl, style = label.style_label_left, textcolor = color.white, color = color.new(#0A0E12, 5), size = size.small)
+                label.new(_lxmid, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
     0
 
 if e1Enabled and barstate.islast
