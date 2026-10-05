@@ -58,7 +58,7 @@ def classify(top: float, bottom: float, spot: float | None) -> str:
     would mislabel a straddler RES). A zero-height zone (top == bottom, the measured shape)
     classifies by the same rule.
     """
-    if spot is None or spot == 0:
+    if spot is None or abs(spot) < 1e-9:
         raise E1SpotMissing("E1_SPOT_MISSING — cannot derive a category without spot")
     if bottom > spot:
         return "RES"
