@@ -275,7 +275,10 @@ def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
         # iteration 0 and every chain came back EMPTY while ST-13a still passed,
         # because "0 links <= 5" is vacuously true. A test that passes on an empty
         # result is not a test.
-        nxt = _next_target(zones, anchor, direction)
+        # THE REACH: a violent directional move (WL/BS/RWL) reaches for the FAR zone (the
+        # week's real extreme); a pause/range shape (R/SS) takes the NEAREST.
+        _far = current in ("WL", "BS", "RWL", "PWL", "PRWL", "PBS")
+        nxt = _next_target(zones, anchor, direction, far=_far)
         if nxt is None:
             break
         if not tf_match(tf_source, nxt.timeframe):
@@ -339,7 +342,8 @@ def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
 _REVERSALS = ("WL", "RWL", "PWL", "PRWL")
 
 
-def _next_target(zones: list[Zone], current_id: str, direction: int) -> Zone | None:
+def _next_target(zones: list[Zone], current_id: str, direction: int,
+                 far: bool = False) -> Zone | None:
     """The next zone the price meets: the strongest one IN THE DIRECTION OF TRAVEL.
 
     §6.6 step 3 extends the chain "shape by shape through the trading week", and
@@ -348,10 +352,14 @@ def _next_target(zones: list[Zone], current_id: str, direction: int) -> Zone | N
     first, nearest on a tie (a forecast whose next step depends on floating-point
     ties is not reproducible).
 
-    DEFECT FOUND AND FIXED 2026-10-05: the first build searched UPWARD only
-    (`z.bottom > cur.top`). Any chain whose price reverses — a WL, a RWL — found no
-    target and stopped at link 1, so the week came back as one repeat of the terminal
-    shape (the flat 'R, WL, WL, WL, WL' day sequence)."""
+    THE REACH (fix 2026-10-06). The operator's play-forward exposed that a
+    "violent directional move" (WL / BS / RWL — the canon's own words) was walking to
+    the ADJACENT zone and reversing, so the whole week came back as a +/-1-zone
+    oscillation that never reached the resistance the price actually rallied to
+    (101.275). A directional move now targets the FARTHEST zone its direction can
+    reach — the week's real extreme — while a range/pause shape (R, SS) still takes
+    the nearest, which is what a pause means. `far` is set by the caller from the
+    CURRENT shape, so the reach is a property of the move, not of the map."""
     cur = next((z for z in zones if z.id == current_id), None)
     if cur is None:
         return None
@@ -362,6 +370,10 @@ def _next_target(zones: list[Zone], current_id: str, direction: int) -> Zone | N
         pool = [z for z in pool if z.top <= cur.bottom]
     if not pool:
         return None
+    if far:
+        # the FARTHEST reachable zone = the move's real target (the extreme)
+        return max(pool, key=lambda z: (abs((z.bottom + z.top) - (cur.bottom + cur.top)),
+                                        z.confluence))
     # "the NEXT zone the price meets" (§6.6 step 3 / §6.8's BS→"Next Resistance")
     # is the NEAREST one in the direction of travel; confluence breaks a tie.
     return min(pool, key=lambda z: (abs((z.bottom + z.top) - (cur.bottom + cur.top)),
