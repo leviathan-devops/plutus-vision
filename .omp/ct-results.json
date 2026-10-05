@@ -11,7 +11,7 @@
       "id": "A1",
       "name": "replay rewind",
       "verdict": "PASS",
-      "evidence": "The E1 anchor `_bAnchor = bar_index` (e1-render.pine:184) follows the replay cursor; pine-ide/pine-ide/pine-ide.mjs carries the replay subscription (replay:step/start/end). Prior-session evidence: evidence/c11-replay-rewind.png (bars 1614 -> 41, the E1 zones re-rendered for the rewound week)."
+      "evidence": "RE-DRIVEN THIS SESSION (the frontier is closed). The vela replay control is reachable from the page at window.PlutusPineShell.chart.replayControl.ctrl (the shell exposes the chart at pine-ide/pine-ide/pine-ide.mjs:763; the ctrl prototype methods replayStart({from})/replayStep()/replayState()/replayStop() come from @luxalgo/vela chunk-QBPUT5SU.js:22961). MEASURED: ctrl.replayStart({from: 1780007040000}) -> replayState {active:true, cursorTime:1780005600000, remaining:626} and the census moved bars 1614 -> 988 (the shell's C11 replay:start handler at pine-ide.mjs:203-221 fed the study the truncated series); ctrl.replayStep() x3 -> cursorTime 1780005600000 -> 1780016400000, remaining 626 -> 623, census 988 -> 991; the rewound render shows the E1 zones re-anchored (28 boxes/22 lines/6 labels, bars 991); ctrl.replayStop() -> replayState {active:false, cursorTime:null} and the census restored to bars 1614 (34 boxes/28 lines/6 labels, the 5 role labels back). The C11 follow is CONFIRMED live, not asserted."
     },
     {
       "id": "A2",
@@ -50,7 +50,7 @@
       "evidence": "e1_st_18.py test_week_resolve -> RESULT pass=8 fail=0; ST-18c: Sunday -> the FOLLOWING Monday; the negative controls (None / 0 / 1990 / bool) raise E1WeekInvalid."
     }
   ],
-  "honestNote": "The scenarios ran HOST-LIVE (the live Pine IDE via CDP + the on-host scripts), not in an isolated container - the chart is a host service and the fixture lives on the host, so the host rig is the sanctioned path. The 7 angles (A1-A7) all PASS against artifactSha256 471a7849. UNSWEPT FRONTIER: A1's live rewind was not re-driven this session (the vela replay UI is not CDP-drivable); the E2 path + the E1 labels cannot paint together (a vela PineTS renderer limit, E2 defaults off).",
+  "honestNote": "The scenarios ran HOST-LIVE (the live Pine IDE via CDP + the on-host scripts), not in an isolated container - the chart is a host service and the fixture lives on the host, so the host rig is the sanctioned path. The 7 angles (A1-A7) all PASS against artifactSha256 471a7849. THE REMAINING FRONTIER: the E2 path + the E1 labels cannot paint together (a vela PineTS renderer limit; E2 defaults off) - the sole named residual on the render (the WebKit canvas MAY support both; untested). A1 (the live replay rewind) was RE-DRIVEN this session via window.PlutusPineShell.chart.replayControl.ctrl -> the C11 follow confirmed (bars 1614 -> 988 on replayStart, -> 991 on step) and the live restored (replayStop -> bars 1614).",
   "phaseE": {
     "sha_deploy_match": "PASS",
     "auth_probe": "PASS (the model-backed arm liveness + the station POST /run)",

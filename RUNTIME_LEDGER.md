@@ -92,8 +92,11 @@ taught by DRIVING the render, not by reading the source — each is invisible to
 
 ## Residual (the unswept frontier)
 - The E2 path + the E1 labels cannot paint TOGETHER (the vela renderer limit) — E2 defaults off.
-- The live replay rewind was not re-driven THIS session (the vela replay UI is not CDP-drivable);
-  the C11 evidence + the `bar_index` mechanism stand.
+- The live replay rewind IS now CDP-drivable and WAS re-driven (see the A1 entry below): the
+  vela replay control lives at `window.PlutusPineShell.chart.replayControl.ctrl` (`replayStart`
+  / `replayStep` / `replayState` / `replayStop`) — the C11 follow confirmed live (census
+  1614→988 on start, cursor advancing, the zones re-anchoring), and the live state restoring
+  (`bars 1614`, the 5 labels back).
 - The WebKit canvas (the desktop app) MAY support both the path and the labels where the vela
   renderer does not — untested.
 
@@ -125,3 +128,47 @@ paint the E2 path lines AND the E1 labels together — the path's line geometry 
 label pass, regardless of loop vs unroll. `e2Enabled` defaults false (the E1 map with labels is
 the product). The chart now shows the 5 labelled institutional-pressure zones (verified by
 looking, this turn).
+
+## 2026-10-05 (A1) — THE LIVE REPLAY REWIND: DRIVEN, AND THE C11 FOLLOW CONFIRMED
+
+THE FRONTIER CLOSED. The prior residual held that A1 (the live replay rewind) "was not re-driven
+because the vela replay UI is not CDP-drivable." MEASURED FALSE this session: the vela replay
+control is reachable from the page at `window.PlutusPineShell.chart.replayControl.ctrl` — the
+shell exposes the mounted chart on `window.PlutusPineShell` (`pine-ide/pine-ide/pine-ide.mjs:763`,
+`window.PlutusPineShell = handle`), and the chart object carries `replayControl.ctrl` whose
+prototype methods are `replayStart({from})` · `replayStep()` · `replayPause()` · `replayStop()` ·
+`replayState()` · `replayBounds()` (source
+`pine-ide/pine-station/node_modules/@luxalgo/vela/dist/chunk-QBPUT5SU.js:22961` `replayStart(opts)`,
+and the vela `start(opts)` at `chunk-E3GU6AUI.js:6772` → `ref.chart.replay.start({ from: opts.from })`).
+The FIRST attempt failed on the arg shape — `ctrl.start()`/`ctrl.step()` are not functions (the
+state object, not the controller) and `ctrl.replayStart()` with no arg throws
+`TypeError: Cannot read properties of undefined (reading 'from')`; the fix is the `{from}` bound
+from `ctrl.replayBounds()` (`{first: 1775041200000, last: 1783317600000}`).
+
+THE OP (pre-registered expectation → observed → verdict):
+- OP-A1.1 — `ctrl.replayStart({from: first + 0.6*(last-first)})` mid-range. EXPECTED: the replay
+  activates and the shell's C11 `replay:start` handler fires, feeding the study the bars UP TO the
+  cursor. OBSERVED: `replayState()` → `{active:true, cursorTime:1780005600000, remaining:626}` and
+  the census moved `bars 1614 → 988` — the study re-ran against the truncated series. VERDICT: PASS
+  (the C11 follow is real).
+- OP-A1.2 — `ctrl.replayStep()` ×3. EXPECTED: the cursor advances one bar-close per step and the
+  census tracks. OBSERVED: `cursorTime` 1780005600000 → 1780009200000 → 1780012800000 →
+  1780016400000; `remaining` 626 → 623; census `988 → 991`. VERDICT: PASS (bars revealed one at a time).
+- OP-A1.3 — the VISUAL: the rewound render (census `28 boxes · 22 lines · 6 labels · bars 991`,
+  the frame ~May 21-29) shows the E1 institutional-pressure zones re-anchored to the rewound last
+  bar — the anchor (`_bAnchor = bar_index`) follows the replay point. VERDICT: PASS.
+- OP-A1.4 — `ctrl.replayStop()`. EXPECTED: the replay ends, the full series returns, the study
+  re-runs at the live end. OBSERVED: `replayState()` → `{active:false, cursorTime:null, remaining:0}`
+  and the census restored to `bars 1614 · 34 boxes · 28 lines · 6 labels` with the 5 role labels
+  back on the right edge (`IP Resistance Ceiling | Lig…` … `Support Floor | Light 19…`). VERDICT: PASS
+  (both directions — the rewind follows AND the live restores).
+
+WHAT RUNNING TAUGHT THAT READING COULD NOT: the replay control is NOT a DOM widget (no
+`.replay` on the workbench, no `window.wb`/`window.S` escapes, no object attached to any element);
+it is reachable ONLY via the shell's exposed `window.PlutusPineShell.chart.replayControl.ctrl`, and
+its `replayStart` REQUIRES a `{from}` epoch-ms bound (the zero-arg call throws on `opts.from`).
+A source read of the shell's C11 handler (`pine-ide.mjs:203-221`) shows the `replay:step/start/end`
+subscription but NOT the drive path; only DRIVING it proves the follow fires. The C11 mechanism
+(`S.bars` truncated to `cursorTime` ≤ the cursor, then `scheduleRun()`) is now CONFIRMED live, not
+merely asserted. RESIDUAL: none on A1 — the frontier is closed; the sole named residual is the
+E2/labels-coexistence renderer limit (above), and the untested WebKit-canvas possibility.
