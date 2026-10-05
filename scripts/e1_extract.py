@@ -44,6 +44,9 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # ── THE CANON'S CONSTANTS — every one quoted, none tuned ─────────────────────
 PIVOT_WEEK_DAYS = 5          # DXY trades Mon-Fri
 CLUSTER_ATR_MULT = 0.10       # canon: levels within 0.10-0.15 cluster into one zone
+CONFLUENCE_MIN = 3            # a ZONE is where INDEPENDENT dimensions AGREE (score >= 3 of 12)
+CONFLUENCE_WINDOW = 0.70      # DXY: the institutional band scanned around spot (the 5 zones
+                              # span ~0.4; 0.70 admits the endpoints without a range partition)
 MAX_ZONES = 6                 # the pin's cap: five plus at most one options wall
 CONFLUENCE_CAP = 14
 
@@ -747,9 +750,16 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
     tol = 10.0 * pip          # canon step 3: "pairs within 0.10 DXY" = TIGHT CONFLUENCE
     band = 15.0 * pip         # canon step 3/4: the 0.15 DXY band IS a zone's max width
     min_members = 1           # a lone scored level is still a level; band prunes weak zones
-    # THE SPREAD WINDOW. Kept at 0.35 (the engine's own render window); the grouping below is
-    # now a property of the canon's band, not of this filter.
-    live = sorted((l for l in levels if abs(l["price"] - spot) <= 0.35),
+    # THE SPREAD WINDOW + THE CONFLUENCE FILTER (the accuracy fix, 2026-07-05). The 144
+    # candidate levels are DENSE (a level every 0.02-0.05), so clustering ALL of them gives a
+    # DENSITY partition — five contiguous ~0.16 bands with no gaps (the operator: "not
+    # accurate"). A REAL institutional zone is where INDEPENDENT dimensions AGREE: a level
+    # scored >= CONFLUENCE_MIN (a multi-dimension confluence). Clustering ONLY the confluence
+    # levels yields the genuine zones — distinct, with the GAPS the operator reads as levels.
+    _sc = lambda l: sum(l[d] for d in ("technical", "options", "analyst", "structural",
+                                       "psychological", "regime"))
+    live = sorted((l for l in levels if abs(l["price"] - spot) <= CONFLUENCE_WINDOW
+                   and _sc(l) >= CONFLUENCE_MIN),
                   key=lambda l: l["price"])
     clusters: list[list[dict]] = []
     for l in live:

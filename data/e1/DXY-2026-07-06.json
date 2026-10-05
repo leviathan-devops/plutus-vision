@@ -12,7 +12,7 @@
   "tsMid": 1783771200000
  },
  "spot": 101.048,
- "data_as_of": "2026-10-05",
+ "data_as_of": "2026-10-06",
  "sources": {
   "EXTRACT_ohlc": {
    "status": "OK",
@@ -2081,9 +2081,73 @@
  ],
  "zones": [
   {
+   "name": "Key IP Support",
+   "top": 100.6142,
+   "bottom": 100.4934,
+   "zone_type": "SOFT_WALL",
+   "confluence": 6,
+   "pressure_degree": "MODERATE",
+   "zfp": 40,
+   "regime": "consolidation",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "zCat": "SUP",
+   "zTir": "T2",
+   "zfp_label": 8,
+   "degree_v8": "MODERATE",
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
+    {
+     "price": 100.4934,
+     "label": "P1_CAMARILLA_D2_S4",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 100.5,
+     "label": "P6_ROUND_100.50",
+     "level_type": "P6",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 100.544,
+     "label": "P1_CLASSIC_D2_S1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 100.58393,
+     "label": "P1_FIB_D3_S2",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 100.59283,
+     "label": "P1_CAMARILLA_W_S3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 100.6142,
+     "label": "P1_FIB_W_S1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    }
+   ],
+   "ladder_name": "MODE_DEMAND_100.61"
+  },
+  {
    "name": "IP Support Floor",
-   "top": 100.852,
-   "bottom": 100.705,
+   "top": 100.68788,
+   "bottom": 100.6539,
    "zone_type": "SOFT_WALL",
    "confluence": 4,
    "pressure_degree": "LIGHT",
@@ -2094,137 +2158,53 @@
    "poi_tier": 1,
    "zCat": "SUP",
    "zTir": "T2",
-   "zfp_label": 9,
+   "zfp_label": 2,
    "degree_v8": "LIGHT",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
     {
-     "price": 100.705,
-     "label": "P5_LSZ_100.7050",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.7332,
-     "label": "P1_CAMARILLA_D2_S3",
+     "price": 100.6539,
+     "label": "P1_FIB_D2_S1",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 100.748,
-     "label": "P5_LSZ_100.7480",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.75,
-     "label": "P6_ROUND_100.75",
-     "level_type": "P6",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.77102,
-     "label": "P1_CAMARILLA_D3_S3",
+     "price": 100.65667,
+     "label": "P1_CLASSIC_D3_S1",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 100.779,
-     "label": "P5_LSZ_100.7790",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.78294,
-     "label": "P1_CAMARILLA_W_S1",
+     "price": 100.66405,
+     "label": "P1_CAMARILLA_D3_S4",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 100.79467,
-     "label": "P1_CLASSIC_D1_S3",
+     "price": 100.67574,
+     "label": "P1_FIB_D3_S1",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 100.797,
-     "label": "P5_LSZ_100.7970",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.80668,
-     "label": "P1_CAMARILLA_D3_S2",
+     "price": 100.68788,
+     "label": "P1_CAMARILLA_W_S2",
      "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.81313,
-     "label": "P1_CAMARILLA_D2_S2",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.82433,
-     "label": "P1_CLASSIC_D3_PP",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.825,
-     "label": "P5_LSZ_100.8250",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.831,
-     "label": "P5_LSZ_100.8310",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.84,
-     "label": "P5_LSZ_100.8400",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.84234,
-     "label": "P1_CAMARILLA_D3_S1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.852,
-     "label": "P5_LSZ_100.8520",
-     "level_type": "P5",
      "style": "line",
      "use_box": false
     }
    ],
-   "ladder_name": "LIGH_DEMAND_100.85"
+   "ladder_name": "LIGH_DEMAND_100.69"
   },
   {
    "name": "Mid-Range Support",
-   "top": 101.01033,
-   "bottom": 100.862,
+   "top": 100.97306,
+   "bottom": 100.831,
    "zone_type": "SOFT_WALL",
    "confluence": 6,
    "pressure_degree": "MODERATE",
@@ -2241,15 +2221,15 @@
    "timeframe": "1H",
    "levels": [
     {
-     "price": 100.862,
-     "label": "P5_LSZ_100.8620",
+     "price": 100.831,
+     "label": "P5_LSZ_100.8310",
      "level_type": "P5",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 100.879,
-     "label": "P5_LSZ_100.8790",
+     "price": 100.852,
+     "label": "P5_LSZ_100.8520",
      "level_type": "P5",
      "style": "line",
      "use_box": false
@@ -2258,13 +2238,6 @@
      "price": 100.88025,
      "label": "P2_SMA20",
      "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.886,
-     "label": "P5_LSZ_100.8860",
-     "level_type": "P5",
      "style": "line",
      "use_box": false
     },
@@ -2279,13 +2252,6 @@
      "price": 100.89307,
      "label": "P1_CAMARILLA_D2_S1",
      "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.904,
-     "label": "P5_LSZ_100.9040",
-     "level_type": "P5",
      "style": "line",
      "use_box": false
     },
@@ -2306,13 +2272,6 @@
     {
      "price": 100.916,
      "label": "P5_LSZ_100.9160",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.929,
-     "label": "P5_LSZ_100.9290",
      "level_type": "P5",
      "style": "line",
      "use_box": false
@@ -2353,13 +2312,6 @@
      "use_box": false
     },
     {
-     "price": 100.956,
-     "label": "P5_LSZ_100.9560",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
      "price": 100.95645,
      "label": "P2_EMA9",
      "level_type": "P2",
@@ -2379,7 +2331,29 @@
      "level_type": "P1",
      "style": "line",
      "use_box": false
-    },
+    }
+   ],
+   "ladder_name": "MODE_DEMAND_100.97"
+  },
+  {
+   "name": "Equilibrium Zone",
+   "top": 101.13287,
+   "bottom": 100.98498,
+   "zone_type": "SOFT_WALL",
+   "confluence": 6,
+   "pressure_degree": "MODERATE",
+   "zfp": 40,
+   "regime": "consolidation",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "zCat": "MID",
+   "zTir": "T2",
+   "zfp_label": 9,
+   "degree_v8": "MODERATE",
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
     {
      "price": 100.98498,
      "label": "P1_CAMARILLA_D3_R3",
@@ -2391,13 +2365,6 @@
      "price": 100.987,
      "label": "P1_CLASSIC_D2_PP",
      "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.987,
-     "label": "P5_LSZ_100.9870",
-     "level_type": "P5",
      "style": "line",
      "use_box": false
     },
@@ -2428,29 +2395,7 @@
      "level_type": "P1",
      "style": "line",
      "use_box": false
-    }
-   ],
-   "ladder_name": "MODE_DEMAND_101.01"
-  },
-  {
-   "name": "Equilibrium Zone",
-   "top": 101.18425,
-   "bottom": 101.03573,
-   "zone_type": "SOFT_WALL",
-   "confluence": 6,
-   "pressure_degree": "MODERATE",
-   "zfp": 40,
-   "regime": "consolidation",
-   "measured_move_target": null,
-   "structural_extreme": true,
-   "poi_tier": 1,
-   "zCat": "MID",
-   "zTir": "T2",
-   "zfp_label": 9,
-   "degree_v8": "MODERATE",
-   "bom_fresh_flag": null,
-   "timeframe": "1H",
-   "levels": [
+    },
     {
      "price": 101.03573,
      "label": "P2_EMA100",
@@ -2494,13 +2439,6 @@
      "use_box": false
     },
     {
-     "price": 101.079,
-     "label": "P5_LSZ_101.0790",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
      "price": 101.09195,
      "label": "P1_CAMARILLA_D3_R4",
      "level_type": "P1",
@@ -2515,33 +2453,34 @@
      "use_box": false
     },
     {
-     "price": 101.106,
-     "label": "P5_LSZ_101.1060",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.13,
-     "label": "P5_LSZ_101.1300",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
      "price": 101.13287,
      "label": "P1_CAMARILLA_D2_R2",
      "level_type": "P1",
      "style": "line",
      "use_box": false
-    },
-    {
-     "price": 101.139,
-     "label": "P5_LSZ_101.1390",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
+    }
+   ],
+   "ladder_name": "MODE_SUPPLY_101.13"
+  },
+  {
+   "name": "Upper IP Resistance",
+   "top": 101.281,
+   "bottom": 101.14704,
+   "zone_type": "SOFT_WALL",
+   "confluence": 6,
+   "pressure_degree": "MODERATE",
+   "zfp": 40,
+   "regime": "consolidation",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "zCat": "RES",
+   "zTir": "T2",
+   "zfp_label": 8,
+   "degree_v8": "MODERATE",
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
     {
      "price": 101.14704,
      "label": "P1_FIB_D1_S2",
@@ -2557,45 +2496,9 @@
      "use_box": false
     },
     {
-     "price": 101.179,
-     "label": "P5_LSZ_101.1790",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
      "price": 101.18425,
      "label": "P1_CAMARILLA_D1_S4",
      "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    }
-   ],
-   "ladder_name": "MODE_SUPPLY_101.18"
-  },
-  {
-   "name": "Upper IP Resistance",
-   "top": 101.33275,
-   "bottom": 101.191,
-   "zone_type": "SOFT_WALL",
-   "confluence": 6,
-   "pressure_degree": "MODERATE",
-   "zfp": 40,
-   "regime": "consolidation",
-   "measured_move_target": null,
-   "structural_extreme": true,
-   "poi_tier": 1,
-   "zCat": "RES",
-   "zTir": "T2",
-   "zfp_label": 9,
-   "degree_v8": "MODERATE",
-   "bom_fresh_flag": null,
-   "timeframe": "1H",
-   "levels": [
-    {
-     "price": 101.191,
-     "label": "P5_LSZ_101.1910",
-     "level_type": "P5",
      "style": "line",
      "use_box": false
     },
@@ -2628,13 +2531,6 @@
      "use_box": false
     },
     {
-     "price": 101.216,
-     "label": "P5_LSZ_101.2160",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
      "price": 101.226,
      "label": "P5_LSZ_101.2260",
      "level_type": "P5",
@@ -2645,27 +2541,6 @@
      "price": 101.24262,
      "label": "P1_FIB_D1_S1",
      "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.25,
-     "label": "P6_ROUND_101.25",
-     "level_type": "P6",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.25322,
-     "label": "P2_SMA200",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.26,
-     "label": "P5_LSZ_101.2600",
-     "level_type": "P5",
      "style": "line",
      "use_box": false
     },
@@ -2682,21 +2557,29 @@
      "level_type": "P5",
      "style": "line",
      "use_box": false
-    },
-    {
-     "price": 101.291,
-     "label": "P5_LSZ_101.2910",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.29563,
-     "label": "P1_CAMARILLA_D1_S3",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
+    }
+   ],
+   "ladder_name": "MODE_SUPPLY_101.28"
+  },
+  {
+   "name": "IP Resistance Ceiling",
+   "top": 101.44835,
+   "bottom": 101.301,
+   "zone_type": "SOFT_WALL",
+   "confluence": 6,
+   "pressure_degree": "MODERATE",
+   "zfp": 40,
+   "regime": "consolidation",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "zCat": "RES",
+   "zTir": "T2",
+   "zfp_label": 9,
+   "degree_v8": "MODERATE",
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
     {
      "price": 101.301,
      "label": "P5_LSZ_101.3010",
@@ -2712,55 +2595,12 @@
      "use_box": false
     },
     {
-     "price": 101.319,
-     "label": "P5_LSZ_101.3190",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.3201,
-     "label": "P1_FIB_D2_R1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.332,
-     "label": "P5_LSZ_101.3320",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
      "price": 101.33275,
      "label": "P1_CAMARILLA_D1_S2",
      "level_type": "P1",
      "style": "line",
      "use_box": false
-    }
-   ],
-   "ladder_name": "MODE_SUPPLY_101.33"
-  },
-  {
-   "name": "IP Resistance Ceiling",
-   "top": 101.39733,
-   "bottom": 101.35,
-   "zone_type": "SOFT_WALL",
-   "confluence": 5,
-   "pressure_degree": "LIGHT",
-   "zfp": 40,
-   "regime": "momentum",
-   "measured_move_target": null,
-   "structural_extreme": true,
-   "poi_tier": 1,
-   "zCat": "RES",
-   "zTir": "T2",
-   "zfp_label": 3,
-   "degree_v8": "LIGHT",
-   "bom_fresh_flag": null,
-   "timeframe": "1H",
-   "levels": [
+    },
     {
      "price": 101.35,
      "label": "P5_LSZ_101.3500",
@@ -2802,14 +2642,56 @@
      "level_type": "P1",
      "style": "line",
      "use_box": false
+    },
+    {
+     "price": 101.40647,
+     "label": "P1_FIB_W_R1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.416,
+     "label": "P1_CLASSIC_D2_R1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.432,
+     "label": "P5_LSZ_101.4320",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.43467,
+     "label": "P1_CLASSIC_D3_R3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.44412,
+     "label": "P1_CAMARILLA_D1_R1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.44835,
+     "label": "P1_CAMARILLA_W_R4",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
     }
    ],
-   "ladder_name": "LIGH_SUPPLY_101.40"
+   "ladder_name": "MODE_SUPPLY_101.45"
   }
  ],
  "shapes": {},
  "notes": [
-  "144 candidate levels clustered into 5 zones",
+  "144 candidate levels clustered into 6 zones",
   "12/12 pivot sets PASS the mandatory formula+symmetry+sanity+range verification (4 timeframes x 3 variants)"
  ],
  "temporal_boundary_utc": ""
