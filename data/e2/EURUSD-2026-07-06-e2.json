@@ -1,0 +1,56 @@
+{
+ "week": "2026-07-06",
+ "monday": "2026-07-06",
+ "zones_in": 6,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1783368000000,
+   "shape": "R",
+   "conf": 60.0,
+   "zone": "LIGH_DEMAND_100.83",
+   "day": "Mon"
+  },
+  {
+   "x": 1783454400000,
+   "shape": "WL",
+   "conf": 60.0,
+   "zone": "LIGH_DEMAND_100.85",
+   "day": "Tue"
+  },
+  {
+   "x": 1783540800000,
+   "shape": "SS",
+   "conf": 55.0,
+   "zone": "LIGH_DEMAND_100.92",
+   "day": "Wed"
+  },
+  {
+   "x": 1783627200000,
+   "shape": "SS",
+   "conf": 55.0,
+   "zone": "LIGH_DEMAND_100.92",
+   "day": "Thu"
+  },
+  {
+   "x": 1783713600000,
+   "shape": "SS",
+   "conf": 55.0,
+   "zone": "LIGH_DEMAND_100.92",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [
+  {
+   "zone": "LIGH_DEMAND_100.85",
+   "to": "WL",
+   "zfp": 40,
+   "conf": 60.0
+  }
+ ],
+ "chain": [
+  "R->WL@LIGH_DEMAND_100.85",
+  "WL->SS@LIGH_DEMAND_100.92"
+ ],
+ "phase": "MID"
+}
