@@ -727,3 +727,17 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
   PASS) · the rewound + the restored renders (looked, display :3) · `git 3918ca3`.
 - GAP: none on A1. The sole render residual: the E2 path + the E1 labels cannot paint together
   (a vela PineTS renderer limit; E2 defaults off).
+
+## 2026-10-05 — SPEC ITEM 14 WIRED: the nine-source harvest in the `make e1` chain
+
+- WHAT: `make e1` now runs `e1_sources.py --json > data/e1/sources.json` BEFORE the extractor —
+  the item-14 chain `harvest → extract → wire → build`. The extractor merges the harvest's
+  per-source status into the payload's `sources` (additive: `local_*` + `web_*` + `web_harvest`).
+- WHY: spec §5 item 14 names the harvest in the chain; the `e1` target skipped it. The render was
+  never affected (the zones are OHLC-derived, blueprint §7), but the automatic-ingest stage + the
+  nine-source provenance were absent (spec §1: "the nine web data sources").
+- EVIDENCE: `make e1` end-to-end — SUITES: PASS (6) → harvest → 5 zones → build (v1 verified
+  untouched) → deploy sha `471a7849a18f7bf0` · the zones + levels BYTE-IDENTICAL · the v2 build
+  sha UNCHANGED · 9 suites green · `DEBUG_LOG EN-108`.
+- GAP: the `--live` web harvest (S1-S9) times out >120s in this environment; the default is
+  offline (the fixture path) — the web harvest is the operator's `--live` opt-in.

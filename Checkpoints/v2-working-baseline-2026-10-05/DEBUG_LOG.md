@@ -1993,3 +1993,35 @@ SEE context_management/NEXT_STEPS.md:1 for the active work.
   build (correctly) did not use. Verify the INTENT before concluding a criterion fails — and when
   the intent holds, correct the COMMAND, not the code. The distinction from FITTED-TO-GOLDEN: the
   code here is measured-correct (the replay-follow); the command's pattern was the stale artifact.
+
+## EN-108 — SPEC ITEM 14: the harvest step was absent from `make e1` (the automatic-ingest gap) (2026-10-05)
+
+- **THE SYMPTOM:** `spec §5 item 14` reads `make e1 = harvest → extract → wire → build`. The
+  Makefile's `e1` target ran `e1_extract.py → lqz_vision_v2_build.py` — **the harvest step
+  (`scripts/e1_sources.py`, spec item 11) was NEVER invoked.** No `data/e1/sources.json` was
+  written; the extractor's `sources` block carried only 3 entries (EXTRACT_ohlc / P1_pivots /
+  P2_ma_grid), not the nine-source status (spec §1: "the five institutional pressure zones …
+  from the nine web data sources").
+- **THE ADJUDICATION (both sides):** (a) my expectation wrong, or (b) a real gap? MEASURED: the
+  blueprint §7 ("THE AUTOMATIC HALF") describes the harvest as a first-class stage; spec item 14
+  names it; `scripts/e1_sources.py` exists but was never in the chain. So (b) — a real
+  unimplemented item.
+- **THE MECHANISM (why it was harmless so far):** the zones are computed from the OHLC pillars
+  (`build_levels` → `assemble`), NOT the web sources (blueprint §7: the harvest is "the web
+  dimension the OHLC cannot supply"). So the render was ALWAYS correct; the gap was the
+  automatic-ingest stage + the payload's provenance completeness.
+- **THE FIX (two surgical edits):**
+  1. `Makefile:28-31` — `e1` now runs `e1_sources.py --json > data/e1/sources.json` BEFORE the
+     extractor (the item-14 chain). Offline by default (the `--live` harvest timed out at 120s
+     — the fixture path is the fast, deterministic one).
+  2. `scripts/e1_extract.py` — the extractor merges the harvest's per-source status into the
+     payload's `sources` (ADDITIVE: `web_*`, `local_*`, `web_harvest`). A down source is
+     `[NO DATA]`, never a fabrication (the honesty law).
+- **THE VERIFICATION (measured):** `py_compile` exit 0 · `sources.json` 277340 B ·
+  **the zones + levels are BYTE-IDENTICAL** to before (diff empty) · **`plutus-vision-v2.pine`
+  rebuilds to the SAME sha `471a7849a18f7bf0`** (the additive merge did not shift the render) ·
+  the 9 suites green (e1_st18 8/0 · st19 10/0 · st20 7/0 · st21 4/0 · st26 4/0 · st22 7/0 ·
+  e1_render 22/0 · e2 36/0 · e2_render 18/0).
+- **THE LESSON:** a spec item can be "implemented" as a file that nothing calls — the unwired-edge
+  class. Check the CHAIN (the Makefile target), not just the file's existence. The zones were
+  always right; the automatic-ingest STAGE was the missing link.

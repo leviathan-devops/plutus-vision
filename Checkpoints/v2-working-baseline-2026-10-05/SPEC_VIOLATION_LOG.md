@@ -139,3 +139,14 @@ criterion's INTENT (`the anchor is chart-based, the last-bar read present`) HOLD
 command's pattern was stale. The command was corrected to the implemented form + the explicit
 `now()`-absent negative. **No code changed — the intent was already satisfied; the command's
 pattern was a pre-build proxy.** The C7 row in the spec carries the correction footnote (†).
+
+## 2026-10-05 (3) — SPEC ITEM 14 IMPLEMENTED: the harvest is now in the `make e1` chain
+
+`spec §5 item 14` (`make e1 = harvest → extract → wire → build`) was INCOMPLETE: the `e1` target
+skipped the harvest (item 11). The render was never affected (the zones are OHLC-derived,
+blueprint §7), but the automatic-ingest stage + the payload's nine-source provenance were
+missing. FIXED: (1) `Makefile:28-31` runs `e1_sources.py --json > data/e1/sources.json` before
+the extractor; (2) `scripts/e1_extract.py` merges the harvest's per-source status into the
+payload's `sources` (additive). VERIFIED: the zones + levels byte-identical; the v2 build sha
+unchanged (`471a7849a18f7bf0`); all 9 suites green. Item 14 now holds; no spec violation
+remains. See DEBUG_LOG EN-108.
