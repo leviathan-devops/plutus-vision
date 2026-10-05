@@ -537,3 +537,20 @@ catch is defensive). ~⅓ of LLM findings are refutations (the skill's own note)
 - `RUNNING_BUILD_LOG.md:1 (the build log)`
 - `CURRENT_STATE.md:1 (the state)`
 - `TESTING_LOG.md:1 (the suites)`
+
+---
+
+## 2026-10-05 — the --pair mislabel FIXED (a verboo audit finding)
+
+**THE FINDING (medium):** `e1_extract.py` ignored `--pair` for OHLC — `fetch_best()` took no
+symbol and always fetched DXY, so `--pair EUR/USD` produced a **DXY-priced payload labeled
+EUR/USD** (a mislabel).
+
+**THE FIX:** `fetch_best(symbol, timeframe)` threads the pair into the fixture fetch; the default
+is now **DXY** (matching the chart + the zones' denomination — the zones ARE DXY-denominated per
+the discovery); ST-20 + the Makefile follow. The artifact sha is **UNCHANGED (7115b734)** — the
+fix removes the mislabel without altering the render. Suites: 6 PASS.
+
+**THE CLASS (F-48):** a `--pair` flag that is accepted but ignored — the silent-mislabel defect.
+The honest state is now single-pair (DXY) end-to-end; the four-pair generalisation (W8) still
+needs per-pair WINDOW calibration (the zone filter `0.35` is DXY-calibrated; EURUSD needs its own).
