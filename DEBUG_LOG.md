@@ -2025,3 +2025,26 @@ SEE context_management/NEXT_STEPS.md:1 for the active work.
 - **THE LESSON:** a spec item can be "implemented" as a file that nothing calls — the unwired-edge
   class. Check the CHAIN (the Makefile target), not just the file's existence. The zones were
   always right; the automatic-ingest STAGE was the missing link.
+
+## EN-109 — THE 6-HOUR FREEZE + THE RENDER FIXES (2026-07-05)
+
+- **THE FREEZE (the root cause).** The item-14 harvest wrote `data/e1/sources.json`. The build's
+  payload picker (`_payload_files` → `sorted(data/e1/*.json)[0]`) grabbed `sources.json` (it sorts
+  after `DXY-…`), the E2 week-anchor match failed, and the build HARD-STOPPED. EVERY subsequent
+  `make e1`/rebuild failed → the OLD (E2-off) served copy stayed. Hours of edits hit a build that
+  never deployed. FIX: harvest → `data/harvest/sources.json`; the picker requires a `YYYY-MM-DD`
+  stem. (Also: a manual rebuild MUST set `PV2_PAIR=DXY`, else EURUSD sorts first.)
+- **E2 NEVER DREW.** The path was rendered `line.new(xloc=bar_time)` at FUTURE timestamps (the
+  target week, past the last bar); the vela renderer clamps at the last bar → no draw. FIX: E2 in
+  `bar_index` + the chart carries the target week's PREDICTION SPACE (pv-server appends
+  `PV_PREDICTION_BARS` flat bars past the anchor).
+- **THE ZONES WERE A DENSITY PARTITION.** Clustering ALL 144 levels (a level every 0.02-0.05) gave
+  five contiguous ~0.16 bands — a range partition, not confluence. FIX: cluster only the CONFLUENCE
+  levels (`score >= 3` of 12) over a 0.70 band → 6 distinct zones with gaps (the real institutional
+  levels). (The pivot MATH was verified correct: PP=101.0083 from the prior week W27 OHLC.)
+- **THE v1 WALL.** The baseline's LQZ layer fills every liquidity zone; the E1 zones drowned in it.
+  FIX: `lqzFillZone=false` + `lqzMaxZones` 60→14 in the v2 build.
+- **THE LABELS.** Now `style_none` white at `anchor+40` (mid-visible), the full `Name | Degree |
+  NN% ZFP` reads.
+- **THE ZONE SPAN.** Anchored to the target week's Monday (`e1_anchor_ms` + `time`), spanning
+  Mon-Fri (5 trading days), not a multi-week ribbon.
