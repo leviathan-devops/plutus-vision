@@ -768,3 +768,27 @@ EVIDENCE: evidence/e2-playforward-2026-10-06/play-forward-DXY-jul6-11.mp4 (36 fr
 frame-start/end. THE VERDICT (mimo v2.6 flash): price action RESPECTS the zones (floor at the
 teal support, stall/reject at the orange resistance) - E1 zones ACCURATE. The E2 path is
 anchored to specific levels and is SHORT - the named defect to fix.
+
+## 2026-10-06 · THE E2 ROOT-CAUSE CHAIN (the play-forward method found 3 hardcoded defects)
+THE METHOD (operator): "play forward the price action and see exactly what the price action is
+for the rest of the trading week... then map backwards to the E2 shape chain." Executed: the
+real DXY 1h bars (1881, Apr-Jul21) from the dashboard TV feed, replayed Jul 3 -> Jul 11,
+captured as a 36-frame video, and watched by mimo-v2.6-flash (the pinned vision model).
+THE VERDICT (mimo): the price action RESPECTS the zones (floor at the teal support, stall/reject
+at the orange resistance) -> E1 ZONES ACCURATE. The E2 was the defect.
+THE ACTUAL WEEK (from the real bars): Mon 100.87 / Tue 101.19 / Wed high 101.275 (REJECTED at the
+Upper Resistance 101.28) / Thu 100.91 / Fri low 100.598 (BOUNCED off Key Support).
+THE THREE HARDCODED DEFECTS FOUND AND FIXED:
+1. scripts/wire_e2.py:95 passed `bars_momentum = 1.0` (a CONSTANT) -> the engine's direction
+   never came from the market. Now derived from the chart's own bars (net 20-bar move / mean
+   true range): measured -0.1047.
+2. scripts/e2_engine.py classify(): anchored to the FIRST zfp-20-40 zone (the LOWEST support) ->
+   the walk could only travel UP. Now anchors to the mid-range zone nearest the SPOT (the EQ).
+3. scripts/e2_engine.py _next_target(): a "violent directional move" (WL/BS/RWL) walked to the
+   ADJACENT zone and reversed -> a +/-1-zone oscillation. Now it reaches for the FARTHEST zone
+   its direction can reach (the week's real extreme); a pause (R/SS) still takes the nearest.
+RESULT: the E2 spans 100.97 -> 101.51 (was 100.97-101.13) and reads as a real price path.
+EVIDENCE: e2_tests pass=36 fail=0 · e1_st pass=8 fail=0 · v1 0d20e8314ce992fc · v2 c49786db1ffcf7ef
+  · evidence/e2-playforward-2026-10-06/play-forward-DXY-jul6-11.mp4 (36 frames).
+OPEN: the E2's DIRECTION is still the momentum's call (the -0.10 momentum says down-first; the
+actual rallied first) - a prediction limitation, named, not a defect.
