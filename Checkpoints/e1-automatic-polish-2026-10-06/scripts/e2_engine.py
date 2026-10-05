@@ -371,10 +371,15 @@ def _next_target(zones: list[Zone], current_id: str, direction: int,
     if cur is None:
         return None
     pool = [z for z in zones if z.id != cur.id and z.degree != "MINIMAL"]
+    # DIRECTION BY CENTRE (audit 2026-10-06). The old edge-strict test (`bottom >= cur.top`
+    # up / `top <= cur.bottom` down) DROPPED every zone that overlapped the current one, so
+    # an overlapping map returned an empty pool and the walk stalled. Centres are total: a
+    # zone is "above" iff its mid is above the current's mid — no zone is ever both.
+    cc = (cur.top + cur.bottom) / 2.0
     if direction > 0:
-        pool = [z for z in pool if z.bottom >= cur.top]
+        pool = [z for z in pool if (z.top + z.bottom) / 2.0 > cc]
     elif direction < 0:
-        pool = [z for z in pool if z.top <= cur.bottom]
+        pool = [z for z in pool if (z.top + z.bottom) / 2.0 < cc]
     if not pool:
         return None
     if far:

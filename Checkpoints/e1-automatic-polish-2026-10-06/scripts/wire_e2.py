@@ -20,7 +20,6 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
-import os
 import pathlib
 import sys
 
@@ -29,9 +28,7 @@ ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 
 from e2_engine import (  # noqa: E402
-    Zone, forward_map, consolidation_phase, FabricationRefused)
-
-DAY_MS = 86_400_000
+    Zone, forward_map, FabricationRefused)
 
 
 def compute_momentum(monday: dt.date, pair: str = "DXY") -> float:
