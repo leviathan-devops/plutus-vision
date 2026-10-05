@@ -1567,9 +1567,9 @@ f_e1Render() =>
                 // confluence CENTRE, so the five institutional levels read as DISTINCT levels with
                 // visible gaps — a level you can see, not a fill you cannot read.
                 _hw = 0.02
-                // THE LABEL X — the zone's price, at a VISIBLE bar just left of the target-week
-                // Monday (the chart's right edge sits near the anchor, so `anchor + N` clips).
-                _lxmid = _bAnchor - 20
+                // THE LABEL X — MID-CHART so the full tag reads (a centered tag near either edge
+                // clips). The reference idiom (`style_none`, white, at the zone price).
+                _lxmid = bar_index - 260
                 // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
                 // A THICKER BORDER + a more OPAQUE fill so the E1 pressure zones DOMINATE the
                 // many v1 liquidity lines behind them (the operator: the E1 zones must be the
