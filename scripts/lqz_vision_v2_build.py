@@ -227,7 +227,7 @@ def build_payload() -> tuple[str, str]:
             continue
         if d.get("x") is None or d.get("conf") is None:   # a malformed engine entry -> not drawn
             continue
-        days.append((d.get("x"), _f(z.get("top")), d.get("shape"), d.get("conf")))
+        days.append((d.get("x"), _f((z.get("top") + z.get("bottom")) / 2), d.get("shape"), d.get("conf")))
     for g in e2doc.get("ghost", []):
         z = zmap.get(g.get("zone"))
         if z is not None:
