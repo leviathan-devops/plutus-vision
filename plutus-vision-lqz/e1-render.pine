@@ -172,6 +172,17 @@ e1PayloadId   = e1_injected_id
 e1_anchor_ms  = e1_injected_anchor_ms
 e1WeekTag     = e1_injected_week_tag
 
+// ── THE PRICE SCALE — THE ZONES MUST FIT ────────────────────────────────────
+// The chart autoscales to the BARS. The zones extend above/below the recent bars, so the
+// upper zones (the resistance levels) fell OFF the top edge (the operator: "cut off"). Two
+// invisible plots (fully transparent) pull the price scale to include the whole zone range,
+// so every zone renders. The zones are price-ASCENDING, so [0] is the floor and the LAST is
+// the ceiling.
+_e1ZHi = array.size(e1PayloadTop) > 0 ? array.get(e1PayloadTop, array.size(e1PayloadTop) - 1) : na
+_e1ZLo = array.size(e1PayloadBot) > 0 ? array.get(e1PayloadBot, 0) : na
+plot(_e1ZHi, "E1 ceiling (scale)", color = color.new(color.white, 100))
+plot(_e1ZLo, "E1 floor (scale)", color = color.new(color.white, 100))
+
 // ── THE RENDER ──────────────────────────────────────────────────────────────
 f_e1Render() =>
     _n = array.size(e1PayloadTop)
