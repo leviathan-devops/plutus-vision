@@ -1564,3 +1564,18 @@ all real ones) + the runtime driven. **The audit is concluded: 0 CONFIRMED criti
    `artifactSha256 471a7849a18f7bf0…` which MATCHES the current served build (`sha256sum
    plutus-vision-v2.pine` → `471a7849a18f7bf0`), v1 seal `0d20e831…`. The A1 scenario was
    re-driven this session; the artifact is current to the deployed build.
+
+### 2026-10-05 — THE A2 + A7 PROBES RE-RUN WITH THE SPEC'S LITERAL INPUTS (`§7`)
+
+The §7 table's A2/A7 probes were re-run against the deployed modules with the spec's EXACT
+inputs (bound to tool results):
+
+```
+A2 RES? RES          # classify(102.0, 101.5, 101.048)  -> the pass token RES (a straddler-free above-spot level)
+A2 SUP? SUP          # classify(100.5, 100.0, 101.048)  -> the pass token SUP (a below-spot level)
+A7 sunday->monday: 2026-07-06T00:00:00+00:00 weekday= 0   # resolve(<Sun 2026-07-05>) -> the FOLLOWING Monday, day 0
+```
+
+`scripts/e1_category.py:49 def classify(top, bottom, spot)` · `scripts/e1_week.py:53 def resolve(...)`.
+Both angles PASS on the exact §7 inputs; A2 also holds in the live payload (`zCat` = 2 RES · 1
+MID · 2 SUP). No defect.
