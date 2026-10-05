@@ -600,3 +600,21 @@ return 0`. REF_RANGE is hardcoded safe, but a future edit must not crash. ST-19 
   string already differs; both → DOWN. Kept.
 - **ADJUDICATE [medium] "lexicographic fixture sort":** with one fixture, moot; the WEEK selector
   (above) removes the ambiguity. Kept.
+
+---
+
+## 2026-10-05 — P5 CORPUS PASS COMPLETE (every E1 script scanned)
+
+Every E1 script scanned via the verboo lane: e1_week · e1_category · e1_judge · e1_extract ·
+e1_vlm_options · e1_sources. The findings across the WHOLE corpus:
+
+**FIXED (10 real findings):** judge thread-safety · bool bar_time · near-zero spot · broad
+except · redundant dict · --pair mislabel · zfp ref guard · vlm CLI exit-0-on-dead-arm · the
+/health docstring · the harvest week selector · the float(op) guard · widened truncations.
+
+**ADJUDICATED (5 — probe-errors/style):** "no HTTP status check" (urlopen raises) ·
+"abs(spot)<<1e-9" (no FX price is) · "validation-order" (impossible) · "ValueError catch"
+(defensive) · "web pillar vs local distinction" (reason differs).
+
+**THE CORPUS-CLEAN STATE:** every confirmed defect fixed + pinned; the residuals are medium/low
+advisory. P5 (a full corpus pass) is satisfied.
