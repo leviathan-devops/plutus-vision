@@ -727,20 +727,32 @@ def main(argv=None) -> int:
         "the web-sourced dimension, which the OHLC cannot supply.")
     doc["data_as_of"] = cutoff.date().isoformat()
 
+    # ── --json-only IS PRINT-ONLY. THIS IS A CORRECTNESS FIX, MEASURED 2026-10-05 ────────
+    # The flag's help said "print the document, no chatter", but the code wrote the file and
+    # printed NOTHING — two defects in one flag:
+    #   (a) `--json-only` produced ZERO stdout (an agent that ran it could not read a document);
+    #   (b) the write landed in data/e1/<pair>-<week>.json — the SAME directory the extractor's
+    #       real zone payload lives in. lqz_vision_v2_build.py selects its payload with
+    #       `sorted(DATA.glob("*.json"), reverse=True)`, so an EMPTY harvest doc for a LATER
+    #       week SHADOWS the real payload and the chart drops to the E2_NO_ZONES refusal.
+    # A diagnostic/harvest read must never mutate the deploy input it is inspecting.
+    if args.json_only:
+        print(json.dumps(doc, indent=1))
+        return 0
+
     os.makedirs(args.out, exist_ok=True)
     safe = args.pair.replace("/", "")
     path = os.path.join(args.out, f"{safe}-{args.week}.json")
     with open(path, "w") as f:
         json.dump(doc, f, indent=1)
 
-    if not args.json_only:
-        ok = sum(1 for v in LEDGER.rows.values() if v["status"] == "OK")
-        nod = sum(1 for v in LEDGER.rows.values() if v["status"] == NO_DATA)
-        ref = sum(1 for v in LEDGER.rows.values() if v["status"] == "REFUSED_TEMPORAL")
-        print(f"  boundary  {cutoff.isoformat()}  ({TEMPORAL_BOUNDARY_UTC})")
-        print(f"  sources   {ok} OK · {nod} [NO DATA] · {ref} REFUSED_TEMPORAL")
-        print(f"  levels    {len(levels)}")
-        print(f"  written   {path}")
+    ok = sum(1 for v in LEDGER.rows.values() if v["status"] == "OK")
+    nod = sum(1 for v in LEDGER.rows.values() if v["status"] == NO_DATA)
+    ref = sum(1 for v in LEDGER.rows.values() if v["status"] == "REFUSED_TEMPORAL")
+    print(f"  boundary  {cutoff.isoformat()}  ({TEMPORAL_BOUNDARY_UTC})")
+    print(f"  sources   {ok} OK · {nod} [NO DATA] · {ref} REFUSED_TEMPORAL")
+    print(f"  levels    {len(levels)}")
+    print(f"  written   {path}")
     return 0
 
 

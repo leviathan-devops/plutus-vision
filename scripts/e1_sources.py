@@ -37,6 +37,23 @@ class SourceDown(Exception):
     """A source failed. Caught per-pillar; recorded as [NO DATA] + the reason. NEVER fatal."""
 
 
+def fixture_week() -> str:
+    """The week the CHART's fixture declares — read from the fixture's own `week` field.
+
+    THE DEFECT THIS REPLACES (measured 2026-10-05): `--week` defaulted to the literal
+    `2026-07-06`, so the harvest targeted one fixed week forever. The chart's bars come from
+    this same fixture (scripts/pv-server.py FIXTURE + pine-ide/pine-station/lib/bars.mjs), so
+    the fixture's own `week` is the honest default and it tracks a fixture swap for free."""
+    for fx in sorted(FIXTURES.glob("*.json"), reverse=True):
+        try:
+            w = str(json.loads(fx.read_text()).get("week") or "")
+        except Exception:
+            continue
+        if w:
+            return w
+    return ""
+
+
 # ── S1/S2 — THE OHLC BARS (local: the fixture the engine scores on) ────────────────
 def harvest_bars(week: str = "", symbol: str = "DXY", timeframe: str = "1H") -> dict:
     files = sorted(FIXTURES.glob("*.json"))
@@ -129,17 +146,19 @@ def harvest_all(week: str, workers: int = 8, live: bool = False) -> dict:
 
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--week", default="2026-07-06")
+    ap.add_argument("--week", default="",
+                    help="the target week ISO; default = the CHART fixture's own `week` field")
     ap.add_argument("--live", action="store_true", help="hit the network for the nine web sources")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args(argv)
 
-    pillars = harvest_all(args.week, live=args.live)
+    week = args.week or fixture_week()      # DERIVED from the chart's fixture, never a literal
+    pillars = harvest_all(week, live=args.live)
     if args.json:
         print(json.dumps(pillars, indent=2, default=str))
         return 0
     ok = sum(1 for p in pillars.values() if p["status"] == "OK")
-    print(f"harvest week={args.week}  {ok}/{len(pillars)} local pillars up  (live={args.live})")
+    print(f"harvest week={week}  {ok}/{len(pillars)} local pillars up  (live={args.live})")
     for name in SOURCE_PILLARS:
         p = pillars.get(name, {})
         print(f"  {'OK ' if p.get('status')=='OK' else 'DOWN'} {name:12s} {p.get('label','?')}"

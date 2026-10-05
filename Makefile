@@ -4,11 +4,15 @@
 #   make e1-test     the acceptance suites (all, aggregated — never stops at the first)
 #   make e1-visual   the served-vs-built comparison (FAILS on a stale deploy)
 #
-# The week is the CHART's target week. Override per run:
-#   make e1 WEEK=2026-07-06 PAIR=DXY
+# The week is DERIVED from the chart's own bars — the anchor law (e1_week.py) is the chart's
+# LAST BAR, never a literal (measured 2026-10-05: a hard-coded WEEK made the zones stale for
+# every week but one). Override per run only when you mean it:
+#   make e1 PAIR=EUR/USD                 # week auto-derived from the fixture the chart serves
+#   make e1 WEEK=2026-07-06 PAIR=DXY     # an explicit week (the extractor overrides it to the
+#                                        # chart's week if they disagree, with a loud line)
 
 PAIR ?= DXY
-WEEK ?= 2026-07-06
+WEEK ?= auto
 PY   ?= python3
 RENDERER := pine-ide/ide/renderer
 
@@ -22,8 +26,8 @@ help:
 # THE AUTO-RUN. Deploy is GATED on the suites (e1-test is a prerequisite): a failing suite
 # stops the chain before anything deploys. The build refuses on v1 drift (HARD STOP H1) too.
 e1: e1-test
-	$(PY) scripts/e1_extract.py --pair "$(PAIR)" --week "$(WEEK)"
-	PV2_WEEK="$(WEEK)" PV2_PAIR="$(PAIR)" $(PY) scripts/lqz_vision_v2_build.py
+	$(PY) scripts/e1_extract.py --pair "$(PAIR)" $(if $(filter-out auto,$(WEEK)),--week "$(WEEK)")
+	PV2_WEEK="$(if $(filter-out auto,$(WEEK)),$(WEEK))" PV2_PAIR="$(PAIR)" $(PY) scripts/lqz_vision_v2_build.py
 	mkdir -p "$(RENDERER)"
 	cp plutus-vision-v2.pine "$(RENDERER)/plutus-vision-v2.pine"
 	@echo "── deployed ──"

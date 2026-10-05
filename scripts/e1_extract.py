@@ -37,6 +37,7 @@ import sys
 import urllib.request
 
 import e1_category as CAT   # W2: the v8 renderer bridge (zCat/zTir/zfp/degree)
+import e1_week as WEEK_ANCHOR   # THE WEEK LAW: the anchor is the chart's last bar, never now()
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -193,23 +194,57 @@ def fetch_ohlc(symbol: str = "DX-Y.NYB", years: int = 2) -> tuple[list[dict], st
     return bars, ""
 
 
-def fetch_best(symbol: str = "DXY", timeframe: str = "1H") -> tuple[list[dict], str, str]:
-    """THE SOURCE LADDER — network first, then the operator's own validated bars.
+def chart_week(bars: list[dict]) -> str:
+    """THE CHART'S ACTIVE WEEK — the Monday of the series' LAST BAR. Derived, never a literal.
+
+    THE LAW (e1_week.py): the anchor is the CHART's last bar, never wall-clock now() and never
+    a flag default. So the payload's `target_week` is the week the CHART is showing: for the
+    bundled fixture that is the fixture's own week (2026-07-06); for a live chart it is the
+    real current week. A hard-coded week made the zones right for one week and stale for every
+    other — the operator's "same stale data hard coded" report, measured 2026-10-05 (`Makefile`
+    pinned WEEK=2026-07-06 while the extractor's fallback defaulted to today-7)."""
+    if not bars:
+        return ""
+    try:
+        mon_ms = WEEK_ANCHOR.resolve(int(bars[-1]["t"]))["mon"]
+    except (WEEK_ANCHOR.E1WeekInvalid, KeyError, TypeError, IndexError, ValueError):
+        return ""
+    return dt.datetime.fromtimestamp(mon_ms / 1000, tz=dt.timezone.utc).date().isoformat()
+
+
+# the Yahoo chart-API symbol per pair (the live rung only — the fixture is keyed by pair).
+LIVE_SYMBOL = {"DXY": "DX-Y.NYB", "EUR/USD": "EURUSD=X", "GBP/USD": "GBPUSD=X"}
+
+
+def _live_symbol(pair: str) -> str:
+    return LIVE_SYMBOL.get(pair.upper(), pair.replace("/", "").upper() + "=X")
+
+
+def fetch_best(symbol: str = "DXY", timeframe: str = "1H",
+               live: bool = False) -> tuple[list[dict], str, str]:
+    """THE SOURCE LADDER — the CHART's own bars by default; the network only when asked.
+
+    THE CHART IS THE ANCHOR (measured 2026-10-05). The renderer's bars are served from the
+    SAME fixture this function reads — scripts/pv-server.py FIXTURE and
+    pine-ide/pine-station/lib/bars.mjs both point at fixtures/bars/<week>.json. Zones computed
+    from a DIFFERENT series than the one on screen are zones the operator cannot use, so the
+    DEFAULT rung is that fixture. The network rung (Yahoo's chart API) returns a DIFFERENT
+    series at a DIFFERENT week, so it is now the OPT-IN (`--live`), not the default — the old
+    network-first order meant a working network silently moved the zones off the chart.
 
     Each rung records WHICH source it used. A pipeline that silently swaps sources is a
-    pipeline whose output nobody can trace; the provenance string travels into the data
-    file so the chart's evidence chain reaches back to the bytes it came from.
-
-    THE SYMBOL IS HONOURED (audit finding 2026-10-05): the earlier version took no symbol and
-    always fetched DXY, so `--pair EUR/USD` produced a DXY-priced payload LABELED EUR/USD —
-    a mislabel. The symbol now travels into the fixture fetch, so the bars match the label."""
-    bars, err = fetch_ohlc()
-    if bars:
-        return bars, "yahoo_chart_api", f"{len(bars)} daily bars from Yahoo's chart API"
+    pipeline whose output nobody can trace; the provenance string travels into the data file."""
+    bars, err = [], ""
+    if live:
+        bars, err = fetch_ohlc(_live_symbol(symbol))
+        if bars:
+            return (bars, "yahoo_chart_api",
+                    f"{len(bars)} daily bars from Yahoo's chart API ({_live_symbol(symbol)})")
     bars2, _, prov = fetch_ohlc_fixture(symbol, timeframe)
     if bars2:
         return bars2, "local_fixture", prov
-    return [], "", f"no OHLC from any source. network: {err}; fixture: {prov}"
+    net = f"network: {err}; " if live else "network: skipped (default is the chart's fixture; pass --live); "
+    return [], "", f"no OHLC from any source. {net}fixture: {prov}"
 
 def ema(values: list[float], n: int) -> list[float]:
     """The standard EMA the canon's MA pillar assumes: seeded with an SMA of the first n."""
@@ -790,19 +825,48 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--pair", default="DXY")
-    ap.add_argument("--week", default="")
+    ap.add_argument("--week", default="",
+                    help="the target Monday ISO. Empty or `auto` DERIVES it from the chart's "
+                         "own bars (the default, recommended path). An explicit value that "
+                         "disagrees with the bars' week is overridden to the chart's week.")
+    ap.add_argument("--live", action="store_true",
+                    help="hit the network for the OHLC series (the REAL current week). Default "
+                         "reads the chart's own fixture, so the zones match what is on screen.")
     ap.add_argument("--out", default=str(ROOT / "data" / "e1"))
     args = ap.parse_args()
 
-    bars, source, provenance = fetch_best(args.pair, "1H")
+    bars, source, provenance = fetch_best(args.pair, "1H", live=args.live)
     out_dir = pathlib.Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
     safe = args.pair.replace("/", "")
-    week = args.week or (dt.date.today() - dt.timedelta(days=7)).isoformat()
+
+    # ── THE WEEK: DERIVED FROM THE CHART'S BARS, NEVER A LITERAL (measured 2026-10-05) ──
+    # The old line was `args.week or (today - 7d)` while the Makefile passed a hard-coded
+    # `--week 2026-07-06` — correct for exactly one week, stale for every other. The anchor
+    # law (e1_week.py) is the chart's LAST BAR, so the bars decide; an explicit `--week` that
+    # disagrees is overridden with a LOUD line, because relevance to the chart is the law.
+    derived = chart_week(bars)
+    if args.week and args.week.strip() and args.week.strip().lower() != "auto":
+        week = args.week.strip()
+        if derived and week != derived:
+            print(f"  WEEK_ANCHOR — --week={week} != the chart's bars' week {derived}; "
+                  f"anchoring to the CHART ({derived})")
+            week = derived
+    else:
+        week = derived or (dt.date.today() - dt.timedelta(days=7)).isoformat()
+    anchor: dict = {}
+    if bars:
+        try:
+            a = WEEK_ANCHOR.resolve(int(bars[-1]["t"]))
+            anchor = {"from": "chart_last_bar",
+                      **{k: a[k] for k in ("mon", "fri", "tsL", "tsR", "tsMid")}}
+        except WEEK_ANCHOR.E1WeekInvalid:
+            anchor = {}
     path = out_dir / f"{safe}-{week}.json"
 
     if not bars:
         doc = {"schema": "trident-e1/1", "pair": args.pair, "target_week": week,
+               "chart_week": derived, "anchor": anchor,
                "spot": None, "data_as_of": None,
                "sources": {"EXTRACT_ohlc": {"status": "[NO DATA]", "reason": provenance}},
                "levels": [], "zones": [], "shapes": {},
@@ -821,6 +885,7 @@ def main() -> int:
     week_mon = dt.date.fromisoformat(week)
     doc = {
         "schema": "trident-e1/1", "pair": args.pair, "target_week": week,
+        "chart_week": derived, "anchor": anchor,
         "spot": round(spot, 5), "data_as_of": dt.date.today().isoformat(),
         "sources": {
             "EXTRACT_ohlc": {"status": "OK", "source": source, "detail": provenance},
@@ -845,8 +910,8 @@ def main() -> int:
         "temporal_boundary_utc": "",
     }
     path.write_text(json.dumps(doc, indent=1))
-    print(f"  wrote {path.name}  bars={len(bars)} spot={spot:.3f} "
-          f"levels={len(levels)} ZONES={len(zones)}")
+    print(f"  wrote {path.name}  source={source}  chart_week={derived}  "
+          f"bars={len(bars)} spot={spot:.3f} levels={len(levels)} ZONES={len(zones)}")
     for z in zones:
         print(f"    {z['name']:22s} conf={z['confluence']:2d}/14 "
               f"{z['pressure_degree']:15s} zfp={z['zfp']:3d}%  "

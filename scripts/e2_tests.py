@@ -23,7 +23,7 @@ sys.path.insert(0, HERE)
 from e2_engine import (  # noqa: E402
     ZFP_BREAKOUT, ZFP_HARDWALL, MIN_CHAIN_CONFIDENCE, MAX_CHAIN_LENGTH,
     Zone, FabricationRefused, classify, transition, tf_match, forward_map,
-    consolidation_phase, day_decomposition)
+    consolidation_phase, day_decomposition, fine_path)
 
 RESULTS: list[tuple[str, bool, str]] = []
 
@@ -150,6 +150,53 @@ def st12_day_decomp() -> None:
            " · ".join(f"{d['day']} {d['confidence']:.0f}%" for d in days))
 
 
+# ── ST-12F · THE FINE PATH — the E2 line is CONTINUOUS and JAGGED ────────────
+
+def st12_fine_path() -> None:
+    """THE 2026-10-05 RENDER DEFECT, pinned. The E2 payload once carried ONE point
+    per day, so the render's polyline drew a five-vertex TRIANGLE. Five day anchors
+    must expand into a CONTINUOUS, JAGGED price path that reads as continuation.
+
+    NEGATIVE CONTROL: the old behaviour (one point per day) is exactly what
+    `len(xs) > 5` rejects; and a straight day-to-day interpolation is rejected by the
+    off-the-line bend count, so a passing result means the geometry is really there."""
+    days = [(1_783_368_000_000, 100.852, "R", 60.0),
+            (1_783_454_400_000, 101.01033, "WL", 60.0),
+            (1_783_540_800_000, 100.852, "SS", 55.0),
+            (1_783_627_200_000, 100.852, "SS", 55.0),
+            (1_783_713_600_000, 100.852, "SS", 55.0)]
+    xs, ys, shapes, confs = fine_path(days)
+
+    record("ST-12f  many points, not the 5 day anchors", len(xs) > 5,
+           f"{len(xs)} points from {len(days)} days")
+    record("ST-12g  the four arrays share one length (the render indexes them together)",
+           len(xs) == len(ys) == len(shapes) == len(confs),
+           f"x={len(xs)} y={len(ys)} shape={len(shapes)} conf={len(confs)}")
+    record("ST-12h  x strictly increasing, no duplicates (one continuous stroke)",
+           all(xs[i] < xs[i + 1] for i in range(len(xs) - 1)))
+    tags = [(x, s, c) for x, s, c in zip(xs, shapes, confs) if s]
+    record("ST-12i  every day boundary is tagged with its shape",
+           [t[1] for t in tags] == [d[2] for d in days],
+           " · ".join(f"{s} {int(c)}%" for _, s, c in tags))
+    record("ST-12j  every tag sits on a real day anchor",
+           all(any(x == d[0] for d in days) for x, _, _ in tags))
+
+    # JAGGED — intraday points must lie OFF the straight anchor-to-anchor line
+    off = 0
+    for i in range(1, len(days)):
+        x0, y0, x1, y1 = days[i - 1][0], days[i - 1][1], days[i][0], days[i][1]
+        for x, y in zip(xs, ys):
+            if x0 < x < x1 and abs(y - (y0 + (y1 - y0) * (x - x0) / (x1 - x0))) > 1e-6:
+                off += 1
+    record("ST-12k  the path BENDS between anchors (never a straight day-to-day line)",
+           off > 0, f"{off} intraday points off the straight anchor line")
+
+    # an SS day between two IDENTICAL anchors (a flat span) must still oscillate
+    flat = {y for x, y in zip(xs, ys) if days[2][0] < x <= days[3][0]}
+    record("ST-12l  a flat-span SS day still oscillates (range-bound, not dead flat)",
+           len(flat) > 1, f"{len(flat)} distinct prices on the flat-span day")
+
+
 # ── ST-13 · THE CHAIN BOUNDS + THE FABRICATION GUARD ───────────────────────
 
 def st13_empty_corpus() -> None:
@@ -191,7 +238,8 @@ def st13_empty_corpus() -> None:
 
 def main() -> int:
     tests = [("ST-10", st10_shape_anchored), ("ST-11", st11_hardwall_rwl),
-             ("ST-12", st12_day_decomp), ("ST-13", st13_empty_corpus)]
+             ("ST-12", st12_day_decomp), ("ST-12F", st12_fine_path),
+             ("ST-13", st13_empty_corpus)]
     want = (sys.argv[1].upper() if len(sys.argv) > 1 else None)
     for name, fn in tests:
         if want and not name.startswith(want):

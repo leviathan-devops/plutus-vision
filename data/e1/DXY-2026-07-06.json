@@ -2,6 +2,15 @@
  "schema": "trident-e1/1",
  "pair": "DXY",
  "target_week": "2026-07-06",
+ "chart_week": "2026-07-06",
+ "anchor": {
+  "from": "chart_last_bar",
+  "mon": 1783296000000,
+  "fri": 1783641600000,
+  "tsL": 1782086400000,
+  "tsR": 1785456000000,
+  "tsMid": 1783771200000
+ },
  "spot": 101.048,
  "data_as_of": "2026-10-05",
  "sources": {
