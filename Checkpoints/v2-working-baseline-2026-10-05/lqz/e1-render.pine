@@ -138,13 +138,13 @@ f_e1Zbord(string cat, string deg) =>
 
 // ── pressureLbl(deg) — trident_v8.pine:157-158, VERBATIM ────────────────────
 f_e1PressureLbl(string deg) =>
-    deg == "EXTREME" ? "Extreme" : deg == "HEAVY" ? "Heavy" : deg == "MODERATE-HEAVY" ? "Moderate-Heavy" : deg == "MODERATE" ? "Moderate" : deg == "LIGHT" ? "Light" : "Minimal"
+    deg == "EXTREME" ? "Extreme" : deg == "HEAVY" ? "Heavy" : deg == "MODERATE_HEAVY" ? "Moderate-Heavy" : deg == "MODERATE" ? "Moderate" : deg == "LIGHT" ? "Light" : "Minimal"
 
 // ── THE DEGREE — confluence → v8's literal vocabulary (hyphen, the tower's branch) ──
 f_e1Degree(int c) =>
     c >= 12 ? "EXTREME" :
      c >= 10 ? "HEAVY" :
-     c >=  8 ? "MODERATE-HEAVY" :
+     c >=  8 ? "MODERATE_HEAVY" :
      c >=  6 ? "MODERATE" :
      c >=  4 ? "LIGHT" : "MINIMAL"
 

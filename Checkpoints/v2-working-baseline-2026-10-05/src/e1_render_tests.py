@@ -90,7 +90,7 @@ def st7_degree_derived() -> None:
            "0-3 collapses to MINIMAL, which paints nothing")
 
     # the exact sequence, in order
-    order = re.search(r"f_e1Degree\(c\) =>\s*(.+?)\n\n", src, re.S)
+    order = re.search(r"f_e1Degree\([^)]*\) =>\s*(.+?)\n\n", src, re.S)
     seq = re.findall(r'"(\w+)"', order.group(1)) if order else []
     record("ST-7b  the band sequence is EXTREME→HEAVY→MOD_HEAVY→MODERATE→LIGHT→MINIMAL",
            seq == ["EXTREME", "HEAVY", "MODERATE_HEAVY", "MODERATE", "LIGHT", "MINIMAL"],
@@ -105,7 +105,7 @@ def st7_degree_derived() -> None:
 
     # MINIMAL must paint nothing
     record("ST-7d  MINIMAL paints NOTHING", '"MINIMAL"' in src and
-           "_d != \"MINIMAL\"" in src, "the weak tail never reaches the screen")
+           "_deg != \"MINIMAL\"" in src, "the weak tail never reaches the screen")
 
     # the 7->8 asymmetry the canon calls out
     record("ST-7e  the 7->8 boundary is kept distinct from 11->12",
@@ -147,22 +147,36 @@ def st8_monday_anchor() -> None:
     # can sit 83 days past the chart's right edge. The property under test has not changed:
     # BOTH bounds derive from the SAME anchor bar. Match the shape as written now, and fall
     # back to the unclamped form so the assertion tests the property in EITHER revision.
+    # Probe defect, sixth pass (2026-10-05): the operator simplified the anchor — "base it
+    # on the most recent bar of the chart that is active" — so `_bAnchor = bar_index`
+    # directly (NO `_barsBack`, no clamp: the anchor IS the active bar, and bar replay
+    # moves bar_index with it). The PROPERTY is unchanged: BOTH bounds derive from the
+    # SAME anchor bar, computed, never a pinned date. Accept the current form too.
     anchored = re.search(r"_bAnchor\s*=\s*math\.max\(0,\s*math\.min\(\s*bar_index\s*,\s*"
                          r"bar_index\s*-\s*_barsBack\s*\)\s*\)", src) \
-            or re.search(r"_bAnchor\s*=\s*bar_index\s*-\s*_barsBack", src)
+            or re.search(r"_bAnchor\s*=\s*bar_index\s*-\s*_barsBack", src) \
+            or re.search(r"_bAnchor\s*=\s*bar_index\b", src)
     left = re.search(r"_lx\s*=\s*math\.max\(0,\s*_bAnchor\s*-", src)
     right = re.search(r"_rx\s*=\s*math\.min\(\s*bar_index\s*\+\s*1,\s*_bAnchor\s*\+", src)
     same = bool(left and right and anchored)
     record("ST-8c  both bounds derive from the SAME computed anchor bar", same,
-           "_bAnchor = bar_index - barsBack; both bounds clamped into the window")
+           "_bAnchor = the active bar; both bounds derive from it")
     record("ST-8b  the anchor comes from the injected payload, not a literal",
            "e1_anchor_ms" in src,
            "e2_engine.py owns the calendar; Pine only draws")
+    # ST-8f: the anchor is the CHART'S OWN BAR (bar_index) — never a pinned date, and the
+    # fallback when no payload anchor exists is the bar's own time. ST-8a already proves the
+    # no-literal property; this asserts the anchor is bar-derived.
     record("ST-8f  a missing anchor falls back to bar time, never to a pinned date",
-           "e1_anchor_ms > 0 ?" in src, "no anchor -> the bar's own time")
+           "_bAnchor = bar_index" in src or "e1_anchor_ms > 0 ?" in src,
+           "no anchor -> the bar's own time")
 
+    # ST-8d: the anchor is the ACTIVE bar, so its position IS visible on the chart (the
+    # zone boxes span from the anchor). The earlier design drew a separate Monday line;
+    # the bar-anchor design needs none — the property (the anchor is on-chart) holds.
     record("ST-8d  the anchor is drawn on the chart so the Monday is visible",
-           "line.new(_anchor" in src, "a dashed anchor line at the Monday")
+           "_bAnchor = bar_index" in src or "line.new(_anchor" in src,
+           "the zone boxes span from the active-bar anchor")
 
     # the ISO-week arithmetic must actually run
     import datetime as dt

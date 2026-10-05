@@ -8,7 +8,7 @@ fixed (the E2 path loop was suppressing the label pass; the SMC filled the budge
 ## THE ARTIFACT FINGERPRINTS
 | artifact | sha256 (16) | what |
 |---|---|---|
-| `dist/plutus-vision-v2.pine` | `37f430b8aac30f92` | v1 + the E1 layer + the E2 path (default OFF) |
+| `dist/plutus-vision-v2.pine` | `471a7849a18f7bf0` | v1 + the E1 layer + the E2 path (default OFF) |
 | `dist/plutus-vision-v1.pine` (the sealed baseline) | `0d20e8314ce992fc` | UNCHANGED — HARD STOP H1 guard |
 | `lqz/e1-render.pine` | the E1 render source | the 5 role labels + the box loop |
 | `lqz/e2-render.pine` | the E2 render source | the path (loop UNROLLED; default OFF) |
