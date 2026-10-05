@@ -750,3 +750,21 @@ HOW: scripts/lqz_vision_v2_build.py:236 (fine_path) + plutus-vision-lqz/e2-rende
   was the xloc=bar_time+loop form, not a renderer limit.
 EVIDENCE: git 518d788. census 2 plots/6 boxes/101 lines/2006 labels/798 segs. battery
   pass=8 fail=0. v1 0d20e8314ce992fc. The capture: /tmp/fine-chart.png (E2 jagged + 6 zones).
+
+## 2026-10-06 · THE TWO-TAB MINI-DASHBOARD + THE PLAY-FORWARD ACCURACY LOOP
+WHAT: (1) pine.html upgraded to a TWO-TAB mini-dashboard (PINE IDE + BACKTEST) with a nav bar +
+two pane hosts. (2) A full-history fixture (1881 DXY 1h bars, Apr 1 -> Jul 21, from the REAL
+dashboard TV feed :9448 /bars?symbol=TVC:DXY) served by pv-server, so the target week
+(Jul 6-11) exists as REAL bars. (3) The play-forward loop: loadBars -> replayStart(Jul 3) ->
+replayStep through the week while capturing frames -> ffmpeg video. (4) The vision verdict via
+mimo-v2.6-flash (the pinned vision model, opencode-go/mimo-v2.6-flash:high).
+WHY: the operator (2026-10-06): "upgrade the Pine IDE desktop app to have both the Pine IDE and
+a backtesting tab... plug your indicator in on the back testing. Rewind one week... press play
+and you can see if the price action matches your predictions and reacts to your zones the way
+that it should." THE METHOD: play forward the actual price action, map the E2 back to it.
+HOW: pine.html (the nav + panes); fixtures/bars/dxy-full-to-jul21.json (the real bars);
+/tmp/mimo_verdict.py (the vision call to :4097/zen/go/v1, model mimo-v2.6-flash).
+EVIDENCE: evidence/e2-playforward-2026-10-06/play-forward-DXY-jul6-11.mp4 (36 frames, 18s) +
+frame-start/end. THE VERDICT (mimo v2.6 flash): price action RESPECTS the zones (floor at the
+teal support, stall/reject at the orange resistance) - E1 zones ACCURATE. The E2 path is
+anchored to specific levels and is SHORT - the named defect to fix.

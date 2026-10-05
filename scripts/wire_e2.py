@@ -34,6 +34,45 @@ from e2_engine import (  # noqa: E402
 DAY_MS = 86_400_000
 
 
+def compute_momentum(monday: dt.date, pair: str = "DXY") -> float:
+    """THE BARS' OWN MOMENTUM — the price action INTO the anchor week.
+
+    DEFECT FOUND 2026-10-06: `forward_map(zones, 1.0, monday)` passed a HARDCODED 1.0, so
+    the engine's direction never came from the market. The operator's method — "play the
+    price action forward and map the chain back" — exposed it: the engine predicted a flat
+    oscillation while the actual week rallied to the resistance. The momentum is now the
+    normalised recent slope of the CHART's own bars (the same fixture pv-server serves, the
+    SAME-BARS law): the net move of the last N bars divided by the mean true range, clamped.
+    A missing/insufficient series returns 0.0 (a neutral, never an invented trend)."""
+    import glob as _glob
+    cands = [ROOT / "fixtures" / "bars" / f"{monday.isoformat()}.json",
+             ROOT / "fixtures" / "bars" / "dxy-full-to-jul21.json",
+             ROOT / "fixtures" / "bars" / "2026-07-06.json"]
+    mon_ms = int(dt.datetime(monday.year, monday.month, monday.day).timestamp() * 1000)
+    for c in cands:
+        if not c.exists():
+            continue
+        try:
+            doc = json.loads(c.read_text())
+        except Exception:
+            continue
+        cell = next((x for x in (doc.get("cells") or []) if str(x.get("pair")).upper() == pair
+                     and str(x.get("timeframe")) == "1H"), None)
+        if not cell:
+            continue
+        bars = [b for b in (cell.get("bars") or []) if int(b.get("timestamp", 0)) < mon_ms]
+        if len(bars) < 20:
+            continue
+        recent = bars[-20:]
+        net = float(recent[-1]["close"]) - float(recent[0]["open"])
+        tr = [(float(b["high"]) - float(b["low"])) for b in recent]
+        atr = sum(tr) / len(tr) if tr else 0.0
+        if atr <= 0:
+            continue
+        m = net / (atr * 2.0)          # a 2-ATR move over the window = +-1.0
+        return max(-1.0, min(1.0, m))
+    return 0.0
+
 def load_zones(data_dir: pathlib.Path) -> tuple[list[Zone], str]:
     """Read the E1 zone map. Returns (zones, refusal)."""
     files = sorted(data_dir.glob("*.json"))
@@ -92,7 +131,9 @@ def main() -> int:
 
     if not refusal:
         try:
-            chain = forward_map(zones, 1.0, monday)
+            mom = compute_momentum(monday)
+            chain = forward_map(zones, mom, monday)
+            out["momentum"] = round(mom, 4)
             if chain.refusal:
                 out["refusal"] = chain.refusal
             else:

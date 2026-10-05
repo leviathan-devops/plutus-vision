@@ -121,9 +121,20 @@ def classify(bars_momentum: float, zones: list[Zone], tf_valid: bool = True) -> 
         if z.is_hard_wall and bars_momentum < 0:
             return "WL", z.id
     # 3 · R — stabilises at a mid-range zone (ZFP 20-40%), < 1 session
-    for z in solid:
-        if 20 <= z.zfp <= 40:
-            return "R", z.id
+    # THE ANCHOR IS THE ZONE NEAREST THE SPOT (fix 2026-10-06). The earlier build returned
+    # the FIRST zfp-20-40 zone in list order — the LOWEST support — so the whole walk
+    # started at the bottom of the map and could only travel UP (with a dead chain when the
+    # momentum pointed down). The operator's play-forward exposed it: the E2 oscillated in
+    # the support band and never reached the resistance the week actually rallied to. The
+    # anchor is now the mid-range zone closest to the MIDDLE of the zone map (the spot /
+    # equilibrium), so the walk can travel BOTH ways — up to the resistance, down to the
+    # support — which is what a one-week forecast must do.
+    mids = [z for z in solid if 20 <= z.zfp <= 40]
+    if mids:
+        ordered = sorted(solid, key=lambda z: (z.top + z.bottom))
+        med = ordered[len(ordered) // 2]
+        mtop = (med.top + med.bottom) / 2
+        return "R", min(mids, key=lambda z: abs(((z.top + z.bottom) / 2) - mtop)).id
     # 4 · WLS — 3+ zones within 0.30-0.50
     tight = [z for z in solid if abs(z.top - solid[0].top) <= 0.5]
     if len(tight) >= 3:

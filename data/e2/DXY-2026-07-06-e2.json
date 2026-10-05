@@ -1,14 +1,14 @@
 {
  "week": "2026-07-06",
  "monday": "2026-07-06",
- "zones_in": 5,
+ "zones_in": 6,
  "refusal": "",
  "days": [
   {
    "x": 1783368000000,
    "shape": "R",
    "conf": 60.0,
-   "zone": "IP Support Floor",
+   "zone": "Equilibrium Zone",
    "day": "Mon"
   },
   {
@@ -22,21 +22,21 @@
    "x": 1783540800000,
    "shape": "SS",
    "conf": 55.0,
-   "zone": "IP Support Floor",
+   "zone": "Equilibrium Zone",
    "day": "Wed"
   },
   {
    "x": 1783627200000,
    "shape": "SS",
    "conf": 55.0,
-   "zone": "IP Support Floor",
+   "zone": "Equilibrium Zone",
    "day": "Thu"
   },
   {
    "x": 1783713600000,
    "shape": "SS",
    "conf": 55.0,
-   "zone": "IP Support Floor",
+   "zone": "Equilibrium Zone",
    "day": "Fri"
   }
  ],
@@ -48,9 +48,10 @@
    "conf": 70.0
   }
  ],
+ "momentum": -0.1047,
  "chain": [
   "R->WL@Mid-Range Support",
-  "WL->SS@IP Support Floor"
+  "WL->SS@Equilibrium Zone"
  ],
  "phase": "MID"
 }
