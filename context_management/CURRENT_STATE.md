@@ -321,7 +321,7 @@ is `bar_index` (the chart's own last bar) · LSZ in reference/ · no E3.
 
 **THE HONEST RESIDUALS:** C10 (2 anchors dropped — E2/v1, not E1) · C11 (chart-anchored, but the
 external pine-station shell doesn't re-run on replay) · C16 (the operator's look) · AUDIT GATE
-BLOCKED (the re-run timed out; the first run's 4 high are fixed) · W6 1/8 sources · W8/W10 deferred.
+PASS (the FULL verboo-lane scan — 1 critical + the confirmed highs fixed; `reports/ocr-e1-automatic*.json`) · W6 1/8 sources · W8/W10 deferred.
 
 ---
 

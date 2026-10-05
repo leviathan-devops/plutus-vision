@@ -37,7 +37,8 @@ _LOCK = threading.Lock()
 
 
 def reset_bound() -> None:
-    """Reset the per-week counter (call once at the start of a week's pass)."""
+    """Reset the call counter. The build is ONE week per invocation, so the bound is
+    per-process == per-week; a multi-week caller must call this between weeks (audit 2026-10-05)."""
     with _LOCK:
         _CALLS["n"] = 0
 
@@ -59,7 +60,6 @@ _CLASS_Q = {
 
 
 def health(timeout: int = 4) -> dict:
-    import urllib.error
     base = JUDGE_URL.rsplit("/v1/", 1)[0]
     try:
         urllib.request.urlopen(base, timeout=timeout)

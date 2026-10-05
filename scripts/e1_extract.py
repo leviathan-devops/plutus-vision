@@ -188,8 +188,7 @@ def fetch_best(symbol: str = "DXY", timeframe: str = "1H") -> tuple[list[dict], 
     bars2, _, prov = fetch_ohlc_fixture(symbol, timeframe)
     if bars2:
         return bars2, "local_fixture", prov
-    _, _, ferr = fetch_ohlc_fixture(symbol, timeframe)
-    return [], "", f"no OHLC from any source. network: {err}; fixture: {ferr}"
+    return [], "", f"no OHLC from any source. network: {err}; fixture: {prov}"
 
 def ema(values: list[float], n: int) -> list[float]:
     """The standard EMA the canon's MA pillar assumes: seeded with an SMA of the first n."""

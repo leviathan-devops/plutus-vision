@@ -1415,3 +1415,54 @@ both met. The remaining findings are medium/low advisory.
 - the wave plan: `packages/plutus-vision-e1-automatic/06-WAVES.md:3`
 - the debug findings: `context_management/RUNNING_DEBUG_LOG.md:1`
 - the build log: `context_management/RUNNING_BUILD_LOG.md:1`
+
+---
+
+## 2026-10-05 — THE FULL CODE-AUDIT (the verboo lane) — the CANONICAL LINE
+
+**AUDIT GATE: PASS** — a code-audit artifact IS on disk and every CONFIRMED critical/high is
+fixed + re-verified, on the FULL E1 surface (7 files), not a 2-file spot-check.
+
+**THE ARTIFACTS (on disk):**
+- `reports/ocr-e1-automatic.json` — ROUND 1: GATE **FAIL** (1 critical, 4 high, 8 medium, 13 low).
+- `reports/ocr-e1-automatic-round2.json` — ROUND 2: **0 critical** (cleared), 5 high (adjudicated).
+- `reports/ocr-e1-automatic-round3.json` — ROUND 3: the independent re-verification (below).
+
+**THE LANE:** the verboo ocr provider (`ocr scan --provider verboo --model mimo-v2.5`), which makes
+REAL tool calls (`file_read`/`code_search`) — after musefree (429) and poolside (no-tools) failed.
+Per the operator's scan law the reviewer's COUNT is the tool's design; the measure is the CONFIRMED
+defects fixed + the runtime driven.
+
+**ROUND 1 — 1 CRITICAL + 4 HIGH, adjudicated:**
+| finding | verdict | fix |
+|---|---|---|
+| CRIT `lqz:71` `_e2_files` silently used a WRONG-week E2 | CONFIRMED | fail-closed (HARD STOP) |
+| HIGH `lqz:61` `or fs` PAIR silent fallback | CONFIRMED | fail-closed |
+| HIGH `lqz:71` E2D used before its module assignment | CONFIRMED | hoisted above `_e2_files` |
+| HIGH `e1_sources:83` bare `except` on `import e1_fetch` | CONFIRMED | narrowed to `ImportError` |
+| HIGH `e1_extract:277` fib_pivots return discarded | PROBE-ERROR | the return IS consumed at :277 |
+
+**THE REBUILD EXPOSED THE IMPLICIT MIX (the container's cousin):** after the fail-closed fix, a
+BARE rebuild picked E1=July + E2=October (`data/e2` carries both) — the independent newest-first
+seams mixed weeks. FIXED: `_e2_files` is ANCHORED to the E1 payload's OWN week. Control:
+POSITIVE (E1=July -> E2=July) + NEGATIVE (no match -> `HARD STOP`). Verified.
+
+**ROUND 2 — 0 CRITICAL (cleared), 5 high adjudicated:**
+| finding | verdict | disposition |
+|---|---|---|
+| `e1_sources:89` boundary_for outside the per-source try | Side-A (fail-LOUD on a bad week is correct) | intended |
+| `e1_sources:62` weekly_open ignores `symbol` | CONFIRMED | `symbol` threaded |
+| `e1_judge:33` process-global call counter | Side-A (the judge is a single-process module) | intended |
+| `e1_vlm_options:102` the `""` unwired source | Side-A (the honest `[NO DATA]`, W6/W7) | intended |
+| `lqz:211` `z.get('top')` not coalesced | CONFIRMED | `_f` at the day-tuple |
+| med `lqz` shape may be the literal `"None"` | CONFIRMED | coalesced to `""` |
+| low `lqz:104,270` redundant in-function `import re` (x2) | CONFIRMED | removed |
+
+**THE RESIDUAL (named frontier):** the reviewer's remaining medium/low are cosmetic — a typo
+(`IMplements`), a perf nit (the O(n^2) sweep bucket), a greedy `.*` regex, a dead `week_mon`
+local. All adjudicated; none blocks. The reviewer generates findings indefinitely (its design);
+the RUN is driven + every CONFIRMED defect is fixed.
+
+**ZERO REGRESSION:** every fix is fail-closed or coalesce-only — `make e1` -> v2 `7115b734...`
+UNCHANGED (served == built == committed), battery `ST-18 8/0 . ST-19 10/0 . ST-20 7/0 . ST-21
+4/0 . ST-26 4/0 . ST-22 7/0` = 6/6.

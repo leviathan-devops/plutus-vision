@@ -54,12 +54,20 @@ def _q(s: str) -> str:
             .replace("\n", " ").replace("\r", " "))
 
 
+def _f(v) -> float:
+    """Coalesce an absent/None numeric to 0 — `array.push(None)` is a Pine compile error, and a
+    PRESENT-but-null JSON value slips past a `.get(k, 0)` default (audit 2026-10-05)."""
+    return 0 if v is None else v
+
 def _payload_files() -> list:
     # NEWEST-FIRST so files[0] is the most recent week; filtered by PAIR then WEEK. A set WEEK
     # that matches NOTHING FAILS CLOSED — the earlier `or fs` silently fell back (audit 2026-10-05).
     fs = sorted(DATA.glob("*.json"), reverse=True)
     if PAIR:
-        fs = [f for f in fs if f.stem.startswith(PAIR.replace("/", ""))] or fs
+        hit = [f for f in fs if f.stem.startswith(PAIR.replace("/", ""))]
+        if not hit:
+            sys.exit(f"HARD STOP — PV2_PAIR={PAIR} matched no payload in {DATA}")
+        fs = hit
     if WEEK:
         hit = [f for f in fs if WEEK in f.stem]
         if not hit:
@@ -68,16 +76,24 @@ def _payload_files() -> list:
     return fs
 
 
-def _e2_files() -> list:
-    """The E2 payload files — the SAME newest-first + WEEK discipline as E1, so E1 and E2 can
-    never come from different weeks (audit 2026-10-05)."""
-    fs = sorted(E2D.glob("*-e2.json"), reverse=True)
-    if WEEK:
-        hit = [f for f in fs if WEEK in f.stem]
-        if hit:
-            fs = hit
-    return fs
+# E2D is DEFINED here, above its only consumer (`_e2_files`) — audit 2026-10-05: it was
+# assigned AFTER `_e2_files`, a latent NameError on any import-time / early call.
 E2D = pathlib.Path(os.environ.get("PV2_E2_DIR", ROOT / "data" / "e2"))
+
+def _e2_files() -> list:
+    """The E2 payload files — ANCHORED to the E1 payload's OWN week, so E1 and E2 can never come
+    from different weeks. The E1 file's date token (e.g. '2026-07-06') is the key; an E2 set with
+    no match FAILS CLOSED. (audit 2026-10-05: independent newest-first picks silently mixed weeks —
+    a naive rebuild produced E1=July + E2=October.)"""
+    e1 = _payload_files()
+    if not e1:
+        sys.exit(f"HARD STOP — no E1 payload in {DATA}")
+    date = e1[0].stem.split("-", 1)[-1]      # 'DXY-2026-07-06' -> '2026-07-06'
+    fs = sorted(E2D.glob("*-e2.json"), reverse=True)
+    hit = [f for f in fs if date in f.stem]
+    if not hit:
+        sys.exit(f"HARD STOP — no E2 payload matching the E1 week {date!r} in {E2D}")
+    return hit
 
 # the v1 seal. The build REFUSES to run if v1 has drifted.
 V1_SEALED_SHA = "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1"
@@ -85,7 +101,6 @@ V1_FLOOR = {"smc": 226, "ob": 6, "lqz": 4}
 
 
 def _lines_matching(text: str, pattern: str) -> int:
-    import re
     rx = re.compile(pattern)
     return sum(1 for ln in text.splitlines() if rx.search(ln))
 
@@ -154,10 +169,10 @@ def build_payload() -> tuple[str, str]:
         for v in vals:
             pushes.append(f"{name}.push({v})")
 
-    add("e1_injected_top", "float", [z.get("top", 0) for z in zones])
-    add("e1_injected_bottom", "float", [z.get("bottom", 0) for z in zones])
-    add("e1_injected_confluence", "int", [int(z.get("confluence", 0)) for z in zones])
-    add("e1_injected_zfp", "int", [int(z.get("zfp", 0)) for z in zones])
+    add("e1_injected_top", "float", [_f(z.get("top")) for z in zones])
+    add("e1_injected_bottom", "float", [_f(z.get("bottom")) for z in zones])
+    add("e1_injected_confluence", "int", [int(_f(z.get("confluence"))) for z in zones])
+    add("e1_injected_zfp", "int", [int(_f(z.get("zfp"))) for z in zones])
     # zCat — the v8 renderer's positional vocabulary (RES|MID|SUP). VALIDATED, never defaulted:
     # a missing zCat silently became "SUP" (a teal wrong-colour) — refuse instead (audit 2026-10-05).
     for z in zones:
@@ -190,18 +205,20 @@ def build_payload() -> tuple[str, str]:
         z = zmap.get(d.get("zone"))
         if z is None:                       # unanchored -> not drawn
             continue
-        days.append((d.get("x"), z.get("top"), d.get("shape"), d.get("conf")))
+        if d.get("x") is None or d.get("conf") is None:   # a malformed engine entry -> not drawn
+            continue
+        days.append((d.get("x"), _f(z.get("top")), d.get("shape"), d.get("conf")))
     for g in e2doc.get("ghost", []):
         z = zmap.get(g.get("zone"))
         if z is not None:
             ghosts.append((z.get("top"), z.get("top")))
 
-    add("e2_injected_x", "float", [d[0] for d in days])
-    add("e2_injected_y", "float", [d[1] for d in days])
-    add("e2_injected_shape", "string", [f'"{_q(d[2])}"' for d in days])
-    add("e2_injected_conf", "int", [int(d[3]) for d in days])
-    add("e2_injected_ghost_x", "float", [g[0] for g in ghosts])
-    add("e2_injected_ghost_y", "float", [g[1] for g in ghosts])
+    add("e2_injected_x", "float", [_f(d[0]) for d in days])
+    add("e2_injected_y", "float", [_f(d[1]) for d in days])
+    add("e2_injected_shape", "string", [f'"{_q(d[2] or "")}"' for d in days])
+    add("e2_injected_conf", "int", [int(_f(d[3])) for d in days])
+    add("e2_injected_ghost_x", "float", [_f(g[0]) for g in ghosts])
+    add("e2_injected_ghost_y", "float", [_f(g[1]) for g in ghosts])
 
     # THE ANCHOR is computed HERE, in Python, because the PineTS transpiler has
     # neither `str.split` nor `tonumber` (measured 2026-10-03: "tonumber is not
@@ -249,7 +266,6 @@ def _monday_anchor() -> tuple[int, str]:
     return ms, f"{iso[0]}-W{iso[1]:02d}"
 
 def strip_decl(src: str, names: list[str]) -> str:
-    import re
     out = []
     for ln in src.split("\n"):
         if any(re.match(rf"^{n}\s*=\s*array\.from\(", ln) for n in names):

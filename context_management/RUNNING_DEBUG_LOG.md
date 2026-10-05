@@ -637,3 +637,28 @@ so the anti-fabrication PROPERTY (ST-22a-e) is proven regardless of the arm. Bot
 **THE LESSON (the class):** a green battery can hide an environment dependency; only the FRESH
 container exposes it. This is exactly the container-testing law — the tool earned its place by
 finding what the host suite could not.
+
+---
+
+## 2026-10-05 — THE FULL CODE-AUDIT, ROUNDS 1-2 (the verboo lane) — the CRITICAL + the fixes
+
+**THE AUDIT (a full 7-file scan, the verboo lane):** ROUND 1 = **FAIL (1 critical, 4 high)**. The
+CRITICAL: `lqz_vision_v2_build.py:71` — `_e2_files()` silently returned a WRONG-WEEK E2 file
+(`if hit: fs = hit` with no else), violating the module's OWN documented invariant ("E1 and E2 can
+never come from different weeks"). FIXED: fail-closed (`HARD STOP`).
+
+**THE REBUILD EXPOSED THE IMPLICIT MIX (the container-test cousin):** after the fail-closed fix, a
+BARE rebuild picked E1=July + E2=October — `data/e2/` carries BOTH `EURUSD-2026-07-06-e2.json` and
+`EURUSD-2026-10-06-e2.json`, and the two independent newest-first seams mixed them. FIXED by
+**ANCHORING `_e2_files` to the E1 payload's OWN week** (`e1[0].stem.split("-",1)[-1]`). Proof:
+POSITIVE (`E1=2026-07-06 -> E2=2026-07-06`) + NEGATIVE (no match -> `HARD STOP`).
+
+**THE OTHER CONFIRMED FIXES:** PAIR `or fs` -> fail-closed; `E2D` hoisted above its consumer; the
+import `except Exception` -> `ImportError`; `harvest_weekly_open` threads `symbol`; `z.get("top")`
+coalesced via `_f`; a `None` shape coalesced to `""`; 2 redundant in-function `import re` removed.
+
+**ROUND 2: 0 CRITICAL** — the critical fix worked. v2 `7115b734…` UNCHANGED (zero regression),
+battery 6/6.
+
+**THE LESSON (the class):** parallel inputs selected by INDEPENDENT "newest" heuristics can silently
+mix — the coupling (E2 follows E1's week) must be EXPLICIT, never inferred from a shared sort.
