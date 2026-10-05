@@ -150,3 +150,27 @@ the extractor; (2) `scripts/e1_extract.py` merges the harvest's per-source statu
 payload's `sources` (additive). VERIFIED: the zones + levels byte-identical; the v2 build sha
 unchanged (`471a7849a18f7bf0`); all 9 suites green. Item 14 now holds; no spec violation
 remains. See DEBUG_LOG EN-108.
+
+## 2026-10-05 (4) — ITEMS 5/6 vs C5: the ladder + helpers live in `e1-render.pine` (a spec clarification, not a defect)
+
+**THE APPARENT GAPS:** `spec §5 items 5/6` name a NEW file `plutus-vision-lqz/e1-ip-colors.pine`
+for "the colour ladder (R/G/T `_F1..6`+`_B1..6`)" + "the helpers (`zfill` `zbord` `pressureLbl`
+`volLbl`)". MEASURED: that file does NOT exist; `volLbl` is absent from the render.
+
+**ADJUDICATED (both sides) — NEITHER IS A DEFECT:**
+1. **The ladder + the IP helpers ARE ported — into `e1-render.pine`** (56 ladder refs: `R/G/T_F/B1..6`;
+   `zfill`/`zbord`/`pressureLbl`/`calcZFP` present). This is exactly where C5 (the mechanical
+   criterion) expects them: `grep -c 'zfill\|zbord\|pressureLbl\|calcZFP' e1-render.pine` ≥ 4.
+   The spec is internally inconsistent (items 5/6 name a separate file; C5 names `e1-render.pine`);
+   the build followed C5. NO DRY GAP: `e2-render.pine` does not duplicate the ladder (0 refs) — the
+   ladder has exactly ONE home.
+2. **`volLbl` is correctly absent — it is NOT an IP-block helper.** In the v8 source it is defined at
+   `trident_v8.pine:320` and used ONLY in the **Option Strike Target** labels (`v8:386/468/549/630`:
+   `oLbl = volLbl(vol) + " Option Strike Target"`). The IP block (`v8:352-365`) uses `zfill` ·
+   `zbord` · `pressureLbl` · `calcZFP` — the exact 4 C5 tests. The E1 build renders NO strikes (0
+   `strike|option` refs in `e1-render.pine`), so `volLbl` is out of the IP-zone scope.
+
+**THE CORRECTION:** items 5/6's true deliverable — "the colour ladder + the helpers, VERBATIM" — is
+IMPLEMENTED and C5-verified in `e1-render.pine`. The file path + the volLbl mention were pre-build
+over-specifications that C5 refines. No code change; the intent holds. (Same class as the C7
+correction.)

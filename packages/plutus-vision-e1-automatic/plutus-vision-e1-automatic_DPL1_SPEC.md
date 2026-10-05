@@ -212,6 +212,15 @@ bottom > spot → RES    top < spot → SUP    else → MID   (a straddler is MI
 **Items 11-13 are the "automatic" half.** Items 1-10 are the port + anchor. Items 16-17 preserve
 the deferred split test. Item 20 is scoped but sequenced last.
 
+† **Items 5/6 — the file-path clarification (2026-10-05).** The separate file `e1-ip-colors.pine`
+named here was not created; the colour ladder (`R/G/T_F/B1..6`) + the IP helpers (`zfill` · `zbord`
+· `pressureLbl` · `calcZFP`) live in **`plutus-vision-lqz/e1-render.pine`** — which is exactly where
+C5 (the mechanical criterion) tests them (`grep -c 'zfill\|zbord\|pressureLbl\|calcZFP'
+e1-render.pine` ≥ 4). The build followed C5 (the criterion refines this pre-build item). `volLbl`
+(item 6) is correctly absent: it is the **Option Strike Target** helper (`trident_v8.pine:320`, used
+at `:386/468/549/630`), NOT the IP block (`:352-365` uses the 4 C5 names); the E1 build renders no
+strikes. No DRY gap — `e2-render.pine` does not duplicate the ladder. See `SPEC_VIOLATION_LOG` (4).
+
 ---
 
 ## §6 SUCCESS CRITERIA (mechanical — every one command/ledger/eyes-verifiable)
