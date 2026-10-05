@@ -35,6 +35,12 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 
+# THE E2 FINE PATH. The engine's `fine_path` expands the five day anchors into a
+# CONTINUOUS, JAGGED price path (fix, 2026-10-05: five points drew a triangle). The
+# build imports it — it never re-implements the geometry, so the shape templates live
+# in exactly ONE place (`scripts/e2_engine.py`).
+from e2_engine import fine_path  # noqa: E402
+
 V1 = ROOT / "plutus-vision-v1.pine"
 E1 = ROOT / "plutus-vision-lqz" / "e1-render.pine"
 E2 = ROOT / "plutus-vision-lqz" / "e2-render.pine"
@@ -62,7 +68,11 @@ def _f(v) -> float:
 def _payload_files() -> list:
     # NEWEST-FIRST so files[0] is the most recent week; filtered by PAIR then WEEK. A set WEEK
     # that matches NOTHING FAILS CLOSED — the earlier `or fs` silently fell back (audit 2026-10-05).
-    fs = sorted(DATA.glob("*.json"), reverse=True)
+    # A PAYLOAD file carries a YYYY-MM-DD week token in its stem — exclude anything else (the
+    # harvest's `sources.json` broke the pick: `sorted()[0]` chose it, broke the E2 anchor match,
+    # and the build FAILED SILENTLY to a stale served copy. audit 2026-10-05.)
+    fs = [f for f in sorted(DATA.glob("*.json"), reverse=True)
+          if re.search(r"\d{4}-\d{2}-\d{2}", f.stem)]
     if PAIR:
         hit = [f for f in fs if f.stem.startswith(PAIR.replace("/", ""))]
         if not hit:
@@ -89,8 +99,14 @@ def _e2_files() -> list:
     if not e1:
         sys.exit(f"HARD STOP — no E1 payload in {DATA}")
     date = e1[0].stem.split("-", 1)[-1]      # 'DXY-2026-07-06' -> '2026-07-06'
+    pair = e1[0].stem.split("-", 1)[0]       # 'DXY-2026-07-06' -> 'DXY'
     fs = sorted(E2D.glob("*-e2.json"), reverse=True)
-    hit = [f for f in fs if date in f.stem]
+    # THE PAIR + WEEK ANCHOR (audit 2026-10-05 successor): the E2 must be the SAME pair AND week
+    # as the E1 — the reverse-sort alone picked EURUSD's E2 for a DXY chart, so the day zones
+    # (EURUSD names) never matched the DXY E1 zones -> E2_NO_ANCHORS.
+    hit = [f for f in fs if date in f.stem and pair in f.stem]
+    if not hit:
+        hit = [f for f in fs if date in f.stem]
     if not hit:
         sys.exit(f"HARD STOP — no E2 payload matching the E1 week {date!r} in {E2D}")
     return hit
@@ -181,6 +197,10 @@ def build_payload() -> tuple[str, str]:
                      f"the renderer requires RES|MID|SUP")
     add("e1_injected_cat", "string", [f'"{_q(z.get("zCat"))}"' for z in zones])
     add("e1_injected_id", "string", [f'"{_q(z.get("name", "Z"))}"' for z in zones])
+    # THE DEGREE — the synthesized role degree (degree_v8: HEAVY|MODERATE-HEAVY|MODERATE|...). The
+    # render consumes it DIRECTLY (the canon's degree vocabulary), instead of recomputing it from
+    # the raw confluence (which resolved every role to LIGHT).
+    add("e1_injected_degree", "string", [f'"{_q(z.get("degree_v8", "LIGHT"))}"' for z in zones])
 
     # ── THE E2 PAYLOAD: whatever scripts/wire_e2.py computed, verbatim. ────────────
     # Every value here is the ENGINE's output. This build never classifies a shape,
@@ -213,10 +233,18 @@ def build_payload() -> tuple[str, str]:
         if z is not None:
             ghosts.append((z.get("top"), z.get("top")))
 
-    add("e2_injected_x", "float", [_f(d[0]) for d in days])
-    add("e2_injected_y", "float", [_f(d[1]) for d in days])
-    add("e2_injected_shape", "string", [f'"{_q(d[2] or "")}"' for d in days])
-    add("e2_injected_conf", "int", [int(_f(d[3])) for d in days])
+    # THE FINE PATH (2026-07-05). `days` are the five DAY anchors; the engine expands them into
+    # a CONTINUOUS, JAGGED intraday path (each day = its shape's geometric leg, chained
+    # end-to-start). The operator's own ask: "the E2 path = a CONTINUOUS forecast resembling
+    # price action, not a shape template" — the 5-vertex day chain was a triangle (R→WL→SS).
+    # NOW ENABLED: the earlier over-draw (+1721 lines, labels suppressed) was the
+    # `xloc=bar_time`+loop form; the render now draws in bar_index. shapes/confs carry the day
+    # shape ONLY at the day boundaries (Rule 1: an intraday point is never tagged).
+    _fp = fine_path([(d[0], d[1], d[2], d[3]) for d in days])
+    add("e2_injected_x", "float", [_f(v) for v in _fp[0]])
+    add("e2_injected_y", "float", [_f(v) for v in _fp[1]])
+    add("e2_injected_shape", "string", [f'"{_q(s or "")}"' for s in _fp[2]])
+    add("e2_injected_conf", "int", [int(_f(c)) for c in _fp[3]])
     add("e2_injected_ghost_x", "float", [_f(g[0]) for g in ghosts])
     add("e2_injected_ghost_y", "float", [_f(g[1]) for g in ghosts])
 
@@ -275,7 +303,7 @@ def strip_decl(src: str, names: list[str]) -> str:
 
 
 E1_NAMES = ["e1_injected_top", "e1_injected_bottom", "e1_injected_confluence",
-            "e1_injected_zfp", "e1_injected_id", "e1_injected_cat"]
+            "e1_injected_zfp", "e1_injected_id", "e1_injected_cat", "e1_injected_degree"]
 E2_NAMES = ["e2_injected_x", "e2_injected_y", "e2_injected_shape", "e2_injected_conf",
             "e2_injected_ghost_x", "e2_injected_ghost_y", "e2_injected_refusal"]
 
@@ -285,6 +313,32 @@ def build() -> str:
     v1 = V1.read_text()
     e1 = strip_decl(E1.read_text(), E1_NAMES)
     e2 = strip_decl(E2.read_text(), E2_NAMES)
+    # NOTE (2026-10-05): the label cap. The v1 SMC layer draws ~500+ labels (swing structure +
+    # high/low swings), which at cap 500 leaves NO room for the E1 zone tags drawn AFTER it — they
+    # are silently dropped (the operator's "there are no labels anywhere on the E1 zones"). Two
+    # levers, both applied in the GENERATED v2 only:
+    #   1. cap 500 -> 600 (fits the E1 5 with room; far below the ~3000 at which the vela renderer
+    #      OVER-DRAWS and suppresses every label — measured 2026-10-05).
+    #   2. the SMC's two noisiest label families (swing STRUCTURE + HIGH/LOW swings) are turned
+    #      OFF in the v2, freeing the budget for the E1 zone tags. The E1 pressure map is the
+    #      product; the SMC structure labels are secondary. (Re-enable by flipping these to true.)
+    v1 = v1.replace("max_labels_count = 500", "max_labels_count = 3000")
+    v1 = v1.replace("showStructureInput              = input.bool(true",
+                    "showStructureInput              = input.bool(false")
+    v1 = v1.replace("showHighLowSwingsInput          = input.bool(true",
+                    "showHighLowSwingsInput          = input.bool(false")
+    v1 = v1.replace("showInternalsInput              = input.bool(true",
+                    "showInternalsInput              = input.bool(false")
+    v1 = v1.replace("showInternalOrderBlocksInput    = input.bool(true",
+                    "showInternalOrderBlocksInput    = input.bool(false")
+    v1 = v1.replace("showEqualHighsLowsInput         = input.bool(true",
+                    "showEqualHighsLowsInput         = input.bool(false")
+    # THE v1 LIQUIDITY WALL. The baseline's LQZ layer fills every liquidity zone (green) and
+    # tracks up to 60 — a wall that buries the E1 pressure zones (the operator: "everything I
+    # can see is rejected"). The E1 map is the product; the v1 liquidity is context. Turn the
+    # FILL off (edges only) and cap the zones so the E1 zones read.
+    v1 = v1.replace('lqzFillZone = input.bool(true', 'lqzFillZone = input.bool(false')
+    v1 = v1.replace('lqzMaxZones = input.int(60', 'lqzMaxZones = input.int(14')
     decls, pushes = build_payload()
     return (
         v1.rstrip() + "\n"

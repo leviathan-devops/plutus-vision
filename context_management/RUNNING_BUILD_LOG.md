@@ -741,3 +741,12 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
   sha UNCHANGED · 9 suites green · `DEBUG_LOG EN-108`.
 - GAP: the `--live` web harvest (S1-S9) times out >120s in this environment; the default is
   offline (the fixture path) — the web harvest is the operator's `--live` opt-in.
+
+## 2026-07-05 · the E2 continuity fix (v2 04d7a89ae57d1f9f)
+WHAT: enabled fine_path() (11-point intraday path) + looped the E2 render over all segments.
+WHY: the operator's oldest complaint — the E2 read as a 5-vertex triangle, not price action.
+HOW: scripts/lqz_vision_v2_build.py:236 (fine_path) + plutus-vision-lqz/e2-render.pine:62
+  (the loop). The render now coexists with the E1 labels — the "cannot paint together" residual
+  was the xloc=bar_time+loop form, not a renderer limit.
+EVIDENCE: git 518d788. census 2 plots/6 boxes/101 lines/2006 labels/798 segs. battery
+  pass=8 fail=0. v1 0d20e8314ce992fc. The capture: /tmp/fine-chart.png (E2 jagged + 6 zones).

@@ -138,40 +138,64 @@ f_e1Zbord(string cat, string deg) =>
 
 // ── pressureLbl(deg) — trident_v8.pine:157-158, VERBATIM ────────────────────
 f_e1PressureLbl(string deg) =>
-    deg == "EXTREME" ? "Extreme" : deg == "HEAVY" ? "Heavy" : deg == "MODERATE-HEAVY" ? "Moderate-Heavy" : deg == "MODERATE" ? "Moderate" : deg == "LIGHT" ? "Light" : "Minimal"
+    deg == "EXTREME" ? "Extreme" : deg == "HEAVY" ? "Heavy" : deg == "MODERATE_HEAVY" ? "Moderate-Heavy" : deg == "MODERATE" ? "Moderate" : deg == "LIGHT" ? "Light" : "Minimal"
 
 // ── THE DEGREE — confluence → v8's literal vocabulary (hyphen, the tower's branch) ──
 f_e1Degree(int c) =>
     c >= 12 ? "EXTREME" :
      c >= 10 ? "HEAVY" :
-     c >=  8 ? "MODERATE-HEAVY" :
+     c >=  8 ? "MODERATE_HEAVY" :
      c >=  6 ? "MODERATE" :
      c >=  4 ? "LIGHT" : "MINIMAL"
+
+// ── calcZFP(tp, bt, pair) — trident_v8.pine:334-338, VERBATIM ────────────────
+// zone width as a percentage of the pair's typical weekly range.
+f_e1CalcZFP(float tp, float bt, string pair) =>
+    float refR = pair == "DXY" ? 1.60 : (pair == "EUR/USD" or pair == "GBP/USD") ? 0.0200 : 0.0150
+    math.round((tp - bt) / refR * 100.0)
+
+// ── THE PAIR — the chart's own (trident_v8.pine:120-126 pair detection) ──────
+// The ZFP reference range is pair-specific; the chart tells us which pair.
+_e1Ticker = str.upper(str.replace(syminfo.ticker, "/", ""))
+_e1Pair = str.contains(_e1Ticker, "DXY") ? "DXY" :
+          str.contains(_e1Ticker, "EURUSD") ? "EUR/USD" :
+          str.contains(_e1Ticker, "GBPUSD") ? "GBP/USD" :
+          str.contains(_e1Ticker, "AUDUSD") ? "AUD/USD" : "DXY"
 
 // ── THE PAYLOAD (injected typed arrays; the builder emits these) ────────────
 e1PayloadTop  = e1_injected_top
 e1PayloadBot  = e1_injected_bottom
 e1PayloadConf = e1_injected_confluence
 e1PayloadCat  = e1_injected_cat
+e1PayloadDeg  = e1_injected_degree
 e1PayloadId   = e1_injected_id
 e1_anchor_ms  = e1_injected_anchor_ms
 e1WeekTag     = e1_injected_week_tag
 
+// ── THE PRICE SCALE — THE ZONES MUST FIT ────────────────────────────────────
+// The chart autoscales to the BARS. The zones extend above/below the recent bars, so the
+// upper zones (the resistance levels) fell OFF the top edge (the operator: "cut off"). Two
+// invisible plots (fully transparent) pull the price scale to include the whole zone range,
+// so every zone renders. The zones are price-ASCENDING, so [0] is the floor and the LAST is
+// the ceiling.
+_e1ZHi = array.size(e1PayloadTop) > 0 ? array.get(e1PayloadTop, array.size(e1PayloadTop) - 1) : na
+_e1ZLo = array.size(e1PayloadBot) > 0 ? array.get(e1PayloadBot, 0) : na
+plot(_e1ZHi, "E1 ceiling (scale)", color = color.new(color.white, 100))
+plot(_e1ZLo, "E1 floor (scale)", color = color.new(color.white, 100))
+
 // ── THE RENDER ──────────────────────────────────────────────────────────────
 f_e1Render() =>
     _n = array.size(e1PayloadTop)
-    // THE ANCHOR — the CHART'S OWN LAST BAR. The operator's words: "base it on the most recent
-    // bar of the chart that is active ... auto-adjust so that if I use bar replay and I rewind,
-    // the zones render for that week." A FIXED injected anchor pins the zones to one calendar
-    // position regardless of where the operator is looking — which is why they vanished off that
-    // week. Anchored to bar_index (the active bar), the zones follow the chart, and under bar
-    // replay they follow the replay point.
-    _bAnchor = bar_index
-    // BARS PER WEEK, computed (432000 s trading week / the timeframe) — never the literal 5
-    // that assumed daily bars and collapsed the zones to a 10-bar sliver on a 1H chart.
+    // THE ANCHOR — THE TARGET WEEK'S MONDAY. The operator: "renders from Monday to Friday of
+    // this trading week". `e1_anchor_ms` is the analysis point (the target week's Monday), so
+    // the anchor bar is the one whose time is that Monday — derived from the CHART's own bars
+    // (the objective's `anchor = time`). Under replay, `time` moves and the anchor follows.
+    _bm = math.max(1, timeframe.in_seconds() * 1000)
+    _bAnchor = bar_index - math.round((time - e1_anchor_ms) / _bm)
+    // THE BAND SPAN — MONDAY to FRIDAY (5 trading days), never a multi-week ribbon.
     _bpw = math.max(1, math.round(432000 / timeframe.in_seconds()))
-    _lx = math.max(0, _bAnchor - e1BackWeeks * _bpw)
-    _rx = math.min(bar_index + 1, _bAnchor + (e1FwdWeeks + 1) * _bpw)
+    _lx = math.max(0, _bAnchor - 4)
+    _rx = math.min(bar_index + 60, _bAnchor + 5 * _bpw)
 
     // THE IP ZONES — trident_v8.pine:352-365, the loop, re-anchored to bar_index bounds.
     // Colour by zCat (RES|MID|SUP) × degree — the v8 ladder. The band height is inflated so
@@ -184,22 +208,36 @@ f_e1Render() =>
                 break
             _cat = array.get(e1PayloadCat, i)
             _c   = array.get(e1PayloadConf, i)
-            _deg = f_e1Degree(_c)
+            // THE DEGREE — the synthesized role degree (HEAVY|MODERATE-HEAVY|MODERATE|...) when
+            // the payload carries it; else the confluence-derived fallback.
+            _deg = array.size(e1PayloadDeg) > i ? array.get(e1PayloadDeg, i) : f_e1Degree(_c)
             if _deg != "MINIMAL"
                 _top = array.get(e1PayloadTop, i)
                 _bot = array.get(e1PayloadBot, i)
                 _mid = (_top + _bot) / 2
-                _band = math.max(_top - _bot, _mid * 0.0008)
-                _bTop = _mid + _band / 2
-                _bBot = _mid - _band / 2
-                box.new(_lx, _bTop, _rx, _bBot,
-                     bgcolor = f_e1Zfill(_cat, _deg),
+                // THE RENDERED BAND. The cluster spans [bottom, top] (~0.15 = the canon's
+                // confluence band). FIVE contiguous 0.15 bands read as ONE wall (the operator:
+                // "stacked on top of each other"). Render each zone as a NARROW band at its
+                // confluence CENTRE, so the five institutional levels read as DISTINCT levels with
+                // visible gaps — a level you can see, not a fill you cannot read.
+                _hw = 0.02
+                // THE LABEL X — MID-VISIBLE. The visible range spans the target week + margins
+                // (`anchor` is ~157 bars from the right edge); anchoring ~40 bars right of the
+                // Monday centers the tag in the view so the full text reads.
+                _lxmid = _bAnchor + 40
+                // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
+                // A THICKER BORDER + a more OPAQUE fill so the E1 pressure zones DOMINATE the
+                // many v1 liquidity lines behind them (the operator: the E1 zones must be the
+                // read, the v1 the context).
+                box.new(_lx, _mid + _hw, _rx, _mid - _hw,
+                     bgcolor = color.new(f_e1Zbord(_cat, _deg), 55),
                      border_color = f_e1Zbord(_cat, _deg),
                      border_width = 2,
                      border_style = line.style_solid)
-                _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + _cat
-                label.new(_lx, _bTop, _lbl, style = label.style_label_left, size = size.tiny,
-                     color = color.new(f_e1Zbord(_cat, _deg), 40), textcolor = color.white)
+                // THE LABEL — the reference idiom: at the MID, style_none, white, size.normal.
+                // A subtle dark backing keeps the white text legible on the zone fill.
+                _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(f_e1CalcZFP(_top, _bot, _e1Pair)) + "% ZFP"
+                label.new(_lxmid, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
     0
 
 if e1Enabled and barstate.islast

@@ -292,3 +292,18 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
   beyond "it renders"; the origin-candle mapping has NOT been independently checked.
 - The carried-forward ship docs describe an EARLIER baseline and are NOT a current verification
   of this artifact.
+
+## [2026-07-05] — E2 path: a continuous jagged price line (the triangle fixed)
+- REQUIREMENT: operator — "the E2 path = a CONTINUOUS forecast resembling price action, not a
+  shape template." The 5-day chain (R→WL→SS→SS→SS) rendered as a spike-and-flat triangle.
+- FIX: `fine_path()` (scripts/e2_engine.py:535, already written, disabled "for the day the
+  renderer can take it") is now ENABLED in scripts/lqz_vision_v2_build.py:236 — the 5 day
+  anchors expand to an 11-point intraday jagged path (each day's shape leg, chained
+  end-to-start). The E2 renderer (plutus-vision-lqz/e2-render.pine:62-72) loops over ALL
+  segments (was unrolled to 4).
+- RESOLVED RESIDUAL: ct-results honestNote said "the E2 path + the E1 labels cannot paint
+  together (a vela PineTS renderer limit; E2 defaults off)". The over-draw was the
+  `xloc=bar_time`+loop form, NOT a segment-count limit — the E2 now draws in bar_index space
+  and coexists with all 5 E1 zone labels (census: 2006 labels + 798 segs together).
+- EVIDENCE: census COMPILED 3697ms · 2 plots · 6 boxes · 101 lines · 2006 labels · 798 segs ·
+  bars 1740. v1 seal 0d20e8314ce992fc unchanged. battery pass=8 fail=0. v2 04d7a89ae57d1f9f.
