@@ -1567,10 +1567,10 @@ f_e1Render() =>
                 // confluence CENTRE, so the five institutional levels read as DISTINCT levels with
                 // visible gaps — a level you can see, not a fill you cannot read.
                 _hw = 0.02
-                // THE LABEL X — in the VISIBLE target-week space. The chart auto-scrolls to the
-                // future (the E2 forecast), so the visible band sits at/after the anchor; a
-                // negative offset lands off-screen. Center the tag near the Monday+mid.
-                _lxmid = _bAnchor + 100
+                // THE LABEL X — MID-VISIBLE. The visible range spans the target week + margins
+                // (`anchor` is ~157 bars from the right edge); anchoring ~40 bars right of the
+                // Monday centers the tag in the view so the full text reads.
+                _lxmid = _bAnchor + 40
                 // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
                 // A THICKER BORDER + a more OPAQUE fill so the E1 pressure zones DOMINATE the
                 // many v1 liquidity lines behind them (the operator: the E1 zones must be the
