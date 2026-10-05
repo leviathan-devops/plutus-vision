@@ -1514,3 +1514,26 @@ all real ones) + the runtime driven. **The audit is concluded: 0 CONFIRMED criti
 - **AUDIT GATE: PASS** — the verboo-lane scan (`reports/ocr-e1-automatic.json` round-1:
   1 critical + 4 high; `-round2`: 0 criticals). The critical (the E1/E2 week-mix) FIXED + re-proven.
   The artifact on disk; the confirmed defects fixed.
+
+## 2026-10-05 — THE C1..C16 COMPLETION AUDIT (every criterion re-verified on the current tree)
+
+| # | criterion | command | result |
+|---|---|---|---|
+| C1 | v1 byte-identical | `sha256sum plutus-vision-v1.pine` | `0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1` ✓ (re-verified after the C4 tamper) |
+| C2 | the v1 floor in v2 | `grep -cE 'pv_alerts|smc_'` etc. | `226` / OB `6` / LQZ `4` ✓ |
+| C3 | no E3 primitive | `grep -icE 'entry\.|strategy\.|sl_|take\.profit'` | `0` ✓ |
+| C4 | the build refuses on v1 drift | append a line to v1, run the builder | python exit `1`, `HARD STOP H1` ✓ (POSITIVE: tamper fires; NEGATIVE: the clean build passes) |
+| C5 | the render is v8's | `grep -cE 'f_e1Zfill|f_e1Zbord|f_e1PressureLbl|f_e1CalcZFP' e1-render.pine` | `7` helpers ✓ |
+| C6 | no hard-coded timestamp | `grep -c 'timestamp(2026' plutus-vision-v2.pine` | `0` ✓ |
+| C7 | the anchor is chart-based | `grep '_bAnchor = bar_index' e1-render.pine` | present ✓ |
+| C8 | the INSTITUTIONAL category derived | `jq '.zones[].zCat'` | 2 RES · 1 MID · 2 SUP, 0 unclassified ✓ |
+| C9 | the zones render | the rig, one run | `34 boxes` = v1's 29 + the 5 zones ✓ |
+| C10 | the zones land on-chart | `anchors dropped` in the census | the 5 E1 zones land (visual); the census's `2 anchors dropped` are **v1's LQZ right-extension** (`lqzRightB`), NOT the E1 — the E1 contributes 0 (both E1-on and E1-off read `2`) |
+| C11 | bar replay correct | the rig rewind | FIXED + proven (this log, 2026-10-05) ✓ |
+| C12 | a dead source is honest | stop the arm, run `make e1` | exit 0; the options pillar reads `[NO DATA]` ✓ |
+| C13 | no fabricated level | the JSON, every level | `144/144` levels carry a derivation label ✓ |
+| C14 | the suite is green | the 4 suites | e1_st 6/6 · e1_render_tests 22/0 · e2_tests 36/0 · e2_render_tests 18/0 ✓ |
+| C15 | the LSZ preserved | `sha256sum reference/trident_v8_lsz.pine` | `db24a18cc8cdd234` (unchanged; it lives in reference/ only — 0 lsz refs in the v2) ✓ |
+| C16 | the look | the operator views the capture | ── PENDING (the operator's eyes) ── |
+
+**15 of 16 hold, each bound to a command/ledger artifact. C16 is the one human gate.**
