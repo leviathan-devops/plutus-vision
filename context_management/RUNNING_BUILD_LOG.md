@@ -604,3 +604,22 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
   `3533896ff2f68389.sock` · binding `plutus-vision-au`.
 - NEXT: the KG now holds the corrected deliverable; the render must be rebuilt to V1+E1 with
   dynamic E1 data.
+
+---
+
+## 2026-10-05 — THE RENDER REBUILT TO V1 + E1 TOGETHER (the operator's correction)
+
+- WHAT: rebuilt the E1 layer (`plutus-vision-lqz/e1-render.pine`) to the canon trident_v8
+  render machinery — box + label at the zone MID, `label.style_none`, the
+  `<name> | <degree> | <zfp>% ZFP` label, top/bottom as-is, `f_e1CalcZFP` + the pair detection.
+  `make e1` -> `plutus-vision-v2.pine` = the SEALED v1 baseline + the E1 layer appended, 1683
+  lines. Deployed; rendered on the live IDE.
+- WHY: LAW-02/R03 — the deliverable is V1 + E1 TOGETHER (the first build was E1-alone, dropping
+  the baseline). LAW-03/R02 — the E1 data is dynamic (the extract for the week). LAW-04/R01 —
+  the canon render verbatim, the LSZ removed.
+- HOW: the E1 layer no longer uses the old band-inflation + left-edge labels (both off-canon);
+  it renders the zone's real top/bottom with the label at the mid, exactly as the canon.
+- EVIDENCE: `plutus-vision-v2.pine` 1683 lines · battery 6/6 · the v1 seal untouched (0d20e831)
+  · the live census `37 boxes · 500 lines · 500 labels · bars 1614` on DXY · captures
+  `evidence/v1e1-dxy.png` + `evidence/v1e1-eurusd.png`.
+- NEXT: the operator looks (C16).
