@@ -9,7 +9,7 @@ checkpoint"). This is the foundation for later visually-semantically-integrated 
 | # | date | checkpoint | visual | sha256 | the state depicted |
 |---|---|---|---|---|---|
 | 1 | 2026-10-02 | `v1-ship-approved-working-baseline` | `visual/runtime-state.png` | `e7f10ef97111735d` | **V1 SHIP-APPROVED**: the operator's approved baseline — candle liquidity + LuxAlgo SMC (the sealed v1, sha 0d20e831). 31 boxes · 13 labels. |
-| 2 | 2026-10-05 | `v2-working-baseline-2026-10-05` | `visual/runtime-state.png` | `$(sha256sum Checkpoints/v2-working-baseline-2026-10-05/visual/runtime-state.png | cut -c1-16)` | **V2 WORKING BASELINE**: the V1 baseline + the 5 E1 institutional-pressure zones (IP Resistance Ceiling\|Heavy → IP Support Floor\|Moderate-Heavy), red/orange/teal, on DXY. 37 boxes · 20 labels. |
+| 2 | 2026-10-05 | `v2-working-baseline-2026-10-05` | `visual/runtime-state.png` | `1aa2f976a744563e| cut -c1-16)` | **V2 WORKING BASELINE**: the V1 baseline + the 5 E1 institutional-pressure zones (IP Resistance Ceiling\|Heavy → IP Support Floor\|Moderate-Heavy), red/orange/teal, on DXY. 37 boxes · 20 labels. |
 
 ## How to add an entry
 When saving a checkpoint: capture the LIVE runtime (the product as it renders/runs), save it as the
