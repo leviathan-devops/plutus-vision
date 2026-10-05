@@ -215,3 +215,9 @@ vision-in-the-loop, found the 4 defects the tests could not see, and made the SC
 **THE THEATRICALITY: a green battery presented as capability.** The metric to drive to zero (the
 OPERATOR-CAUGHT count) is the lesson: a unit battery is an EFFORT RECEIPT, never a capability
 measurement.
+
+## ANCHOR INDEX (path:line)
+
+- `context_management/RUNNING_BUILD_LOG.md:1 (the build log)`
+- `FAILURE_LOG.md:1 (the failures)`
+- `TESTING_LOG.md:1 (the suites)`

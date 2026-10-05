@@ -321,3 +321,9 @@ anchor count, E2's off-chart forecast).
 **THE LAWS THAT BITE:** `make e1` refuses on v1 drift (HARD STOP H1) · the E1 zones all land
 (0 E1 drops) · a dead source → [NO DATA] (never fabricated) · the renderer is v8's ladder
 VERBATIM · the anchor is `_bAnchor = bar_index` (the chart's own bar, never now()).
+
+## ANCHOR INDEX (path:line)
+
+- `CURRENT_STATE.md:1 (the state)`
+- `packages/plutus-vision-e1-automatic/00-INDEX.md:1 (the map)`
+- `RUNNING_DEBUG_LOG.md:1 (the findings)`

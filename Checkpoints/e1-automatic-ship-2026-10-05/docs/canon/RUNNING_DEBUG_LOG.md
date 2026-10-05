@@ -479,3 +479,91 @@ hook FILTERS the bars to `time <= cursorTime`, stores them as `S.bars`, then `sc
 
 **THE EDIT:** `pine-ide/pine-ide/pine-ide.mjs` lines 197-218 — the replay subscriptions. Bundles
 clean (`bun build` exit 0).
+
+---
+
+## 2026-10-05 — SECURITY: a leaked verboo key in the repo (found by the secret-scan)
+
+**FINDING:** the verboo API key (`vbk_pro_*`) appeared in THREE tracked files —
+`vil/FAILURE_FORENSICS.md` + two checkpoints' copies. The forensics log captured the earlier
+verboo-setup bash commands verbatim, including the key.
+
+**THE GOAL'S HARD STOP:** "secrets: keys live out-of-band; never in the repo, chat, logs, or doc
+rows." This VIOLATED it.
+
+**REMEDIATION (agent-side):**
+1. REDACTED all three working-tree files (`vbk_pro_*` → `vbk_pro_REDACTED`). Verified 0 remaining.
+2. **GIT HISTORY STILL CARRIES THE KEY** (3 commits: 5b947ea, 9871c93, 4d993b7) — the files are
+   tracked, not gitignored. A history rewrite OR a key rotation is required.
+
+**THE OPERATOR ACTION REQUIRED:** **ROTATE the verboo key.** The key is now COMPROMISED (git
+history + this session's transcript). Rotation is the definitive remediation — a history rewrite
+alone does not un-compromise an exposed key.
+
+---
+
+## 2026-10-05 — the verboo audit findings, FIXED (2 in e1_judge.py)
+
+**THE AUDIT (via the verboo ocr lane — the working lane):** `e1_judge.py` — 1 HIGH + 1 MEDIUM.
+1. **HIGH — thread-unsafe counter:** `_CALLS["n"] += 1` is a non-atomic read-modify-write; two
+   concurrent threads could both read 9 and both increment, exceeding JUDGE_BOUND. FIX: a
+   `threading.Lock` guards the check+increment. VERIFIED: 30 concurrent attempts → used=10 (bound
+   held).
+2. **MEDIUM — broad `except Exception`:** swallowed the traceback and conflated an HTTP error (a
+   structured body) with a network failure. FIX: `HTTPError` (surfaces the status + body) is now
+   distinct from `URLError`/`TimeoutError`/`JSONDecodeError` (the network path). VERIFIED: a dead
+   host → the URLError path.
+
+Also fixed: `e1_category.py` — a redundant self-referential dict entry (LOW).
+
+---
+
+## 2026-10-05 — the e1_week.py findings, ADJUDICATED (both non-defects)
+
+**FINDING 1 (medium) — "the year check should be BEFORE fromtimestamp":** PROBE-ERROR. The year
+is DERIVED from the timestamp — you cannot know the year without converting. The suggested order is
+impossible. The current order (validate range > convert > check year) is correct. NO CHANGE.
+
+**FINDING 2 (low) — "catching ValueError is unnecessary":** STYLE PREFERENCE. `fromtimestamp` CAN
+raise ValueError on some platforms for out-of-range input; catching it is defensive and harmless.
+NO CHANGE.
+
+**THE ADJUDICATION DISCIPLINE:** an audit finding is a HYPOTHESIS. Both were read against the code
+and dismissed with the measurement that decided it (the year is conversion-derived; the ValueError
+catch is defensive). ~⅓ of LLM findings are refutations (the skill's own note).
+
+## ANCHOR INDEX (path:line)
+
+- `RUNNING_BUILD_LOG.md:1 (the build log)`
+- `CURRENT_STATE.md:1 (the state)`
+- `TESTING_LOG.md:1 (the suites)`
+
+---
+
+## 2026-10-05 — the --pair mislabel FIXED (a verboo audit finding)
+
+**THE FINDING (medium):** `e1_extract.py` ignored `--pair` for OHLC — `fetch_best()` took no
+symbol and always fetched DXY, so `--pair EUR/USD` produced a **DXY-priced payload labeled
+EUR/USD** (a mislabel).
+
+**THE FIX:** `fetch_best(symbol, timeframe)` threads the pair into the fixture fetch; the default
+is now **DXY** (matching the chart + the zones' denomination — the zones ARE DXY-denominated per
+the discovery); ST-20 + the Makefile follow. The artifact sha is **UNCHANGED (7115b734)** — the
+fix removes the mislabel without altering the render. Suites: 6 PASS.
+
+**THE CLASS (F-48):** a `--pair` flag that is accepted but ignored — the silent-mislabel defect.
+The honest state is now single-pair (DXY) end-to-end; the four-pair generalisation (W8) still
+needs per-pair WINDOW calibration (the zone filter `0.35` is DXY-calibrated; EURUSD needs its own).
+
+---
+
+## 2026-10-05 — the verboo re-scan findings (2 in e1_category.py)
+
+**FINDING 1 (HIGH) — "abs(spot) < 1e-9 too aggressive":** PROBE-ERROR / DOMAIN-INAPPLICABLE.
+The auditor worried a "legitimate small value" would trigger. For FX/DXY the spot is ≥ ~0.5;
+1e-9 is nanometer-scale. The check cleanly separates MISSING (None/0/NaN) from VALID. Kept
+(with the domain rationale). The original fix (from `== 0` to `< 1e-9`) stands — it closed the
+1e-15 bypass the PRECEDING audit found.
+
+**FINDING 2 (MEDIUM, latent) — a zero `ref` would ZeroDivisionError:** FIXED — `if not ref:
+return 0`. REF_RANGE is hardcoded safe, but a future edit must not crash. ST-19 still 10/0.

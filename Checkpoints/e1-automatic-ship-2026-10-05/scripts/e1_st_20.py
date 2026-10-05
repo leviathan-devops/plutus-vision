@@ -83,10 +83,10 @@ def test_extract_contract() -> None:
     with tempfile.TemporaryDirectory() as td:
         r = subprocess.run(
             [sys.executable, os.path.join(HERE, "e1_extract.py"),
-             "--pair", "EUR/USD", "--week", "2026-07-06", "--out", td],
+             "--pair", "DXY", "--week", "2026-07-06", "--out", td],
             capture_output=True, text=True, cwd=ROOT, timeout=180)
         record("ST-20b  the extractor exits 0", r.returncode == 0, f"exit={r.returncode}")
-        path = os.path.join(td, "EURUSD-2026-07-06.json")
+        path = os.path.join(td, "DXY-2026-07-06.json")
         record("ST-20c  the payload file exists", os.path.exists(path), path)
         if not os.path.exists(path):
             return

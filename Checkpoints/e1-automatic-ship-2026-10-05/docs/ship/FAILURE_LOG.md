@@ -850,3 +850,9 @@ steps moved the cursor while the census stayed `bars 1614`. FIX: subscribe to `r
 the bars up to the cursor, re-run. PROVEN: `bars 1614 → 41`.
 **F-36 (fabricated-strike class):** `parse_strikes` accepted `bool`/`NaN`/`Infinity` — a fake
 level. FIX: reject bool + require `math.isfinite`. (The audit caught this one.)
+
+## ANCHOR INDEX (path:line)
+
+- `context_management/RUNNING_DEBUG_LOG.md:1 (the findings)`
+- `TESTING_LOG.md:1 (the suites)`
+- `DEBUG_LOG.md:1 (the bug record)`

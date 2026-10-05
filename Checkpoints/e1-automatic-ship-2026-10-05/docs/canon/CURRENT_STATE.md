@@ -322,3 +322,28 @@ is `bar_index` (the chart's own last bar) · LSZ in reference/ · no E3.
 **THE HONEST RESIDUALS:** C10 (2 anchors dropped — E2/v1, not E1) · C11 (chart-anchored, but the
 external pine-station shell doesn't re-run on replay) · C16 (the operator's look) · AUDIT GATE
 BLOCKED (the re-run timed out; the first run's 4 high are fixed) · W6 1/8 sources · W8/W10 deferred.
+
+---
+
+## FINAL STATE — 2026-10-05 (the E1 build, consolidated)
+
+```
+v1 seal      0d20e8314ce992fc…   UNCHANGED (HARD STOP H1 on drift)
+v2 served    7115b73488bdc0eb…   served == built; the E1 zones render (6: 3 red + 3 teal)
+C1  seal OK · C2 floor 226/6/4 · C3 no-E3=0 · C5 v8 ladder=7 · C6 no-hc-ts=0
+C7 chart-anchor=1 · C8 RES+SUP · C13 0 unlabelled · C15 LSZ db24a18c
+C4/C12/C14 the suites · C10 rig-internal · C11 FIXED+PROVEN · C16 the operator's look
+suites   ST-18 7/0 · ST-19 9/0 · ST-20 7/0 · ST-21 4/0 · ST-26 4/0 · ST-22 7/0 — SUITES: PASS
+evidence w4-e1-zones.png · w9-final-render.png · c11-replay-rewind.png (3 captures)
+checkpoint Checkpoints/e1-automatic-ship-2026-10-05/ (58 files, re-sealed)
+```
+
+**THE RESIDUALS (terminal):** C16 (the operator's look) · P6 (the audit gate — ALL 6 lane
+attempts failed: 429 / JSON-absent / timeout / "no tool calls parsed") · W8 (four pairs) · W10
+(the split test) · C10 (a rig-internal anchor count).
+
+## ANCHOR INDEX (path:line)
+
+- `packages/plutus-vision-e1-automatic/00-INDEX.md:1 (the package)`
+- `RUNNING_BUILD_LOG.md:1 (the build log)`
+- `NEXT_STEPS.md:1 (the order)`

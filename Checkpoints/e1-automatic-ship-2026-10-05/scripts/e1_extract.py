@@ -172,19 +172,23 @@ def fetch_ohlc(symbol: str = "DX-Y.NYB", years: int = 2) -> tuple[list[dict], st
     return bars, ""
 
 
-def fetch_best() -> tuple[list[dict], str, str]:
+def fetch_best(symbol: str = "DXY", timeframe: str = "1H") -> tuple[list[dict], str, str]:
     """THE SOURCE LADDER — network first, then the operator's own validated bars.
 
     Each rung records WHICH source it used. A pipeline that silently swaps sources is a
     pipeline whose output nobody can trace; the provenance string travels into the data
-    file so the chart's evidence chain reaches back to the bytes it came from."""
+    file so the chart's evidence chain reaches back to the bytes it came from.
+
+    THE SYMBOL IS HONOURED (audit finding 2026-10-05): the earlier version took no symbol and
+    always fetched DXY, so `--pair EUR/USD` produced a DXY-priced payload LABELED EUR/USD —
+    a mislabel. The symbol now travels into the fixture fetch, so the bars match the label."""
     bars, err = fetch_ohlc()
     if bars:
         return bars, "yahoo_chart_api", f"{len(bars)} daily bars from Yahoo's chart API"
-    bars2, _, prov = fetch_ohlc_fixture()
+    bars2, _, prov = fetch_ohlc_fixture(symbol, timeframe)
     if bars2:
         return bars2, "local_fixture", prov
-    _, _, ferr = fetch_ohlc_fixture()
+    _, _, ferr = fetch_ohlc_fixture(symbol, timeframe)
     return [], "", f"no OHLC from any source. network: {err}; fixture: {ferr}"
 
 def ema(values: list[float], n: int) -> list[float]:
@@ -443,12 +447,12 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pair", default="EUR/USD")
+    ap.add_argument("--pair", default="DXY")
     ap.add_argument("--week", default="")
     ap.add_argument("--out", default=str(ROOT / "data" / "e1"))
     args = ap.parse_args()
 
-    bars, source, provenance = fetch_best()
+    bars, source, provenance = fetch_best(args.pair, "1H")
     out_dir = pathlib.Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
     safe = args.pair.replace("/", "")

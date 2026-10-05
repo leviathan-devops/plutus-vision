@@ -316,3 +316,9 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
 
 **THE READ-FIRST:** every wave reads `00-INDEX → the spec → the blueprint → the wave's GOALS`.
 **THE GATE:** a wave does not advance until its gate exits 0 and its audit is recorded.
+
+## ANCHOR INDEX (path:line)
+
+- `NEXT_STEPS.md:1 (the order)`
+- `CURRENT_STATE.md:1 (the state)`
+- `RUNNING_BUILD_LOG.md:1 (the log)`

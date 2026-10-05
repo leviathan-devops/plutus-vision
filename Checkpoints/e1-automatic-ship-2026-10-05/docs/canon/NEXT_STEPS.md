@@ -317,3 +317,9 @@ W8 the pairs         the four-pair generalisation (deferred, scoped)
 W9 the test          the container rig angles A1-A7 + the look (C16)
 ```
 **THE GATE BETWEEN EVERY WAVE:** the wave audit + the four suites green + the docs updated.
+
+## ANCHOR INDEX (path:line)
+
+- `CURRENT_STATE.md:1 (the state)`
+- `RUNNING_BUILD_LOG.md:1 (the log)`
+- `packages/plutus-vision-e1-automatic/06-WAVES.md:3 (the waves)`
