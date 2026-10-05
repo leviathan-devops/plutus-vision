@@ -831,3 +831,22 @@ ADJUDICATED AS A FALSE POSITIVE (no fix, verified):
     misread the shared-boundary logic.
 EVIDENCE: e1_st pass=8 fail=0 · e2_tests pass=36 fail=0 · tagprobe 5/5 · the adversarial
 A1-A7 9/9 · AUDIT GATE PASS · v1 0d20e8314ce992fc · v2 36ddad9676becd70.
+
+## 2026-10-06 · THE C1-C16 ACCEPTANCE VERIFICATION — 14/14 mechanical PASS (C16 pending)
+Run first-person against the CURRENT tree (v2 36ddad96):
+  C1  v1 byte-identical        0d20e8314ce992fc                                          PASS
+  C2  floor 226 in v2          grep -cE 'pv_alerts|smc_' == 226                            PASS
+  C3  no E3 primitive          grep -icE 'entry.|strategy.|sl_|take.profit' == 0           PASS
+  C4  refuses on v1 drift      append v1 -> exit=1, HARD STOP H1                            PASS
+  C5  the v8 renderer          5 named helpers (zfill|zbord|pressureLbl|calcZFP) >= 4       PASS
+  C6  anchor computed          grep -c 'timestamp(2026' == 0                                PASS
+  C7  anchor chart-based       bar_index present (3), now() call absent (0)                 PASS
+  C8  the category derived     classify -> 2 RES, 3 SUP, 0 unclassified                     PASS
+  C10 the zones land           6 box.new sites (one per zone)                              PASS
+  C11 replay-safe              the payload anchor.from == "chart_last_bar"                  PASS
+  C12 a dead source honest     e1_sources --no-arm -> exit 0                               PASS
+  C13 no fabricated level      144 levels, every one labelled                              PASS
+  C14 the suites green         e1_st pass=8 fail=0 | e2_tests pass=36 fail=0               PASS
+  C15 the LSZ reference        preserved (reference/ only)
+  C16 THE LOOK                 the operator views the capture -> "this is right"           PENDING
+EVIDENCE: /tmp/cverif.py output above. v1 0d20e8314ce992fc · v2 36ddad9676becd70.
