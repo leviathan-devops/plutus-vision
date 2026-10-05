@@ -1942,3 +1942,33 @@ SEE context_management/NEXT_STEPS.md:1 for the active work.
   operator can toggle E2 back on from the indicator settings; the labels are the default.
 - **THE VERIFICATION (looked):** the served v2 (sha 37f430b8) renders the 5 distinct E1 zone bands
   + all 5 labels reading on the chart.
+
+## EN-106 — A1: THE LIVE REPLAY REWIND DRIVEN (the control was page-reachable all along) (2026-10-05)
+
+- **THE PRIOR RESIDUAL (stale):** "A1 (the replay rewind) was not re-driven — the vela replay UI
+  is not CDP-drivable in the current rig." This was a READING assumption, re-emitted across
+  sessions. MEASURED FALSE.
+- **THE MECHANISM (measured):** the shell exposes the mounted chart at
+  `window.PlutusPineShell.chart` (`pine-ide/pine-ide/pine-ide.mjs:763`, `window.PlutusPineShell =
+  handle`). That chart object carries `replayControl.ctrl`, whose prototype methods are
+  `replayStart(opts)` · `replayStep()` · `replayPause()` · `replayStop()` · `replayState()` ·
+  `replayBounds()` (`@luxalgo/vela chunk-QBPUT5SU.js:22961`; the vela controller `start(opts)` at
+  `chunk-E3GU6AUI.js:6772` → `ref.chart.replay.start({ from: opts.from })`). It is NOT a DOM
+  widget — no `.replay` on the workbench, no `window.wb`/`window.S` escape.
+- **THE ARG SHAPE (the first failure, adjudicated):** `ctrl.start()` and `ctrl.step()` are NOT
+  functions (the state object, not the controller), and `ctrl.replayStart()` with no arg throws
+  `TypeError: Cannot read properties of undefined (reading 'from')`. The fix is `replayStart({from:
+  <epoch-ms>})` with the bound from `ctrl.replayBounds()` (`{first: 1775041200000, last:
+  1783317600000}`).
+- **THE OPS (pre-registered → observed):** (1) `replayStart({from: first+0.6*(last-first)})` →
+  `replayState {active:true, cursorTime:1780005600000, remaining:626}`, census `bars 1614 → 988`
+  (the shell's C11 handler at `pine-ide.mjs:203-221` fed the study the truncated series). (2)
+  `replayStep()` ×3 → cursor 1780005600000→1780016400000, `remaining 626→623`, census `→ 991`. (3)
+  the rewound render (bars 991) shows the E1 zones re-anchored (28 boxes/22 lines/6 labels). (4)
+  `replayStop()` → `{active:false, cursorTime:null}`, census restored to `bars 1614` (34 boxes/28
+  lines/6 labels, the 5 role labels back on the right edge).
+- **THE VERIFICATION (looked):** the rewound frame (May 21-29, bars 991) + the restored live frame
+  (bars 1614, the 5 labels) — both captured on display :3 via CDP.
+- **THE LESSON:** "not CDP-drivable" is a claim about the DOM; the control lived behind the
+  shell's JS handle. DRIVE the surface end-to-end before asserting it is unreachable. Run-to-learn
+  > read-to-assume (H6).

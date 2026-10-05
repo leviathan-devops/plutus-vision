@@ -708,3 +708,22 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
   battery E1 6/6 + E2 29/0 + 18/0 · the live render shows distinct zones + the cyan E2 path.
 - 8 pillar defects fixed by the agent (the inverted fib_formula, the 5-HOUR 'prior week', the
   ATR-scaled MA tolerance, the chaining blob).
+
+## 2026-10-05 — A1 RE-DRIVEN: THE LIVE REPLAY REWIND (the last frontier closed)
+
+- WHAT: drove the live replay rewind on the host rig. The vela replay control is reachable at
+  `window.PlutusPineShell.chart.replayControl.ctrl` (the shell exposes the chart at
+  `pine-ide/pine-ide/pine-ide.mjs:763`; the ctrl methods `replayStart({from})`/`replayStep()`/
+  `replayState()`/`replayStop()` come from `@luxalgo/vela chunk-QBPUT5SU.js:22961`).
+  `replayStart({from: 1780007040000})` → replayState `{active:true, cursorTime:1780005600000,
+  remaining:626}` and the census `bars 1614 → 988` (the shell's C11 handler at
+  `pine-ide.mjs:203-221` fed the study the truncated series); `replayStep()` ×3 → cursor
+  1780005600000→1780016400000, `remaining 626→623`, census `→ 991`; the rewound render shows the
+  E1 zones re-anchored (28 boxes/22 lines/6 labels, bars 991); `replayStop()` → `{active:false}`
+  and the census restored to `bars 1614` (34 boxes/28 lines/6 labels, the 5 labels back).
+- WHY: A1 was the last named frontier (prior residual: "the vela replay UI is not CDP-drivable").
+  MEASURED FALSE — the control IS page-reachable, behind the shell's handle.
+- EVIDENCE: `RUNTIME_LEDGER.md` (the A1 entry) · `.omp/ct-results.json` (the A1 scenario, verdict
+  PASS) · the rewound + the restored renders (looked, display :3) · `git 3918ca3`.
+- GAP: none on A1. The sole render residual: the E2 path + the E1 labels cannot paint together
+  (a vela PineTS renderer limit; E2 defaults off).

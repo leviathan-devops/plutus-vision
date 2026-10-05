@@ -2204,3 +2204,17 @@ that DRAWS on the chart (the cyan forecast path).
 **8 pillar defects fixed** (agent-verified + my re-run): the inverted `fib_pivots`, the "5-HOUR
 prior week" (now UTC D1 buckets), the MA cluster tolerance `0.15×ATR`→15 pips absolute, the
 3-pip chaining blob, the flat pivot scoring, the missing recapture, and the missing verification.
+
+## 2026-10-05 — THE A1 RUNTIME CLOSURE (the live replay rewind)
+
+The E1 render's replay-follow (C11) is now RUNTIME-CONFIRMED, not merely asserted. A1 was the last
+named frontier; it was re-driven this session against the deployed artifact (`artifactSha256
+471a7849a18f7bf0`). The vela replay control lives at
+`window.PlutusPineShell.chart.replayControl.ctrl` (the shell exposes the chart at
+`pine-ide/pine-ide/pine-ide.mjs:763`; the `replayStart/replayStep/replayState/replayStop` methods
+from `@luxalgo/vela chunk-QBPUT5SU.js:22961`). MEASURED: `replayStart({from})` → the census `bars
+1614 → 988` (the shell's C11 handler at `pine-ide.mjs:203-221` fed the study the truncated
+series); `replayStep()` ×3 → the cursor advanced (`remaining 626→623`, census `→ 991`) and the E1
+zones re-anchored; `replayStop()` → `bars 1614` (the 5 labels back). The replay-follow works in
+both directions. Evidence: `RUNTIME_LEDGER.md` (the A1 entry) · `.omp/ct-results.json` (verdict
+PASS) · `DEBUG_LOG.md EN-106` · `TESTING_LOG.md`.

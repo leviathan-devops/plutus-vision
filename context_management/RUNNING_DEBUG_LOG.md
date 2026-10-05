@@ -755,3 +755,20 @@ per the pin · C16 (the operator's look). NONE is a defect; each is a scoped res
 - FIX IN FLIGHT: a wave implementing Protocol B's Pillars 1+2 (exact formulas) + Engine 2 (the shape
   chain) per the prompt. The tolerance set to 3 pips (the spec's exact-match granularity).
 - LESSON: the E1 zones must trace to the PROMPT's pillars — bars-only levels are not the spec.
+
+## 2026-10-05 — A1: the vela replay control is page-reachable (the prior residual was WRONG)
+
+- SYMPTOM (prior, stale): "A1 (the replay rewind) was not re-driven — the vela replay UI is not
+  CDP-drivable in the current rig."
+- ROOT CAUSE of the stale claim: the shell exposes the mounted chart at
+  `window.PlutusPineShell.chart` (`pine-ide/pine-ide/pine-ide.mjs:763`), and the chart carries
+  `replayControl.ctrl` (proto methods `replayStart/replayStep/replayState/replayStop` from
+  `@luxalgo/vela chunk-QBPUT5SU.js:22961`). It is NOT a DOM widget — no `.replay` on the
+  workbench, no `window.wb`/`window.S` escape. The arg shape is `replayStart({from: <epoch-ms>})`
+  — a zero-arg call throws `TypeError: Cannot read properties of undefined (reading 'from')`.
+- FIX: drive it via CDP — `window.PlutusPineShell.chart.replayControl.ctrl.replayStart({from})`
+  + `.replayStep()` + `.replayStop()`.
+- LESSON: "not CDP-drivable" was a READING assumption, not a measurement. The control lives
+  behind the shell's exposed handle, not a DOM element. DRIVE the surface; do not assert it is
+  unreachable from the DOM structure alone.
+- EVIDENCE: the census `1614 → 988 → 991 → 1614` (replayStart/step/stop) + the 5 labels restoring.
