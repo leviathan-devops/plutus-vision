@@ -99,7 +99,7 @@ internalBearColorInput          = input.color(RED, '', group = INTERNAL_GROUP, i
 internalFilterConfluenceInput   = input.bool(false, 'Confluence Filter', group = INTERNAL_GROUP, tooltip = internalFilterConfluenceTooltip)
 internalStructureSize           = input.string( TINY,       'Internal Label Size',      group = INTERNAL_GROUP, options = [TINY,SMALL,NORMAL])
 
-showStructureInput              = input.bool(true, 'Show Swing Structure', group = SWING_GROUP, tooltip = showStructureTooltip)
+showStructureInput              = input.bool(false, 'Show Swing Structure', group = SWING_GROUP, tooltip = showStructureTooltip)
 showSwingBullInput              = input.string( ALL,        'Bullish Structure',        group = SWING_GROUP,    inline = 'bull',    options = [ALL,BOS,CHOCH])
 swingBullColorInput             = input.color(GREEN, '', group = SWING_GROUP, inline = 'bull')
 showSwingBearInput              = input.string( ALL,        'Bearish Structure',        group = SWING_GROUP,    inline = 'bear',    options = [ALL,BOS,CHOCH])
@@ -107,7 +107,7 @@ swingBearColorInput             = input.color(RED, '', group = SWING_GROUP, inli
 swingStructureSize              = input.string( SMALL,      'Swing Label Size',         group = SWING_GROUP,    options = [TINY,SMALL,NORMAL])
 showSwingsInput                 = input.bool(false, 'Show Swings Points', group = SWING_GROUP, tooltip = showSwingsTooltip, inline = 'swings')
 swingsLengthInput               = input.int(    50,         '',                         group = SWING_GROUP,    minval = 10,                inline = 'swings')
-showHighLowSwingsInput          = input.bool(true, 'Show Strong/Weak High/Low', group = SWING_GROUP, tooltip = showHighLowSwingsTooltip)
+showHighLowSwingsInput          = input.bool(false, 'Show Strong/Weak High/Low', group = SWING_GROUP, tooltip = showHighLowSwingsTooltip)
 
 showInternalOrderBlocksInput    = input.bool(true, 'Internal Order Blocks', group = BLOCKS_GROUP, tooltip = showInternalOrderBlocksTooltip, inline = 'iob')
 internalOrderBlocksSizeInput    = input.int(    5,          '',                         group = BLOCKS_GROUP,   minval = 1, maxval = 20,                    inline = 'iob')

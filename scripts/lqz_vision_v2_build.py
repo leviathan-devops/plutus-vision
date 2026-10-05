@@ -314,11 +314,20 @@ def build() -> str:
     v1 = V1.read_text()
     e1 = strip_decl(E1.read_text(), E1_NAMES)
     e2 = strip_decl(E2.read_text(), E2_NAMES)
-    # NOTE (2026-10-05): the label cap. The v1 SMC layer draws ~500 labels; the E1 zone tags are
-    # drawn AFTER it and are dropped at cap 500. A cap of 600 fits the E1 tags with room to spare,
-    # while staying far below the ~3000 at which the vela PineTS renderer OVER-DRAWS (a constant
-    # +1721 lines) and suppresses every label (measured 2026-10-05).
+    # NOTE (2026-10-05): the label cap. The v1 SMC layer draws ~500+ labels (swing structure +
+    # high/low swings), which at cap 500 leaves NO room for the E1 zone tags drawn AFTER it — they
+    # are silently dropped (the operator's "there are no labels anywhere on the E1 zones"). Two
+    # levers, both applied in the GENERATED v2 only:
+    #   1. cap 500 -> 600 (fits the E1 5 with room; far below the ~3000 at which the vela renderer
+    #      OVER-DRAWS and suppresses every label — measured 2026-10-05).
+    #   2. the SMC's two noisiest label families (swing STRUCTURE + HIGH/LOW swings) are turned
+    #      OFF in the v2, freeing the budget for the E1 zone tags. The E1 pressure map is the
+    #      product; the SMC structure labels are secondary. (Re-enable by flipping these to true.)
     v1 = v1.replace("max_labels_count = 500", "max_labels_count = 600")
+    v1 = v1.replace("showStructureInput              = input.bool(true",
+                    "showStructureInput              = input.bool(false")
+    v1 = v1.replace("showHighLowSwingsInput          = input.bool(true",
+                    "showHighLowSwingsInput          = input.bool(false")
     decls, pushes = build_payload()
     return (
         v1.rstrip() + "\n"
