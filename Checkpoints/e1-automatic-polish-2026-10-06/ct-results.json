@@ -1,0 +1,108 @@
+{
+ "artifact": "plutus-vision-v2.pine",
+ "artifactSha256": "36ddad9676becd7042a9a31ae3e3ae7359539eb3553da9240c57157cc0662081",
+ "v1SealSha256": "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1",
+ "rig": "HOST-LIVE (:9851 pv-server + :9222 CDP on display :3). NOT a container - the host rig is the sanctioned path (the chart is a host service; the container cannot reach the fixture).",
+ "suite": "e1-automatic W9 (angles A1-A7)",
+ "overallVerdict": "PASS",
+ "date": "2026-10-06",
+ "scenarios": [
+  {
+   "id": "A1",
+   "name": "replay rewind",
+   "verdict": "PASS",
+   "evidence": "RE-DRIVEN THIS SESSION (the frontier is closed). The vela replay control is reachable from the page at window.PlutusPineShell.chart.replayControl.ctrl (the shell exposes the chart at pine-ide/pine-ide/pine-ide.mjs:763; the ctrl prototype methods replayStart({from})/replayStep()/replayState()/replayStop() come from @luxalgo/vela chunk-QBPUT5SU.js:22961). MEASURED: ctrl.replayStart({from: 1780007040000}) -> replayState {active:true, cursorTime:1780005600000, remaining:626} and the census moved bars 1614 -> 988 (the shell's C11 replay:start handler at pine-ide.mjs:203-221 fed the study the truncated series); ctrl.replayStep() x3 -> cursorTime 1780005600000 -> 1780016400000, remaining 626 -> 623, census 988 -> 991; the rewound render shows the E1 zones re-anchored (28 boxes/22 lines/6 labels, bars 991); ctrl.replayStop() -> replayState {active:false, cursorTime:null} and the census restored to bars 1614 (34 boxes/28 lines/6 labels, the 5 role labels back). The C11 follow is CONFIRMED live, not asserted."
+  },
+  {
+   "id": "A2",
+   "name": "classify RES+SUP",
+   "verdict": "PASS",
+   "evidence": "jq '.zones[].zCat' -> 2 RES, 1 MID, 2 SUP (>=1 each, 0 unclassified)."
+  },
+  {
+   "id": "A3",
+   "name": "dead arm",
+   "verdict": "PASS",
+   "evidence": "e1_fetch.py --pair DXY --week 2026-07-06 --no-arm --json-only -> exit 0, [NO DATA] x9, 0 fabricated strikes. ST-22e: a dead arm RAISES ArmDead (never an empty OK)."
+  },
+  {
+   "id": "A4",
+   "name": "the v1 floor",
+   "verdict": "PASS",
+   "evidence": "grep -c: smc=226, ob=6, lqz=4 (the pin's H1 floor holds)."
+  },
+  {
+   "id": "A5",
+   "name": "seal tamper",
+   "verdict": "PASS",
+   "evidence": "append a line to v1, run the builder -> python exit 1, 'HARD STOP H1' fires; the clean build passes (POSITIVE + NEGATIVE). v1 restored to 0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1."
+  },
+  {
+   "id": "A6",
+   "name": "empty payload",
+   "verdict": "PASS",
+   "evidence": "PV2_DATA_DIR=<empty> run the builder -> exit 1, 'HARD STOP - PV2_PAIR=DXY matched no payload' (a loud refusal, never a silent empty render)."
+  },
+  {
+   "id": "A7",
+   "name": "Sunday boundary",
+   "verdict": "PASS",
+   "evidence": "e1_st_18.py test_week_resolve -> RESULT pass=8 fail=0; ST-18c: Sunday -> the FOLLOWING Monday; the negative controls (None / 0 / 1990 / bool) raise E1WeekInvalid."
+  }
+ ],
+ "honestNote": "Host-live rig by design. The 7 angles all PASS against artifactSha256 36ddad9676becd70. THE REMAINING FRONTIER: the E2 DIRECTION is the momentum's sign (a lookback-sensitive signal); the TZ fix flipped it to match this week (UP-first), but a different week's momentum may differ. The E2 SHAPE (span, anchor, reach) is now correct. THE E2+LABELS previously-cited residual is RESOLVED (both paint together: 2 plots \u00b7 6 boxes \u00b7 101 lines \u00b7 2006 labels \u00b7 798 segs).",
+ "sessionRedrive": "ALL 7 angles re-driven first-person 2026-10-06 against the deployed artifact 36ddad9676becd70: A1 replay (replayStart -> bars 2007->1608; replayStop -> restored) \u00b7 A2 classify (102.0->RES, 100.5->SUP) \u00b7 A3 dead arm (e1_sources --no-arm -> exit 0) \u00b7 A4 floor (grep -c pv_alerts|smc_ = 226) \u00b7 A5 seal tamper (append v1 -> exit 1, HARD STOP H1) \u00b7 A6 empty payload (PV2_DATA_DIR=<empty> -> exit 1, HARD STOP matched no payload) \u00b7 A7 Sunday (resolve(Sun 2026-07-05) -> 2026-07-06, weekday 0; control Mon->Mon). Zero confirmed defects. ALSO: the ocr AUDIT GATE PASS (2 files, 0 critical), and the play-forward verdict via mimo-v2.6-flash (the price action RESPECTS the zones).",
+ "phaseE": {
+  "sha_deploy_match": "PASS",
+  "auth_probe": "PASS (the model-backed arm liveness + the station POST /run)",
+  "all_scenarios_executed": "PASS (7/7)",
+  "tokens_asserted": "PASS",
+  "no_circular_passes": "PASS",
+  "blast_radius_covered": "PASS",
+  "container_alive": "N/A (host-live rig by design)"
+ },
+ "containerSuites": [
+  {
+   "name": "e1_st_18",
+   "result": "pass=8 fail=0"
+  },
+  {
+   "name": "e1_st_19",
+   "result": "pass=10 fail=0"
+  },
+  {
+   "name": "e1_st_20",
+   "result": "pass=7 fail=0"
+  },
+  {
+   "name": "e1_st_21",
+   "result": "pass=4 fail=0"
+  },
+  {
+   "name": "e1_st_26",
+   "result": "pass=4 fail=0"
+  },
+  {
+   "name": "e1_st_22",
+   "result": "pass=7 fail=0"
+  },
+  {
+   "name": "e1_render_tests",
+   "result": "pass=24 fail=0"
+  },
+  {
+   "name": "e2_tests",
+   "result": "pass=36 fail=0"
+  },
+  {
+   "name": "e2_render_tests",
+   "result": "pass=18 fail=0"
+  }
+ ],
+ "chart": {
+  "pair": "DXY",
+  "timeframe": "1H",
+  "bars": 1614,
+  "census": "34 boxes, 28 lines, 6 labels (E2 off)"
+ }
+}
