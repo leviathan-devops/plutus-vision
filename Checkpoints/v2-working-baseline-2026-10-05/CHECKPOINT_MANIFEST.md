@@ -1,6 +1,6 @@
 # CHECKPOINT MANIFEST — v2-working-baseline-2026-10-05 (updated)
 
-**Date:** 2026-10-05 · **Project:** PLUTUS VISION · **git HEAD:** 3918ca3
+**Date:** 2026-10-05 · **Project:** PLUTUS VISION · **git HEAD:** 4bc81f1
 **Seal mode:** NO-LOCK (mutable working snapshot; the v1 SHA is checked by every build — the H1 guard is the seal)
 **Milestone:** THE E1 ZONES RENDER WITH LABELS — the v2 working baseline, the E1 label defect
 fixed (the E2 path loop was suppressing the label pass; the SMC filled the budget).
@@ -41,6 +41,11 @@ fixed (the E2 path loop was suppressing the label pass; the SMC filled the budge
   entry) + `.omp/ct-results.json` (the A1 scenario).
 - the W9 artifact: `.omp/ct-results.json` — `overallVerdict: PASS`, 7/7 angles (A1-A7), artifact
   sha `471a7849a18f7bf0`, the v1 seal `0d20e8314ce992fc`.
+- **spec item 14 wired (2026-10-05)** — `make e1` now runs the nine-source harvest
+  (`e1_sources.py → data/e1/sources.json`) BEFORE the extractor (the `harvest → extract → wire →
+  build` chain); the extractor merges the harvest's per-source status into the payload's
+  `sources` (additive). The zones are OHLC-derived (blueprint §7) so the render is unchanged
+  (the v2 sha holds `471a7849a18f7bf0`); the 9 suites stay green. See `DEBUG_LOG` EN-108.
 
 ## THE KNOWN CONSTRAINT (named)
 - The vela PineTS renderer cannot paint the E2 path lines AND the E1 zone labels together — the
