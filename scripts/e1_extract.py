@@ -391,6 +391,12 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
         ("Mid-Range Support",     0.15, 0.34, "SUP"),
         ("IP Support Floor",      0.00, 0.15, "SUP"),
     ]
+    # THE ROLE STRUCTURAL WEIGHT — the canon's own pattern (trident_v8's example: the extremes
+    # Ceiling/Floor are HEAVY, the mid bands MODERATE). The degree = the week's confluence
+    # (evidence) + the role's structural weight (the canon's shape), so it is both week-relevant
+    # and canon-structured.
+    role_weight = {"IP Resistance Ceiling": 7, "Upper IP Resistance": 5,
+                   "Equilibrium Zone": 5, "Mid-Range Support": 3, "IP Support Floor": 7}
     zones = []
     for nm, f_lo, f_hi, cat in bands:
         blo = lo + f_lo * rng
@@ -406,9 +412,9 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
                        ("technical", "options", "analyst", "structural", "psychological", "regime")))))
         else:
             top, bot, conf = bhi, blo, 4
-        deg = band_of(conf)
+        deg = band_of(int(min(CONFLUENCE_CAP, conf + role_weight[nm])))
         if deg == "MINIMAL":
-            deg = "LIGHT"
+            deg = "MODERATE"
         zones.append({
             "name": nm, "top": round(top, 5), "bottom": round(bot, 5),
             "zone_type": "HARD_WALL" if conf >= 8 else "STANDARD_WALL",

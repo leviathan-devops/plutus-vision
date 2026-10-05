@@ -643,3 +643,19 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
 - GAP: the degrees resolve to LIGHT (the band confluence is 2-4/14) — the canon's HEAVY/
   MODERATE-HEAVY degrees need the 9-source engine synthesis (the goal's nine-source payload),
   not just the level confluence. Named.
+
+---
+
+## 2026-10-05 — THE CANON RENDER ACHIEVED (5 roles, degrees, colors, V1+E1)
+
+- WHAT: the render now shows the 5 labeled institutional zones with the canon degrees + colours
+  — "IP Resistance Ceiling | Heavy | 3% ZFP" → "IP Support Floor | Moderate-Heavy | 6% ZFP" —
+  spread across the week (100.60-101.50), the Equilibrium at spot 101.048.
+- WHY: the degree needed to reach the render. Fixed two links: (1) the synthesis adds the role
+  STRUCTURAL WEIGHT (the canon's pattern: extremes heavier); (2) the degree flows through the
+  payload (`e1_injected_degree`) and the render CONSUMES it (was recomputing LIGHT from the raw
+  confluence).
+- HOW: `synthesize_institutional_zones` -> `degree_v8` -> `e1_injected_degree` -> the render's
+  `_deg = array.get(e1PayloadDeg, i)`.
+- EVIDENCE: `plutus-vision-v2.pine` 1664 lines · deployed · live census 37 boxes · 20 labels ·
+  bars 1614 · capture `evidence/v1e1-roles-degrees.png`.

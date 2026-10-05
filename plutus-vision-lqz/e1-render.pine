@@ -167,6 +167,7 @@ e1PayloadTop  = e1_injected_top
 e1PayloadBot  = e1_injected_bottom
 e1PayloadConf = e1_injected_confluence
 e1PayloadCat  = e1_injected_cat
+e1PayloadDeg  = e1_injected_degree
 e1PayloadId   = e1_injected_id
 e1_anchor_ms  = e1_injected_anchor_ms
 e1WeekTag     = e1_injected_week_tag
@@ -198,7 +199,9 @@ f_e1Render() =>
                 break
             _cat = array.get(e1PayloadCat, i)
             _c   = array.get(e1PayloadConf, i)
-            _deg = f_e1Degree(_c)
+            // THE DEGREE — the synthesized role degree (HEAVY|MODERATE-HEAVY|MODERATE|...) when
+            // the payload carries it; else the confluence-derived fallback.
+            _deg = array.size(e1PayloadDeg) > i ? array.get(e1PayloadDeg, i) : f_e1Degree(_c)
             if _deg != "MINIMAL"
                 _top = array.get(e1PayloadTop, i)
                 _bot = array.get(e1PayloadBot, i)

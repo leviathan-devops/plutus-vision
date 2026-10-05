@@ -181,6 +181,10 @@ def build_payload() -> tuple[str, str]:
                      f"the renderer requires RES|MID|SUP")
     add("e1_injected_cat", "string", [f'"{_q(z.get("zCat"))}"' for z in zones])
     add("e1_injected_id", "string", [f'"{_q(z.get("name", "Z"))}"' for z in zones])
+    # THE DEGREE — the synthesized role degree (degree_v8: HEAVY|MODERATE-HEAVY|MODERATE|...). The
+    # render consumes it DIRECTLY (the canon's degree vocabulary), instead of recomputing it from
+    # the raw confluence (which resolved every role to LIGHT).
+    add("e1_injected_degree", "string", [f'"{_q(z.get("degree_v8", "LIGHT"))}"' for z in zones])
 
     # ── THE E2 PAYLOAD: whatever scripts/wire_e2.py computed, verbatim. ────────────
     # Every value here is the ENGINE's output. This build never classifies a shape,
@@ -275,7 +279,7 @@ def strip_decl(src: str, names: list[str]) -> str:
 
 
 E1_NAMES = ["e1_injected_top", "e1_injected_bottom", "e1_injected_confluence",
-            "e1_injected_zfp", "e1_injected_id", "e1_injected_cat"]
+            "e1_injected_zfp", "e1_injected_id", "e1_injected_cat", "e1_injected_degree"]
 E2_NAMES = ["e2_injected_x", "e2_injected_y", "e2_injected_shape", "e2_injected_conf",
             "e2_injected_ghost_x", "e2_injected_ghost_y", "e2_injected_refusal"]
 
