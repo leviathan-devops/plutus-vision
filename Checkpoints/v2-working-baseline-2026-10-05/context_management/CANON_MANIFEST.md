@@ -62,3 +62,57 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
   beyond "it renders"; the origin-candle mapping has NOT been independently checked.
 - The carried-forward ship docs describe an EARLIER baseline and are NOT a current verification
   of this artifact.
+
+---
+
+<!-- LQZ:CANON-HAND -->
+## THE E1-AUTOMATIC STATE BLOCK (2026-10-05 — supersedes the 2026-10-03 block above)
+
+**THE VERIFIED ARTIFACTS (the E1-automatic build).**
+
+| artifact | sha256 (16) | role |
+|---|---|---|
+| `plutus-vision-v2.pine` | `471a7849a18f7bf0` | THE DELIVERABLE — the sealed v1 + the E1 IP zones (+ the E2 path, default OFF) |
+| `pine-ide/ide/renderer/plutus-vision-v2.pine` | `471a7849a18f7bf0` | the SERVED copy (in sync) |
+| `plutus-vision-v1.pine` | `0d20e8314ce992fc` | the SEALED baseline — `HARD STOP H1` if it drifts |
+| `plutus-vision-v0.pine` | `605bff82d3539e9e` | the parity reference (never edited) |
+
+**THE RENDER (the deliverable's observable behaviour).** The 5 labelled institutional-pressure
+zones — IP Resistance Ceiling · Upper IP Resistance · Equilibrium Zone · Mid-Range Support · IP
+Support Floor — anchored to the chart's own last bar (`_bAnchor = bar_index`), for the chart's own
+trading week; they follow bar replay (the A1 re-drive: census `bars 1614 → 988` on `replayStart`).
+The E2 predicted path is secondary (default OFF — the vela renderer cannot paint it and the labels
+together).
+
+**THE GATES (the evidence, bound to tool results).**
+- `.omp/ct-results.json:1` — the W9 host-live artifact: `overallVerdict: PASS`, 7/7 angles (A1-A7),
+  `artifactSha256 471a7849a18f7bf0…`.
+- `TESTING_LOG.md:1541` — the P5 adversarial pass + `AUDIT GATE: PASS`.
+- `RUNTIME_LEDGER.md:1` — what RUNNING taught (the A1 replay-follow, the renderer limits, the
+  anchor law).
+- `Checkpoints/v2-working-baseline-2026-10-05/CHECKPOINT_MANIFEST.md:1` — the sealed checkpoint.
+- `packages/plutus-vision-e1-automatic/plutus-vision-e1-automatic_DPL1_SPEC.md:1` — the binding
+  authority (C1-C16; the corrected C7 command; the items-5/6 footnote).
+
+**THE PER-DOC GUIDE (which canon doc to read for what).**
+
+| doc | role | read it when |
+|---|---|---|
+| `CURRENT_STATE.md` | the system as it is NOW + the build truth SHAs | first, on any resume |
+| `POST-COMPACTION_PROMPT.md` | the resume prompt + the load-bearing anchors | a fresh session boots |
+| `BUILD_STATE.md` | the sha chain + the module inventory + the frozen list | verifying a build |
+| `EVIDENCE_STATE.md` | per-gate evidence with shas + the honest gaps | checking a claim |
+| `DECISION_CHAIN.md` | the operator's rulings VERBATIM + the derived decisions | resolving a fork |
+| `NEXT_STEPS.md` | the queued work + the fired ideas | planning the next wave |
+| `TASK_QUEUE.md` | every task, its gate, its evidence, its status | tracking progress |
+| `CHANGELOG.md` | the wave history (append-only) | reconstructing the timeline |
+| `RUNNING_BUILD_LOG.md` | the per-milestone build log (append-only, high frequency) | the moment-of-work record |
+| `RUNNING_DEBUG_LOG.md` | the per-defect debug log (append-only) | a symptom→cause lookup |
+| `COMPACTION_SURVIVAL.md` | the session record | surviving a compaction |
+| `CANON_MANIFEST.md` | THIS file — the index + the state blocks | orienting in the canon |
+
+**THE RESIDUALS (named, not hidden).** The E2 path + the E1 labels cannot paint together (a vela
+PineTS renderer limit; E2 defaults off). The `--live` nine-source web harvest is the operator's
+opt-in (it times out offline; the fixture path is the deterministic default). C16 (the operator's
+visual verdict on display `:3`) is the sole unmet criterion.
+<!-- /LQZ:CANON-HAND -->
