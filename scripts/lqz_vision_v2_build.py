@@ -233,23 +233,18 @@ def build_payload() -> tuple[str, str]:
         if z is not None:
             ghosts.append((z.get("top"), z.get("top")))
 
-    # THE FINE PATH (fix 2026-10-05). `days` above are the five DAY anchors; the engine
-    # expands them into a continuous, jagged intraday path (each day = its shape's
-    # geometric leg, chained end-to-start). The render's polyline consumes THIS, so the
-    # drawn line reads as price continuation instead of a five-vertex triangle. The
-    # shape/conf arrays are re-lengthened to the path so the render's per-point tag loop
-    # stays in bounds and tags exactly the five day boundaries; a point with no shape is
-    # never tagged (Rule 1). The ghost stays the day-level alternative chain, unchanged.
-    # THE DAY ANCHORS (1 point/day). Measured 2026-10-05: the vela PineTS renderer over-draws
-    # (a CONSTANT +1721 lines, suppressing EVERY label on the chart) once the E2 path carries
-    # more than ~5 line segments — a fine-grained intraday path breaks the E1 zone labels. The
-    # day-level path is the largest form the renderer handles; the per-shape intraday detail is
-    # a renderer limitation (documented), not a data one. fine_path() remains in e2_engine.py
-    # for the day the renderer can take it.
-    add("e2_injected_x", "float", [_f(d[0]) for d in days])
-    add("e2_injected_y", "float", [_f(d[1]) for d in days])
-    add("e2_injected_shape", "string", [f'"{_q(d[2] or "")}"' for d in days])
-    add("e2_injected_conf", "int", [int(_f(d[3])) for d in days])
+    # THE FINE PATH (2026-07-05). `days` are the five DAY anchors; the engine expands them into
+    # a CONTINUOUS, JAGGED intraday path (each day = its shape's geometric leg, chained
+    # end-to-start). The operator's own ask: "the E2 path = a CONTINUOUS forecast resembling
+    # price action, not a shape template" — the 5-vertex day chain was a triangle (R→WL→SS).
+    # NOW ENABLED: the earlier over-draw (+1721 lines, labels suppressed) was the
+    # `xloc=bar_time`+loop form; the render now draws in bar_index. shapes/confs carry the day
+    # shape ONLY at the day boundaries (Rule 1: an intraday point is never tagged).
+    _fp = fine_path([(d[0], d[1], d[2], d[3]) for d in days])
+    add("e2_injected_x", "float", [_f(v) for v in _fp[0]])
+    add("e2_injected_y", "float", [_f(v) for v in _fp[1]])
+    add("e2_injected_shape", "string", [f'"{_q(s or "")}"' for s in _fp[2]])
+    add("e2_injected_conf", "int", [int(_f(c)) for c in _fp[3]])
     add("e2_injected_ghost_x", "float", [_f(g[0]) for g in ghosts])
     add("e2_injected_ghost_y", "float", [_f(g[1]) for g in ghosts])
 

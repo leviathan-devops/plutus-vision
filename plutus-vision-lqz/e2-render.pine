@@ -51,11 +51,6 @@ f_e2Render() =>
     // `bar_index + round((t - time)/bar_ms)` — the space the E1 zones render in. The conversion
     // is INLINE (PineTS rejects a local typed helper `f(float x) =>`).
     _bm = math.max(1, timeframe.in_seconds() * 1000)
-    _x0 = bar_index + math.round((array.get(e2DayX, 0) - time) / _bm)
-    _x1 = bar_index + math.round((array.get(e2DayX, 1) - time) / _bm)
-    _x2 = _n >= 3 ? bar_index + math.round((array.get(e2DayX, 2) - time) / _bm) : _x1
-    _x3 = _n >= 4 ? bar_index + math.round((array.get(e2DayX, 3) - time) / _bm) : _x2
-    _x4 = _n >= 5 ? bar_index + math.round((array.get(e2DayX, 4) - time) / _bm) : _x3
 
     // THE REFUSAL IS VISIBLE. A silent empty chart reads as "the engine ran and found
     // nothing"; a NAMED refusal on the chart reads as "the engine refused to guess".
@@ -65,33 +60,26 @@ f_e2Render() =>
              color = color.new(color.red, 22), textcolor = color.new(color.red, 90))
 
     if e2Enabled and _n >= 2
-        // THE LINE. ONE polyline, drawn as a freehand brush. THE LOOP IS UNROLLED — measured
-        // 2026-10-05: a `for` loop of `line.new` carrying FUTURE offsets OVER-DRAWS + SUPPRESSES
-        // every label. The SEGMENTS are drawn as explicit calls, in bar_index space.
-        line.new(_x0, array.get(e2DayY, 0), _x1, array.get(e2DayY, 1),
-             xloc = xloc.bar_index, color = color.new(e2ColPath, e2Opacity), width = e2Width)
-        if _n >= 3
-            line.new(_x1, array.get(e2DayY, 1), _x2, array.get(e2DayY, 2),
-                 xloc = xloc.bar_index, color = color.new(e2ColPath, e2Opacity), width = e2Width)
-        if _n >= 4
-            line.new(_x2, array.get(e2DayY, 2), _x3, array.get(e2DayY, 3),
-                 xloc = xloc.bar_index, color = color.new(e2ColPath, e2Opacity), width = e2Width)
-        if _n >= 5
-            line.new(_x3, array.get(e2DayY, 3), _x4, array.get(e2DayY, 4),
+        // THE LINE. ONE continuous polyline through the engine's FINE PATH (the intraday
+        // expansion — many points per day, not a 5-vertex triangle). Drawn in bar_index space
+        // (the future day timestamps → bar positions), which the renderer draws reliably; the
+        // earlier over-draw was the `xloc=bar_time`+loop form.
+        for i = 0 to _n - 2
+            line.new(bar_index + math.round((array.get(e2DayX, i) - time) / _bm),
+                 array.get(e2DayY, i),
+                 bar_index + math.round((array.get(e2DayX, i + 1) - time) / _bm),
+                 array.get(e2DayY, i + 1),
                  xloc = xloc.bar_index, color = color.new(e2ColPath, e2Opacity), width = e2Width)
 
-        // THE DOT + TAG at each day anchor. The tag is the SHAPE, not a zone
-        // classification: this is what the engine PREDICTS, and it must be
-        // readable as a prediction.
+        // THE DOT + TAG at each DAY anchor (the fine path carries a shape only at the day
+        // boundaries; an intraday point is never tagged — Rule 1).
         if e2ShowTags
             for i = 0 to _n - 1
                 if i >= _n
                     break
                 _s = array.get(e2DayShape, i)
                 _c = array.get(e2DayConf, i)
-                // RULE 1 AT THE RENDER: no shape, no dot. A prediction with no
-                // anchoring zone is a fabrication and is never drawn.
-                _anchored = array.get(e2DayShape, i) != ""
+                _anchored = _s != ""
                 if _anchored
                     label.new(bar_index + math.round((array.get(e2DayX, i) - time) / _bm),
                          array.get(e2DayY, i),
@@ -101,9 +89,7 @@ f_e2Render() =>
                          color = color(na),
                          textcolor = color.new(e2ColPath, math.min(100, e2Opacity + 30)))
 
-        // THE ALTERNATIVE — a THIN DASHED GHOST, never a second solid line.
-        // THE LOOP BOUND IS NOT `_gn - 2`. Pine evaluates `0 to -1` as a WRAP. The `if _gn >= 2`
-        // guard is the real bound and it must come FIRST, before the range is computed.
+        // THE ALTERNATIVE — a THIN DASHED GHOST (the day-level chain).
         _gn = array.size(e2GhostX)
         if e2ShowGhost and _gn >= 2
             for i = 0 to _gn - 2
