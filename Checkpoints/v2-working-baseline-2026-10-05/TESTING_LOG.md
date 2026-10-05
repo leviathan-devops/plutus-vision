@@ -1553,10 +1553,14 @@ all real ones) + the runtime driven. **The audit is concluded: 0 CONFIRMED criti
 **VERDICT: ZERO CONFIRMED DEFECTS across A1..A7.**
 
 **THE UNSWEPT FRONTIER (named):**
-1. **A1 (the replay rewind)** rests on the PRIOR session's C11 evidence + the sound mechanism
-   (`bar_index` follows the cursor); a LIVE rewind THIS session was not re-run (the vela replay UI
-   is not CDP-drivable in the current rig).
+1. **A1 (the replay rewind)** — **CLOSED THIS SESSION (re-driven).** The vela replay control is
+   reachable at `window.PlutusPineShell.chart.replayControl.ctrl`; `replayStart({from})` → the
+   shell's C11 handler fed the truncated series (census `bars 1614 → 988`), `replayStep()` ×3 →
+   the cursor advanced (`remaining 626→623`, census `→ 991`) and the E1 zones re-anchored;
+   `replayStop()` → `bars 1614` (the 5 labels back). The prior "not CDP-drivable" claim was FALSE.
 2. **The E2 path + the E1 labels cannot paint TOGETHER** (the vela PineTS renderer limit) — E2
    defaults off; this is a RENDERER constraint, named, not a data/Pine defect.
-3. **W9 (the container rig)**: `.omp/ct-results.json` is from the 2026-10-05 05:56 run (the
-   pre-label-fix build); not re-run this session.
+3. **W9 (the host-live rig, A1-A7)**: `.omp/ct-results.json` — `overallVerdict: PASS`, 7/7 angles,
+   `artifactSha256 471a7849a18f7bf0…` which MATCHES the current served build (`sha256sum
+   plutus-vision-v2.pine` → `471a7849a18f7bf0`), v1 seal `0d20e831…`. The A1 scenario was
+   re-driven this session; the artifact is current to the deployed build.

@@ -739,3 +739,36 @@ per the pin · C16 (the operator's look). NONE is a defect; each is a scoped res
 - LESSON: verify by LOOKING, not counting; the canon's MACHINERY ports, its DATA does not; a
   computed field must be traced to its CONSUMER.
 - EVIDENCE: `plutus-vision-v2.pine` · `data/e1/DXY-2026-07-06.json` (5 roles) · the live render.
+
+## 2026-10-05 — THE ZONES ARE OVER-CLUSTERED (the operator: "just literally stacked on top of each other")
+
+- SYMPTOM: the E1 zones render as a wall of stacked bars filling the price range — NOT distinct
+  institutional zones. The E2 path was a flat line.
+- ROOT CAUSE (measured): (1) the clustering tolerance was `CLUSTER_ATR_MULT * atr` = `0.10 * ~0.05`
+  ≈ **0.005** — every zone collapsed to a zero-width POINT; (2) the level set is BARS-ONLY
+  (`build_levels` uses pivots/MA/LSZ/round — NOT the prompt's 9 pillars' data sources), so it is
+  partial + over-dense (74 levels); (3) a too-wide window then merges them into 2 mega-blobs.
+- THE SPEC (5.3.3): Engine 1 = the 9-PILLAR 6D hybrid (Protocol B) — Pillar 1 "exact within 3 pips
+  = 2 pts, zone within 10 pips = 1 pt"; Pillar 2 "MA confluence within 0.15 DXY points"; the zones
+  = where the pillars' levels CONFLUENCE (not a range partition). The code implements a partial,
+  bars-only version.
+- FIX IN FLIGHT: a wave implementing Protocol B's Pillars 1+2 (exact formulas) + Engine 2 (the shape
+  chain) per the prompt. The tolerance set to 3 pips (the spec's exact-match granularity).
+- LESSON: the E1 zones must trace to the PROMPT's pillars — bars-only levels are not the spec.
+
+## 2026-10-05 — A1: the vela replay control is page-reachable (the prior residual was WRONG)
+
+- SYMPTOM (prior, stale): "A1 (the replay rewind) was not re-driven — the vela replay UI is not
+  CDP-drivable in the current rig."
+- ROOT CAUSE of the stale claim: the shell exposes the mounted chart at
+  `window.PlutusPineShell.chart` (`pine-ide/pine-ide/pine-ide.mjs:763`), and the chart carries
+  `replayControl.ctrl` (proto methods `replayStart/replayStep/replayState/replayStop` from
+  `@luxalgo/vela chunk-QBPUT5SU.js:22961`). It is NOT a DOM widget — no `.replay` on the
+  workbench, no `window.wb`/`window.S` escape. The arg shape is `replayStart({from: <epoch-ms>})`
+  — a zero-arg call throws `TypeError: Cannot read properties of undefined (reading 'from')`.
+- FIX: drive it via CDP — `window.PlutusPineShell.chart.replayControl.ctrl.replayStart({from})`
+  + `.replayStep()` + `.replayStop()`.
+- LESSON: "not CDP-drivable" was a READING assumption, not a measurement. The control lives
+  behind the shell's exposed handle, not a DOM element. DRIVE the surface; do not assert it is
+  unreachable from the DOM structure alone.
+- EVIDENCE: the census `1614 → 988 → 991 → 1614` (replayStart/step/stop) + the 5 labels restoring.

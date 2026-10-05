@@ -106,3 +106,36 @@ byte-identical (0d20e831…). No violation of the pin's LAW section.
 - `plutus-vision-e1-automatic_DPL1_SPEC.md:1 (the spec)`
 - `TESTING_LOG.md:1 (the suites)`
 - `packages/plutus-vision-e1-automatic/06-WAVES.md:3 (`WAVES: 10`)`
+
+## 2026-10-05 (2) — THE C1-C16 RE-AUDIT + THE C7 COMMAND CORRECTION
+
+**NO SPEC VIOLATIONS.** Re-ran every criterion of `§6 SUCCESS CRITERIA` against the current tree
+(HEAD at the time). C1-C15 hold mechanically; C16 is the operator's look (pending, by design).
+
+| # | criterion | the command run | result |
+|---|---|---|---|
+| C1 | v1 byte-identical | `sha256sum plutus-vision-v1.pine` | `0d20e8314ce992fc…517bd1` ✓ |
+| C2 | the floor in v2 | `grep -c 'pv_alerts\|smc_'` | `226` ✓ |
+| C3 | no E3 primitive | `grep -icE 'entry\.\|strategy\.\|sl_\|take\.profit'` | `0` ✓ |
+| C4 | the build refuses on drift | append to v1, run the builder | exit 1 · `HARD STOP H1` ✓ (A5) |
+| C5 | the v8 helpers verbatim | `grep -c 'zfill\|zbord\|pressureLbl\|calcZFP'` | `5` ✓ |
+| C6 | no hardcoded ts | `grep -c 'timestamp(2026'` | `0` ✓ |
+| C7 | the anchor is chart-based | `grep -cE 'bar_index'` + `grep -cE '^[^/]*now\(\)'` | `4` + `0` ✓ (CORRECTED — see below) |
+| C8 | the category is derived | `jq '.zones[].zCat'` | `2 RES · 1 MID · 2 SUP` ✓ |
+| C9 | the zones render | the live census | `34 boxes` ✓ |
+| C10 | the zones land on-chart | the live render status | `0` dropped ✓ |
+| C11 | bar replay is correct | the A1 replay re-drive | `bars 1614→988→991→1614` ✓ |
+| C12 | a dead source is honest | `e1_fetch.py --no-arm` | exit 0 · `[NO DATA]` ×9 ✓ |
+| C13 | no fabricated level | `jq '[.levels[]\|select(.label)]\|length'` | `144/144` carry a label ✓ |
+| C14 | the suite is green | the 7 suites | all `fail=0` ✓ |
+| C15 | the LSZ block preserved | the reference extract | `reference/trident_v8_lsz.pine` intact ✓ |
+| C16 | the look | the operator views the capture | PENDING |
+
+**THE C7 COMMAND CORRECTION.** C7's original command (`grep -n 'time\[1\]\|time - ' e1-render.pine`)
+was written BEFORE the build and assumed a Pine-`time`-axis anchor; it returned 0 against the
+implementation, which anchored on `_bAnchor = bar_index` (the chart's own last bar) — the
+MEASURED-CORRECT choice (DEBUG_LOG EN-103; the A1 replay re-drive `bars 1614 → 988`). The
+criterion's INTENT (`the anchor is chart-based, the last-bar read present`) HOLDS; only the
+command's pattern was stale. The command was corrected to the implemented form + the explicit
+`now()`-absent negative. **No code changed — the intent was already satisfied; the command's
+pattern was a pre-build proxy.** The C7 row in the spec carries the correction footnote (†).
