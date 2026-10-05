@@ -1,0 +1,124 @@
+# /goal — PLUTUS VISION E1 AUTOMATIC (automatic institutional pressure zones)
+
+GOAL
+Build the E1 AUTOMATIC layer for PLUTUS VISION: replace `trident_v8.pine`'s manual
+data input with an automatic nine-source pipeline so E1's institutional pressure zones
+render for the target trading week and follow bar replay. PORT v8's renderer VERBATIM
+(colour ladder, zfill, zbord, pressureLbl, calcZFP, the IP zone block), ANCHOR it to the
+chart's own last bar (`anchor = time`, NOT `now()`), and INJECT the live payload whose one
+missing field (`zCat`: RES|MID|SUP) is closed by a positional classify against spot. The
+sealed v1 baseline stays byte-identical; the LSZ block is separated to reference/ only.
+
+BASELINE (measure on first reply — never trust this pin's numbers)
+- v1 SEAL: `sha256sum plutus-vision-v1.pine` -> 0d20e8314ce992fc (1270 lines, 76550 B)
+- v2: 3c3f1a76ee54b60d (1694 lines) · e1-render.pine 236 lines (REPLACED by this build)
+- git HEAD 4044e97 · the rig :9851 renderer · :9222 CDP · display :3 weston
+- package: 2796 lines across 10 files (see BUILD PACKAGE)
+
+BUILD PACKAGE
+`packages/plutus-vision-e1-automatic/` is the BINDING authority, minted before this pin:
+- `plutus-vision-e1-automatic_DPL1_SPEC.md` (609 lines, spec-audit APPROVED 0/8)
+- `MASTER_BLUEPRINT.md` (1032 lines — the VERBATIM source to port)
+- `06-WAVES.md` (WAVES: 10) · `07-GOALS.md` · `00-INDEX.md` · `CONTEXT_BIBLE.md`
+- `reference/trident_v8_lsz.pine` (the frozen split arm, sha db24a18c)
+Read `00-INDEX` -> the DPL1 spec -> the blueprint -> the wave's GOAL, before any edit.
+
+PHASES
+0 read the packet + assert the fingerprint `packages/plutus-vision-e1-automatic/` | 1 the
+anchor | 2 the gap | 3 the data | 4 the render | 5 the build | 6 the harvest | 7 the arms |
+8 the pairs (deferred) | 9 the container rig | 10 the split test (deferred).
+
+WAVES (each wave owns a DISJOINT file set; the wave gate exits 0 before the next fires)
+W1 anchor `scripts/e1_week.py` — test_week_resolve (+ST-18)
+W2 gap `scripts/e1_category.py` — test_classify_gap (+ST-19)
+W3 data `scripts/e1_extract.py` + `data/e1/zones.json` — test_extract_contract (+ST-20)
+W4 render `plutus-vision-lqz/e1-render.pine` — the v8 port — test_render_port (+ST-21a)
+W5 build `scripts/lqz_vision_v2_build.py` + `make e1` — test_build_seal (+ST-21)
+W6 harvest `scripts/e1_sources.py` — test_harvest_dead_source (+ST-26)
+W7 arms `scripts/e1_vlm_options.py` + `scripts/e1_judge.py` — test_vlm_dead_arm (+ST-22)
+W8 pairs (deferred) | W9 the container rig (angles A1-A7) | W10 the split test (deferred)
+Derived from the wave-plan `packages/plutus-vision-e1-automatic/06-WAVES.md` (`WAVES: 10`)
+which argues the DPL1 spec `packages/plutus-vision-e1-automatic/plutus-vision-e1-automatic_DPL1_SPEC.md`
+(the BINDING authority) and the blueprint `packages/plutus-vision-e1-automatic/MASTER_BLUEPRINT.md`.
+The live angle: the container rig on :9851 + a fresh container; every angle binds a pass
+token in a tool result (`token`/`artifact`/`exit 0`), never agent prose. Independent audit:
+a zero-trust re-verify step re-runs every wave's gate + the four suites, and a claim table
+that re-run proves or destroys each completion claim.
+
+LAWS
+- QUERY THE GRAPH (ripwire verb=callers|impact|for) before every structural edit; no blind
+  edits; re-map after export-surface changes.
+- PORT VERBATIM: the v8 blocks (`trident_v8.pine:43-65,67-155,112-155,157-158,334-338,352-365`)
+  are copied byte-for-byte; only the anchor (`:35-37`) and the data (`:187-192`) adapt.
+- EVIDENCE OVER PROSE: a claim without a tool result is void; name the run + the artifact.
+- LOUD FAIL OR CLEAR PASS: a down source yields `[NO DATA]` + a reason; NEVER a fabricated
+  level. A silent fallback producing a different artifact = false success = banned.
+- THE SEAL: v1 is READ-ONLY; the build's `verify_v1_untouched()` runs FIRST.
+- NO E3: no entry/SL/TP/position primitive anywhere.
+- ADVERSARIAL FIRST: probe the failure shapes before the happy path; a green battery
+  standing in for runtime capability is THEATRICAL and fails the wave on sight (violation).
+
+PROOF CONTRACT
+Every wave declares a pass token that MUST appear in a TOOL RESULT — a JSON field, an exit
+code, a grep census, a screenshot path — never an agent-typed phrase. The tool-result-bound
+tokens: `RESULT pass=N fail=0` (the ST exit `exit 0`); `HARD STOP H1` (the seal, a verbatim
+tool result); `anchors dropped: 0` (the .pine-status tail); the CT artifact
+`.omp/ct-results.json` with `overallVerdict: PASS`; the `sha256sum` of the served copy. A
+pass token that appears only in free text is CIRCULAR = FAIL.
+
+RUNTIME SEAT
+The build runs in THIS seat (the PLUTUS_VISION tree, the rig on :9851/:9222/:3). The
+container rig (W9) is the terminal seat: one fresh container, the built artifact deployed,
+the angles driven through the real TUI, every token read from a tool result.
+
+ADVERSARIAL LOOP
+Angles: A1 replay (rewind 5 weeks -> tsL/tsR differ) · A2 classify (RES then SUP) · A3 dead
+arm (VLM down -> [NO DATA], exit 0, zero fabricated) · A4 floor (SMC 226 OB 6 LQZ 4) · A5
+seal (tamper v1 -> HARD STOP H1) · A6 empty payload (a refusal label, not a bare chart) ·
+A7 Sunday boundary (the FOLLOWING Monday). The happy path is LAST.
+
+DOC CONTRACT
+`.md` floors: SPEC 3000 (at completion) / ARCH 1000 / REPORT 500 / README 300 / GENERIC 200.
+Update canon + ship docs at every wave (canon-doc-update + ship-docs-update). A fact appears
+ONCE. The THEATRICALITY_LOG is append-only.
+
+CHECKPOINT
+Round-0 sealed at `Checkpoints/e1-automatic-round0-2026-10-04/`. Seal a round after every
+green wave. Load saving-checkpoints before each.
+
+HARD STOPS
+- v1 drift (sha != 0d20e8314ce992fc) -> STOP `HARD STOP H1`, never build.
+- a fabricated level on the chart -> STOP, revert, log F-23.
+- a wave dispatched with its gate unmet -> STOP; a violation fails the wave.
+- editing a file another wave owns -> STOP (the file map is law).
+- an adversarial angle returning a fail token -> fix in source, rebuild, re-run THAT angle.
+
+STOP (done-when)
+DONE when C1..C16 of the DPL1 spec all hold: the SEAL intact, the floor 226/6/4, the render
+carries the v8 helpers, the anchor is computed (grep timestamp(2026)==0), the classify
+yields >=1 RES + >=1 SUP, the zones render on-chart (anchors dropped 0), the container
+artifact reads `overallVerdict: PASS`, the four suites green, and the operator LOOKS at the
+capture and says "this is right" (C16). The legal stop is NOT reachable without W9.
+
+ANTI-DERAIL
+- a hardcoded `timestamp(2026…)` slipping into the render (grep it; F-21).
+- `now()`/`timenow` in the anchor (replay renders the wrong week; F-21).
+- the LSZ block contaminating the render (F-15 class; reference/ only).
+- a fabricated strike when the VLM is down (the fake-zone class; F-23).
+- a green ST battery cited as runtime capability (theatrical; violation).
+- editing v1 (the seal; F-24).
+
+ANTI-STOP
+- "the STs pass, we're done" while the rig never rendered -> W9 is mandatory.
+- "structural PASS / PASS by design" -> banned; a scenario is PASS only via a tool result.
+- "the render was verified" without a screenshot/artifact -> not verified.
+- closing at W5 with W6-W9 unrun -> the terminal phase is unmet.
+
+RESUME POINTERS
+`packages/plutus-vision-e1-automatic/00-INDEX.md` · the DPL1 spec · MASTER_BLUEPRINT.md ·
+`06-WAVES.md` · `07-GOALS.md` · `CONTEXT_BIBLE.md` · the project canon
+`context_management/CURRENT_STATE.md` · the round-0 checkpoint
+`Checkpoints/e1-automatic-round0-2026-10-04/`. On wake: assert the fingerprint, read 00-INDEX.
+
+first reply: re-measure the baseline (the seal sha, git HEAD, the package line counts) before
+any edit — never trust this pin's numbers. Then dispatch W1.

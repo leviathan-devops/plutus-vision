@@ -1,0 +1,144 @@
+# /goal — PLUTUS VISION: THE E1 AUTOMATIC BUILD (automatic institutional pressure zones)
+
+## GOAL
+Port trident_v8.pine's renderer VERBATIM (colour ladder, zfill, zbord, pressureLbl, calcZFP, the
+IP block), ANCHOR it to the chart's own last bar (`anchor = time`, NOT `now()`), and INJECT the
+live nine-source payload whose one missing field (zCat: RES|MID|SUP) closes in one positional
+classify against spot — so E1's institutional pressure zones render for the TARGET trading week
+and follow bar replay, with the sealed v1 baseline byte-identical. DONE only when C1..C16 of the
+spec hold AND the runtime seat has operated the live render AND the checkpoint seal is written.
+
+## BASELINE (re-measured THIS turn — inherited numbers are STALE)
+- repo `PLUTUS_VISION` @ main 4044e97 · v1 seal sha256 0d20e8314ce992fc (1270 lines, 76550 B)
+- v2 sha256 3c3f1a76ee54b60d (1694 lines) · e1-render.pine 236 lines (REPLACED by this build)
+- tests: `python3 scripts/e1_st_18.py` -> RESULT pass=7 fail=0 · tree: 12 package files / 3043 lines
+- rigs: :9741 pine-station · :9851 pv-server · :9222 CDP · display :3 weston · arm :8010
+- build package: `packages/plutus-vision-e1-automatic/` (DPL1 spec APPROVED 0/8, wave-plan, blueprint) — minted BEFORE this pin
+FIRST REPLY must re-run the seal sha, git HEAD and the package line count, post the diff, then fire W1.
+
+## BUILD PACKAGE (exists before pinning — G2)
+- DPL1 spec: `packages/plutus-vision-e1-automatic/plutus-vision-e1-automatic_DPL1_SPEC.md` (APPROVED 0/8)
+- wave-plan: `packages/plutus-vision-e1-automatic/06-WAVES.md` (`WAVES: 10`)
+- blueprint: `packages/plutus-vision-e1-automatic/MASTER_BLUEPRINT.md` (verbatim source to port)
+- the spec is the BINDING AUTHORITY; the plan argues it; conflicts resolve against the spec.
+- a pin for a build with no package is VOID — this package exists (3043 lines, 12 files).
+
+## PHASES (owner skill -> exit gate)
+P0 ABSORB goal-prompt -> baseline re-measured, no memory numbers
+P1 SPEC goal-prompt/build-package -> DPL1 + wave-plan on disk (DONE: APPROVED 0/8)
+P2 PREFLIGHT hydra-mode -> the file-disjointness checkpoint ALL green before any dispatch
+P3 EXECUTE hydra-mode + SDD -> every wave audited (per-hunk verdicts + spec coverage), suite green
+P4 RUNTIME runtime-grade -> a live identified instance operated first-person; bug ledger non-empty
+P5 ADVERSARIAL red-team -> a FULL corpus pass: ZERO confirmed defects; frontier named
+P6 DOCUMENT canon + ship docs -> U-gates + S-gates PASS with the AUDIT GATE line
+P7 CHECKPOINT saving-checkpoints -> structure gate passed (src, dist+SHA, docs, manifest, seal)
+P8 VERDICT goal-prompt -> the legal-stop definition met in FULL
+
+## WAVES (dependency-ordered fronts; DISJOINT file ownership; per-wave gate)
+| wave | owns (DISJOINT) | deliverable | gate | test id |
+|---|---|---|---|---|
+| W1 | scripts/e1_week.py | the anchor | RESULT pass=7 fail=0 | test_week_resolve |
+| W2 | scripts/e1_category.py | the gap (RES|MID|SUP) | exit 0; >=1 RES + >=1 SUP | test_classify_gap |
+| W3 | scripts/e1_extract.py, data/e1/ | the payload | exit 0; contract holds | test_extract_contract |
+| W4 | plutus-vision-lqz/e1-render.pine | the v8 port | grep >=4 helpers; timestamp(2026)==0 | test_render_port |
+| W5 | scripts/lqz_vision_v2_build.py, Makefile | the build+auto-run | tamper -> HARD STOP H1 | test_build_seal |
+| W6 | scripts/e1_sources.py | the 9-source harvest | [NO DATA] + exit 0 | test_harvest_dead_source |
+| W7 | scripts/e1_vlm_options.py, e1_judge.py | the VLM+judge arms | dead arm -> [NO DATA], 0 fabricated | test_vlm_dead_arm |
+| W9 | .omp/ct-results.json | the container rig (A1-A7) | overallVerdict PASS | test_rig_angles |
+W6+W7 run CONCURRENTLY with W4+W5 (disjoint files). W8 pairs + W10 split deferred.
+Derived from `packages/plutus-vision-e1-automatic/06-WAVES.md`; it argues
+`packages/plutus-vision-e1-automatic/plutus-vision-e1-automatic_DPL1_SPEC.md` (the BINDING authority).
+
+## LAWS
+- RIPWIRE FIRST-CLASS: map structure (verb=callers|impact|for) before EVERY coding edit; re-map
+  after export-surface edits. A blind/syntax-only patch is FORBIDDEN (RIPWIRE_MISSING).
+- BUILDER-UNDER-AUDIT: a subagent return is a CLAIM — re-run the gate YOURSELF on the tree.
+- PORT VERBATIM: trident_v8.pine:43-65,67-155,112-155,157-158,334-338,352-365 copied byte-for-byte;
+  only the anchor (:35-37) and the data (:187-192) adapt.
+- EVIDENCE OVER PROSE: every verdict carries a quoted tool result. No prose verdicts.
+- LOUD FAIL OR CLEAR PASS: a down source -> [NO DATA] + a reason; a fabricated level on a chart is
+  a VIOLATION and FAILS THE WAVE ON SIGHT. A silent fallback = false success = banned.
+- ADVERSARIAL-FIRST: the adversarial/mutation cases run BEFORE the happy path; the happy path is
+  the LAST confirmation. Theatrical slop / a fabricated PASS / a skipped gate = AUTOMATIC FAIL.
+
+## PROOF CONTRACT (four tiers — a claim without its tier artifact is VOID)
+| tier | what | artifact |
+|---|---|---|
+| L0 | python3 -c compile / the build | exit codes |
+| L1 | unit — the pure functions (classify/tier/zfp/resolve) | exit 0 |
+| L2 | script-test — real modules, observation-channel asserts | PASS/FAIL table + exit |
+| L3/L4 | the container rig (:9851) AND/OR host-live | results JSON + screenshot |
+Named tests (the G3 surface, selectable by name): test_week_resolve · test_classify_gap ·
+test_extract_contract · test_render_port · test_build_seal · test_harvest_dead_source · test_vlm_dead_arm.
+EVERY enforcement is POSITIVE + NEGATIVE: the seal fires `HARD STOP H1` on a tamper AND the clean
+build passes with ZERO misfire; a GENERIC gate preempting a specific one = UNOBSERVED, never PASS.
+Bound every token to a TOOL RESULT (a verbatim output, an artifact path `.omp/ct-results.json`,
+`exit 0`, a `sha256sum`), never to agent prose. Independent re-verification: the orchestrator re-runs
+every prior wave's gate on the combined tree and records the PASS/FAIL per token. NO ARTIFACT, NO CLAIM.
+
+## RUNTIME SEAT (mandatory — the author's seat is the default failure)
+"I am the driver of the PLUTUS_VISION live render (:9851 + :9222 CDP on display :3)."
+H1 start the REAL render — the served plutus-vision-v2.pine, its sha recorded, reachable surface.
+H2 operate FIRST PERSON, each op with a PRE-REGISTERED expectation + an evidence channel.
+H3 every break is the deliverable: op#, expected, actual VERBATIM, mechanism, fix, retest.
+H4 push it: the replay rewind · a dead VLM · an empty payload · a Sunday bar.
+H5 fix IN the hot seat; retest = the NEXT numbered op on the SAME instance.
+H6 the runtime ledger: what RUNNING taught that READING could not.
+H7 close only when the residual is NAMED. Zero bugs found = RED FLAG.
+
+## ADVERSARIAL LOOP (adversarial-first; the corpus-exhaustion contract)
+Map the surface first (the render's decision points), then run the corpus per point. Probes run
+against the DEPLOYED render (never a source read). Adjudicate EVERY failure BOTH ways (my expectation
+wrong? / a real defect?) BEFORE any fix. Angles: A1 replay rewind · A2 classify RES+SUP · A3 dead arm
+· A4 floor 226/6/4 · A5 seal tamper · A6 empty payload · A7 Sunday boundary. The loop terminates only
+when a FULL pass returns ZERO confirmed defects AND the unswept frontier is explicitly named.
+
+## DOC CONTRACT
+- canon: `context_management/` — 11 docs; the 2 logs (BUILD+DEBUG) update at the MOMENT of work.
+  Gate: 200+ lines, >=3 file:line refs, the read-first docs agree on the truth SHA.
+- ship: BUILD_REPORT (500+) · DEBUG_LOG (500+) · FAILURE_LOG · SPEC_VIOLATION_LOG · TESTING_LOG.
+- AUDIT GATE: a code-audit artifact on disk AND TESTING_LOG carries `AUDIT GATE: PASS|FAIL|BLOCKED`.
+  FAIL blocks every ship-ready claim; BLOCKED is never PASS.
+- A completed todo without its doc entry is an UNFINISHED todo.
+
+## CHECKPOINT
+Round-0 sealed at `Checkpoints/e1-automatic-round0-2026-10-04/` (package + STATE.md + the pin).
+Enter P3 only with it. At P7 seal a checkpoint with: the tree · v2 + its SHA · context_management (11)
+· the 5 ship docs · the spec + artifacts · CHECKPOINT_MANIFEST · ONE seal mode (never manifest-only).
+
+## HARD STOPS
+- v1 drift (sha != 0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1) -> `HARD STOP H1`, never build.
+- a fabricated level on the chart -> STOP, revert, log F-23.
+- secrets: keys live out-of-band; never in the repo, chat, logs, or doc rows.
+- rig down / the arm quota exhausted -> BLOCKED with the retry condition. Never PASS.
+- editing a file another wave owns -> STOP (the file map is law).
+
+## STOP (the legal stop + the FIRST-REPLY contract)
+The run stops only when all 8 phase gates are green AND the seal is written AND the receipt
+(the baseline diff, the battery, the audit verdict, the runtime ledger, the checkpoint path) is
+posted. ANYTHING LESS IS OPEN. A BLOCKED state is never a stop — it names its resume condition.
+Legal stop met only when the operator LOOKS at the capture and says "this is right" (C16).
+FIRST REPLY: re-measure the baseline, post the diff, fire W1 the same turn.
+
+## ANTI-DERAIL (recognize these; do not re-live them)
+- a hardcoded `timestamp(2026…)` slipping into the render -> FAILS THE WAVE ON SIGHT (grep it).
+- `now()`/`timenow` in the anchor (replay renders the wrong week).
+- the LSZ block contaminating the ported render (it lives in reference/ only).
+- a fabricated strike when the VLM is down (the fake-zone class).
+- a green ST battery cited as runtime capability (theatrical; a violation).
+- editing v1 (the seal) · a blind/syntax-only coding patch · scope-shrink under pressure.
+
+## ANTI-STOP (these never close the run)
+- stationarity ("no change in N turns") · sub-inner pass as complete.
+- memory-complete / theater-complete (a claimed close without the gates).
+- blocked-as-done · partial-scope close · "zero bugs" as success.
+- a green battery presented as capability · an empty runtime ledger.
+- "the STs pass, we're done" while the rig never rendered -> W9 is mandatory.
+
+## RESUME POINTERS
+- board `packages/plutus-vision-e1-automatic/06-WAVES.md` · ledger `.trident/wave-audit/`
+- package `packages/plutus-vision-e1-automatic/00-INDEX.md` + the DPL1 spec + MASTER_BLUEPRINT.md +
+  CONTEXT_BIBLE.md + MASTER_PROMPT.md
+- canon `context_management/CURRENT_STATE.md` · checkpoint `Checkpoints/e1-automatic-round0-2026-10-04/`
+A fresh session resumes from DISK, never from this pin's frozen numbers. On wake: assert the
+fingerprint, read 00-INDEX, then dispatch the next wave.
