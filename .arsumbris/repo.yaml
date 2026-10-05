@@ -1,0 +1,4 @@
+type: au.engine.repo::au-engine
+name: PLUTUS_VISION
+deps:
+  - name: au-mcp-core

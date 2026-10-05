@@ -327,3 +327,19 @@ W9 the test          the container rig angles A1-A7 + the look (C16)
 - `CURRENT_STATE.md:1 (the state)`
 - `RUNNING_BUILD_LOG.md:1 (the log)`
 - `packages/plutus-vision-e1-automatic/06-WAVES.md:3 (the waves)`
+
+---
+
+## 2026-10-05 — THE ACTIVE TASK: REBUILD THE RENDER TO V1 + E1 (DYNAMIC)
+
+**THE DELIVERABLE (the operator's words, now LAW-02/03 in the KG):**
+`plutus-vision-v2.pine` re-generated so it is the **V1 baseline (1-1358, SEALED, sha 0d20e831
+unchanged) + the E1 layer (the canon render machinery) with the E1 payload DERIVED FOR THE CURRENT
+TRADING WEEK** (never the canon's Apr example), the **LSZ removed** (LAW-04/R01).
+
+**THE STEPS:**
+1. Repoint the build (`scripts/lqz_vision_v2_build.py`) so the E1 layer emits the canon-faithful
+   colour ladder + zfill/zbord/pressureLbl/calcZFP + option strikes + the label-at-tsMid (the
+   render machinery), from the DYNAMIC current-week payload (`e1_injected_*`).
+2. `make e1` -> the v2 file = the sealed v1 baseline + the dynamic E1 layer.
+3. Deploy to the IDE; render on the current-week fixture; capture; the operator looks (C16).

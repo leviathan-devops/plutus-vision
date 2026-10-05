@@ -347,3 +347,25 @@ attempts failed: 429 / JSON-absent / timeout / "no tool calls parsed") · W8 (fo
 - `packages/plutus-vision-e1-automatic/00-INDEX.md:1 (the package)`
 - `RUNNING_BUILD_LOG.md:1 (the build log)`
 - `NEXT_STEPS.md:1 (the order)`
+
+---
+
+## 2026-10-05 — THE KNOWLEDGE GRAPH + THE RENDER CORRECTION
+
+**THE KNOWLEDGE GRAPH stood up** (`/skill:create-knowledge-graphs`): L1 semantica (`entities 347 ·
+relationships 316`, `.omp/graph-intelligence/layers/semantica/kg.json`) + L2 arsumbris (the repo at
+`.arsumbris/`, the daemon socket `~/.arsumbris/au-engine/run/3533896ff2f68389.sock`, **9 cards**:
+`laws/LAW-01..06`, `rulings/R01..03`, **0 diagnostics**) + the OMP binding `plutus-vision-au` +
+the map `reports/Knowledge_Graph_Map.md`. The graph HOLDS the deliverable definition.
+
+**THE RENDER CORRECTION (the operator's three rulings, now cards):**
+- **LAW-02 / R03** — the deliverable is **V1 baseline + E1 rendered TOGETHER**. `plutus-vision-e1-
+  automatic.pine` (the canon trident_v8 appended alone) DROPPED the v1 baseline — WRONG. The
+  correct file is `plutus-vision-v2.pine`'s architecture: v1 baseline (1-1358) + E1 layer appended
+  (1359-1671).
+- **LAW-03 / R02** — the E1 data must be **dynamic to the CURRENT trading week**. Copying the
+  canon's Apr 20-24 example (zones + strikes) is stale — FORBIDDEN.
+- **LAW-04 / R01** — the canon render is verbatim; the ONLY change is the **LSZ removed**.
+
+**STATUS:** the render is being rebuilt to V1 + E1 (dynamic). The E1 layer's machinery is canon-
+correct (zfill/zbord/pressureLbl/calcZFP, the colour ladder, labels at tsMid). The KG holds the law.

@@ -708,3 +708,22 @@ holds.
 **ZERO CONFIRMED DEFECTS.** The unswept frontier (named, not hidden): C10 (2 anchors dropped — E2/v1,
 not E1) · W6 (1/8 sources wired; S3-S9 honest [NO DATA]) · W8 (four pairs) + W10 (split) deferred
 per the pin · C16 (the operator's look). NONE is a defect; each is a scoped residual.
+
+---
+
+## 2026-10-05 — THE RENDER WAS E1-ONLY (the V1 baseline dropped) + STALE canon data
+
+- SYMPTOM: the operator: "the entire V1 baseline is missing ... it is just rendering the
+  institutional pressure zone ... it also has the stale options strike target from the canon."
+- ROOT CAUSE (the 5-why): I ported the canon `trident_v8.pine` IP block as a STANDALONE
+  indicator — which (1) DROPS the operator's V1 baseline (the candle-liquidity + LuxAlgo SMC
+  layer), and (2) uses the canon's Apr 20-24 example data (zones + strikes) — stale, not the
+  current week. I rendered E1-alone-with-copied-data instead of V1+E1-with-dynamic-data.
+- FIX (the correct architecture, already present in v2): the deliverable = the v1 baseline
+  (lines 1-1358) + the E1 layer APPENDED (lines 1359-1671, `plutus-vision-v2.pine`), with the
+  E1 payload (`e1_injected_*`) derived for the CURRENT trading week — never copied from the
+  canon example.
+- LESSON: "port the render verbatim" means the RENDERING MACHINERY (zfill/zbord/pressureLbl/
+  calcZFP/label-at-tsMid/the colour ladder), NOT the example's stale DATA. The data is DYNAMIC.
+  And the E1 layer sits ON TOP OF the v1 baseline — never alone.
+- EVIDENCE: operator rulings R01/R02/R03 (now cards in the KG).

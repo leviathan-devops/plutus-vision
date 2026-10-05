@@ -583,3 +583,24 @@ in `TESTING_LOG.md`.
 **THE CRITICAL CAUGHT (a real defect):** the E1/E2 payload seams picked their weeks INDEPENDENTLY —
 `_e2_files` silently fell back to a wrong week. Fixed, and the IMPLICIT case closed by anchoring E2
 to E1's own week. v2 `7115b734…` UNCHANGED.
+
+---
+
+## 2026-10-05 — THE KNOWLEDGE GRAPH (create-knowledge-graphs for PLUTUS_VISION)
+
+- WHAT: stood up the project's knowledge graphs per `/skill:create-knowledge-graphs`.
+  L1 semantica: `files=125 nodes=347 edges=316 entities=347 relationships=316` ->
+  `.omp/graph-intelligence/layers/semantica/kg.json`. L2 arsumbris: the repo scaffolding
+  (`.arsumbris/repo.yaml` + `workspace.yaml` + `README.md` + `type/`), the daemon on
+  `~/.arsumbris/au-engine/run/3533896ff2f68389.sock`, **9 cards** (6 LAWS + 3 RULINGS) at
+  **0 diagnostics**, the OMP binding `plutus-vision-au` in `~/.omp/agent/mcp.json`, the map
+  `reports/Knowledge_Graph_Map.md`.
+- WHY: the operator ordered the project graph so sessions read the laws (read the graph, quote
+  it — never paraphrase) — the KG holds THE deliverable definition: V1 baseline + E1 TOGETHER,
+  E1 dynamic to the current week, the canon render verbatim, LSZ removed, the 5.3.3 authority.
+- HOW: Phase 0 charter -> Phase 1 semantica ingest (the SHARED walk-skip law) -> Phase 2 the au
+  engine + the cards -> Phase 3 the au-mcp binding -> Phase 4 the 4 reviews + the map.
+- EVIDENCE: L1 entity=347/rel=316 · L2 cards=9 · diagnostics=0 · socket
+  `3533896ff2f68389.sock` · binding `plutus-vision-au`.
+- NEXT: the KG now holds the corrected deliverable; the render must be rebuilt to V1+E1 with
+  dynamic E1 data.

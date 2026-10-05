@@ -1,0 +1,6 @@
+#: A deliverable state — a fact about what IS rendered / operational.
+fields:
+  id: String
+  tldr: String
+  statement: String
+  anchor: String
