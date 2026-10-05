@@ -1579,3 +1579,10 @@ A7 sunday->monday: 2026-07-06T00:00:00+00:00 weekday= 0   # resolve(<Sun 2026-07
 `scripts/e1_category.py:49 def classify(top, bottom, spot)` · `scripts/e1_week.py:53 def resolve(...)`.
 Both angles PASS on the exact §7 inputs; A2 also holds in the live payload (`zCat` = 2 RES · 1
 MID · 2 SUP). No defect.
+
+### 2026-10-05 — C11 (the replay bounds) MEASURED PRECISELY
+
+Re-drove the replay + read the E1 zone labels' anchor times from the live chart: **LIVE
+`1783069200000` → REWOUND `1779933600000` (`timesDiffer: true`)**; the prices stay identical
+(`100.779/100.936/101.110/101.262/101.374`); the census `bars 1614 → 988 → 1614` (restored). The
+zones recompute with different bounds on replay — C11 PASS. See `SPEC_VIOLATION_LOG` (6).
