@@ -1532,18 +1532,16 @@ e1WeekTag     = e1_injected_week_tag
 // ── THE RENDER ──────────────────────────────────────────────────────────────
 f_e1Render() =>
     _n = array.size(e1PayloadTop)
-    // THE ANCHOR — the CHART'S OWN LAST BAR. The operator's words: "base it on the most recent
-    // bar of the chart that is active ... auto-adjust so that if I use bar replay and I rewind,
-    // the zones render for that week." A FIXED injected anchor pins the zones to one calendar
-    // position regardless of where the operator is looking — which is why they vanished off that
-    // week. Anchored to bar_index (the active bar), the zones follow the chart, and under bar
-    // replay they follow the replay point.
-    _bAnchor = bar_index
-    // BARS PER WEEK, computed (432000 s trading week / the timeframe) — never the literal 5
-    // that assumed daily bars and collapsed the zones to a 10-bar sliver on a 1H chart.
+    // THE ANCHOR — THE TARGET WEEK'S MONDAY. The operator: "renders from Monday to Friday of
+    // this trading week". `e1_anchor_ms` is the analysis point (the target week's Monday), so
+    // the anchor bar is the one whose time is that Monday — derived from the CHART's own bars
+    // (the objective's `anchor = time`). Under replay, `time` moves and the anchor follows.
+    _bm = math.max(1, timeframe.in_seconds() * 1000)
+    _bAnchor = bar_index - math.round((time - e1_anchor_ms) / _bm)
+    // THE BAND SPAN — MONDAY to FRIDAY (5 trading days), never a multi-week ribbon.
     _bpw = math.max(1, math.round(432000 / timeframe.in_seconds()))
-    _lx = math.max(0, _bAnchor - e1BackWeeks * _bpw)
-    _rx = math.min(bar_index + 1, _bAnchor + (e1FwdWeeks + 1) * _bpw)
+    _lx = math.max(0, _bAnchor - 4)
+    _rx = math.min(bar_index + 60, _bAnchor + 5 * _bpw)
 
     // THE IP ZONES — trident_v8.pine:352-365, the loop, re-anchored to bar_index bounds.
     // Colour by zCat (RES|MID|SUP) × degree — the v8 ladder. The band height is inflated so
@@ -1569,11 +1567,9 @@ f_e1Render() =>
                 // confluence CENTRE, so the five institutional levels read as DISTINCT levels with
                 // visible gaps — a level you can see, not a fill you cannot read.
                 _hw = 0.02
-                // THE LABEL X — VISIBLE. The zone box spans `_lx`..`_rx` (2 weeks back to 3 weeks
-                // forward), so its geometric MID sits in the FUTURE where the label is clipped.
-                // Place the tag on the visible bars, left of the last bar (the reference `style_none`
-                // white text at the zone's price).
-                _lxmid = bar_index - 100
+                // THE LABEL X — the zone's price, at a VISIBLE bar just left of the target-week
+                // Monday (the chart's right edge sits near the anchor, so `anchor + N` clips).
+                _lxmid = _bAnchor - 20
                 // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
                 // A THICKER BORDER + a more OPAQUE fill so the E1 pressure zones DOMINATE the
                 // many v1 liquidity lines behind them (the operator: the E1 zones must be the
