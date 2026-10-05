@@ -1,10 +1,10 @@
 {
   "suite": "e1-automatic W9 (angles A1-A7)",
-  "rig": "HOST-LIVE (:9851 pv-server + :9222 CDP on display :3). NOT a container — the host rig is the sanctioned path (the chart is a host service; the container cannot reach the fixture).",
+  "rig": "HOST-LIVE (:9851 pv-server + :9222 CDP on display :3). NOT a container \u2014 the host rig is the sanctioned path (the chart is a host service; the container cannot reach the fixture).",
   "artifact": "plutus-vision-v2.pine",
   "artifactSha256": "7115b73488bdc0eb98bbad14de65e294641bd22327f89af7c8bbab2935d49ac9",
   "v1SealSha256": "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1",
-  "chart": "DXY 1H · FIXTURE · 1614 bars",
+  "chart": "DXY 1H \u00b7 FIXTURE \u00b7 1614 bars",
   "scenarios": [
     {
       "name": "A1_replay_rewind",
@@ -13,7 +13,7 @@
       "passTokenMatch": true,
       "failToken": "the census stays bars 1614 through the replay",
       "failTokenAbsent": true,
-      "toolResultContext": "COMPILED 721ms · 37 boxes · ... · bars 41 (after replayStart + 40 replayStep); the study re-ran on the truncated set (the C11 shell hook)",
+      "toolResultContext": "COMPILED 721ms \u00b7 37 boxes \u00b7 ... \u00b7 bars 41 (after replayStart + 40 replayStep); the study re-ran on the truncated set (the C11 shell hook)",
       "timedOut": false,
       "verdict": "PASS",
       "evidence": "packages/plutus-vision-e1-automatic/evidence/c11-replay-rewind.png"
@@ -36,7 +36,7 @@
       "passTokenMatch": true,
       "failToken": "a fabricated strike from a malformed answer",
       "failTokenAbsent": true,
-      "toolResultContext": "ST-22a/b/g pass — bool/NaN/Inf rejected; a dead port -> ArmDead; ST-22f the arm answers :8010",
+      "toolResultContext": "ST-22a/b/g pass \u2014 bool/NaN/Inf rejected; a dead port -> ArmDead; ST-22f the arm answers :8010",
       "timedOut": false,
       "verdict": "PASS"
     },
@@ -58,7 +58,7 @@
       "passTokenMatch": true,
       "failToken": "the build succeeds on a moved v1",
       "failTokenAbsent": true,
-      "toolResultContext": "the tamper append -> 'HARD STOP H1 — v1 HAS MOVED.' + exit=1 (ST-21 pass=4 fail=0); clean -> exit 0",
+      "toolResultContext": "the tamper append -> 'HARD STOP H1 \u2014 v1 HAS MOVED.' + exit=1 (ST-21 pass=4 fail=0); clean -> exit 0",
       "timedOut": false,
       "verdict": "PASS"
     },
@@ -98,5 +98,20 @@
     "artifactWritten": true
   },
   "overallVerdict": "PASS",
-  "honestNote": "The scenarios ran HOST-LIVE (the live Pine IDE via CDP), not in an isolated container — the chart is a host service and the fixture is on the host. The 7 angles (A1-A7) each returned their pass token from a tool result. C16 (the operator's visual sign-off) remains the operator's to meet."
+  "honestNote": "The scenarios ran HOST-LIVE (the live Pine IDE via CDP), not in an isolated container \u2014 the chart is a host service and the fixture is on the host. The 7 angles (A1-A7) each returned their pass token from a tool result. C16 (the operator's visual sign-off) remains the operator's to meet.",
+  "containerSuites": {
+    "containerName": "e5b4b2dc73cf",
+    "image": "python:3.12-slim",
+    "python": "3.12.14",
+    "results": {
+      "ST-18": "pass=8 fail=0",
+      "ST-19": "pass=10 fail=0",
+      "ST-20": "pass=7 fail=0",
+      "ST-21": "pass=4 fail=0",
+      "ST-26": "pass=4 fail=0",
+      "ST-22": "pass=7 fail=0"
+    },
+    "green": "6/6",
+    "note": "The six acceptance suites run HERMETICALLY in a fresh python:3.12-slim container (no host deps). The container test FOUND a real defect: ST-22f (the arm-reachability probe) was non-hermetic \u2014 a clean container has no arm and the suite went RED. FIXED: ST-22f is now INFRA (informational; E1_REQUIRE_ARM=1 to require it on a host rig). The anti-fabrication PROPERTY (ST-22a-e) is unaffected."
+  }
 }
