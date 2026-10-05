@@ -809,3 +809,25 @@ string while resolve() returns a ms dict; the ms 1783296000000 IS 2026-07-06. Tw
 adjudication: Side A (probe wrong) YES, Side B (real defect) NO. Re-probed with the correct
 check -> PASS. THE FRONTIER (unswept): the E2's DIRECTION (the momentum's sign) - a prediction
 limitation, named, not a defect.
+
+## 2026-10-06 · THE ocr AUDIT — every finding adjudicated + fixed (v2 36ddad96)
+The ocr scan (2 files: scripts/e2_engine.py, scripts/wire_e2.py) returned 13 findings.
+EVERY one was adjudicated two-sided (probe-error? / real defect?) BEFORE any fix.
+FIXED (real):
+  - THE TZ SKEW (critical to the result): a naive datetime.timestamp() read midnight as LOCAL
+    time while the bars are UTC millis -> the momentum window shifted by the host offset and
+    the SIGN flipped (-0.1047 -> +0.5388). The E2 now predicts UP-first, matching the week.
+  - the pair: compute_momentum defaulted to DXY; now reads the E1 file's own pair.
+  - the day x: UTC-aware (was naive).
+  - --week validation: E2_BAD_WEEK refusal + exit 1 (was a traceback, no payload).
+  - corrupt E1: E2_BAD_DATA refusal (was a crash).
+  - file selection: by the resolved week (was silently files[0]).
+  - the WLS cage: sorted by price (was input-order dependent).
+  - the direction filter: compared by CENTRE (the edge-strict test dropped overlapping zones).
+  - the transition annotation: Optional.
+  - dead code (os, consolidation_phase, DAY_MS).
+ADJUDICATED AS A FALSE POSITIVE (no fix, verified):
+  - the day-tag finding: a probe shows all 5 days ARE tagged (idx 0,2,4,6,8). The reviewer
+    misread the shared-boundary logic.
+EVIDENCE: e1_st pass=8 fail=0 · e2_tests pass=36 fail=0 · tagprobe 5/5 · the adversarial
+A1-A7 9/9 · AUDIT GATE PASS · v1 0d20e8314ce992fc · v2 36ddad9676becd70.
