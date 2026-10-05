@@ -1,0 +1,1147 @@
+{
+ "schema": "trident-e1/1",
+ "pair": "EUR/USD",
+ "target_week": "2026-07-06",
+ "spot": 1.1423,
+ "data_as_of": "2026-10-05",
+ "sources": {
+  "EXTRACT_ohlc": {
+   "status": "OK",
+   "source": "local_fixture",
+   "detail": "fixtures/bars/2026-07-06.json \u00b7 EUR/USD 1H \u00b7 1603 bars \u00b7 validated against the documented prints in the golden cascade"
+  },
+  "P1_pivots": {
+   "status": "OK",
+   "detail": "R1/S1/R2/S2 all verified to 1e-9"
+  }
+ },
+ "levels": [
+  {
+   "price": 1.14339,
+   "label": "P1_CLASSIC_R1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.1418,
+   "label": "P1_CLASSIC_S1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14442,
+   "label": "P1_CLASSIC_R2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14124,
+   "label": "P1_CLASSIC_S2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14498,
+   "label": "P1_CLASSIC_R3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14021,
+   "label": "P1_CLASSIC_S3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14283,
+   "label": "P1_CLASSIC_PP",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14326,
+   "label": "P1_FIB_R1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14289,
+   "label": "P1_FIB_R2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14228,
+   "label": "P1_FIB_R3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14289,
+   "label": "P1_FIB_S1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14326,
+   "label": "P1_FIB_S2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14387,
+   "label": "P1_FIB_S3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14322,
+   "label": "P1_CAMARILLA_R4",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14148,
+   "label": "P1_CAMARILLA_S4",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14279,
+   "label": "P1_CAMARILLA_R3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14191,
+   "label": "P1_CAMARILLA_S3",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14264,
+   "label": "P1_CAMARILLA_R2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14206,
+   "label": "P1_CAMARILLA_S2",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.1425,
+   "label": "P1_CAMARILLA_R1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.1422,
+   "label": "P1_CAMARILLA_S1",
+   "level_type": "P1",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.1422,
+   "label": "P2_EMA200",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14207,
+   "label": "P2_EMA100",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14296,
+   "label": "P2_EMA50",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14336,
+   "label": "P2_EMA20",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14302,
+   "label": "P2_EMA9",
+   "level_type": "P2",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14074,
+   "label": "P5_LSZ_1.1407",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13996,
+   "label": "P5_LSZ_1.1400",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13988,
+   "label": "P5_LSZ_1.1399",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14164,
+   "label": "P5_LSZ_1.1416",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14305,
+   "label": "P5_LSZ_1.1430",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14281,
+   "label": "P5_LSZ_1.1428",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14213,
+   "label": "P5_LSZ_1.1421",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.1429,
+   "label": "P5_LSZ_1.1429",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14269,
+   "label": "P5_LSZ_1.1427",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14221,
+   "label": "P5_LSZ_1.1422",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14194,
+   "label": "P5_LSZ_1.1419",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14205,
+   "label": "P5_LSZ_1.1421",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14063,
+   "label": "P5_LSZ_1.1406",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14015,
+   "label": "P5_LSZ_1.1401",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13927,
+   "label": "P5_LSZ_1.1393",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14095,
+   "label": "P5_LSZ_1.1409",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13834,
+   "label": "P5_LSZ_1.1383",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13891,
+   "label": "P5_LSZ_1.1389",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14027,
+   "label": "P5_LSZ_1.1403",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13943,
+   "label": "P5_LSZ_1.1394",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14154,
+   "label": "P5_LSZ_1.1415",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14228,
+   "label": "P5_LSZ_1.1423",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14082,
+   "label": "P5_LSZ_1.1408",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14105,
+   "label": "P5_LSZ_1.1410",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14042,
+   "label": "P5_LSZ_1.1404",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14054,
+   "label": "P5_LSZ_1.1405",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13847,
+   "label": "P5_LSZ_1.1385",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13798,
+   "label": "P5_LSZ_1.1380",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13859,
+   "label": "P5_LSZ_1.1386",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13752,
+   "label": "P5_LSZ_1.1375",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13816,
+   "label": "P5_LSZ_1.1382",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13738,
+   "label": "P5_LSZ_1.1374",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13721,
+   "label": "P5_LSZ_1.1372",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13771,
+   "label": "P5_LSZ_1.1377",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.13884,
+   "label": "P5_LSZ_1.1388",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.1378,
+   "label": "P5_LSZ_1.1378",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14147,
+   "label": "P5_LSZ_1.1415",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14552,
+   "label": "P5_LSZ_1.1455",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14384,
+   "label": "P5_LSZ_1.1438",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14583,
+   "label": "P5_LSZ_1.1458",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14335,
+   "label": "P5_LSZ_1.1434",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14397,
+   "label": "P5_LSZ_1.1440",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14369,
+   "label": "P5_LSZ_1.1437",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14261,
+   "label": "P5_LSZ_1.1426",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14355,
+   "label": "P5_LSZ_1.1436",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14446,
+   "label": "P5_LSZ_1.1445",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14623,
+   "label": "P5_LSZ_1.1462",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14474,
+   "label": "P5_LSZ_1.1447",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14576,
+   "label": "P5_LSZ_1.1458",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14527,
+   "label": "P5_LSZ_1.1453",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14413,
+   "label": "P5_LSZ_1.1441",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.14327,
+   "label": "P5_LSZ_1.1433",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false
+  },
+  {
+   "price": 1.0,
+   "label": "P6_ROUND_1.00",
+   "level_type": "P6",
+   "style": "line",
+   "use_box": false
+  }
+ ],
+ "zones": [
+  {
+   "name": "LIGH_SUPPLY_1.15",
+   "top": 1.14623,
+   "bottom": 1.13721,
+   "zone_type": "SOFT_WALL",
+   "confluence": 4,
+   "pressure_degree": "LIGHT",
+   "zfp": 40,
+   "regime": "momentum",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "zCat": "MID",
+   "zTir": "T2",
+   "zfp_label": 45,
+   "degree_v8": "LIGHT",
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
+    {
+     "price": 1.13721,
+     "label": "P5_LSZ_1.1372",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13738,
+     "label": "P5_LSZ_1.1374",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13752,
+     "label": "P5_LSZ_1.1375",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13771,
+     "label": "P5_LSZ_1.1377",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.1378,
+     "label": "P5_LSZ_1.1378",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13798,
+     "label": "P5_LSZ_1.1380",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13816,
+     "label": "P5_LSZ_1.1382",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13834,
+     "label": "P5_LSZ_1.1383",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13847,
+     "label": "P5_LSZ_1.1385",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13859,
+     "label": "P5_LSZ_1.1386",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13884,
+     "label": "P5_LSZ_1.1388",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13891,
+     "label": "P5_LSZ_1.1389",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13927,
+     "label": "P5_LSZ_1.1393",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13943,
+     "label": "P5_LSZ_1.1394",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13988,
+     "label": "P5_LSZ_1.1399",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.13996,
+     "label": "P5_LSZ_1.1400",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14015,
+     "label": "P5_LSZ_1.1401",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14021,
+     "label": "P1_CLASSIC_S3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14027,
+     "label": "P5_LSZ_1.1403",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14042,
+     "label": "P5_LSZ_1.1404",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14054,
+     "label": "P5_LSZ_1.1405",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14063,
+     "label": "P5_LSZ_1.1406",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14074,
+     "label": "P5_LSZ_1.1407",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14082,
+     "label": "P5_LSZ_1.1408",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14095,
+     "label": "P5_LSZ_1.1409",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14105,
+     "label": "P5_LSZ_1.1410",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14124,
+     "label": "P1_CLASSIC_S2",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14147,
+     "label": "P5_LSZ_1.1415",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14148,
+     "label": "P1_CAMARILLA_S4",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14154,
+     "label": "P5_LSZ_1.1415",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14164,
+     "label": "P5_LSZ_1.1416",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.1418,
+     "label": "P1_CLASSIC_S1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14191,
+     "label": "P1_CAMARILLA_S3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14194,
+     "label": "P5_LSZ_1.1419",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14205,
+     "label": "P5_LSZ_1.1421",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14206,
+     "label": "P1_CAMARILLA_S2",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14207,
+     "label": "P2_EMA100",
+     "level_type": "P2",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14213,
+     "label": "P5_LSZ_1.1421",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.1422,
+     "label": "P1_CAMARILLA_S1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.1422,
+     "label": "P2_EMA200",
+     "level_type": "P2",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14221,
+     "label": "P5_LSZ_1.1422",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14228,
+     "label": "P1_FIB_R3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14228,
+     "label": "P5_LSZ_1.1423",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.1425,
+     "label": "P1_CAMARILLA_R1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14261,
+     "label": "P5_LSZ_1.1426",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14264,
+     "label": "P1_CAMARILLA_R2",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14269,
+     "label": "P5_LSZ_1.1427",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14279,
+     "label": "P1_CAMARILLA_R3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14281,
+     "label": "P5_LSZ_1.1428",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14283,
+     "label": "P1_CLASSIC_PP",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14289,
+     "label": "P1_FIB_R2",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14289,
+     "label": "P1_FIB_S1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.1429,
+     "label": "P5_LSZ_1.1429",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14296,
+     "label": "P2_EMA50",
+     "level_type": "P2",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14302,
+     "label": "P2_EMA9",
+     "level_type": "P2",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14305,
+     "label": "P5_LSZ_1.1430",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14322,
+     "label": "P1_CAMARILLA_R4",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14326,
+     "label": "P1_FIB_R1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14326,
+     "label": "P1_FIB_S2",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14327,
+     "label": "P5_LSZ_1.1433",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14335,
+     "label": "P5_LSZ_1.1434",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14336,
+     "label": "P2_EMA20",
+     "level_type": "P2",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14339,
+     "label": "P1_CLASSIC_R1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14355,
+     "label": "P5_LSZ_1.1436",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14369,
+     "label": "P5_LSZ_1.1437",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14384,
+     "label": "P5_LSZ_1.1438",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14387,
+     "label": "P1_FIB_S3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14397,
+     "label": "P5_LSZ_1.1440",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14413,
+     "label": "P5_LSZ_1.1441",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14442,
+     "label": "P1_CLASSIC_R2",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14446,
+     "label": "P5_LSZ_1.1445",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14474,
+     "label": "P5_LSZ_1.1447",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14498,
+     "label": "P1_CLASSIC_R3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14527,
+     "label": "P5_LSZ_1.1453",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14552,
+     "label": "P5_LSZ_1.1455",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14576,
+     "label": "P5_LSZ_1.1458",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14583,
+     "label": "P5_LSZ_1.1458",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 1.14623,
+     "label": "P5_LSZ_1.1462",
+     "level_type": "P5",
+     "style": "line",
+     "use_box": false
+    }
+   ]
+  }
+ ],
+ "shapes": {},
+ "notes": [
+  "79 candidate levels clustered into 1 zones at tolerance 0.1 x ATR"
+ ],
+ "temporal_boundary_utc": ""
+}
