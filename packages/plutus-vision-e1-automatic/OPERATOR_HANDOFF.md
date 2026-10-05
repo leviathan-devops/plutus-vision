@@ -13,7 +13,8 @@ v2 served      7115b73488bdc0eb98bbad14de65e294641bd22327f89af7c8bbab2935d49ac9 
 suites         ST-18 8 pass · ST-19 10 pass · ST-20 7 pass · ST-21 4 pass · ST-26 4 pass · ST-22 7 pass
 the render     6 E1 zones (3 red + 3 teal) — evidence/C16-definitive-render.png
 checkpoint     Checkpoints/e1-automatic-ship-2026-10-05/  (59 files, manifest present)
-commits        7 E1 commits (git log)
+commits        25 E1 commits (git log)
+audit gate     UNBLOCKED via the verboo lane: 7 findings FIXED + 3 adjudicated
 ```
 
 ---
