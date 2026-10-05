@@ -909,6 +909,27 @@ def main() -> int:
                   notes.get("pivot_verification", "")],
         "temporal_boundary_utc": "",
     }
+    # THE NINE-SOURCE HARVEST (spec item 14: `make e1` runs e1_sources.py -> data/e1/
+    # sources.json BEFORE this extractor). Merge its per-source status into the payload's
+    # provenance. ADDITIVE — the zones stay OHLC-derived (blueprint §7: the harvest is the
+    # web dimension the OHLC cannot supply); a down source is [NO DATA], never a fabrication.
+    _harvest = out_dir / "sources.json"
+    if _harvest.exists():
+        try:
+            _h = json.loads(_harvest.read_text())
+            _web = _h.get("web") or {}
+            for _name, _v in (_web.get("data") or {}).items():
+                doc["sources"][f"web_{_name}"] = {
+                    "status": _v.get("status", "[NO DATA]"),
+                    "count": _v.get("count"),
+                    "reason": _v.get("reason", "")}
+            for _nm in ("ohlc", "weekly_open"):
+                if _nm in _h:
+                    doc["sources"][f"local_{_nm}"] = {"status": _h[_nm].get("status", "?")}
+            doc["sources"]["web_harvest"] = {"status": _web.get("status", "?"),
+                                             "label": _web.get("label", "")}
+        except Exception as _e:
+            doc["sources"]["web_harvest"] = {"status": "ERROR", "reason": str(_e)[:120]}
     path.write_text(json.dumps(doc, indent=1))
     print(f"  wrote {path.name}  source={source}  chart_week={derived}  "
           f"bars={len(bars)} spot={spot:.3f} levels={len(levels)} ZONES={len(zones)}")

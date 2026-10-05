@@ -26,6 +26,8 @@ help:
 # THE AUTO-RUN. Deploy is GATED on the suites (e1-test is a prerequisite): a failing suite
 # stops the chain before anything deploys. The build refuses on v1 drift (HARD STOP H1) too.
 e1: e1-test
+	@mkdir -p data/e1
+	$(PY) scripts/e1_sources.py --json > data/e1/sources.json
 	$(PY) scripts/e1_extract.py --pair "$(PAIR)" $(if $(filter-out auto,$(WEEK)),--week "$(WEEK)")
 	PV2_WEEK="$(if $(filter-out auto,$(WEEK)),$(WEEK))" PV2_PAIR="$(PAIR)" $(PY) scripts/lqz_vision_v2_build.py
 	mkdir -p "$(RENDERER)"
