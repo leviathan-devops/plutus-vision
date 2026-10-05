@@ -1514,3 +1514,49 @@ all real ones) + the runtime driven. **The audit is concluded: 0 CONFIRMED criti
 - **AUDIT GATE: PASS** — the verboo-lane scan (`reports/ocr-e1-automatic.json` round-1:
   1 critical + 4 high; `-round2`: 0 criticals). The critical (the E1/E2 week-mix) FIXED + re-proven.
   The artifact on disk; the confirmed defects fixed.
+
+## 2026-10-05 — THE C1..C16 COMPLETION AUDIT (every criterion re-verified on the current tree)
+
+| # | criterion | command | result |
+|---|---|---|---|
+| C1 | v1 byte-identical | `sha256sum plutus-vision-v1.pine` | `0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1` ✓ (re-verified after the C4 tamper) |
+| C2 | the v1 floor in v2 | `grep -cE 'pv_alerts|smc_'` etc. | `226` / OB `6` / LQZ `4` ✓ |
+| C3 | no E3 primitive | `grep -icE 'entry\.|strategy\.|sl_|take\.profit'` | `0` ✓ |
+| C4 | the build refuses on v1 drift | append a line to v1, run the builder | python exit `1`, `HARD STOP H1` ✓ (POSITIVE: tamper fires; NEGATIVE: the clean build passes) |
+| C5 | the render is v8's | `grep -cE 'f_e1Zfill|f_e1Zbord|f_e1PressureLbl|f_e1CalcZFP' e1-render.pine` | `7` helpers ✓ |
+| C6 | no hard-coded timestamp | `grep -c 'timestamp(2026' plutus-vision-v2.pine` | `0` ✓ |
+| C7 | the anchor is chart-based | `grep '_bAnchor = bar_index' e1-render.pine` | present ✓ |
+| C8 | the INSTITUTIONAL category derived | `jq '.zones[].zCat'` | 2 RES · 1 MID · 2 SUP, 0 unclassified ✓ |
+| C9 | the zones render | the rig, one run | `34 boxes` = v1's 29 + the 5 zones ✓ |
+| C10 | the zones land on-chart | `anchors dropped` in the census | the 5 E1 zones land (visual); the census's `2 anchors dropped` are **v1's LQZ right-extension** (`lqzRightB`), NOT the E1 — the E1 contributes 0 (both E1-on and E1-off read `2`) |
+| C11 | bar replay correct | the rig rewind | FIXED + proven (this log, 2026-10-05) ✓ |
+| C12 | a dead source is honest | stop the arm, run `make e1` | exit 0; the options pillar reads `[NO DATA]` ✓ |
+| C13 | no fabricated level | the JSON, every level | `144/144` levels carry a derivation label ✓ |
+| C14 | the suite is green | the 4 suites | e1_st 6/6 · e1_render_tests 22/0 · e2_tests 36/0 · e2_render_tests 18/0 ✓ |
+| C15 | the LSZ preserved | `sha256sum reference/trident_v8_lsz.pine` | `db24a18cc8cdd234` (unchanged; it lives in reference/ only — 0 lsz refs in the v2) ✓ |
+| C16 | the look | the operator views the capture | ── PENDING (the operator's eyes) ── |
+
+**15 of 16 hold, each bound to a command/ledger artifact. C16 is the one human gate.**
+
+## 2026-10-05 — THE P5 ADVERSARIAL PASS (A1..A7, run against the deployed artifact)
+
+| angle | probe | result |
+|---|---|---|
+| A1 replay rewind | rewind the rig; `bar_index` moves; the zones recompute | ✓ the anchor `_bAnchor = bar_index` follows the replay cursor; `pine-ide/pine-ide/pine-ide.mjs` carries the replay subscription; evidence `evidence/c11-replay-rewind.png` (bars 1614→41, the zones re-rendered) |
+| A2 classify RES+SUP | `jq '.zones[].zCat'` | ✓ 2 RES · 1 MID · 2 SUP (≥1 each) |
+| A3 dead arm | `e1_fetch.py --no-arm` (the arm :8010 down) | ✓ exit 0 · `[NO DATA]` ×9 · 0 fabricated strikes; ST-22e: a dead arm RAISES `ArmDead` (never an empty OK) |
+| A4 the v1 floor | `grep -c` the three floors | ✓ 226 / 6 / 4 |
+| A5 seal tamper | append a line to v1, run the builder | ✓ exit 1 · `HARD STOP H1` |
+| A6 empty payload | `PV2_DATA_DIR=<empty>` run the builder | ✓ `HARD STOP — PV2_PAIR=DXY matched no payload` (a loud refusal, never a silent empty render) |
+| A7 Sunday boundary | `e1_st_18.py test_week_resolve` | ✓ ST-18c: Sunday → the FOLLOWING Monday; the negative controls (None/0/1990/bool) raise |
+
+**VERDICT: ZERO CONFIRMED DEFECTS across A1..A7.**
+
+**THE UNSWEPT FRONTIER (named):**
+1. **A1 (the replay rewind)** rests on the PRIOR session's C11 evidence + the sound mechanism
+   (`bar_index` follows the cursor); a LIVE rewind THIS session was not re-run (the vela replay UI
+   is not CDP-drivable in the current rig).
+2. **The E2 path + the E1 labels cannot paint TOGETHER** (the vela PineTS renderer limit) — E2
+   defaults off; this is a RENDERER constraint, named, not a data/Pine defect.
+3. **W9 (the container rig)**: `.omp/ct-results.json` is from the 2026-10-05 05:56 run (the
+   pre-label-fix build); not re-run this session.
