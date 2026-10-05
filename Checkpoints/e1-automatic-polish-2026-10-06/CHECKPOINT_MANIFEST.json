@@ -1,0 +1,52 @@
+{
+ "checkpoint": "e1-automatic-polish-2026-10-06",
+ "token": "feat(e1-e2): automatic institutional pressure zones + the E2 price-continuation path",
+ "v1_seal": "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1",
+ "files": [
+  {
+   "path": "CONTEXT_TOKEN.md",
+   "sha256": "4950b1aa381c66a5f12afd35fbd4a8611d9d8b3e3de437615a7a9966bc5fe398",
+   "bytes": 1869
+  },
+  {
+   "path": "docs/STATE.md",
+   "sha256": "d5d17143b4faf2649d66d26731dd17a08c7e9d6d26a7a903a400fd6162e4bbc1",
+   "bytes": 1476
+  },
+  {
+   "path": "render/SHA256SUMS",
+   "sha256": "b918e2edfe48c6851752df644cd01772349887ef409f3179325a135999f7fe27",
+   "bytes": 338
+  },
+  {
+   "path": "render/e1-render.pine",
+   "sha256": "e3d279c01e901a6a59c70de7cb52b6acf2114a8039d4bf6dd172402c5dfd8c55",
+   "bytes": 12703
+  },
+  {
+   "path": "render/e2-render.pine",
+   "sha256": "2c89707843df9e85ca35df98a805bc8e434cf59539a009419e945eddcd09c2be",
+   "bytes": 6897
+  },
+  {
+   "path": "render/plutus-vision-v1.pine",
+   "sha256": "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1",
+   "bytes": 76550
+  },
+  {
+   "path": "render/plutus-vision-v2.pine",
+   "sha256": "04d7a89ae57d1f9f29e8dbb428d93a306c3d66301b7c1a9e177d09abac65642b",
+   "bytes": 100208
+  },
+  {
+   "path": "scripts/e2_engine.py",
+   "sha256": "bf221220b3fd766afd1f2369d6aaa390575695d38b6dddf8fc3ca32cafc908de",
+   "bytes": 30153
+  },
+  {
+   "path": "scripts/lqz_vision_v2_build.py",
+   "sha256": "34a59e41b957d558de9a2cbed16d664404c3c2e2efd5880558319cffe7a9408e",
+   "bytes": 18826
+  }
+ ]
+}
