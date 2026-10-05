@@ -1,9 +1,9 @@
 {
  "schema": "trident-e1/1",
  "pair": "EUR/USD",
- "target_week": "2026-10-06",
+ "target_week": "2026-07-06",
  "spot": 101.048,
- "data_as_of": "2026-10-03",
+ "data_as_of": "2026-10-05",
  "sources": {
   "EXTRACT_ohlc": {
    "status": "OK",
@@ -548,6 +548,10 @@
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 1,
+   "zCat": "SUP",
+   "zTir": "T2",
+   "zfp_label": 0,
+   "degree_v8": "LIGHT",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -572,6 +576,10 @@
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 1,
+   "zCat": "SUP",
+   "zTir": "T2",
+   "zfp_label": 0,
+   "degree_v8": "LIGHT",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -596,6 +604,10 @@
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 1,
+   "zCat": "SUP",
+   "zTir": "T2",
+   "zfp_label": 10,
+   "degree_v8": "LIGHT",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -627,6 +639,10 @@
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 1,
+   "zCat": "RES",
+   "zTir": "T2",
+   "zfp_label": 0,
+   "degree_v8": "LIGHT",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -651,6 +667,10 @@
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 1,
+   "zCat": "RES",
+   "zTir": "T2",
+   "zfp_label": 0,
+   "degree_v8": "LIGHT",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -675,6 +695,10 @@
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 1,
+   "zCat": "RES",
+   "zTir": "T2",
+   "zfp_label": 0,
+   "degree_v8": "LIGHT",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [

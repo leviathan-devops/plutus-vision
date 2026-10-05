@@ -40,6 +40,43 @@ E1 = ROOT / "plutus-vision-lqz" / "e1-render.pine"
 E2 = ROOT / "plutus-vision-lqz" / "e2-render.pine"
 OUT = ROOT / "plutus-vision-v2.pine"
 DATA = pathlib.Path(os.environ.get("PV2_DATA_DIR", ROOT / "data" / "e1"))
+# THE WEEK SELECTOR — measured defect 2026-10-05 (audit): DATA.glob picked sorted()[0], so
+# `make e1 WEEK=<other>` could inject/deploy a STALE week whose file sorted first. PV2_WEEK
+# (set by the Makefile from WEEK=) selects the matching file; unset -> the newest.
+WEEK = os.environ.get("PV2_WEEK", "")
+PAIR = os.environ.get("PV2_PAIR", "")
+
+
+def _q(s: str) -> str:
+    """Escape a value for a Pine double-quoted string literal — a `"`/`\\`/newline in a zone
+    name or an exception message would otherwise break the shipped artifact (audit 2026-10-05)."""
+    return (str(s).replace("\\", "\\\\").replace('"', '\\"')
+            .replace("\n", " ").replace("\r", " "))
+
+
+def _payload_files() -> list:
+    # NEWEST-FIRST so files[0] is the most recent week; filtered by PAIR then WEEK. A set WEEK
+    # that matches NOTHING FAILS CLOSED — the earlier `or fs` silently fell back (audit 2026-10-05).
+    fs = sorted(DATA.glob("*.json"), reverse=True)
+    if PAIR:
+        fs = [f for f in fs if f.stem.startswith(PAIR.replace("/", ""))] or fs
+    if WEEK:
+        hit = [f for f in fs if WEEK in f.stem]
+        if not hit:
+            sys.exit(f"HARD STOP — PV2_WEEK={WEEK} matched no payload in {DATA}")
+        fs = hit
+    return fs
+
+
+def _e2_files() -> list:
+    """The E2 payload files — the SAME newest-first + WEEK discipline as E1, so E1 and E2 can
+    never come from different weeks (audit 2026-10-05)."""
+    fs = sorted(E2D.glob("*-e2.json"), reverse=True)
+    if WEEK:
+        hit = [f for f in fs if WEEK in f.stem]
+        if hit:
+            fs = hit
+    return fs
 E2D = pathlib.Path(os.environ.get("PV2_E2_DIR", ROOT / "data" / "e2"))
 
 # the v1 seal. The build REFUSES to run if v1 has drifted.
@@ -95,7 +132,10 @@ def build_payload() -> tuple[str, str]:
     using `array.new<T>()` + push, so the payload uses exactly that shape."""
     zones: list[dict] = []
     refusal = ""
-    for f in sorted(DATA.glob("*.json")):
+    _files = _payload_files()
+    if not _files:
+        refusal = "E2_NO_ZONES: no E1 payload file on disk for this week — the fetch layer recorded every source as [NO DATA]"
+    for f in _files:
         try:
             d = json.loads(f.read_text())
         except Exception:
@@ -118,7 +158,14 @@ def build_payload() -> tuple[str, str]:
     add("e1_injected_bottom", "float", [z.get("bottom", 0) for z in zones])
     add("e1_injected_confluence", "int", [int(z.get("confluence", 0)) for z in zones])
     add("e1_injected_zfp", "int", [int(z.get("zfp", 0)) for z in zones])
-    add("e1_injected_id", "string", [f'"{z.get("name", "Z")}"' for z in zones])
+    # zCat — the v8 renderer's positional vocabulary (RES|MID|SUP). VALIDATED, never defaulted:
+    # a missing zCat silently became "SUP" (a teal wrong-colour) — refuse instead (audit 2026-10-05).
+    for z in zones:
+        if z.get("zCat") not in ("RES", "MID", "SUP"):
+            sys.exit(f"HARD STOP — zone {z.get('name','?')} has zCat={z.get('zCat')!r}; "
+                     f"the renderer requires RES|MID|SUP")
+    add("e1_injected_cat", "string", [f'"{_q(z.get("zCat"))}"' for z in zones])
+    add("e1_injected_id", "string", [f'"{_q(z.get("name", "Z"))}"' for z in zones])
 
     # ── THE E2 PAYLOAD: whatever scripts/wire_e2.py computed, verbatim. ────────────
     # Every value here is the ENGINE's output. This build never classifies a shape,
@@ -126,7 +173,7 @@ def build_payload() -> tuple[str, str]:
     # An absent or refused engine run leaves the arrays EMPTY and sets the refusal,
     # so the chart states the refusal rather than drawing a fabricated path.
     e2doc = {"days": [], "ghost": [], "refusal": ""}
-    e2files = sorted(E2D.glob("*-e2.json"))
+    e2files = _e2_files()
     if e2files:
         try:
             e2doc = json.loads(e2files[0].read_text())
@@ -151,7 +198,7 @@ def build_payload() -> tuple[str, str]:
 
     add("e2_injected_x", "float", [d[0] for d in days])
     add("e2_injected_y", "float", [d[1] for d in days])
-    add("e2_injected_shape", "string", [f'"{d[2]}"' for d in days])
+    add("e2_injected_shape", "string", [f'"{_q(d[2])}"' for d in days])
     add("e2_injected_conf", "int", [int(d[3]) for d in days])
     add("e2_injected_ghost_x", "float", [g[0] for g in ghosts])
     add("e2_injected_ghost_y", "float", [g[1] for g in ghosts])
@@ -163,7 +210,7 @@ def build_payload() -> tuple[str, str]:
     # hard-coded — a pinned timestamp makes the indicator right for one week only.
     anchor_ms, week_tag = _monday_anchor()
     decls.append(f"e1_injected_anchor_ms = {anchor_ms}")
-    decls.append(f'e1_injected_week_tag = "{week_tag}"')
+    decls.append(f'e1_injected_week_tag = "{_q(week_tag)}"')
 
     # THE REFUSAL STRING comes from the ENGINE, verbatim. This build never invents a reason.
     # When the engine produced a chain the refusal is empty; when it refused, its own words are
@@ -171,9 +218,12 @@ def build_payload() -> tuple[str, str]:
     # are different claims and the operator must be able to tell them apart.
     engine_refusal = e2doc.get("refusal") or ""
     if not days and not engine_refusal:
-        engine_refusal = ("E2_NO_ANCHORS: the engine produced days but none carried an "
-                          "anchoring zone, so Rule 1 forbids drawing them")
-    decls.append(f'e2_injected_refusal = "{engine_refusal}"')
+        # THE E1 REFUSAL TAKES PRIORITY: when the E1 payload carried no zones, `refusal` holds
+        # E2_NO_ZONES (the specific cause); only fall back to the generic E2_NO_ANCHORS when the
+        # E1 file WAS non-empty but no day anchored to a zone. (audit finding 2026-10-05)
+        engine_refusal = refusal or ("E2_NO_ANCHORS: the engine produced days but none carried an "
+                                     "anchoring zone, so Rule 1 forbids drawing them")
+    decls.append(f'e2_injected_refusal = "{_q(engine_refusal)}"')
     return "\n".join(decls), "\n".join(pushes)
 
 
@@ -185,7 +235,7 @@ def _monday_anchor() -> tuple[int, str]:
     the change is that a pinned date is the Temporal Boundary violation."""
     import datetime as _dt
     tag = ""
-    files = sorted(DATA.glob("*.json"))
+    files = _payload_files()
     if files:
         m = re.search(r"(\d{4}-\d{2}-\d{2})", files[0].stem)
         if m:
@@ -209,7 +259,7 @@ def strip_decl(src: str, names: list[str]) -> str:
 
 
 E1_NAMES = ["e1_injected_top", "e1_injected_bottom", "e1_injected_confluence",
-            "e1_injected_zfp", "e1_injected_id"]
+            "e1_injected_zfp", "e1_injected_id", "e1_injected_cat"]
 E2_NAMES = ["e2_injected_x", "e2_injected_y", "e2_injected_shape", "e2_injected_conf",
             "e2_injected_ghost_x", "e2_injected_ghost_y", "e2_injected_refusal"]
 

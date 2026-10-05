@@ -36,6 +36,8 @@ import pathlib
 import sys
 import urllib.request
 
+import e1_category as CAT   # W2: the v8 renderer bridge (zCat/zTir/zfp/degree)
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # ── THE CANON'S CONSTANTS — every one quoted, none tuned ─────────────────────
@@ -364,7 +366,7 @@ def build_levels(bars: list[dict]) -> tuple[list[dict], dict]:
     return levels, notes
 
 
-def assemble(levels: list[dict], a: float, spot: float) -> list[dict]:
+def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> list[dict]:
     """Cluster the scored levels into zones, then score each CLUSTER by summing its
     dimensions. Independent evidence adds; it does not compete."""
     # ── THE CONFLUENCE SUM: independent dimensions ADD, they do not compete ──────
@@ -380,30 +382,14 @@ def assemble(levels: list[dict], a: float, spot: float) -> list[dict]:
     # dimension across its members. A round number that is ALSO a Camarilla R1 and also sits
     # on an MA is a genuinely strong zone; the same round number alone is not.
     tol = max(CLUSTER_ATR_MULT * a, 0.0005)
+    # THE SPREAD WINDOW. Measured 2026-10-05: widening this to 1.2 did NOT change the zones —
+    # the top-6 by confluence cluster at 100.83-101.28 regardless, because the 74 levels are
+    # concentrated there. Kept at 0.35 (the engine's own window); the clustering is a property
+    # of the level set, not this filter.
     live = sorted((l for l in levels if abs(l["price"] - spot) <= 0.35),
                   key=lambda l: l["price"])
-    clusters: list[list[dict]] = []
-    for l in live:
-        if clusters and abs(l["price"] - clusters[-1][-1]["price"]) <= tol:
-            clusters[-1].append(l)
-        else:
-            clusters.append([l])
-
-    DIMS = ("technical", "options", "analyst", "structural", "psychological", "regime")
-    zones: list[dict] = []
-    for cl in clusters:
-        # the SUM over dimensions, taking each dimension's best member — a dimension cannot
-        # vote twice, which is exactly the canon's cap
-        base = sum(max((m[d] for m in cl), default=0.0) for d in DIMS)
-        # the structural bonus, capped at +2 (canon: "confluence CAP of 14")
-        bonus = min(2.0, max(m["structural"] for m in cl) * 0.66)
-        conf = int(min(CONFLUENCE_CAP, round(base + bonus)))
-        deg = band_of(conf)
-        if deg == "MINIMAL":
-            continue                      # a 0-3 score is discarded by the canon
-        if len(zones) >= MAX_ZONES:
-            break
-    tol = CLUSTER_ATR_MULT * a
+    # ONE clustering pass (the earlier duplicate first-pass was dead — audit 2026-10-05). `tol`
+    # keeps its max(...,0.0005) floor from above; the old second pass dropped it.
     clusters: list[list[dict]] = []
     for l in live:
         if clusters and abs(l["price"] - clusters[-1][-1]["price"]) <= tol:
@@ -439,6 +425,13 @@ def assemble(levels: list[dict], a: float, spot: float) -> list[dict]:
             "measured_move_target": None, "structural_extreme": any(
                 l["structural"] >= 1.0 for l in cl),
             "poi_tier": 2 if conf >= 8 else 1,
+            # ── THE V8 BRIDGE (W2's e1_category) — the renderer's own vocabulary ──────
+            # zCat: RES|MID|SUP (positional vs spot) · zTir: T1|T2 · the label's ZFP by
+            # v8's zoneW/refRange · the degree in the zfill/zbord tower's literal form
+            "zCat": CAT.classify(top, bot, spot),
+            "zTir": CAT.tier(conf),
+            "zfp_label": CAT.zfp(top, bot, pair),
+            "degree_v8": CAT.norm_degree(deg),
             "bom_fresh_flag": None,
             "timeframe": "1H",
             "levels": [{"price": l["price"], "label": l["label"],
@@ -474,7 +467,7 @@ def main() -> int:
 
     spot = bars[-1]["c"]
     levels, notes = build_levels(bars)
-    zones = assemble(levels, atr(bars) or 0.0005, spot)
+    zones = assemble(levels, atr(bars) or 0.0005, spot, args.pair)
     week_mon = dt.date.fromisoformat(week)
     doc = {
         "schema": "trident-e1/1", "pair": args.pair, "target_week": week,

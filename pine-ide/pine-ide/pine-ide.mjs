@@ -195,6 +195,31 @@ export async function mount(container, opts = {}) {
       onError: (e) => { if (e) status(`${e.code}: ${String(e.message).slice(0, 180)}`, 'error'); },
     });
     S.wb.chart.on('load:end', (ev) => onMarketLoaded(ev));
+    // C11 — RE-RUN ON REPLAY. The E1 render is chart-anchored (`_bAnchor = bar_index`), so when
+    // the operator REWINDS, the study must re-run against the TRUNCATED bars for the zones to
+    // follow the replay point. Vela emits replay:step/start/end; the shell previously ignored
+    // them (AUTO fired only on market-load + editor-change). MEASURED 2026-10-05: 300 replay
+    // steps moved the cursor but the census stayed `bars 1614` — the study never re-ran.
+    for (const _rev of ['replay:step', 'replay:start', 'replay:end']) {
+      try { S.wb.chart.on(_rev, () => {
+        // the replay CURSOR is the study's last bar under replay. The workbench's getBars() still
+        // returns the FULL series (the renderer truncates only its scene — measured: scene 41 vs
+        // getBars 1614), so the study must be fed the bars UP TO the cursor, or barstate.islast
+        // stays at the full-data end and the zones never follow the rewind.
+        let _all = S.wb.getBars() || S.bars;
+        try {
+          const _rc = (S.chart && S.chart.replayControl && S.chart.replayControl.ctrl)
+                   || (S.wb.chart && S.wb.chart.replayControl && S.wb.chart.replayControl.ctrl);
+          const _ct = _rc && _rc.replayState ? _rc.replayState().cursorTime : null;
+          if (_ct && Array.isArray(_all)) {
+            const _trunc = _all.filter((b) => ((b.time ?? b.t) || 0) <= _ct);
+            if (_trunc.length) _all = _trunc;   // feed the study only the bars up to the rewind
+          }
+        } catch { /* no replay control — leave the full set */ }
+        S.bars = _all;
+        if (S.autoRun) scheduleRun();
+      }); } catch { /* older chart without the event */ }
+    }
     // the TradingView-style indicator row under the symbol legend + its Inputs dialog
     S.legend = mountStudyLegend(chartHost, {
       getSource: () => editor.getSource(),
