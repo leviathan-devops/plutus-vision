@@ -259,3 +259,25 @@ REFUSES BY NAME (`PINE_BARS_ABSENT`, "bars unusable … need ≥2") and RETAINS 
 persist (the retained frame), and on `replayStop` the census returns (`bars 1614`). This is the
 `LOUD FAIL OR CLEAR PASS` law working at the extreme: a degenerate input names its failure and
 keeps the last good state. No defect — a positive finding (the boundary is guarded).
+
+## 2026-10-05 (9) — THE DESKTOP APP VERIFIED: it renders the 5 labelled zones (the operator's product)
+
+**THE PROBE.** Captured the Tauri/WebKit desktop app's window on display `:3`
+(`xdotool search --name Plutus` → `Plutus Vision — Pine IDE`, geometry 1626x931;
+`import -window <id>` → 187258 bytes) and LOOKED at it.
+
+**THE OBSERVED (the operator's product, verbatim).** The native app renders:
+- the Pine editor (left) — the v1+v2 source;
+- the DXY 1H chart (right) with the **5 labelled institutional-pressure zones**: `IP Resistance
+  Ceiling | Lig…` (the ceiling, RES) · `Upper IP Resistance | Mod…` (RES) · `Equilibrium Zone |
+  Modera…` at 101.048 (MID, the spot) · `Mid-Range Support | Mod…` (SUP) · `Support Floor | Light
+  19…` (the floor, SUP);
+- the statusline: `COMPILED 1759ms · 0 plots · 34 boxes · 28 lines · 6 labels · 0 markers · 0 segs
+  · bars 1614`.
+
+**THE VERDICT — PASS.** The operator's DESKTOP APP (the `pine-ide` product, the deliverable's
+front end) renders the E1 zones + all 5 role labels correctly. The labels ARE visible on the
+native app (with E2 off) — matching the Chrome render. This also confirms the E2/labels limitation
+is RENDERER-INDEPENDENT: the WebKit canvas renders the labels exactly as the Chrome vela renderer
+(so the hypothesis that WebKit might paint both is DISPROVEN — the labels render, the E2 path is
+off, same as Chrome). H1 (the real render reachable) is satisfied for the desktop app too.
