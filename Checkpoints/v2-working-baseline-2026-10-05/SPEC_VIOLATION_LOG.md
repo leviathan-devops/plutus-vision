@@ -174,3 +174,34 @@ for "the colour ladder (R/G/T `_F1..6`+`_B1..6`)" + "the helpers (`zfill` `zbord
 IMPLEMENTED and C5-verified in `e1-render.pine`. The file path + the volLbl mention were pre-build
 over-specifications that C5 refines. No code change; the intent holds. (Same class as the C7
 correction.)
+
+## 2026-10-05 (5) — THE E1 BOX COORD SPACE: `bar_index` is the ALLOWED anchor adaptation (not the F-17 class)
+
+**THE QUESTION:** `spec §8` bans "a second coordinate space (bar_index) mixed with `bar_time`" (the
+F-17 cull class), and `item 7` says "the v8 block verbatim, **`xloc=bar_time`**, computed bounds".
+The render's E1 box is `box.new(_lx, _top, _rx, _bot, ...)` — **no `xloc`** (defaults to
+`bar_index`).
+
+**ADJUDICATED — NOT a defect, and NOT the F-17 class:**
+1. **The anchor IS the permitted adaptation.** `v8:35-37` is `int tsL = timestamp(2026, 4, 6, …);
+   int tsR = timestamp(2026, 5, 15, …)` — a HARDCODED week (the anti-derail's exact target:
+   "a hardcoded `timestamp(2026…)` slipping into the render"). The objective's PORT VERBATIM law:
+   "only the anchor (:35-37) and the data (:187-192) adapt." The render's `_bAnchor = bar_index` +
+   the computed `_lx`/`_rx` bounds ARE that anchor adaptation — the bounds are COMPUTED (item 7's
+   "computed bounds" ✓), replacing the hardcoded timestamps.
+2. **The E1 box is INTERNALLY CONSISTENT — one coordinate space.** All four box args
+   (`_lx`/`_top`/`_rx`/`_bot`) are bar_index-derived; there is NO per-box mixing of bar_index and
+   bar_time. The F-17 cull requires a SINGLE box mixing spaces; here the two spaces live in
+   SEPARATE layers (v1's SMC boxes use `xloc=bar_time`; the E1 zone function uses bar_index). Each
+   is internally consistent → no per-box cull.
+3. **It is FUNCTIONALLY REQUIRED for the replay-follow.** In Pine, `time[<variable>]` is illegal
+   (the `[]` offset must be constant), so a bar_index anchor CANNOT be expressed in bar_time
+   coords. The bar_index form is what the vela replay cursor moves — proven live (the A1 re-drive:
+   census `bars 1614 → 988` on `replayStart`, the zones re-anchoring). A fixed `tsL`/`tsR`
+   (bar_time) would pin the zones to the payload's week and NOT follow the replay.
+4. **VERIFIED (looked):** the zones render as 5 bands + the labels; the A1 replay re-anchors them.
+
+**THE CORRECTION:** item 7's "`xloc=bar_time`" was paired with v8's HARDCODED `tsL`/`tsR`; the
+anchored form (the permitted adaptation) uses `bar_index`. No code change — the render is the
+measured-correct anchored form; `xloc=bar_time` would break the replay-follow. Same class as the
+C7 / items-5/6 corrections. The colour ladder + the 4 helpers ARE verbatim (C5).
