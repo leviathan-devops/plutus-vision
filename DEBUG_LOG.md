@@ -1972,3 +1972,24 @@ SEE context_management/NEXT_STEPS.md:1 for the active work.
 - **THE LESSON:** "not CDP-drivable" is a claim about the DOM; the control lived behind the
   shell's JS handle. DRIVE the surface end-to-end before asserting it is unreachable. Run-to-learn
   > read-to-assume (H6).
+
+## EN-107 — C7: the criterion's command predated the implemented anchor (a stale proxy, not a code defect) (2026-10-05)
+
+- **THE SYMPTOM:** re-auditing the spec's §6 criteria against the tree, C7's command
+  (`grep -n 'time\[1\]\|time - ' e1-render.pine`) returned **0** — the criterion read as FAILING.
+- **THE ADJUDICATION (both sides):** (a) is my expectation wrong, or (b) a real defect? MEASURED:
+  the render anchors on `_bAnchor = bar_index` (e1-render.pine:184, 4 uses) — the chart's own last
+  bar — PLUS the payload's `anchor.from = "chart_last_bar"`. So the last-bar read IS present (via
+  `bar_index`, not the Pine `time` axis). The sole `now()` text in the file is the comment
+  "…not now()" (line 11), not a call. So the INTENT holds; the command's pattern was a pre-build
+  proxy that assumed a `time`-based anchor.
+- **WHY bar_index (the measured decision, EN-103):** a time-computed anchor was a
+  stale-relative-week hazard; `bar_index` is what the vela replay cursor moves — the A1 re-drive
+  proves it (census `bars 1614 → 988` on `replayStart`, the zones re-anchoring).
+- **THE FIX:** corrected C7's command to the implemented chart-anchor form + the explicit
+  `now()`-absent negative (`grep -cE '^[^/]*now\(\)'` = 0). NO code change — the criterion's intent
+  was already satisfied. Recorded in SPEC_VIOLATION_LOG.
+- **THE LESSON:** a criterion command written before the build can be a stale proxy for a form the
+  build (correctly) did not use. Verify the INTENT before concluding a criterion fails — and when
+  the intent holds, correct the COMMAND, not the code. The distinction from FITTED-TO-GOLDEN: the
+  code here is measured-correct (the replay-follow); the command's pattern was the stale artifact.

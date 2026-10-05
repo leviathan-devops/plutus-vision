@@ -224,7 +224,7 @@ the deferred split test. Item 20 is scoped but sequenced last.
 | C4 | **the build refuses on v1 drift** | append a line to v1, run the builder | exit non-zero, `HARD STOP H1` |
 | C5 | **the renderer is v8's — VERBATIM** | `grep -c 'zfill\|zbord\|pressureLbl\|calcZFP' e1-render.pine` | ≥ 4 named helpers present, copied **verbatim** from `trident_v8.pine:44-158,334-338` |
 | C6 | **the anchor is computed** | `grep -c 'timestamp(2026' plutus-vision-v2.pine` | `0` |
-| C7 | **the anchor is chart-based** | `grep -n 'time\[1\]\|time - ' e1-render.pine` | the last-bar read present |
+| C7 | **the anchor is chart-based** | `grep -nE 'bar_index' plutus-vision-lqz/e1-render.pine` + `grep -cE '^[^/]*now\(\)' plutus-vision-lqz/e1-render.pine` | the chart's own last-bar read present (`_bAnchor = bar_index`, 4 uses; the payload's `anchor.from = "chart_last_bar"`) + a `now()` CALL absent (`0`) † |
 | C8 | **the INSTITUTIONAL category is derived** | `python3 -c "…classify…"` on the 6 zones | ≥1 RES, ≥1 SUP, 0 unclassified |
 | C9 | **the zones render** | the rig, one run, fresh page | `boxes` == v1's 32 + the zone count |
 | C10 | **the zones land on-chart** | `anchors dropped` in `.pine-status` | `0` |
@@ -236,6 +236,18 @@ the deferred split test. Item 20 is scoped but sequenced last.
 | C16 | **the look** | the operator views the capture | "this is right" |
 
 **Every criterion is a command or a ledger row.** C16 is the only human one and it is last.
+
+† **C7 — the criterion-command correction (2026-10-05).** The original C7 command
+(`grep -n 'time\[1\]\|time - ' e1-render.pine`) was written BEFORE the build and assumed a
+Pine-`time`-axis anchor. The build's MEASURED-CORRECT anchor is `_bAnchor = bar_index` — the
+chart's own last bar — chosen because a time-computed anchor was a stale-relative-week hazard and
+`bar_index` is what the vela replay cursor moves (DEBUG_LOG EN-103; the A1 replay re-drive: census
+`bars 1614 → 988` on `replayStart`). The criterion's INTENT — "the anchor is chart-based, the
+last-bar read present" — HOLDS (`_bAnchor = bar_index`, 4 uses; the payload's `anchor.from =
+"chart_last_bar"`); only the command's pattern was stale. The command is corrected to the
+implemented chart-anchor form + the explicit `now()`-absent negative (the sole `now()` text in the
+file is the comment "…not now()", not a call — a strict no-comment grep returns 0). No code change;
+the intent was already satisfied.
 
 ---
 
