@@ -15,7 +15,7 @@
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ── INPUTS ──────────────────────────────────────────────────────────────────
-e2Enabled   = input.bool(true, "Show the E2 predicted price path", group = "E2 path")
+e2Enabled   = input.bool(false, "Show the E2 predicted price path", group = "E2 path")
 e2Opacity   = input.int(55, "Path opacity (a forecast, not price)", minval = 10, maxval = 90, group = "E2 path")
 e2Width     = input.int(3, "Brush width (px)", minval = 1, maxval = 6, group = "E2 path")
 e2ShowGhost = input.bool(true, "Show the alternative chain (dashed ghost)", group = "E2 path")

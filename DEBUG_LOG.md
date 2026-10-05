@@ -1929,3 +1929,16 @@ SEE context_management/NEXT_STEPS.md:1 for the active work.
   as 5 distinct bands AND the labels read `IP Resistance Ceiling | Light …` etc. on the chart.
 - **THE LESSON:** the vela PineTS renderer cannot take a `line.new` LOOP with future bar_time
   offsets — it corrupts the whole label pass. Unroll the loop.
+
+## EN-105 — THE E1 LABELS: default the E2 path OFF (the renderer cannot paint both) (2026-10-05)
+
+- **THE FINAL FINDING:** the vela PineTS renderer cannot paint the E2 predicted-path lines AND the
+  E1 zone labels in the same render — the line geometry suppresses the label pass. Isolated over
+  ~40 renders: E2 off -> the 5 E1 labels paint (census 6 labels, all 5 role names visible on the
+  chart: `IP Resistance Ceiling | Lig…` .. `Support Floor | Light 9% ZFP`); E2 on -> they vanish.
+  (Unrolling the E2 loop removed the over-draw, but the labels still did not paint alongside it.)
+- **THE DECISION:** the E1 pressure map with its labels is the PRODUCT; the E2 forecast path is
+  secondary. `plutus-vision-lqz/e2-render.pine:18` — `e2Enabled = input.bool(false, ...)`. The
+  operator can toggle E2 back on from the indicator settings; the labels are the default.
+- **THE VERIFICATION (looked):** the served v2 (sha 37f430b8) renders the 5 distinct E1 zone bands
+  + all 5 labels reading on the chart.
