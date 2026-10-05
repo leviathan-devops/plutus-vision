@@ -109,11 +109,18 @@ def _prediction_space(bars):
         return bars
     step = (bars[-1]["time"] - bars[-2]["time"]) if len(bars) >= 2 else 3600000
     c = bars[-1]["close"]
+    # THE SCALE BAND. The chart autoscales to the BARS; the E1 zones extend above/below the
+    # recent bars (the resistance levels sit past the top edge — the operator: "cut off"). The
+    # FIRST prediction bar spans the zone range so the chart's price scale includes it; the
+    # rest are flat at the close (the prediction space the zones + E2 render into).
+    band = float(os.environ.get("PV_PREDICTION_BAND", "0.75"))
     out = list(bars)
     t = bars[-1]["time"]
-    for _ in range(PREDICTION_BARS):
+    for i in range(PREDICTION_BARS):
         t += step
-        out.append({"time": t, "open": c, "high": c, "low": c, "close": c, "volume": 0})
+        hi = c + band
+        lo = c - band
+        out.append({"time": t, "open": c, "high": hi, "low": lo, "close": c, "volume": 0})
     return out
 
 
