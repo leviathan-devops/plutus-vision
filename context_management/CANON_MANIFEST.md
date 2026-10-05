@@ -72,21 +72,20 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
 
 | artifact | sha256 (16) | role |
 |---|---|---|
-| `plutus-vision-v2.pine` | `471a7849a18f7bf0` | THE DELIVERABLE — the sealed v1 + the E1 IP zones (+ the E2 path, default OFF) |
-| `pine-ide/ide/renderer/plutus-vision-v2.pine` | `471a7849a18f7bf0` | the SERVED copy (in sync) |
+| `plutus-vision-v2.pine` | `36ddad9676becd70` | THE DELIVERABLE — the sealed v1 + the E1 IP zones + the E2 predicted path (ON) |
+| `pine-ide/ide/renderer/plutus-vision-v2.pine` | `36ddad9676becd70` | the SERVED copy (in sync) |
 | `plutus-vision-v1.pine` | `0d20e8314ce992fc` | the SEALED baseline — `HARD STOP H1` if it drifts |
 | `plutus-vision-v0.pine` | `605bff82d3539e9e` | the parity reference (never edited) |
 
-**THE RENDER (the deliverable's observable behaviour).** The 5 labelled institutional-pressure
+**THE RENDER (the deliverable's observable behaviour).** The 6 labelled institutional-pressure
 zones — IP Resistance Ceiling · Upper IP Resistance · Equilibrium Zone · Mid-Range Support · IP
-Support Floor — anchored to the chart's own last bar (`_bAnchor = bar_index`), for the chart's own
+Support Floor · Key IP Support — anchored to the chart's own last bar (`_bAnchor = bar_index`), for the chart's own
 trading week; they follow bar replay (the A1 re-drive: census `bars 1614 → 988` on `replayStart`).
-The E2 predicted path is secondary (default OFF — the vela renderer cannot paint it and the labels
-together).
+The E2 predicted path renders alongside the labels (2 plots · 6 boxes · 101 lines · 2006 labels · 798 segs together) — a continuous jagged line from the spot to the week's extreme.
 
 **THE GATES (the evidence, bound to tool results).**
 - `.omp/ct-results.json:1` — the W9 host-live artifact: `overallVerdict: PASS`, 7/7 angles (A1-A7),
-  `artifactSha256 471a7849a18f7bf0…`.
+  `artifactSha256 36ddad9676becd70…`.
 - `TESTING_LOG.md:1541` — the P5 adversarial pass + `AUDIT GATE: PASS`.
 - `RUNTIME_LEDGER.md:1` — what RUNNING taught (the A1 replay-follow, the renderer limits, the
   anchor law).
