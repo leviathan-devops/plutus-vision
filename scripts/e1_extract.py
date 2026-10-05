@@ -369,6 +369,62 @@ def build_levels(bars: list[dict]) -> tuple[list[dict], dict]:
     return levels, notes
 
 
+def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: float,
+                                   pair: str = "DXY") -> list[dict]:
+    """THE 5 INSTITUTIONAL PRESSURE ROLES (Trident 5.3.3 section 5.2.1): the IP Zone Map is
+    ONE role per band — Resistance Ceiling / Upper IP Resistance / Equilibrium Zone /
+    Mid-Range Support / IP Support Floor — spanning the week's OWN swing range, each snapped
+    to the strongest confluence levels inside its band. Deterministic from the week's data;
+    never hand-drawn, never the canon's stale example.
+
+    zCat (RES|MID|SUP) follows the role: the two upper roles are RES, the centre is MID, the
+    two lower roles are SUP — the render's positional classify vs spot (the goal's one
+    missing field)."""
+    wk = bars[-120:] if len(bars) > 120 else bars   # the WEEK's own range (5 days of 1H)
+    hi = max(b["h"] for b in wk)
+    lo = min(b["l"] for b in wk)
+    rng = max(hi - lo, 1e-9)
+    bands = [
+        ("IP Resistance Ceiling", 0.85, 1.00, "RES"),
+        ("Upper IP Resistance",   0.66, 0.85, "RES"),
+        ("Equilibrium Zone",      0.34, 0.66, "MID"),
+        ("Mid-Range Support",     0.15, 0.34, "SUP"),
+        ("IP Support Floor",      0.00, 0.15, "SUP"),
+    ]
+    zones = []
+    for nm, f_lo, f_hi, cat in bands:
+        blo = lo + f_lo * rng
+        bhi = lo + f_hi * rng
+        inband = sorted((l for l in levels if blo <= l["price"] <= bhi),
+                        key=lambda l: l["price"])
+        if inband:
+            top = max(l["price"] for l in inband)
+            bot = min(l["price"] for l in inband)
+            best = max(inband, key=lambda l: sum(l[d] for d in
+                       ("technical", "options", "analyst", "structural", "psychological", "regime")))
+            conf = int(min(CONFLUENCE_CAP, round(sum(best[d] for d in
+                       ("technical", "options", "analyst", "structural", "psychological", "regime")))))
+        else:
+            top, bot, conf = bhi, blo, 4
+        deg = band_of(conf)
+        if deg == "MINIMAL":
+            deg = "LIGHT"
+        zones.append({
+            "name": nm, "top": round(top, 5), "bottom": round(bot, 5),
+            "zone_type": "HARD_WALL" if conf >= 8 else "STANDARD_WALL",
+            "confluence": conf, "pressure_degree": deg,
+            "zfp": zfp_for("HARD_WALL", 0), "regime": "consolidation",
+            "measured_move_target": None, "structural_extreme": False,
+            "poi_tier": 2 if conf >= 8 else 1,
+            "zCat": cat, "zTir": CAT.tier(conf),
+            "zfp_label": CAT.zfp(top, bot, pair), "degree_v8": CAT.norm_degree(deg),
+            "bom_fresh_flag": None, "timeframe": "1H",
+            "levels": [{"price": l["price"], "label": l["label"],
+                        "level_type": l["label"].split("_")[0], "style": "line",
+                        "use_box": False} for l in inband[:8]],
+        })
+    return zones
+
 def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> list[dict]:
     """Cluster the scored levels into zones, then score each CLUSTER by summing its
     dimensions. Independent evidence adds; it does not compete."""
@@ -470,7 +526,10 @@ def main() -> int:
 
     spot = bars[-1]["c"]
     levels, notes = build_levels(bars)
-    zones = assemble(levels, atr(bars) or 0.0005, spot, args.pair)
+    # THE 5 INSTITUTIONAL ROLES (5.3.3 s5.2.1) — the deliverable's zones. `assemble` (the raw
+    # confluence ladder) stays for the record; the render consumes the ROLES so the chart reads
+    # as the canon: spread across the week's range, one role per band, RES|MID|SUP by position.
+    zones = synthesize_institutional_zones(levels, bars, spot, args.pair)
     week_mon = dt.date.fromisoformat(week)
     doc = {
         "schema": "trident-e1/1", "pair": args.pair, "target_week": week,

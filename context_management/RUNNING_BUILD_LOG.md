@@ -623,3 +623,23 @@ to E1's own week. v2 `7115b734…` UNCHANGED.
   · the live census `37 boxes · 500 lines · 500 labels · bars 1614` on DXY · captures
   `evidence/v1e1-dxy.png` + `evidence/v1e1-eurusd.png`.
 - NEXT: the operator looks (C16).
+
+---
+
+## 2026-10-05 — THE 5 INSTITUTIONAL ROLES (the Engine-1 zone map, from the week's own data)
+
+- WHAT: added `synthesize_institutional_zones()` to `scripts/e1_extract.py` — the 5 roles of
+  Trident 5.3.3 §5.2.1 (IP Resistance Ceiling / Upper IP Resistance / Equilibrium Zone /
+  Mid-Range Support / IP Support Floor) spanning the week's OWN swing range, each snapped to
+  the real levels in its band, `zCat`=RES|MID|SUP by the role's position. `make e1` ->
+  5 zones, 100.60-101.50 (DXY wk 2026-07-06, spot 101.048 in the Equilibrium).
+- WHY: the operator's correction — the render showed the raw confluence ladder (6 thin
+  clustered zones) instead of the 5 institutional roles the prompt mandates.
+- HOW: deterministic synthesis from the week's data (the last ~5 days), never the canon's
+  stale example, never hand-drawn. `assemble()` (the ladder) stays for the record.
+- EVIDENCE: `data/e1/DXY-2026-07-06.json` -> 5 role-named zones · `plutus-vision-v2.pine`
+  1655 lines = the sealed v1 baseline + the E1 layer · deployed · live census 31 boxes ·
+  41 lines · 14 labels · bars 1614.
+- GAP: the degrees resolve to LIGHT (the band confluence is 2-4/14) — the canon's HEAVY/
+  MODERATE-HEAVY degrees need the 9-source engine synthesis (the goal's nine-source payload),
+  not just the level confluence. Named.
