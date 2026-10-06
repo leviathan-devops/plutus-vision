@@ -112,15 +112,12 @@ def _prediction_space(bars):
         return bars
     step = (bars[-1]["time"] - bars[-2]["time"]) if len(bars) >= 2 else 3600000
     c = bars[-1]["close"]
-    # THE SCALE BAND. The chart autoscales to the BARS; the E1 zones extend above/below the
-    # recent bars (the resistance levels sit past the top edge — the operator: "cut off"). ONE
-    # prediction bar spans the zone range so the chart's price scale includes it; the REST are
-    # FLAT (open = high = low = close) — the prediction space the zones + E2 render into.
-    #
-    # FIX 2026-10-06 (the operator: "what the fuck is this"): an earlier change made EVERY
-    # prediction bar span ±band. 126 tall candles stacked at the chart's right edge = a dense
-    # teal WALL that buried the render. Only the FIRST bar carries the band; the rest are flat
-    # (a flat candle is a 1px tick, not a bar).
+    # THE SCALE BAND (RESTORED 2026-10-06). The chart autoscales to the BARS — the E1 render's
+    # `plot()` scale lines do NOT pull it (measured: without a band the RES zones fell off the
+    # top edge, the operator's original "cut off"). So ONE prediction bar spans the zone range
+    # (close ± band) and the REST are FLAT. The band bar's high/low is a vertical wick at the
+    # prediction boundary — the accepted cost of the zones fitting. (The alternative — every
+    # bar banded — was the 126-tall-candle WALL; only the first bar is the scale bar.)
     band = float(os.environ.get("PV_PREDICTION_BAND", "0.75"))
     out = list(bars)
     t = bars[-1]["time"]
