@@ -112,20 +112,24 @@ def _prediction_space(bars):
         return bars
     step = (bars[-1]["time"] - bars[-2]["time"]) if len(bars) >= 2 else 3600000
     c = bars[-1]["close"]
-    # THE SCALE BAND (RESTORED 2026-10-06). The chart autoscales to the BARS — the E1 render's
-    # `plot()` scale lines do NOT pull it (measured: without a band the RES zones fell off the
-    # top edge, the operator's original "cut off"). So ONE prediction bar spans the zone range
-    # (close ± band) and the REST are FLAT. The band bar's high/low is a vertical wick at the
-    # prediction boundary — the accepted cost of the zones fitting. (The alternative — every
-    # bar banded — was the 126-tall-candle WALL; only the first bar is the scale bar.)
+    # THE SCALE — TWO FLAT BARS (fixed 2026-10-06). The chart autoscales to the BARS (the E1
+    # render's plot() does not pull it). The tool needs bars whose EXTENT is the zone range, so
+    # the FIRST prediction bar sits at the ceiling (flat) and the SECOND at the floor (flat):
+    # both are 1px ticks (no vertical line), and together they pull the scale to span the whole
+    # zone range. The earlier single `close ± band` bar drew a full-height vertical WICK — the
+    # operator's remaining wonk. Two flat bars: no wick, the scale still fits. The rest of the
+    # prediction space stays at the close.
     band = float(os.environ.get("PV_PREDICTION_BAND", "0.75"))
     out = list(bars)
     t = bars[-1]["time"]
     for i in range(PREDICTION_BARS):
         t += step
         if i == 0:
-            out.append({"time": t, "open": c, "high": c + band, "low": c - band,
-                        "close": c, "volume": 0})
+            out.append({"time": t, "open": c + band, "high": c + band, "low": c + band,
+                        "close": c + band, "volume": 0})
+        elif i == 1:
+            out.append({"time": t, "open": c - band, "high": c - band, "low": c - band,
+                        "close": c - band, "volume": 0})
         else:
             out.append({"time": t, "open": c, "high": c, "low": c, "close": c, "volume": 0})
     return out
