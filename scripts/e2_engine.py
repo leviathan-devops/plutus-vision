@@ -539,41 +539,43 @@ def day_decomposition(chain: ShapeChain, zones: list[Zone],
     +1 day offset on the date so a reader can see it, not as a hidden adjustment."""
     days, names = [], ["Mon", "Tue", "Wed", "Thu", "Fri"]
     shapes = [chain.current] + [l.to_shape for l in chain.chain]
+    # THE ZONE WALK (fix 2026-10-07 — Engine 2's flat-line defect). Each day's zone is
+    # the price's LOCATION that day, carried by the chain: `anchor_zone_ids[k]` is the
+    # k-th shape's zone (the classification anchor for k=0, then the k-th link's TARGET),
+    # and `shapes` and `anchor_zone_ids` are the SAME length by construction. The earlier
+    # `_mid_zone` override pinned EVERY range shape (SS/R/WLS/RS — most of a week's
+    # shapes) to the map's middle zone, so the day sequence collapsed to ONE price level
+    # and the E2 drew a flat line at the ceiling: measured 2026-10-07, DXY-2026-07-13 gave
+    # all four anchored days the Equilibrium and the fine path a 0.09 wiggle. The chain's
+    # own per-shape zone is what makes the forecast a per-day SEQUENCE across the map.
+    _anchor0 = chain.anchor_zone_ids[0] if chain.anchor_zone_ids else ""
+    _nz = len(chain.anchor_zone_ids)
+    zone_of = [(chain.anchor_zone_ids[k] if k < _nz else (chain.anchor_zone_ids[-1] if _nz else ""))
+               for k in range(len(shapes))]
     seq: list[str] = []
-    for s in shapes:
-        seq.extend([s] * max(1, _DURATION.get(s, 1)))
+    zseq: list[str] = []
+    for k, s in enumerate(shapes):
+        dur = max(1, _DURATION.get(s, 1))
+        seq.extend([s] * dur)
+        zseq.extend([zone_of[k]] * dur)
     if not seq:
-        seq = [""]
+        seq, zseq = [""], [_anchor0]
     while len(seq) < len(names):
         seq.append(seq[-1])
-    seq = seq[:len(names)]
-    # each day's zone + confidence come from the LINK that produced ITS shape (the
-    # first link that reaches it, so a revisited shape names a real trigger zone).
+        zseq.append(zseq[-1])
+    seq, zseq = seq[:len(names)], zseq[:len(names)]
+    # each day's confidence comes from the LINK that produced ITS shape (the first link
+    # that reaches it, so a revisited shape names a real trigger zone).
     by_to: dict = {}
     for l in chain.chain:
         by_to.setdefault(l.to_shape, l)
-    # THE MID-RANGE ZONE (accuracy fix 2026-10-06). The canon defines SS as "oscillates
-    # within a defined range bounded by IP zones" — a RANGE around the spot, not a run to
-    # the week's extreme. The operator's accuracy check exposed the drift: after a WL that
-    # correctly reached the Upper Resistance (Tue, err -0.03), the terminal SS anchored at
-    # the FAR Key Support (100.55) while the actual price consolidated at ~100.9-101.0 (the
-    # Equilibrium) — a systematic +0.4 miss for the rest of the week. A range shape (SS/R)
-    # now anchors at the zone nearest the MIDDLE of the map (the spot/equilibrium); a
-    # directional shape (WL/BS/RWL) keeps the link's target (the extreme it ran to).
-    _ordered = sorted([z for z in zones if z.degree != "MINIMAL"], key=lambda z: (z.top + z.bottom))
-    _mid_zone = _ordered[len(_ordered) // 2].id if _ordered else ""
-    _RANGE = ("SS", "R", "WLS", "RS")
     for i, name in enumerate(names):
         shape = seq[i]
         link = by_to.get(shape)
-        key_zone = link.trigger_zone_id if link else (chain.anchor_zone_ids[0]
-                                                      if chain.anchor_zone_ids else "")
-        # §6.6 TRACEABILITY (audit 2026-10-06, OCR finding #2): a range shape renders at the
-        # equilibrium (key_zone), but the Link's OWN trigger zone is preserved as `link_zone`
-        # so the day can still be traced back through `chain.chain`.
-        link_zone = key_zone
-        if shape in _RANGE and _mid_zone:
-            key_zone = _mid_zone
+        key_zone = zseq[i] or _anchor0
+        # §6.6 TRACEABILITY: the day renders at the chain's walked zone (key_zone); the
+        # Link's OWN trigger zone is preserved as `link_zone` for traceback through the chain.
+        link_zone = link.trigger_zone_id if link else key_zone
         conf = link.confidence if link else 60.0
         d = monday + dt.timedelta(days=i)
         days.append({

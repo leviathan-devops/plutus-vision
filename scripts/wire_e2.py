@@ -76,9 +76,16 @@ def compute_momentum(monday: dt.date, pair: str = "DXY") -> float:
         return max(-1.0, min(1.0, m))
     return 0.0
 
-def load_zones(data_dir: pathlib.Path) -> tuple[list[Zone], str]:
-    """Read the E1 zone map. Returns (zones, refusal)."""
-    files = sorted(data_dir.glob("*.json"))
+def load_zones(data_dir: pathlib.Path, week: str = "") -> tuple[list[Zone], str]:
+    """Read the E1 zone map. Returns (zones, refusal).
+
+    THE WEEK ANCHOR (fix 2026-10-07): the earlier form read `files[0]` — the FIRST
+    sorted E1 — so a `--week` run for a newer week still loaded the OLDEST file's zones
+    and the emitted days carried zones from a DIFFERENT week. Measured: the 2026-07-13
+    run produced day zones from the 2026-07-06 map, so Wed anchored to "IP Support
+    Floor" — a zone absent from the 07-13 E1 (renamed "Key IP Support") — and the build
+    dropped that day as unanchored. The week token in the filename now selects the file."""
+    files = [f for f in sorted(data_dir.glob("*.json")) if not week or week in f.stem]
     if not files:
         return [], "E2_NO_DATA: no E1 data file — run scripts/e1_fetch.py first"
     doc = json.loads(files[0].read_text())
@@ -145,7 +152,7 @@ def main() -> int:
         files = matched
 
     try:
-        zones, refusal = load_zones(data_dir)
+        zones, refusal = load_zones(data_dir, week)
     except Exception as exc:
         # AUDIT 2026-10-06: a corrupt/mistyped E1 file raised out of the FabricationRefused
         # handler and wrote NO payload. The contract is a NAMED refusal, never a crash.
