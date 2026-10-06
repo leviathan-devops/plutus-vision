@@ -819,7 +819,7 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
             "name": f"{deg[:4]}_{side}_{top:.2f}",
             "top": round(top, 5), "bottom": round(bot, 5),
             "zone_type": ztype, "confluence": conf, "pressure_degree": deg,
-            "zfp": zfp_from_degree(conf),
+            "zfp": zfp_for(ztype, best["zfp_hits"]),
             "regime": "consolidation" if conf >= 6 else "momentum",
             "measured_move_target": None, "structural_extreme": any(
                 l["structural"] >= 1.0 for l in cl),
