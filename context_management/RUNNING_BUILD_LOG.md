@@ -850,3 +850,19 @@ Run first-person against the CURRENT tree (v2 36ddad96):
   C15 the LSZ reference        preserved (reference/ only)
   C16 THE LOOK                 the operator views the capture -> "this is right"           PENDING
 EVIDENCE: /tmp/cverif.py output above. v1 0d20e8314ce992fc · v2 36ddad9676becd70.
+
+## 2026-10-06 · THE E2 ACCURACY PASS — MAE 0.2923 -> 0.0979 (v2 7ebbe95b)
+THE OPERATOR'S METHOD: play the price forward, map the E2 back, MEASURE the accuracy.
+Done: the E2 vs the ACTUAL Jul 6-11 week, per day (the actual closes Mon 100.869 / Tue 101.186
+/ Wed 101.027 / Thu 100.913 / Fri 100.965).
+BEFORE (v2 36ddad96): MAE 0.2923. Tue NEARLY PERFECT (err -0.028: the WL correctly reached the
+Upper Resistance) but Wed/Thu/Fri each ~+0.4 off — the terminal SS anchored at the FAR Key
+Support (100.55) while the price actually consolidated at ~100.9-101.0.
+THE FIX: the canon defines SS as "oscillates within a defined range bounded by IP zones" — a
+RANGE around the spot, not a run to the week's extreme. A range shape (SS/R/WLS/RS) now anchors
+at the zone nearest the MIDDLE of the map (the Equilibrium); a directional shape (WL/BS/RWL)
+keeps the link's target (the extreme it ran to).
+AFTER (v2 7ebbe95b): MAE 0.0979 — Mon -0.190 / Tue -0.028 / Wed -0.032 / Thu -0.146 / Fri
+-0.094. All 5 days within 0.19, most within 0.1.
+EVIDENCE: scripts/e2_engine.py day_decomposition (the _RANGE mid-anchor) · e1_st pass=8 fail=0 ·
+e2_tests pass=36 fail=0 · v1 0d20e8314ce992fc.
