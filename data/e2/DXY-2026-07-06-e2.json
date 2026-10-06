@@ -23,21 +23,21 @@
    "x": 1783555200000,
    "shape": "SS",
    "conf": 55.0,
-   "zone": "Key IP Support",
+   "zone": "Equilibrium Zone",
    "day": "Wed"
   },
   {
    "x": 1783641600000,
    "shape": "SS",
    "conf": 55.0,
-   "zone": "Key IP Support",
+   "zone": "Equilibrium Zone",
    "day": "Thu"
   },
   {
    "x": 1783728000000,
    "shape": "SS",
    "conf": 55.0,
-   "zone": "Key IP Support",
+   "zone": "Equilibrium Zone",
    "day": "Fri"
   }
  ],
