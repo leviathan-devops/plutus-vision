@@ -121,7 +121,16 @@ def fetch_ohlc_fixture(symbol: str = "DXY", timeframe: str = "1H") -> tuple[list
     the operator already holds, with its provenance attached. Using it is not a shortcut —
     it is the better source. The network route stays as the FIRST attempt so a live host
     gets fresher bars when it can."""
-    fx = ROOT / "fixtures" / "bars" / "2026-07-06.json"
+    # THE FIXTURE IS AN ENV OVERRIDE (fix 2026-10-07). The path was HARDCODED to the one
+    # forward-extended fixture, so the week is DERIVED from that fixture's last bar and every
+    # run produced the SAME week (measured: `e1_extract --pair DXY` always writes
+    # DXY-2026-07-13.json whatever `--week` says, because `--week` is overridden by the chart's
+    # bars). The operator's litmus test — "the live render matches the v8's structure on five
+    # random weeks" — needs the SAME pipeline run against a DIFFERENT week's bars, so E1_FIXTURE
+    # points the extractor at any fixture on disk. The default stays the operator's validated
+    # 1614-bar harvest.
+    fx = pathlib.Path(os.environ.get(
+        "E1_FIXTURE", str(ROOT / "fixtures" / "bars" / "2026-07-06.json")))
     if not fx.exists():
         return [], "", "no fixture file on disk"
     try:
@@ -866,6 +875,7 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
     clusters = [cl for cl in clusters if len(cl) >= min_members]
 
     zones = []
+    minimal_zones: list[dict] = []   # the 0-3 clusters, kept as LADDER FILLERS (the 5-slot cut)
     for cl in clusters:
         top = max(l["price"] for l in cl)
         bot = min(l["price"] for l in cl)
@@ -886,12 +896,10 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
         bonus = min(2.0, best.get("bonus", 0.0)) + zone_extreme_bonus(bot, top, bars)
         conf = int(min(CONFLUENCE_CAP, round(base + reg + bonus)))
         deg = band_of(conf)
-        if deg == "MINIMAL":
-            continue                                     # a 0-3 score is discarded
         side = "SUPPLY" if top > spot else "DEMAND"
         ztype = "HARD_WALL" if best["zfp_hits"] >= 1 else ("STANDARD_WALL" if conf >= 8
                                                              else "SOFT_WALL")
-        zones.append({
+        _zone = {
             "name": f"{deg[:4]}_{side}_{top:.2f}",
             "top": round(top, 5), "bottom": round(bot, 5),
             "zone_type": ztype, "confluence": conf, "pressure_degree": deg,
@@ -912,7 +920,11 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
             "levels": [{"price": l["price"], "label": l["label"],
                         "level_type": l["label"].split("_")[0],
                         "style": "line", "use_box": False} for l in cl],
-        })
+        }
+        if deg == "MINIMAL":
+            minimal_zones.append(_zone)      # a 0-3 cluster still fills a ladder SLOT
+            continue                         # ...but never stands as a NAMED zone
+        zones.append(_zone)
     # ── THE 5.3.3 §5.2.1 IP ZONE MAP SYNTHESIS — the five ROLE names ──────────────
     # "Key Resistance / Upper IP Resistance / Equilibrium Zone / Mid-Range Support / Key
     # Support." The role is POSITIONAL (the prompt's step 7): the zones ABOVE the spot are RES,
@@ -928,6 +940,14 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
     # randomly go from six zones down to five zones?"). Rank it, take the FIVE strongest, name
     # by rank. The spot still drives each zone's degree (via zone_regime), never the count.
     zones.sort(key=lambda z: -z["confluence"])          # strongest first
+    # THE LADDER IS FIVE SLOTS (the v8's RES,RES,MID,SUP,SUP). The earlier cut took the five
+    # STRONGEST clusters and stopped, so a week whose level set formed only four non-MINIMAL
+    # clusters emitted FOUR zones and left a hole in the ladder (measured 2026-10-07:
+    # DXY-2026-05-11 → 4 zones; the operator's litmus test needs 5 on EVERY week). A MINIMAL
+    # cluster is a real cluster at a real price — it FILLS a slot rather than leaving a gap.
+    _fill = sorted(minimal_zones, key=lambda z: -z["confluence"])
+    while len(zones) < 5 and _fill:
+        zones.append(_fill.pop(0))
     zones = zones[:5]                                   # the v8's five slots
     zones.sort(key=lambda z: -z["top"])                 # emit TOP→DOWN (the prompt's sort)
     for _i, _z in enumerate(zones):
