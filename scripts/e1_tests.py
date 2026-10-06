@@ -65,16 +65,24 @@ def st1_zero_fabrication() -> None:
     # THE REAL CONTRACT, unchanged in spirit: NO LEVEL WITHOUT A DERIVATION. Every level
     # must name the pillar that produced it, so any number on the chart traces back to the
     # computation that made it. An unlabelled level is a fabricated number.
-    f = os.path.join(ROOT, "data", "e1", "EURUSD-2026-10-06.json")
-    if not os.path.exists(f):
-        record("ST-1b  every produced level carries a derivation label", False, "no data file")
+    # THE FILE (fix 2026-10-06): this pointed at a hardcoded `EURUSD-2026-10-06.json` that
+    # stopped existing (the E1 data dir moved to the target-week naming, DXY-2026-07-06.json
+    # for the shipped week) — so the test read "no data file" and FAILED while the contract it
+    # guards was intact. It now reads the NEWEST E1 file on disk, whatever week the pipeline
+    # last produced. An empty dir is still a NAMED failure (never a silent pass).
+    import glob as _glob
+    cands = sorted(_glob.glob(os.path.join(ROOT, "data", "e1", "*.json")), reverse=True)
+    if not cands:
+        record("ST-1b  every produced level carries a derivation label", False,
+               f"no E1 data file in {os.path.join(ROOT, 'data', 'e1')}")
         return
+    f = cands[0]
     doc = json.load(open(f))
     levels = doc.get("levels", [])
     unlabelled = [l for l in levels if not l.get("label")]
     record("ST-1b  every produced level carries a derivation label",
            not unlabelled,
-           f"{len(levels)} levels, {len(unlabelled)} unlabelled, "
+           f"{os.path.basename(f)}: {len(levels)} levels, {len(unlabelled)} unlabelled, "
            f"{len(doc.get('zones', []))} zones")
     # and every ZONE must carry the fields E2 anchors on — Rule 1 depends on them
     need = ("top", "bottom", "confluence", "zfp", "name")

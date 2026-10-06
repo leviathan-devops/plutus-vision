@@ -181,6 +181,17 @@ def build_payload() -> tuple[str, str]:
     pushes: list[str] = []
 
     def add(name: str, ty: str, vals) -> None:
+        # THE ARRAY IS INITIALIZED ONCE (fix 2026-10-06). The previous form was
+        # `var array<T> name = array.new<T>()` + `name.push(v)` AT THE GLOBAL SCOPE — a bare
+        # global statement runs EVERY BAR, so the array grew by its length on every bar. The E1
+        # hid it (`e1MaxZones` caps the loop at 6), but the E2 had no cap: the day-tag loop drew
+        # the same label once per accumulated point — the operator's "wall" was 800 stacked
+        # "SS 55%" labels at one x (measured: 846 drawings = 6 boxes + 800 text + 38 trendlines +
+        # 2 polylines). The pushes now live under a single `if bar_index == 0` block (see the
+        # assembly below), so the array is filled EXACTLY ONCE and holds the static payload it
+        # is. `array.from([...])` was tried first and PineTS REJECTED it ("Cannot call
+        # array.from with a tuple argument"), so `var array.new<T>()` + the guarded pushes is the
+        # form that both compiles and does not accumulate.
         decls.append(f"var array<{ty}> {name} = array.new<{ty}>()")
         for v in vals:
             pushes.append(f"{name}.push({v})")
@@ -269,7 +280,14 @@ def build_payload() -> tuple[str, str]:
         engine_refusal = refusal or ("E2_NO_ANCHORS: the engine produced days but none carried an "
                                      "anchoring zone, so Rule 1 forbids drawing them")
     decls.append(f'e2_injected_refusal = "{_q(engine_refusal)}"')
-    return "\n".join(decls), "\n".join(pushes)
+    # THE PUSHES RUN EXACTLY ONCE. Every `.push()` is emitted under ONE `if bar_index == 0`
+    # block, so the `var` arrays are filled on the FIRST bar only and hold the static payload on
+    # every bar after (the render reads them on `barstate.islast`). Without the guard the pushes
+    # ran every bar and the arrays grew unbounded — the operator's 800-label wall.
+    if pushes:
+        guard = "if bar_index == 0\n" + "\n".join("    " + p for p in pushes)
+        return "\n".join(decls), guard
+    return "\n".join(decls), ""
 
 
 def _monday_anchor() -> tuple[int, str]:
@@ -333,12 +351,17 @@ def build() -> str:
                     "showInternalOrderBlocksInput    = input.bool(false")
     v1 = v1.replace("showEqualHighsLowsInput         = input.bool(true",
                     "showEqualHighsLowsInput         = input.bool(false")
-    # THE v1 LIQUIDITY WALL. The baseline's LQZ layer fills every liquidity zone (green) and
-    # tracks up to 60 — a wall that buries the E1 pressure zones (the operator: "everything I
-    # can see is rejected"). The E1 map is the product; the v1 liquidity is context. Turn the
-    # FILL off (edges only) and cap the zones so the E1 zones read.
-    v1 = v1.replace('lqzFillZone = input.bool(true', 'lqzFillZone = input.bool(false')
-    v1 = v1.replace('lqzMaxZones = input.int(60', 'lqzMaxZones = input.int(14')
+    # THE v1 LIQUIDITY WALL. The baseline's LQZ layer draws up to 60 liquidity zones, each a
+    # 500-bar-wide ribbon (lqzLeftB=500), stacked into a SOLID WALL that buries the E1 pressure
+    # zones (the operator, 2026-10-06: "what the fuck is this"; earlier "everything I can see
+    # is rejected"). The E1 map is the product; the v1 liquidity is context that reads as noise
+    # at this density. DISABLED ENTIRELY in the v2 (the enable flags derive from lqzSource, so
+    # the derivation is overridden): the zones array stays empty and the LQZ render draws
+    # nothing. The E1 zones + the E2 path are untouched (the progress is preserved).
+    v1 = v1.replace('lqzV1Enabled = lqzSource == "luxalgo" or lqzSource == "both"',
+                    'lqzV1Enabled = false   // [v2 2026-10-06] the wall — see the build comment')
+    v1 = v1.replace('lqzV2Enabled = lqzSource == "candles" or lqzSource == "both"',
+                    'lqzV2Enabled = false   // [v2 2026-10-06] the wall — see the build comment')
     decls, pushes = build_payload()
     return (
         v1.rstrip() + "\n"
