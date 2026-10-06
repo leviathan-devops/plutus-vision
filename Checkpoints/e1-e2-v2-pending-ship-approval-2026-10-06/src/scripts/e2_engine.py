@@ -53,10 +53,14 @@ class Zone:
                "MODERATE_HEAVY" if c >= 8 else "MODERATE" if c >= 6 else
                "LIGHT" if c >= 4 else "MINIMAL")
         # DEGREES is the canon's six-degree vocabulary the render's colour ladder branches on
-        # (audit 2026-10-06: the constant was declared but never read). This assertion makes
-        # it live — a ladder edit that invented a seventh degree would silently fall through
-        # the render's tower to the LIGHT default (a wrong-colour), so it is refused HERE.
-        assert deg in DEGREES, f"degree {deg!r} is not in the canon's DEGREES {DEGREES}"
+        # (audit 2026-10-06: the constant was declared but never read). This guard makes it live —
+        # a ladder edit that invented a seventh degree would silently fall through the render's
+        # tower to the LIGHT default (a wrong-colour), so it is refused HERE. A NAMED refusal,
+        # never a bare assert: `assert` is STRIPPED under `python -O`, so the guard would vanish
+        # and a 7th degree would pass silently (audit 2026-10-06, OCR finding #1).
+        if deg not in DEGREES:
+            raise FabricationRefused(
+                f"E2_DEGREE_UNKNOWN: {deg!r} is not in the canon's DEGREES {DEGREES}")
         return deg
 
     @property
@@ -114,7 +118,13 @@ def classify(bars_momentum: float, zones: list[Zone]) -> tuple[str, str]:
     if not zones:
         raise FabricationRefused("E2_NO_ZONES: an empty zone map cannot classify a shape")
 
-    solid = [z for z in zones if z.degree != "MINIMAL"]
+    # SORT DETERMINISTICALLY (audit 2026-10-06, OCR finding #3). The priority scans below
+    # (`for z in solid`) return the FIRST match in input order, so the same zone set in a
+    # different order produced a different anchor and therefore a different chain — `R` and
+    # `WLS` sorted, the rest inherited caller order. One canonical order (by mid-price, then id)
+    # makes EVERY anchor order-independent.
+    solid = sorted([z for z in zones if z.degree != "MINIMAL"],
+                   key=lambda z: (z.top + z.bottom, z.id))
     if not solid:
         raise FabricationRefused(
             "E2_NO_SOLID_ZONES: every zone is MINIMAL (confluence < 4); the canon "
@@ -517,6 +527,10 @@ def day_decomposition(chain: ShapeChain, zones: list[Zone],
         link = by_to.get(shape)
         key_zone = link.trigger_zone_id if link else (chain.anchor_zone_ids[0]
                                                       if chain.anchor_zone_ids else "")
+        # §6.6 TRACEABILITY (audit 2026-10-06, OCR finding #2): a range shape renders at the
+        # equilibrium (key_zone), but the Link's OWN trigger zone is preserved as `link_zone`
+        # so the day can still be traced back through `chain.chain`.
+        link_zone = key_zone
         if shape in _RANGE and _mid_zone:
             key_zone = _mid_zone
         conf = link.confidence if link else 60.0
@@ -527,6 +541,7 @@ def day_decomposition(chain: ShapeChain, zones: list[Zone],
             "shape": shape,
             "bias": "down" if shape in ("WL", "RWL") else "up" if shape in ("BS", "PBS") else "range",
             "key_zone": key_zone,
+            "link_zone": link_zone,
             "confidence": conf,
             "triggers": ["auction", "expiry", "economic"] if i in (1, 3) else [],
         })
@@ -655,12 +670,14 @@ def fine_path(days: list[tuple], day_ms: int = DAY_MS) -> tuple[list[int], list[
 
     # TAG THE DAY BOUNDARIES. The day's own x is on the path (it is the first point of
     # the day's leg, or the last point of the previous day's). Carry the day's shape +
-    # confidence onto that one point; every other point stays tag-free.
+    # confidence onto that one point; every other point stays tag-free. Assign ONLY to a
+    # FREE slot and keep scanning (audit 2026-10-06, OCR finding #3): the previous form
+    # `break`ed on the first `xv >= x0` even when the slot was already taken, so a
+    # colliding day (duplicate x, rounding, a zero-length gap) silently LOST its tag.
     for (x0, y0, shape, conf) in anchors:
         for idx, xv in enumerate(xs):
-            if xv >= int(x0):
-                if shapes[idx] == "":
-                    shapes[idx] = shape or ""
-                    confs[idx] = float(conf or 0.0)
+            if xv >= int(x0) and shapes[idx] == "":
+                shapes[idx] = shape or ""
+                confs[idx] = float(conf or 0.0)
                 break
     return xs, ys, shapes, confs

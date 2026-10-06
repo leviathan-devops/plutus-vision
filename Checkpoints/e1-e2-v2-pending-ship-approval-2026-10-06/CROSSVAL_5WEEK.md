@@ -143,3 +143,47 @@ DIRECTION does not meet the bar. The gap is named and mechanical (the momentum s
 - The checkpoint manifest: `Checkpoints/e1-e2-v2-pending-ship-approval-2026-10-06/CHECKPOINT_MANIFEST.md:1`.
 - The testing log: `TESTING_LOG.md:1670` (the cross-val section).
 - The debug log: `DEBUG_LOG.md:2081` (the F-DEGENERATE-RANGE entry).
+
+---
+# THE MACRO SWEEP — 35 WEEKS (2026-02-02 … 2026-09-28)
+
+**The 5-week sample was TOO SMALL to trust.** The operator's real question — *"can it maintain
+this accuracy across infinite potential trading weeks"* — needs every available week, not five.
+The macro sweep (`/tmp/pv_macro.py` → `evidence/macro-sweep.json`) runs `measure_week` over ALL 35
+Mondays inside the bar window. **THE MACRO NUMBERS SUPERSEDE THE 5-WEEK SAMPLE.**
+
+| metric | 5-week | **35-week (the truth)** |
+|---|---|---|
+| E1 zone relevance (mean) | 88% | **74%** (min 33% · max 100%) |
+| E2 direction hit-rate | 2/5 = 40% | **19/35 = 54%** |
+| E2 path beat-naive | 5/5 = 100% | **17/35 = 49%** |
+
+## THE HONEST READING
+
+**E1 — REAL AND ROBUST.** 74% mean zone relevance; **32/35 = 91% of weeks** had ≥50% of their
+zones touched by the actual action. This is the durable capability: the institutional-pressure
+zones land where the market trades, on almost any week. (Down from the 5-week's 88% — the larger
+sample is the honest number, and 74% with a 91%-of-weeks floor is strong.)
+
+**E2 DIRECTION — WEAKLY POSITIVE, CONCENTRATED IN DECISIVE WEEKS.** 54% overall (barely above a
+coin flip), but **58% on the decisive weeks (|momentum| ≥ 0.5, 26 of 35)** and 44% on the mild
+weeks. The signal is real at the extremes and noise in the middle — the momentum's magnitude is the
+discriminator. The contrarian mirror = 46% (so the E2's "follow the momentum" is the better of the
+two directions, marginally).
+
+**E2 PATH MAGNITUDE — NO MACRO EDGE.** **17/35 = 49%** beat-naive — a COIN FLIP. The E2 path's
+MAE (mean 0.4795) is slightly WORSE than "assume the week stays at the prior close" (0.4558). **The
+5-week 5/5 was a sample-size artifact.** At the macro level, the zone-anchored E2 path adds no
+value over a flat line.
+
+## THE VERDICT (corrected)
+
+- **E1 (the zones): SHIPS.** 74% macro relevance, 91% of weeks ≥50%. The durable capability.
+- **E2 direction: MARGINAL.** 54% overall, 58% decisive-only. Weakly positive; not a standalone
+  predictor.
+- **E2 path magnitude: NO SHIP.** 49% beat-naive = no edge. The 5-week result was noise.
+
+**THE SHIP DECISION: the E1 ships; the E2 does not (yet).** The operator's own read — *"if this
+week's price action is actually flat for this week then this is a valid prediction"* — is exactly
+right: the E2 is a flat/zone-anchored prediction, not a directional path, and the macro sweep
+confirms it adds no edge over flat.

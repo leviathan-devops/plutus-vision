@@ -1,0 +1,4642 @@
+{
+ "weeks": [
+  "2026-02-02",
+  "2026-02-09",
+  "2026-02-16",
+  "2026-02-23",
+  "2026-03-02",
+  "2026-03-09",
+  "2026-03-16",
+  "2026-03-23",
+  "2026-03-30",
+  "2026-04-06",
+  "2026-04-13",
+  "2026-04-20",
+  "2026-04-27",
+  "2026-05-04",
+  "2026-05-11",
+  "2026-05-18",
+  "2026-05-25",
+  "2026-06-01",
+  "2026-06-08",
+  "2026-06-15",
+  "2026-06-22",
+  "2026-06-29",
+  "2026-07-06",
+  "2026-07-13",
+  "2026-07-20",
+  "2026-07-27",
+  "2026-08-03",
+  "2026-08-10",
+  "2026-08-17",
+  "2026-08-24",
+  "2026-08-31",
+  "2026-09-07",
+  "2026-09-14",
+  "2026-09-21",
+  "2026-09-28"
+ ],
+ "n": 35,
+ "rows": [
+  {
+   "week": "2026-02-02",
+   "bars_before": 815,
+   "bars_actual": 118,
+   "spot_prev_close": 97.225,
+   "levels": 146,
+   "zones": 3,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 96.68216,
+     "bottom": 96.65695,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 96.79633,
+     "bottom": 96.79633,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 97.35772,
+     "bottom": 97.31035,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "BS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Tue",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Thu",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Fri",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    }
+   ],
+   "actual_days": [
+    "2026-02-02",
+    "2026-02-03",
+    "2026-02-04",
+    "2026-02-05",
+    "2026-02-06"
+   ],
+   "actual_closes": [
+    97.604,
+    97.381,
+    97.642,
+    97.946,
+    97.681
+   ],
+   "actual_hl": [
+    97.008,
+    97.298,
+    97.309,
+    97.607,
+    97.559,
+    97.733,
+    97.692,
+    97.73,
+    97.986,
+    97.973
+   ],
+   "week_hi": 97.986,
+   "week_lo": 97.008,
+   "e2_mae": 0.31676,
+   "naive_mae": 0.4258,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "IP Resistance Ceiling"
+   ],
+   "zones_touched_n": 1,
+   "zone_relevance": 0.333,
+   "net_actual": 0.077,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-02-09",
+   "bars_before": 934,
+   "bars_actual": 118,
+   "spot_prev_close": 97.612,
+   "levels": 150,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 97.08833,
+     "bottom": 96.95393,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 97.421,
+     "bottom": 97.30016,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 97.61211,
+     "bottom": 97.46733,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 97.77065,
+     "bottom": 97.62678,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 97.93193,
+     "bottom": 97.788,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 98.08567,
+     "bottom": 97.94995,
+     "conf": 6,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 1,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Thu",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Fri",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "IP Support Floor"
+    }
+   ],
+   "actual_days": [
+    "2026-02-09",
+    "2026-02-10",
+    "2026-02-11",
+    "2026-02-12",
+    "2026-02-13"
+   ],
+   "actual_closes": [
+    96.869,
+    96.891,
+    96.907,
+    96.92,
+    96.884
+   ],
+   "actual_hl": [
+    96.793,
+    96.609,
+    96.494,
+    96.744,
+    96.802,
+    97.653,
+    97.007,
+    97.272,
+    97.074,
+    97.156
+   ],
+   "week_hi": 97.653,
+   "week_lo": 96.494,
+   "e2_mae": 0.39796,
+   "naive_mae": 0.7178,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance 3",
+    "IP Support Floor",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 4,
+   "zone_relevance": 0.667,
+   "net_actual": 0.015,
+   "e2_direction": "down",
+   "actual_direction": "flat",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-02-16",
+   "bars_before": 1053,
+   "bars_actual": 118,
+   "spot_prev_close": 96.915,
+   "levels": 142,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 96.538,
+     "bottom": 96.4102,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 96.70873,
+     "bottom": 96.56527,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 96.86405,
+     "bottom": 96.72,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 97.01075,
+     "bottom": 96.874,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 97.16611,
+     "bottom": 97.03,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 97.3349,
+     "bottom": 97.1882,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -0.2149,
+   "e2_refusal": "",
+   "e2_current": "R",
+   "e2_links": 2,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "R",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Tue",
+     "shape": "WL",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Wed",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Thu",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Equilibrium Zone"
+    }
+   ],
+   "actual_days": [
+    "2026-02-16",
+    "2026-02-17",
+    "2026-02-18",
+    "2026-02-19",
+    "2026-02-20"
+   ],
+   "actual_closes": [
+    97.098,
+    97.107,
+    97.694,
+    97.819,
+    97.789
+   ],
+   "actual_hl": [
+    96.906,
+    97.072,
+    97.118,
+    97.572,
+    97.589,
+    97.12,
+    97.546,
+    97.742,
+    98.074,
+    98.078
+   ],
+   "week_hi": 98.078,
+   "week_lo": 96.906,
+   "e2_mae": 0.5891,
+   "naive_mae": 0.5864,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 0.5,
+   "net_actual": 0.691,
+   "e2_direction": "down",
+   "actual_direction": "up",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-02-23",
+   "bars_before": 1172,
+   "bars_actual": 118,
+   "spot_prev_close": 97.384,
+   "levels": 178,
+   "zones": 5,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 96.894,
+     "bottom": 96.894,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 97.1444,
+     "bottom": 97.104,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 97.68947,
+     "bottom": 97.5429,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 97.83383,
+     "bottom": 97.69935,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 98.07133,
+     "bottom": 98.04833,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 3,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    }
+   ],
+   "actual_days": [
+    "2026-02-23",
+    "2026-02-24",
+    "2026-02-25",
+    "2026-02-26",
+    "2026-02-27"
+   ],
+   "actual_closes": [
+    97.696,
+    97.882,
+    97.643,
+    97.782,
+    97.646
+   ],
+   "actual_hl": [
+    97.355,
+    97.695,
+    97.622,
+    97.489,
+    97.561,
+    97.853,
+    97.986,
+    98.002,
+    97.984,
+    97.851
+   ],
+   "week_hi": 98.002,
+   "week_lo": 97.355,
+   "e2_mae": 0.21201,
+   "naive_mae": 0.3458,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "IP Resistance 3",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 2,
+   "zone_relevance": 0.4,
+   "net_actual": -0.05,
+   "e2_direction": "down",
+   "actual_direction": "down",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-03-02",
+   "bars_before": 1291,
+   "bars_actual": 118,
+   "spot_prev_close": 98.022,
+   "levels": 192,
+   "zones": 5,
+   "zone_list": [
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 97.482,
+     "bottom": 97.33333,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 97.636,
+     "bottom": 97.4865,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 97.794,
+     "bottom": 97.64588,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 97.94076,
+     "bottom": 97.79678,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 98.101,
+     "bottom": 97.957,
+     "conf": 8,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 3,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "Key IP Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "IP Support Floor"
+    }
+   ],
+   "actual_days": [
+    "2026-03-02",
+    "2026-03-03",
+    "2026-03-04",
+    "2026-03-05",
+    "2026-03-06"
+   ],
+   "actual_closes": [
+    98.548,
+    99.071,
+    98.775,
+    99.061,
+    98.855
+   ],
+   "actual_hl": [
+    97.768,
+    98.435,
+    98.7,
+    98.667,
+    98.836,
+    98.753,
+    99.683,
+    99.329,
+    99.413,
+    99.435
+   ],
+   "week_hi": 99.683,
+   "week_lo": 97.768,
+   "e2_mae": 1.1738,
+   "naive_mae": 0.84,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Support Floor",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 0.6,
+   "net_actual": 0.307,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-03-09",
+   "bars_before": 1412,
+   "bars_actual": 117,
+   "spot_prev_close": 99.549,
+   "levels": 223,
+   "zones": 5,
+   "zone_list": [
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 99.0,
+     "bottom": 98.851,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 99.1335,
+     "bottom": 99.00553,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 99.28367,
+     "bottom": 99.157,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.4713,
+     "bottom": 99.32339,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.76933,
+     "bottom": 99.641,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 3,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Thu",
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "IP Support Floor"
+    }
+   ],
+   "actual_days": [
+    "2026-03-09",
+    "2026-03-10",
+    "2026-03-11",
+    "2026-03-12",
+    "2026-03-13"
+   ],
+   "actual_closes": [
+    98.865,
+    98.928,
+    99.446,
+    99.669,
+    100.494
+   ],
+   "actual_hl": [
+    98.698,
+    98.492,
+    98.699,
+    99.25,
+    99.586,
+    99.695,
+    98.954,
+    99.466,
+    99.759,
+    100.54
+   ],
+   "week_hi": 100.54,
+   "week_lo": 98.492,
+   "e2_mae": 0.51913,
+   "naive_mae": 0.4946,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "IP Resistance Ceiling",
+    "IP Support 4",
+    "IP Support Floor",
+    "Key IP Support",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 5,
+   "zone_relevance": 1.0,
+   "net_actual": 1.629,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-03-16",
+   "bars_before": 1531,
+   "bars_actual": 117,
+   "spot_prev_close": 100.35,
+   "levels": 239,
+   "zones": 2,
+   "zone_list": [
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.76232,
+     "bottom": 99.65693,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 100.47533,
+     "bottom": 100.47533,
+     "conf": 4,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "BS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Tue",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Thu",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Fri",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    }
+   ],
+   "actual_days": [
+    "2026-03-16",
+    "2026-03-17",
+    "2026-03-18",
+    "2026-03-19",
+    "2026-03-20"
+   ],
+   "actual_closes": [
+    99.859,
+    99.551,
+    100.21,
+    99.284,
+    99.503
+   ],
+   "actual_hl": [
+    99.66,
+    99.503,
+    99.465,
+    98.975,
+    99.252,
+    100.462,
+    100.115,
+    100.314,
+    100.306,
+    99.793
+   ],
+   "week_hi": 100.462,
+   "week_lo": 98.975,
+   "e2_mae": 0.79393,
+   "naive_mae": 0.6686,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 1,
+   "zone_relevance": 0.5,
+   "net_actual": -0.356,
+   "e2_direction": "up",
+   "actual_direction": "down",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-03-23",
+   "bars_before": 1650,
+   "bars_actual": 117,
+   "spot_prev_close": 99.544,
+   "levels": 206,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 99.03589,
+     "bottom": 98.8868,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 99.03998,
+     "bottom": 99.03998,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 99.30934,
+     "bottom": 99.16199,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.45341,
+     "bottom": 99.31267,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.614,
+     "bottom": 99.465,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.78,
+     "bottom": 99.638,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.5779,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 3,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Thu",
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-03-23",
+    "2026-03-24",
+    "2026-03-25",
+    "2026-03-26",
+    "2026-03-27"
+   ],
+   "actual_closes": [
+    99.177,
+    99.19,
+    99.624,
+    99.885,
+    100.193
+   ],
+   "actual_hl": [
+    98.88,
+    99.06,
+    99.071,
+    99.562,
+    99.803,
+    100.148,
+    99.622,
+    99.665,
+    100.01,
+    100.206
+   ],
+   "week_hi": 100.206,
+   "week_lo": 98.88,
+   "e2_mae": 0.41987,
+   "naive_mae": 0.3582,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "IP Support 4",
+    "IP Support Floor",
+    "Key IP Support",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 6,
+   "zone_relevance": 1.0,
+   "net_actual": 1.016,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-03-30",
+   "bars_before": 1769,
+   "bars_actual": 117,
+   "spot_prev_close": 100.309,
+   "levels": 205,
+   "zones": 5,
+   "zone_list": [
+    {
+     "name": "IP Support 5",
+     "cat": "SUP",
+     "top": 99.75967,
+     "bottom": 99.60999,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 99.90186,
+     "bottom": 99.7618,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 100.05235,
+     "bottom": 99.91339,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 100.1817,
+     "bottom": 100.06733,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 100.30383,
+     "bottom": 100.22128,
+     "conf": 6,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "BS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-03-30",
+    "2026-03-31",
+    "2026-04-01",
+    "2026-04-02",
+    "2026-04-03"
+   ],
+   "actual_closes": [
+    100.568,
+    99.731,
+    99.56,
+    99.984,
+    100.185
+   ],
+   "actual_hl": [
+    100.05,
+    99.727,
+    99.298,
+    99.447,
+    99.946,
+    100.614,
+    100.643,
+    99.883,
+    100.263,
+    100.223
+   ],
+   "week_hi": 100.643,
+   "week_lo": 99.298,
+   "e2_mae": 0.37913,
+   "naive_mae": 0.407,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "IP Support 4",
+    "IP Support 5",
+    "IP Support Floor",
+    "Key IP Support",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 5,
+   "zone_relevance": 1.0,
+   "net_actual": -0.383,
+   "e2_direction": "up",
+   "actual_direction": "down",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-04-06",
+   "bars_before": 1888,
+   "bars_actual": 117,
+   "spot_prev_close": 100.262,
+   "levels": 201,
+   "zones": 3,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 100.01219,
+     "bottom": 99.86267,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 100.013,
+     "bottom": 100.013,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 100.29,
+     "bottom": 100.15961,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "BS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Tue",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Thu",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Fri",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    }
+   ],
+   "actual_days": [
+    "2026-04-06",
+    "2026-04-07",
+    "2026-04-08",
+    "2026-04-09",
+    "2026-04-10"
+   ],
+   "actual_closes": [
+    100.005,
+    98.926,
+    99.064,
+    98.875,
+    98.697
+   ],
+   "actual_hl": [
+    99.757,
+    98.91,
+    98.525,
+    98.625,
+    98.541,
+    100.275,
+    100.156,
+    99.179,
+    99.157,
+    99.007
+   ],
+   "week_hi": 100.275,
+   "week_lo": 98.525,
+   "e2_mae": 1.11141,
+   "naive_mae": 1.1486,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Support Floor",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 1.0,
+   "net_actual": -1.308,
+   "e2_direction": "up",
+   "actual_direction": "down",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-04-13",
+   "bars_before": 2007,
+   "bars_actual": 117,
+   "spot_prev_close": 99.096,
+   "levels": 235,
+   "zones": 4,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 98.61433,
+     "bottom": 98.49717,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 98.7043,
+     "bottom": 98.65428,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.1495,
+     "bottom": 99.00405,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.1839,
+     "bottom": 99.16567,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 3,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Thu",
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    }
+   ],
+   "actual_days": [
+    "2026-04-13",
+    "2026-04-14",
+    "2026-04-15",
+    "2026-04-16",
+    "2026-04-17"
+   ],
+   "actual_closes": [
+    98.344,
+    98.078,
+    98.008,
+    98.211,
+    98.226
+   ],
+   "actual_hl": [
+    98.342,
+    97.969,
+    98.003,
+    97.832,
+    97.632,
+    99.136,
+    98.414,
+    98.285,
+    98.292,
+    98.291
+   ],
+   "week_hi": 99.136,
+   "week_lo": 97.632,
+   "e2_mae": 0.90337,
+   "naive_mae": 0.9226,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Support Floor",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 0.75,
+   "net_actual": -0.118,
+   "e2_direction": "up",
+   "actual_direction": "down",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-04-20",
+   "bars_before": 2126,
+   "bars_actual": 117,
+   "spot_prev_close": 98.3,
+   "levels": 221,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 97.76669,
+     "bottom": 97.61737,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 97.91233,
+     "bottom": 97.77063,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 98.061,
+     "bottom": 97.9239,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 98.223,
+     "bottom": 98.074,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 98.39133,
+     "bottom": 98.25,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 98.5,
+     "bottom": 98.402,
+     "conf": 4,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.2578,
+   "e2_refusal": "",
+   "e2_current": "R",
+   "e2_links": 2,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "R",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "WL",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-04-20",
+    "2026-04-21",
+    "2026-04-22",
+    "2026-04-23",
+    "2026-04-24"
+   ],
+   "actual_closes": [
+    98.077,
+    98.376,
+    98.615,
+    98.825,
+    98.51
+   ],
+   "actual_hl": [
+    98.006,
+    98.068,
+    98.211,
+    98.534,
+    98.489,
+    98.395,
+    98.567,
+    98.643,
+    98.939,
+    98.915
+   ],
+   "week_hi": 98.939,
+   "week_lo": 98.006,
+   "e2_mae": 0.32627,
+   "naive_mae": 0.2698,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "IP Support Floor",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 4,
+   "zone_relevance": 0.667,
+   "net_actual": 0.433,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-04-27",
+   "bars_before": 2245,
+   "bars_actual": 117,
+   "spot_prev_close": 98.642,
+   "levels": 222,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 98.112,
+     "bottom": 97.97218,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 98.276,
+     "bottom": 98.12859,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 98.444,
+     "bottom": 98.306,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 98.618,
+     "bottom": 98.47095,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 98.76833,
+     "bottom": 98.62715,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 98.924,
+     "bottom": 98.77801,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -0.9398,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Wed",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-04-27",
+    "2026-04-28",
+    "2026-04-29",
+    "2026-04-30",
+    "2026-05-01"
+   ],
+   "actual_closes": [
+    98.463,
+    98.593,
+    98.858,
+    98.144,
+    98.211
+   ],
+   "actual_hl": [
+    98.214,
+    98.426,
+    98.565,
+    98.009,
+    97.72,
+    98.641,
+    98.874,
+    99.05,
+    99.093,
+    98.244
+   ],
+   "week_hi": 99.093,
+   "week_lo": 97.72,
+   "e2_mae": 0.2355,
+   "naive_mae": 0.2746,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "IP Support 4",
+    "IP Support Floor",
+    "Key IP Support",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 6,
+   "zone_relevance": 1.0,
+   "net_actual": -0.252,
+   "e2_direction": "down",
+   "actual_direction": "down",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-05-04",
+   "bars_before": 2364,
+   "bars_actual": 117,
+   "spot_prev_close": 98.162,
+   "levels": 233,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 97.5,
+     "bottom": 97.5,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 97.81685,
+     "bottom": 97.66767,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 97.95928,
+     "bottom": 97.821,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 98.12,
+     "bottom": 97.98033,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 98.276,
+     "bottom": 98.135,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 98.455,
+     "bottom": 98.30707,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.1152,
+   "e2_refusal": "",
+   "e2_current": "R",
+   "e2_links": 2,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "R",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "WL",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-05-04",
+    "2026-05-05",
+    "2026-05-06",
+    "2026-05-07",
+    "2026-05-08"
+   ],
+   "actual_closes": [
+    98.466,
+    98.315,
+    98.05,
+    98.229,
+    97.842
+   ],
+   "actual_hl": [
+    97.97,
+    98.296,
+    97.625,
+    97.815,
+    97.829,
+    98.536,
+    98.579,
+    98.342,
+    98.282,
+    98.277
+   ],
+   "week_hi": 98.579,
+   "week_lo": 97.625,
+   "e2_mae": 0.1825,
+   "naive_mae": 0.1912,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "IP Support Floor",
+    "Key IP Support",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 5,
+   "zone_relevance": 0.833,
+   "net_actual": -0.624,
+   "e2_direction": "up",
+   "actual_direction": "down",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-05-11",
+   "bars_before": 2483,
+   "bars_actual": 117,
+   "spot_prev_close": 98.008,
+   "levels": 223,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 97.64167,
+     "bottom": 97.5,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 97.76462,
+     "bottom": 97.65091,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 97.945,
+     "bottom": 97.80093,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 98.10058,
+     "bottom": 97.95379,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 98.25,
+     "bottom": 98.10435,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 98.40567,
+     "bottom": 98.25953,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Thu",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Fri",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    }
+   ],
+   "actual_days": [
+    "2026-05-11",
+    "2026-05-12",
+    "2026-05-13",
+    "2026-05-14",
+    "2026-05-15"
+   ],
+   "actual_closes": [
+    97.965,
+    98.325,
+    98.465,
+    98.951,
+    99.269
+   ],
+   "actual_hl": [
+    97.85,
+    97.965,
+    98.264,
+    98.416,
+    98.935,
+    98.153,
+    98.46,
+    98.598,
+    98.954,
+    99.32
+   ],
+   "week_hi": 99.32,
+   "week_lo": 97.85,
+   "e2_mae": 0.59269,
+   "naive_mae": 0.6042,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "Mid-Range Support",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 4,
+   "zone_relevance": 0.667,
+   "net_actual": 1.304,
+   "e2_direction": "down",
+   "actual_direction": "up",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-05-18",
+   "bars_before": 2602,
+   "bars_actual": 117,
+   "spot_prev_close": 99.362,
+   "levels": 233,
+   "zones": 2,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 98.97918,
+     "bottom": 98.93674,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.33958,
+     "bottom": 99.2469,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "BS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-05-18",
+    "2026-05-19",
+    "2026-05-20",
+    "2026-05-21",
+    "2026-05-22"
+   ],
+   "actual_closes": [
+    98.99,
+    99.308,
+    99.14,
+    99.2,
+    99.319
+   ],
+   "actual_hl": [
+    98.944,
+    98.982,
+    98.966,
+    99.064,
+    99.172,
+    99.409,
+    99.434,
+    99.472,
+    99.515,
+    99.412
+   ],
+   "week_hi": 99.515,
+   "week_lo": 98.944,
+   "e2_mae": 0.11805,
+   "naive_mae": 0.1706,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "IP Support Floor",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 2,
+   "zone_relevance": 1.0,
+   "net_actual": 0.329,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-05-25",
+   "bars_before": 2721,
+   "bars_actual": 117,
+   "spot_prev_close": 99.025,
+   "levels": 215,
+   "zones": 5,
+   "zone_list": [
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.00495,
+     "bottom": 98.8617,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.162,
+     "bottom": 99.01531,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 99.309,
+     "bottom": 99.172,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 99.471,
+     "bottom": 99.322,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.61221,
+     "bottom": 99.47603,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Wed",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Thu",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Fri",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    }
+   ],
+   "actual_days": [
+    "2026-05-25",
+    "2026-05-26",
+    "2026-05-27",
+    "2026-05-28",
+    "2026-05-29"
+   ],
+   "actual_closes": [
+    99.038,
+    99.103,
+    99.298,
+    98.993,
+    98.942
+   ],
+   "actual_hl": [
+    98.915,
+    99.014,
+    98.969,
+    98.945,
+    98.751,
+    99.106,
+    99.251,
+    99.306,
+    99.544,
+    99.186
+   ],
+   "week_hi": 99.544,
+   "week_lo": 98.751,
+   "e2_mae": 0.1887,
+   "naive_mae": 0.0958,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance 3",
+    "IP Resistance Ceiling",
+    "Mid-Range Support",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 5,
+   "zone_relevance": 1.0,
+   "net_actual": -0.096,
+   "e2_direction": "down",
+   "actual_direction": "down",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-06-01",
+   "bars_before": 2840,
+   "bars_actual": 117,
+   "spot_prev_close": 99.012,
+   "levels": 212,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 98.79662,
+     "bottom": 98.66355,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 98.968,
+     "bottom": 98.82025,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.12584,
+     "bottom": 98.979,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 99.286,
+     "bottom": 99.137,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 99.39927,
+     "bottom": 99.313,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.60333,
+     "bottom": 99.4637,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -0.1846,
+   "e2_refusal": "",
+   "e2_current": "R",
+   "e2_links": 2,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "R",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WL",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Thu",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "IP Resistance 3"
+    }
+   ],
+   "actual_days": [
+    "2026-06-01",
+    "2026-06-02",
+    "2026-06-03",
+    "2026-06-04",
+    "2026-06-05"
+   ],
+   "actual_closes": [
+    99.174,
+    99.296,
+    99.448,
+    99.432,
+    100.071
+   ],
+   "actual_hl": [
+    98.919,
+    99.049,
+    99.191,
+    99.179,
+    99.163,
+    99.385,
+    99.329,
+    99.552,
+    99.533,
+    100.109
+   ],
+   "week_hi": 100.109,
+   "week_lo": 98.919,
+   "e2_mae": 0.31952,
+   "naive_mae": 0.4722,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance 3",
+    "IP Resistance Ceiling",
+    "Mid-Range Support",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 5,
+   "zone_relevance": 0.833,
+   "net_actual": 0.897,
+   "e2_direction": "down",
+   "actual_direction": "up",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-06-08",
+   "bars_before": 2959,
+   "bars_actual": 117,
+   "spot_prev_close": 100.084,
+   "levels": 220,
+   "zones": 2,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 99.5507,
+     "bottom": 99.441,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 100.07145,
+     "bottom": 100.042,
+     "conf": 4,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "BS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-06-08",
+    "2026-06-09",
+    "2026-06-10",
+    "2026-06-11",
+    "2026-06-12"
+   ],
+   "actual_closes": [
+    100.047,
+    100.018,
+    100.053,
+    99.735,
+    99.806
+   ],
+   "actual_hl": [
+    99.819,
+    99.679,
+    99.715,
+    99.586,
+    99.635,
+    100.214,
+    100.077,
+    100.115,
+    100.314,
+    99.909
+   ],
+   "week_hi": 100.314,
+   "week_lo": 99.586,
+   "e2_mae": 0.12493,
+   "naive_mae": 0.1522,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 1,
+   "zone_relevance": 0.5,
+   "net_actual": -0.241,
+   "e2_direction": "up",
+   "actual_direction": "down",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-06-15",
+   "bars_before": 3078,
+   "bars_actual": 117,
+   "spot_prev_close": 99.515,
+   "levels": 213,
+   "zones": 5,
+   "zone_list": [
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.63931,
+     "bottom": 99.49,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 4",
+     "cat": "RES",
+     "top": 99.78333,
+     "bottom": 99.64667,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 99.9499,
+     "bottom": 99.80173,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 100.08967,
+     "bottom": 99.952,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 100.2147,
+     "bottom": 100.1138,
+     "conf": 6,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Wed",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Thu",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Fri",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    }
+   ],
+   "actual_days": [
+    "2026-06-15",
+    "2026-06-16",
+    "2026-06-17",
+    "2026-06-18",
+    "2026-06-19"
+   ],
+   "actual_closes": [
+    99.653,
+    99.551,
+    100.35,
+    100.83,
+    100.76
+   ],
+   "actual_hl": [
+    99.384,
+    99.461,
+    99.491,
+    100.206,
+    100.697,
+    99.714,
+    99.791,
+    100.574,
+    100.918,
+    101.127
+   ],
+   "week_hi": 101.127,
+   "week_lo": 99.384,
+   "e2_mae": 0.57204,
+   "naive_mae": 0.7138,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance 3",
+    "IP Resistance 4",
+    "IP Resistance Ceiling",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 5,
+   "zone_relevance": 1.0,
+   "net_actual": 1.107,
+   "e2_direction": "down",
+   "actual_direction": "up",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-06-22",
+   "bars_before": 3197,
+   "bars_actual": 117,
+   "spot_prev_close": 100.851,
+   "levels": 233,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 100.28068,
+     "bottom": 100.15145,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 100.44928,
+     "bottom": 100.30829,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 100.64782,
+     "bottom": 100.5,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 100.79942,
+     "bottom": 100.65133,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 100.94565,
+     "bottom": 100.80763,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 101.09667,
+     "bottom": 100.96053,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.0235,
+   "e2_refusal": "",
+   "e2_current": "R",
+   "e2_links": 2,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "R",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "WL",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-06-22",
+    "2026-06-23",
+    "2026-06-24",
+    "2026-06-25",
+    "2026-06-26"
+   ],
+   "actual_closes": [
+    101.013,
+    101.392,
+    101.605,
+    101.509,
+    101.366
+   ],
+   "actual_hl": [
+    100.76,
+    100.952,
+    101.366,
+    101.305,
+    101.045,
+    101.076,
+    101.433,
+    101.8,
+    101.746,
+    101.57
+   ],
+   "week_hi": 101.8,
+   "week_lo": 100.76,
+   "e2_mae": 0.62137,
+   "naive_mae": 0.526,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 0.5,
+   "net_actual": 0.353,
+   "e2_direction": "flat",
+   "actual_direction": "up",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-06-29",
+   "bars_before": 3316,
+   "bars_actual": 117,
+   "spot_prev_close": 101.366,
+   "levels": 143,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 100.89913,
+     "bottom": 100.75,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 101.084,
+     "bottom": 100.936,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 101.236,
+     "bottom": 101.092,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 101.39216,
+     "bottom": 101.24746,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 101.54942,
+     "bottom": 101.402,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 101.68846,
+     "bottom": 101.555,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -0.7865,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Thu",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Fri",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    }
+   ],
+   "actual_days": [
+    "2026-06-29",
+    "2026-06-30",
+    "2026-07-01",
+    "2026-07-02",
+    "2026-07-03"
+   ],
+   "actual_closes": [
+    101.146,
+    101.244,
+    101.407,
+    100.973,
+    100.878
+   ],
+   "actual_hl": [
+    101.071,
+    101.049,
+    101.19,
+    100.558,
+    100.603,
+    101.394,
+    101.432,
+    101.595,
+    101.43,
+    100.992
+   ],
+   "week_hi": 101.595,
+   "week_lo": 100.558,
+   "e2_mae": 0.22509,
+   "naive_mae": 0.2528,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "IP Support Floor",
+    "Key IP Support",
+    "Mid-Range Support",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 6,
+   "zone_relevance": 1.0,
+   "net_actual": -0.268,
+   "e2_direction": "down",
+   "actual_direction": "down",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-07-06",
+   "bars_before": 3435,
+   "bars_actual": 117,
+   "spot_prev_close": 100.872,
+   "levels": 163,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 100.6142,
+     "bottom": 100.4934,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 100.797,
+     "bottom": 100.652,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 100.94932,
+     "bottom": 100.80405,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 101.11683,
+     "bottom": 100.97293,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 101.267,
+     "bottom": 101.13,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 101.426,
+     "bottom": 101.281,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.5388,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 3,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    }
+   ],
+   "actual_days": [
+    "2026-07-06",
+    "2026-07-07",
+    "2026-07-08",
+    "2026-07-09",
+    "2026-07-10"
+   ],
+   "actual_closes": [
+    100.869,
+    101.186,
+    101.027,
+    100.913,
+    100.965
+   ],
+   "actual_hl": [
+    100.838,
+    100.803,
+    100.946,
+    100.786,
+    100.598,
+    101.145,
+    101.194,
+    101.275,
+    101.039,
+    100.997
+   ],
+   "week_hi": 101.275,
+   "week_lo": 100.598,
+   "e2_mae": 0.16625,
+   "naive_mae": 0.1212,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance 3",
+    "IP Support Floor",
+    "Mid-Range Support",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 5,
+   "zone_relevance": 0.833,
+   "net_actual": 0.096,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-07-13",
+   "bars_before": 3554,
+   "bars_actual": 117,
+   "spot_prev_close": 101.062,
+   "levels": 149,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 100.617,
+     "bottom": 100.5,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 100.78633,
+     "bottom": 100.65967,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 100.96145,
+     "bottom": 100.816,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 101.115,
+     "bottom": 100.96668,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 101.25233,
+     "bottom": 101.11747,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 101.36439,
+     "bottom": 101.28599,
+     "conf": 6,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 3,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Thu",
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    }
+   ],
+   "actual_days": [
+    "2026-07-13",
+    "2026-07-14",
+    "2026-07-15",
+    "2026-07-16",
+    "2026-07-17"
+   ],
+   "actual_closes": [
+    101.277,
+    100.892,
+    100.467,
+    100.711,
+    100.754
+   ],
+   "actual_hl": [
+    100.793,
+    100.607,
+    100.353,
+    100.437,
+    100.647,
+    101.327,
+    101.322,
+    101.029,
+    100.831,
+    100.867
+   ],
+   "week_hi": 101.327,
+   "week_lo": 100.353,
+   "e2_mae": 0.25154,
+   "naive_mae": 0.3278,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "IP Support Floor",
+    "Key IP Support",
+    "Mid-Range Support",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 6,
+   "zone_relevance": 1.0,
+   "net_actual": -0.523,
+   "e2_direction": "up",
+   "actual_direction": "down",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-07-20",
+   "bars_before": 3673,
+   "bars_actual": 117,
+   "spot_prev_close": 100.842,
+   "levels": 170,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 100.3581,
+     "bottom": 100.25,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 100.55487,
+     "bottom": 100.40503,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 100.695,
+     "bottom": 100.55579,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 100.85779,
+     "bottom": 100.709,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 101.0,
+     "bottom": 100.86,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 101.164,
+     "bottom": 101.02,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.4989,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 3,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "IP Support Floor"
+    },
+    {
+     "day": "Thu",
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    }
+   ],
+   "actual_days": [
+    "2026-07-20",
+    "2026-07-21",
+    "2026-07-22",
+    "2026-07-23",
+    "2026-07-24"
+   ],
+   "actual_closes": [
+    100.958,
+    101.176,
+    101.114,
+    101.452,
+    101.465
+   ],
+   "actual_hl": [
+    100.65,
+    100.863,
+    101.02,
+    100.938,
+    101.248,
+    101.027,
+    101.21,
+    101.198,
+    101.544,
+    101.53
+   ],
+   "week_hi": 101.544,
+   "week_lo": 100.65,
+   "e2_mae": 0.51029,
+   "naive_mae": 0.391,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "Mid-Range Support",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 4,
+   "zone_relevance": 0.667,
+   "net_actual": 0.507,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-07-27",
+   "bars_before": 3792,
+   "bars_actual": 117,
+   "spot_prev_close": 101.267,
+   "levels": 146,
+   "zones": 4,
+   "zone_list": [
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 100.66717,
+     "bottom": 100.66717,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 101.04267,
+     "bottom": 100.93267,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 101.24006,
+     "bottom": 101.09768,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 101.5631,
+     "bottom": 101.43915,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -0.998,
+   "e2_refusal": "",
+   "e2_current": "WL",
+   "e2_links": 1,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WL",
+     "conf": 60.0,
+     "zone": "Key IP Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Wed",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-07-27",
+    "2026-07-28",
+    "2026-07-29",
+    "2026-07-30",
+    "2026-07-31"
+   ],
+   "actual_closes": [
+    101.525,
+    101.425,
+    100.799,
+    100.073,
+    99.802
+   ],
+   "actual_hl": [
+    101.116,
+    101.258,
+    100.762,
+    99.857,
+    99.692,
+    101.541,
+    101.64,
+    101.495,
+    101.072,
+    100.463
+   ],
+   "week_hi": 101.64,
+   "week_lo": 99.692,
+   "e2_mae": 0.78931,
+   "naive_mae": 0.7086,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "IP Resistance Ceiling",
+    "IP Support Floor",
+    "Key IP Support",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 4,
+   "zone_relevance": 1.0,
+   "net_actual": -1.723,
+   "e2_direction": "down",
+   "actual_direction": "down",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-08-03",
+   "bars_before": 3911,
+   "bars_actual": 117,
+   "spot_prev_close": 99.713,
+   "levels": 165,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.63386,
+     "bottom": 99.5,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.80933,
+     "bottom": 99.6595,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 4",
+     "cat": "RES",
+     "top": 99.9485,
+     "bottom": 99.828,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 100.091,
+     "bottom": 99.98057,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 100.25,
+     "bottom": 100.148,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 100.40712,
+     "bottom": 100.31293,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Wed",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Thu",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Fri",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    }
+   ],
+   "actual_days": [
+    "2026-08-03",
+    "2026-08-04",
+    "2026-08-05",
+    "2026-08-06",
+    "2026-08-07"
+   ],
+   "actual_closes": [
+    100.012,
+    99.861,
+    99.654,
+    99.942,
+    99.604
+   ],
+   "actual_hl": [
+    99.418,
+    99.828,
+    99.628,
+    99.637,
+    99.403,
+    100.027,
+    100.058,
+    99.9,
+    100.02,
+    99.997
+   ],
+   "week_hi": 100.058,
+   "week_lo": 99.403,
+   "e2_mae": 0.22119,
+   "naive_mae": 0.1688,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance 3",
+    "IP Resistance 4",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 4,
+   "zone_relevance": 0.667,
+   "net_actual": -0.408,
+   "e2_direction": "down",
+   "actual_direction": "down",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-08-10",
+   "bars_before": 4030,
+   "bars_actual": 117,
+   "spot_prev_close": 99.642,
+   "levels": 211,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 99.45533,
+     "bottom": 99.31867,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.62509,
+     "bottom": 99.47603,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.77256,
+     "bottom": 99.62907,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 99.9307,
+     "bottom": 99.783,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 100.05,
+     "bottom": 99.933,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 100.15425,
+     "bottom": 100.09312,
+     "conf": 4,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Wed",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Thu",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Fri",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    }
+   ],
+   "actual_days": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12",
+    "2026-08-13",
+    "2026-08-14"
+   ],
+   "actual_closes": [
+    99.771,
+    99.805,
+    99.951,
+    99.92,
+    99.636
+   ],
+   "actual_hl": [
+    99.603,
+    99.725,
+    99.613,
+    99.798,
+    99.475,
+    99.829,
+    99.898,
+    100.023,
+    100.083,
+    99.936
+   ],
+   "week_hi": 100.083,
+   "week_lo": 99.475,
+   "e2_mae": 0.10317,
+   "naive_mae": 0.177,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance 3",
+    "Mid-Range Support",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 4,
+   "zone_relevance": 0.667,
+   "net_actual": -0.135,
+   "e2_direction": "down",
+   "actual_direction": "down",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-08-17",
+   "bars_before": 4149,
+   "bars_actual": 117,
+   "spot_prev_close": 99.593,
+   "levels": 218,
+   "zones": 5,
+   "zone_list": [
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.59374,
+     "bottom": 99.4521,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 4",
+     "cat": "RES",
+     "top": 99.64867,
+     "bottom": 99.6058,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 99.93367,
+     "bottom": 99.78433,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 100.07675,
+     "bottom": 99.93947,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 100.11167,
+     "bottom": 100.10267,
+     "conf": 6,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Wed",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Thu",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Fri",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    }
+   ],
+   "actual_days": [
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-19",
+    "2026-08-20",
+    "2026-08-21"
+   ],
+   "actual_closes": [
+    99.541,
+    99.643,
+    98.83,
+    98.789,
+    98.839
+   ],
+   "actual_hl": [
+    99.294,
+    99.521,
+    98.767,
+    98.557,
+    98.562,
+    99.648,
+    99.693,
+    99.692,
+    98.934,
+    98.911
+   ],
+   "week_hi": 99.693,
+   "week_lo": 98.557,
+   "e2_mae": 0.7306,
+   "naive_mae": 0.4846,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance 4"
+   ],
+   "zones_touched_n": 2,
+   "zone_relevance": 0.4,
+   "net_actual": -0.702,
+   "e2_direction": "down",
+   "actual_direction": "down",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-08-24",
+   "bars_before": 4268,
+   "bars_actual": 117,
+   "spot_prev_close": 98.808,
+   "levels": 233,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 98.64705,
+     "bottom": 98.5,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 98.80701,
+     "bottom": 98.66042,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 4",
+     "cat": "RES",
+     "top": 98.94313,
+     "bottom": 98.81059,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 99.05407,
+     "bottom": 98.963,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 99.395,
+     "bottom": 99.25,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.5,
+     "bottom": 99.405,
+     "conf": 5,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.4756,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 3,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 85.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Thu",
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "IP Resistance 3"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "IP Resistance 3"
+    }
+   ],
+   "actual_days": [
+    "2026-08-24",
+    "2026-08-25",
+    "2026-08-26",
+    "2026-08-27",
+    "2026-08-28"
+   ],
+   "actual_closes": [
+    98.967,
+    98.915,
+    99.122,
+    99.111,
+    99.677
+   ],
+   "actual_hl": [
+    98.762,
+    98.863,
+    98.898,
+    99.07,
+    99.098,
+    99.063,
+    99.118,
+    99.231,
+    99.26,
+    99.726
+   ],
+   "week_hi": 99.726,
+   "week_lo": 98.762,
+   "e2_mae": 0.20389,
+   "naive_mae": 0.3504,
+   "beat_naive": true,
+   "paired_days": 5,
+   "zones_touched": [
+    "IP Resistance 3",
+    "IP Resistance 4",
+    "IP Resistance Ceiling",
+    "Mid-Range Support",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 5,
+   "zone_relevance": 0.833,
+   "net_actual": 0.71,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-08-31",
+   "bars_before": 4387,
+   "bars_actual": 117,
+   "spot_prev_close": 99.641,
+   "levels": 212,
+   "zones": 3,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 99.147,
+     "bottom": 99.05067,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.28946,
+     "bottom": 99.21087,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.74375,
+     "bottom": 99.67253,
+     "conf": 6,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 1.0,
+   "e2_refusal": "",
+   "e2_current": "BS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Tue",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Thu",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Fri",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    }
+   ],
+   "actual_days": [
+    "2026-08-31",
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03",
+    "2026-09-04"
+   ],
+   "actual_closes": [
+    99.411,
+    99.679,
+    99.599,
+    98.965,
+    99.159
+   ],
+   "actual_hl": [
+    99.39,
+    99.353,
+    99.436,
+    98.831,
+    98.916,
+    99.664,
+    99.722,
+    99.863,
+    99.612,
+    99.392
+   ],
+   "week_hi": 99.863,
+   "week_lo": 98.831,
+   "e2_mae": 0.34554,
+   "naive_mae": 0.2936,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "IP Resistance Ceiling",
+    "IP Support Floor",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 1.0,
+   "net_actual": -0.252,
+   "e2_direction": "up",
+   "actual_direction": "down",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-09-07",
+   "bars_before": 4506,
+   "bars_actual": 117,
+   "spot_prev_close": 99.156,
+   "levels": 231,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 98.8972,
+     "bottom": 98.75023,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.01469,
+     "bottom": 98.91933,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 4",
+     "cat": "RES",
+     "top": 99.4165,
+     "bottom": 99.26701,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance 3",
+     "cat": "RES",
+     "top": 99.56907,
+     "bottom": 99.4208,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 99.701,
+     "bottom": 99.589,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.85283,
+     "bottom": 99.79578,
+     "conf": 6,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.9235,
+   "e2_refusal": "",
+   "e2_current": "BS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Tue",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Wed",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Thu",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    },
+    {
+     "day": "Fri",
+     "shape": "BS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
+    }
+   ],
+   "actual_days": [
+    "2026-09-07",
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11"
+   ],
+   "actual_closes": [
+    98.833,
+    98.785,
+    98.779,
+    99.083,
+    99.094
+   ],
+   "actual_hl": [
+    98.828,
+    98.716,
+    98.599,
+    98.706,
+    98.965,
+    99.209,
+    99.018,
+    98.9,
+    99.199,
+    99.368
+   ],
+   "week_hi": 99.368,
+   "week_lo": 98.599,
+   "e2_mae": 0.9095,
+   "naive_mae": 0.2412,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "IP Resistance 4",
+    "IP Support Floor",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 0.5,
+   "net_actual": 0.261,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-09-14",
+   "bars_before": 4625,
+   "bars_actual": 117,
+   "spot_prev_close": 99.109,
+   "levels": 195,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 98.64435,
+     "bottom": 98.5,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 98.821,
+     "bottom": 98.67105,
+     "conf": 8,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 98.98318,
+     "bottom": 98.83418,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.13094,
+     "bottom": 98.9844,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 99.286,
+     "bottom": 99.138,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.42368,
+     "bottom": 99.29033,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.0,
+   "e2_refusal": "",
+   "e2_current": "R",
+   "e2_links": 2,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "R",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Tue",
+     "shape": "WL",
+     "conf": 60.0,
+     "zone": "Upper IP Resistance"
+    },
+    {
+     "day": "Wed",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Thu",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Equilibrium Zone"
+    }
+   ],
+   "actual_days": [
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18"
+   ],
+   "actual_closes": [
+    99.488,
+    99.681,
+    100.267,
+    100.255,
+    100.215
+   ],
+   "actual_hl": [
+    99.092,
+    99.486,
+    99.537,
+    100.022,
+    100.165,
+    99.736,
+    99.696,
+    100.354,
+    100.367,
+    100.564
+   ],
+   "week_hi": 100.564,
+   "week_lo": 99.092,
+   "e2_mae": 0.89266,
+   "naive_mae": 0.8722,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "Upper IP Resistance"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 0.5,
+   "net_actual": 0.727,
+   "e2_direction": "flat",
+   "actual_direction": "up",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-09-21",
+   "bars_before": 4744,
+   "bars_actual": 117,
+   "spot_prev_close": 100.278,
+   "levels": 223,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 99.702,
+     "bottom": 99.589,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 99.751,
+     "bottom": 99.739,
+     "conf": 4,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 100.08288,
+     "bottom": 99.93947,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 100.25158,
+     "bottom": 100.10528,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 100.40733,
+     "bottom": 100.266,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 100.564,
+     "bottom": 100.41678,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": 0.0991,
+   "e2_refusal": "",
+   "e2_current": "R",
+   "e2_links": 2,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "R",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "WL",
+     "conf": 60.0,
+     "zone": "Equilibrium Zone"
+    },
+    {
+     "day": "Wed",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "SS",
+     "conf": 55.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-24",
+    "2026-09-25"
+   ],
+   "actual_closes": [
+    100.426,
+    100.553,
+    101.134,
+    101.297,
+    101.034
+   ],
+   "actual_hl": [
+    100.179,
+    100.307,
+    100.544,
+    101.001,
+    100.872,
+    100.451,
+    100.703,
+    101.231,
+    101.398,
+    101.305
+   ],
+   "week_hi": 101.398,
+   "week_lo": 100.179,
+   "e2_mae": 0.67872,
+   "naive_mae": 0.6108,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 0.5,
+   "net_actual": 0.608,
+   "e2_direction": "up",
+   "actual_direction": "up",
+   "direction_match": true,
+   "verdict": "MEASURED"
+  },
+  {
+   "week": "2026-09-28",
+   "bars_before": 4861,
+   "bars_actual": 115,
+   "spot_prev_close": 101.034,
+   "levels": 239,
+   "zones": 6,
+   "zone_list": [
+    {
+     "name": "IP Support 4",
+     "cat": "SUP",
+     "top": 100.5244,
+     "bottom": 100.375,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 100.63803,
+     "bottom": 100.52761,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Support Floor",
+     "cat": "SUP",
+     "top": 100.84328,
+     "bottom": 100.694,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 101.01846,
+     "bottom": 100.87033,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 101.15438,
+     "bottom": 101.02185,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 101.33339,
+     "bottom": 101.1834,
+     "conf": 7,
+     "tf": "1H"
+    }
+   ],
+   "momentum": -1.0,
+   "e2_refusal": "",
+   "e2_current": "WLS",
+   "e2_links": 0,
+   "e2_days": [
+    {
+     "day": "Mon",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Tue",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Wed",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Thu",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    },
+    {
+     "day": "Fri",
+     "shape": "WLS",
+     "conf": 60.0,
+     "zone": "Mid-Range Support"
+    }
+   ],
+   "actual_days": [
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02"
+   ],
+   "actual_closes": [
+    101.19,
+    101.409,
+    101.501,
+    101.985,
+    101.923
+   ],
+   "actual_hl": [
+    100.98,
+    101.177,
+    101.026,
+    101.459,
+    101.668,
+    101.308,
+    101.612,
+    101.527,
+    102.207,
+    102.132
+   ],
+   "week_hi": 102.207,
+   "week_lo": 100.98,
+   "e2_mae": 0.65721,
+   "naive_mae": 0.5676,
+   "beat_naive": false,
+   "paired_days": 5,
+   "zones_touched": [
+    "Equilibrium Zone",
+    "IP Resistance Ceiling",
+    "Mid-Range Support"
+   ],
+   "zones_touched_n": 3,
+   "zone_relevance": 0.5,
+   "net_actual": 0.733,
+   "e2_direction": "down",
+   "actual_direction": "up",
+   "direction_match": false,
+   "verdict": "MEASURED"
+  }
+ ]
+}

@@ -1668,3 +1668,34 @@ week's OWN bars (held back). Harness: `/tmp/pv_crossval.py` → `evidence/crossv
 E2 path YES-vs-baseline (5/5) but DIRECTION NO (2/5). **SHIP PENDING the direction work.**
 
 **THE DEFECT FOUND (by this validation): the DEGENERATE RANGE** — logged in DEBUG_LOG.
+
+### THE MACRO SWEEP — 35 weeks (supersedes the 5-week sample)
+
+Ran `measure_week` over ALL 35 Mondays (2026-02-02 … 2026-09-28) → `evidence/macro-sweep.json`.
+**E1 zone relevance 74% mean (min 33% · max 100%); 32/35 = 91% of weeks ≥50% touched.**
+**E2 direction 19/35 = 54% (decisive |mom|≥0.5: 15/26 = 58%; mild: 4/9 = 44%).**
+**E2 beat-naive 17/35 = 49% — a COIN FLIP; the 5-week 5/5 was a sample-size artifact.**
+E2 MAE mean 0.4795 vs naive 0.4558 (the E2 path has no macro edge over "flat at the prior close").
+VERDICT: the E1 ships (74% macro, 91%-of-weeks); the E2 does not (direction 54% weak; magnitude
+49% no edge).
+
+### THE AUDIT GATE — 2026-10-06 (the e2_engine.py fix + the cross-val changes)
+
+**AUDIT GATE: BLOCKED** — `qwen-code-audit action=scan repo=PLUTUS_VISION scanPath=scripts/e2_engine.py`
+returned `GATE: BLOCKED (OCR_JSON_UNPARSEABLE)` on BOTH runs (the engine's JSON container could not
+be parsed), while returning 4 findings in TEXT. **BLOCKED is never PASS** — the ship stays PENDING.
+
+**THE FINDINGS (all 4, adjudicated + addressed):**
+1. `Zone.degree` used `assert` → STRIPPED under `python -O`, raising `AssertionError` not a named
+   refusal. **FIXED** (`scripts/e2_engine.py:55`): `if deg not in DEGREES: raise FabricationRefused`
+   — proven by new `ST-14b` which PASSES under `python -O`.
+2. Order-dependent anchors — `BS/WL/SS/RWL` returned first-match-in-input-order (only `R`/`WLS`
+   sorted). **FIXED** (`scripts/e2_engine.py:121`): `solid` sorted by `(mid, id)` before the scans —
+   proven by new `ST-14a` (6 shuffles → one anchor).
+3. The day range override (`key_zone = _mid_zone`) broke the §6.6 link trace. **FIXED**
+   (`scripts/e2_engine.py:533,544`): the Link's own trigger is preserved as `link_zone`.
+4. The fine-path day tag was silently dropped on an x-collision. **FIXED**
+   (`scripts/e2_engine.py:677`): the scan continues past a taken slot — proven by new `ST-14c`.
+
+**BATTERY AFTER:** `e2_tests 39/0` (was 36/0, +ST-14a/b/c) · `e1_st_18 8/0` · `e1_tests 15/0`.
+**The operator's approved Jul-6 render is byte-identical (`282517ac622769bd`) after every fix.**

@@ -2079,3 +2079,29 @@ the `classify` priority ladder LOOKED complete (6 branches) while 2 of them were
 real zone. The cross-validation across random weeks is what exposed it; a single-week test could
 not (the target week's `R` was plausible there). **The multi-week sweep is the instrument that
 finds the constant-input degeneracy.**
+
+---
+## F-AUDIT-SWEEP — the OCR audit's 4 findings on e2_engine.py (2026-10-06)
+
+The ship gate `qwen-code-audit` ran on `scripts/e2_engine.py` after the cross-val fix. Its JSON
+container returned BLOCKED (OCR_JSON_UNPARSEABLE) on both runs, but it reported 4 findings in text.
+All 4 were real and are fixed:
+
+1. **`assert` vs a named refusal.** `Zone.degree` guarded the canon's vocabulary with a bare
+   `assert`, which `python -O` STRIPS — the 7th-degree guard would silently vanish. → `raise
+   FabricationRefused("E2_DEGREE_UNKNOWN: …")`. New ST-14b proves the guard survives `-O`.
+2. **Order-dependent anchors (a REAL determinism defect).** `classify`'s priority scans
+   (`for z in solid`) returned the FIRST match in the caller's list order — so the same zone set in
+   a different order yielded a different anchor and therefore a different chain. Only `R`/`WLS`
+   sorted. → `solid` is now sorted by `(mid, id)` once, making EVERY anchor order-independent. New
+   ST-14a (6 shuffles → one anchor).
+3. **The day range override dropped the link trace.** A range shape rendered at the equilibrium
+   (`key_zone = _mid_zone`) but lost the Link's own trigger, so §6.6's chain-trace broke. → the
+   Link's trigger is preserved as `link_zone`.
+4. **The fine-path day tag dropped on an x-collision.** The inner scan `break`ed on the first
+   `xv >= x0` even when the slot was already taken → a colliding day lost its tag. → the scan
+   continues past a taken slot. New ST-14c.
+
+**THE LESSON.** A priority ladder whose branches take the FIRST input-order match is
+order-dependent — the same data permuted gives a different answer. The fix is ONE canonical sort
+before the scans. And a guard written as `assert` is not a guard: it disappears under `-O`.

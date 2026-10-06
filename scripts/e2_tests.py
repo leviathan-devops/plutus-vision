@@ -236,10 +236,51 @@ def st13_empty_corpus() -> None:
            "same-density containment plus one adjacent step")
 
 
+def st14_determinism() -> None:
+    """ST-14 — DETERMINISM (audit 2026-10-06, OCR finding #3 + #1).
+
+    POSITIVE: the anchor is ORDER-INDEPENDENT — the same zone set in a shuffled order must
+    classify to the SAME (shape, anchor). NEGATIVE: a non-canon degree RAISES a NAMED refusal
+    (a bare `assert` is stripped under `python -O`, so the guard would silently vanish)."""
+    import random
+    import e2_engine
+    zones = [z("ZA", 1.1560, 1.1540, 9, 12), z("ZB", 1.1500, 1.1490, 13, 60),
+             z("ZC", 1.1400, 1.1380, 7, 35), z("ZD", 1.1700, 1.1680, 11, 88)]
+    base = classify(1.0, zones)
+    agree = True
+    for seed in range(6):
+        perm = zones[:]
+        random.Random(seed).shuffle(perm)
+        if classify(1.0, perm) != base:
+            agree = False
+    record("ST-14a  the anchor is ORDER-INDEPENDENT (6 shuffles agree)", agree, f"base={base}")
+
+    # NEGATIVE CONTROL — a degree outside the canon is refused BY NAME (not an assert)
+    saved = e2_engine.DEGREES
+    try:
+        e2_engine.DEGREES = ("EXTREME",)          # strip the ladder's other values
+        zz = z("ZY", 1.16, 1.15, 9, 40)           # conf 9 -> HEAVY, now outside the set
+        try:
+            zz.degree
+            raised = False
+        except FabricationRefused:
+            raised = True
+        record("ST-14b  a non-canon degree RAISES a named refusal", raised,
+               "the guard survives python -O (not an assert)")
+    finally:
+        e2_engine.DEGREES = saved
+
+    # ST-14c — a colliding day boundary still gets its tag (finding #3, the fine-path fix)
+    from e2_engine import fine_path
+    xs, ys, shp, cnf = fine_path([(0, 1.0, "R", 60), (0, 1.5, "WL", 55)], day_ms=0)
+    tagged = [s for s in shp if s]
+    record("ST-14c  colliding day tags are NOT dropped", len(tagged) >= 2, f"tags={tagged}")
+
+
 def main() -> int:
     tests = [("ST-10", st10_shape_anchored), ("ST-11", st11_hardwall_rwl),
              ("ST-12", st12_day_decomp), ("ST-12F", st12_fine_path),
-             ("ST-13", st13_empty_corpus)]
+             ("ST-13", st13_empty_corpus), ("ST-14", st14_determinism)]
     want = (sys.argv[1].upper() if len(sys.argv) > 1 else None)
     for name, fn in tests:
         if want and not name.startswith(want):
