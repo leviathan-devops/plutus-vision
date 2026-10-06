@@ -2105,3 +2105,19 @@ All 4 were real and are fixed:
 **THE LESSON.** A priority ladder whose branches take the FIRST input-order match is
 order-dependent — the same data permuted gives a different answer. The fix is ONE canonical sort
 before the scans. And a guard written as `assert` is not a guard: it disappears under `-O`.
+
+---
+## F-NULL-INFLATION — the "relevance" metric was mostly the window (2026-10-06)
+
+**Finding.** The E1's "74% zone relevance" sounded strong. Measured against a null (6 random bands
+in the same ±0.70 window), random bands are touched 65.3% — so the E1's edge over chance is only
+~+8.4%. A second instrument (the reaction test: does the price REVERSE at the zone?) gives E1 54.8%
+vs random 48.0% → +6.8%.
+
+**Root cause of the inflation.** The prevalence base rate: 6 bands of 0.10 width in a 1.40-wide
+window cover ~43% of the window, and a week's action travels through most of a narrow ±0.70 window,
+so most bands are touched regardless of position. The metric measured the WINDOW, not the SELECTION.
+
+**The lesson (the coverage-baseline law).** A hit-rate is not a capability until it is measured
+against a null of the same count in the same space. 74% vs 65% is a +8% edge; the headline number
+was the base rate. ALWAYS run the null before calling a detector good.

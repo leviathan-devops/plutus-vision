@@ -1699,3 +1699,11 @@ be parsed), while returning 4 findings in TEXT. **BLOCKED is never PASS** — th
 
 **BATTERY AFTER:** `e2_tests 39/0` (was 36/0, +ST-14a/b/c) · `e1_st_18 8/0` · `e1_tests 15/0`.
 **The operator's approved Jul-6 render is byte-identical (`282517ac622769bd`) after every fix.**
+
+### THE COVERAGE-BASELINE AUDIT — the E1 vs the NULL (2026-10-06)
+
+`evidence/null-baseline.json`: E1 zones touched 73.8% vs 6 RANDOM bands in the same ±0.70 window
+65.3% → **edge +8.4%**. `evidence/reaction-test.json` (the stronger instrument): the E1 zone HELD
+(price reversed) 54.8% vs random 48.0% → **edge +6.8%**. **VERDICT: the E1's edge over chance is
+WEAK (+6–8%); the 74% headline is mostly the window, not zone selection.** The E1 renders correctly
+but its zone-selection is a weak signal, not a strong capability. The E2 has no edge (54% / 49%).

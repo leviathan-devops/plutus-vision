@@ -187,3 +187,40 @@ value over a flat line.
 week's price action is actually flat for this week then this is a valid prediction"* — is exactly
 right: the E2 is a flat/zone-anchored prediction, not a directional path, and the macro sweep
 confirms it adds no edge over flat.
+
+---
+# THE COVERAGE-BASELINE AUDIT — IS THE E1 ACTUALLY GOOD? (the null test)
+
+**A high hit-rate is only a capability if it beats chance.** The 74% "touched" is measured against
+a NULL: 6 RANDOM bands, same count, placed in the SAME ±0.70 window as the E1 zones
+(`evidence/null-baseline.json`). And a SECOND, stronger instrument — the REACTION test: did the
+price REVERSE at the zone (the zone held as S/R), vs pass through (`evidence/reaction-test.json`).
+
+| instrument | E1 | random baseline | edge |
+|---|---|---|---|
+| a zone is TOUCHED by the week | 73.8% | 65.3% | **+8.4%** |
+| a zone HELD (the price reversed) | 54.8% | 48.0% | **+6.8%** |
+
+## THE HONEST VERDICT (and it is sobering)
+
+**The E1's edge over random bands in the same window is WEAK: +6–8%.** The 74% headline number is
+MOSTLY THE WINDOW, not zone selection: 6 bands placed anywhere in a ±0.70 window near the spot get
+touched by ~65% of weeks regardless of where they sit — because the window is narrow and most weeks
+travel through it. The E1's clustering buys it ~+8% over throwing darts; its S/R quality buys ~+7%.
+
+**Neither instrument shows a STRONG capability.** The operator's own question — *"that is where the
+intelligence of the code base is going to shine or ship the bet"* — is answered: **the intelligence
+does NOT strongly shine.** The E1 is a WEAK-POSITIVE signal (real, but small), not a strong one.
+
+## WHAT THIS MEANS FOR THE SHIP
+
+- **The E1 renders correctly** (the operator saw it; C16). The RENDER ships.
+- **The E1's zone-selection edge is WEAK (+6–8%).** It is NOT a strong predictor. The "88% / 74%"
+  relevance numbers were inflated by the window; the honest capability is the +6–8% edge.
+- **The E2 has NO edge** (direction 54%, path 49% vs naive).
+- **THE HONEST SHIP CALL: neither engine clears a strong-capability bar.** They render; they are
+  directionally weak. A real edge needs a better zone-selection rule (the confluence sum is not
+  discriminating enough) or a better direction model.
+
+**This is the coverage-baseline lesson:** a hit-rate must be measured against the null before it is
+called a capability. 74% sounds strong; +8% over chance is the truth.
