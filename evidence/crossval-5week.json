@@ -189,7 +189,7 @@
    "momentum": 0.1152,
    "e2_refusal": "",
    "e2_current": "R",
-   "e2_links": 2,
+   "e2_links": 1,
    "e2_days": [
     {
      "day": "Mon",
@@ -199,26 +199,26 @@
     },
     {
      "day": "Tue",
-     "shape": "WL",
+     "shape": "SS",
      "conf": 60.0,
-     "zone": "Equilibrium Zone"
+     "zone": "Mid-Range Support"
     },
     {
      "day": "Wed",
      "shape": "SS",
-     "conf": 55.0,
+     "conf": 60.0,
      "zone": "Mid-Range Support"
     },
     {
      "day": "Thu",
      "shape": "SS",
-     "conf": 55.0,
+     "conf": 60.0,
      "zone": "Mid-Range Support"
     },
     {
      "day": "Fri",
      "shape": "SS",
-     "conf": 55.0,
+     "conf": 60.0,
      "zone": "Mid-Range Support"
     }
    ],
@@ -250,9 +250,9 @@
    ],
    "week_hi": 98.579,
    "week_lo": 97.625,
-   "e2_mae": 0.1825,
+   "e2_mae": 0.21357,
    "naive_mae": 0.1912,
-   "beat_naive": true,
+   "beat_naive": false,
    "paired_days": 5,
    "zones_touched": [
     "Equilibrium Zone",
