@@ -296,7 +296,14 @@ if printf '%s\n' "$STAGED" | grep -qE '(^|/)Checkpoints/'; then
   # FIXED (ocr audit high): `grep` over the WHOLE ledger matched ANY historical
   # PASS row — a weeks-old green unblocked a dead-system snapshot. The window is
   # now BOUNDED (the most recent 200 rows), so a stale green falls out of it.
-  if ! tail -n 200 "$GR_LEDGER" 2>/dev/null | grep -qE '"verdict":[[:space:]]*"PASS"'; then
+  # FIXED 2026-10-07 (the always-reject defect): `tail | grep -q` under `set -o pipefail`
+  # returned 141 — grep -q exits on the FINAL match as it DRAINS stdin, tail takes SIGPIPE,
+  # and the pipeline reports the SIGPIPE even though a PASS matched. With `!` the gate then
+  # rejected EVERY Checkpoints/ commit regardless of the ledger (measured: 167 window PASS
+  # rows, still REJECT). `grep -c` reads to EOF (no early exit), so the pipeline exit is the
+  # real one; count > 0 is the PASS test.
+  _gr_pass="$(tail -n 200 "$GR_LEDGER" 2>/dev/null | grep -cE '"verdict":[[:space:]]*"PASS"' || true)"
+  if [ "${_gr_pass:-0}" -eq 0 ]; then
     echo 'REJECT(G-SEAL): no fence PASS row — a checkpoint now is a snapshot of a dead system' >&2
     FAIL=1
   fi
