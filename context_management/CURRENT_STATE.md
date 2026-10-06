@@ -11,8 +11,8 @@ the section-map source. The E1-automatic BUILD's truth SHAs:
 
 | artifact | sha256 | role |
 |---|---|---|
-| `plutus-vision-v2.pine` | `7ebbe95b58217020…` | THE DELIVERABLE = the sealed v1 + the E1 IP zones + the E2 predicted path (ON) |
-| `pine-ide/ide/renderer/plutus-vision-v2.pine` | `7ebbe95b58217020…` | the SERVED copy (in sync with the built artifact) |
+| `plutus-vision-v2.pine` | `282517ac622769bd…` | THE DELIVERABLE = the sealed v1 + the E1 IP zones + the E2 predicted path (ON) |
+| `pine-ide/ide/renderer/plutus-vision-v2.pine` | `282517ac622769bd…` | the SERVED copy (in sync with the built artifact) |
 | `plutus-vision-v1.pine` | `0d20e8314ce992fc…517bd1` | the SEALED baseline — HARD STOP H1 if it drifts |
 | `plutus-vision-v0.pine` | `605bff82d3539e9e…` | the parity reference (never edited) |
 
