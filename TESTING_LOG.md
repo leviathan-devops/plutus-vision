@@ -1631,3 +1631,40 @@ annotation is Optional.
 | v1 seal | 0d20e8314ce992fc |
 | v2 | 36ddad9676becd70 |
 | the E2 chain | R->WL@Upper Resistance->SS@Key Support |
+
+---
+## THE 5-WEEK CROSS-VALIDATION — 2026-10-06 (the operator's litmus test)
+
+**The operator's directive:** *"pick five random trading weeks within the last six months and you
+just rewind there. You run the pipeline and you will literally see on the charts — does the engine
+two accurately predict the actual price action that happened and are the engine one zones relevant
+to that specific trading week's price action?"*
+
+**THE METHOD.** Five random weeks (seeded `random.seed(7)`) from the Monday pool 2026-04-06…09-28:
+`2026-04-13 · 2026-05-04 · 2026-06-15 · 2026-06-29 · 2026-08-24`. Bars = the operator's real DXY 1H
+series (5000 bars, 2025-12-11 → 2026-10-05). Per week: rewind (slice bars to the Monday) → E1
+(`e1_extract.build_levels` + `assemble`, the REAL deterministic derivation) → E2
+(`momentum` → `e2_engine.forward_map` → `day_decomposition`, the REAL engine) → measure vs the
+week's OWN bars (held back). Harness: `/tmp/pv_crossval.py` → `evidence/crossval-5week.json`.
+
+**THE RESULTS.**
+| week | E1 zones | touched | E2 MAE | naive | beat? | E2 dir / actual |
+|---|---|---|---|---|---|---|
+| 2026-04-13 | 4 | 3 (75%) | 0.903 | 0.923 | ✓ | up / down ✗ |
+| 2026-05-04 | 6 | 5 (83%) | 0.183 | 0.191 | ✓ | up / down ✗ |
+| 2026-06-15 | 5 | 5 (100%) | 0.572 | 0.714 | ✓ | down / up ✗ |
+| 2026-06-29 | 6 | 6 (100%) | 0.226 | 0.253 | ✓ | down / down ✓ |
+| 2026-08-24 | 6 | 5 (83%) | 0.204 | 0.350 | ✓ | up / up ✓ |
+
+**AGGREGATES:** E1 zone relevance **88% mean** (≥75% every week) · E2 path beat the naive
+(prior-close) baseline **5/5** · E2 DIRECTION **2/5** (the weak axis) · E2 MAE mean 0.417.
+
+**THE DYNAMIC-WEEK REWIND (question #1): PROVEN.** The SAME `lqz_vision_v2_build.py` (selected by
+`PV2_WEEK`) produced 5 DISTINCT pines — `evidence/cv-pines/plutus-vision-2026-{04-13,05-04,06-15,
+06-29,08-24}.pine` (shas 04642d87 · e63ca2f7 · 99ab705e · d4bcfc0b · 4edfe99c). All five rendered
+`ok:true` on the station (`:9741/run`). Five distinct artifacts = the render is week-specific.
+
+**THE VERDICT.** Q1 (dynamic week render): YES. Q2 (E1/E2 accuracy on a random week): E1 YES (88%);
+E2 path YES-vs-baseline (5/5) but DIRECTION NO (2/5). **SHIP PENDING the direction work.**
+
+**THE DEFECT FOUND (by this validation): the DEGENERATE RANGE** — logged in DEBUG_LOG.

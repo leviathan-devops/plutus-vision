@@ -2048,3 +2048,34 @@ SEE context_management/NEXT_STEPS.md:1 for the active work.
   NN% ZFP` reads.
 - **THE ZONE SPAN.** Anchored to the target week's Monday (`e1_anchor_ms` + `time`), spanning
   Mon-Fri (5 trading days), not a multi-week ribbon.
+
+---
+## F-DEGENERATE-RANGE — the E2 could never predict direction (2026-10-06, found by the 5-week CV)
+
+**SYMPTOM.** The 5-week cross-validation returned the shape `R` for ALL FIVE WEEKS — across
+momentum −1.0 … +1.0. The E2's direction was structurally constant.
+
+**ROOT CAUSE (measured, not theorized).** Every assembled E1 zone is a `SOFT_WALL`, so
+`e1_extract.zfp_for("SOFT_WALL", 0)` returns a CONSTANT **40** for every zone. With `zfp=40`:
+`Zone.is_hard_wall` (`zfp < ZFP_HARDWALL=20`) is FALSE and `Zone.is_breakout_risk`
+(`zfp > ZFP_BREAKOUT=45`) is FALSE. So in `e2_engine.classify`: step #1 (BS) can never fire
+(needs breakout-risk), step #2 (WL) can never fire (needs a hard wall), and step #3 (`R`) fired
+whenever ANY mid-zfp zone existed — regardless of the momentum. The momentum (the only directional
+signal) never reached the decision.
+
+**THE FIX** (`scripts/e2_engine.py`): (1) `R` — a STABILISATION by the canon's own §6.2 definition
+— now requires `abs(momentum) < R_STABILISE` (0.35, new constant); (2) a decisive move with no
+breakout/hard-wall zone falls (LAST priority) to a directional shape carrying its own sign
+(momentum ≥ +0.35 → BS anchored to the resistance ceiling; ≤ −0.35 → WL anchored to the support
+floor) — the canon's §6.2 #1/#2 momentum reads.
+
+**VERIFICATION.** `e2_tests 36/0 · e1_st_18 8/0 · e1_tests 15/0` (no regression). Cross-val after
+the fix: the E2 path beats naive **5/5** (was 4/5); the days VARY by week (WLS/WL/BS/R/SS) instead
+of a flat `R`. **The operator's approved Jul-6 render is byte-identical (`282517ac622769bd`)** —
+the fix touches only fresh engine runs, never the shipped artifact.
+
+**THE LESSON.** A constant input (here: every zone's `zfp`) silently collapses a decision matrix —
+the `classify` priority ladder LOOKED complete (6 branches) while 2 of them were unreachable on ANY
+real zone. The cross-validation across random weeks is what exposed it; a single-week test could
+not (the target week's `R` was plausible there). **The multi-week sweep is the instrument that
+finds the constant-input degeneracy.**

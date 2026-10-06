@@ -25,6 +25,8 @@ from dataclasses import dataclass, field
 # ── THE ZFP THRESHOLDS — quoted from the canon, never tuned ─────────────────
 ZFP_BREAKOUT = 45      # "ZFP > 45% = BREAKOUT THRESHOLD"
 ZFP_HARDWALL = 20      # "ZFP < 20% = HARD WALL"
+R_STABILISE = 0.35     # |momentum| below this is a STABILISATION (a range, §6.2's R). A
+                       # DECISIVE move (>=) is never a range; it carries its own direction.
 MIN_CHAIN_CONFIDENCE = 25   # §6.6 step 3: terminate when cumulative < 25%
 MAX_CHAIN_LENGTH = 5        # §6.6 step 3
 
@@ -136,7 +138,12 @@ def classify(bars_momentum: float, zones: list[Zone]) -> tuple[str, str]:
     # equilibrium), so the walk can travel BOTH ways — up to the resistance, down to the
     # support — which is what a one-week forecast must do.
     mids = [z for z in solid if 20 <= z.zfp <= 40]
-    if mids:
+    # A RANGE IS A STABILISATION (§6.2: R "stabilises at a mid-range zone, < 1 session") — a
+    # LOW-momentum state by definition. The earlier build fired R whenever ANY mid-zfp zone
+    # existed, so a decisive move classified R regardless of its momentum (measured 2026-10-06:
+    # the 5-week cross-validation returned R for ALL five weeks across mom −1.0…+1.0 — the E2
+    # could never predict direction). R now requires a genuinely flat momentum.
+    if mids and abs(bars_momentum) < R_STABILISE:
         ordered = sorted(solid, key=lambda z: (z.top + z.bottom))
         med = ordered[len(ordered) // 2]
         mtop = (med.top + med.bottom) / 2
@@ -162,6 +169,18 @@ def classify(bars_momentum: float, zones: list[Zone]) -> tuple[str, str]:
     for z in solid:
         if z.is_hard_wall and z.reactions >= 4:
             return "RWL", z.id
+
+    # THE DECISIVE-MOVE FALLBACK (the LAST priority, after every zone-specific signature). A
+    # move too strong to be a stabilisation (|momentum| >= R_STABILISE) with no breakout/hard-wall
+    # zone to pin it still carries its own DIRECTION — §6.2's #1 (BS) reads momentum > 0 and #2
+    # (WL) reads momentum < 0. The shape anchors to the boundary zone the move travels toward (the
+    # resistance ceiling for an up-move, the support floor for a down-move). Without this, a
+    # decisive week with no extreme zone falls to the refusal and draws NOTHING while the price
+    # moved — the degenerate-R failure in a different costume.
+    if bars_momentum >= R_STABILISE:
+        return "BS", max(solid, key=lambda z: z.top).id
+    if bars_momentum <= -R_STABILISE:
+        return "WL", min(solid, key=lambda z: z.bottom).id
 
     # nothing matched a signature — refuse rather than default to something plausible
     raise FabricationRefused(
