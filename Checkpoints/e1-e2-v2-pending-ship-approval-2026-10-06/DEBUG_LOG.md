@@ -2161,3 +2161,39 @@ the loud-fail contract.
 
 **The lesson:** the LOUD-FAIL contract means a NAMED refusal, never a bare `ValueError`. An empty
 input is the FIRST adversarial case, and it found an unguarded `min()` on the very first probe.
+
+---
+## F-TUNE-REFUTED — the zone-selection experiment, and why the current params stand (2026-10-06)
+
+**The question.** The E1's edge over the null is weak (+6-8%). Can a stricter zone-selection rule
+raise it?
+
+**The experiment** (`/tmp/pv_tune.py`, non-destructive — the served artifact untouched):
+
+| variant | zones/wk | relevance | null | touched edge |
+|---|---|---|---|---|
+| V0 current (cmin=3, win=0.70) | 5.1 | 73.8% | 65.3% | **+8.5%** |
+| V4 win=0.50 | 4.5 | 77.0% | 64.9% | **+12.0%** |
+| V5 cmin=5 + win=0.50 | 3.6 | 78.8% | 67.9% | +10.9% |
+| V2 cmin=7 / V3 cmin=9 | — | NO ZONES | — | — |
+
+V4 (the tighter window) looked like a **41% relative improvement** on touched.
+
+**THE REFUTATION** (`/tmp/pv_tune2.py`, the stronger instrument): the HELD rate — did the price
+actually REVERSE at the zone?
+
+| variant | touched edge | **held edge** |
+|---|---|---|
+| V0 win=0.70 (current) | +8.4% | **+6.6%** (73/131 held) |
+| V4 win=0.50 | +11.6% | **+3.2%** (64/123 held) |
+
+**V4 raises the WEAK metric while HALVING the STRONG one.** A tighter window selects zones nearer
+the spot — touched MORE often (they sit where the week starts) but they HOLD as S/R LESS often
+(they are not the strong structural levels). The touched-rate gain is a window artifact.
+
+**VERDICT: the current parameters (win=0.70) are BETTER on the truer instrument. The E1 stays
+as-is.** The accuracy work is NOT a parameter tune — the confluence sum is near its ceiling; a real
+gain needs a different zone-derivation or a better direction model.
+
+**THE LESSON (again): a weaker metric improved while the truer capability degraded.** The rejection
+of V4 required the SECOND instrument — the touched rate alone would have shipped a regression.

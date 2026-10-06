@@ -224,3 +224,11 @@ does NOT strongly shine.** The E1 is a WEAK-POSITIVE signal (real, but small), n
 
 **This is the coverage-baseline lesson:** a hit-rate must be measured against the null before it is
 called a capability. 74% sounds strong; +8% over chance is the truth.
+
+## 9 · THE ZONE-SELECTION EXPERIMENT — V4 REFUTED (the current params stand)
+
+Two candidate tightenings were measured across 35 weeks against their nulls. The **touched** rate
+favoured a tighter window (V4 win=0.50: +12.0% vs the current +8.5%). The **held** rate (the truer
+instrument — does the price reverse at the zone?) **refuted it**: V4 +3.2% vs the current +6.6%.
+A tighter window puts zones nearer the spot (touched more) but they hold as S/R less. **The current
+parameters are better; the E1 stays as-is.** (DEBUG_LOG: F-TUNE-REFUTED.)
