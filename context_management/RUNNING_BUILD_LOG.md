@@ -866,3 +866,27 @@ AFTER (v2 7ebbe95b): MAE 0.0979 — Mon -0.190 / Tue -0.028 / Wed -0.032 / Thu -
 -0.094. All 5 days within 0.19, most within 0.1.
 EVIDENCE: scripts/e2_engine.py day_decomposition (the _RANGE mid-anchor) · e1_st pass=8 fail=0 ·
 e2_tests pass=36 fail=0 · v1 0d20e8314ce992fc.
+
+## 2026-10-06 · THE INDEPENDENT RE-VERIFICATION — 12/13 PASS (W5 the 13th = a PROBE ERROR)
+The goal's PROOF CONTRACT: "the orchestrator re-runs every prior wave's gate on the combined
+tree and records the PASS/FAIL per token." Run.
+  W1 the anchor      resolve(Sun)=Mon ms 1783296000000                                  PASS
+  W2 classify        e1_tests pass=15 fail=0                                            PASS
+  W3 the payload     6 zones, 6 zCat-valid                                              PASS
+  W4 the port        5 named helpers (>=4)                                              PASS
+  W5 build+seal      SEE BELOW                                                          PROBE-ERR
+  W6 harvest         e1_sources --no-arm -> exit 0                                      PASS
+  C1 v1 seal         0d20e8314ce992fc                                                   PASS
+  C2 floor           226                                                                PASS
+  C6 computed anchor 0 timestamp(2026)                                                  PASS
+  C7 chart anchor    0 now() calls                                                      PASS
+  clean build        exit 0, "v1 verified untouched"                                    PASS
+  E2 engine suite    e2_tests pass=36 fail=0                                            PASS
+  determinism        rebuild -> same v2 282517ac622769bd                                PASS
+W5 ADJUDICATED AS A PROBE ERROR (two-sided):
+  Side A (the probe is wrong) YES: the probe's shell captured `python3 ... | tail -1` — the
+  PIPE's exit code (0), not the build's; and TWO concurrent re-verify runs raced on
+  plutus-vision-v1.pine (one restored it while the other was mid-tamper), so the build saw an
+  UNTAMPERED v1.
+  Side B (a real defect) NO: the CLEAN test (no pipe) gives `exit=1` + verbatim `HARD STOP H1
+  — v1 HAS MOVED.`; v1 restored to 0d20e8314ce992fc. The enforcement is intact.
