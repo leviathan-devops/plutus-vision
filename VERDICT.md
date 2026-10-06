@@ -61,7 +61,7 @@ A1 replay rewind (bars 2007→1608, restored) · A2 classify (RES/SUP) · A3 dea
 ```
 repo   PLUTUS_VISION @ the checkpoint Checkpoints/e1-automatic-polish-2026-10-06/
 build  PV2_PAIR=DXY PV2_WEEK=2026-07-06 python3 scripts/lqz_vision_v2_build.py
-       -> plutus-vision-v2.pine  7ebbe95b58217020  (v1 verified untouched)
+       -> plutus-vision-v2.pine  282517ac622769bd  (v1 verified untouched)
 tests  python3 scripts/e1_st_18.py · scripts/e2_tests.py (0 fail)
 rig    :9741 pine-station · :9854 VIL rail · :9851 pv-server · :9222 CDP
 app    pine-ide  -> the 2-tab dashboard (PINE IDE + BACKTEST), the app on the operator display

@@ -20,11 +20,13 @@ _The legal-stop record. Written 2026-10-06. A fresh agent resumes from THIS + th
 
 ### The seal + the artifact
 - **v1 seal** `0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1` — byte-identical (the HARD-STOP target). Enforced at `scripts/lqz_vision_v2_build.py:1` (`verify_v1_untouched`) → `HARD STOP H1`.
-- **v2** `7ebbe95b58217020` — the served copy == the tree == the checkpoint (all in sync).
+- **v2** `282517ac622769bd` — the served copy == the tree == the checkpoint (all in sync). Recorded in `context_management/CURRENT_STATE.md:14` and `.omp/ct-results.json:1`.
+- The truth table: `context_management/CURRENT_STATE.md:7` · the manifest `context_management/CANON_MANIFEST.md:75` · the E1 payload `data/e1/DXY-2026-07-06.json:1` · the E2 chain `data/e2/DXY-2026-07-06-e2.json:1`.
 - The build: `scripts/lqz_vision_v2_build.py:153` (`build_payload`) injects the E1 zones + the E2 path; the render is `plutus-vision-lqz/e1-render.pine:1` + `plutus-vision-lqz/e2-render.pine:1`.
 - The engine: `scripts/e2_engine.py:97` (`classify`) · `:342` (`_next_target`) · `:456` (`day_decomposition`) · `:570` (`fine_path`).
 - The E2 driver: `scripts/wire_e2.py:35` (`compute_momentum`) · `scripts/wire_e2.py:132` (the week validation).
 - The backtest overlay: `scripts/pv-server.py:152` (`/api/v1/e1/zones`) · `pine-ide/ide/renderer/tabs/backtest.js:783` (`drawE1Zones`).
+- The audit gate line: `TESTING_LOG.md:1633` (`AUDIT GATE: PASS`).
 
 ### The suites (this session)
 `e1_st_18` 8 · `e1_st_19` 10 · `e1_st_20` 7 · `e1_st_21` 4 · `e1_st_22` 7 · `e1_st_26` 4 · `e2_tests` 36 — **0 failures**.
@@ -59,8 +61,65 @@ A1 replay rewind (bars 2007→1608, restored) · A2 classify (RES/SUP) · A3 dea
 ```
 repo   PLUTUS_VISION @ the checkpoint Checkpoints/e1-automatic-polish-2026-10-06/
 build  PV2_PAIR=DXY PV2_WEEK=2026-07-06 python3 scripts/lqz_vision_v2_build.py
-       -> plutus-vision-v2.pine  7ebbe95b58217020  (v1 verified untouched)
+       -> plutus-vision-v2.pine  282517ac622769bd  (v1 verified untouched)
 tests  python3 scripts/e1_st_18.py · scripts/e2_tests.py (0 fail)
 rig    :9741 pine-station · :9854 VIL rail · :9851 pv-server · :9222 CDP
 app    pine-ide  -> the 2-tab dashboard (PINE IDE + BACKTEST), the app on the operator display
 ```
+
+---
+
+## THE DIAGNOSIS LOG (what VISUAL inspection found that reading could not)
+
+This is the record of the "wonky shit with the dashboards" the operator flagged by
+LOOKING at the app. Every fix below traces to a MEASURED observation, never a guess.
+
+### WONK 1 — the SPLIT-TAB layout (fixed)
+The operator's screenshot showed only the left of the window. Cause: a stray `"` in an
+inline `onclick` attribute in `pine-ide/ide/renderer/pine.html:1` closed the attribute
+early and leaked `pv-pane">` as visible text on the BACKTEST tab. Fixed by moving the
+switcher off the inline handler.
+
+### WONK 2 — FIXTURE_CELL_ABSENT (fixed)
+`scripts/pv-server.py:72` (`bars_for`) keyed cells on `pair` + `timeframe`; the app
+requested `EUR/USD` while the fixture carried `DXY`. The app's navigation map normalizes
+`EUR/USD → EURUSD`; the `norm_pair` helper in `scripts/pv-server.py:62` now strips the
+slash before comparison, so both spellings resolve to one cell.
+
+### WONK 3 — THE SCRIPT-MISMATCH (fixed)
+After a page reload the editor reset to a study smoke case (`// THE PINE SHELL — a study
+smoke case`), so the chart showed an "EMA Ribbon", not the E1/E2 render. The reload path
+must always re-inject `plutus-vision-v2.pine`; the served copy lives at
+`pine-ide/ide/renderer/plutus-vision-v2.pine:1`.
+
+### WONK 4 — THE 800-LABEL WALL (fixed — the big one)
+Measured by reading the chart's OWN scene: `ctrl.drawings.all()` returned **846** items —
+`6 box, 38 trendline, 800 text, 2 polyline`. All 800 text items were the IDENTICAL
+`"SS 55%"` E2 day-tag at the SAME x. The mechanism lived in the payload injection:
+`scripts/lqz_vision_v2_build.py:183` (`add()`) emitted `var array<T> name = array.new<T>()`
+plus a BARE GLOBAL `name.push(v)`; a bare global statement in Pine runs EVERY BAR, so each
+array grew by its length on every bar and the E2 day-tag loop drew the label once per
+accumulated point. The E1 hid it (`e1MaxZones` caps its loop, `plutus-vision-lqz/e1-render.pine:1`).
+The fix: ONE `if bar_index == 0` guard around every push. `array.from([...])` was tried
+first and PineTS REJECTED it ("Cannot call array.from with a tuple argument"). After the
+fix the scene reads **14** drawings (6 box + 4 trendline + 2 text + 2 polyline) and the
+census shows `2 labels` — the E1 zone tags RETURN.
+
+### WONK 5 — THE TEAL CANDLE WALL (fixed)
+The raw v1 ALSO showed a wall with `0 segs`, proving it was the CANDLES, not a study.
+`scripts/pv-server.py:110` (`_prediction_space`) gave EVERY one of the 126 prediction bars
+a `±0.75` high/low — 126 tall candles stacked at the chart's right edge. An earlier change
+of mine had done that to pull the price scale. The fix: only the FIRST prediction bar
+carries the band (for the scale); the rest are FLAT.
+
+### WONK 6 — ST-1b the stale path (fixed)
+`scripts/e1_tests.py:60` read a hardcoded `data/e1/EURUSD-2026-10-06.json` that stopped
+existing, so the test reported `no data file` and FAILED while the contract it guards was
+intact. Now it reads the newest E1 file on disk. `e1_tests` went 13/1 -> 15/0.
+
+## THE FRONTIER (named residual)
+- The E2 direction is the momentum's sign (a weak signal); the TZ fix made it match THIS
+  week.
+- The backtest overlay draws the zones at the chart's last bar (the room's Vite chart has no
+  future drawing).
+- C16 — the operator's look.

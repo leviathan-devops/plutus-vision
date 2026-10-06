@@ -2,7 +2,7 @@
  "checkpoint": "e1-automatic-polish-2026-10-06",
  "token": "feat(e1-e2): automatic institutional pressure zones + the E2 price-continuation path",
  "v1_seal": "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1",
- "v2": "7ebbe95b58217020",
+ "v2": "282517ac622769bd",
  "files": [
   {
    "path": "CONTEXT_TOKEN.md",
@@ -15,6 +15,11 @@
    "bytes": 898
   },
   {
+   "path": "VERDICT.md",
+   "sha256": "076d628a3babf05131352e32cfe32538fec49b5b0d8df6b48f7fa40c6826e5ce",
+   "bytes": 5376
+  },
+  {
    "path": "ct-results.json",
    "sha256": "7c0a1ca24a99ea2cf368b21190f9ce7a6cd646e0f8231bff83654b5912f51b47",
    "bytes": 5219
@@ -25,14 +30,19 @@
    "bytes": 3501
   },
   {
+   "path": "evidence/C16-clean-render.png",
+   "sha256": "d76eeba28dae9861ca16b302913599fa02cf3f7c3431b84101d490ee3c29676d",
+   "bytes": 174673
+  },
+  {
    "path": "evidence/play-forward-DXY-jul6-11.mp4",
    "sha256": "9f40e812fc0a54c29e661c7700caf6fe93518b42f32a70388331680ab0d5301f",
    "bytes": 368537
   },
   {
    "path": "render/SHA256SUMS",
-   "sha256": "173a97967370a9b9c0fc0710085133a8c85a9b8d774fe139a15374396788e415",
-   "bytes": 415
+   "sha256": "5e5f68d014ab4868805cda4bc5a4e85f8e2cd19bcf1f7a7c66561af48cf27ef2",
+   "bytes": 510
   },
   {
    "path": "render/e1-render.pine",
@@ -50,9 +60,19 @@
    "bytes": 76550
   },
   {
+   "path": "render/plutus-vision-v2-served.pine",
+   "sha256": "282517ac622769bdb34296ebee94fa8079da28dbab30bff1c27ae2146a74f011",
+   "bytes": 100605
+  },
+  {
    "path": "render/plutus-vision-v2.pine",
-   "sha256": "7ebbe95b5821702085ba9e1b59dea1ac416e72fa96a0042f8c098b8c70fc9ee4",
-   "bytes": 100204
+   "sha256": "282517ac622769bdb34296ebee94fa8079da28dbab30bff1c27ae2146a74f011",
+   "bytes": 100605
+  },
+  {
+   "path": "scripts/e1_tests.py",
+   "sha256": "17452079cd488094a42a3e762f63c3e9bfa72ff4d827281ef1a30b8e8978c4b7",
+   "bytes": 11516
   },
   {
    "path": "scripts/e2_engine.py",
@@ -61,13 +81,13 @@
   },
   {
    "path": "scripts/lqz_vision_v2_build.py",
-   "sha256": "d1007623808ea13c5661cd6834b0d9008b51d6ebaf013758d6f1407274fde42b",
-   "bytes": 18850
+   "sha256": "148859547ddf747c58aa98e27b0c893b8804e9a4d8ca450f0a2f1e7655afd87f",
+   "bytes": 20830
   },
   {
    "path": "scripts/pv-server.py",
-   "sha256": "c4d22e97f7b409f560e1fba9c40ce1618f22d48b45b6e854a92a232ee4cb0157",
-   "bytes": 9854
+   "sha256": "cd1e827fdb170ec44c12f0401765056bd3a4e68cb6c7a325d884d243c758b0aa",
+   "bytes": 10408
   },
   {
    "path": "scripts/wire_e2.py",
