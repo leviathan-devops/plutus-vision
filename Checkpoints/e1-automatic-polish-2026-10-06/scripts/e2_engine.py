@@ -482,11 +482,24 @@ def day_decomposition(chain: ShapeChain, zones: list[Zone],
     by_to: dict = {}
     for l in chain.chain:
         by_to.setdefault(l.to_shape, l)
+    # THE MID-RANGE ZONE (accuracy fix 2026-10-06). The canon defines SS as "oscillates
+    # within a defined range bounded by IP zones" — a RANGE around the spot, not a run to
+    # the week's extreme. The operator's accuracy check exposed the drift: after a WL that
+    # correctly reached the Upper Resistance (Tue, err -0.03), the terminal SS anchored at
+    # the FAR Key Support (100.55) while the actual price consolidated at ~100.9-101.0 (the
+    # Equilibrium) — a systematic +0.4 miss for the rest of the week. A range shape (SS/R)
+    # now anchors at the zone nearest the MIDDLE of the map (the spot/equilibrium); a
+    # directional shape (WL/BS/RWL) keeps the link's target (the extreme it ran to).
+    _ordered = sorted([z for z in zones if z.degree != "MINIMAL"], key=lambda z: (z.top + z.bottom))
+    _mid_zone = _ordered[len(_ordered) // 2].id if _ordered else ""
+    _RANGE = ("SS", "R", "WLS", "RS")
     for i, name in enumerate(names):
         shape = seq[i]
         link = by_to.get(shape)
         key_zone = link.trigger_zone_id if link else (chain.anchor_zone_ids[0]
                                                       if chain.anchor_zone_ids else "")
+        if shape in _RANGE and _mid_zone:
+            key_zone = _mid_zone
         conf = link.confidence if link else 60.0
         d = monday + dt.timedelta(days=i)
         days.append({
