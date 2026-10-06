@@ -72,8 +72,8 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
 
 | artifact | sha256 (16) | role |
 |---|---|---|
-| `plutus-vision-v2.pine` | `36ddad9676becd70` | THE DELIVERABLE — the sealed v1 + the E1 IP zones + the E2 predicted path (ON) |
-| `pine-ide/ide/renderer/plutus-vision-v2.pine` | `36ddad9676becd70` | the SERVED copy (in sync) |
+| `plutus-vision-v2.pine` | `7ebbe95b58217020` | THE DELIVERABLE — the sealed v1 + the E1 IP zones + the E2 predicted path (ON) |
+| `pine-ide/ide/renderer/plutus-vision-v2.pine` | `7ebbe95b58217020` | the SERVED copy (in sync) |
 | `plutus-vision-v1.pine` | `0d20e8314ce992fc` | the SEALED baseline — `HARD STOP H1` if it drifts |
 | `plutus-vision-v0.pine` | `605bff82d3539e9e` | the parity reference (never edited) |
 
@@ -85,7 +85,7 @@ The E2 predicted path renders alongside the labels (2 plots · 6 boxes · 101 li
 
 **THE GATES (the evidence, bound to tool results).**
 - `.omp/ct-results.json:1` — the W9 host-live artifact: `overallVerdict: PASS`, 7/7 angles (A1-A7),
-  `artifactSha256 36ddad9676becd70…`.
+  `artifactSha256 7ebbe95b58217020…`.
 - `TESTING_LOG.md:1541` — the P5 adversarial pass + `AUDIT GATE: PASS`.
 - `RUNTIME_LEDGER.md:1` — what RUNNING taught (the A1 replay-follow, the renderer limits, the
   anchor law).

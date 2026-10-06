@@ -11,8 +11,8 @@ the section-map source. The E1-automatic BUILD's truth SHAs:
 
 | artifact | sha256 | role |
 |---|---|---|
-| `plutus-vision-v2.pine` | `36ddad9676becd70…` | THE DELIVERABLE = the sealed v1 + the E1 IP zones + the E2 predicted path (ON) |
-| `pine-ide/ide/renderer/plutus-vision-v2.pine` | `36ddad9676becd70…` | the SERVED copy (in sync with the built artifact) |
+| `plutus-vision-v2.pine` | `7ebbe95b58217020…` | THE DELIVERABLE = the sealed v1 + the E1 IP zones + the E2 predicted path (ON) |
+| `pine-ide/ide/renderer/plutus-vision-v2.pine` | `7ebbe95b58217020…` | the SERVED copy (in sync with the built artifact) |
 | `plutus-vision-v1.pine` | `0d20e8314ce992fc…517bd1` | the SEALED baseline — HARD STOP H1 if it drifts |
 | `plutus-vision-v0.pine` | `605bff82d3539e9e…` | the parity reference (never edited) |
 
@@ -285,7 +285,7 @@ target trading week and follow bar replay.
 ```
 WORKSTREAM           STATE            THE ARTIFACT
 V1 baseline          SHIPPED+SEALED   plutus-vision-v1.pine        1270L  sha 0d20e831…
-V2 shell (E1+E2)     SHIPPED          plutus-vision-v2.pine        1735L  sha 36ddad96…
+V2 shell (E1+E2)     SHIPPED          plutus-vision-v2.pine        1735L  sha 7ebbe95b…
 E1-AUTOMATIC         BUILT (W1-W9)    packages/plutus-vision-e1-automatic/
   ├── spec           APPROVED (0/8)   plutus-vision-e1-automatic_DPL1_SPEC.md   609L
   ├── blueprint      DONE             MASTER_BLUEPRINT.md                       1032L
