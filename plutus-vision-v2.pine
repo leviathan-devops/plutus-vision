@@ -1291,46 +1291,39 @@ e1_injected_week_tag = "2026-W29"
 e2_injected_refusal = ""
 
 if bar_index == 0
-    e1_injected_top.push(100.70967)
-    e1_injected_top.push(100.892)
-    e1_injected_top.push(101.05215)
-    e1_injected_top.push(101.20461)
-    e1_injected_top.push(101.33735)
-    e1_injected_top.push(101.36439)
-    e1_injected_bottom.push(100.59265)
+    e1_injected_top.push(101.294)
+    e1_injected_top.push(101.05716)
+    e1_injected_top.push(101.03933)
+    e1_injected_top.push(100.78633)
+    e1_injected_top.push(100.617)
+    e1_injected_bottom.push(101.2502)
+    e1_injected_bottom.push(101.05215)
+    e1_injected_bottom.push(100.88981)
     e1_injected_bottom.push(100.74555)
-    e1_injected_bottom.push(100.90294)
-    e1_injected_bottom.push(101.05716)
-    e1_injected_bottom.push(101.20795)
-    e1_injected_bottom.push(101.36439)
-    e1_injected_confluence.push(6)
-    e1_injected_confluence.push(6)
-    e1_injected_confluence.push(6)
-    e1_injected_confluence.push(6)
-    e1_injected_confluence.push(6)
-    e1_injected_confluence.push(4)
+    e1_injected_bottom.push(100.59265)
+    e1_injected_confluence.push(8)
+    e1_injected_confluence.push(7)
+    e1_injected_confluence.push(10)
+    e1_injected_confluence.push(7)
+    e1_injected_confluence.push(5)
+    e1_injected_zfp.push(27)
     e1_injected_zfp.push(37)
-    e1_injected_zfp.push(37)
-    e1_injected_zfp.push(37)
-    e1_injected_zfp.push(37)
+    e1_injected_zfp.push(17)
     e1_injected_zfp.push(37)
     e1_injected_zfp.push(50)
-    e1_injected_cat.push("SUP")
-    e1_injected_cat.push("SUP")
-    e1_injected_cat.push("SUP")
-    e1_injected_cat.push("SUP")
-    e1_injected_cat.push("MID")
     e1_injected_cat.push("RES")
-    e1_injected_id.push("IP Support 4")
-    e1_injected_id.push("Key IP Support")
-    e1_injected_id.push("IP Support Floor")
-    e1_injected_id.push("Mid-Range Support")
-    e1_injected_id.push("Equilibrium Zone")
+    e1_injected_cat.push("RES")
+    e1_injected_cat.push("MID")
+    e1_injected_cat.push("SUP")
+    e1_injected_cat.push("SUP")
     e1_injected_id.push("IP Resistance Ceiling")
+    e1_injected_id.push("Upper IP Resistance")
+    e1_injected_id.push("Equilibrium Zone")
+    e1_injected_id.push("Mid-Range Support")
+    e1_injected_id.push("Key IP Support")
+    e1_injected_degree.push("MODERATE-HEAVY")
     e1_injected_degree.push("MODERATE")
-    e1_injected_degree.push("MODERATE")
-    e1_injected_degree.push("MODERATE")
-    e1_injected_degree.push("MODERATE")
+    e1_injected_degree.push("HEAVY")
     e1_injected_degree.push("MODERATE")
     e1_injected_degree.push("LIGHT")
     e2_injected_x.push(1783987200000)
@@ -1338,31 +1331,25 @@ if bar_index == 0
     e2_injected_x.push(1784073600000)
     e2_injected_x.push(1784116800000)
     e2_injected_x.push(1784160000000)
-    e2_injected_x.push(1784198880000)
-    e2_injected_x.push(1784246400000)
     e2_injected_x.push(1784285280000)
     e2_injected_x.push(1784332800000)
     e2_injected_x.push(1784376000000)
     e2_injected_x.push(1784419200000)
-    e2_injected_y.push(101.27265)
-    e2_injected_y.push(101.36575)
-    e2_injected_y.push(101.27265)
-    e2_injected_y.push(101.26247)
-    e2_injected_y.push(100.97754)
-    e2_injected_y.push(101.22396)
-    e2_injected_y.push(101.27265)
-    e2_injected_y.push(101.32025)
-    e2_injected_y.push(101.27265)
-    e2_injected_y.push(101.33565)
-    e2_injected_y.push(101.27265)
+    e2_injected_y.push(100.96457)
+    e2_injected_y.push(101.05767)
+    e2_injected_y.push(100.96457)
+    e2_injected_y.push(101.05767)
+    e2_injected_y.push(100.96457)
+    e2_injected_y.push(101.01217)
+    e2_injected_y.push(100.96457)
+    e2_injected_y.push(101.02757)
+    e2_injected_y.push(100.96457)
     e2_injected_shape.push("WLS")
     e2_injected_shape.push("")
     e2_injected_shape.push("WLS")
     e2_injected_shape.push("")
-    e2_injected_shape.push("BS")
     e2_injected_shape.push("")
     e2_injected_shape.push("R")
-    e2_injected_shape.push("")
     e2_injected_shape.push("SS")
     e2_injected_shape.push("")
     e2_injected_shape.push("")
@@ -1370,15 +1357,11 @@ if bar_index == 0
     e2_injected_conf.push(0)
     e2_injected_conf.push(60)
     e2_injected_conf.push(0)
-    e2_injected_conf.push(85)
     e2_injected_conf.push(0)
     e2_injected_conf.push(75)
-    e2_injected_conf.push(0)
     e2_injected_conf.push(60)
     e2_injected_conf.push(0)
     e2_injected_conf.push(0)
-    e2_injected_ghost_x.push(101.05215)
-    e2_injected_ghost_y.push(101.05215)
 
 // ═════════════════════════════════════════════════════════════════════════════
 //  E1 RENDER — the INSTITUTIONAL PRESSURE MAP.  W4: the trident_v8 port.
@@ -1520,7 +1503,7 @@ f_e1Zbord(string cat, string deg) =>
 
 // ── pressureLbl(deg) — trident_v8.pine:157-158, VERBATIM ────────────────────
 f_e1PressureLbl(string deg) =>
-    deg == "EXTREME" ? "Extreme" : deg == "HEAVY" ? "Heavy" : deg == "MODERATE_HEAVY" ? "Moderate-Heavy" : deg == "MODERATE" ? "Moderate" : deg == "LIGHT" ? "Light" : "Minimal"
+    deg == "EXTREME" ? "Extreme" : deg == "HEAVY" ? "Heavy" : (deg == "MODERATE_HEAVY" or deg == "MODERATE-HEAVY") ? "Moderate-Heavy" : deg == "MODERATE" ? "Moderate" : deg == "LIGHT" ? "Light" : "Minimal"
 
 // ── THE DEGREE — confluence → v8's literal vocabulary (hyphen, the tower's branch) ──
 f_e1Degree(int c) =>
@@ -1577,8 +1560,11 @@ f_e1Render() =>
     _bAnchor = bar_index - math.round((time - e1_anchor_ms) / _bm)
     // THE BAND SPAN — MONDAY to FRIDAY (5 trading days), never a multi-week ribbon.
     _bpw = math.max(1, math.round(432000 / timeframe.in_seconds()))
-    _lx = math.max(0, _bAnchor - 4)
-    _rx = math.min(bar_index + 60, _bAnchor + 5 * _bpw)
+    // THE OPERATOR'S APPROVED WIDTH (2026-10-06): the zones reach ~2 weeks BACK to the left of
+    // the target Monday and ~1 week forward — the wide band the operator approved ("wide to the
+    // left side … you could see back like an extra week or two. Perfect.").
+    _lx = math.max(0, _bAnchor - 2 * _bpw)
+    _rx = _bAnchor + _bpw
 
     // THE IP ZONES — trident_v8.pine:352-365, the loop, re-anchored to bar_index bounds.
     // Colour by zCat (RES|MID|SUP) × degree — the v8 ladder. The band height is inflated so
@@ -1598,29 +1584,19 @@ f_e1Render() =>
                 _top = array.get(e1PayloadTop, i)
                 _bot = array.get(e1PayloadBot, i)
                 _mid = (_top + _bot) / 2
-                // THE RENDERED BAND. The cluster spans [bottom, top] (~0.15 = the canon's
-                // confluence band). FIVE contiguous 0.15 bands read as ONE wall (the operator:
-                // "stacked on top of each other"). Render each zone as a NARROW band at its
-                // confluence CENTRE, so the five institutional levels read as DISTINCT levels with
-                // visible gaps — a level you can see, not a fill you cannot read.
+                // THE RENDERED BAND. The cluster spans [bottom, top]; rendering each at its FULL
+                // range made five adjacent bands read as ONE solid wall (operator, rejected). A
+                // NARROW band at the confluence CENTRE keeps the zones DISTINCT with visible gaps.
                 _hw = 0.02
-                // THE LABEL X — MID-VISIBLE. The visible range spans the target week + margins
-                // (`anchor` is ~157 bars from the right edge); anchoring ~40 bars right of the
-                // Monday centers the tag in the view so the full text reads.
-                _lxmid = _bAnchor + 40
-                // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
-                // A THICKER BORDER + a more OPAQUE fill so the E1 pressure zones DOMINATE the
-                // many v1 liquidity lines behind them (the operator: the E1 zones must be the
-                // read, the v1 the context).
                 box.new(_lx, _mid + _hw, _rx, _mid - _hw,
-                     bgcolor = color.new(f_e1Zbord(_cat, _deg), 55),
+                     bgcolor = f_e1Zfill(_cat, _deg),
                      border_color = f_e1Zbord(_cat, _deg),
                      border_width = 2,
                      border_style = line.style_solid)
                 // THE LABEL — the reference idiom: at the MID, style_none, white, size.normal.
                 // A subtle dark backing keeps the white text legible on the zone fill.
                 _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(array.get(e1PayloadZfp, i)) + "% ZFP"
-                label.new(_lxmid, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
+                label.new((_lx + _rx) / 2, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
     0
 
 if e1Enabled and barstate.islast

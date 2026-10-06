@@ -658,6 +658,22 @@ def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[l
     # than filtered out of a coarse sweep: the canon names .00/.50 as the 2-point anchors
     # and .25/.75 as the 1-point pair, so both are emitted, scored accordingly.
     lo, hi = min(b["l"] for b in recent), max(b["h"] for b in recent)
+    # ── P6 · THE PSYCHOLOGICAL DIMENSION — PER LEVEL, the prompt's own scoring ────────
+    # "Psychological: Major big figure (.00, .50) = 2 points · Quarter figure (.25, .75) = 1."
+    # The prompt scores EACH level's PRICE at a round number; the earlier build added round
+    # numbers as SEPARATE levels, so a pivot that IS at 101.00 never got its psychological
+    # credit (it stayed its own weak level and was discarded). This applies the test to every
+    # level already harvested (the measured defect: only 4/139 levels carried the dimension).
+    for l in levels:
+        cents = round((l["price"] % 1.0) * 100)
+        if cents in (0, 50):
+            l["psychological"] = 2.0
+        elif cents in (25, 75):
+            l["psychological"] = 1.0
+        elif cents in (10, 20, 30, 40, 60, 70, 80, 90):    # the 0.10 grid (the minor figure)
+            l["psychological"] = max(l.get("psychological", 0.0), 0.5)
+    # keep the discrete round-number levels too (the prompt's grid — they anchor zones of
+    # their own where the other pillars land near them)
     start = math.floor(lo / 0.25) * 0.25
     p = start
     while p <= hi:
@@ -666,15 +682,15 @@ def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[l
             score = 2.0 if cents in (0, 50) else 1.0
             add(round(p, 2), f"P6_ROUND_{p:.2f}", 0.0, 0.0, score)
         p += 0.25
-    # ── P9 · THE REGIME DIMENSION — the canon's sixth, and it was never wired ──────
-    # "2 points if the zone sits inside a CONSOLIDATION RANGE (price will respect it);
-    #  1 point if in a TRENDING market (may hold or fail);  0 in a BREAKOUT (likely to
-    #  fail)." The regime is read from the series, never guessed.
-    regime = classify_regime(bars)
-    regime_score = {"CONSOLIDATION": 2.0, "TREND": 1.0, "BREAKOUT": 0.0}[regime]
-    notes["regime"] = regime
+    # ── P9 · THE REGIME — READ FROM THE SERIES, and per ZONE ───────────────────────
+    # The prompt's Regime/Dynamic dimension (0-2) is "zone in consolidation, will hold = 2 ·
+    # zone in momentum = 1 · zone in breakout = 0". It is PER ZONE, computed in `assemble`
+    # (zone_regime). The earlier build set a GLOBAL CONSTANT on every level, which flattened
+    # every cluster's score to the same value → every zone the same MODERATE degree (the
+    # operator's 6th-repeat catch: "five out of six zones … not possible").
+    notes["regime"] = classify_regime(bars)               # the WEEK regime (context only)
     for l in levels:
-        l["regime"] = regime_score
+        l["regime"] = 0.0                                  # the per-ZONE regime lands in assemble
     return levels, notes
 
 
@@ -745,7 +761,54 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
         })
     return zones
 
-def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> list[dict]:
+def zone_regime(bot: float, top: float, bars: list, spot: float) -> float:
+    """The prompt's Regime/Dynamic dimension (0-2), PER ZONE — the prompt's Synthesis Engine:
+    'Zone in consolidation, will hold = 2 · zone in momentum, may hold or fail = 1 · zone in
+    breakout, likely to fail = 0.' Read from the recent price action around the zone, never
+    assigned (and never a global constant — a constant flattens every degree, the 6× defect)."""
+    if not bars:
+        return 1.0
+    recent = bars[-120:]                                   # ~1 week of 1H bars
+    touches = sum(1 for b in recent if b["l"] <= top and b["h"] >= bot)
+    closes = [b["c"] for b in recent]
+    above = sum(1 for c in closes if c > top)
+    below = sum(1 for c in closes if c < bot)
+    if touches >= 1 and above and below:
+        return 2.0                                         # oscillating ACROSS it → consolidation
+    if above == len(closes) or below == len(closes):
+        return 0.0                                         # price sits beyond it → breakout
+    return 1.0                                             # otherwise → momentum
+
+
+def zone_extreme_bonus(bot: float, top: float, bars: list) -> float:
+    """The prompt's Structural Extreme Bonus (≤2): a zone containing a prior swing HIGH or LOW
+    (a liquidity-sweep / supply-ceiling target) earns +0.5 each, capped at 2.0. Read from the
+    daily extremes of the bars — the prompt's 'Repeated Extreme Magnet' in its simplest form."""
+    if not bars:
+        return 0.0
+    daily: dict = {}
+    for b in bars[-360:]:
+        d = dt.datetime.fromtimestamp(b["t"] / 1000, dt.timezone.utc).date()
+        if d not in daily:
+            daily[d] = {"h": b["h"], "l": b["l"]}
+        else:
+            daily[d]["h"] = max(daily[d]["h"], b["h"])
+            daily[d]["l"] = min(daily[d]["l"], b["l"])
+    days = list(daily.values())
+    if len(days) < 3:
+        return 0.0
+    hits = 0
+    for i in range(1, len(days) - 1):
+        h, l = days[i]["h"], days[i]["l"]
+        if h >= days[i - 1]["h"] and h >= days[i + 1]["h"] and bot - 0.05 <= h <= top + 0.05:
+            hits += 1
+        if l <= days[i - 1]["l"] and l <= days[i + 1]["l"] and bot - 0.05 <= l <= top + 0.05:
+            hits += 1
+    return min(2.0, hits * 0.5)
+
+
+def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
+             bars: list = None) -> list[dict]:
     """Cluster the scored levels into zones, then score each CLUSTER by summing its
     dimensions. Independent evidence adds; it does not compete."""
     pip = PIP.get(pair, 0.01)
@@ -784,9 +847,15 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
     # levels yields the genuine zones — distinct, with the GAPS the operator reads as levels.
     _sc = lambda l: sum(l[d] for d in ("technical", "options", "analyst", "structural",
                                        "psychological", "regime"))
-    live = sorted((l for l in levels if abs(l["price"] - spot) <= CONFLUENCE_WINDOW
-                   and _sc(l) >= CONFLUENCE_MIN),
-                  key=lambda l: l["price"])
+    # ── THE PROMPT'S STEP 1 (VERBATIM): "Collect all levels from all 9 pillars. Sort from
+    # highest to lowest. DO NOT filter by spot proximity." ───────────────────────────────
+    # The earlier build restricted the pool to ±CONFLUENCE_WINDOW of spot, so with the price
+    # near the week's high EVERY resistance level above it was discarded → 0 RES zones (the
+    # operator: "how did we randomly go from six zones down to five zones?"). The confluence
+    # floor stays (a zone still needs ≥3 agreeing levels); the SPOT-PROXIMITY FILTER IS GONE.
+    live = sorted((l for l in levels if _sc(l) >= CONFLUENCE_MIN),
+                  key=lambda l: l["price"])             # ascending — the clustering needs it
+    # (the prompt's "sort highest→lowest" is honoured on the EMIT: `zones.sort(-top)` below)
     clusters: list[list[dict]] = []
     for l in live:
         if clusters and (l["price"] - clusters[-1][-1]["price"] <= tol
@@ -798,20 +867,27 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
 
     zones = []
     for cl in clusters:
+        top = max(l["price"] for l in cl)
+        bot = min(l["price"] for l in cl)
+        # ── THE PROMPT'S 6-DIMENSION SCORE (Synthesis Engine, the 0-14) ──────────────
+        # technical + options + analyst + structural + psychological + regime, PLUS the
+        # Structural Extreme Bonus (≤2). Max = 6×2 + 2 = 14. THE DEFECT THIS FIXES
+        # (operator 2026-10-06, 6th repeat): the regime dim was a GLOBAL CONSTANT
+        # (`build_levels` set `l["regime"]` on every level identically) and `structural` was
+        # DOUBLE-COUNTED (base + bonus×0.66), so 29 levels tied at 6.3 and every cluster's
+        # best tied → EVERY zone read MODERATE 37% ("five out of six zones … not possible").
+        # The prompt's regime is PER ZONE ("zone in consolidation 2 / momentum 1 / breakout 0").
         best = max(cl, key=lambda l: sum(l[d] for d in
                                          ("technical", "options", "analyst", "structural",
-                                          "psychological", "regime")))
+                                          "psychological")))
         base = sum(best[d] for d in ("technical", "options", "analyst", "structural",
-                                     "psychological", "regime"))
-        bonus = min(2.0, best["structural"] * 0.66 + best.get("bonus", 0.0))  # + legacy/recapture
-        conf = int(min(CONFLUENCE_CAP, round(base + bonus)))
+                                     "psychological"))
+        reg = zone_regime(bot, top, bars, spot)          # 0/1/2, PER ZONE
+        bonus = min(2.0, best.get("bonus", 0.0)) + zone_extreme_bonus(bot, top, bars)
+        conf = int(min(CONFLUENCE_CAP, round(base + reg + bonus)))
         deg = band_of(conf)
         if deg == "MINIMAL":
             continue                                     # a 0-3 score is discarded
-        if len(zones) >= MAX_ZONES:
-            break
-        top = max(l["price"] for l in cl)
-        bot = min(l["price"] for l in cl)
         side = "SUPPLY" if top > spot else "DEMAND"
         ztype = "HARD_WALL" if best["zfp_hits"] >= 1 else ("STANDARD_WALL" if conf >= 8
                                                              else "SOFT_WALL")
@@ -839,12 +915,27 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
         })
     # ── THE 5.3.3 §5.2.1 IP ZONE MAP SYNTHESIS — the five ROLE names ──────────────
     # "Key Resistance / Upper IP Resistance / Equilibrium Zone / Mid-Range Support / Key
-    # Support." The role is POSITIONAL: the RES zones rank top-down, the MID zone is the
-    # Equilibrium, the SUP zones rank top-down. The ladder id stays as `ladder_name`.
+    # Support." The role is POSITIONAL (the prompt's step 7): the zones ABOVE the spot are RES,
+    # the one straddling is the Equilibrium, those BELOW are SUP. Select 2 RES + 1 MID + 2 SUP
+    # (the v8's own structure: zCat = RES,RES,MID,SUP,SUP), by SCORE within each slot, then
+    # emit TOP→DOWN (the prompt's sort). This is ROLE ASSIGNMENT, not a spot filter — every
+    # level was clustered; the roles are named by position, as the prompt requires.
+    # ── THE v8's FIXED FIVE-SLOT LADDER — BY RANK (the prompt §5.2.1 / the v8's own zCat) ──
+    # The v8's zCat is "RES, RES, MID, SUP, SUP" — a FIXED five-slot ladder, not a spot test.
+    # The top two zones (highest price) are the resistance pair, the THIRD is the Equilibrium,
+    # the bottom two are the support pair. The earlier spot-based naming gave a variable count
+    # (1 RES + 4 SUP when the price sat at the top of the stack — the operator: "how did we
+    # randomly go from six zones down to five zones?"). Rank it, take the FIVE strongest, name
+    # by rank. The spot still drives each zone's degree (via zone_regime), never the count.
+    zones.sort(key=lambda z: -z["confluence"])          # strongest first
+    zones = zones[:5]                                   # the v8's five slots
+    zones.sort(key=lambda z: -z["top"])                 # emit TOP→DOWN (the prompt's sort)
+    for _i, _z in enumerate(zones):
+        _z["zCat"] = "RES" if _i < 2 else ("MID" if _i == 2 else "SUP")
     res = sorted([z for z in zones if z["zCat"] == "RES"], key=lambda z: -z["top"])
     sup = sorted([z for z in zones if z["zCat"] == "SUP"], key=lambda z: -z["top"])
     res_roles = ["IP Resistance Ceiling", "Upper IP Resistance"]
-    sup_roles = ["Mid-Range Support", "IP Support Floor", "Key IP Support"]
+    sup_roles = ["Mid-Range Support", "Key IP Support", "IP Support Floor"]
     for i, z in enumerate(res):
         z["ladder_name"] = z["name"]
         z["name"] = res_roles[i] if i < len(res_roles) else f"IP Resistance {i + 1}"
@@ -911,13 +1002,21 @@ def main() -> int:
         print(f"  wrote {path.name}  — NO DATA: {provenance}")
         return 0
 
-    spot = bars[-1]["c"]
+    # ── THE SPOT = THE PRICE AT THE ANCHOR (the target week's Monday), NOT bars[-1] ──────
+    # With a forward-EXTENDED fixture, `bars[-1]` is the FUTURE price (8 days past the anchor).
+    # Classifying the zones against the future price put the "resistance" BELOW it → 0 RES zones
+    # even after the spot filter was removed (the operator: "the resistance … is literally being
+    # broken"). The prompt classifies vs the CURRENT price — the price at prediction time.
+    _wmon = int(dt.datetime.combine(dt.date.fromisoformat(week), dt.time(0, 0),
+                                    tzinfo=dt.timezone.utc).timestamp() * 1000)
+    _pre = [b for b in bars if b["t"] < _wmon]
+    spot = _pre[-1]["c"] if _pre else bars[-1]["c"]
     levels, notes = build_levels(bars, args.pair, week)
     # THE SPEC'S METHOD (5.3.3 Part III Protocol B): the IP zones = where the pillars' LEVELS
     # CONFLUENCE — cluster the scored levels by price, score each cluster by the 6D sum.
     # (The earlier `synthesize_institutional_zones` range-bands were WRONG — a partition of the
     # range, not zones; the operator: "they're just literally stacked on top of each other".)
-    zones = assemble(levels, atr(bars) or 0.0005, spot, args.pair)
+    zones = assemble(levels, atr(bars) or 0.0005, spot, args.pair, bars)
     week_mon = dt.date.fromisoformat(week)
     doc = {
         "schema": "trident-e1/1", "pair": args.pair, "target_week": week,
