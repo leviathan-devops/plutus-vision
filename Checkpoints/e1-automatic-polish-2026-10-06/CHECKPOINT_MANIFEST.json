@@ -2,6 +2,7 @@
  "checkpoint": "e1-automatic-polish-2026-10-06",
  "token": "feat(e1-e2): automatic institutional pressure zones + the E2 price-continuation path",
  "v1_seal": "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1",
+ "v2": "7ebbe95b58217020",
  "files": [
   {
    "path": "CONTEXT_TOKEN.md",
@@ -9,14 +10,29 @@
    "bytes": 1869
   },
   {
+   "path": "DXY-2026-07-06-e2.json",
+   "sha256": "a1f8260af25594b053da6695159f02ef9ba0fb0453dc039d487de12c37b078e2",
+   "bytes": 898
+  },
+  {
+   "path": "ct-results.json",
+   "sha256": "7c0a1ca24a99ea2cf368b21190f9ce7a6cd646e0f8231bff83654b5912f51b47",
+   "bytes": 5219
+  },
+  {
    "path": "docs/STATE.md",
-   "sha256": "d5d17143b4faf2649d66d26731dd17a08c7e9d6d26a7a903a400fd6162e4bbc1",
-   "bytes": 1476
+   "sha256": "ecad18b598c0fe0ae2ca0fe259c8f530b2177668592d99c355cbdf016f26c68b",
+   "bytes": 3501
+  },
+  {
+   "path": "evidence/play-forward-DXY-jul6-11.mp4",
+   "sha256": "9f40e812fc0a54c29e661c7700caf6fe93518b42f32a70388331680ab0d5301f",
+   "bytes": 368537
   },
   {
    "path": "render/SHA256SUMS",
-   "sha256": "b918e2edfe48c6851752df644cd01772349887ef409f3179325a135999f7fe27",
-   "bytes": 338
+   "sha256": "173a97967370a9b9c0fc0710085133a8c85a9b8d774fe139a15374396788e415",
+   "bytes": 415
   },
   {
    "path": "render/e1-render.pine",
@@ -35,18 +51,38 @@
   },
   {
    "path": "render/plutus-vision-v2.pine",
-   "sha256": "04d7a89ae57d1f9f29e8dbb428d93a306c3d66301b7c1a9e177d09abac65642b",
-   "bytes": 100208
+   "sha256": "7ebbe95b5821702085ba9e1b59dea1ac416e72fa96a0042f8c098b8c70fc9ee4",
+   "bytes": 100204
   },
   {
    "path": "scripts/e2_engine.py",
-   "sha256": "bf221220b3fd766afd1f2369d6aaa390575695d38b6dddf8fc3ca32cafc908de",
-   "bytes": 30153
+   "sha256": "5776100d041f4cf2701d176ee32ff19c01e63fdea51565038876f3b4d2666c32",
+   "bytes": 34417
   },
   {
    "path": "scripts/lqz_vision_v2_build.py",
-   "sha256": "34a59e41b957d558de9a2cbed16d664404c3c2e2efd5880558319cffe7a9408e",
-   "bytes": 18826
+   "sha256": "d1007623808ea13c5661cd6834b0d9008b51d6ebaf013758d6f1407274fde42b",
+   "bytes": 18850
+  },
+  {
+   "path": "scripts/pv-server.py",
+   "sha256": "c4d22e97f7b409f560e1fba9c40ce1618f22d48b45b6e854a92a232ee4cb0157",
+   "bytes": 9854
+  },
+  {
+   "path": "scripts/wire_e2.py",
+   "sha256": "f649811107bd488d3d5c6d9f1c7c0d8e7d71b5ddebd0acf06de22a3d69eddb61",
+   "bytes": 9776
+  },
+  {
+   "path": "tabs/backtest.js",
+   "sha256": "e30e2773b60438db320b56070b585871a80bedba5393d210aae57f74afab8b84",
+   "bytes": 59008
+  },
+  {
+   "path": "tabs/pine.html",
+   "sha256": "c2bdd22e254293ba2b4e040cb0bd6f9ba08fe22c97e45a6ffbc35498f8c2c4a0",
+   "bytes": 4377
   }
  ]
 }

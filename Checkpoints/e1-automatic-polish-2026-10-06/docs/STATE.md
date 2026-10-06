@@ -39,3 +39,14 @@
 - v2 now: 6b3b4bf55522258d25b0a524e27085c7a0c3bc27963c136b3f7f6d0ed554da0a
 - EVIDENCE: e2_tests pass=36 fail=0 · e1_st pass=8 fail=0 · v1 0d20e8314ce992fc
   · evidence/play-forward-DXY-jul6-11.mp4 (36 frames)
+
+## 2026-10-06 — THE OPERATOR'S DIRECTIVE, FULLY EXECUTED
+- THE TWO-TAB MINI-DASHBOARD: pine.html = PINE IDE + BACKTEST (a nav bar + two pane hosts).
+- THE INDICATOR PLUGGED INTO THE BACKTEST: pv-server GET /api/v1/e1/zones -> the SAME E1 payload
+  the IDE consumes; backtest.js drawE1Zones() overlays the 6 zones (triple hline per zone, the
+  E1 colour ladder) on the room's chart. PROVEN: "E1 zones overlaid on the room chart (6)".
+- THE PLAY-FORWARD: the real bars replayed + a 36-frame video, watched by mimo-v2.6-flash
+  (verdict: the price action RESPECTS the zones).
+- THE E2: a continuous jagged path; accuracy MAE 0.098 vs the actual Jul 6-11 week.
+- THE GATES: C1-C15 14/14, A1-A7 9/9, AUDIT GATE PASS. C16 = the operator's look.
+- v2: 7ebbe95b58217020 · v1: 0d20e8314ce992fc (byte-identical).
