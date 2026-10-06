@@ -890,3 +890,25 @@ W5 ADJUDICATED AS A PROBE ERROR (two-sided):
   UNTAMPERED v1.
   Side B (a real defect) NO: the CLEAN test (no pipe) gives `exit=1` + verbatim `HARD STOP H1
   — v1 HAS MOVED.`; v1 restored to 0d20e8314ce992fc. The enforcement is intact.
+
+## 2026-10-06 — THE ADVERSARIAL + AUDIT-SWEEP SESSION (commits ce75bed → 1497aee)
+
+- **The audit sweep** (`qwen-code-audit`): the multi-file scope BLOCKED (OCR_JSON_UNPARSEABLE);
+  the single-file scope PASSED and caught a REAL HIGH the multi-file hid — `transition()` returned
+  `R→WL`/`WL→SS` where canon E2.3 (`docs/PLUTUS_VISION_V2_E1E2_SPEC.md:264`) says `R→SS (RECLASSIFY)`
+  / `WL→RWL`. **The tests pinned the CODE, certifying the defect.** Fixed to the canon; ST-11e
+  re-pinned. Plus 4 mediums + 2 lows (the ordinal determinism sort, the §6.6 temporal bound, the
+  empty-chain alternative, the §6.5 initial-anchor check, the anchor_zone_ids invariant, the
+  terminal shape). **AUDIT GATE: PASS** (0 crit/high).
+- **The adversarial loop A1..A8**: 8/8 PASS. A6 found `build_levels([])` raising a bare `ValueError`
+  → fixed to a NAMED `E1_NO_BARS` refusal (ST-6a/b/c, +3).
+- **The ST-8c probe** (the 7th pass): the test regex hardcoded `bar_index + 1` while the render uses
+  `+60`; the PROPERTY held, the regex was stale — fixed to accept any `+N` clamp.
+- **The wave audit COMPLETE**: W1..W7 + W9, every wave's named test re-run on the tree — ZERO FLAWED.
+- **The W9 re-drive**: the ct-results.json carried a STALE artifact sha (36ddad96); re-driven vs the
+  current `282517ac622769bd`. (The A5 tamper test drifted v1 via a `printf` restore — no trailing
+  newline; restored from git to the seal.)
+- **THE SUITE**: `e1_st_18 8/0 · e2_tests 42/0 · e1_render_tests 24/0 · e1_tests 18/0`.
+- **THE ACCURACY** (the operator's ask): the 35-week macro sweep — E1 relevance 74%, E2 direction
+  54%, E2 beat-naive 49% (the 5-week 5/5 was a sample-size artifact). The null baseline — the E1
+  edge over chance is +6-8% (WEAK). **The render ships; the intelligence is weak.**
