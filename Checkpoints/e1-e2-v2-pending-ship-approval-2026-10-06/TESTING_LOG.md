@@ -1820,3 +1820,14 @@ I drove the live render (:9851 pv-server + :9222 CDP + the pine-station :9741). 
 different weeks' payloads simultaneously (one `PV_FIXTURE` per server). The cross-val renders were
 therefore verified via the station (`:9741`) per week, not as 5 live app screenshots — an
 environment limit, not a defect.
+
+### THE EMPTY-IDE RUNTIME FINDING (2026-10-06, operator-reported)
+
+The Pine IDE appeared empty (candles only). DIAGNOSIS: the chart rendered **EUR/USD** bars while the
+E1 payload is **DXY** — the DXY-priced zones (~100) are ~100 off-scale on EUR/USD (~1.14), rendered
+off-chart and clipped → an empty-looking chart; `VERDICT: NO WEEK`. ROOT CAUSE: the launcher default
+pair (`scripts/pv-ide.sh:72`, `scripts/pv-load.mjs:11`) was EUR/USD, not the payload's DXY. FIX: the
+launcher defaults now match the E1 deliverable (`plutus-vision-v2.pine` on DXY). VERIFIED: the
+operator's window shows DXY · 1740 bars · 6 labelled zones + the E2 path (the checkpoint's approved
+look). This is a RUNTIME finding the static suite could not see (the render compiles + draws — the
+boxes exist — but they are off the VISIBLE price range).

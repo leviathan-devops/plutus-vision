@@ -1,14 +1,15 @@
 #!/usr/bin/env bun
 // pv-load — push a .pine file into the running PLUTUS_VISION Pine IDE, RUN it on
 // the chart's bars, frame the drawn geometry, and print the counts.
-//   bun pv-load.mjs [file.pine] [PAIR] [TF]      defaults: plutus-vision-v0.pine EUR/USD 1H
+//   bun pv-load.mjs [file.pine] [PAIR] [TF]      defaults: plutus-vision-v2.pine DXY 1H
+//   (the E1 deliverable — the E1 zones are DXY-priced; EUR/USD bars put them off-scale)
 // Exit 0 = compiled + drawn; exit 1 = a named failure (NO_PAGE / NO_HANDLE / RUN_FAILED / NOTHING_DRAWN).
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const W = resolve(import.meta.dir, "..");
-const file = resolve(process.argv[2] || `${W}/plutus-vision-v0.pine`);
-const pair = process.argv[3] || "EUR/USD";
+const file = resolve(process.argv[2] || `${W}/plutus-vision-v2.pine`);
+const pair = process.argv[3] || "DXY";
 const tf = process.argv[4] || "1H";
 const src = readFileSync(file, "utf8");
 const fail = (code, msg) => { console.error(`${code}: ${msg}`); process.exit(1); };

@@ -2197,3 +2197,37 @@ gain needs a different zone-derivation or a better direction model.
 
 **THE LESSON (again): a weaker metric improved while the truer capability degraded.** The rejection
 of V4 required the SECOND instrument — the touched rate alone would have shipped a regression.
+
+---
+## F-EMPTY-IDE — the Pine IDE looked empty: a pair mismatch off-scaled the zones (2026-10-06, by the operator)
+
+**SYMPTOM.** The operator: *"pine IDE is empty, nothing is rendered."* The app showed DXY candles
+but no E1 zones (only a thin green band at the far right).
+
+**DIAGNOSIS (measured, not guessed).**
+- The render: `COMPILED … 6 boxes · 10 lines · 11 labels · bars 1740` — the E1 DOES compile + draw 6
+  boxes.
+- The chart pair: the operator's window showed **EUR/USD** (`FIXTURE · EUR/USD · 1H · 1729 bars`),
+  not DXY.
+- The payload: the E1 zones are **DXY**-priced (`100.5`–`101.45`).
+- The mechanism: on EUR/USD bars (~`1.14`), the DXY-priced zones (`~100`) are **~100 units
+  off-scale**. They render (off-chart) and are CLIPPED from the visible price range → the chart reads
+  as EMPTY. The chart ALSO showed `VERDICT: NO WEEK` — the wrong pair has no anchor.
+
+**ROOT CAUSE.** The launcher defaulted the chart to EUR/USD while the E1 payload is DXY:
+`scripts/pv-ide.sh:72` (`"${2:-EUR/USD}"`) and `scripts/pv-load.mjs:11` (`pair … || "EUR/USD"`).
+The build was launched with the v2 pine (the checkpoint's `visual/runtime-state.png` shows the app on
+DXY — the approved look), but a later launch without the pair arg dropped to the EUR/USD default.
+
+**THE FIX.** The launcher defaults now MATCH the E1 deliverable — `plutus-vision-v2.pine` on **DXY**:
+`scripts/pv-ide.sh:72` (`"${1:-…v2.pine}" "${2:-DXY}"`) and `scripts/pv-load.mjs:10-11`
+(`v2.pine` / `"DXY"`). The runtime `loadBars({ pair: 'DXY' })` restored the zones; the NO-ARG default
+now loads v2/DXY (proven: `{file: …v2.pine, pair: DXY, boxes: 6, labels: 11, bars: 1740}`).
+
+**VERIFICATION.** The operator's window now shows **DXY · 1740 bars · 6 labelled zones**
+(IP Resistance Ceiling · Upper IP Resistance · Equilibrium Zone · Mid-Range Support · IP Support
+Floor · Key IP Support) + the E2 path — matching the checkpoint's approved visual.
+
+**THE LESSON.** A pair mismatch between the PAYLOAD and the CHART BARS renders "empty" (off-scale,
+clipped) rather than erroring — a SILENT failure. The chart's default pair is a build parameter, not
+a decoration: it MUST match the payload's pair, and the launcher's default must be the deliverable's.

@@ -2,7 +2,9 @@
 # pv-ide — ONE COMMAND, RELOCATABLE: everything runs from the tree this script sits in
 # (live PLUTUS_VISION or any checkpoint copy). Owns ports :9741 station · :9754 rail ·
 # :9851 renderer+bars · :9222 CDP. Restarts all of them from THIS tree every launch.
-#   pv-ide.sh [file.pine] [PAIR] [TF]      default: <tree>/plutus-vision-v0.pine EUR/USD 1H
+#   pv-ide.sh [file.pine] [PAIR] [TF]      default: <tree>/plutus-vision-v2.pine DXY 1H
+#                                          (the E1 deliverable — the E1 zones are DXY-priced;
+#                                           loading EUR/USD bars puts the zones off-scale)
 #   pv-ide.sh --shot [out.png]             capture the IDE window (vision in the loop)
 set -uo pipefail
 W="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
@@ -69,4 +71,4 @@ DISPLAY=:$SLOT setsid -f google-chrome-stable \
   --use-gl=swiftshader --enable-unsafe-swiftshader \
   --app="http://127.0.0.1:9851/pine.html" > /tmp/pv-ide-chrome.log 2>&1 < /dev/null
 
-timeout 120 bun "$W/scripts/pv-load.mjs" "${1:-$W/plutus-vision-v0.pine}" "${2:-EUR/USD}" "${3:-1H}"
+timeout 120 bun "$W/scripts/pv-load.mjs" "${1:-$W/plutus-vision-v2.pine}" "${2:-DXY}" "${3:-1H}"
