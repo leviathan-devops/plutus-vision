@@ -1306,11 +1306,11 @@ if bar_index == 0
     e1_injected_confluence.push(6)
     e1_injected_confluence.push(6)
     e1_injected_confluence.push(6)
-    e1_injected_zfp.push(40)
-    e1_injected_zfp.push(40)
-    e1_injected_zfp.push(40)
-    e1_injected_zfp.push(40)
-    e1_injected_zfp.push(40)
+    e1_injected_zfp.push(37)
+    e1_injected_zfp.push(37)
+    e1_injected_zfp.push(37)
+    e1_injected_zfp.push(37)
+    e1_injected_zfp.push(37)
     e1_injected_cat.push("MID")
     e1_injected_cat.push("RES")
     e1_injected_cat.push("RES")
@@ -1527,6 +1527,21 @@ f_e1CalcZFP(float tp, float bt, string pair) =>
     float refR = pair == "DXY" ? 1.60 : (pair == "EUR/USD" or pair == "GBP/USD") ? 0.0200 : 0.0150
     math.round((tp - bt) / refR * 100.0)
 
+// ── f_e1Zfp(deg) — THE CANON ZFP (E1.10, a STEP FUNCTION of the pressure degree).
+// THE DEFECT THIS FIXES (operator, vision-in-the-loop 2026-10-06): the label showed the v8's
+// WIDTH-based `f_e1CalcZFP(tp-bt)` — ~9% for EVERY zone (the clusters share a similar width),
+// which cannot distinguish a zone that holds from one that breaks. The canon
+// (docs/PLUTUS_VISION_V2_E1E2_SPEC.md:840) is explicit: the ZFP IS the degree's band —
+//   EXTREME <10% · HEAVY 10-25% · MODERATE-HEAVY 20-35% · MODERATE 30-45% · LIGHT 40-60% · MINIMAL >60%
+// "THE BAND IS DERIVED FROM THE SCORE, NEVER ASSIGNED." A LIGHT zone (the broken Key IP Support)
+// now reads ~50% — likely to fail — not 9%. The number carries the failure information.
+f_e1Zfp(string deg) =>
+    deg == "EXTREME" ? 7 :
+     deg == "HEAVY" ? 17 :
+     (deg == "MODERATE_HEAVY" or deg == "MODERATE-HEAVY") ? 27 :
+     deg == "MODERATE" ? 37 :
+     deg == "LIGHT" ? 50 : 70
+
 // ── THE PAIR — the chart's own (trident_v8.pine:120-126 pair detection) ──────
 // The ZFP reference range is pair-specific; the chart tells us which pair.
 _e1Ticker = str.upper(str.replace(syminfo.ticker, "/", ""))
@@ -1609,7 +1624,7 @@ f_e1Render() =>
                      border_style = line.style_solid)
                 // THE LABEL — the reference idiom: at the MID, style_none, white, size.normal.
                 // A subtle dark backing keeps the white text legible on the zone fill.
-                _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(f_e1CalcZFP(_top, _bot, _e1Pair)) + "% ZFP"
+                _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(f_e1Zfp(_deg)) + "% ZFP"
                 label.new(_lxmid, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
     0
 

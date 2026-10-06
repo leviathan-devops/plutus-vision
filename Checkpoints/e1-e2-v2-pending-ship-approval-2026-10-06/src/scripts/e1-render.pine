@@ -1,0 +1,259 @@
+// ═════════════════════════════════════════════════════════════════════════════
+//  E1 RENDER — the INSTITUTIONAL PRESSURE MAP.  W4: the trident_v8 port.
+//
+//  This is the v8 renderer, PORTED VERBATIM (trident_v8.pine:43-65, :67-155,
+//  :112-155, :157-158, :352-365) and re-anchored to the chart's own week. The
+//  colour is v8's exact ladder — RES=RED, MID=ORANGE, SUP=TEAL, each with six
+//  pressure-tier shades — so the operator reads the SAME colours as the reference.
+//
+//  THE THREE MOVES (blueprint §4):
+//    PORT   the colour ladder + zfill/zbord + the IP block, byte-for-byte
+//    ANCHOR to the chart (`e1_injected_anchor_ms` derived from the chart), not now()
+//    INJECT the live payload (top/bottom/cat/confluence), one derived field = zCat
+//
+//  It consumes ONLY the injected payload; it never reads the v1 liquidity arrays.
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ── INPUTS ──────────────────────────────────────────────────────────────────
+e1Enabled   = input.bool(true, "Show the E1 institutional pressure map", group = "E1 zones")
+e1MaxZones  = input.int(6, "MAX zones", minval = 1, maxval = 6, group = "E1 zones")
+e1BackWeeks = input.int(2, "Hindsight: weeks before the anchor", minval = 0, maxval = 8, group = "E1 zones")
+e1FwdWeeks  = input.int(3, "Foresight: weeks after the anchor", minval = 0, maxval = 8, group = "E1 zones")
+e1ShowFill  = input.bool(true, "Fill the zones", group = "E1 zones")
+
+// ── THE COLOUR LADDER — trident_v8.pine:43-65, VERBATIM ─────────────────────
+// IP Resistance (RED) — 6 pressure tiers
+R_F1 = color.new(color.rgb(180,40,30), 70),  R_B1 = color.rgb(180,40,30)
+R_F2 = color.new(color.rgb(200,60,35), 70),  R_B2 = color.rgb(200,60,35)
+R_F3 = color.new(color.rgb(210,80,40), 70),  R_B3 = color.rgb(210,80,40)
+R_F4 = color.new(color.rgb(220,100,50), 70), R_B4 = color.rgb(220,100,50)
+R_F5 = color.new(color.rgb(230,130,60), 70), R_B5 = color.rgb(230,130,60)
+R_F6 = color.new(color.rgb(240,160,90), 70), R_B6 = color.rgb(240,160,90)
+// IP Equilibrium (ORANGE #FF9800) — 6 pressure tiers
+G_F1 = color.new(color.rgb(255,152,0), 70),   G_B1 = color.rgb(255,152,0)
+G_F2 = color.new(color.rgb(245,145,10), 70),  G_B2 = color.rgb(245,145,10)
+G_F3 = color.new(color.rgb(235,138,20), 70),  G_B3 = color.rgb(235,138,20)
+G_F4 = color.new(color.rgb(225,131,30), 70),  G_B4 = color.rgb(225,131,30)
+G_F5 = color.new(color.rgb(215,124,40), 70),  G_B5 = color.rgb(215,124,40)
+G_F6 = color.new(color.rgb(205,117,50), 70),  G_B6 = color.rgb(205,117,50)
+// IP Support (TEAL) — 6 pressure tiers
+T_F1 = color.new(color.rgb(0,150,150), 70),  T_B1 = color.rgb(0,150,150)
+T_F2 = color.new(color.rgb(0,170,160), 70),  T_B2 = color.rgb(0,170,160)
+T_F3 = color.new(color.rgb(20,180,170), 70), T_B3 = color.rgb(20,180,170)
+T_F4 = color.new(color.rgb(40,190,180), 70), T_B4 = color.rgb(40,190,180)
+T_F5 = color.new(color.rgb(60,200,190), 70), T_B5 = color.rgb(60,200,190)
+T_F6 = color.new(color.rgb(80,210,200), 70), T_B6 = color.rgb(80,210,200)
+
+// ── zfill(cat, deg) — trident_v8.pine:67-155, VERBATIM (the FILL) ───────────
+f_e1Zfill(string cat, string deg) =>
+    color result = color.gray
+    if cat == "RES"
+        if deg == "EXTREME"
+            result := R_F1
+        else if deg == "HEAVY"
+            result := R_F2
+        else if deg == "MODERATE-HEAVY"
+            result := R_F3
+        else if deg == "MODERATE"
+            result := R_F4
+        else if deg == "LIGHT"
+            result := R_F5
+        else
+            result := R_F6
+    else if cat == "MID"
+        if deg == "EXTREME"
+            result := G_F1
+        else if deg == "HEAVY"
+            result := G_F2
+        else if deg == "MODERATE-HEAVY"
+            result := G_F3
+        else if deg == "MODERATE"
+            result := G_F4
+        else if deg == "LIGHT"
+            result := G_F5
+        else
+            result := G_F6
+    else if cat == "SUP"
+        if deg == "EXTREME"
+            result := T_F1
+        else if deg == "HEAVY"
+            result := T_F2
+        else if deg == "MODERATE-HEAVY"
+            result := T_F3
+        else if deg == "MODERATE"
+            result := T_F4
+        else if deg == "LIGHT"
+            result := T_F5
+        else
+            result := T_F6
+    else
+        result := T_F4
+    result
+
+// ── zbord(cat, deg) — trident_v8.pine:112-155, VERBATIM (the BORDER) ────────
+f_e1Zbord(string cat, string deg) =>
+    color result = color.gray
+    if cat == "RES"
+        if deg == "EXTREME"
+            result := R_B1
+        else if deg == "HEAVY"
+            result := R_B2
+        else if deg == "MODERATE-HEAVY"
+            result := R_B3
+        else if deg == "MODERATE"
+            result := R_B4
+        else if deg == "LIGHT"
+            result := R_B5
+        else
+            result := R_B6
+    else if cat == "MID"
+        if deg == "EXTREME"
+            result := G_B1
+        else if deg == "HEAVY"
+            result := G_B2
+        else if deg == "MODERATE-HEAVY"
+            result := G_B3
+        else if deg == "MODERATE"
+            result := G_B4
+        else if deg == "LIGHT"
+            result := G_B5
+        else
+            result := G_B6
+    else if cat == "SUP"
+        if deg == "EXTREME"
+            result := T_B1
+        else if deg == "HEAVY"
+            result := T_B2
+        else if deg == "MODERATE-HEAVY"
+            result := T_B3
+        else if deg == "MODERATE"
+            result := T_B4
+        else if deg == "LIGHT"
+            result := T_B5
+        else
+            result := T_B6
+    else
+        result := T_B4
+    result
+
+// ── pressureLbl(deg) — trident_v8.pine:157-158, VERBATIM ────────────────────
+f_e1PressureLbl(string deg) =>
+    deg == "EXTREME" ? "Extreme" : deg == "HEAVY" ? "Heavy" : deg == "MODERATE_HEAVY" ? "Moderate-Heavy" : deg == "MODERATE" ? "Moderate" : deg == "LIGHT" ? "Light" : "Minimal"
+
+// ── THE DEGREE — confluence → v8's literal vocabulary (hyphen, the tower's branch) ──
+f_e1Degree(int c) =>
+    c >= 12 ? "EXTREME" :
+     c >= 10 ? "HEAVY" :
+     c >=  8 ? "MODERATE_HEAVY" :
+     c >=  6 ? "MODERATE" :
+     c >=  4 ? "LIGHT" : "MINIMAL"
+
+// ── calcZFP(tp, bt, pair) — trident_v8.pine:334-338, VERBATIM ────────────────
+// zone width as a percentage of the pair's typical weekly range.
+f_e1CalcZFP(float tp, float bt, string pair) =>
+    float refR = pair == "DXY" ? 1.60 : (pair == "EUR/USD" or pair == "GBP/USD") ? 0.0200 : 0.0150
+    math.round((tp - bt) / refR * 100.0)
+
+// ── f_e1Zfp(deg) — THE CANON ZFP (E1.10, a STEP FUNCTION of the pressure degree).
+// THE DEFECT THIS FIXES (operator, vision-in-the-loop 2026-10-06): the label showed the v8's
+// WIDTH-based `f_e1CalcZFP(tp-bt)` — ~9% for EVERY zone (the clusters share a similar width),
+// which cannot distinguish a zone that holds from one that breaks. The canon
+// (docs/PLUTUS_VISION_V2_E1E2_SPEC.md:840) is explicit: the ZFP IS the degree's band —
+//   EXTREME <10% · HEAVY 10-25% · MODERATE-HEAVY 20-35% · MODERATE 30-45% · LIGHT 40-60% · MINIMAL >60%
+// "THE BAND IS DERIVED FROM THE SCORE, NEVER ASSIGNED." A LIGHT zone (the broken Key IP Support)
+// now reads ~50% — likely to fail — not 9%. The number carries the failure information.
+f_e1Zfp(string deg) =>
+    deg == "EXTREME" ? 7 :
+     deg == "HEAVY" ? 17 :
+     (deg == "MODERATE_HEAVY" or deg == "MODERATE-HEAVY") ? 27 :
+     deg == "MODERATE" ? 37 :
+     deg == "LIGHT" ? 50 : 70
+
+// ── THE PAIR — the chart's own (trident_v8.pine:120-126 pair detection) ──────
+// The ZFP reference range is pair-specific; the chart tells us which pair.
+_e1Ticker = str.upper(str.replace(syminfo.ticker, "/", ""))
+_e1Pair = str.contains(_e1Ticker, "DXY") ? "DXY" :
+          str.contains(_e1Ticker, "EURUSD") ? "EUR/USD" :
+          str.contains(_e1Ticker, "GBPUSD") ? "GBP/USD" :
+          str.contains(_e1Ticker, "AUDUSD") ? "AUD/USD" : "DXY"
+
+// ── THE PAYLOAD (injected typed arrays; the builder emits these) ────────────
+e1PayloadTop  = e1_injected_top
+e1PayloadBot  = e1_injected_bottom
+e1PayloadConf = e1_injected_confluence
+e1PayloadCat  = e1_injected_cat
+e1PayloadDeg  = e1_injected_degree
+e1PayloadId   = e1_injected_id
+e1_anchor_ms  = e1_injected_anchor_ms
+e1WeekTag     = e1_injected_week_tag
+
+// ── THE PRICE SCALE — THE ZONES MUST FIT ────────────────────────────────────
+// The chart autoscales to the BARS. The zones extend above/below the recent bars, so the
+// upper zones (the resistance levels) fell OFF the top edge (the operator: "cut off"). Two
+// invisible plots (fully transparent) pull the price scale to include the whole zone range,
+// so every zone renders. The zones are price-ASCENDING, so [0] is the floor and the LAST is
+// the ceiling.
+_e1ZHi = array.size(e1PayloadTop) > 0 ? array.get(e1PayloadTop, array.size(e1PayloadTop) - 1) : na
+_e1ZLo = array.size(e1PayloadBot) > 0 ? array.get(e1PayloadBot, 0) : na
+plot(_e1ZHi, "E1 ceiling (scale)", color = color.new(color.white, 100))
+plot(_e1ZLo, "E1 floor (scale)", color = color.new(color.white, 100))
+
+// ── THE RENDER ──────────────────────────────────────────────────────────────
+f_e1Render() =>
+    _n = array.size(e1PayloadTop)
+    // THE ANCHOR — THE TARGET WEEK'S MONDAY. The operator: "renders from Monday to Friday of
+    // this trading week". `e1_anchor_ms` is the analysis point (the target week's Monday), so
+    // the anchor bar is the one whose time is that Monday — derived from the CHART's own bars
+    // (the objective's `anchor = time`). Under replay, `time` moves and the anchor follows.
+    _bm = math.max(1, timeframe.in_seconds() * 1000)
+    _bAnchor = bar_index - math.round((time - e1_anchor_ms) / _bm)
+    // THE BAND SPAN — MONDAY to FRIDAY (5 trading days), never a multi-week ribbon.
+    _bpw = math.max(1, math.round(432000 / timeframe.in_seconds()))
+    _lx = math.max(0, _bAnchor - 4)
+    _rx = math.min(bar_index + 60, _bAnchor + 5 * _bpw)
+
+    // THE IP ZONES — trident_v8.pine:352-365, the loop, re-anchored to bar_index bounds.
+    // Colour by zCat (RES|MID|SUP) × degree — the v8 ladder. The band height is inflated so
+    // a zero-height zone (one confluent level) reads as a band, not a vanished hairline.
+    if _n > 0
+        for i = 0 to _n - 1
+            if i >= _n
+                break
+            if i >= e1MaxZones
+                break
+            _cat = array.get(e1PayloadCat, i)
+            _c   = array.get(e1PayloadConf, i)
+            // THE DEGREE — the synthesized role degree (HEAVY|MODERATE-HEAVY|MODERATE|...) when
+            // the payload carries it; else the confluence-derived fallback.
+            _deg = array.size(e1PayloadDeg) > i ? array.get(e1PayloadDeg, i) : f_e1Degree(_c)
+            if _deg != "MINIMAL"
+                _top = array.get(e1PayloadTop, i)
+                _bot = array.get(e1PayloadBot, i)
+                _mid = (_top + _bot) / 2
+                // THE RENDERED BAND. The cluster spans [bottom, top] (~0.15 = the canon's
+                // confluence band). FIVE contiguous 0.15 bands read as ONE wall (the operator:
+                // "stacked on top of each other"). Render each zone as a NARROW band at its
+                // confluence CENTRE, so the five institutional levels read as DISTINCT levels with
+                // visible gaps — a level you can see, not a fill you cannot read.
+                _hw = 0.02
+                // THE LABEL X — MID-VISIBLE. The visible range spans the target week + margins
+                // (`anchor` is ~157 bars from the right edge); anchoring ~40 bars right of the
+                // Monday centers the tag in the view so the full text reads.
+                _lxmid = _bAnchor + 40
+                // THE ZONE — trident_v8.pine:352-365, VERBATIM: box + label at the MID.
+                // A THICKER BORDER + a more OPAQUE fill so the E1 pressure zones DOMINATE the
+                // many v1 liquidity lines behind them (the operator: the E1 zones must be the
+                // read, the v1 the context).
+                box.new(_lx, _mid + _hw, _rx, _mid - _hw,
+                     bgcolor = color.new(f_e1Zbord(_cat, _deg), 55),
+                     border_color = f_e1Zbord(_cat, _deg),
+                     border_width = 2,
+                     border_style = line.style_solid)
+                // THE LABEL — the reference idiom: at the MID, style_none, white, size.normal.
+                // A subtle dark backing keeps the white text legible on the zone fill.
+                _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(f_e1Zfp(_deg)) + "% ZFP"
+                label.new(_lxmid, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
+    0
+
+if e1Enabled and barstate.islast
+    f_e1Render()

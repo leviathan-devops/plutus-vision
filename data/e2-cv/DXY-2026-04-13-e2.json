@@ -1,0 +1,52 @@
+{
+ "week": "2026-04-13",
+ "monday": "2026-04-13",
+ "pair": "DXY",
+ "zones_in": 4,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1776124800000,
+   "shape": "BS",
+   "conf": 60.0,
+   "zone": "IP Support Floor",
+   "day": "Mon"
+  },
+  {
+   "x": 1776211200000,
+   "shape": "PBS",
+   "conf": 65.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Tue"
+  },
+  {
+   "x": 1776297600000,
+   "shape": "PBS",
+   "conf": 65.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Wed"
+  },
+  {
+   "x": 1776384000000,
+   "shape": "PBS",
+   "conf": 65.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Thu"
+  },
+  {
+   "x": 1776470400000,
+   "shape": "PBS",
+   "conf": 65.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [],
+ "chain": [
+  "BS->PBS@IP Resistance Ceiling"
+ ],
+ "momentum": 1.0,
+ "comments": [
+  "cross-val: 4 zones, 5 days, momentum 1.000"
+ ]
+}

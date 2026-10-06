@@ -1,0 +1,50 @@
+{
+ "week": "2026-06-15",
+ "monday": "2026-06-15",
+ "pair": "DXY",
+ "zones_in": 5,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1781568000000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance 3",
+   "day": "Mon"
+  },
+  {
+   "x": 1781654400000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance 3",
+   "day": "Tue"
+  },
+  {
+   "x": 1781740800000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance 3",
+   "day": "Wed"
+  },
+  {
+   "x": 1781827200000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance 3",
+   "day": "Thu"
+  },
+  {
+   "x": 1781913600000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "IP Resistance 3",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [],
+ "chain": [],
+ "momentum": -1.0,
+ "comments": [
+  "cross-val: 5 zones, 5 days, momentum -1.000"
+ ]
+}

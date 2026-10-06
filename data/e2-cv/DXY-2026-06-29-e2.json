@@ -1,0 +1,50 @@
+{
+ "week": "2026-06-29",
+ "monday": "2026-06-29",
+ "pair": "DXY",
+ "zones_in": 6,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1782777600000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Mon"
+  },
+  {
+   "x": 1782864000000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Tue"
+  },
+  {
+   "x": 1782950400000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Wed"
+  },
+  {
+   "x": 1783036800000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Thu"
+  },
+  {
+   "x": 1783123200000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [],
+ "chain": [],
+ "momentum": -0.7865,
+ "comments": [
+  "cross-val: 6 zones, 5 days, momentum -0.786"
+ ]
+}

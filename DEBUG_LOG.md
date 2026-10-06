@@ -2231,3 +2231,45 @@ Floor · Key IP Support) + the E2 path — matching the checkpoint's approved vi
 **THE LESSON.** A pair mismatch between the PAYLOAD and the CHART BARS renders "empty" (off-scale,
 clipped) rather than erroring — a SILENT failure. The chart's default pair is a build parameter, not
 a decoration: it MUST match the payload's pair, and the launcher's default must be the deliverable's.
+
+---
+## F-ZFP-DEGENERATE + F-E2-SHAPE — the operator's vision-in-the-loop (2026-10-06)
+
+The operator looked at the rendered chart and named two precision defects:
+
+### F-ZFP-DEGENERATE — the ZFP read 9% on every zone (a constant)
+The label showed `f_e1CalcZFP(top,bottom,pair)` = `(top-bottom)/refRange*100` — the **zone WIDTH**.
+The clustered zones share a similar width (~0.15 DXY), so every label read **~9%**, and the
+payload's `zfp` was a constant **40** (`zfp_for("SOFT_WALL",0)`). A number that cannot distinguish a
+zone that holds from one that breaks is not the failure probability — and the canon
+(`docs/PLUTUS_VISION_V2_E1E2_SPEC.md:807,843`) says exactly what it should be:
+
+> THE PRESSURE-DEGREE MAPPING IS A STEP FUNCTION, not a gradient. Within a band ZFP is constant; at
+> a boundary it jumps 10-15%. … THE BAND IS DERIVED FROM THE SCORE, NEVER ASSIGNED.
+
+`confluence 6-7 MODERATE → 30-45% ZFP · 4-5 LIGHT → 40-60% ZFP`. The operator's own read — *"this
+key IP support got broken … the zone failure probability for this was wrong"* — is exactly the
+canon's point: the zone that broke was LIGHT (a weak zone) and should have read a HIGH ZFP.
+
+**THE FIX.** `e1_extract.zfp_from_degree(conf)` (the canon step function) now drives the payload's
+`zfp`, and the render's label uses `f_e1Zfp(deg)` (the same step function). The target week now
+reads `37,50,37,37,37,37` — the LIGHT Key IP Support reads **50%**, MODERATE zones **37%**.
+
+### F-E2-SHAPE — the E2 drew one shape for the whole week
+The E2 rendered a flat **SS** for all five days (a single shape), while the actual week was
+SS → BS → SS (the operator: *"swing scalp, breakout surge, swing scalp … you just drew a swing
+scalp for the entire week"*).
+
+**THE MECHANISM.** The E2's `classify` returned `R` (a range) for the target week (the momentum
+0.54 was below the old `R_STABILISE`), and `transition` produced a flat SS. With the ZFP fix, the
+target zone's zfp moved into the BS band (>45), so `transition` now fires **BS → R → SS** — the
+breakout surge is captured.
+
+**THE FIX.** The ZFP fix (above) propagated: the E2 chain for the target week is now
+`BS→R→SS` (Mon:BS, Tue:R, Wed-Fri:SS), and the 5 cross-val weeks now carry varied chains
+(BS→PBS, WLS) instead of a flat R/SS.
+
+**THE RESIDUAL (named):** the E2 chain is still SHORT (1-2 links, then the terminal shape pads the
+tail via `day_decomposition`). The chain captures the OPENING move (BS) but not the full week's
+shape sequence — the momentum-based direction is the limiting factor. A richer chain needs the E2
+to walk MULTIPLE zones (the chain currently walks 1-2 before the reach/tf bounds stop it).

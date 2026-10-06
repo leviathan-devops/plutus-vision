@@ -448,6 +448,25 @@ def zfp_for(zone_type: str, zfp_hits: int) -> int:
     base -= 5.0 * zfp_hits                # an option wall directly beneath lowers failure
     return int(max(2.0, min(98.0, base)))
 
+# ── THE ZFP — THE FAILURE PROBABILITY (canon E1.10, a STEP FUNCTION of the degree).
+# THE DEFECT THIS FIXES (operator, vision-in-the-loop 2026-10-06): the ZFP shown was the v8's
+# WIDTH-based calcZFP (tp-bt) — ~9% for EVERY zone (the clustered zones share a similar width),
+# an UNINFORMATIVE number that cannot distinguish a zone that holds from one that breaks — and
+# `zfp_for` returned a constant 40 for every SOFT_WALL zone. The canon
+# (docs/PLUTUS_VISION_V2_E1E2_SPEC.md:840-846) is explicit — the ZFP IS the pressure degree's band:
+#   confluence 12-14 EXTREME <10% · 10-11 HEAVY 10-25% · 8-9 MODERATE-HEAVY 20-35% ·
+#   6-7 MODERATE 30-45% · 4-5 LIGHT 40-60% · 0-3 MINIMAL >60%.
+# "THE BAND IS DERIVED FROM THE SCORE, NEVER ASSIGNED" · "ZFP IS THE MOST IMPORTANT SINGLE NUMBER
+# IN E1" (the ONLY scalar both engines read). A LIGHT zone that breaks now reads ~50%, not 9% —
+# the number carries the failure information the operator's vision-in-the-loop measured.
+ZFP_BY_DEGREE = {"EXTREME": 7, "HEAVY": 17, "MODERATE_HEAVY": 27, "MODERATE": 37,
+                 "LIGHT": 50, "MINIMAL": 70}
+
+def zfp_from_degree(conf: int) -> int:
+    """The canon E1.10 step function: the ZFP is the pressure degree's band, derived from the
+    confluence score. NEVER the zone width, NEVER a constant."""
+    return ZFP_BY_DEGREE[band_of(conf)]
+
 
 def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[list[dict], dict]:
     """Compute every candidate level from the fetched series, with its dimension scores."""
@@ -800,7 +819,7 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY") -> li
             "name": f"{deg[:4]}_{side}_{top:.2f}",
             "top": round(top, 5), "bottom": round(bot, 5),
             "zone_type": ztype, "confluence": conf, "pressure_degree": deg,
-            "zfp": zfp_for(ztype, best["zfp_hits"]),
+            "zfp": zfp_from_degree(conf),
             "regime": "consolidation" if conf >= 6 else "momentum",
             "measured_move_target": None, "structural_extreme": any(
                 l["structural"] >= 1.0 for l in cl),
