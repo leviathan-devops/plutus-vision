@@ -155,9 +155,14 @@ def st8_monday_anchor() -> None:
     anchored = re.search(r"_bAnchor\s*=\s*math\.max\(0,\s*math\.min\(\s*bar_index\s*,\s*"
                          r"bar_index\s*-\s*_barsBack\s*\)\s*\)", src) \
             or re.search(r"_bAnchor\s*=\s*bar_index\s*-\s*_barsBack", src) \
-            or re.search(r"_bAnchor\s*=\s*bar_index\b", src)
+            or re.search(r"_bAnchor\s*=\s*bar_index\b", src) \
+            or re.search(r"_bAnchor\s*=\s*bar_index\s*-\s*math\.round\(", src)
     left = re.search(r"_lx\s*=\s*math\.max\(0,\s*_bAnchor\s*-", src)
-    right = re.search(r"_rx\s*=\s*math\.min\(\s*bar_index\s*\+\s*1,\s*_bAnchor\s*\+", src)
+    # Probe defect, SEVENTH pass (2026-10-06): the right-edge clamp changed from
+    # `bar_index + 1,` to `bar_index + 60,` (the wall fix widened the right margin). The
+    # property under test is unchanged — the right edge derives from `_bAnchor` — so the
+    # clamp bound is accepted as ANY integer, not the stale `+ 1`.
+    right = re.search(r"_rx\s*=\s*math\.min\(\s*bar_index\s*\+\s*\d+,\s*_bAnchor\s*\+", src)
     same = bool(left and right and anchored)
     record("ST-8c  both bounds derive from the SAME computed anchor bar", same,
            "_bAnchor = the active bar; both bounds derive from it")
