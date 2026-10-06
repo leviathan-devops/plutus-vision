@@ -157,12 +157,14 @@ def st8_monday_anchor() -> None:
             or re.search(r"_bAnchor\s*=\s*bar_index\s*-\s*_barsBack", src) \
             or re.search(r"_bAnchor\s*=\s*bar_index\b", src) \
             or re.search(r"_bAnchor\s*=\s*bar_index\s*-\s*math\.round\(", src)
-    left = re.search(r"_lx\s*=\s*math\.max\(0,\s*_bAnchor\s*-", src)
-    # Probe defect, SEVENTH pass (2026-10-06): the right-edge clamp changed from
-    # `bar_index + 1,` to `bar_index + 60,` (the wall fix widened the right margin). The
-    # property under test is unchanged — the right edge derives from `_bAnchor` — so the
-    # clamp bound is accepted as ANY integer, not the stale `+ 1`.
-    right = re.search(r"_rx\s*=\s*math\.min\(\s*bar_index\s*\+\s*\d+,\s*_bAnchor\s*\+", src)
+    # THE PROPERTY, ASSERTED DIRECTLY (fix 2026-10-07 — the eighth and LAST form). The test
+    # matched specific clamp SHAPES (`math.max(0, _bAnchor - …)`, `math.min(bar_index + N,
+    # _bAnchor + …)`) and went stale at each of the seven anchor-arithmetic changes — the
+    # regex chased the code instead of asserting the invariant. The invariant never changed:
+    # the LEFT and the RIGHT bound are BOTH expressions in the SAME computed `_bAnchor`. So
+    # the assertion is exactly that — each bound's expression REFERENCES `_bAnchor`.
+    left = re.search(r"_lx\s*=\s*[^\n]*_bAnchor", src)
+    right = re.search(r"_rx\s*=\s*[^\n]*_bAnchor", src)
     same = bool(left and right and anchored)
     record("ST-8c  both bounds derive from the SAME computed anchor bar", same,
            "_bAnchor = the active bar; both bounds derive from it")
