@@ -1746,3 +1746,38 @@ C9's literal formula (`boxes == v1's 32 + the zone count`) is **STALE**. Measure
 **VERDICT: C9's INTENT holds (the E1 zones render). The spec's C9 formula is stale** — logged as
 a spec-drift finding (SPEC_VIOLATION_LOG), to be corrected to `boxes == the E1 zone count when the
 v1 SMC layers are disabled`.
+
+### THE AUDIT GATE — FINAL: `AUDIT GATE: PASS` (2026-10-06, the single-file scope)
+
+The single-file scope (`qwen-code-audit action=scan scanPath=scripts/e2_engine.py`) parses cleanly
+where the multi-file scope did not (OCR_JSON_UNPARSEABLE at scope=workspace>1). The sequence:
+
+| run | scope | verdict |
+|---|---|---|
+| 1 | workspace/e2_engine.py+e1_extract.py | BLOCKED (OCR_JSON_ABSENT — 0 files) |
+| 2 | scripts/e2_engine.py (after the degree/determinism/tag fixes) | **FAIL** (1 high: transition ignores target_zfp) |
+| 3 | scripts/e2_engine.py (after the canon-faithful transition fix) | **PASS** (0 crit/high; 3 med/low) |
+| 4 | scripts/e2_engine.py (after the temporal-bound + alternative fixes) | **PASS** (0 crit/high; 5 med/low) |
+| 5 | — | **AUDIT GATE: PASS** |
+| — | scripts/e1_category.py | **PASS** (0 crit/high; 3 medium) |
+
+**The BLOCKED → FAIL → PASS progression is the honest record**: the multi-file scope returned
+unparseable JSON (BLOCKED, never PASS); the single-file scope parsed and caught a REAL HIGH the
+multi-file run had hidden.
+
+**FIXED THIS SESSION** (`scripts/e2_engine.py`, all proven by ST-14a-e + ST-11e):
+- HIGH: the HIGH finding — `transition()` R→WL and WL→SS contradicted the canon E2.3
+  (`docs/PLUTUS_VISION_V2_E1E2_SPEC.md:264`: `R → SS (RECLASSIFY)`, `WL → opposite momentum = RWL`).
+  Fixed to the canon; the R/WL/WLS/RWL conditions now cite the target's ZFP.
+- MEDIUM: the temporal reclassification bypassed the §6.6 cumulative bound (now gated).
+- MEDIUM: `_alternative` returned [] on a zero-link chain (now derives from the anchor).
+- MEDIUM: the initial anchor skipped §6.5 `tf_match` (now checked → a named refusal).
+- MEDIUM: the temporal link broke `len(anchor_zone_ids)==len(chain)+1` (now maintained).
+- MEDIUM: `chain.current` never exposed the terminal (now `chain.terminal_shape`).
+- LOW: the unused `zones` param in `_alternative` (removed).
+
+**RESIDUAL (named, not swept):** 2 medium + 2 low remain on the macro scale — `transition()` has no
+outgoing row for PBS (the review's scale-dependence: a lone-file view reports what a multi-file
+pass rounds off); the range-day `key_zone`/`link_zone` dual-field is an intentional trace-preserving
+split (both fields present); `PWL/PRWL` are canon shapes not produced by `classify`. The E2 is
+**NO SHIP** (the macro sweep) — these residuals sit on a non-shipping subsystem.

@@ -91,6 +91,9 @@ class ShapeChain:
     days: list[dict] = field(default_factory=list)
     consolidation_phase: str = ""
     refusal: str = ""           # set when the engine refuses rather than fabricates
+    terminal_shape: str = ""    # the shape price is in at the WEEK'S END (audit 2026-10-06,
+                                # e2_engine.py:299) — `current` stays the INITIAL shape the
+                                # day-decomposition sequence starts from; this is the terminal
 
     def cumulative(self) -> float:
         c = 100.0
@@ -236,15 +239,26 @@ def transition(current: str, target_zfp: int) -> "tuple[str, str, float] | None"
             return ("PBS", f"target zfp {target_zfp} beyond the 20-40 mid-range = "
                            f"the zone fails (§6.4 BS→PBS)", 65.0)
     if current == "SS":
-        return ("SS", "both bounds < 30 = SS continues", 70.0)
+        return ("SS", f"both bounds < 30 = SS continues (target zfp {target_zfp})", 70.0)
     if current == "WLS":
-        return ("BS", "WLS always resolves into a BS", 85.0)
+        return ("BS", f"WLS always resolves into a BS (target zfp {target_zfp})", 85.0)
     if current == "R":
-        return ("WL", "R persisting is a WL, not an R", 60.0)
+        # CANON E2.3 (docs/PLUTUS_VISION_V2_E1E2_SPEC.md:264): "R → persists >1 session =
+        # SS (RECLASSIFY)". The earlier build returned WL — a shape the canon does NOT list
+        # for R (audit 2026-10-06, e2_engine.py:238). The RECLASSIFY means the terminal R
+        # becomes an SS, so the chain continues into the range state, not a rejection.
+        return ("SS", f"R persists >1 session = SS (RECLASSIFY; target zfp {target_zfp})", 60.0)
     if current == "WL":
-        return ("SS", "no opposing momentum = SS", 55.0)
+        # CANON E2.3: "WL → opposite momentum = RWL". The transition takes NO momentum (ST-11a
+        # pins the signature: the ZFP decides, not the momentum), so the opponent is read from
+        # the TARGET's density: a hard wall (ZFP < 20) IS the opposite move — the price rejects
+        # it and reverses again (RWL). With no dense wall the WL collapses into a range (SS).
+        if target_zfp < ZFP_HARDWALL:
+            return ("RWL", f"WL meets a dense wall (target zfp {target_zfp} < {ZFP_HARDWALL}) "
+                           f"= RWL (the reverse)", 70.0)
+        return ("SS", f"WL with no opposing wall (target zfp {target_zfp}) = SS", 55.0)
     if current == "RWL":
-        return ("SS", "RWL resolves to SS", 70.0)
+        return ("SS", f"RWL resolves to SS (target zfp {target_zfp})", 70.0)
     # NO DEFAULT ANSWER. Reaching here means no §6.4.1 row matched. The canon's
     # zero-tolerance code forbids inventing a shape, and a silent fallback is an
     # invented shape wearing a low confidence. The caller treats None as
@@ -298,6 +312,16 @@ def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
 
     chain = ShapeChain(current=current, anchor_zone_ids=[anchor])
     zmap = {z.id: z for z in zones}
+    # §6.5 — the INITIAL anchor must satisfy the SAME timeframe reach as every later target
+    # (audit 2026-10-06, e2_engine.py:325). The earlier build checked tf_match only inside the
+    # walk, so a classification anchored to a zone >2 dimensions up (or an invalid tf) was kept
+    # while every subsequent target enforced the rule — an inconsistent contract. Refuse the
+    # unreachable anchor by name rather than emitting a chain that violates §6.5 at link 0.
+    _za = zmap.get(anchor)
+    if _za is not None and not tf_match(tf_source, _za.timeframe):
+        return ShapeChain(current="", refusal=(
+            f"E2_TF_UNREACHABLE: the anchor zone {anchor} ({_za.timeframe}) is more than 2 "
+            f"dimensions from the source timeframe {tf_source} (§6.5)"))
 
     # STEP 3 — extend the chain, with the per-link audit trail and the two bounds.
     # DIRECTION OF TRAVEL: seeded from the classification momentum, then flipped by a
@@ -358,7 +382,7 @@ def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
     # with no second zone ends on one shape and the day decomposition is necessarily
     # flat (an R — a <1-session shape — drawn five times), which §6.8 and §6.4.1 forbid.
     _TEMPORAL = {"R": "SS", "WL": "SS", "RWL": "SS"}
-    if current in _TEMPORAL:
+    if current in _TEMPORAL and chain.cumulative() >= MIN_CHAIN_CONFIDENCE:
         z_anchor = zmap.get(anchor)
         if z_anchor is not None:
             succ = _TEMPORAL[current]
@@ -368,9 +392,16 @@ def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
                 condition=(f"§6.4.1 temporal: {current} unresolved past its canon "
                            f"duration at {anchor} → reclassify to {succ}"),
                 confidence=60.0))
+            # audit 2026-10-06, e2_engine.py:360 — the temporal link must keep the chain's
+            # own invariant (len(anchor_zone_ids) == len(chain) + 1) and advance the terminal,
+            # which the earlier build left untouched.
+            chain.anchor_zone_ids.append(anchor)
+            current = succ
+
+    chain.terminal_shape = current      # the shape price is in at the week's end (299)
 
     # STEP 4 — the alternative chain, ALWAYS
-    chain.alternative = _alternative(zones, zmap, chain)
+    chain.alternative = _alternative(zmap, chain)
 
     # STEPS 2 + 5 — consolidation phase, then the day decomposition with the speed rule
     anchor_id = chain.anchor_zone_ids[-1] if chain.anchor_zone_ids else None
@@ -427,7 +458,7 @@ def _next_target(zones: list[Zone], current_id: str, direction: int,
                                     -z.confluence))
 
 
-def _alternative(zones: list[Zone], zmap: dict, chain: ShapeChain) -> list[Link]:
+def _alternative(zmap: dict, chain: ShapeChain) -> list[Link]:
     """§6.6 step 4 — for EVERY primary chain, at least one alternative that activates
     if the DECISION ZONE behaves oppositely. The decision zone is the first link's
     target; the threshold is the §6.4.1 band boundary, and the shape is the canon's
@@ -440,11 +471,21 @@ def _alternative(zones: list[Zone], zmap: dict, chain: ShapeChain) -> list[Link]
     could return the SAME branch as the primary. The branch is now the canon's
     opposite outcome for the decision zone's own band."""
     if not chain.chain:
-        return []
-    first = chain.chain[0]
-    z = zmap.get(first.trigger_zone_id)
-    if z is None:
-        return []
+        # §6.6 step 4 promises the alternative ALWAYS (audit 2026-10-06, e2_engine.py:473).
+        # A stalled / SS-start week has ZERO links, so the earlier build returned [] and the
+        # "if the decision zone behaves oppositely" contract was unfulfilled. Fall back to the
+        # ANCHOR zone (the classification's own zone) as the decision zone.
+        aid = chain.anchor_zone_ids[0] if chain.anchor_zone_ids else None
+        z = zmap.get(aid) if aid else None
+        if z is None:
+            return []
+        first_from = chain.current
+    else:
+        first = chain.chain[0]
+        z = zmap.get(first.trigger_zone_id)
+        if z is None:
+            return []
+        first_from = first.from_shape
     if z.zfp < ZFP_HARDWALL:
         # primary called the zone a Hard Wall (rejection); alternative = it fails
         alt_shape, threshold, why, conf = "PBS", f"ZFP > {ZFP_BREAKOUT}", \
@@ -457,7 +498,7 @@ def _alternative(zones: list[Zone], zmap: dict, chain: ShapeChain) -> list[Link]
         # primary called the zone a mid-range pause; alternative = it breaks
         alt_shape, threshold, why, conf = "BS", f"ZFP > {ZFP_BREAKOUT}", \
             "the mid-range zone FAILS (breakout) — it does not pause", 70.0
-    return [Link(from_shape=first.from_shape, to_shape=alt_shape,
+    return [Link(from_shape=first_from, to_shape=alt_shape,
                  trigger_zone_id=z.id, trigger_zone_zfp=z.zfp,
                  condition=f"ALTERNATIVE: DECISION ZONE {z.id} {threshold} → {why}",
                  confidence=conf)]

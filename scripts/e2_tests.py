@@ -110,9 +110,13 @@ def st11_hardwall_rwl() -> None:
         got, _, _ = transition("BS", zfp)
         record(f"ST-11d  BS + zfp {zfp} -> {want}", got == want, f"got {got}")
 
-    # the other rows
+    # the other rows — the CANON E2.3 values (docs/PLUTUS_VISION_V2_E1E2_SPEC.md:264):
+    #   WLS → any = BS · R → persists = SS (RECLASSIFY) · WL → opposite momentum = RWL ·
+    #   RWL → SS. The R row was WRONG (returned WL) until the 2026-10-06 audit fix; the WL
+    #   row now reads the opponent from the TARGET's density (a hard wall = the opposite move).
     for cur, zfp, want in (("SS", 50, "BS"), ("SS", 20, "SS"), ("WLS", 40, "BS"),
-                           ("R", 30, "WL"), ("WL", 30, "SS"), ("RWL", 30, "SS")):
+                           ("R", 30, "SS"), ("WL", 30, "SS"), ("WL", 15, "RWL"),
+                           ("RWL", 30, "SS")):
         got, _, _ = transition(cur, zfp)
         record(f"ST-11e  {cur} + zfp {zfp} -> {want}", got == want, f"got {got}")
 
@@ -275,6 +279,16 @@ def st14_determinism() -> None:
     xs, ys, shp, cnf = fine_path([(0, 1.0, "R", 60), (0, 1.5, "WL", 55)], day_ms=0)
     tagged = [s for s in shp if s]
     record("ST-14c  colliding day tags are NOT dropped", len(tagged) >= 2, f"tags={tagged}")
+
+    # ST-14d/e — the chain's own invariants (audit 2026-10-06, findings 299 + 360):
+    # len(anchor_zone_ids) == len(chain)+1, and the week-end shape is exposed.
+    zs = [z("A", 1.10, 1.09, 9, 40), z("B", 1.12, 1.11, 7, 35)]
+    ch = forward_map(zs, 0.0, dt.date(2026, 10, 6))
+    record("ST-14d  len(anchor_zone_ids) == len(chain)+1",
+           len(ch.anchor_zone_ids) == len(ch.chain) + 1,
+           f"{len(ch.anchor_zone_ids)} vs {len(ch.chain)+1}")
+    record("ST-14e  the chain exposes the week-end terminal_shape", bool(ch.terminal_shape),
+           f"= {ch.terminal_shape!r}")
 
 
 def main() -> int:

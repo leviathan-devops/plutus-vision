@@ -2121,3 +2121,24 @@ so most bands are touched regardless of position. The metric measured the WINDOW
 **The lesson (the coverage-baseline law).** A hit-rate is not a capability until it is measured
 against a null of the same count in the same space. 74% vs 65% is a +8% edge; the headline number
 was the base rate. ALWAYS run the null before calling a detector good.
+
+---
+## F-TRANSITION-CANON — the transition table contradicted the canon E2.3 (2026-10-06, by the audit)
+
+**Finding (the audit's HIGH, e2_engine.py:238):** `transition()` ignored `target_zfp` for the
+R/WL/RWL/WLS rows, contradicting the file's own density-beats-momentum law.
+
+**The root cause (deeper than the audit stated):** the rows were not just ignoring the ZFP — two of
+them returned the WRONG SHAPE against the canon. The canon
+(`docs/PLUTUS_VISION_V2_E1E2_SPEC.md:264`, E2.3) says: `R → persists >1 session = SS (RECLASSIFY)`,
+`WL → opposite momentum = RWL`, `WLS → any = BS`, `RWL → SS`. The code returned `R → WL` and
+`WL → SS`. The tests pinned the CODE's values (`("R",30,"WL")`), so the test certified the defect —
+the classic test-encoded-the-defect class.
+
+**The fix:** `transition()` now matches the canon exactly — `R → SS`, `WL → RWL` (when the target is
+a dense wall; the signature takes NO momentum, so the opponent is read from the target's ZFP), and
+every row cites the target's ZFP in its condition. ST-11e updated to the canon's values.
+
+**The lesson:** a test written from the CODE certifies the code, never the canon. When a BINDING
+spec exists, the test's expected values must be traced to the SPEC's table, not to the
+implementation's current output.
