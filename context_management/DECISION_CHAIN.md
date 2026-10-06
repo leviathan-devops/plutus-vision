@@ -298,3 +298,34 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
   beyond "it renders"; the origin-candle mapping has NOT been independently checked.
 - The carried-forward ship docs describe an EARLIER baseline and are NOT a current verification
   of this artifact.
+
+---
+## RULING 2026-10-06 — THE VERBATIM AUTHORITY (the operator's ruling, verbatim)
+
+**THE OPERATOR:** *"The reference pine and the prompt together are both the verbatim of the word.
+… Verbatim authority."* · *"The pine exists from the prompt. The prompt and the reference pine IS
+literally the indicator rendering this exact fucking prompt."* · *"All you have to do is …
+copy paste the working engine one onto the baseline and then just make engine two work."*
+
+**THE LAW (binding):**
+1. **THE AUTHORITY = the prompt** (`Original_Canon_Data/Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md`)
+   **AND the reference pine** (`Original_Canon_Data/Pine Scripts/trident_v8.pine`). They are ONE
+   authority — the pine is the prompt rendered as an indicator. Read BOTH.
+2. **The build package is a DERIVED PLAN, never the authority.** Where it disagrees with the prompt,
+   the prompt WINS.
+3. **THE ONE AUTHORIZED CHANGE:** the LSZ (liquidity zones) are REMOVED from Engine 1 — the baseline
+   already has them. Nothing else changes.
+4. **SCOPE:** Engine 1 + Engine 2 only. Engine 3 is ignored (the operator ruled it flawed).
+5. **NO IMPROVISING.** Anywhere the prompt is silent, FIND the answer in the prompt/pine — never
+   invent. An invented formula (the ZFP) is the derailment the operator caught 5×.
+
+## RULING 2026-10-06 — THE ZFP IS THE PRESSURE DEGREE'S FAILURE BAND
+
+The prompt's Synthesis Engine: `score 6-7 MODERATE → ZFP 30-45% · 4-5 LIGHT → 40-60%`. The ZFP is
+the DEGREE's failure-probability band, NOT a zone width. `zfp_from_degree(conf)` is the
+implementation.
+
+## RULING 2026-10-06 — ENGINE 2 IS ZFP-CONDITIONED (the prompt's §6.4.1)
+
+*"THE TARGET ZONE'S ZFP DECIDES, NOT THE MOMENTUM."* The E2 shape decision + every transition read
+the ZONE's ZFP. The current code reads the momentum (`e2_engine.py:138,142`) — that is the defect.

@@ -168,6 +168,7 @@ e1PayloadBot  = e1_injected_bottom
 e1PayloadConf = e1_injected_confluence
 e1PayloadCat  = e1_injected_cat
 e1PayloadDeg  = e1_injected_degree
+e1PayloadZfp  = e1_injected_zfp
 e1PayloadId   = e1_injected_id
 e1_anchor_ms  = e1_injected_anchor_ms
 e1WeekTag     = e1_injected_week_tag
@@ -236,7 +237,7 @@ f_e1Render() =>
                      border_style = line.style_solid)
                 // THE LABEL — the reference idiom: at the MID, style_none, white, size.normal.
                 // A subtle dark backing keeps the white text legible on the zone fill.
-                _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(f_e1CalcZFP(_top, _bot, _e1Pair)) + "% ZFP"
+                _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(array.get(e1PayloadZfp, i)) + "% ZFP"
                 label.new(_lxmid, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
     0
 

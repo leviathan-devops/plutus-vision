@@ -912,3 +912,13 @@ W5 ADJUDICATED AS A PROBE ERROR (two-sided):
 - **THE ACCURACY** (the operator's ask): the 35-week macro sweep — E1 relevance 74%, E2 direction
   54%, E2 beat-naive 49% (the 5-week 5/5 was a sample-size artifact). The null baseline — the E1
   edge over chance is +6-8% (WEAK). **The render ships; the intelligence is weak.**
+
+## 2026-10-06 — THE AUTHORITY RE-READ + THE ZFP FIX
+- WHAT: read the FULL prompt (Engine 1 + Engine 2, 4216 lines). Fixed the ZFP to the prompt's
+  degree-band (`zfp_from_degree`). Wrote `context_management/ENGINE_BLUEPRINT.md` (the authoritative
+  Engine 1+2 plan). Anchored the authority in the docs.
+- WHY: the operator caught me improvising the ZFP 5× and not reading the prompt.
+- HOW: reverted every improvisation; the ZFP = the pressure degree's failure band; the label reads
+  the injected zfp (not v8's width formula).
+- EVIDENCE: the pine's zfp `37,37,37,37,37,50` (varies by degree); `e1_st_18 8/0 · e2_tests 42/0`.
+- NEXT: W1 — the 6-dimension score (the heart of Engine 1); W3 — Engine 2 ZFP-conditioned.

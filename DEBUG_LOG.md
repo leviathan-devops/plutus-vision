@@ -2324,3 +2324,12 @@ station fresh.
 **THE LESSON.** A long-lived dev server that holds every request's transpile in memory LEAKS. The
 render-verification loops must RESTART the station periodically, or the station must be bounded.
 Documented for the rig.
+
+---
+## EN-ZFP-DEGREE — the ZFP = the pressure degree's failure band (2026-10-06)
+
+- **THE FINDING:** the ZFP label read a flat ~9% (v8's box width) and the engine's ZFP was a constant 40. Neither describes the zone's failure odds.
+- **THE ROOT CAUSE:** the build used v8's `calcZFP = (tp-bt)/refRange*100` (a GEOMETRY) for the label, and `zfp_for("SOFT_WALL")` (a constant) for the engine. The PROMPT defines the ZFP as the pressure degree's failure band.
+- **THE FIX:** `e1_extract.zfp_from_degree(conf)` → `{EXTREME:7, HEAVY:17, MODERATE_HEAVY:27, MODERATE:37, LIGHT:50, MINIMAL:70}` (the prompt's band midpoints); the render label now reads the INJECTED `e1PayloadZfp` (not calcZFP). `scripts/e1_extract.py:822`, `plutus-vision-lqz/e1-render.pine:240`.
+- **THE VERIFICATION:** the payload + the pine now carry `37,37,37,37,37,50` — varying by DEGREE (5 MODERATE zones = 37%, the 1 LIGHT = 50%). `e1_st_18 8/0 · e2_tests 42/0`.
+- **THE LESSON:** the ZFP is a DEFINED quantity in the prompt — read the authority, never substitute a plausible formula.

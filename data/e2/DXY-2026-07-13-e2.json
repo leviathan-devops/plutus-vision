@@ -1,0 +1,59 @@
+{
+ "week": "2026-07-13",
+ "monday": "2026-07-13",
+ "pair": "DXY",
+ "zones_in": 6,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1783987200000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Mon"
+  },
+  {
+   "x": 1784073600000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Tue"
+  },
+  {
+   "x": 1784160000000,
+   "shape": "BS",
+   "conf": 85.0,
+   "zone": "IP Support Floor",
+   "day": "Wed"
+  },
+  {
+   "x": 1784246400000,
+   "shape": "R",
+   "conf": 75.0,
+   "zone": "Equilibrium Zone",
+   "day": "Thu"
+  },
+  {
+   "x": 1784332800000,
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [
+  {
+   "zone": "IP Support Floor",
+   "to": "BS",
+   "zfp": 40,
+   "conf": 70.0
+  }
+ ],
+ "momentum": 1.0,
+ "chain": [
+  "WLS->BS@IP Support Floor",
+  "BS->R@IP Resistance Ceiling",
+  "R->SS@IP Resistance Ceiling"
+ ],
+ "phase": "MID"
+}
