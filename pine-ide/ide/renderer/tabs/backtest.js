@@ -767,10 +767,52 @@
       if (S.uid !== uidAt || S.win !== w || WB.gen !== genAt || !WB.host || !WB.host.isConnected) return;
       syncRoomChart(wb, w); // a throw here rejects this chain: surfaced by the .catch below
       drawTradeLevels(wb);
+      drawE1Zones(wb);
     }).catch(function (e) {
       var em = q('chart-empty');
       if (em) { em.style.display = 'flex'; em.textContent = 'CHART_SYNC_FAILED — ' + (e && e.message); }
     });
+  }
+
+  // ── THE E1 ZONES ON THE ROOM'S CHART (2026-10-06) ─────────────────────────────
+  // The operator: "plug your indicator in on the back testing". The room's Vela chart has NO
+  // pine runner (it is the TradeZella workbench), but its drawing surface accepts
+  // drawings.add('hline'). The E1 institutional-pressure zones are fetched from the pv-server
+  // payload and drawn as labelled horizontal bands, so the room's replay shows the very zones
+  // the price reacts to — the same payload the PINE IDE tab's renderer consumes (ONE source).
+  // A missing payload is a NO-OP (never a fabricated zone).
+  var E1_COL = { RES: '#C8643C', MID: '#3FA46A', SUP: '#2E9B9B' };
+  function drawE1Zones(wb) {
+    var ch = wb && wb.chart;
+    if (!ch || !ch.drawings || typeof ch.drawings.add !== 'function') return;
+    var bars = (S.win && S.win.bars) || [];
+    if (!bars.length) return;
+    if (WB.e1Key === S.uid) return;          // drawn once per session
+    WB.e1Key = S.uid;
+    var t0 = bars[bars.length - 1].time;
+    var put = function (price, color, width, text) {
+      try {
+        ch.drawings.add('hline', {
+          anchors: [{ time: t0, price: Number(price) }],
+          style: { lineColor: color, lineWidth: width, lineStyle: 'solid' },
+          text: text ? { content: text } : undefined,
+        });
+      } catch (e) { /* the chart refuses this level — skip, never fabricate */ }
+    };
+    fetch('http://127.0.0.1:9851/api/v1/e1/zones?pair=' + encodeURIComponent((S.st && S.st.symbol) || 'DXY'))
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        var zs = (j && j.data && j.data.zones) || [];
+        zs.forEach(function (z) {
+          var col = E1_COL[z.cat] || '#888888';
+          put(z.top, col, 1);
+          put(z.bottom, col, 1);
+          put((Number(z.top) + Number(z.bottom)) / 2, col, 3,
+              (z.name || '') + ' | ' + (z.degree || '') + ' | ' + (z.zfp || '') + '% ZFP');
+        });
+        if (zs.length) note({ message: 'E1 zones overlaid on the room chart (' + zs.length + ')' });
+      })
+      .catch(function () { /* the E1 payload is absent — no overlay, never a fabricated one */ });
   }
 
   // ─────────────────────────────────────────────────────────── the details strip (canon envelope)

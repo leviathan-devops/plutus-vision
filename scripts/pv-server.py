@@ -25,6 +25,7 @@ Run:  python3 pv-server.py <port> <static-root>
 """
 import json
 import os
+import pathlib
 import re
 import sys
 import mimetypes
@@ -32,6 +33,8 @@ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
 FIXTURE = os.environ.get("PV_FIXTURE") or str(__import__("pathlib").Path(__file__).resolve().parent.parent / "fixtures/bars/2026-07-06.json")
+# THE E1 ZONE PAYLOAD DIR — the backtest tab's /api/v1/e1/zones reads it (2026-10-06).
+E1_DIR = os.environ.get("PV_E1_DIR") or str(__import__("pathlib").Path(__file__).resolve().parent.parent / "data" / "e1")
 
 # fixture timeframe spelling -> the spellings the workbench may ask with.
 # The provider sends the FIXTURE_TF value ('15m','30m','1H','4H'); the station
@@ -149,6 +152,35 @@ class Handler(SimpleHTTPRequestHandler):
                 code, msg = err
                 return self._json(200, {"success": False, "code": code, "error": msg})
             return self._json(200, {"success": True, "data": {"pair": norm_pair(pair), "timeframe": tf, "count": len(bars), "bars": bars}})
+        if u.path == "/api/v1/e1/zones":
+            # THE E1 ZONES for the backtest tab's overlay (2026-10-06, the operator: "plug your
+            # indicator in on the back testing"). Returns the zones the v2 render draws, so the
+            # room's chart can overlay them (the room's Vela chart has no pine runner, but it
+            # DOES accept drawings.add('hline')). Pair-filtered, newest week first.
+            q = parse_qs(u.query)
+            want = (q.get("pair") or ["DXY"])[0].upper()
+            try:
+                files = sorted(pathlib.Path(E1_DIR).glob("*.json"), reverse=True)
+            except Exception:
+                files = []
+            for f in files:
+                if not f.stem.upper().startswith(want.replace("/", "")):
+                    continue
+                try:
+                    doc = json.loads(f.read_text())
+                except Exception:
+                    continue
+                out = []
+                for z in doc.get("zones", []):
+                    out.append({"name": z.get("name"), "top": z.get("top"),
+                                "bottom": z.get("bottom"), "cat": z.get("zCat"),
+                                "degree": z.get("degree_v8"), "zfp": z.get("zfp"),
+                                "confluence": z.get("confluence")})
+                return self._json(200, {"success": True, "data": {
+                    "pair": want, "week": doc.get("target_week"), "spot": doc.get("spot"),
+                    "anchor": doc.get("anchor"), "zones": out}})
+            return self._json(200, {"success": False, "code": "E1_ABSENT",
+                                    "error": f"no E1 file for {want} in {E1_DIR}"})
         if u.path == "/api/v1/health":
             cells = load_cells()
             return self._json(200, {"success": True, "data": {"cells": len(cells or []), "fixture": FIXTURE}})
