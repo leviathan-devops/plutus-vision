@@ -1,0 +1,24 @@
+{
+ "probes": [
+  {
+   "angle": "A1 replay rewind",
+   "pass": true,
+   "note": "the anchor recomputes, never pinned"
+  },
+  {
+   "angle": "A6 empty payload",
+   "pass": true,
+   "note": "no fabricated zone from an empty payload"
+  },
+  {
+   "angle": "A7 Sunday boundary",
+   "pass": true,
+   "note": "the Sunday\u2192Monday+1 rule holds"
+  },
+  {
+   "angle": "A8 classify gap",
+   "pass": true,
+   "note": "the spot-less zone is refused, never silently defaulted"
+  }
+ ]
+}

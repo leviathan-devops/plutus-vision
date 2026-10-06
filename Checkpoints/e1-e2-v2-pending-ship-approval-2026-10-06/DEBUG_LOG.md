@@ -2142,3 +2142,22 @@ every row cites the target's ZFP in its condition. ST-11e updated to the canon's
 **The lesson:** a test written from the CODE certifies the code, never the canon. When a BINDING
 spec exists, the test's expected values must be traced to the SPEC's table, not to the
 implementation's current output.
+
+---
+## F-EMPTY-BARS — an empty bar series crashed instead of refusing (2026-10-06, by the A6 probe)
+
+**Finding (adversarial A6):** `e1_extract.build_levels([])` raised
+`ValueError: min() iterable argument is empty` from `min(b["l"] for b in recent)` deep in the
+pillar loop — a CRASH, not a refusal.
+
+**The mechanism:** the pillar code assumed a non-empty series (the fetch layer normally guards it),
+but `build_levels` itself had no guard, so any caller passing empty bars got a traceback instead of
+the loud-fail contract.
+
+**The fix** (`scripts/e1_extract.py:454`): an early `if not bars: return [], {"refusal":
+"E1_NO_BARS: …"}` — no levels, a NAMED reason. The caller renders nothing rather than dying.
+
+**Verification:** A6 now PASS (`levels=0 zones=0`, no exception); e1_st_18 still 8/0.
+
+**The lesson:** the LOUD-FAIL contract means a NAMED refusal, never a bare `ValueError`. An empty
+input is the FIRST adversarial case, and it found an unguarded `min()` on the very first probe.

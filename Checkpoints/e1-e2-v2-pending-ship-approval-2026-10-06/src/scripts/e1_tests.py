@@ -216,10 +216,24 @@ def st5_dead_arm_honest() -> None:
                f"levels={len(doc.get('levels', []))}")
 
 
+def st6_empty_bars() -> None:
+    """ST-6 — THE EMPTY-SERIES REFUSAL (adversarial A6, 2026-10-06). An empty bar series must
+    return a NAMED refusal, never a bare ValueError crash (the loud-fail-or-clear-pass law)."""
+    import e1_extract
+    levels, notes = e1_extract.build_levels([], "DXY", "2026-07-06")
+    record("ST-6a  an empty series returns 0 levels (no crash)",
+           levels == [], f"levels={len(levels)}")
+    record("ST-6b  the refusal is NAMED (E1_NO_BARS)",
+           "E1_NO_BARS" in str(notes.get("refusal", "")),
+           f"{str(notes.get('refusal',''))[:60]}")
+    zones = e1_extract.assemble(levels, 0.0005, 100.0, "DXY")
+    record("ST-6c  an empty series fabricates 0 zones", zones == [], f"zones={len(zones)}")
+
+
 def main() -> int:
     tests = [("ST-1", st1_zero_fabrication), ("ST-2", st2_temporal_boundary),
              ("ST-3", st3_notional_assertion), ("ST-4", st4_arm_control),
-             ("ST-5", st5_dead_arm_honest)]
+             ("ST-5", st5_dead_arm_honest), ("ST-6", st6_empty_bars)]
     want = sys.argv[1].upper() if len(sys.argv) > 1 else None
     for name, fn in tests:
         if want and not name.startswith(want):

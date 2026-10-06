@@ -1781,3 +1781,42 @@ outgoing row for PBS (the review's scale-dependence: a lone-file view reports wh
 pass rounds off); the range-day `key_zone`/`link_zone` dual-field is an intentional trace-preserving
 split (both fields present); `PWL/PRWL` are canon shapes not produced by `classify`. The E2 is
 **NO SHIP** (the macro sweep) — these residuals sit on a non-shipping subsystem.
+
+### THE ADVERSARIAL LOOP — A1..A8 (2026-10-06, against the DEPLOYED surfaces)
+
+L2 script-test over the real modules (`evidence/adversarial-A1A6A7.json`), each a PRE-REGISTERED
+expectation + a two-sided adjudication:
+
+| angle | probe | result | verdict |
+|---|---|---|---|
+| A1 replay rewind | two different last-bars → different weeks | Jul8→mon 2026-07-06 (tsL 1782086400000) · May6→mon 2026-05-04 (tsL 1776643200000) | **PASS** |
+| A2 classify RES+SUP | the 6 zones carry ≥1 RES + ≥1 SUP | RES=2 SUP=3 MID=1, 0 unclassified (C8) | **PASS** |
+| A3 dead arm | VLM down → `[NO DATA]`, 0 fabricated | e1_tests ST-5a/b/c (rc=0 · [NO DATA] · levels=0) | **PASS** |
+| A4 floor | `pv_alerts\|smc_` == 226 | 226 (C2) | **PASS** |
+| A5 seal tamper | a v1 line → `HARD STOP H1` | EXIT=1, `HARD STOP H1 — v1 HAS MOVED.` (C4) | **PASS** |
+| A6 empty payload | a zero bar_time + empty bars REFUSE | week_refused=True · levels=0 · zones=0 | **PASS** (after F-EMPTY-BARS) |
+| A7 Sunday boundary | a Sunday bar → the FOLLOWING Monday | mon=2026-07-13 | **PASS** |
+| A8 classify gap | a missing spot REFUSES (E1SpotMissing) | missing-spot→`E1SpotMissing` | **PASS** |
+
+**8/8 adversarial PASS. ONE real finding (A6) fixed** (F-EMPTY-BARS, DEBUG_LOG). **The unswept
+frontier is NAMED:** the inverted-bounds case (`classify(90,110,spot)` returns RES, the audit's
+`e1_category.py:63` finding) is a residual on the E1 (a non-shipping subsystem); the payloads are
+always top>=bottom so it is unreachable on the live path.
+
+### THE RUNTIME SEAT — the ledger (P4: what RUNNING taught that READING could not)
+
+I drove the live render (:9851 pv-server + :9222 CDP + the pine-station :9741). The ops + findings:
+
+| op | action | evidence | what RUNNING taught |
+|---|---|---|---|
+| H1 | the served pine sha | `sha256sum pine-ide/ide/renderer/plutus-vision-v2.pine` = `282517ac…` | the SERVED copy == the built artifact |
+| H2 | render v2 on the station | `:9741/run` → 6 boxes · 2 plots · 10 lines · 11 labels | the E1 zones render; `droppedAnchors: 0` (C10) |
+| H3 | render v1 on the station | 65 boxes · 110 labels · 166 lines | **the SMC toggle discovery** — v1's SMC layers are ON, v2's OFF by design (the 65→6 gap) |
+| H4 | the app CDP screenshots | `/tmp/cv-app2.png`, `/tmp/v2-render.png` | the operator's live app: 6 zones + the E2 path, clean |
+| H5 | the fixture swap | `FIXTURE_CELL_ABSENT: EURUSD 1H` | the app + pv-server share ONE fixture; swapping it breaks the other pair (a runtime constraint) |
+| H6 | the station dataFile | `PINE_DATA_ABSENT` (relative path) then OK (absolute) | the station resolves dataFile against its OWN root, not cwd |
+
+**THE RESIDUAL (named):** the single-fixture constraint means the operator's app cannot show two
+different weeks' payloads simultaneously (one `PV_FIXTURE` per server). The cross-val renders were
+therefore verified via the station (`:9741`) per week, not as 5 live app screenshots — an
+environment limit, not a defect.

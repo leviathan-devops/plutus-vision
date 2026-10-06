@@ -301,3 +301,17 @@ the v1 SMC layers are deliberately disabled; the v1 baseline boxes are NOT a v2 
 
 **The re-verification:** the station render + the operator's app BOTH show `6 boxes · 2 plots ·
 10 lines · 11 labels` — consistent, by design.
+
+---
+## SPEC-VIOLATION SV-2 — the empty-series contract gap (2026-10-06)
+
+**The spec section:** the PROOF CONTRACT's LOUD FAIL OR CLEAR PASS law — "a down source → [NO DATA]
++ a reason".
+
+**The violation:** `build_levels([])` raised a bare `ValueError` (a crash) rather than `[NO DATA]`
++ a named reason — the empty series was an unhandled case.
+
+**The fix:** `scripts/e1_extract.py:454` — an early refusal `E1_NO_BARS` returning `([], {refusal})`.
+
+**The re-verification:** the A6 probe: `week_refused=True levels=0 zones=0` — no fabricated level,
+no crash.

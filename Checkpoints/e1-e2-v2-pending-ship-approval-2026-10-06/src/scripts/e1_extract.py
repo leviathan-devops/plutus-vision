@@ -451,6 +451,13 @@ def zfp_for(zone_type: str, zfp_hits: int) -> int:
 
 def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[list[dict], dict]:
     """Compute every candidate level from the fetched series, with its dimension scores."""
+    # THE EMPTY-SERIES REFUSAL (adversarial A6, 2026-10-06). An empty bar series raised a bare
+    # `ValueError: min() iterable argument is empty` deep in the pillar loop — a crash, not a
+    # refusal. The contract is LOUD-FAIL-OR-CLEAR-PASS with a NAMED reason: return no levels and
+    # a named refusal so the caller renders nothing rather than dying.
+    if not bars:
+        return [], {"refusal": "E1_NO_BARS: the bar series is empty — every pillar is "
+                               "[NO DATA], so no level can be derived (never fabricated)"}
     a = atr(bars) or 0.0005
     closes = [b["c"] for b in bars]
     notes: dict = {}
