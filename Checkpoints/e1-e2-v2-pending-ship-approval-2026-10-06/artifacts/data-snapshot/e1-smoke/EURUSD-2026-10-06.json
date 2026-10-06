@@ -1,0 +1,62 @@
+{
+ "schema": "trident-e1/1-SMOKE",
+ "WARNING": "SMOKE PAYLOAD \u2014 placeholder zones to exercise the RENDER path. These are NOT the canon's nine-pillar confluence scores.",
+ "pair": "EUR/USD",
+ "target_week": "2026-10-06",
+ "data_as_of": "SMOKE",
+ "sources": {
+  "SMOKE": {
+   "status": "SMOKE_FIXTURE",
+   "detail": "synthetic zones, six degree bands"
+  }
+ },
+ "levels": [],
+ "zones": [
+  {
+   "name": "SMOKE-EXTREME",
+   "top": 1.147,
+   "bottom": 1.146,
+   "confluence": 13,
+   "zfp": 8
+  },
+  {
+   "name": "SMOKE-HEAVY",
+   "top": 1.145,
+   "bottom": 1.1442,
+   "confluence": 11,
+   "zfp": 18
+  },
+  {
+   "name": "SMOKE-MODHEAVY",
+   "top": 1.143,
+   "bottom": 1.1423,
+   "confluence": 9,
+   "zfp": 26
+  },
+  {
+   "name": "SMOKE-MODERATE",
+   "top": 1.141,
+   "bottom": 1.1404,
+   "confluence": 7,
+   "zfp": 38
+  },
+  {
+   "name": "SMOKE-LIGHT",
+   "top": 1.139,
+   "bottom": 1.1384,
+   "confluence": 5,
+   "zfp": 48
+  },
+  {
+   "name": "SMOKE-MINIMAL",
+   "top": 1.137,
+   "bottom": 1.1364,
+   "confluence": 2,
+   "zfp": 70
+  }
+ ],
+ "shapes": {},
+ "notes": [
+  "MINIMAL (confluence 2) must NOT paint \u2014 the degree rule drops it."
+ ]
+}

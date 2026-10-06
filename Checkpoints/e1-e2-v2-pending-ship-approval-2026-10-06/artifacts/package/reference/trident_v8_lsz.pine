@@ -1,0 +1,26 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// THE SPLIT-TEST REFERENCE ARM — trident_v8.pine's LSZ block, FROZEN
+// Extracted byte-exact from trident_v8.pine:160-162 (the LSZ colours)
+// and :367-377 (the LSZ render block).
+// PURPOSE: the deferred accuracy comparison (08-SPLIT-TEST.md) — v8's hand-tuned
+//   liquidity zones (arm A) vs our derived ladder (arm B).
+// THE RULE: this file is NEVER ported into e1-render.pine. It is the reference.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// SOURCE: trident_v8.pine:160-162
+// LSZ Colors — ALL GREEN, FILLED ZONES
+LSZ_STD_F = color.new(color.rgb(40,180,80), 70),  LSZ_STD_B = color.rgb(40,180,80)
+LSZ_ACT_F = color.new(color.rgb(80,230,100), 60), LSZ_ACT_B = color.rgb(80,230,100)
+
+// SOURCE: trident_v8.pine:367-377
+    // ── LSZ ──
+    if show_lsz
+        for i = 0 to nX - 1
+            float  tp    = array.get(dxy_xTp, i)
+            float  bt    = array.get(dxy_xBt, i)
+            string pri   = array.get(dxy_xPri, i)
+            bool   isAct = pri == "ACTIVE"
+            color x_bg = isAct ? LSZ_ACT_F : LSZ_STD_F
+            color x_bd = isAct ? LSZ_ACT_B : LSZ_STD_B
+            int   x_w  = isAct ? 2 : 1
+            box.new(tsL, tp, tsR, bt, bgcolor=x_bg, border_color=x_bd, border_width=x_w, border_style=line.style_solid, xloc=xloc.bar_time)

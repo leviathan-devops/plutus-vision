@@ -1,0 +1,55 @@
+{
+ "week": "2026-10-06",
+ "monday": "2026-10-06",
+ "zones_in": 5,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1791316800000,
+   "shape": "BS",
+   "conf": 60.0,
+   "zone": "SMOKE-LIGHT",
+   "day": "Mon"
+  },
+  {
+   "x": 1791403200000,
+   "shape": "RWL",
+   "conf": 85.0,
+   "zone": "SMOKE-EXTREME",
+   "day": "Tue"
+  },
+  {
+   "x": 1791489600000,
+   "shape": "RWL",
+   "conf": 85.0,
+   "zone": "SMOKE-EXTREME",
+   "day": "Wed"
+  },
+  {
+   "x": 1791576000000,
+   "shape": "RWL",
+   "conf": 85.0,
+   "zone": "SMOKE-EXTREME",
+   "day": "Thu"
+  },
+  {
+   "x": 1791662400000,
+   "shape": "RWL",
+   "conf": 85.0,
+   "zone": "SMOKE-EXTREME",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [
+  {
+   "zone": "SMOKE-EXTREME",
+   "to": "R",
+   "zfp": 8,
+   "conf": 75.0
+  }
+ ],
+ "chain": [
+  "BS->RWL@SMOKE-EXTREME"
+ ],
+ "phase": "LATE"
+}
