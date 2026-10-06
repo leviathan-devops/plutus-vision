@@ -113,17 +113,24 @@ def _prediction_space(bars):
     step = (bars[-1]["time"] - bars[-2]["time"]) if len(bars) >= 2 else 3600000
     c = bars[-1]["close"]
     # THE SCALE BAND. The chart autoscales to the BARS; the E1 zones extend above/below the
-    # recent bars (the resistance levels sit past the top edge — the operator: "cut off"). The
-    # FIRST prediction bar spans the zone range so the chart's price scale includes it; the
-    # rest are flat at the close (the prediction space the zones + E2 render into).
+    # recent bars (the resistance levels sit past the top edge — the operator: "cut off"). ONE
+    # prediction bar spans the zone range so the chart's price scale includes it; the REST are
+    # FLAT (open = high = low = close) — the prediction space the zones + E2 render into.
+    #
+    # FIX 2026-10-06 (the operator: "what the fuck is this"): an earlier change made EVERY
+    # prediction bar span ±band. 126 tall candles stacked at the chart's right edge = a dense
+    # teal WALL that buried the render. Only the FIRST bar carries the band; the rest are flat
+    # (a flat candle is a 1px tick, not a bar).
     band = float(os.environ.get("PV_PREDICTION_BAND", "0.75"))
     out = list(bars)
     t = bars[-1]["time"]
     for i in range(PREDICTION_BARS):
         t += step
-        hi = c + band
-        lo = c - band
-        out.append({"time": t, "open": c, "high": hi, "low": lo, "close": c, "volume": 0})
+        if i == 0:
+            out.append({"time": t, "open": c, "high": c + band, "low": c - band,
+                        "close": c, "volume": 0})
+        else:
+            out.append({"time": t, "open": c, "high": c, "low": c, "close": c, "volume": 0})
     return out
 
 
