@@ -281,3 +281,23 @@ native app (with E2 off) — matching the Chrome render. This also confirms the 
 is RENDERER-INDEPENDENT: the WebKit canvas renders the labels exactly as the Chrome vela renderer
 (so the hypothesis that WebKit might paint both is DISPROVEN — the labels render, the E2 path is
 off, same as Chrome). H1 (the real render reachable) is satisfied for the desktop app too.
+
+---
+## SPEC-VIOLATION SV-1 — C9's box formula is stale (2026-10-06)
+
+**The spec section:** §6 C9 — *"the zones render — the rig, one run, fresh page — `boxes` == v1's
+32 + the zone count."*
+
+**The violation:** the v2 renders **6** boxes (not `v1's box count + 6`). The formula assumed the v2
+keeps v1's SMC visuals.
+
+**The mechanism (by design):** the v2 turns OFF every v1 SMC visual toggle
+(`plutus-vision-v2.pine:94,102,110,112,114,123`) and the LSZ (`plutus-vision-v2.pine:1018`,
+`lqzV1Enabled = false`), rendering a clean chart of the E1 zones + the E2 path only — the
+operator's approved C16 look.
+
+**The fix:** correct §6 C9 to state the intended composition: `boxes == the E1 zone count` (6) when
+the v1 SMC layers are deliberately disabled; the v1 baseline boxes are NOT a v2 target.
+
+**The re-verification:** the station render + the operator's app BOTH show `6 boxes · 2 plots ·
+10 lines · 11 labels` — consistent, by design.

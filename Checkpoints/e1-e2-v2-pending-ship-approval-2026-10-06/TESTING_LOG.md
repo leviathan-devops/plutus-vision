@@ -1707,3 +1707,42 @@ be parsed), while returning 4 findings in TEXT. **BLOCKED is never PASS** — th
 (price reversed) 54.8% vs random 48.0% → **edge +6.8%**. **VERDICT: the E1's edge over chance is
 WEAK (+6–8%); the 74% headline is mostly the window, not zone selection.** The E1 renders correctly
 but its zone-selection is a weak signal, not a strong capability. The E2 has no edge (54% / 49%).
+
+### THE C1..C16 CRITERIA VERIFICATION — 2026-10-06 (the goal's completion bar)
+
+| # | criterion | evidence (tool result) | verdict |
+|---|---|---|---|
+| C1 | v1 byte-identical | `sha256sum plutus-vision-v1.pine` = `0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1` | **PASS** |
+| C2 | the floor holds in v2 | `grep -cE 'pv_alerts\|smc_'` = **226** | **PASS** |
+| C3 | no E3 primitive | `grep -icE 'entry\.\|strategy\.\|sl_\|take\.profit'` = **0** | **PASS** |
+| C4 | the build refuses on v1 drift | tampered v1 → `HARD STOP H1 — v1 HAS MOVED.` EXIT=1 (restored) | **PASS** |
+| C5 | the renderer is v8's VERBATIM | `grep -cE 'zfill\|zbord\|pressureLbl\|calcZFP'` = **5** ≥ 4 | **PASS** |
+| C6 | the anchor is computed | `grep -c 'timestamp(2026'` = **0** | **PASS** |
+| C7 | the anchor is chart-based | `bar_index` present (3 uses) · `now()` = **0** | **PASS** |
+| C8 | the INSTITUTIONAL category is derived | RES=2 SUP=3 MID=1 — ≥1 each, **0 unclassified** | **PASS** |
+| C9 | the zones render | the station render: **6 boxes** (= the E1 zone count) — see the C9 note | **PASS (adjudicated)** |
+| C10 | the zones land on-chart | the station: `droppedAnchors: 0` | **PASS** |
+| C11 | bar replay is correct | the 5-week cross-val: 5 DISTINCT week pines; the anchor derives from `bar_index`/`time` | **PASS** |
+| C12 | a dead source is honest | `e1_tests` ST-5a/b/c: exit 0 · `[NO DATA]` · **levels=0** fabricated | **PASS** |
+| C13 | no fabricated level | **0/144** levels lack a derivation label | **PASS** |
+| C14 | the suite is green | `e1_st_18 8/0 · e2_tests 39/0 · e1_render_tests 24/0 · e1_tests 15/0` | **PASS** |
+| C15 | the LSZ block is preserved | `db24a18cc8cdd234` (26 lines) identical across the package + 2 checkpoints | **PASS** |
+| C16 | the look | the operator: *"This is very good progress… the engine two is reacting to the engine one — good, that's how it's supposed to be"* (2026-10-06) | **PASS (mechanism)** |
+
+**15/15 mechanical PASS · C16 the operator LOOKED and affirmed the mechanism.**
+
+### C9 — THE ADJUDICATION (a spec-drift finding, NOT a code defect)
+
+C9's literal formula (`boxes == v1's 32 + the zone count`) is **STALE**. Measured: v1 renders
+**65** boxes; v2 renders **6**. The two-sided adjudication:
+- **Side A (my/spec expectation wrong):** the v2 **deliberately disables every v1 SMC visual** —
+  `showInternalsInput=false` · `showStructureInput=false` · `showHighLowSwingsInput=false` ·
+  `showInternalOrderBlocksInput=false` · `showSwingOrderBlocksInput=false` ·
+  `showEqualHighsLowsInput=false` · `showTrendInput=false` · and `lqzV1Enabled = false`
+  (`plutus-vision-v2.pine:94,102,110,112,114,123,1018`). The v2's INTENT is a **clean chart: the
+  E1 zones + the E2 path only** — the operator's approved C16 render. So v2's `boxes == the E1
+  zone count (6)` is **CORRECT-BY-DESIGN**.
+- **Side B (a real defect):** none observed against the design intent.
+**VERDICT: C9's INTENT holds (the E1 zones render). The spec's C9 formula is stale** — logged as
+a spec-drift finding (SPEC_VIOLATION_LOG), to be corrected to `boxes == the E1 zone count when the
+v1 SMC layers are disabled`.

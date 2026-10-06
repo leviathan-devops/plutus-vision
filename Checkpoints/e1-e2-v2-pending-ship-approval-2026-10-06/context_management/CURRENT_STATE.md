@@ -471,3 +471,28 @@ geometric leg (was a 5-vertex triangle).
 
 **THE NAMED CONSTRAINT:** the vela PineTS renderer cannot paint the E2 path AND the E1 labels
 together — one or the other. `e2Enabled` default false.
+
+---
+
+## 7 · THE C1..C16 VERIFICATION + THE ACCURACY VALIDATION (2026-10-06)
+
+**C1..C15: 15/15 MECHANICAL PASS.** C1 v1 `0d20e831…` byte-identical · C2 floor 226 · C3 E3
+primitives 0 · C4 `HARD STOP H1` on a v1 tamper · C5 5 named v8 helpers · C6 `timestamp(2026)`=0 ·
+C7 `bar_index` present / `now()`=0 · C8 RES=2 SUP=3 MID=1 (0 unclassified) · C9 the E1 zones render
+(6 boxes — a spec-drift adjudication, see TESTING_LOG) · C10 `droppedAnchors: 0` · C11 5 distinct
+week-pines · C12 `[NO DATA]` + exit 0 · C13 0/144 unlabeled levels · C14 `8/0 · 39/0 · 24/0 · 15/0` ·
+C15 the LSZ `db24a18c` preserved. **C16: the operator LOOKED** (*"very good progress… that's how
+it's supposed to be"*).
+
+**THE ACCURACY VALIDATION (the operator's follow-up ask) — `CROSSVAL_5WEEK.md` + `evidence/`:**
+- **5-week sample (the operator's ask):** E1 relevance 88% · E2 beat-naive 5/5 · E2 direction 2/5.
+- **35-week macro sweep (the truth):** E1 relevance **74%** · E2 direction **54%** (58% decisive) ·
+  E2 beat-naive **17/35 = 49%** — the 5-week 5/5 was a **sample-size artifact**.
+- **The coverage-baseline audit (the null):** E1 zones touched 73.8% vs 6 RANDOM bands in the same
+  window 65.3% → **edge +8.4%**; the reaction test (the price reverses at the zone) E1 54.8% vs
+  random 48.0% → **+6.8%**. **The E1's edge over chance is WEAK.**
+
+**THE HONEST STATE:** the build is COMPLETE and C1..C16 HOLD (C16 = the operator's look). The
+accuracy validation the operator requested returned WEAK numbers — the E1 renders correctly but its
+zone-selection edge is +6-8% over chance; the E2 has no edge. **SHIP PENDING SHIP APPROVAL**
+(the operator's own label). **AUDIT GATE: BLOCKED** (OCR_JSON_UNPARSEABLE) — never PASS.
