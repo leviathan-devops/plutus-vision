@@ -496,3 +496,27 @@ it's supposed to be"*).
 accuracy validation the operator requested returned WEAK numbers — the E1 renders correctly but its
 zone-selection edge is +6-8% over chance; the E2 has no edge. **SHIP PENDING SHIP APPROVAL**
 (the operator's own label). **AUDIT GATE: BLOCKED** (OCR_JSON_UNPARSEABLE) — never PASS.
+
+---
+
+## 8 · THE AUTHORITY + THE ENGINE 1/2 BUILD STATE (2026-10-06)
+
+**THE VERBATIM AUTHORITY (binding):** `Original_Canon_Data/Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md`
+(the prompt) AND `Original_Canon_Data/Pine Scripts/trident_v8.pine` (the prompt as an indicator) —
+ONE authority. The build package is a DERIVED plan, NEVER the authority. The one authorized change:
+LSZ removed from Engine 1. Scope: E1 + E2 only (E3 ignored).
+
+**THE BLUEPRINT:** `context_management/ENGINE_BLUEPRINT.md` (the authoritative Engine 1+2 plan).
+
+**THE ZFP (FIXED 2026-10-06):** the ZFP = the pressure degree's FAILURE BAND (prompt: MODERATE
+30-45% · LIGHT 40-60%) via `scripts/e1_extract.py:465` (`zfp_from_degree`). The pine now carries
+`37,37,37,37,37,50`. NEVER v8's width formula.
+
+**THE REMAINING GAPS (the plan):**
+1. **The 6-dimension score** — `build_levels` uses a pillar-sum, not the prompt's 0-14 across
+   Technical/Options/Analyst/Structural/Psychological/Regime. The score must VARY → the degree
+   varies → the ZFP varies per zone. `scripts/e1_extract.py:452`, `:488`.
+2. **The options + analyst pillars** — Options-Derived + Analyst carry 0 (S3/S4 unwired), so 2 of
+   6 dimensions are dead.
+3. **Engine 2 §6.4.1** — `classify` reads the MOMENTUM; the prompt says read the TARGET zone's ZFP.
+   `scripts/e2_engine.py:112`, `:209`.
