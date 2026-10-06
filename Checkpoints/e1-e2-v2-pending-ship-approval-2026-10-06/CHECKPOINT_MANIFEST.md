@@ -63,3 +63,44 @@ app    pine-ide  -> the 2-tab dashboard (PINE IDE + BACKTEST)
 The 5-week cross-validation: 5 random trading weeks in the last 6 months, each rewound on the
 chart, the pipeline run per week, the E1 zones + E2 path rendered, the accuracy measured vs the
 actual. The ship decision follows the verdicts.
+
+---
+## UPDATE 2026-10-06 (after the 5-week CV + the macro sweep + the audit fixes)
+
+**THE MACRO VERDICT (35 weeks, 2026-02-02…09-28, `evidence/macro-sweep.json`):**
+- **E1 zone relevance: 74% mean** (min 33% · max 100%); **32/35 = 91% of weeks ≥50% touched. SHIPS.**
+- **E2 direction: 19/35 = 54%** (decisive |mom|≥0.5: 15/26 = 58%). Marginal.
+- **E2 path beat-naive: 17/35 = 49%** — a coin flip. The 5-week 5/5 was a sample-size artifact. NO SHIP.
+
+**THE AUDIT GATE: BLOCKED** (`qwen-code-audit` → `OCR_JSON_UNPARSEABLE` on both runs; 4 findings
+returned in text, ALL addressed). BLOCKED is never PASS → the ship stays PENDING.
+
+**THE FIXES IN THIS CHECKPOINT** (`scripts/e2_engine.py`, shas in the tree):
+1. The degree guard: `assert` → `FabricationRefused` (ST-14b, passes under `-O`).
+2. `classify` sorts `solid` by `(mid,id)` → order-independent anchors (ST-14a).
+3. The day range override preserves the Link trigger as `link_zone` (§6.6 trace).
+4. The fine-path day tag scans past a taken slot (ST-14c).
+
+**BATTERY:** `e2_tests 39/0 · e1_st_18 8/0 · e1_tests 15/0`. **The target render byte-identical
+(`282517ac622769bd`) after every fix.**
+
+## THE SEAL MODE — MODE B (no lock, a MUTABLE working snapshot)
+Per the saving-checkpoints skill: Mode A = a full-tree `chattr +i` (byte-immutable); Mode B = no
+lock (a living snapshot, refreshed in place). **This checkpoint is MODE B** — the operator labeled
+it "PENDING ship approval" (a follow-up is expected: the E2 direction work or the ship). It is
+NEVER manifest-only (the partial-lock lie). The `chattr` lock is the operator's to apply (the
+guardian owns protect/unprotect) — apply Mode A here when the ship is final.
+
+## THE ANCHOR INDEX (where each claim's source lives)
+- The E1 deterministic derivation: `scripts/e1_extract.py:452` (`build_levels`) and
+  `scripts/e1_extract.py:722` (`assemble`).
+- The E2 engine + the fixed decision matrix: `scripts/e2_engine.py:103` (`classify`), and the
+  fixes at `scripts/e2_engine.py:55` (the degree refusal), `scripts/e2_engine.py:121` (the sort),
+  `scripts/e2_engine.py:533` (the link_zone), `scripts/e2_engine.py:677` (the tag scan).
+- The payload builder: `scripts/lqz_vision_v2_build.py:153` (`build_payload`).
+- The momentum (the E2's weak axis): `scripts/wire_e2.py:34` (`compute_momentum`).
+- The cross-val harness: `/tmp/pv_crossval.py:56` (`measure_week`); the macro: `/tmp/pv_macro.py:41`.
+- The evidence: `evidence/macro-sweep.json:1`, `evidence/crossval-5week.json:1`.
+- The testing log: `TESTING_LOG.md:1701` (the audit gate + the macro section).
+- The debug log: `DEBUG_LOG.md:2107` (F-AUDIT-SWEEP).
+- The report: `CROSSVAL_5WEEK.md:145` (the macro sweep).
