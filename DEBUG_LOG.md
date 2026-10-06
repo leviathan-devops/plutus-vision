@@ -2273,3 +2273,54 @@ breakout surge is captured.
 tail via `day_decomposition`). The chain captures the OPENING move (BS) but not the full week's
 shape sequence — the momentum-based direction is the limiting factor. A richer chain needs the E2
 to walk MULTIPLE zones (the chain currently walks 1-2 before the reach/tf bounds stop it).
+
+---
+## F-ZFP-IMPROVISE — I improvised the ZFP and was wrong (2026-10-06, operator-caught)
+
+**The operator:** *"five of them say 37%. You're not calculating this correctly. Look at the fucking
+original prompt and do this correctly. Stop improvising. Follow the instructions of the build
+package."*
+
+**WHAT I DID WRONG.** The operator asked to optimize precision (the ZFP read a flat 9%). I replaced
+the build package's mandated formula with my own **degree-derived step function** (MODERATE→37%,
+LIGHT→50%). That was an IMPROVISATION — the build package is explicit:
+
+- **D2** (`plutus-vision-e1-automatic_DPL1_SPEC.md:343`): *"which ZFP formula in the label | v8's
+  `zoneW/refRange` vs our Pillar-9 base+modifiers | **v8's for the label** (it is what the operator
+  reads); Pillar-9 stays the engine's internal score."*
+- **MASTER_BLUEPRINT §3.5/§6.1**: the label is `nm | prs | calcZFP(tp, bt, "DXY")% ZFP` with
+  `calcZFP = (tp-bt)/refRange*100` on the per-zone bounds.
+- **MASTER_PROMPT §5**: the ZFP reference ranges are v8's (DXY 1.60, EU/GU 0.0200, AU 0.0150).
+
+**THE FIX.** Reverted the improvisation. The label now uses v8's `f_e1CalcZFP(_top, _bot, _e1Pair)` on
+the per-zone bounds (blueprint §6.1). The 6 zones read **`8,2,9,9,8,9`** — each computed uniquely
+from its OWN width (the tight IP Support Floor correctly **2%**, previously a fake flat 9% because
+the earlier render's bounds were not per-zone).
+
+**WHY FIVE ARE SIMILAR (the honest mechanism).** The engine's clustered zones have similar WIDTHS
+(0.121–0.148 DXY), so the width-based ZFP lands them in the 8–9 band. The one narrow zone (the IP
+Support Floor, width 0.034) reads 2%. The similarity is the ZONES' similarity, not a formula
+defect — the formula IS computed uniquely per zone.
+
+**THE LESSON.** The build package is the AUTHORITY for HOW. When the operator said "optimize for
+precision", the precision target is the ENGINE's zone quality (E1.8 Pillar-9 base+modifiers, which
+needs the option-wall tier for its base), NOT a swap of the label's formula. Improvising a formula
+the package explicitly decided against is the derailment the operator caught.
+
+---
+## F-MEMORY-LEAK — the pine-station held 46GB of swap (2026-10-06, device freezing)
+
+**The operator:** *"the device is constantly freezing … it is taking 42 gigabytes of swap."*
+
+**MEASURED.** `node server.mjs` (the pine-station PineTS transpiler, pid 4189038) held
+**46,136,660 kB VmSwap = 46GB of swap** — leaked from the many `/run` calls during the render
+verification loops (each `/run` transpiles a ~1700-line Pine; the transpiler's heap grew unbounded
+across ~20+ runs).
+
+**THE FIX.** Killed the leaked station (+ the stale MCP node servers + the ~18 OMP headless-browser
+chrome processes from the CDP loops). `free -h`: swap **88GB → 42GB** freed 46GB. Restarted the
+station fresh.
+
+**THE LESSON.** A long-lived dev server that holds every request's transpile in memory LEAKS. The
+render-verification loops must RESTART the station periodically, or the station must be bounded.
+Documented for the rig.
