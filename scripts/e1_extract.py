@@ -837,19 +837,26 @@ def zone_regime(bot: float, top: float, bars: list, spot: float) -> float:
 
 
 def zone_extreme_bonus(bot: float, top: float, bars: list) -> float:
-    """The prompt's STRUCTURAL EXTREME BONUS — Pillar 5 Step 0.5c, TRANSCRIBED.
+    """The prompt's STRUCTURAL EXTREME BONUS — Step 0b/0c/0.5/0e, TRANSCRIBED.
 
-    The earlier form was an improvisation: a bare local-daily-extreme test at +0.5 a hit,
-    capped at 2.0. The prompt defines the bonus precisely (Step 0b/0c + Step 0.5c):
-      · a swing low/high counts only WITH A REJECTION WICK — the lower wick >= 0.15 DXY AND
-        the close in the UPPER 50% of the day's range (a high: upper wick >= 0.15, close in
-        the LOWER 50%);
-      · a level reached on 2 SEPARATE DATES is a Repeated Extreme Magnet -> +1.5;
-      · on 3+ dates -> +2.0;
-      · a ROLE REVERSAL (a swing low coinciding with a prior swing high, or vice versa)
-        -> +2.0, independent of the count.
-    A zone with no qualifying extreme scores 0. This is the escalation ABOVE the structural
-    dimension, never a substitute for it."""
+      · Step 0b — a SWING LOW is a D1 bar whose lower wick >= 0.15 DXY AND whose close is in
+        the UPPER 50% of the daily range (a "Liquidity Sweep Target").
+      · Step 0c — a SWING HIGH is a D1 bar whose upper wick >= 0.15 AND whose close is in the
+        LOWER 50% (a "Supply Ceiling Target").
+      · Step 0e — a swing low INSIDE this zone is a "Confluent Floor"; a swing high INSIDE is
+        a "Confluent Ceiling". The prompt: "These confluent levels receive Structural
+        dimension score of 2 (maximum) PLUS a Structural Extreme Bonus of +2." — the HIGHEST
+        structural tier, and the mechanism that makes the price EXTREMES (the ceiling + the
+        floor) the STRONGEST zones.
+      · Step 0.5 — 2 swing extremes within 0.05 on separate dates = a Repeated Extreme Magnet
+        (+1.5); 3+ = +2.0.
+
+    THE DEFECT THIS FIXES (operator 2026-10-07, the N-th repeat): the earlier form filtered
+    the swing list to the zone's OWN range and then required 2+ REPEATS — so a single swing
+    inside a zone produced a group of 1 and the bonus was 0.0 on EVERY zone. Step 0e was
+    never implemented: the ceiling + the floor (which DO contain swings) got nothing, so they
+    stayed LIGHT/MODERATE-HEAVY while the mid won. The prompt's Step 0e is the exact +2 the
+    extremes need."""
     if not bars:
         return 0.0
     daily: dict = {}
@@ -864,22 +871,27 @@ def zone_extreme_bonus(bot: float, top: float, bars: list) -> float:
         return 0.0
     lows: list = []
     highs: list = []
-    for i in range(1, len(days) - 1):
-        dd, r = days[i]
+    for dd, r in days:
         rng = r["h"] - r["l"]
         if rng <= 0:
             continue
         lower_wick = min(r["o"], r["c"]) - r["l"]
         upper_wick = r["h"] - max(r["o"], r["c"])
-        is_low = r["l"] <= days[i - 1][1]["l"] and r["l"] <= days[i + 1][1]["l"]
-        is_high = r["h"] >= days[i - 1][1]["h"] and r["h"] >= days[i + 1][1]["h"]
-        if (is_low and lower_wick >= 0.15 and (r["c"] - r["l"]) / rng >= 0.5
-                and bot - 0.05 <= r["l"] <= top + 0.05):
+        if lower_wick >= 0.15 and (r["c"] - r["l"]) / rng >= 0.5:
             lows.append((dd, r["l"]))
-        if (is_high and upper_wick >= 0.15 and (r["c"] - r["l"]) / rng <= 0.5
-                and bot - 0.05 <= r["h"] <= top + 0.05):
+        if upper_wick >= 0.15 and (r["c"] - r["l"]) / rng <= 0.5:
             highs.append((dd, r["h"]))
 
+    # ── STEP 0e · CONFLUENT FLOOR / CEILING — a swing extreme INSIDE the zone → +2 ──────
+    # The prompt (Step 0e): a swing low inside a Demand Zone is a "Confluent Floor"; a swing
+    # high inside a Supply Zone is a "Confluent Ceiling" → the structural maximum, +2. This
+    # is the tier that makes the price extremes the strongest zones, and it was MISSING.
+    in_lo = [p for _, p in lows if bot - 0.05 <= p <= top + 0.05]
+    in_hi = [p for _, p in highs if bot - 0.05 <= p <= top + 0.05]
+    if in_lo or in_hi:
+        return 2.0
+
+    # ── STEP 0.5 · THE REPEATED EXTREME MAGNET — 2 dates ≤0.05 apart → +1.5, 3+ → +2.0 ──
     def _repeats(pts: list) -> float:
         used = [False] * len(pts)
         best = 0.0
@@ -898,13 +910,7 @@ def zone_extreme_bonus(bot: float, top: float, bars: list) -> float:
                 best = max(best, 1.5)
         return best
 
-    bonus = max(_repeats(lows), _repeats(highs))
-    # role reversal: a swing low coinciding with a prior swing high (or vice versa)
-    for _, lp in lows:
-        if any(abs(lp - hp) <= 0.05 for _, hp in highs):
-            bonus = 2.0
-            break
-    return min(2.0, bonus)
+    return min(2.0, max(_repeats(in_lo), _repeats(in_hi)))
 
 
 def _resample_4h(bars: list) -> list:
