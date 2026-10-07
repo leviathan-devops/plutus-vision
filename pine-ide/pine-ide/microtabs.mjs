@@ -19,10 +19,27 @@
 
 export const MICROTABS_VERSION = '1.0.0';
 
-export function createMicroTabs({ host, onActivate = null, onRemove = null, onAdd = null, onMutate = null } = {}) {
+export function createMicroTabs({ host, onActivate = null, onRemove = null, onAdd = null, onMutate = null, persistKey = null } = {}) {
   const tabs = new Map();
   let order = [];
   let activeId = null;
+
+  // ── THE ACTIVE-TAB PERSISTENCE ───────────────────────────────────────────────────────
+  // The operator's report (2026-10-07): the ACTIVE micro-tab survived no re-entry. Every
+  // activate()/remove()/reset() below now writes the id under `persistKey` (the IDE passes
+  // 'plutus.pine.activeMicrotab'); persistedActiveId() reads it back so the caller can restore
+  // the operator on the same tab. localStorage-guarded: storage-off degrades to a no-op.
+  const store = persistKey ? {
+    get() { try { return typeof localStorage !== 'undefined' ? localStorage.getItem(persistKey) : null; } catch { return null; } },
+    set(id) {
+      try {
+        if (typeof localStorage === 'undefined') return;
+        if (id == null) localStorage.removeItem(persistKey);
+        else localStorage.setItem(persistKey, String(id));
+      } catch { /* storage off — never throw into the caller */ }
+    },
+  } : null;
+  const persistActive = () => { if (store) store.set(activeId); };
 
   const strip = document.createElement('div');
   strip.className = 'pine-microtabs';
@@ -89,6 +106,7 @@ export function createMicroTabs({ host, onActivate = null, onRemove = null, onAd
     order = order.filter((x) => x !== id);
     if (activeId === id) {
       activeId = order[0] || null;
+      persistActive(); // the close moved the active tab — persist the one that took over
       if (activeId && onActivate) onActivate(tabs.get(activeId));
     }
     render();
@@ -99,6 +117,7 @@ export function createMicroTabs({ host, onActivate = null, onRemove = null, onAd
   function activate(id) {
     if (!tabs.has(id)) return null;
     activeId = id;
+    persistActive(); // (1) PERSIST THE ACTIVE MICRO-TAB id, before onActivate runs
     render();
     const t = tabs.get(id);
     if (onActivate) onActivate(t);
@@ -136,8 +155,13 @@ export function createMicroTabs({ host, onActivate = null, onRemove = null, onAd
         order.push(id);
       }
       activeId = tabs.has(activeTabId) ? activeTabId : (order[0] || null);
+      persistActive(); // a workspace swap IS the operator's new active tab — persist it
       render();
       return activeId ? tabs.get(activeId) : null;
     },
+    /** The id persisted by the LAST activate/remove/reset — the restore point for the caller. */
+    persistedActiveId: () => (store ? store.get() : null),
+    /** The key this manager persists the active tab under (null when persistence is off). */
+    persistKey: () => persistKey,
   };
 }

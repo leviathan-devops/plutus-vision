@@ -33,6 +33,7 @@
 import { createGate, DEFAULT_RAIL_BASES } from './gate.mjs';
 import { createPineEditor } from './pine-editor.mjs';
 import { createMicroTabs } from './microtabs.mjs';
+import { PINE_KEYS, readWorkspace, writeWorkspace, isValidMarket } from './pine-persist.mjs';
 import { createAgentFace } from './agent-face.mjs';
 import { mountStudyLegend } from './study-legend.mjs';
 import { renderVision, clearDrawings, frameStats, compositeCanvases, compositeCanvasesSettled, captureViaRenderer, VISION_VERSION } from './vision.mjs';
@@ -108,6 +109,17 @@ export async function mount(container, opts = {}) {
   const wsUrl = opts.wsUrl || (window.dashboardConfig && window.dashboardConfig.wsUrl) || 'ws://127.0.0.1:9431';
   const railBases = opts.railBases || DEFAULT_RAIL_BASES;
   const cfg = Object.assign({ autoDebounceMs: 120, limit: 400, pair: 'EUR/USD', timeframe: '1H' }, opts.config || {});
+
+  // ── THE LOCAL MIRROR (pine-persist.mjs) ──────────────────────────────────────────────────
+  // The operator's report (2026-10-07): leaving the PINE SHELL tab and coming back reset the
+  // editor to the DEFAULT TEMPLATE (PREFILL) and the chart to the pinned EUR/USD. The face's
+  // SERVER workspace is authoritative while it is UP; THIS mirror is what a remount, a reload,
+  // or a DOWN face ("workspaces offline") restores from. It carries the three items the
+  // operator named — the active micro-tab id, the editor source, the chart symbol+timeframe —
+  // plus the tab list that makes a persisted active id mean anything.
+  let persisted = readWorkspace();
+  let persistTimer = null;
+  const PERSIST_MS = 250; // a write-debounce on top of the editor's own 120ms emit
 
   const q = (sel) => container.querySelector(sel);
   const slot = (name) => q(`[data-slot="${name}"]`);
@@ -190,7 +202,11 @@ export async function mount(container, opts = {}) {
     }
     const mod = opts.workbench || await import(`${apiUrl.origin}/charts/workbench.bundle.js`);
     S.wb = mod.mountWorkbench(chartHost, {
-      symbol: marketSymbol(cfg.pair), timeframe: tfCode(cfg.timeframe), layout: false,
+      // (3) THE CHART SYMBOL + TIMEFRAME: the mirror's market seeds the FIRST mount, so a
+      // remount lands on the operator's market instead of the pinned EUR/USD (a face
+      // workspace load, when one exists, overrides it via importWorkspace).
+      symbol: persisted.market ? `${persisted.market.provider}:${persisted.market.ticker}` : marketSymbol(cfg.pair),
+      timeframe: persisted.market ? persisted.market.timeframe : tfCode(cfg.timeframe), layout: false,
       storage: opts.chartStorage || null, persistKey: 'pine-shell', watermark: false,
       onError: (e) => { if (e) status(`${e.code}: ${String(e.message).slice(0, 180)}`, 'error'); },
     });
@@ -241,7 +257,8 @@ export async function mount(container, opts = {}) {
     const id = S.wb ? S.wb.marketId() : null;
     if (!id) return;
     S.bars = S.wb.getBars() || [];
-    if (S.bars.length) S.goodMarket = id; // the persisted market is the last one that LOADED
+    // the persisted market is the last one that LOADED — (3) persist SYMBOL + TIMEFRAME here
+    if (S.bars.length) { S.goodMarket = id; schedulePersist(); }
     S.barsMeta = { source: `${id.provider}:${id.ticker} ${id.timeframe}`, provider: id.provider };
     cfg.pair = pairLabel(id.ticker); cfg.timeframe = tfLabel(id.timeframe);
     const ml = slot('market');
@@ -298,17 +315,62 @@ export async function mount(container, opts = {}) {
 
   const editor = createPineEditor({
     host: slot('editor'),
-    source: PREFILL,
+    // (2) THE EDITOR SOURCE comes back from the local mirror — never a blind PREFILL on re-entry
+    source: persisted.source || PREFILL,
     debounceMs: cfg.autoDebounceMs,
-    onChange: () => { markDirty(); if (S.autoRun) scheduleRun(); },
+    // (2) THE EDITOR SOURCE is persisted on input. The editor's own 120ms emit already
+    // debounces the keystroke; schedulePersist adds a 250ms write-debounce on top.
+    onChange: () => { markDirty(); schedulePersist(); if (S.autoRun) scheduleRun(); },
   });
 
   const tabs = createMicroTabs({
     host: slot('microtabs'),
-    onActivate: (tab) => { activateTab(tab); markDirty(); },
-    onMutate: () => markDirty(),
+    // (1) THE ACTIVE MICRO-TAB id is persisted by the manager itself under this key
+    persistKey: PINE_KEYS.activeTab,
+    onActivate: (tab) => { activateTab(tab); markDirty(); schedulePersist(); },
+    onMutate: () => { markDirty(); schedulePersist(); },
     onAdd: () => { const t = tabs.add({ name: 'tab ' + (tabs.count() + 1), lane: 'pine', source: PREFILL }); tabs.activate(t.id); },
   });
+
+  // ── THE LOCAL MIRROR's writers (pine-persist.mjs) ───────────────────────────────────────
+  // One snapshot carries all four facts; the editor buffer is ALWAYS the active tab's, so the
+  // two can never disagree on restore.
+  function persistNow() {
+    if (persistTimer) { clearTimeout(persistTimer); persistTimer = null; }
+    const at = tabs.active();
+    if (at) at.source = editor.getSource();            // the buffer belongs to the active tab
+    const m = S.goodMarket || (S.wb ? S.wb.marketId() : null);
+    writeWorkspace({
+      tabs: tabs.list().map((t) => ({ id: t.id, name: t.name, lane: t.lane, ref: t.ref || null, source: t.source || '' })),
+      activeTab: S.activeTabId,
+      source: editor.getSource(),
+      market: isValidMarket(m) ? { provider: m.provider, ticker: m.ticker, timeframe: m.timeframe } : null,
+    });
+  }
+  function schedulePersist() {
+    if (persistTimer) clearTimeout(persistTimer);
+    persistTimer = setTimeout(() => { persistTimer = null; persistNow(); }, PERSIST_MS);
+  }
+  /** Restore the LOCAL MIRROR into the tabs + the editor; returns the market to load with it.
+   *  The active tab takes the saved editor buffer, so tab + buffer restore consistently. */
+  function restoreLocalWorkspace() {
+    const local = readWorkspace();
+    const list = (local.tabs && local.tabs.length)
+      ? local.tabs.map((t) => Object.assign({}, t))
+      : [{ id: 'tab-1', name: 'gate · buffer', lane: 'pine', source: local.source || PREFILL }];
+    if (local.source != null) {                        // the editor buffer belongs to the ACTIVE tab
+      const idx = list.findIndex((t) => t.id === local.activeTab);
+      const at = idx >= 0 ? idx : 0;
+      list[at] = Object.assign({}, list[at], { source: local.source });
+    }
+    let t = tabs.reset(list, local.activeTab);
+    if (!t) t = tabs.reset(list, list.length ? list[0].id : null);   // nothing valid survived
+    S.activeTabId = t ? t.id : null;
+    S.lastVision = null;
+    editor.clearError();
+    editor.setSource(t ? t.source : (local.source || PREFILL));
+    return { restored: !!(local.source != null || (local.tabs && local.tabs.length)), market: local.market };
+  }
 
   function activateTab(tab) {
     if (!tab) return null;
@@ -616,22 +678,32 @@ export async function mount(container, opts = {}) {
   /** Swap the code + chart panels to a workspace: its tabs, its source, its market — then re-run. */
   async function importWorkspace(state, meta) {
     const st = state || {};
-    const list = Array.isArray(st.tabs) && st.tabs.length ? st.tabs : [{ id: 'tab-1', name: 'gate · buffer', lane: 'pine', source: PREFILL }];
+    // a workspace with NO tabs (a fresh/empty server workspace) must not wipe the operator's
+    // local buffer: fall back to the LOCAL MIRROR before the PREFILL default.
+    const local = readWorkspace();
+    const server = Array.isArray(st.tabs) && st.tabs.length ? st.tabs : null;
+    const fallback = (local.tabs && local.tabs.length)
+      ? local.tabs
+      : (local.source != null ? [{ id: local.activeTab || 'tab-1', name: 'gate · buffer', lane: 'pine', source: local.source }] : [{ id: 'tab-1', name: 'gate · buffer', lane: 'pine', source: PREFILL }]);
+    const list = server || fallback;
     S.wsGen = (S.wsGen || 0) + 1;
-    let t = tabs.reset(list, st.activeTab);
-    if (!t) t = tabs.reset([{ id: 'tab-1', name: 'gate · buffer', lane: 'pine', source: PREFILL }], 'tab-1'); // nothing valid survived
+    let t = tabs.reset(list, server ? st.activeTab : local.activeTab);
+    if (!t) t = tabs.reset(fallback, fallback[0] ? fallback[0].id : null); // nothing valid survived
     S.activeTabId = t ? t.id : null;
     S.lastGood = null; S.lastVision = null; S.lastCapture = null; S.lastGate = null;
     editor.clearError();
     editor.setSource(t ? t.source : '');
+    schedulePersist();                               // the imported workspace IS the local mirror now
     const wk = q('[data-act="week"]'); if (wk) wk.value = st.week || '';
     const sel = q('[data-act="artifact"]'); if (sel && st.artifact && [...sel.options].some((o) => o.value === st.artifact)) sel.value = st.artifact;
     if (typeof st.autoRun === 'boolean') { S.autoRun = st.autoRun; const a = q('[data-act="auto"]'); if (a) a.checked = st.autoRun; }
     paintCapture(null);
-    // a persisted market passes the SAME validation as an agent's load command
-    const m = st.market && /^(tv|fixture)$/.test(String(st.market.provider)) && /^[A-Za-z0-9_.!-]{1,40}$/.test(String(st.market.ticker)) && /^[0-9]{1,4}$|^1[DW]$/.test(String(st.market.timeframe)) ? st.market : null;
-    if (st.market && !m) status('the workspace market was malformed — loaded EUR/USD 1H instead (named, not silent)', 'error');
-    const r = await loadBars({ symbol: m ? `${m.provider}:${m.ticker}` : marketSymbol('EUR/USD'), timeframe: m ? m.timeframe : '60', rerun: false });
+    // a persisted market passes the SAME validation as an agent's load command; a workspace
+    // with none (or a malformed one) falls back to the mirror's market before the pinned EUR/USD
+    const m = isValidMarket(st.market) ? st.market : null;
+    if (st.market && !m) status('the workspace market was malformed — the local market (or EUR/USD 1H) was loaded instead (named, not silent)', 'error');
+    const useM = m || (isValidMarket(local.market) ? local.market : null);
+    const r = await loadBars({ symbol: useM ? `${useM.provider}:${useM.ticker}` : marketSymbol('EUR/USD'), timeframe: useM ? useM.timeframe : '60', rerun: false });
     if (!r.ok) { status(`${meta && meta.label ? meta.label + ' · ' : ''}${r.code}: ${String(r.error).slice(0, 160)}`, 'error'); return r; }
     if (S.autoRun) await runFresh();
     else status(`${meta && meta.label ? meta.label + ' · ' : ''}workspace loaded · AUTO off — press ▶ RUN`, 'idle');
@@ -730,12 +802,17 @@ export async function mount(container, opts = {}) {
   face = createAgentFace({ root: faceRoot, apiBase, wsUrl, token, ide: { exportWorkspace, importWorkspace, runCommand } });
   const booted = await face.boot();
   if (!booted) {
-    // AGENT_WORKSPACES_DOWN is named in the face; the IDE itself still runs on a local buffer.
-    const t0 = tabs.add({ id: 'tab-1', name: 'gate · buffer', lane: 'pine', source: PREFILL });
-    tabs.activate(t0.id);
-    const barsRes = await loadBars({ rerun: false });
+    // AGENT WORKSPACES DOWN ("workspaces offline" in the face): the IDE runs on the LOCAL
+    // MIRROR — the operator's tabs, their buffers, the active tab and the chart market come
+    // back exactly as they were left, instead of a fresh PREFILL buffer on the pinned EUR/USD.
+    const restored = restoreLocalWorkspace();
+    const rm = restored.market;
+    const barsRes = await loadBars({ symbol: rm ? `${rm.provider}:${rm.ticker}` : undefined, timeframe: rm ? rm.timeframe : undefined, rerun: false });
     if (barsRes.ok) await run({ silent: true });
-    status(barsRes.ok ? `${strip()} · WORKSPACES DOWN (local buffer)` : `${barsRes.code}: ${String(barsRes.error).slice(0, 160)}`, 'error');
+    status(barsRes.ok
+      ? `${strip()} · WORKSPACES DOWN (local buffer${restored.restored ? ' · restored' : ''})`
+      : `${barsRes.code}: ${String(barsRes.error).slice(0, 160)}`, 'error');
+    persistNow();
   }
   await refreshRows();
 
@@ -743,6 +820,7 @@ export async function mount(container, opts = {}) {
     version: PINE_IDE_VERSION,
     mount: container, shell, get chart() { return S.chart; }, get workbench() { return S.wb; }, chartError: S.chartError,
     editor, tabs, gate, chat, get face() { return face; }, exportWorkspace, importWorkspace, runCommand,
+    persist: persistNow, restoreLocal: restoreLocalWorkspace,   // the operator's tab-state mirror
     state: () => ({
       version: PINE_IDE_VERSION, vision: VISION_VERSION,
       rail: S.rail, chart: !!S.chart, chartError: S.chartError ? String(S.chartError.message) : null,
@@ -760,7 +838,7 @@ export async function mount(container, opts = {}) {
     run, capture, runGate, look, refreshRows, refreshArtifacts, refreshRail, loadBars,
     clearDrawings: () => (S.chart ? clearDrawings(S.chart) : 0),
     frameStats,
-    destroy() { if (runTimer) { clearTimeout(runTimer); runTimer = null; } try { if (face) face.destroy(); } catch { /* gone */ } try { if (S.wb) S.wb.destroy(); } catch { /* gone */ } container.innerHTML = ''; if (window.PlutusPineShell === handle) window.PlutusPineShell = null; },
+    destroy() { if (runTimer) { clearTimeout(runTimer); runTimer = null; } if (persistTimer) { clearTimeout(persistTimer); persistTimer = null; } persistNow(); /* flush the mirror BEFORE the teardown: a remount must land on THIS state */ try { if (face) face.destroy(); } catch { /* gone */ } try { if (S.wb) S.wb.destroy(); } catch { /* gone */ } container.innerHTML = ''; if (window.PlutusPineShell === handle) window.PlutusPineShell = null; },
   };
   window.PlutusPineShell = handle;
   return handle;

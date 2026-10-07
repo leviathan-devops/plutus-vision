@@ -16,6 +16,11 @@ Serves TWO things from ONE origin (the page is same-origin, so no CORS games):
      The provider then validates every bar (barsOf) and NAMES a bad reply —
      so a shape mismatch here is a loud FEED_BAD_REPLY, never a blank chart.
 
+  3. THE AGENT'S FACE PROXY — `/api/v1/workspaces…`, `/api/v1/commands…` and
+     `/api/v1/orca/terminals…` are forwarded VERBATIM to the dashboard server
+     (:9430), which owns the agent-workspaces DB and the Orca terminal bridge.
+     Without it the face panel reads "workspaces offline" (measured 2026-10-07).
+
 CONTRACT (read from charts/workbench.js FixtureProvider.getBars):
   request   GET  {base}/api/v1/chart/bars?pair=<urlencoded pair>&timeframe=<15m|30m|1H|4H>
   response  {success: true, data: {bars: [{time, open, high, low, close, volume}]}}
@@ -29,9 +34,34 @@ import pathlib
 import re
 import sys
 import mimetypes
+import urllib.error
+import urllib.request
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
+# ── THE AGENT'S FACE PROXY (2026-10-07) ───────────────────────────────────────
+# THE PINE SHELL's AGENT'S FACE panel speaks the DASHBOARD's agent-workspace API —
+# `GET/POST/PATCH/DELETE /api/v1/workspaces…`, `GET /api/v1/commands/pending`, and
+# the ORCA TERMINAL BRIDGE (`GET /api/v1/orca/terminals…`, `…/screen`, `…/send`).
+# That API + the agent_workspaces DB + the Orca bridge all live in the DASHBOARD
+# server (127.0.0.1:9430) — never here. This host serves the renderer and the chart
+# feed on ONE base (`window.dashboardConfig.apiBase`, which the shell's asset loader
+# and the backtest tab's bars/zones ALSO resolve against), so the standalone app can
+# only work when those three prefixes are PROXIED to the dashboard.
+# MEASURED 2026-10-07: every one of them returned 404 here, `face.boot()` threw at
+# `refreshList()`, and the panel read "workspaces offline" with the terminal mirror
+# dead. Same-origin (no CORS game); a dead upstream is a NAMED refusal, never a
+# fabricated success.
+FACE_API = os.environ.get("PV_FACE_API") or "http://127.0.0.1:9430"
+FACE_PREFIXES = ("/api/v1/workspaces", "/api/v1/commands", "/api/v1/orca/")
+FACE_TIMEOUT = float(os.environ.get("PV_FACE_TIMEOUT", "20"))
+
+
+def face_route(path: str) -> bool:
+    """The three prefixes the AGENT'S FACE owns (proxied to the dashboard)."""
+    return path.startswith(FACE_PREFIXES)
+
+# fixture timeframe spelling -> the spellings the workbench may ask with.
 FIXTURE = os.environ.get("PV_FIXTURE") or str(__import__("pathlib").Path(__file__).resolve().parent.parent / "fixtures/bars/2026-07-06.json")
 # THE E1 ZONE PAYLOAD DIR — the backtest tab's /api/v1/e1/zones reads it (2026-10-06).
 E1_DIR = os.environ.get("PV_E1_DIR") or str(__import__("pathlib").Path(__file__).resolve().parent.parent / "data" / "e1")
@@ -151,6 +181,8 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         u = urlparse(self.path)
+        if face_route(u.path):
+            return self._proxy("GET")
         if u.path == "/api/v1/chart/bars":
             q = parse_qs(u.query)
             pair = (q.get("pair") or [""])[0]
@@ -193,6 +225,58 @@ class Handler(SimpleHTTPRequestHandler):
             cells = load_cells()
             return self._json(200, {"success": True, "data": {"cells": len(cells or []), "fixture": FIXTURE}})
         return super().do_GET()
+
+    # ── THE AGENT'S FACE PROXY ──────────────────────────────────────────────
+    # Forward the three face prefixes to the dashboard server VERBATIM: method,
+    # query, Authorization, body. The upstream's own status + body (200, 401, 403
+    # SEND_REFUSED, 404 WORKSPACE_ABSENT, 409 HANDLE_BOUND …) is passed through
+    # UNCHANGED — this host never re-decides the face's contract. An unreachable
+    # upstream is a LOUD named refusal (WORKSPACES_API_DOWN), never a fake success.
+    def _proxy(self, method: str):
+        u = urlparse(self.path)
+        n = int(self.headers.get("Content-Length") or 0)
+        body = self.rfile.read(n) if n > 0 else None
+        url = FACE_API + u.path + (("?" + u.query) if u.query else "")
+        req = urllib.request.Request(url, data=body, method=method)
+        for h in ("Authorization", "Content-Type", "Accept"):
+            v = self.headers.get(h)
+            if v:
+                req.add_header(h, v)
+        try:
+            with urllib.request.urlopen(req, timeout=FACE_TIMEOUT) as r:
+                payload, code = r.read(), r.status
+                ctype = r.headers.get("Content-Type", "application/json")
+        except urllib.error.HTTPError as e:          # the API's own refusal — forwarded as-is
+            payload, code = e.read(), e.code
+            ctype = e.headers.get("Content-Type", "application/json")
+        except Exception as e:                        # the API is DOWN — loud, named, no fallback
+            return self._json(503, {"success": False, "code": "WORKSPACES_API_DOWN",
+                                    "error": f"{FACE_API} unreachable: {type(e).__name__}: {str(e)[:160]}"})
+        self.send_response(code)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(payload)))
+        self.end_headers()
+        self.wfile.write(payload)
+
+    def do_POST(self):
+        if face_route(urlparse(self.path).path):
+            return self._proxy("POST")
+        self.send_error(501, "this host is read-only (only the face proxy accepts writes)")
+
+    def do_PATCH(self):
+        if face_route(urlparse(self.path).path):
+            return self._proxy("PATCH")
+        self.send_error(501, "this host is read-only (only the face proxy accepts writes)")
+
+    def do_PUT(self):
+        if face_route(urlparse(self.path).path):
+            return self._proxy("PUT")
+        self.send_error(501, "this host is read-only (only the face proxy accepts writes)")
+
+    def do_DELETE(self):
+        if face_route(urlparse(self.path).path):
+            return self._proxy("DELETE")
+        self.send_error(501, "this host is read-only (only the face proxy accepts writes)")
 
     def end_headers(self):
         # Never let the browser cache a source-of-truth file during a live iteration.

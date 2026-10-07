@@ -29,6 +29,7 @@
     base: null, baseWhy: null, health: null, cells: [], uid: null, st: null,
     win: null, es: null, poll: null, host: null, root: null, cells_cache: {},
     side: 'buy', busy: false, lastErr: null, attached: null, sessions: [], timers: {},
+    marketRestored: false, // the create-form SYMBOL/TIMEFRAME is restored once per mount (see restoreMarketSelection)
   };
 
   // ─────────────────────────────────────────────────────────── the shell (real or dev shim)
@@ -162,6 +163,81 @@
   var el = SH.el;
   var F = SH.fmt;
 
+  // ─────────────────────────────────────────────────────────── the local state mirror
+  // THE OPERATOR'S TAB PERSISTENCE. This module is a CLASSIC script (index.html:
+  // <script src="tabs/backtest.js">), so the DOM-free mirror is loaded with a dynamic
+  // import() — the exact pattern tabs/pineshell.js uses for its kernel — and it is the SAME
+  // module backtest-persist.selftest.mjs exercises in node (one source of truth). A failed
+  // load degrades to "nothing persisted" (the tab keeps working on in-memory defaults).
+  var PS = null;         // the loaded mirror module (backtest-persist.mjs), or null
+  var _psLoading = null; // the in-flight load, so a re-mount never re-imports
+
+  function loadPersist() {
+    if (PS) return Promise.resolve(PS);
+    if (_psLoading) return _psLoading;
+    var bases = [SH.apiBase() + '/tabs/', './tabs/', '../tabs/', './'];
+    var errors = [];
+    var tryAt = function (i) {
+      if (i >= bases.length) {
+        console.warn('[backtest-room] persist module unavailable — symbol/timeframe will NOT survive a remount:', errors.join(' · '));
+        return null;
+      }
+      return import(/* @vite-ignore */ bases[i] + 'backtest-persist.mjs').then(function (mod) {
+        if (!mod || typeof mod.readState !== 'function' || typeof mod.writeState !== 'function') throw new Error('no readState/writeState export');
+        PS = mod;
+        return mod;
+      }).catch(function (e) { errors.push(bases[i] + ' → ' + (e && e.message)); return tryAt(i + 1); });
+    };
+    _psLoading = Promise.resolve(tryAt(0));
+    return _psLoading;
+  }
+
+  function persistMarket() {
+    if (!PS) return;
+    var sym = q('f-symbol'), tf = q('f-timeframe');
+    if (!sym || !tf) return;
+    PS.writeMarket({ symbol: sym.value, timeframe: tf.value }); // an invalid pair CLEARS the key (module-side gate)
+  }
+  function persistSource() { if (PS) PS.writeSource((q('f-source') || {}).value); }
+  function persistSide() { if (PS) PS.writeSide(S.side); }
+  function persistSession(uid) { if (PS) PS.writeSession(uid); }
+
+  /** The side toggle's visual state — shared by wire()'s click handler and the restore. */
+  function applySideButtons() {
+    var box = q('side'); if (!box) return;
+    box.querySelectorAll('.bt-side-btn').forEach(function (b) { b.classList.toggle('active', b.dataset.side === S.side); });
+  }
+
+  function hasOption(sel, v) {
+    for (var i = 0; i < sel.options.length; i++) if (sel.options[i].value === v) return true;
+    return false;
+  }
+
+  /** Restore the DATA source + the BUY/SELL side. Runs BEFORE the create form renders (the form
+   *  branches on sourceOf()), on every refreshAll — idempotent, since a change already saved. */
+  function applyPersistedSourceSide() {
+    if (!PS) return;
+    var src = PS.readSource();
+    if (src) { var s = q('f-source'); if (s && hasOption(s, src)) s.value = src; }
+    var side = PS.readSide();
+    if (side) { S.side = side; applySideButtons(); }
+  }
+
+  /** Restore the create form's SYMBOL + TIMEFRAME — ONCE per mount, after the <select> lists are
+   *  populated. A value not in the current list is ignored (never forced, never fabricated). */
+  function restoreMarketSelection() {
+    if (S.marketRestored || !PS) return;
+    var sym = q('f-symbol'), tf = q('f-timeframe');
+    if (!sym || !tf) return;
+    if (sym.options.length === 0) return; // the list is not populated yet (cells not loaded) — retry on the next render
+    S.marketRestored = true;
+    var m = PS.readMarket();
+    if (!m) return;
+    if (hasOption(sym, m.symbol)) sym.value = m.symbol;
+    if (sourceOf() === 'fixture') fillTimeframes(); // the timeframe list belongs to the symbol
+    if (hasOption(tf, m.timeframe)) tf.value = m.timeframe;
+  }
+
   // ─────────────────────────────────────────────────────────── the control surface
   async function discover(force) {
     if (S.base && !force) return S.base;
@@ -202,6 +278,8 @@
     if (!host) return { ok: false, error: 'NO_HOST' };
     S.host = host;
     S.uid = null; S.st = null; S.win = null;
+    S.marketRestored = false; // a fresh mount re-restores the operator's symbol/timeframe (once)
+    S.cells_cache = {};       // the create form re-derives FROM/TO from the restored cell (a fresh fragment has empty inputs)
 
     host.classList.add('bt-host');   // .main-content gains zero padding + a flex column while the room is mounted
 
@@ -226,7 +304,8 @@
       S.root = host.querySelector('.bt-room');
       SH.ensureTokens && SH.ensureTokens();
       wire();
-      return refreshAll(true);
+      // the mirror loads before the first refresh: the restore (source/side/market/session) needs it
+      return loadPersist().then(function () { return refreshAll(true); });
     }).catch(function (e) {
       console.error('[backtest-room] mount failed', e);
       return { ok: false, error: String(e) };
@@ -279,6 +358,8 @@
 
   // ─────────────────────────────────────────────────────────── refresh / poll
   async function refreshAll(full) {
+    if (!PS) { try { await loadPersist(); } catch (e) { /* mirror unavailable — defaults */ } }
+    applyPersistedSourceSide(); // DATA source + BUY/SELL set BEFORE the form renders (it branches on sourceOf())
     var base = await discover();
     if (!base) { paintDown(); return; }
     paintService(true);
@@ -296,7 +377,11 @@
     } catch (e) { note(e); }
     if (!S.uid) {
       var live = S.sessions.filter(function (x) { return x.status === 'RUNNING' && !(S.ghosts && S.ghosts[x.session_uid]); });
-      if (live.length) await attach(live[0].session_uid);
+      // the operator's SESSION LIST SELECTION wins over "the first RUNNING row" (its replay window lives in the room)
+      var prefer = PS ? PS.readSession() : null;
+      var chosen = prefer ? live.filter(function (x) { return x.session_uid === prefer; })[0] : null;
+      if (chosen) await attach(chosen.session_uid);
+      else if (live.length) await attach(live[0].session_uid);
     } else {
       await pullStatus();
     }
@@ -355,6 +440,7 @@
   async function attach(uid) {
     if (S.ghosts) delete S.ghosts[uid]; // an explicit attach re-probes a session once marked a ghost
     S.uid = uid;
+    persistSession(uid); // the SESSION LIST SELECTION survives leaving the tab (its replay window lives in the room)
     await pullStatus();
     openStream();
     renderSessions();
@@ -458,6 +544,9 @@
     c.pairs.forEach(function (p) { sym.appendChild(el('option', { value: p, text: p })); });
     c.timeframes.forEach(function (t) { tf.appendChild(el('option', { value: t, text: t })); });
     tf.value = c.timeframes.indexOf('1H') >= 0 ? '1H' : tf.value;
+    sym.onchange = persistMarket; // the TV FEED selection is the operator's too
+    tf.onchange = persistMarket;
+    restoreMarketSelection();     // the operator's stored SYMBOL + TIMEFRAME win over the '1H' default
     var from = q('f-from'), to = q('f-to');
     if (from) from.value = localInput(new Date(Date.now() - 30 * 86400000));
     if (to) to.value = '';
@@ -469,17 +558,18 @@
     var sym = q('f-symbol'), tf = q('f-timeframe');
     if (!sym || !tf) return;
     var srcSel = q('f-source');
-    if (srcSel && !srcSel.onchange) srcSel.onchange = function () { S.cells_cache.from = false; renderCreateForm(); };
+    if (srcSel && !srcSel.onchange) srcSel.onchange = function () { S.cells_cache.from = false; persistSource(); renderCreateForm(); };
     if (sourceOf() === 'tv') { sym.onchange = null; tf.onchange = null; void renderTvForm(); return; }
     var pairs = [];
     S.cells.forEach(function (c) { if (pairs.indexOf(c.pair) < 0) pairs.push(c.pair); });
     sym.innerHTML = '';
     pairs.forEach(function (p) { sym.appendChild(el('option', { value: p, text: p })); });
     fillTimeframes();
-    sym.onchange = function () { fillTimeframes(); renderCellInfo(); };
-    tf.onchange = function () { renderCellInfo(); };
+    sym.onchange = function () { fillTimeframes(); persistMarket(); renderCellInfo(); };
+    tf.onchange = function () { persistMarket(); renderCellInfo(); };
     var info = q('cellinfo');
     if (info) info.onclick = renderCellInfo;
+    restoreMarketSelection(); // the operator's SYMBOL + TIMEFRAME, restored before the from/to derive from the cell
     if (!S.cells_cache.from) {
       var cell = cellFor();
       if (cell) {
@@ -1045,7 +1135,8 @@
     q('side').querySelectorAll('.bt-side-btn').forEach(function (b) {
       b.onclick = function () {
         S.side = b.dataset.side;
-        q('side').querySelectorAll('.bt-side-btn').forEach(function (x) { x.classList.toggle('active', x === b); });
+        applySideButtons();
+        persistSide(); // the BUY/SELL toggle is operator state — it survives the tab
       };
     });
     onSel('o-type', function () {
