@@ -1,0 +1,57 @@
+{
+ "week": "2026-06-22",
+ "monday": "2026-06-22",
+ "pair": "DXY",
+ "zones_in": 5,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1782172800000,
+   "shape": "R",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Mon"
+  },
+  {
+   "x": 1782259200000,
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Upper IP Resistance",
+   "day": "Tue"
+  },
+  {
+   "x": 1782345600000,
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Upper IP Resistance",
+   "day": "Wed"
+  },
+  {
+   "x": 1782432000000,
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Upper IP Resistance",
+   "day": "Thu"
+  },
+  {
+   "x": 1782518400000,
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Upper IP Resistance",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [
+  {
+   "zone": "Upper IP Resistance",
+   "to": "BS",
+   "zfp": 37,
+   "conf": 70.0
+  }
+ ],
+ "momentum": 0.0235,
+ "chain": [
+  "R->SS@Upper IP Resistance"
+ ],
+ "phase": "MID"
+}

@@ -1,0 +1,57 @@
+{
+ "week": "2026-04-20",
+ "monday": "2026-04-20",
+ "pair": "DXY",
+ "zones_in": 5,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1776729600000,
+   "shape": "BS",
+   "conf": 60.0,
+   "zone": "Key IP Support",
+   "day": "Mon"
+  },
+  {
+   "x": 1776816000000,
+   "shape": "PBS",
+   "conf": 65.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Tue"
+  },
+  {
+   "x": 1776902400000,
+   "shape": "PBS",
+   "conf": 65.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Wed"
+  },
+  {
+   "x": 1776988800000,
+   "shape": "PBS",
+   "conf": 65.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Thu"
+  },
+  {
+   "x": 1777075200000,
+   "shape": "PBS",
+   "conf": 65.0,
+   "zone": "IP Resistance Ceiling",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [
+  {
+   "zone": "IP Resistance Ceiling",
+   "to": "RWL",
+   "zfp": 50,
+   "conf": 85.0
+  }
+ ],
+ "momentum": 0.2578,
+ "chain": [
+  "BS->PBS@IP Resistance Ceiling"
+ ],
+ "phase": "POST_BS_EARLY_BREAKOUT"
+}

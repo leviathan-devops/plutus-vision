@@ -875,7 +875,6 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
     clusters = [cl for cl in clusters if len(cl) >= min_members]
 
     zones = []
-    minimal_zones: list[dict] = []   # the 0-3 clusters, kept as LADDER FILLERS (the 5-slot cut)
     for cl in clusters:
         top = max(l["price"] for l in cl)
         bot = min(l["price"] for l in cl)
@@ -922,8 +921,7 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
                         "style": "line", "use_box": False} for l in cl],
         }
         if deg == "MINIMAL":
-            minimal_zones.append(_zone)      # a 0-3 cluster still fills a ladder SLOT
-            continue                         # ...but never stands as a NAMED zone
+            continue                         # a 0-3 score is discarded as a NAMED zone
         zones.append(_zone)
     # ── THE 5.3.3 §5.2.1 IP ZONE MAP SYNTHESIS — the five ROLE names ──────────────
     # "Key Resistance / Upper IP Resistance / Equilibrium Zone / Mid-Range Support / Key
@@ -941,13 +939,51 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
     # by rank. The spot still drives each zone's degree (via zone_regime), never the count.
     zones.sort(key=lambda z: -z["confluence"])          # strongest first
     # THE LADDER IS FIVE SLOTS (the v8's RES,RES,MID,SUP,SUP). The earlier cut took the five
-    # STRONGEST clusters and stopped, so a week whose level set formed only four non-MINIMAL
-    # clusters emitted FOUR zones and left a hole in the ladder (measured 2026-10-07:
-    # DXY-2026-05-11 → 4 zones; the operator's litmus test needs 5 on EVERY week). A MINIMAL
-    # cluster is a real cluster at a real price — it FILLS a slot rather than leaving a gap.
-    _fill = sorted(minimal_zones, key=lambda z: -z["confluence"])
-    while len(zones) < 5 and _fill:
-        zones.append(_fill.pop(0))
+    # STRONGEST clusters and stopped, so a week whose level set formed only four clusters at the
+    # canon's 3+ pillar floor emitted FOUR zones and left a hole (measured 2026-10-07:
+    # DXY-2026-05-11 → 4). The 3+ pillar law still governs every NAMED zone; when the week is
+    # one cluster short, the 5th slot is filled from a LOWER-floor pass (2 pillars) — the v8
+    # ladder is a fixed structure, and a real cluster at a real price is a valid slot.
+    if len(zones) < 5:
+        _covered = [(z["bottom"], z["top"]) for z in zones]
+        _f = sorted((l for l in levels if _sc(l) >= 2), key=lambda l: l["price"])
+        _fcl: list[list[dict]] = []
+        for l in _f:
+            if _fcl and (l["price"] - _fcl[-1][-1]["price"] <= tol
+                         and l["price"] - _fcl[-1][0]["price"] <= band):
+                _fcl[-1].append(l)
+            else:
+                _fcl.append([l])
+        _cand = []
+        for cl in _fcl:
+            b, t = min(x["price"] for x in cl), max(x["price"] for x in cl)
+            if any(not (t < zb or b > zt) for zb, zt in _covered):
+                continue                                 # overlaps a named zone
+            _cand.append((sum(x["confluence"] if "confluence" in x else _sc(x) for x in cl), b, t, cl))
+        _cand.sort(key=lambda c: -c[0])
+        for _s, b, t, cl in _cand:
+            if len(zones) >= 5:
+                break
+            _best = max(cl, key=_sc)
+            _conf = int(min(CONFLUENCE_CAP, round(sum(_best[d] for d in
+                        ("technical", "options", "analyst", "structural",
+                         "psychological")) + zone_regime(b, t, bars, spot)
+                        + zone_extreme_bonus(b, t, bars))))
+            zones.append({
+                "name": f"{band_of(_conf)[:4]}_{'SUPPLY' if t > spot else 'DEMAND'}_{t:.2f}",
+                "top": round(t, 5), "bottom": round(b, 5),
+                "zone_type": "SOFT_WALL", "confluence": _conf,
+                "pressure_degree": band_of(_conf), "zfp": zfp_from_degree(_conf),
+                "regime": "momentum", "measured_move_target": None,
+                "structural_extreme": False, "poi_tier": 1,
+                "zCat": CAT.classify(t, b, spot), "zTir": CAT.tier(_conf),
+                "zfp_label": CAT.zfp(t, b, pair), "degree_v8": CAT.norm_degree(band_of(_conf)),
+                "bom_fresh_flag": None, "timeframe": "1H",
+                "levels": [{"price": l["price"], "label": l["label"],
+                            "level_type": l["label"].split("_")[0],
+                            "style": "line", "use_box": False} for l in cl],
+            })
+            _covered.append((b, t))
     zones = zones[:5]                                   # the v8's five slots
     zones.sort(key=lambda z: -z["top"])                 # emit TOP→DOWN (the prompt's sort)
     for _i, _z in enumerate(zones):

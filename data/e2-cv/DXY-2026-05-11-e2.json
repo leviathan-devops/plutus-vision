@@ -1,0 +1,55 @@
+{
+ "week": "2026-05-11",
+ "monday": "2026-05-11",
+ "pair": "DXY",
+ "zones_in": 5,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1778544000000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Key IP Support",
+   "day": "Mon"
+  },
+  {
+   "x": 1778630400000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Key IP Support",
+   "day": "Tue"
+  },
+  {
+   "x": 1778716800000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Key IP Support",
+   "day": "Wed"
+  },
+  {
+   "x": 1778803200000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Key IP Support",
+   "day": "Thu"
+  },
+  {
+   "x": 1778889600000,
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Key IP Support",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [
+  {
+   "zone": "Key IP Support",
+   "to": "RWL",
+   "zfp": 50,
+   "conf": 85.0
+  }
+ ],
+ "momentum": -1.0,
+ "chain": [],
+ "phase": "POST_BS_EARLY_BREAKOUT"
+}

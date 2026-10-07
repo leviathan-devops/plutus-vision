@@ -7,43 +7,43 @@
  "days": [
   {
    "x": 1777939200000,
-   "shape": "BS",
+   "shape": "R",
    "conf": 60.0,
-   "zone": "IP Support 4",
+   "zone": "Mid-Range Support",
    "day": "Mon"
   },
   {
    "x": 1778025600000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Mid-Range Support",
    "day": "Tue"
   },
   {
    "x": 1778112000000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Mid-Range Support",
    "day": "Wed"
   },
   {
    "x": 1778198400000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Mid-Range Support",
    "day": "Thu"
   },
   {
    "x": 1778284800000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Mid-Range Support",
    "day": "Fri"
   }
  ],
  "ghost": [],
  "chain": [
-  "BS->PBS@IP Resistance Ceiling"
+  "R->SS@Equilibrium Zone"
  ],
  "momentum": 0.1152,
  "comments": [
