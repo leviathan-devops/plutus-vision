@@ -958,3 +958,20 @@ W5 ADJUDICATED AS A PROBE ERROR (two-sided):
   face routes 404 -> 401 (upstream auth) · rig ports 9851/9741/9754/9222 up. Commit cf7b0bf.
 - NEXT: the operator reviews the Engine-1 side-by-side (ENGINE1_V8_VS_MINE.md) and directs the
   calcZFP fix (the crux).
+
+## [2026-10-07] THE 4H ORDER-BLOCK DIMENSION (the operator's named missing input)
+
+- WHAT: added the prompt's Pillar 5 Step 0d + Step 9.7 (the 4H Zone Classification Overlay) —
+  `four_h_order_blocks(bars)` resamples the 1H bars to 4H and detects the last opposing 4H candle
+  before an impulsive move (a SUPPLY block before a down move, a DEMAND block before an up move);
+  `zone_4h_bonus(bot,top,blocks,spot)` gives +2 to an IP zone overlapping a MATCHED 4H block (a
+  supply block at a resistance, a demand block at a support) — the prompt's Tier-1 POI.
+- WHY: the operator (2026-10-07): "there is a four hour supply zone right around the resistance
+  areas of the IP zones … your engine one is still not wired correctly." The engine had NO 4H
+  dimension, so a resistance sitting on a 4H supply block scored LIGHT (zfp 50) instead of HEAVY.
+- EVIDENCE: confluence rose across all weeks — DXY-2026-07-13's Equilibrium reached HEAVY (10),
+  the Ceiling 5→7, Upper 6→8. W2a ("≥4 distinct zfp") now PASSES: distinct zfp = 17/27/37/50.
+  Named gates 17/4 → **18/3**. Battery e1_st_18 8/0 · e2_tests 46/0. Commit d0d928a.
+- NEXT: the floor (Key IP Support) is still LIGHT — it sits BELOW the week and overlaps no 4H
+  block, so it needs the options/analyst dimensions (the harvest, DOWN) to reach HEAVY. W1e + W2b/c
+  remain blocked on the harvest.
