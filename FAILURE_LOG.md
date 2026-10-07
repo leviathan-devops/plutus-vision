@@ -1006,3 +1006,12 @@ guard does not over-fire). Battery: e2_tests 42 → **46** pass.
 **THE LESSON.** The happy-path battery (42 green) hid the defect; the ADVERSARIAL probe found it
 in one pass. This is the objective's own law — "zero defects in the adversarial pass = RED FLAG":
 a fresh adversarial round is what surfaces the silent-failure class the happy path cannot.
+
+**DECISIVE ADDENDUM [2026-10-07] — W1e IS A BROKEN GATE (the v8's OWN data fails it).**
+Computed from the v8's own reference arrays (trident_v8.pine:187-188 `dxy_zTp`/`dxy_zBt` → line
+334 `calcZFP`, DXY ref 1.60): widths 0.07/0.22/0.12/0.12/**0.34** → calcZFP 4/14/7/8/**21**.
+The FLOOR (Key IP Support) is the WIDEST zone (0.34) → calcZFP **21**, HIGHER than every mid
+(14/7/8). So `floor_zfp < mid_zfp` is **FALSE for the v8 itself** — W1e contradicts the authority,
+and NO engine that matches the v8 can pass it. W1e is a SPEC ERROR, not an implementation gap.
+(Separately, the v8's calcZFP has 5 DISTINCT values [4,7,8,14,21] → W2a passes under the v8's own
+metric; the gate's ">=4 distinct" is satisfiable by the calcZFP, not the degree-band zfp.)
