@@ -108,7 +108,11 @@ def harvest_web(week: str, live: bool = False) -> dict:
     for name, fn in F.SOURCES:
         try:
             levels = fn(cutoff)
-            out[name] = {"status": "OK", "count": len(levels)}
+            # CAPTURE THE LEVELS (fix 2026-10-07). The earlier form recorded ONLY the count,
+            # so the harvested option-strike / analyst levels (the canon's S1/S9, the source of
+            # the Options + Analyst score dimensions) were discarded the moment they arrived —
+            # the two dimensions could never be wired. `levels` is the useful output.
+            out[name] = {"status": "OK", "count": len(levels), "levels": levels}
         except Exception as e:                              # any source failure is [NO DATA]
             out[name] = {"status": "DOWN", "reason": f"{type(e).__name__}: {str(e)[:200]}"}
     up = sum(1 for v in out.values() if v["status"] == "OK")
