@@ -907,6 +907,70 @@ def zone_extreme_bonus(bot: float, top: float, bars: list) -> float:
     return min(2.0, bonus)
 
 
+def _resample_4h(bars: list) -> list:
+    """Resample the 1H bars to 4H candles (4 bars each) — the 4H Zone Scan source."""
+    out = []
+    for i in range(0, len(bars), 4):
+        chunk = bars[i:i + 4]
+        if not chunk:
+            continue
+        out.append({"t": chunk[0]["t"], "o": chunk[0]["o"],
+                    "h": max(b["h"] for b in chunk), "l": min(b["l"] for b in chunk),
+                    "c": chunk[-1]["c"]})
+    return out
+
+
+def four_h_order_blocks(bars: list) -> list:
+    """The prompt's 4H ORDER BLOCKS — Pillar 5 Step 0d ("Cross-Reference Swing Extremes with
+    Order Blocks") + Step 9.7 (the 4H Zone Classification Overlay). An order block is the
+    LAST OPPOSING 4H candle before an IMPULSIVE 4H move — the institutional origin of the
+    move (a down candle before a strong up move = DEMAND; an up candle before a strong down
+    move = SUPPLY). Returns [(bottom, top, kind)].
+
+    THE MISSING DIMENSION (operator 2026-10-07, verbatim: "there is a four hour supply zone
+    right around the resistance areas of the IP zones … if you had accurate ZFP you would
+    have seen an extremely low ZFP and high pressure on these zones"). The engine had NO 4H
+    dimension, so a resistance ceiling sitting on a 4H supply block scored LIGHT (zfp 50) —
+    and the E2 then predicted a breakout continuation where the canon's own §6.4.1 says a
+    hard wall (zfp < 20) bounces. This is the prompt's Tier-1 POI input."""
+    h4 = _resample_4h(bars) if bars else []
+    if len(h4) < 6:
+        return []
+    body = [abs(c["c"] - c["o"]) for c in h4]
+    avg = (sum(body) / len(body)) if body else 0.0
+    blocks = []
+    for i in range(1, len(h4) - 1):
+        cur, nxt = h4[i], h4[i + 1]
+        move = nxt["c"] - nxt["o"]
+        if avg <= 0 or abs(move) < 1.5 * avg:
+            continue                                    # not an impulsive move
+        if move > 0 and cur["c"] < cur["o"]:
+            blocks.append((cur["l"], cur["h"], "DEMAND"))
+        elif move < 0 and cur["c"] > cur["o"]:
+            blocks.append((cur["l"], cur["h"], "SUPPLY"))
+    return blocks
+
+
+def zone_4h_bonus(bot: float, top: float, blocks: list, spot: float = None) -> float:
+    """The prompt's Step 9.7: an IP zone that OVERLAPS a 4H order block is a Tier-1 POI
+    ("Primary trade location. +2 confluence."). +2 on overlap, else 0.
+
+    THE S/D MATCH (operator 2026-10-07): a 4H SUPPLY block reinforces a RESISTANCE zone
+    (above the spot); a 4H DEMAND block reinforces a SUPPORT zone (below the spot). An
+    unmatched overlap (a demand block at a resistance) is not institutional confluence —
+    the prompt's Tier-1 is a MATCHED BoM/S-D overlap. The operator's ceiling has a 4H
+    SUPPLY zone on it, which is exactly this bonus firing."""
+    for b, t, kind in (blocks or []):
+        if top < b or bot > t:                          # no overlap
+            continue
+        if spot is None:
+            return 2.0                                  # spot-less: any overlap counts
+        above = (top + bot) / 2.0 > spot                # a resistance-side zone
+        if (above and kind == "SUPPLY") or (not above and kind == "DEMAND"):
+            return 2.0
+    return 0.0
+
+
 def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
              bars: list = None) -> list[dict]:
     """Cluster the scored levels into zones, then score each CLUSTER by summing its
@@ -964,6 +1028,7 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
         else:
             clusters.append([l])
     clusters = [cl for cl in clusters if len(cl) >= min_members]
+    _blocks = four_h_order_blocks(bars)                  # the 4H order blocks (Step 0d/9.7)
 
     zones = []
     for cl in clusters:
@@ -983,7 +1048,8 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
         base = sum(best[d] for d in ("technical", "options", "analyst", "structural",
                                      "psychological"))
         reg = zone_regime(bot, top, bars, spot)          # 0/1/2, PER ZONE
-        bonus = min(2.0, best.get("bonus", 0.0)) + zone_extreme_bonus(bot, top, bars)
+        bonus = (min(2.0, best.get("bonus", 0.0)) + zone_extreme_bonus(bot, top, bars)
+                 + zone_4h_bonus(bot, top, _blocks, spot))  # +2 for a Tier-1 4H overlap (Step 9.7)
         conf = int(min(CONFLUENCE_CAP, round(base + reg + bonus)))
         deg = band_of(conf)
         side = "SUPPLY" if top > spot else "DEMAND"

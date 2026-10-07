@@ -2076,18 +2076,18 @@
    "name": "Upper IP Resistance",
    "top": 101.05716,
    "bottom": 101.05215,
-   "zone_type": "SOFT_WALL",
-   "confluence": 6,
-   "pressure_degree": "MODERATE",
-   "zfp": 37,
+   "zone_type": "STANDARD_WALL",
+   "confluence": 8,
+   "pressure_degree": "MODERATE_HEAVY",
+   "zfp": 27,
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
-   "poi_tier": 1,
+   "poi_tier": 2,
    "zCat": "RES",
-   "zTir": "T2",
+   "zTir": "T1",
    "zfp_label": 0,
-   "degree_v8": "MODERATE",
+   "degree_v8": "MODERATE-HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -2113,9 +2113,9 @@
    "top": 101.03933,
    "bottom": 100.88981,
    "zone_type": "STANDARD_WALL",
-   "confluence": 8,
-   "pressure_degree": "MODERATE_HEAVY",
-   "zfp": 27,
+   "confluence": 10,
+   "pressure_degree": "HEAVY",
+   "zfp": 17,
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
@@ -2123,7 +2123,7 @@
    "zCat": "MID",
    "zTir": "T1",
    "zfp_label": 9,
-   "degree_v8": "MODERATE-HEAVY",
+   "degree_v8": "HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -2268,7 +2268,7 @@
      "use_box": false
     }
    ],
-   "ladder_name": "MODE_DEMAND_101.04"
+   "ladder_name": "HEAV_DEMAND_101.04"
   },
   {
    "name": "Mid-Range Support",
