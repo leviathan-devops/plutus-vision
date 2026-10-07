@@ -952,8 +952,10 @@ def four_h_order_blocks(bars: list) -> list:
 
 
 def zone_4h_bonus(bot: float, top: float, blocks: list, spot: float = None) -> float:
-    """The prompt's Step 9.7: an IP zone that OVERLAPS a 4H order block is a Tier-1 POI
-    ("Primary trade location. +2 confluence."). +2 on overlap, else 0.
+    """The prompt's Step 9.7 POI Tier: an IP zone that OVERLAPS a 4H BoM S/D is Tier 1
+    ("Primary trade location. +2 confluence."); an IP zone with NO overlapping 4H BoM is
+    Tier 2 ("Secondary trade location. +1 confluence."). Every IP zone is Tier 1 or Tier 2,
+    so the bonus is +2 (Tier 1) or +1 (Tier 2) — NEVER 0.
 
     THE S/D MATCH (operator 2026-10-07): a 4H SUPPLY block reinforces a RESISTANCE zone
     (above the spot); a 4H DEMAND block reinforces a SUPPORT zone (below the spot). An
@@ -967,8 +969,8 @@ def zone_4h_bonus(bot: float, top: float, blocks: list, spot: float = None) -> f
             return 2.0                                  # spot-less: any overlap counts
         above = (top + bot) / 2.0 > spot                # a resistance-side zone
         if (above and kind == "SUPPLY") or (not above and kind == "DEMAND"):
-            return 2.0
-    return 0.0
+            return 2.0                                  # Tier 1 — a MATCHED BoM overlap
+    return 1.0                                          # Tier 2 — IP-only POI (+1, Step 9.7)
 
 
 def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
