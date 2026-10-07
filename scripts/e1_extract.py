@@ -477,6 +477,30 @@ def zfp_from_degree(conf: int) -> int:
     return ZFP_BY_DEGREE[band_of(conf)]
 
 
+def _harvest_levels(week: str = "", pair: str = "DXY") -> list[dict]:
+    """The nine-source harvest's LEVELS (option strikes + analyst), or [] when down.
+
+    `e1_sources.py --live` writes data/harvest/sources.json; each source's `levels` are the
+    typed rows (S1 option strikes carry price/notional_bn/tier; S9 analyst levels carry
+    price/tier). A DOWN harvest contributes NOTHING — the Options/Analyst dimensions stay 0
+    rather than a fabricated score."""
+    hp = ROOT / "data" / "harvest" / "sources.json"
+    if not hp.exists():
+        return []
+    try:
+        h = json.loads(hp.read_text())
+    except Exception:
+        return []
+    web = (h.get("web") or {}).get("data") or {}
+    out: list[dict] = []
+    for _src, v in web.items():
+        if not isinstance(v, dict) or v.get("status") != "OK":
+            continue
+        for lvl in (v.get("levels") or []):
+            if isinstance(lvl, dict) and lvl.get("level_type"):
+                out.append(lvl)
+    return out
+
 def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[list[dict], dict]:
     """Compute every candidate level from the fetched series, with its dimension scores."""
     # THE EMPTY-SERIES REFUSAL (adversarial A6, 2026-10-06). An empty bar series raised a bare
@@ -700,6 +724,29 @@ def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[l
     notes["regime"] = classify_regime(bars)               # the WEEK regime (context only)
     for l in levels:
         l["regime"] = 0.0                                  # the per-ZONE regime lands in assemble
+
+    # ── P3+P8 (OPTIONS) + P4 (ANALYST) — THE WIRED WEB DIMENSIONS ──────────────────────
+    # The nine-source harvest (data/harvest/sources.json, written by `e1_sources.py --live`)
+    # carries the option strikes (S1: price + notional_bn + tier) and the analyst levels
+    # (S9). A harvested level CONFLUENT with a computed level sets that level's dimension —
+    # the canon's "an option wall AT a level makes it institutional". A DOWN harvest
+    # contributes NOTHING (the dimension stays 0, never a fabricated score). This is the
+    # WIRING; the DATA is the harvest's (network-gated: the vision arm for S1, CDP for S9).
+    for hl in _harvest_levels(week, pair):
+        ltype = str(hl.get("level_type", ""))
+        dim = ("options" if ltype == "OPTION_STRIKE"
+               else "analyst" if ltype.startswith("ANALYST") else "")
+        if not dim:
+            continue
+        try:
+            hprice = float(hl.get("price"))
+        except (TypeError, ValueError):
+            continue
+        tier = str(hl.get("tier", "")).upper()
+        score = 2.0 if tier.startswith("CRITICAL") else 1.5 if tier.startswith("SIGNIFICANT") else 1.0
+        for l in levels:
+            if abs(l["price"] - hprice) <= zone_tol:
+                l[dim] = max(l.get(dim, 0.0), score)
     return levels, notes
 
 
