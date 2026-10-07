@@ -46,19 +46,19 @@ def st10_shape_anchored() -> None:
     zones = [z("Z1", 1.1500, 1.1490, 13, 60), z("Z2", 1.1560, 1.1540, 9, 12),
              z("Z3", 1.1400, 1.1380, 7, 35)]
 
-    shape, anchor = classify(1.0, zones)
+    shape, anchor = classify(zones)
     record("ST-10a  classify returns a shape AND an anchor", bool(shape) and bool(anchor),
            f"{shape} @ {anchor}")
 
     # EVERY link in the chain must name a zone
-    ch = forward_map(zones, 1.0, dt.date(2026, 10, 6))
+    ch = forward_map(zones, dt.date(2026, 10, 6))
     unanchored = [l for l in (ch.chain + ch.alternative) if not l.trigger_zone_id]
     record("ST-10b  ZERO unanchored links in the primary chain", not unanchored,
            f"{len(ch.chain)} links, {len(ch.alternative)} alternative")
 
     # NEGATIVE CONTROL — the empty map
     try:
-        classify(1.0, [])
+        classify([])
         raised = False
     except FabricationRefused:
         raised = True
@@ -66,7 +66,7 @@ def st10_shape_anchored() -> None:
            "negative control: the refusal is load-bearing")
 
     # and the refusal NAMES the reason
-    ch_empty = forward_map([], 1.0, dt.date(2026, 10, 6))
+    ch_empty = forward_map([], dt.date(2026, 10, 6))
     record("ST-10d  the refusal is NAMED, not silent",
            bool(ch_empty.refusal) and "E2_" in ch_empty.refusal,
            ch_empty.refusal[:70])
@@ -74,7 +74,7 @@ def st10_shape_anchored() -> None:
     # every MINIMAL zone must be excluded from anchoring
     all_min = [z("M1", 1.15, 1.149, 2, 90), z("M2", 1.16, 1.159, 3, 85)]
     try:
-        classify(1.0, all_min)
+        classify(all_min)
         raised = False
     except FabricationRefused:
         raised = True
@@ -131,7 +131,7 @@ def st12_day_decomp() -> None:
     zones = [z("Z1", 1.1500, 1.1490, 13, 60), z("Z2", 1.1560, 1.1540, 9, 12),
              z("Z3", 1.1400, 1.1380, 7, 35)]
     monday = dt.date(2026, 10, 6)
-    ch = forward_map(zones, 1.0, monday)
+    ch = forward_map(zones, monday)
 
     days = ch.days
     record("ST-12a  five day entries (Mon-Fri)", len(days) == 5,
@@ -217,7 +217,7 @@ def st13_empty_corpus() -> None:
     #   Z1  9 conf, zfp 18 -> a HARD WALL, so BS must become RWL (§6.4.1's #1 rule)
     zones = [z("Z0", 1.1500, 1.1490, 13, 55), z("Z1", 1.1560, 1.1540, 9, 18),
              z("Z2", 1.1620, 1.1600, 7, 35), z("Z3", 1.1680, 1.1660, 6, 28)]
-    ch = forward_map(zones, 1.0, dt.date(2026, 10, 6))
+    ch = forward_map(zones, dt.date(2026, 10, 6))
     record("ST-13a0 the fixture PRODUCES a chain (not vacuously empty)", len(ch.chain) >= 1,
            f"{len(ch.chain)} links")
     record("ST-13a  the chain never exceeds 5 links", len(ch.chain) <= MAX_CHAIN_LENGTH,
@@ -250,12 +250,12 @@ def st14_determinism() -> None:
     import e2_engine
     zones = [z("ZA", 1.1560, 1.1540, 9, 12), z("ZB", 1.1500, 1.1490, 13, 60),
              z("ZC", 1.1400, 1.1380, 7, 35), z("ZD", 1.1700, 1.1680, 11, 88)]
-    base = classify(1.0, zones)
+    base = classify(zones)
     agree = True
     for seed in range(6):
         perm = zones[:]
         random.Random(seed).shuffle(perm)
-        if classify(1.0, perm) != base:
+        if classify(perm) != base:
             agree = False
     record("ST-14a  the anchor is ORDER-INDEPENDENT (6 shuffles agree)", agree, f"base={base}")
 
@@ -283,7 +283,7 @@ def st14_determinism() -> None:
     # ST-14d/e — the chain's own invariants (audit 2026-10-06, findings 299 + 360):
     # len(anchor_zone_ids) == len(chain)+1, and the week-end shape is exposed.
     zs = [z("A", 1.10, 1.09, 9, 40), z("B", 1.12, 1.11, 7, 35)]
-    ch = forward_map(zs, 0.0, dt.date(2026, 10, 6))
+    ch = forward_map(zs, dt.date(2026, 10, 6))
     record("ST-14d  len(anchor_zone_ids) == len(chain)+1",
            len(ch.anchor_zone_ids) == len(ch.chain) + 1,
            f"{len(ch.anchor_zone_ids)} vs {len(ch.chain)+1}")

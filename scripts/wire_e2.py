@@ -177,7 +177,7 @@ def main() -> int:
     if not refusal:
         try:
             mom = compute_momentum(monday, pair=PAIR)
-            chain = forward_map(zones, mom, monday)
+            chain = forward_map(zones, monday)
             out["momentum"] = round(mom, 4)
             if chain.refusal:
                 out["refusal"] = chain.refusal

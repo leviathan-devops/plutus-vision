@@ -7,50 +7,51 @@
  "days": [
   {
    "x": 1783382400000,
-   "shape": "BS",
+   "shape": "WLS",
    "conf": 60.0,
-   "zone": "IP Support Floor",
+   "zone": "Key IP Support",
    "day": "Mon"
   },
   {
    "x": 1783468800000,
-   "shape": "R",
-   "conf": 75.0,
-   "zone": "Equilibrium Zone",
+   "shape": "WLS",
+   "conf": 60.0,
+   "zone": "Key IP Support",
    "day": "Tue"
   },
   {
    "x": 1783555200000,
-   "shape": "SS",
-   "conf": 60.0,
-   "zone": "Equilibrium Zone",
+   "shape": "BS",
+   "conf": 85.0,
+   "zone": "IP Support Floor",
    "day": "Wed"
   },
   {
    "x": 1783641600000,
-   "shape": "SS",
-   "conf": 60.0,
-   "zone": "Equilibrium Zone",
+   "shape": "R",
+   "conf": 75.0,
+   "zone": "IP Resistance Ceiling",
    "day": "Thu"
   },
   {
    "x": 1783728000000,
    "shape": "SS",
    "conf": 60.0,
-   "zone": "Equilibrium Zone",
+   "zone": "IP Resistance Ceiling",
    "day": "Fri"
   }
  ],
  "ghost": [
   {
-   "zone": "IP Resistance Ceiling",
+   "zone": "IP Support Floor",
    "to": "BS",
-   "zfp": 37,
+   "zfp": 40,
    "conf": 70.0
   }
  ],
  "momentum": 0.5388,
  "chain": [
+  "WLS->BS@IP Support Floor",
   "BS->R@IP Resistance Ceiling",
   "R->SS@IP Resistance Ceiling"
  ],

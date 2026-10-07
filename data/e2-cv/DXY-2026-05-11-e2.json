@@ -7,49 +7,52 @@
  "days": [
   {
    "x": 1778544000000,
-   "shape": "WLS",
+   "shape": "BS",
    "conf": 60.0,
    "zone": "Key IP Support",
    "day": "Mon"
   },
   {
    "x": 1778630400000,
-   "shape": "WLS",
-   "conf": 60.0,
-   "zone": "Key IP Support",
+   "shape": "R",
+   "conf": 75.0,
+   "zone": "IP Resistance Ceiling",
    "day": "Tue"
   },
   {
    "x": 1778716800000,
-   "shape": "WLS",
+   "shape": "SS",
    "conf": 60.0,
-   "zone": "Key IP Support",
+   "zone": "IP Resistance Ceiling",
    "day": "Wed"
   },
   {
    "x": 1778803200000,
-   "shape": "WLS",
+   "shape": "SS",
    "conf": 60.0,
-   "zone": "Key IP Support",
+   "zone": "IP Resistance Ceiling",
    "day": "Thu"
   },
   {
    "x": 1778889600000,
-   "shape": "WLS",
+   "shape": "SS",
    "conf": 60.0,
-   "zone": "Key IP Support",
+   "zone": "IP Resistance Ceiling",
    "day": "Fri"
   }
  ],
  "ghost": [
   {
-   "zone": "Key IP Support",
-   "to": "RWL",
-   "zfp": 50,
-   "conf": 85.0
+   "zone": "IP Resistance Ceiling",
+   "to": "BS",
+   "zfp": 37,
+   "conf": 70.0
   }
  ],
  "momentum": -1.0,
- "chain": [],
- "phase": "POST_BS_EARLY_BREAKOUT"
+ "chain": [
+  "BS->R@IP Resistance Ceiling",
+  "R->SS@IP Resistance Ceiling"
+ ],
+ "phase": "MID"
 }

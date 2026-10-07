@@ -2,56 +2,55 @@
  "week": "2026-07-13",
  "monday": "2026-07-13",
  "pair": "DXY",
- "zones_in": 6,
+ "zones_in": 5,
  "refusal": "",
  "days": [
   {
    "x": 1783987200000,
-   "shape": "WLS",
+   "shape": "BS",
    "conf": 60.0,
-   "zone": "Equilibrium Zone",
+   "zone": "Key IP Support",
    "day": "Mon"
   },
   {
    "x": 1784073600000,
-   "shape": "WLS",
-   "conf": 60.0,
-   "zone": "Equilibrium Zone",
+   "shape": "R",
+   "conf": 75.0,
+   "zone": "IP Resistance Ceiling",
    "day": "Tue"
   },
   {
    "x": 1784160000000,
-   "shape": "BS",
-   "conf": 85.0,
-   "zone": "IP Support Floor",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "IP Resistance Ceiling",
    "day": "Wed"
   },
   {
    "x": 1784246400000,
-   "shape": "R",
-   "conf": 75.0,
-   "zone": "Equilibrium Zone",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "IP Resistance Ceiling",
    "day": "Thu"
   },
   {
    "x": 1784332800000,
    "shape": "SS",
    "conf": 60.0,
-   "zone": "Equilibrium Zone",
+   "zone": "IP Resistance Ceiling",
    "day": "Fri"
   }
  ],
  "ghost": [
   {
-   "zone": "IP Support Floor",
+   "zone": "IP Resistance Ceiling",
    "to": "BS",
-   "zfp": 40,
+   "zfp": 27,
    "conf": 70.0
   }
  ],
  "momentum": 1.0,
  "chain": [
-  "WLS->BS@IP Support Floor",
   "BS->R@IP Resistance Ceiling",
   "R->SS@IP Resistance Ceiling"
  ],

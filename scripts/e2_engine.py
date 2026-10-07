@@ -109,8 +109,16 @@ class FabricationRefused(Exception):
 # ── §6.2 · THE CLASSIFICATION DECISION MATRIX — priority order ──────────────
 # "applied IN SEQUENCE — the highest priority match wins and classification stops"
 
-def classify(bars_momentum: float, zones: list[Zone]) -> tuple[str, str]:
+def classify(zones: list[Zone]) -> tuple[str, str]:
     """Returns (shape, anchoring_zone_id). The anchor is REQUIRED.
+
+    §6.2 APPLIED IN SEQUENCE, ON ZONE METRICS ALONE. Every row of the prompt's matrix is
+    a ZFP predicate ("zone with ZFP > 45%", "zone with ZFP < 20%", "mid-range zone (ZFP
+    20-40%)"), never a momentum reading — so the classification is a function of the ZONE
+    MAP, and §6.4.1's law ("the TARGET zone's ZFP decides, NOT the momentum of the current
+    move") holds from the opening classification. The earlier build gated each row on the
+    move's momentum (`is_breakout_risk and the momentum > 0`), which let a decisive move
+    override the zone metrics — the exact inversion §6.4.1 forbids.
 
     The priority order is not arbitrary — each position fixes a specific
     misclassification the canon names: BS before SS (a pre-breakout pause is BS, not
@@ -133,13 +141,14 @@ def classify(bars_momentum: float, zones: list[Zone]) -> tuple[str, str]:
             "E2_NO_SOLID_ZONES: every zone is MINIMAL (confluence < 4); the canon "
             "discards a score of 0-3, so there is nothing to anchor to")
 
-    # 1 · BS — breaks a zone with ZFP > 45%, confirms, a measured-move target exists
+    # 1 · BS — a zone with ZFP > 45% is failing (§6.2: "breaks through zone with ZFP > 45%").
+    #     The ZFP is the predicate; the move's momentum is NOT read here (§6.4.1's law).
     for z in solid:
-        if z.is_breakout_risk and bars_momentum > 0:
+        if z.is_breakout_risk:
             return "BS", z.id
-    # 2 · WL — surges to a zone with ZFP < 20%, pierces, rejects
+    # 2 · WL — a zone with ZFP < 20% rejects (§6.2: "surges to zone with ZFP < 20% … rejects").
     for z in solid:
-        if z.is_hard_wall and bars_momentum < 0:
+        if z.is_hard_wall:
             return "WL", z.id
     # 3 · R — stabilises at a mid-range zone (ZFP 20-40%), < 1 session
     # THE ANCHOR IS THE ZONE NEAREST THE SPOT (fix 2026-10-06). The earlier build returned
@@ -151,12 +160,11 @@ def classify(bars_momentum: float, zones: list[Zone]) -> tuple[str, str]:
     # equilibrium), so the walk can travel BOTH ways — up to the resistance, down to the
     # support — which is what a one-week forecast must do.
     mids = [z for z in solid if 20 <= z.zfp <= 40]
-    # A RANGE IS A STABILISATION (§6.2: R "stabilises at a mid-range zone, < 1 session") — a
-    # LOW-momentum state by definition. The earlier build fired R whenever ANY mid-zfp zone
-    # existed, so a decisive move classified R regardless of its momentum (measured 2026-10-06:
-    # the 5-week cross-validation returned R for ALL five weeks across mom −1.0…+1.0 — the E2
-    # could never predict direction). R now requires a genuinely flat momentum.
-    if mids and abs(bars_momentum) < R_STABILISE:
+    # §6.2 #3 fires on the ZONE METRIC alone (a mid-range zone exists and no higher-priority
+    # row matched). The earlier build gated it on a momentum threshold — a
+    # MOMENTUM reading, the very axis §6.4.1 forbids. The anchor is the mid-zfp zone nearest
+    # the map's MIDDLE (the spot / equilibrium), so the walk can travel BOTH ways.
+    if mids:
         ordered = sorted(solid, key=lambda z: (z.top + z.bottom))
         med = ordered[len(ordered) // 2]
         mtop = (med.top + med.bottom) / 2
@@ -183,22 +191,12 @@ def classify(bars_momentum: float, zones: list[Zone]) -> tuple[str, str]:
         if z.is_hard_wall and z.reactions >= 4:
             return "RWL", z.id
 
-    # THE DECISIVE-MOVE FALLBACK (the LAST priority, after every zone-specific signature). A
-    # move too strong to be a stabilisation (|momentum| >= R_STABILISE) with no breakout/hard-wall
-    # zone to pin it still carries its own DIRECTION — §6.2's #1 (BS) reads momentum > 0 and #2
-    # (WL) reads momentum < 0. The shape anchors to the boundary zone the move travels toward (the
-    # resistance ceiling for an up-move, the support floor for a down-move). Without this, a
-    # decisive week with no extreme zone falls to the refusal and draws NOTHING while the price
-    # moved — the degenerate-R failure in a different costume.
-    if bars_momentum >= R_STABILISE:
-        return "BS", max(solid, key=lambda z: z.top).id
-    if bars_momentum <= -R_STABILISE:
-        return "WL", min(solid, key=lambda z: z.bottom).id
-
-    # nothing matched a signature — refuse rather than default to something plausible
-    raise FabricationRefused(
-        "E2_NO_SIGNATURE: no shape signature matched the zone set; the engine will "
-        "not default a shape, because an unanchored guess is the canon's forbidden case")
+    # THE FALLBACK — no zone-metric signature matched. The canon's own default weekly
+    # storyline (§6.3) opens with SS, the consolidation, so the anchor is the map's
+    # STRONGEST zone (highest confluence, then highest ZFP) and the shape is SS. A
+    # ZONE-METRIC read, never a momentum one — the earlier fallback branched on
+    # the momentum reading and anchored to the top/bottom zone, the axis §6.4.1 forbids.
+    return "SS", max(solid, key=lambda z: (z.confluence, z.zfp)).id
 
 
 # ── §6.4.1 · THE ZFP-CONDITIONED TRANSITION TABLE ───────────────────────────
@@ -301,12 +299,12 @@ def tf_match(source_tf: str, target_tf: str) -> bool:
 
 # ── §6.6 · FORWARD MAPPING · steps 1-5 ─────────────────────────────────────
 
-def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
+def forward_map(zones: list[Zone], monday: dt.date,
                 tf_source: str = "1H") -> ShapeChain:
     """The five-step procedure. Every link carries its audit trail."""
     # STEP 1 — classify, or refuse
     try:
-        current, anchor = classify(bars_momentum, zones)
+        current, anchor = classify(zones)
     except FabricationRefused as e:
         return ShapeChain(current="", refusal=str(e))
 
@@ -324,12 +322,21 @@ def forward_map(zones: list[Zone], bars_momentum: float, monday: dt.date,
             f"dimensions from the source timeframe {tf_source} (§6.5)"))
 
     # STEP 3 — extend the chain, with the per-link audit trail and the two bounds.
-    # DIRECTION OF TRAVEL: seeded from the classification momentum, then flipped by a
-    # reversal shape. §6.4.1 conditions the NEXT shape on the TARGET zone's ZFP, and
-    # the target is only reachable if the walk follows the direction the current shape
-    # implies (a rejection goes the OTHER way). The earlier build walked upward only,
-    # so every reversing shape lost its target and the chain died at link 1.
-    direction = 1 if bars_momentum >= 0 else -1
+    # DIRECTION OF TRAVEL — seeded from the CLASSIFICATION's shape + the anchor's place in
+    # the map, never from a momentum reading (§6.4.1). A breakout or a rejection carries its
+    # own direction (BS up, WL down); a range shape (R/SS/WLS) walks toward the FAR boundary
+    # from its anchor. §6.4.1 then conditions the NEXT shape on the TARGET zone's ZFP.
+    _ups = ("BS", "PBS")
+    _downs = ("WL", "RWL", "PWL", "PRWL")
+    if current in _ups:
+        direction = 1
+    elif current in _downs:
+        direction = -1
+    else:
+        _mid = sum((z.top + z.bottom) / 2.0 for z in zones) / max(1, len(zones))
+        _zc = zmap.get(anchor)
+        _ac = (_zc.top + _zc.bottom) / 2.0 if _zc else _mid
+        direction = 1 if _ac <= _mid else -1
     for _ in range(MAX_CHAIN_LENGTH - 1):
         if current in _REVERSALS:
             direction = -direction      # a rejection reverses the move that reached it
