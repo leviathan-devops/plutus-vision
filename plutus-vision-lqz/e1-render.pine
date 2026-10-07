@@ -230,7 +230,7 @@ f_e1Render() =>
                      border_style = line.style_solid)
                 // THE LABEL — the reference idiom: at the MID, style_none, white, size.normal.
                 // A subtle dark backing keeps the white text legible on the zone fill.
-                _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(array.get(e1PayloadZfp, i)) + "% ZFP"
+                _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(f_e1CalcZFP(_top, _bot, _e1Pair)) + "% ZFP"
                 label.new((_lx + _rx) / 2, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
     0
 
