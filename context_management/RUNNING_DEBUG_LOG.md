@@ -828,3 +828,80 @@ IS this step; its absence is the single defect that cost the second half of the 
 **LESSON.** A FORECAST that walks one direction to a map boundary and stops can predict an approach but
 never a bounce — and the bounce (the reversal) is where the week's money is made. The §6.4.1 density
 law is a TWO-WAY rule; the walk must enforce it at the edge, not only between interior zones.
+
+## [2026-10-07] D-E1-ZFP-1 · ENGINE 1's ZFP + DEGREE ARE THE ROOT CAUSE (operator: "I've said this 10 times")
+
+**SYMPTOM (operator, verbatim):** "the resistance ceiling obviously has a low ZFP … your engine one is
+still not wired correctly … if you had accurate ZFP on your engine one zones, then you would have seen
+that there's an extremely low ZFP and high pressure on these zones. This obviously indicates that a
+reversal could happen … swing scalp is only if the pressure is low. If the pressure is high and it's a
+support or resistance ceiling or floor then obviously if the ZFP is low then obviously there's going to
+be a sharp reversal."
+
+**THE AUTHORITY (read verbatim this session).**
+- `trident_v8.pine:334` — **THE ZFP IS A WIDTH FORMULA**, not a degree lookup:
+  `calcZFP(tp,bt,pair) => float zoneW = tp-bt; float refRange = pair=="DXY"?1.60:…; int pct =
+  math.round(zoneW/refRange*100.0)`. The v8's own Ceiling (w=0.07) → **4%**; Key Support (w=0.34) → **21%**.
+- `trident_v8.pine:157` — `pressureLbl(deg)` is the DEGREE only (Heavy/Moderate-Heavy/…).
+- `trident_v8.pine:187-192` — the degrees (`dxy_zDeg = HEAVY, MODERATE-HEAVY, MODERATE-HEAVY,
+  MODERATE, HEAVY`) and the widths are LITERALS (the manual Apr-20-24 input the operator wants wired
+  DYNAMICALLY).
+
+**OUR ENGINE'S STATE (measured 2026-10-07).**
+1. **THE ZFP IS THE DEGREE-BAND, NOT THE WIDTH.** `e1_extract.py:474 zfp_from_degree(conf)` returns
+   `ZFP_BY_DEGREE[band_of(conf)]` (MODERATE→37, LIGHT→50) and `assemble` writes it to the zone's `zfp`
+   (`:996`). The E2 READS THAT (`wire_e2.py:106 zfp=int(z.get("zfp",0))`). So the 08-31 Ceiling
+   (LIGHT) → zfp 50 → `is_breakout_risk` (zfp>45) → the §6.4.1 BS row → **a breakout continuation**
+   where the v8's calcZFP (4%) would have said **reversal**. The payload ALSO carries `zfp_label`
+   (`CAT.zfp(t,b,pair)` = the v8's calcZFP) — the Ceiling's is **0%** — but the E2 and the render
+   ignore it.
+2. **THE DEGREE CANNOT REACH HEAVY.** The confluence caps at **5.0/14** because THREE of the six
+   dimensions are ZERO: `options=0` (harvest DOWN), `analyst=0` (harvest DOWN), `regime=0` (set only
+   in `assemble`, never on a level). Measured dimension totals (150 levels): technical 107.5 ·
+   structural 145.5 · psychological 20.0 · **options 0 · analyst 0 · regime 0**. Max level score 5.0.
+   The v8's extremes are HEAVY (a 10-14 band) — unreachable with 3 dead dimensions.
+3. **THE ZONES ARE RAZOR-THIN.** The 08-31 zones are 0.000-0.144 wide (Ceiling 0.006, Key Support
+   0.000) vs the v8's 0.07-0.34 — a consequence of (2): a low-confluence cluster is a thin cluster.
+
+**THE CONNECTION TO THE E2 MISS (F-51).** The operator's point, confirmed: with the v8's calcZFP, the
+Ceiling (4%) is a HARD WALL → the §6.4.1 row `BS + target zfp<20 → RWL` fires → **a reversal**, which
+IS the actual Thursday move. With our degree-band ZFP (50%) the same zone reads as failing → a
+continuation. **The ZFP is the crux: the wrong ZFP inverts the E2's terminal shape.**
+
+**THE FIX (per the operator: "copy paste the v8").** (a) Make the engine's `zfp` = the v8's `calcZFP`
+(width/refRange) — or make the E2 read `zfp_label`; (b) make the degree reflect real institutional
+pressure so the extremes are HEAVY (wire the options/analyst dims + the regime dim, or score the zone
+ROLE); (c) widen the zones to the v8's cluster scale. Operator to direct the order.
+
+## [2026-10-07] D-E1-DEGREE-1 · THE ZFP FORMULA IS CORRECT; THE DEGREE IS UNDER-SCORED (the ceiling should be HEAVY)
+
+**THE FINDING.** The operator's "ZFP is completely fucked" is NOT a formula bug. Measured against the
+prompt:
+- The prompt's `PRESSURE DEGREE ASSIGNMENT` (line 1486): `12-14 EXTREME · 10-11 HEAVY · 8-9
+  MODERATE-HEAVY · 6-7 MODERATE · 4-5 LIGHT · 0-3 MINIMAL`. My `band_of` (`e1_extract.py:448`) uses
+  EXACTLY those boundaries (12/10/8/6/4). ✓ CORRECT.
+- My `ZFP_BY_DEGREE` (`:471`): EXTREME 7 · HEAVY 17 · MOD-HEAVY 27 · MODERATE 37 · LIGHT 50 · MINIMAL
+  70 — the midpoints of the prompt's failure bands (`<10% · 10-25% · 20-35% · 30-45% · 40-60% · >60%`).
+  ✓ CORRECT. (And the §6.4.1 E2 thresholds — `<20 → RWL`, `20-40 → R`, `>60 → PBS` — align: HEAVY 17
+  is a HARD WALL, LIGHT 50 is not.)
+
+**THE ACTUAL DEFECT — THE CONFLUENCE IS UNDER-SCORED.** The v8's Ceiling is HEAVY (a 10-11 confluence →
+zfp 17 < 20 = a hard wall → §6.4.1 `BS→RWL` = a REVERSAL). My Ceiling's confluence is **5** → LIGHT →
+zfp 50. The 5 = technical 0 + options 0 + analyst 0 + structural 2 + psychological 1 + regime 0-2.
+Measured dimension totals (150 levels): technical 107.5 (but 0 on the top-scorers) · options 0 ·
+analyst 0 · structural 145.5 · psychological 20 · regime 0 (per-level; the zone regime is added in
+assemble).
+
+**WHY THE EXTREMES ARE WEAK (the operator's point, mechanism confirmed).** The operator: "there is a
+four hour supply zone right around the resistance areas of the IP zones." That 4H-zone pressure is a
+REAL institutional input — the prompt's Pillar 5 Step 0d (HTF order blocks) + Step 9.7 (the 4H Zone
+Classification Overlay: a Tier-1 POI = an IP zone overlapping a 4H BoM S/D → +2 confluence). My
+engine has NO 4H-zone dimension and NO option/analyst dimension, so a resistance ceiling that is
+genuinely heavy (a 4H supply block + option walls) scores as LIGHT. **The formula is right; the
+INPUTS are missing.**
+
+**THE FIX (the operator's "copy-paste the v8 and wire it dynamically").** For the dynamic engine to
+reproduce the v8's HEAVY-at-the-extremes, the score must see the same pressure the v8's author saw:
+(a) the OPTIONS dimension (S1 strikes) and the ANALYST dimension (S9) — the harvest, currently DOWN;
+(b) the 4H-zone overlap (the prompt's Step 0d/9.7 Tier-1 +2) — not yet a dimension. Either wiring
+raises the extremes toward HEAVY and flips the E2 to the reversal the operator expects.
