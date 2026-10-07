@@ -988,3 +988,21 @@ matching the v8's count. So W2's "≥4 distinct zfp across the 5 zones" is ANTI-
 hand-authored ladder yields 3. W1e (extremes strongest) and W2a (≥4 distinct) are two different
 rejections of the SAME fact — the v8's degree is a fixed 3-value pattern, and a derived degree
 cannot be forced to satisfy both.
+
+## [2026-10-07] F-50 · A NON-FINITE ZONE PRICE WAS SILENTLY TOLERATED (found by a fresh adversarial pass)
+
+**THE FINDING.** A fresh adversarial probe (A1–A8) found that `classify` TOLERATED a zone
+whose `top`/`bottom` is NaN or ±inf: the mid-price computation produced NaN, the band
+comparisons never matched, and the engine anchored a shape to a zone with an undefined price
+— a fabricated anchor (the canon's forbidden case). The other seven probes passed (A1 empty map
+refused · A2 single zone · A3 all-weak · A4 spot-less · A6 0-link chain pads · A7 out-of-range
+zfp · A8 empty fine_path draws nothing).
+
+**THE FIX.** `Zone.__post_init__` (scripts/e2_engine.py) now REFUSES a non-finite bound by name
+(`E2_ZONE_NONFINITE`), so EVERY construction is validated at the boundary. Pinned by ST-15
+(4 assertions: NaN/inf/-inf refused + a finite zone accepted — the negative control proving the
+guard does not over-fire). Battery: e2_tests 42 → **46** pass.
+
+**THE LESSON.** The happy-path battery (42 green) hid the defect; the ADVERSARIAL probe found it
+in one pass. This is the objective's own law — "zero defects in the adversarial pass = RED FLAG":
+a fresh adversarial round is what surfaces the silent-failure class the happy path cannot.
