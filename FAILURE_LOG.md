@@ -1048,3 +1048,33 @@ reverse → 98.87/98.75 (the actual low 98.831 — Δ0.04).
 **THE LESSON.** A one-directional walk to the boundary predicts an approach, never a bounce. §6.4.1
 is a TWO-WAY rule; the engine enforces it between interior zones but not at the edge — the single
 missing step that cost the week's decisive move.
+
+## [2026-10-07] F-52 · THE OPTIONS/ANALYST HARVEST IS EXTERNALLY BLOCKED (403 / Cloudflare)
+
+**THE FINDING.** The options (S1) + analyst (S9) sources CANNOT be fetched — the sites block
+automated access, so the harvest returns 0 and the options/analyst dimensions are [NO DATA].
+
+**THE MEASUREMENT (this session).**
+- `curl https://www.investinglive.com/orders/` → **HTTP 403**.
+- `curl https://www.forex.com/en/market-analysis/` → **HTTP 403**.
+- The engine's own `headless_fetch` (a real browser via CDP :9222):
+  - investinglive → ok=True but the body is an ERROR page (821 B, "ERROR: The request could not…").
+  - forex.com → ok=True but the body is **"Just a moment…"** — a **Cloudflare JS challenge**.
+- `s1_investinglive_options(cutoff)` → 0 levels; `s9_forex_com_research(cutoff)` → 0 levels.
+
+**THE MECHANISM.** The sources are behind bot-detection (403 + Cloudflare). The engine's
+`http_get` gets 403; the browser `headless_fetch` gets the challenge/error page. Neither yields the
+options table or the analyst levels. The wiring (proven 2026-10-07, positive control 74.5/2.0) is
+CORRECT; the DATA is unavailable.
+
+**THE RESOLUTION (operator).** The v8's own options/analyst data was HAND-AUTHORED (the arrays in
+trident_v8.pine are literals — the operator's manual input). Options:
+(a) the operator SUPPLIES the options table + analyst levels for the target week (paste/screenshot),
+and the engine ingests them (the wiring is ready);
+(b) a Cloudflare-bypassing fetch (a headed browser with the operator's session) is built;
+(c) the dimensions are ruled permanently [NO DATA] (the wiring stays; the score uses the 4 available
+dims + the 4H bonus).
+
+**THE IMPACT.** W1e (floor strongest) + W2b/W2c (options/analyst > 0) are DATA-GATED on this. The
+4H dimension (added 2026-10-07) already raised the confluence (Eq reaches HEAVY); the extremes need
+the options/analyst pressure to reach HEAVY too.
