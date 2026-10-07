@@ -943,3 +943,18 @@ W5 ADJUDICATED AS A PROBE ERROR (two-sided):
 - **NEXT:** the operator reviews D-E2-BE-1 and rules on the boundary-reversal fix (the missing
   bounce step). Blocked waves W1e/W2a (the v8 zDeg is a fixed 3-value literal — F-49) + W2b/W2c
   (the options/analyst harvest is DOWN) remain operator-gated.
+
+## [2026-10-07] TAB-PERSISTENCE (Pine IDE + BACKTEST) + THE AGENT-FACE PROXY
+
+- WHAT: fixed the operator's two tab bugs + the "shell environment is fucked" blocker.
+  (1) The Pine IDE tab — a localStorage mirror (pine-ide/pine-persist.mjs) persists the active
+  micro-tab id, the editor source, and the chart symbol+tf; 7/7 selftest. (2) The BACKTEST tab —
+  backtest-persist.mjs persists symbol+timeframe+source+side+session; 7/7 selftest. (3) pv-server.py
+  now reverse-proxies the agent-face API (:9851 -> :9430) so the panel stops reading "workspaces
+  offline".
+- WHY: the operator lost the editor + the symbol on every tab switch (both tabs reset to the pinned
+  EUR/USD 5m), and the shell env was blocking accurate work.
+- EVIDENCE: pine-ide selftest 7/7 · backtest selftest 7/7 · pine-ide.mjs + backtest.js PARSE OK ·
+  face routes 404 -> 401 (upstream auth) · rig ports 9851/9741/9754/9222 up. Commit cf7b0bf.
+- NEXT: the operator reviews the Engine-1 side-by-side (ENGINE1_V8_VS_MINE.md) and directs the
+  calcZFP fix (the crux).

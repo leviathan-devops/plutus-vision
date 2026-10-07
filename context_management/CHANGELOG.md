@@ -331,3 +331,16 @@ has no boundary-reversal — the second-half miss).
 **HONEST DISCLOSURES.** W1e/W2a remain operator-gated (a spec contradiction with the authority).
 W2b/W2c (options/analyst) remain NO-DATA — the nine-source harvest is DOWN; the wiring is done and
 proven. The tab-persistence bug and the shell environment are being fixed in parallel.
+
+## [2026-10-07] — TAB PERSISTENCE + THE AGENT-FACE PROXY
+
+**ACCOMPLISHED.** Pine IDE tab persistence (pine-persist.mjs, 7/7 selftest) · BACKTEST tab
+persistence (backtest-persist.mjs, 7/7 selftest) · the agent-face reverse proxy in pv-server.py
+(:9851 -> :9430; the panel's routes went 404 -> 401 = the upstream's own auth). Plus
+ENGINE1_V8_VS_MINE.md — the full Engine-1 side-by-side the operator requested.
+
+**EVIDENCE.** selftests 7/7 + 7/7 · both files PARSE OK · commit cf7b0bf · battery unchanged
+(e1_st_18 8/0 · e2_tests 46/0).
+
+**DECISIONS.** The Engine-1 defect list (11 items) is on disk; the crux is calcZFP (the v8's width
+formula vs mine's degree-band).
