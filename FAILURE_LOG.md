@@ -1078,3 +1078,26 @@ dims + the 4H bonus).
 **THE IMPACT.** W1e (floor strongest) + W2b/W2c (options/analyst > 0) are DATA-GATED on this. The
 4H dimension (added 2026-10-07) already raised the confluence (Eq reaches HEAVY); the extremes need
 the options/analyst pressure to reach HEAVY too.
+
+## [2026-10-07] F-53 · THE W1e GATE CONTRADICTS THE v8 (the gate's premise is inverted)
+
+**THE FINDING.** The W1e gate asserts `floor.zfp < mid.zfp` ("the floor zone's zfp < the mid zones'
+zfp"). The v8's OWN data contradicts it.
+
+**THE MEASUREMENT (the v8's literals, trident_v8.pine:187-191, calcZFP = (tp-bt)/1.60).**
+- floor "Key IP Support" tp/bt = 97.97/97.63 -> zfp = round(0.34/1.60*100) = **21%** (the WIDEST).
+- mid "Equilibrium Zone" tp/bt = 98.41/98.29 -> zfp = round(0.12/1.60*100) = **8%** (the NARROWEST).
+- So the v8's floor zfp (21) is **GREATER** than the mid (8) — the OPPOSITE of the gate's assertion.
+- The engine's own render (week 2026-W29): floor 50% vs mid 17% — the SAME relationship as the v8
+  (floor wider than mid). The engine MATCHES the v8; the GATE is what differs.
+
+**THE MECHANISM.** The zfp (the zone WIDTH) and the pressure degree (the confluence) are INDEPENDENT
+in the v8: the floor is HEAVY (a strong support) yet WIDE (21%) — a strong zone can span a wide
+price range. The gate conflated "strong" with "narrow" (assuming a HEAVY zone must have a small zfp),
+which the v8 disproves. The faithful check would be on the DEGREE (floor degree == HEAVY), not the zfp.
+
+**THE RESOLUTION.** The W1e gate is the OPERATOR's heuristic (from the objective's W1: "the floor
+zone's zfp < the mid zones' zfp"). It contradicts the v8's own data. Options: (a) keep the gate (it
+encodes the operator's expectation, not the v8's); (b) re-express W1e on the degree (floor degree ==
+the strongest), which IS what the v8 shows. Needs the operator's ruling — I do not unilaterally
+rewrite a gate from the objective.
