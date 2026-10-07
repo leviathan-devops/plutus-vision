@@ -11,13 +11,13 @@
   "tsR": 1785456000000,
   "tsMid": 1783771200000
  },
- "spot": 101.048,
- "data_as_of": "2026-10-06",
+ "spot": 100.872,
+ "data_as_of": "2026-10-07",
  "sources": {
   "EXTRACT_ohlc": {
    "status": "OK",
    "source": "local_fixture",
-   "detail": "fixtures/bars/2026-07-06.json \u00b7 DXY 1H \u00b7 1614 bars \u00b7 validated against the documented prints in the golden cascade"
+   "detail": "fixtures/bars/2026-07-06.json \u00b7 DXY 1H \u00b7 382 bars \u00b7 validated against the documented prints in the golden cascade"
   },
   "P1_pivots": {
    "status": "OK",
@@ -44,9 +44,6 @@
    "mas": 12,
    "cluster_tol_pips": 15.0,
    "recapture": [
-    "P2_EMA100",
-    "P2_EMA200",
-    "P2_EMA50",
     "P2_SMA50"
    ]
   },
@@ -71,7 +68,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -85,7 +82,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -99,7 +96,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -113,7 +110,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -126,8 +123,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 0.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 2.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -141,7 +138,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -155,7 +152,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -169,7 +166,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -183,7 +180,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -197,7 +194,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -211,7 +208,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -225,7 +222,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -239,7 +236,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -253,7 +250,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -267,7 +264,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -281,7 +278,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -295,7 +292,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -309,7 +306,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -323,7 +320,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -337,7 +334,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -351,7 +348,7 @@
    "technical": 1.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -364,8 +361,8 @@
    "use_box": false,
    "technical": 2.0,
    "structural": 2.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -378,8 +375,8 @@
    "use_box": false,
    "technical": 2.0,
    "structural": 2.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -392,8 +389,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 0.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -407,7 +404,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -421,7 +418,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -435,7 +432,7 @@
    "technical": 1.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -448,8 +445,8 @@
    "use_box": false,
    "technical": 2.0,
    "structural": 1.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -463,7 +460,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -477,7 +474,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -490,8 +487,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 0.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -505,7 +502,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -519,7 +516,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -533,7 +530,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -547,7 +544,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -561,7 +558,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -575,7 +572,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -588,8 +585,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 0.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -603,7 +600,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -617,7 +614,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -631,7 +628,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -645,7 +642,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -659,7 +656,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -673,7 +670,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -687,7 +684,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -701,7 +698,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -715,7 +712,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -729,7 +726,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -743,7 +740,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -757,7 +754,7 @@
    "technical": 1.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -771,7 +768,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -785,7 +782,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -799,7 +796,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -813,7 +810,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -827,7 +824,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -841,7 +838,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -855,7 +852,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -869,7 +866,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -883,7 +880,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -897,7 +894,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -911,7 +908,7 @@
    "technical": 1.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -925,7 +922,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -939,7 +936,7 @@
    "technical": 2.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -953,7 +950,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -967,7 +964,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -981,7 +978,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -995,7 +992,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1009,7 +1006,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1023,7 +1020,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1037,7 +1034,7 @@
    "technical": 1.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1051,7 +1048,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1065,7 +1062,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1079,7 +1076,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1093,7 +1090,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1107,7 +1104,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1121,7 +1118,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1135,7 +1132,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1149,7 +1146,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1163,7 +1160,7 @@
    "technical": 2.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1177,7 +1174,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1191,7 +1188,7 @@
    "technical": 2.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1205,7 +1202,7 @@
    "technical": 1.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1219,7 +1216,7 @@
    "technical": 1.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1233,27 +1230,27 @@
    "technical": 1.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
   },
   {
-   "price": 100.95645,
+   "price": 100.89999,
    "label": "P2_EMA9",
    "level_type": "P2",
    "style": "line",
    "use_box": false,
    "technical": 2.0,
    "structural": 0.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
   },
   {
-   "price": 100.94289,
+   "price": 100.88233,
    "label": "P2_SMA9",
    "level_type": "P2",
    "style": "line",
@@ -1261,27 +1258,27 @@
    "technical": 2.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
   },
   {
-   "price": 100.94957,
+   "price": 100.90495,
    "label": "P2_EMA10",
    "level_type": "P2",
    "style": "line",
    "use_box": false,
    "technical": 2.0,
    "structural": 0.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
   },
   {
-   "price": 100.9364,
+   "price": 100.895,
    "label": "P2_SMA10",
    "level_type": "P2",
    "style": "line",
@@ -1289,13 +1286,13 @@
    "technical": 2.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
   },
   {
-   "price": 100.90904,
+   "price": 100.93049,
    "label": "P2_EMA20",
    "level_type": "P2",
    "style": "line",
@@ -1303,13 +1300,13 @@
    "technical": 2.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
   },
   {
-   "price": 100.88025,
+   "price": 100.98385,
    "label": "P2_SMA20",
    "level_type": "P2",
    "style": "line",
@@ -1317,13 +1314,13 @@
    "technical": 2.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
   },
   {
-   "price": 100.94177,
+   "price": 100.95111,
    "label": "P2_EMA50",
    "level_type": "P2",
    "style": "line",
@@ -1331,27 +1328,27 @@
    "technical": 2.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 2.0,
-   "recapture": true,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
    "extended": false
   },
   {
-   "price": 100.8874,
+   "price": 100.89566,
    "label": "P2_SMA50",
    "level_type": "P2",
    "style": "line",
    "use_box": false,
    "technical": 2.0,
    "structural": 0.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 2.0,
    "recapture": true,
    "extended": false
   },
   {
-   "price": 101.03573,
+   "price": 101.0148,
    "label": "P2_EMA100",
    "level_type": "P2",
    "style": "line",
@@ -1359,13 +1356,13 @@
    "technical": 2.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 2.0,
-   "recapture": true,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
    "extended": false
   },
   {
-   "price": 101.10362,
+   "price": 101.04893,
    "label": "P2_SMA100",
    "level_type": "P2",
    "style": "line",
@@ -1373,13 +1370,13 @@
    "technical": 2.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
   },
   {
-   "price": 101.0409,
+   "price": 100.99371,
    "label": "P2_EMA200",
    "level_type": "P2",
    "style": "line",
@@ -1387,119 +1384,21 @@
    "technical": 2.0,
    "structural": 0.0,
    "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 2.0,
-   "recapture": true,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
    "extended": false
   },
   {
-   "price": 101.25322,
+   "price": 101.203,
    "label": "P2_SMA200",
    "level_type": "P2",
    "style": "line",
    "use_box": false,
-   "technical": 1.0,
+   "technical": 0.5,
    "structural": 0.0,
-   "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 0.0,
-   "recapture": false,
-   "extended": false
-  },
-  {
-   "price": 101.216,
-   "label": "P5_LSZ_101.2160",
-   "level_type": "P5",
-   "style": "line",
-   "use_box": false,
-   "technical": 0.0,
-   "structural": 1.0,
-   "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 0.0,
-   "recapture": false,
-   "extended": false
-  },
-  {
-   "price": 101.281,
-   "label": "P5_LSZ_101.2810",
-   "level_type": "P5",
-   "style": "line",
-   "use_box": false,
-   "technical": 0.0,
-   "structural": 2.0,
-   "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 0.0,
-   "recapture": false,
-   "extended": false
-  },
-  {
-   "price": 101.26,
-   "label": "P5_LSZ_101.2600",
-   "level_type": "P5",
-   "style": "line",
-   "use_box": false,
-   "technical": 0.0,
-   "structural": 1.5,
-   "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 0.0,
-   "recapture": false,
-   "extended": false
-  },
-  {
-   "price": 101.179,
-   "label": "P5_LSZ_101.1790",
-   "level_type": "P5",
-   "style": "line",
-   "use_box": false,
-   "technical": 0.0,
-   "structural": 1.0,
-   "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 0.0,
-   "recapture": false,
-   "extended": false
-  },
-  {
-   "price": 101.139,
-   "label": "P5_LSZ_101.1390",
-   "level_type": "P5",
-   "style": "line",
-   "use_box": false,
-   "technical": 0.0,
-   "structural": 1.5,
-   "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 0.0,
-   "recapture": false,
-   "extended": false
-  },
-  {
-   "price": 101.079,
-   "label": "P5_LSZ_101.0790",
-   "level_type": "P5",
-   "style": "line",
-   "use_box": false,
-   "technical": 0.0,
-   "structural": 1.5,
-   "psychological": 0.0,
-   "regime": 1.0,
-   "bonus": 0.0,
-   "recapture": false,
-   "extended": false
-  },
-  {
-   "price": 101.13,
-   "label": "P5_LSZ_101.1300",
-   "level_type": "P5",
-   "style": "line",
-   "use_box": false,
-   "technical": 0.0,
-   "structural": 1.5,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1512,8 +1411,22 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 2.0,
+   "psychological": 0.5,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 101.259,
+   "label": "P5_LSZ_101.2590",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1527,7 +1440,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1541,7 +1454,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1555,7 +1468,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1569,7 +1482,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1583,7 +1496,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1597,7 +1510,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1611,7 +1524,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1625,7 +1538,21 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 101.137,
+   "label": "P5_LSZ_101.1370",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.5,
+   "psychological": 0.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1639,7 +1566,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1653,7 +1580,7 @@
    "technical": 0.0,
    "structural": 1.5,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1667,7 +1594,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1681,7 +1608,21 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 101.278,
+   "label": "P5_LSZ_101.2780",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.0,
+   "psychological": 0.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1695,7 +1636,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1709,7 +1650,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1722,8 +1663,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 1.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1737,7 +1678,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1751,7 +1692,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1765,7 +1706,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1779,7 +1720,7 @@
    "technical": 0.0,
    "structural": 1.5,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1792,8 +1733,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 1.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1806,8 +1747,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 1.5,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1821,7 +1762,7 @@
    "technical": 0.0,
    "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1833,9 +1774,9 @@
    "style": "line",
    "use_box": false,
    "technical": 0.0,
-   "structural": 1.0,
+   "structural": 1.5,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1849,7 +1790,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1862,8 +1803,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 1.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1876,8 +1817,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 1.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1891,7 +1832,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1905,7 +1846,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1917,9 +1858,9 @@
    "style": "line",
    "use_box": false,
    "technical": 0.0,
-   "structural": 1.0,
+   "structural": 1.5,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1933,7 +1874,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1945,9 +1886,9 @@
    "style": "line",
    "use_box": false,
    "technical": 0.0,
-   "structural": 1.5,
+   "structural": 2.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1960,8 +1901,8 @@
    "use_box": false,
    "technical": 0.0,
    "structural": 1.0,
-   "psychological": 0.0,
-   "regime": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1975,7 +1916,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -1989,7 +1930,7 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -2003,7 +1944,105 @@
    "technical": 0.0,
    "structural": 1.0,
    "psychological": 0.0,
-   "regime": 1.0,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 101.097,
+   "label": "P5_LSZ_101.0970",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.0,
+   "psychological": 0.5,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 101.115,
+   "label": "P5_LSZ_101.1150",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.0,
+   "psychological": 0.0,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 101.061,
+   "label": "P5_LSZ_101.0610",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.0,
+   "psychological": 0.0,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 101.052,
+   "label": "P5_LSZ_101.0520",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.0,
+   "psychological": 0.0,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 101.038,
+   "label": "P5_LSZ_101.0380",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.0,
+   "psychological": 0.0,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 101.128,
+   "label": "P5_LSZ_101.1280",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.0,
+   "psychological": 0.0,
+   "regime": 0.0,
+   "bonus": 0.0,
+   "recapture": false,
+   "extended": false
+  },
+  {
+   "price": 100.895,
+   "label": "P5_LSZ_100.8950",
+   "level_type": "P5",
+   "style": "line",
+   "use_box": false,
+   "technical": 0.0,
+   "structural": 1.0,
+   "psychological": 0.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -2017,7 +2056,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 2.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -2031,7 +2070,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 1.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -2045,7 +2084,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 2.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -2059,7 +2098,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 1.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -2073,7 +2112,7 @@
    "technical": 0.0,
    "structural": 0.0,
    "psychological": 2.0,
-   "regime": 1.0,
+   "regime": 0.0,
    "bonus": 0.0,
    "recapture": false,
    "extended": false
@@ -2081,413 +2120,124 @@
  ],
  "zones": [
   {
-   "name": "Key IP Support",
-   "top": 100.6142,
-   "bottom": 100.4934,
-   "zone_type": "SOFT_WALL",
-   "confluence": 6,
-   "pressure_degree": "MODERATE",
-   "zfp": 40,
-   "regime": "consolidation",
-   "measured_move_target": null,
-   "structural_extreme": true,
-   "poi_tier": 1,
-   "zCat": "SUP",
-   "zTir": "T2",
-   "zfp_label": 8,
-   "degree_v8": "MODERATE",
-   "bom_fresh_flag": null,
-   "timeframe": "1H",
-   "levels": [
-    {
-     "price": 100.4934,
-     "label": "P1_CAMARILLA_D2_S4",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.5,
-     "label": "P6_ROUND_100.50",
-     "level_type": "P6",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.544,
-     "label": "P1_CLASSIC_D2_S1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.58393,
-     "label": "P1_FIB_D3_S2",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.59283,
-     "label": "P1_CAMARILLA_W_S3",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.6142,
-     "label": "P1_FIB_W_S1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    }
-   ],
-   "ladder_name": "MODE_DEMAND_100.61"
-  },
-  {
-   "name": "IP Support Floor",
-   "top": 100.68788,
-   "bottom": 100.6539,
+   "name": "IP Resistance Ceiling",
+   "top": 101.60467,
+   "bottom": 101.60467,
    "zone_type": "SOFT_WALL",
    "confluence": 4,
    "pressure_degree": "LIGHT",
-   "zfp": 40,
+   "zfp": 50,
    "regime": "momentum",
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 1,
-   "zCat": "SUP",
+   "zCat": "RES",
    "zTir": "T2",
-   "zfp_label": 2,
+   "zfp_label": 0,
    "degree_v8": "LIGHT",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
     {
-     "price": 100.6539,
-     "label": "P1_FIB_D2_S1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.65667,
-     "label": "P1_CLASSIC_D3_S1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.66405,
-     "label": "P1_CAMARILLA_D3_S4",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.67574,
-     "label": "P1_FIB_D3_S1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.68788,
-     "label": "P1_CAMARILLA_W_S2",
+     "price": 101.60467,
+     "label": "P1_CLASSIC_D1_R1",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     }
    ],
-   "ladder_name": "LIGH_DEMAND_100.69"
-  },
-  {
-   "name": "Mid-Range Support",
-   "top": 100.97306,
-   "bottom": 100.831,
-   "zone_type": "SOFT_WALL",
-   "confluence": 6,
-   "pressure_degree": "MODERATE",
-   "zfp": 40,
-   "regime": "consolidation",
-   "measured_move_target": null,
-   "structural_extreme": true,
-   "poi_tier": 1,
-   "zCat": "SUP",
-   "zTir": "T2",
-   "zfp_label": 9,
-   "degree_v8": "MODERATE",
-   "bom_fresh_flag": null,
-   "timeframe": "1H",
-   "levels": [
-    {
-     "price": 100.831,
-     "label": "P5_LSZ_100.8310",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.852,
-     "label": "P5_LSZ_100.8520",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.88025,
-     "label": "P2_SMA20",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.8874,
-     "label": "P2_SMA50",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.89307,
-     "label": "P1_CAMARILLA_D2_S1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.90904,
-     "label": "P2_EMA20",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.91366,
-     "label": "P1_CAMARILLA_D3_R1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.916,
-     "label": "P5_LSZ_100.9160",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.9364,
-     "label": "P2_SMA10",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.94177,
-     "label": "P2_EMA50",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.94289,
-     "label": "P2_SMA9",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.94932,
-     "label": "P1_CAMARILLA_D3_R2",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.94957,
-     "label": "P2_EMA10",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.95645,
-     "label": "P2_EMA9",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.97293,
-     "label": "P1_FIB_D3_R1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.97306,
-     "label": "P1_CAMARILLA_W_R1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    }
-   ],
-   "ladder_name": "MODE_DEMAND_100.97"
-  },
-  {
-   "name": "Equilibrium Zone",
-   "top": 101.13287,
-   "bottom": 100.98498,
-   "zone_type": "SOFT_WALL",
-   "confluence": 6,
-   "pressure_degree": "MODERATE",
-   "zfp": 40,
-   "regime": "consolidation",
-   "measured_move_target": null,
-   "structural_extreme": true,
-   "poi_tier": 1,
-   "zCat": "MID",
-   "zTir": "T2",
-   "zfp_label": 9,
-   "degree_v8": "MODERATE",
-   "bom_fresh_flag": null,
-   "timeframe": "1H",
-   "levels": [
-    {
-     "price": 100.98498,
-     "label": "P1_CAMARILLA_D3_R3",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.987,
-     "label": "P1_CLASSIC_D2_PP",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.99233,
-     "label": "P1_CLASSIC_D1_S2",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 100.99233,
-     "label": "P1_FIB_D1_S3",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.0,
-     "label": "P6_ROUND_101.00",
-     "level_type": "P6",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.01033,
-     "label": "P1_CLASSIC_W_PP",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.03573,
-     "label": "P2_EMA100",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.0409,
-     "label": "P2_EMA200",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.04567,
-     "label": "P1_CLASSIC_D3_R1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.05293,
-     "label": "P1_CAMARILLA_D2_R1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.06474,
-     "label": "P1_FIB_D3_R2",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.06812,
-     "label": "P1_CAMARILLA_W_R2",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.09195,
-     "label": "P1_CAMARILLA_D3_R4",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.10362,
-     "label": "P2_SMA100",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.13287,
-     "label": "P1_CAMARILLA_D2_R2",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    }
-   ],
-   "ladder_name": "MODE_SUPPLY_101.13"
+   "ladder_name": "LIGH_SUPPLY_101.60"
   },
   {
    "name": "Upper IP Resistance",
-   "top": 101.281,
-   "bottom": 101.14704,
+   "top": 101.4526,
+   "bottom": 101.39733,
    "zone_type": "SOFT_WALL",
    "confluence": 6,
    "pressure_degree": "MODERATE",
-   "zfp": 40,
+   "zfp": 37,
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 1,
    "zCat": "RES",
    "zTir": "T2",
-   "zfp_label": 8,
+   "zfp_label": 3,
    "degree_v8": "MODERATE",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
     {
-     "price": 101.14704,
-     "label": "P1_FIB_D1_S2",
+     "price": 101.39733,
+     "label": "P1_CLASSIC_D1_PP",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
+    {
+     "price": 101.40647,
+     "label": "P1_FIB_W_R1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.416,
+     "label": "P1_CLASSIC_D2_R1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.43467,
+     "label": "P1_CLASSIC_D3_R3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.44412,
+     "label": "P1_CAMARILLA_D1_R1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.44835,
+     "label": "P1_CAMARILLA_W_R4",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.4526,
+     "label": "P1_CAMARILLA_D2_R4",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    }
+   ],
+   "ladder_name": "MODE_SUPPLY_101.45"
+  },
+  {
+   "name": "Equilibrium Zone",
+   "top": 101.21333,
+   "bottom": 101.16317,
+   "zone_type": "STANDARD_WALL",
+   "confluence": 8,
+   "pressure_degree": "MODERATE_HEAVY",
+   "zfp": 27,
+   "regime": "consolidation",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 2,
+   "zCat": "MID",
+   "zTir": "T1",
+   "zfp_label": 3,
+   "degree_v8": "MODERATE-HEAVY",
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
     {
      "price": 101.16317,
      "label": "P1_CAMARILLA_W_R3",
@@ -2529,169 +2279,149 @@
      "level_type": "P1",
      "style": "line",
      "use_box": false
-    },
-    {
-     "price": 101.226,
-     "label": "P5_LSZ_101.2260",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.24262,
-     "label": "P1_FIB_D1_S1",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.267,
-     "label": "P5_LSZ_101.2670",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.281,
-     "label": "P5_LSZ_101.2810",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
     }
    ],
-   "ladder_name": "MODE_SUPPLY_101.28"
+   "ladder_name": "MODE_SUPPLY_101.21"
   },
   {
-   "name": "IP Resistance Ceiling",
-   "top": 101.44835,
-   "bottom": 101.301,
+   "name": "Mid-Range Support",
+   "top": 101.01033,
+   "bottom": 100.89307,
    "zone_type": "SOFT_WALL",
    "confluence": 6,
    "pressure_degree": "MODERATE",
-   "zfp": 40,
+   "zfp": 37,
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 1,
-   "zCat": "RES",
+   "zCat": "SUP",
    "zTir": "T2",
-   "zfp_label": 9,
+   "zfp_label": 7,
    "degree_v8": "MODERATE",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
     {
-     "price": 101.301,
-     "label": "P5_LSZ_101.3010",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.313,
-     "label": "P5_LSZ_101.3130",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.33275,
-     "label": "P1_CAMARILLA_D1_S2",
+     "price": 100.89307,
+     "label": "P1_CAMARILLA_D2_S1",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 101.35,
-     "label": "P5_LSZ_101.3500",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.363,
-     "label": "P5_LSZ_101.3630",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.36987,
-     "label": "P1_CAMARILLA_D1_S1",
+     "price": 100.94932,
+     "label": "P1_CAMARILLA_D3_R2",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 101.377,
-     "label": "P5_LSZ_101.3770",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.394,
-     "label": "P5_LSZ_101.3940",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.39733,
-     "label": "P1_CLASSIC_D1_PP",
+     "price": 100.97293,
+     "label": "P1_FIB_D3_R1",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 101.40647,
-     "label": "P1_FIB_W_R1",
+     "price": 100.97306,
+     "label": "P1_CAMARILLA_W_R1",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 101.416,
-     "label": "P1_CLASSIC_D2_R1",
+     "price": 100.98498,
+     "label": "P1_CAMARILLA_D3_R3",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 101.432,
-     "label": "P5_LSZ_101.4320",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 101.43467,
-     "label": "P1_CLASSIC_D3_R3",
+     "price": 100.987,
+     "label": "P1_CLASSIC_D2_PP",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 101.44412,
-     "label": "P1_CAMARILLA_D1_R1",
+     "price": 100.99233,
+     "label": "P1_CLASSIC_D1_S2",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     },
     {
-     "price": 101.44835,
-     "label": "P1_CAMARILLA_W_R4",
+     "price": 100.99233,
+     "label": "P1_FIB_D1_S3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 101.01033,
+     "label": "P1_CLASSIC_W_PP",
      "level_type": "P1",
      "style": "line",
      "use_box": false
     }
    ],
-   "ladder_name": "MODE_SUPPLY_101.45"
+   "ladder_name": "MODE_SUPPLY_101.01"
+  },
+  {
+   "name": "Key IP Support",
+   "top": 100.6142,
+   "bottom": 100.544,
+   "zone_type": "SOFT_WALL",
+   "confluence": 4,
+   "pressure_degree": "LIGHT",
+   "zfp": 50,
+   "regime": "momentum",
+   "measured_move_target": null,
+   "structural_extreme": true,
+   "poi_tier": 1,
+   "zCat": "SUP",
+   "zTir": "T2",
+   "zfp_label": 4,
+   "degree_v8": "LIGHT",
+   "bom_fresh_flag": null,
+   "timeframe": "1H",
+   "levels": [
+    {
+     "price": 100.544,
+     "label": "P1_CLASSIC_D2_S1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 100.58393,
+     "label": "P1_FIB_D3_S2",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 100.59283,
+     "label": "P1_CAMARILLA_W_S3",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    },
+    {
+     "price": 100.6142,
+     "label": "P1_FIB_W_S1",
+     "level_type": "P1",
+     "style": "line",
+     "use_box": false
+    }
+   ],
+   "ladder_name": "LIGH_DEMAND_100.61"
   }
  ],
  "shapes": {},
  "notes": [
-  "144 candidate levels clustered into 6 zones",
+  "147 candidate levels clustered into 5 zones",
   "12/12 pivot sets PASS the mandatory formula+symmetry+sanity+range verification (4 timeframes x 3 variants)"
  ],
  "temporal_boundary_utc": ""
