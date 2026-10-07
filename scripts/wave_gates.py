@@ -20,6 +20,12 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# THE CANONICAL WEEK — the objective's reference week. The gate reads THIS week's payload, so
+# its verdict is DETERMINISTIC. `sorted(glob(...))[-1]` was fragile: any other week written to
+# data/e1 (a cross-validation week, an ad-hoc extract) silently became the gate's subject and
+# its verdict changed with the alphabet — a gate whose subject drifts is not a gate.
+CANONICAL_WEEK = "2026-07-13"
+
 _RESULTS: list[tuple[str, bool, str]] = []
 
 
@@ -29,6 +35,10 @@ def record(name: str, ok: bool, detail: str = "") -> None:
 
 
 def _newest_dxy() -> str:
+    """The CANONICAL week's payload — deterministic, never the alphabetically-last file."""
+    p = os.path.join(ROOT, "data", "e1", f"DXY-{CANONICAL_WEEK}.json")
+    if os.path.exists(p):
+        return p
     fs = sorted(glob.glob(os.path.join(ROOT, "data", "e1", "DXY-*.json")))
     return fs[-1] if fs else ""
 
