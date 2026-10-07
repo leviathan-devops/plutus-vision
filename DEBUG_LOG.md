@@ -2333,3 +2333,35 @@ Documented for the rig.
 - **THE FIX:** `e1_extract.zfp_from_degree(conf)` → `{EXTREME:7, HEAVY:17, MODERATE_HEAVY:27, MODERATE:37, LIGHT:50, MINIMAL:70}` (the prompt's band midpoints); the render label now reads the INJECTED `e1PayloadZfp` (not calcZFP). `scripts/e1_extract.py:822`, `plutus-vision-lqz/e1-render.pine:240`.
 - **THE VERIFICATION:** the payload + the pine now carry `37,37,37,37,37,50` — varying by DEGREE (5 MODERATE zones = 37%, the 1 LIGHT = 50%). `e1_st_18 8/0 · e2_tests 42/0`.
 - **THE LESSON:** the ZFP is a DEFINED quantity in the prompt — read the authority, never substitute a plausible formula.
+
+---
+## EN-DEGREE-COMPRESSION — the ZFP was 5/6 identical (the degree didn't vary) (2026-10-06, operator 6th catch)
+
+- **THE FINDING (operator):** *"five of them say 37% … five out of six zones are moderate pressure.
+  Again, this is not possible. This literally never happens … why are the ZFPs hard coded constant
+  bullshit?"*
+- **THE ROOT CAUSE (measured):** the ZFP IS a function of the degree (correct), but the degree was
+  uniform because the SCORE was flat. Two mechanisms: (1) `build_levels` set the regime dimension as
+  a GLOBAL CONSTANT (`for l in levels: l["regime"] = regime_score`) — every level identical; (2)
+  `structural` was DOUBLE-COUNTED (base + bonus×0.66) → 29 levels tied at exactly 6.3 → every
+  cluster's "best" scored the same → every degree = MODERATE. The psychological dimension was also
+  mis-wired: round numbers were added as SEPARATE levels, so a pivot AT 101.00 never got its
+  big-figure credit (only 4/139 levels carried the dimension).
+- **THE FIX** (`scripts/e1_extract.py:748` `zone_regime`, `:778` `zone_extreme_bonus`, `:661` the
+  per-level psychological scoring, `:685` the regime no longer a constant): the regime is PER ZONE
+  (the prompt: "zone in consolidation 2 / momentum 1 / breakout 0", read from the price-vs-zone
+  action); the psychological dimension scores EACH level's price; the structural bonus is applied
+  once.
+- **THE VERIFICATION:** the 5 zones now read `LIGHT 50% · MODERATE 37% · HEAVY 17% · MODERATE 37% ·
+  MODERATE-HEAVY 27%` — four distinct degrees, four ZFP values. `e1_st_18 8/0`.
+- **THE LESSON:** the ZFP's VARIATION depends on the SCORE's variation. A single global constant in
+  any dimension flattens every zone to one degree — check EVERY dimension for a constant before
+  declaring the ZFP wrong.
+
+---
+## EN-SPOT-FILTER — the prompt's step 1 violation that deleted the resistance (2026-10-06)
+
+- **THE FINDING:** the render showed 0 RESISTANCE zones (5 SUP/MID); the colors were "just orange and teal".
+- **THE ROOT CAUSE:** `e1_extract.assemble` filtered levels to `abs(price - spot) <= CONFLUENCE_WINDOW (0.70)`. The prompt's Zone Assembly **step 1**: *"Collect all levels from all 9 pillars. Sort from highest to lowest. DO NOT filter by spot proximity."* With the spot near the week's high, the resistance levels above it were discarded → no RES zones → the red ladder shade unused.
+- **THE FIX (plan):** remove the spot filter; keep all levels; cluster the full set; emit top-down (the v8's order).
+- **THE LESSON:** the prompt's bold admonitions are the ones I violated. "DO NOT filter by spot proximity" was written because it is the natural mistake — and I made exactly it.
