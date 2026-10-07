@@ -162,16 +162,20 @@ def classify(zones: list[Zone], spot: float | None = None) -> tuple[str, str]:
 
     # 1 · BS — "Price BREAKS THROUGH zone with ZFP > 45%" (§6.2 #1). BOTH clauses: a zone
     #     whose ZFP > 45% (failing) AND the price AT/THROUGH it (the break is happening).
-    #     The earlier build read the ZFP alone, so BS fired on every map that contained any
-    #     weak zone (measured: 5/5 cross-validation weeks → BS) while the price sat elsewhere.
-    _ztol = 0.15                                     # the canon's cluster band
+    #     THE BAND IS TIGHT (fix 2026-10-07, operator hot-seat). The earlier ±0.15 (= the
+    #     full cluster band) let a spot 0.09 BELOW a Light resistance count as "breaking
+    #     through" — the price had NOT reached it. Measured: the 08-31 week's spot 99.641
+    #     selected the Ceiling 99.73 → an EMPTY chain → all 5 days at that one zone → the
+    #     uniform square-wave floating above the price. "At the zone" now means within a
+    #     small touch band (0.03 ≈ a third of the canon's 0.10 tight-confluence step).
+    _ztol = 0.03
     for z in solid:
         if not z.is_breakout_risk:
             continue
         if spot is None or (z.bottom - _ztol) <= spot <= (z.top + _ztol):
             return "BS", z.id
     # 2 · WL — "surges to zone with ZFP < 20%, pierces, then rejects" (§6.2 #2): a zone that
-    #     is BOTH a hard wall AND at the price.
+    #     is BOTH a hard wall AND at the price (same tight band).
     for z in solid:
         if not z.is_hard_wall:
             continue
