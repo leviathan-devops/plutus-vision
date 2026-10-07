@@ -2365,3 +2365,52 @@ Documented for the rig.
 - **THE ROOT CAUSE:** `e1_extract.assemble` filtered levels to `abs(price - spot) <= CONFLUENCE_WINDOW (0.70)`. The prompt's Zone Assembly **step 1**: *"Collect all levels from all 9 pillars. Sort from highest to lowest. DO NOT filter by spot proximity."* With the spot near the week's high, the resistance levels above it were discarded → no RES zones → the red ladder shade unused.
 - **THE FIX (plan):** remove the spot filter; keep all levels; cluster the full set; emit top-down (the v8's order).
 - **THE LESSON:** the prompt's bold admonitions are the ones I violated. "DO NOT filter by spot proximity" was written because it is the natural mistake — and I made exactly it.
+
+## [2026-10-07] THE AUTHORITY READ COVER-TO-COVER — the v8 is HAND-AUTHORED; the prompt defines the degree
+
+**THE FINDING.** Read the FULL authority this session (both halves): `trident_v8.pine` (668 lines) AND
+the prompt (4216 lines). Two facts settle the long-running "degree" question:
+
+1. **The v8's `zDeg` is a HARDCODED LITERAL ARRAY, not a computation.**
+   `trident_v8.pine:190`: `var array<string> dxy_zDeg = array.from("HEAVY","MODERATE-HEAVY","MODERATE-HEAVY","MODERATE","HEAVY")`.
+   The same 5-value ladder is repeated IDENTICALLY for EUR (225), GBP (258), AUD (291). The v8's
+   zone table (`zTp/zBt/zCat/zDeg/zTir/zNm`) is the author's HAND-TYPED data for ONE week
+   (DXY Apr 20-24 2026). The v8 does NOT compute the zones or the degrees — it RENDERS literals.
+
+2. **The v8's ONE computed piece IS the ZFP = the zone WIDTH.** `calcZFP(tp,bt,pair)`
+   (`trident_v8.pine:334-338`): `round((tp-bt) / refRange * 100)`, `refRange` = 1.60 (DXY) / 0.0200
+   (EU/GU) / 0.0150 (AU) — "zone width as percentage of a typical weekly range". VERIFIED on the
+   v8's own data: (99.23-99.16)/1.60 = 4%, (98.99-98.77)/1.60 = 14%, (98.41-98.29) = 8%, (98.12-98.00)
+   = 8%, (97.97-97.63) = 21%.
+
+3. **The PROMPT defines the degree by the confluence SCORE** (the 6-dim sum, 0-12 base + up to +2
+   extreme = 14): `prompt:1490-1496` — `12-14 EXTREME / 10-11 HEAVY / 8-9 MODERATE-HEAVY /
+   6-7 MODERATE / 4-5 LIGHT / 0-3 MINIMAL`. `prompt:1501`: "Assign pressure degrees based on the
+   group's highest-scoring level." So the degree IS derivable — from the score the engine computes.
+
+**THE FIXES THIS SESSION (all VERBATIM, each with its authority anchor).**
+- **W4 · the label** (commit `8b74048`): the zone label now reads `f_e1CalcZFP(top, bot, pair)` — the
+  v8's `calcZFP` (the WIDTH/reference-range %), VERBATIM from `trident_v8.pine:334-338`. It was the
+  failure band (the degree's failure probability, 37/27/17%). The label is a WIDTH; the degree is a
+  PRESSURE. Two different quantities — the engine conflated them. `e1_render_tests 24 pass`.
+- **W2 · the 4H dimension** (commit `d0d928a`): the prompt Pillar 5 Step 0d + Step 9.7 (the 4H Zone
+  Classification Overlay). Raised the confluence; the Equilibrium reached HEAVY; W2a (>=4 distinct
+  zfp) now PASSES.
+- **W2 · the Step 9.7 Tier-2** (commit `6651073`): the prompt's POI Tier is Tier 1 (+2, a MATCHED 4H
+  BoM overlap) OR Tier 2 (+1, an IP-only zone) — NEVER 0. The engine returned 0 for a non-overlapping
+  zone; now every IP zone is Tier 1 or Tier 2. The ceiling rose MODERATE->MODERATE-HEAVY; the floor 4->5.
+
+**THE REMAINING GAP (the operator's decision).**
+- **W1e (extremes strongest).** The floor zone sits ~0.2 BELOW the week's low (a prior-week support
+  level — exactly what the canon's IP zones are). Its COMPUTED confluence is 5 (LIGHT), because its
+  cluster is thin. The v8's HEAVY floor is the author's MANUAL assignment, not a computed value.
+  For the floor to reach HEAVY, it needs the OPTIONS + ANALYST dimensions (the +5), which are blocked.
+- **W2b/W2c (options/analyst > 0).** The nine-source harvest is EXTERNALLY BLOCKED (F-52):
+  investinglive.com/orders -> 403; forex.com -> 403/Cloudflare. The wiring is proven correct
+  (positive control 74.5/2.0); the DATA is unavailable.
+- **THE DECISION:** (A) derive the degrees from the score (canon-faithful — the current path; the
+  extremes follow the score); or (B) transcribe the v8's fixed ladder (the extremes always HEAVY — but
+  that is a hardcoded pattern, not a computation, and it defeats W2's >=4-distinct-zfp).
+
+**THE MEASUREMENT.** Battery: `e1_st_18 8/0`, `e2_tests 46/0`, `e1_render_tests 24/0`. Wave gates 18/3
+(W1e + W2b/c). The render: 5 zones (RES,RES,MID,SUP,SUP top->down) + the E2 path on the live rig.
