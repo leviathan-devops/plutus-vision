@@ -1015,3 +1015,14 @@ The FLOOR (Key IP Support) is the WIDEST zone (0.34) → calcZFP **21**, HIGHER 
 and NO engine that matches the v8 can pass it. W1e is a SPEC ERROR, not an implementation gap.
 (Separately, the v8's calcZFP has 5 DISTINCT values [4,7,8,14,21] → W2a passes under the v8's own
 metric; the gate's ">=4 distinct" is satisfiable by the calcZFP, not the degree-band zfp.)
+
+**FINAL PROOF [2026-10-07] — W1e AND W2a ARE MUTUALLY UNSATISFIABLE.** Computed on the v8's OWN
+arrays (zTp/zBt line 187-188, zDeg line 190, calcZFP line 334):
+  · the DEGREE-zfp (the engine value, per the anti-derail): [20,30,30,37,20] — 3 distinct →
+    W1e TRUE (floor 20 < Equilibrium 30), W2a FALSE (3 < 4).
+  · the CALCZFP (the v8's displayed value, zoneW/1.60): [4,14,7,8,21] — 5 distinct →
+    W2a TRUE (5 >= 4), W1e FALSE (floor 21 > Equilibrium 7).
+NO metric satisfies both gates on the v8's own data. The objective's W1e and W2a cannot both be
+green for ANY engine that matches the v8 — the gates are internally inconsistent with the
+authority. Resolution requires the operator: which metric is "zfp", and whether the degree is
+DERIVED (canon-faithful; the anti-derail) or the v8's FIXED ladder (its literal structure).
