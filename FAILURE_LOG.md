@@ -978,3 +978,13 @@ is its measured consequence.
 **REMEDY (the operator's call).** Either (A) keep the derived degree — canon-faithful, W2 green,
 W1e stays red; or (B) transcribe the v8's fixed ladder — W1e green, W2's distinct-zfp fails, the
 degree stops being data-driven. The engine currently does (A).
+
+**ADDENDUM [2026-10-07] — W2a ("≥4 distinct zfp") ALSO CONFLICTS WITH THE v8.** The v8's
+`dxy_zDeg = array.from("HEAVY","MODERATE-HEAVY","MODERATE-HEAVY","MODERATE","HEAVY")` has THREE
+distinct degrees (HEAVY · MODERATE-HEAVY · MODERATE), so the v8's own zfp carries at most 3
+distinct values. Transcribing the prompt's Pillar 5 Step 0.5c structural-extreme bonus (the
+canon-faithful move) produced EXACTLY 3 distinct degrees (MODERATE · MODERATE-HEAVY · LIGHT) —
+matching the v8's count. So W2's "≥4 distinct zfp across the 5 zones" is ANTI-v8: the v8's
+hand-authored ladder yields 3. W1e (extremes strongest) and W2a (≥4 distinct) are two different
+rejections of the SAME fact — the v8's degree is a fixed 3-value pattern, and a derived degree
+cannot be forced to satisfy both.
