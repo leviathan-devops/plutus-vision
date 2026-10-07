@@ -790,30 +790,74 @@ def zone_regime(bot: float, top: float, bars: list, spot: float) -> float:
 
 
 def zone_extreme_bonus(bot: float, top: float, bars: list) -> float:
-    """The prompt's Structural Extreme Bonus (≤2): a zone containing a prior swing HIGH or LOW
-    (a liquidity-sweep / supply-ceiling target) earns +0.5 each, capped at 2.0. Read from the
-    daily extremes of the bars — the prompt's 'Repeated Extreme Magnet' in its simplest form."""
+    """The prompt's STRUCTURAL EXTREME BONUS — Pillar 5 Step 0.5c, TRANSCRIBED.
+
+    The earlier form was an improvisation: a bare local-daily-extreme test at +0.5 a hit,
+    capped at 2.0. The prompt defines the bonus precisely (Step 0b/0c + Step 0.5c):
+      · a swing low/high counts only WITH A REJECTION WICK — the lower wick >= 0.15 DXY AND
+        the close in the UPPER 50% of the day's range (a high: upper wick >= 0.15, close in
+        the LOWER 50%);
+      · a level reached on 2 SEPARATE DATES is a Repeated Extreme Magnet -> +1.5;
+      · on 3+ dates -> +2.0;
+      · a ROLE REVERSAL (a swing low coinciding with a prior swing high, or vice versa)
+        -> +2.0, independent of the count.
+    A zone with no qualifying extreme scores 0. This is the escalation ABOVE the structural
+    dimension, never a substitute for it."""
     if not bars:
         return 0.0
     daily: dict = {}
-    for b in bars[-360:]:
+    for b in bars[-540:]:
         d = dt.datetime.fromtimestamp(b["t"] / 1000, dt.timezone.utc).date()
-        if d not in daily:
-            daily[d] = {"h": b["h"], "l": b["l"]}
-        else:
-            daily[d]["h"] = max(daily[d]["h"], b["h"])
-            daily[d]["l"] = min(daily[d]["l"], b["l"])
-    days = list(daily.values())
+        row = daily.setdefault(d, {"h": b["h"], "l": b["l"], "c": b["c"], "o": b["o"]})
+        row["h"] = max(row["h"], b["h"])
+        row["l"] = min(row["l"], b["l"])
+        row["c"] = b["c"]
+    days = sorted(daily.items())
     if len(days) < 3:
         return 0.0
-    hits = 0
+    lows: list = []
+    highs: list = []
     for i in range(1, len(days) - 1):
-        h, l = days[i]["h"], days[i]["l"]
-        if h >= days[i - 1]["h"] and h >= days[i + 1]["h"] and bot - 0.05 <= h <= top + 0.05:
-            hits += 1
-        if l <= days[i - 1]["l"] and l <= days[i + 1]["l"] and bot - 0.05 <= l <= top + 0.05:
-            hits += 1
-    return min(2.0, hits * 0.5)
+        dd, r = days[i]
+        rng = r["h"] - r["l"]
+        if rng <= 0:
+            continue
+        lower_wick = min(r["o"], r["c"]) - r["l"]
+        upper_wick = r["h"] - max(r["o"], r["c"])
+        is_low = r["l"] <= days[i - 1][1]["l"] and r["l"] <= days[i + 1][1]["l"]
+        is_high = r["h"] >= days[i - 1][1]["h"] and r["h"] >= days[i + 1][1]["h"]
+        if (is_low and lower_wick >= 0.15 and (r["c"] - r["l"]) / rng >= 0.5
+                and bot - 0.05 <= r["l"] <= top + 0.05):
+            lows.append((dd, r["l"]))
+        if (is_high and upper_wick >= 0.15 and (r["c"] - r["l"]) / rng <= 0.5
+                and bot - 0.05 <= r["h"] <= top + 0.05):
+            highs.append((dd, r["h"]))
+
+    def _repeats(pts: list) -> float:
+        used = [False] * len(pts)
+        best = 0.0
+        for i in range(len(pts)):
+            if used[i]:
+                continue
+            grp = [pts[i]]
+            for j in range(i + 1, len(pts)):
+                if not used[j] and abs(pts[j][1] - pts[i][1]) <= 0.05:
+                    grp.append(pts[j])
+                    used[j] = True
+            used[i] = True
+            if len(grp) >= 3:
+                best = max(best, 2.0)
+            elif len(grp) == 2:
+                best = max(best, 1.5)
+        return best
+
+    bonus = max(_repeats(lows), _repeats(highs))
+    # role reversal: a swing low coinciding with a prior swing high (or vice versa)
+    for _, lp in lows:
+        if any(abs(lp - hp) <= 0.05 for _, hp in highs):
+            bonus = 2.0
+            break
+    return min(2.0, bonus)
 
 
 def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
