@@ -20,7 +20,7 @@
      "cat": "RES",
      "top": 100.24717,
      "bottom": 100.24717,
-     "conf": 6,
+     "conf": 7,
      "tf": "1H"
     },
     {
@@ -28,7 +28,7 @@
      "cat": "RES",
      "top": 99.1839,
      "bottom": 99.16567,
-     "conf": 5,
+     "conf": 6,
      "tf": "1H"
     },
     {
@@ -36,7 +36,7 @@
      "cat": "MID",
      "top": 99.1495,
      "bottom": 99.00405,
-     "conf": 7,
+     "conf": 8,
      "tf": "1H"
     },
     {
@@ -44,7 +44,7 @@
      "cat": "SUP",
      "top": 98.7043,
      "bottom": 98.65428,
-     "conf": 5,
+     "conf": 6,
      "tf": "1H"
     },
     {
@@ -58,38 +58,38 @@
    ],
    "momentum": 1.0,
    "e2_refusal": "",
-   "e2_current": "BS",
-   "e2_links": 2,
+   "e2_current": "R",
+   "e2_links": 1,
    "e2_days": [
     {
      "day": "Mon",
-     "shape": "BS",
+     "shape": "R",
      "conf": 60.0,
-     "zone": "Mid-Range Support"
+     "zone": "Equilibrium Zone"
     },
     {
      "day": "Tue",
-     "shape": "R",
-     "conf": 75.0,
-     "zone": "IP Resistance Ceiling"
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "Upper IP Resistance"
     },
     {
      "day": "Wed",
      "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance Ceiling"
+     "zone": "Upper IP Resistance"
     },
     {
      "day": "Thu",
      "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance Ceiling"
+     "zone": "Upper IP Resistance"
     },
     {
      "day": "Fri",
      "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance Ceiling"
+     "zone": "Upper IP Resistance"
     }
    ],
    "actual_days": [
@@ -120,7 +120,7 @@
    ],
    "week_hi": 99.136,
    "week_lo": 97.632,
-   "e2_mae": 1.76019,
+   "e2_mae": 0.98178,
    "naive_mae": 0.9226,
    "beat_naive": false,
    "paired_days": 5,
@@ -132,7 +132,7 @@
    "zones_touched_n": 3,
    "zone_relevance": 0.6,
    "net_actual": -0.118,
-   "e2_direction": "up",
+   "e2_direction": "range",
    "actual_direction": "down",
    "direction_match": false,
    "verdict": "MEASURED"
@@ -158,7 +158,7 @@
      "cat": "RES",
      "top": 98.59125,
      "bottom": 98.497,
-     "conf": 5,
+     "conf": 6,
      "tf": "1H"
     },
     {
@@ -166,7 +166,7 @@
      "cat": "MID",
      "top": 98.25903,
      "bottom": 98.16274,
-     "conf": 6,
+     "conf": 8,
      "tf": "1H"
     },
     {
@@ -174,7 +174,7 @@
      "cat": "SUP",
      "top": 98.0387,
      "bottom": 97.98033,
-     "conf": 7,
+     "conf": 8,
      "tf": "1H"
     },
     {
@@ -182,7 +182,7 @@
      "cat": "SUP",
      "top": 97.74542,
      "bottom": 97.70531,
-     "conf": 6,
+     "conf": 5,
      "tf": "1H"
     }
    ],
@@ -195,7 +195,7 @@
      "day": "Mon",
      "shape": "BS",
      "conf": 60.0,
-     "zone": "Upper IP Resistance"
+     "zone": "Key IP Support"
     },
     {
      "day": "Tue",
@@ -250,7 +250,7 @@
    ],
    "week_hi": 98.579,
    "week_lo": 97.625,
-   "e2_mae": 0.76429,
+   "e2_mae": 0.8968,
    "naive_mae": 0.1912,
    "beat_naive": false,
    "paired_days": 5,
@@ -289,7 +289,7 @@
      "cat": "RES",
      "top": 100.1354,
      "bottom": 100.042,
-     "conf": 5,
+     "conf": 6,
      "tf": "1H"
     },
     {
@@ -305,7 +305,7 @@
      "cat": "SUP",
      "top": 99.83417,
      "bottom": 99.7138,
-     "conf": 5,
+     "conf": 6,
      "tf": "1H"
     },
     {
@@ -313,44 +313,44 @@
      "cat": "SUP",
      "top": 99.6595,
      "bottom": 99.561,
-     "conf": 6,
+     "conf": 8,
      "tf": "1H"
     }
    ],
    "momentum": -1.0,
    "e2_refusal": "",
-   "e2_current": "BS",
-   "e2_links": 2,
+   "e2_current": "R",
+   "e2_links": 1,
    "e2_days": [
     {
      "day": "Mon",
-     "shape": "BS",
+     "shape": "R",
      "conf": 60.0,
-     "zone": "Mid-Range Support"
+     "zone": "Equilibrium Zone"
     },
     {
      "day": "Tue",
-     "shape": "R",
-     "conf": 75.0,
-     "zone": "IP Resistance Ceiling"
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "Upper IP Resistance"
     },
     {
      "day": "Wed",
      "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance Ceiling"
+     "zone": "Upper IP Resistance"
     },
     {
      "day": "Thu",
      "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance Ceiling"
+     "zone": "Upper IP Resistance"
     },
     {
      "day": "Fri",
      "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance Ceiling"
+     "zone": "Upper IP Resistance"
     }
    ],
    "actual_days": [
@@ -381,7 +381,7 @@
    ],
    "week_hi": 101.127,
    "week_lo": 99.384,
-   "e2_mae": 0.38692,
+   "e2_mae": 0.4937,
    "naive_mae": 0.7138,
    "beat_naive": true,
    "paired_days": 5,
@@ -395,9 +395,9 @@
    "zones_touched_n": 5,
    "zone_relevance": 1.0,
    "net_actual": 1.107,
-   "e2_direction": "up",
+   "e2_direction": "range",
    "actual_direction": "up",
-   "direction_match": true,
+   "direction_match": false,
    "verdict": "MEASURED"
   },
   {
@@ -421,7 +421,7 @@
      "cat": "RES",
      "top": 101.63027,
      "bottom": 101.48565,
-     "conf": 5,
+     "conf": 6,
      "tf": "1H"
     },
     {
@@ -429,7 +429,7 @@
      "cat": "MID",
      "top": 101.38773,
      "bottom": 101.24746,
-     "conf": 5,
+     "conf": 6,
      "tf": "1H"
     },
     {
@@ -437,7 +437,7 @@
      "cat": "SUP",
      "top": 101.005,
      "bottom": 101.00255,
-     "conf": 5,
+     "conf": 6,
      "tf": "1H"
     },
     {
@@ -544,7 +544,7 @@
      "cat": "RES",
      "top": 99.72033,
      "bottom": 99.66798,
-     "conf": 6,
+     "conf": 5,
      "tf": "1H"
     },
     {
@@ -552,7 +552,7 @@
      "cat": "RES",
      "top": 99.497,
      "bottom": 99.497,
-     "conf": 5,
+     "conf": 6,
      "tf": "1H"
     },
     {
@@ -568,7 +568,7 @@
      "cat": "SUP",
      "top": 98.89267,
      "bottom": 98.74298,
-     "conf": 6,
+     "conf": 7,
      "tf": "1H"
     },
     {
@@ -576,14 +576,14 @@
      "cat": "SUP",
      "top": 98.58893,
      "bottom": 98.50067,
-     "conf": 5,
+     "conf": 4,
      "tf": "1H"
     }
    ],
    "momentum": 0.4756,
    "e2_refusal": "",
    "e2_current": "BS",
-   "e2_links": 2,
+   "e2_links": 1,
    "e2_days": [
     {
      "day": "Mon",
@@ -593,26 +593,26 @@
     },
     {
      "day": "Tue",
-     "shape": "R",
-     "conf": 75.0,
+     "shape": "PBS",
+     "conf": 65.0,
      "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Wed",
-     "shape": "SS",
-     "conf": 60.0,
+     "shape": "PBS",
+     "conf": 65.0,
      "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Thu",
-     "shape": "SS",
-     "conf": 60.0,
+     "shape": "PBS",
+     "conf": 65.0,
      "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Fri",
-     "shape": "SS",
-     "conf": 60.0,
+     "shape": "PBS",
+     "conf": 65.0,
      "zone": "IP Resistance Ceiling"
     }
    ],

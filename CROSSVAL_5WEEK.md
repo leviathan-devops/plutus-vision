@@ -41,15 +41,15 @@ The harness: `/tmp/pv_crossval.py` → `evidence/crossval-5week.json` (every per
 
 | week | E1 zones | touched | E2 shape | E2 days | E2 MAE | naive | beat? | E2 dir / actual |
 |---|---|---|---|---|---|---|---|---|
-| 2026-04-13 | 5 | 3 (60%) | BS | BS/R/SS/SS/SS | 1.760 | 0.923 | ✗ | up / **down** ✗ |
-| 2026-05-04 | 5 | 4 (80%) | BS | BS/PBS/PBS/PBS/PBS | 0.764 | 0.191 | ✗ | up / **down** ✗ |
-| 2026-06-15 | 5 | 5 (100%) | BS | BS/R/SS/SS/SS | 0.387 | 0.714 | ✓ | up / **up** ✓ |
+| 2026-04-13 | 5 | 3 (60%) | R | R/SS/SS/SS/SS | 0.982 | 0.923 | ✗ | range / **down** ✗ |
+| 2026-05-04 | 5 | 4 (80%) | BS | BS/PBS/PBS/PBS/PBS | 0.897 | 0.191 | ✗ | up / **down** ✗ |
+| 2026-06-15 | 5 | 5 (100%) | R | R/SS/SS/SS/SS | 0.494 | 0.714 | ✓ | range / **up** ✗ |
 | 2026-06-29 | 5 | 4 (80%) | BS | BS/R/SS/SS/SS | 0.577 | 0.253 | ✗ | up / **down** ✗ |
-| 2026-08-24 | 5 | 4 (80%) | BS | BS/R/SS/SS/SS | 0.475 | 0.350 | ✗ | up / **up** ✓ |
+| 2026-08-24 | 5 | 4 (80%) | BS | BS/PBS/PBS/PBS/PBS | 0.475 | 0.350 | ✗ | up / **up** ✓ |
 
-**AGGREGATES (2026-10-07 — the ZONE-METRIC classify):** the v8 ladder **5/5** (5 zones,
-2 RES · 1 MID · 2 SUP on every week) · E1 relevance **80% mean** (≥60% every week) · E2 beat-naive
-**1/5** · E2 direction **2/5** · E2 MAE **0.793 mean**.
+**AGGREGATES (2026-10-07 — the ZONE-METRIC classify + the bars-passing harness):** the v8 ladder
+**5/5** (5 zones, 2 RES · 1 MID · 2 SUP on every week) · E1 relevance **80% mean** (≥60% every
+week) · E2 beat-naive **1/5** · E2 direction **1/5** · E2 MAE **0.685 mean**.
 
 ## 3 · WHAT THE NUMBERS SAY
 
