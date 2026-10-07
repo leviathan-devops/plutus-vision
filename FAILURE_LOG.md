@@ -951,3 +951,30 @@ level. FIX: reject bool + require `math.isfinite`. (The audit caught this one.)
 - **What happened (operator):** *"the colors are completely fucked. You have just orange and teal."*
 - **Root cause:** not a color bug — a ZONE bug. The 6-shade ladder (RES red / MID orange / SUP teal) IS ported; but with 0 RESISTANCE zones, the red shade is never used. The color symptom was a zone symptom.
 - **Disposition:** FIXED-BY-F-15 (the resistance zones return → the red shade returns).
+
+## [2026-10-07] F-49 · THE W1e GATE IS UNSATISFIABLE WITH A DERIVED DEGREE (a spec tension)
+
+**THE FINDING.** W1's gate has two clauses: (a) the payload's zCat = RES,RES,MID,SUP,SUP, and
+(b) "the floor zone's zfp < the mid zones' zfp". (a) passes on all weeks. (b) FAILS on all 7
+weeks measured (07-13, 04-20, 05-11, 06-22, 07-06, 08-31, + the canonical).
+
+**THE MEASUREMENT.** The floor zone (Key IP Support) is the WEAKEST cluster — fewer levels, lower
+confluence — so the derived degree is LIGHT (zfp 50) while the mid (Equilibrium) is the STRONGEST
+(the price consolidates there, so more levels cluster) → MODERATE-HEAVY/HEAVY (zfp 17-27).
+
+**THE MECHANISM (measured, file:line).** trident_v8.pine:190 hardcodes
+`dxy_zDeg = array.from("HEAVY","MODERATE-HEAVY","MODERATE-HEAVY","MODERATE","HEAVY")` — a FIXED
+3-value ladder, IDENTICAL at lines 225/258/291 for EUR/GU/AU. Four different markets produce the
+same ladder, which proves the degree is a hand-authored pattern, NOT a computation. The prompt's
+confluence (Synthesis, 6 dims × 2) does NOT guarantee the extremes are strongest — the extremes
+are strongest only in the v8's hand-authored example.
+
+**THE INCOMPATIBILITY.** W1e (extremes strongest) needs the v8's FIXED 3-value ladder; W2's
+"≥4 distinct zfp across the 5 zones" needs a DERIVED degree (the fixed ladder yields 3 distinct).
+The two gates cannot both hold. The objective's W1 deliverable explicitly instructs "the degree
+from the cluster's HIGHEST-scoring level" (DERIVE), so the derivation is the instruction and W1e
+is its measured consequence.
+
+**REMEDY (the operator's call).** Either (A) keep the derived degree — canon-faithful, W2 green,
+W1e stays red; or (B) transcribe the v8's fixed ladder — W1e green, W2's distinct-zfp fails, the
+degree stops being data-driven. The engine currently does (A).
