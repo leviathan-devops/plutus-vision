@@ -177,7 +177,13 @@ def main() -> int:
     if not refusal:
         try:
             mom = compute_momentum(monday, pair=PAIR)
-            chain = forward_map(zones, monday)
+            _spot = None
+            if files:
+                try:
+                    _spot = json.loads(files[0].read_text()).get("spot")
+                except Exception:
+                    pass
+            chain = forward_map(zones, monday, spot=_spot)
             out["momentum"] = round(mom, 4)
             if chain.refusal:
                 out["refusal"] = chain.refusal

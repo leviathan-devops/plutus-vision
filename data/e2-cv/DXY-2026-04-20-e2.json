@@ -7,51 +7,52 @@
  "days": [
   {
    "x": 1776729600000,
-   "shape": "BS",
+   "shape": "R",
    "conf": 60.0,
-   "zone": "Key IP Support",
+   "zone": "Equilibrium Zone",
    "day": "Mon"
   },
   {
    "x": 1776816000000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Upper IP Resistance",
    "day": "Tue"
   },
   {
    "x": 1776902400000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Upper IP Resistance",
    "day": "Wed"
   },
   {
    "x": 1776988800000,
-   "shape": "PBS",
-   "conf": 65.0,
+   "shape": "BS",
+   "conf": 80.0,
    "zone": "IP Resistance Ceiling",
    "day": "Thu"
   },
   {
    "x": 1777075200000,
-   "shape": "PBS",
-   "conf": 65.0,
+   "shape": "BS",
+   "conf": 80.0,
    "zone": "IP Resistance Ceiling",
    "day": "Fri"
   }
  ],
  "ghost": [
   {
-   "zone": "IP Resistance Ceiling",
-   "to": "RWL",
-   "zfp": 50,
-   "conf": 85.0
+   "zone": "Upper IP Resistance",
+   "to": "BS",
+   "zfp": 37,
+   "conf": 70.0
   }
  ],
  "momentum": 0.2578,
  "chain": [
-  "BS->PBS@IP Resistance Ceiling"
+  "R->SS@Upper IP Resistance",
+  "SS->BS@IP Resistance Ceiling"
  ],
  "phase": "POST_BS_EARLY_BREAKOUT"
 }

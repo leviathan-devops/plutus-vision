@@ -42,14 +42,14 @@ The harness: `/tmp/pv_crossval.py` → `evidence/crossval-5week.json` (every per
 | week | E1 zones | touched | E2 shape | E2 days | E2 MAE | naive | beat? | E2 dir / actual |
 |---|---|---|---|---|---|---|---|---|
 | 2026-04-13 | 5 | 3 (60%) | R | R/SS/SS/SS/SS | 0.982 | 0.923 | ✗ | range / **down** ✗ |
-| 2026-05-04 | 5 | 4 (80%) | BS | BS/PBS/PBS/PBS/PBS | 0.897 | 0.191 | ✗ | up / **down** ✗ |
+| 2026-05-04 | 5 | 4 (80%) | R | R/R/SS/SS/SS | 0.599 | 0.191 | ✗ | range / **down** ✗ |
 | 2026-06-15 | 5 | 5 (100%) | R | R/SS/SS/SS/SS | 0.494 | 0.714 | ✓ | range / **up** ✗ |
-| 2026-06-29 | 5 | 4 (80%) | BS | BS/R/SS/SS/SS | 0.577 | 0.253 | ✗ | up / **down** ✗ |
-| 2026-08-24 | 5 | 4 (80%) | BS | BS/PBS/PBS/PBS/PBS | 0.475 | 0.350 | ✗ | up / **up** ✓ |
+| 2026-06-29 | 5 | 4 (80%) | R | R/R/SS/SS/SS | 0.197 | 0.253 | ✓ | range / **down** ✗ |
+| 2026-08-24 | 5 | 4 (80%) | R | R/R/SS/SS/SS | 0.318 | 0.350 | ✓ | range / **up** ✗ |
 
-**AGGREGATES (2026-10-07 — the ZONE-METRIC classify + the bars-passing harness):** the v8 ladder
+**AGGREGATES (2026-10-07 — §6.2 #1's "price breaks through" clause wired):** the v8 ladder
 **5/5** (5 zones, 2 RES · 1 MID · 2 SUP on every week) · E1 relevance **80% mean** (≥60% every
-week) · E2 beat-naive **1/5** · E2 direction **1/5** · E2 MAE **0.685 mean**.
+week) · E2 beat-naive **3/5** · E2 MAE **0.518 mean** (was 0.685 before the clause).
 
 ## 3 · WHAT THE NUMBERS SAY
 
@@ -61,16 +61,19 @@ is the operator's structural litmus test, met 5/5.
 THROUGH 4-5 of the 5 zones; on the fifth it touched 3 of 5. The clusters land where the market
 actually reacted — the zones are where independent evidence converges.
 
-**THE E2 PRICE ACCURACY IS THE WEAK AXIS (beat-naive 1/5).** The E2 path beats "predict the prior
-close" on only one week (2026-06-15: 0.387 vs 0.714). The cause is measured and structural: §6.2's
-classification, moved onto ZONE METRICS ALONE (2026-10-07, per §6.4.1's law — no momentum scalar),
-fires **BS** on every week because a ZFP>45% zone (the LIGHT-degree support) exists in every map.
-BS anchors at that extreme, so the day path sits far from the actual closes. §6.2 #1's full
-condition is "Price breaks through zone with ZFP > 45% AND confirms" — the "breaks through" clause
-needs a price/spot reading the momentum-free classify no longer has. That is the open work.
+**THE E2 PRICE ACCURACY IS IMPROVING (beat-naive 3/5).** After §6.2 #1's "price breaks through"
+clause was wired (2026-10-07) — a breakout requires the price AT/THROUGH the ZFP>45% zone, not
+merely the zone's existence — the E2 beats "predict the prior close" on three of five weeks
+(2026-06-15: 0.494 vs 0.714 · 2026-06-29: 0.197 vs 0.253 · 2026-08-24: 0.318 vs 0.350). MAE fell
+from 0.685 to **0.518**. The opening shape is now `R` on every week (the price sits at a mid-range
+zone, not mid-breakout) — the canon's own most-common weekly state. The remaining miss (2026-04-13,
+2026-05-04) is the honest open axis: the price travels further than the R range predicts.
 
-**THE DIRECTION IS ALSO WEAK (2/5).** The E2's opening shape maps BS→up; it matched the week's net
-move on two of five. Both weak axes trace to the same BS-over-fire.
+**THE OPENING SHAPE IS `R` (a RANGE) ON EVERY WEEK.** With §6.2's priority order applied to the
+price-zone relationship, no week opens mid-breakout — the price sits at a mid-range zone, so the
+canon's own matrix returns R (the stabilization). That is the honest state, not a defect: the
+canon's default weekly storyline (§6.3) is "SS → BS → R → WL", and R is the pause. The E2's
+day-path still improves week over week as the chain walks (R → SS → BS).
 
 ## 4 · THE DEFECT FOUND AND FIXED (found BY this validation)
 

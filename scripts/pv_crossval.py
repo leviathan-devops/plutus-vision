@@ -87,7 +87,7 @@ def measure_week(iso: str) -> dict:
                             timeframe=z.get('timeframe', '1H'), bom='', reactions=0)
              for z in zones]
     monday = dt.date.fromisoformat(iso)
-    chain = e2_engine.forward_map(zobjs, monday)
+    chain = e2_engine.forward_map(zobjs, monday, spot=spot)
     if not chain.refusal:
         chain.days = e2_engine.day_decomposition(chain, zobjs, monday)
     rec['e2_refusal'] = chain.refusal or ''

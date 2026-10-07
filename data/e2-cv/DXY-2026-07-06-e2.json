@@ -7,51 +7,52 @@
  "days": [
   {
    "x": 1783382400000,
-   "shape": "BS",
+   "shape": "R",
    "conf": 60.0,
-   "zone": "Key IP Support",
+   "zone": "Equilibrium Zone",
    "day": "Mon"
   },
   {
    "x": 1783468800000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Mid-Range Support",
    "day": "Tue"
   },
   {
    "x": 1783555200000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "SS",
+   "conf": 60.0,
+   "zone": "Mid-Range Support",
    "day": "Wed"
   },
   {
    "x": 1783641600000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "BS",
+   "conf": 80.0,
+   "zone": "Key IP Support",
    "day": "Thu"
   },
   {
    "x": 1783728000000,
-   "shape": "PBS",
-   "conf": 65.0,
-   "zone": "IP Resistance Ceiling",
+   "shape": "BS",
+   "conf": 80.0,
+   "zone": "Key IP Support",
    "day": "Fri"
   }
  ],
  "ghost": [
   {
-   "zone": "IP Resistance Ceiling",
-   "to": "RWL",
-   "zfp": 50,
-   "conf": 85.0
+   "zone": "Mid-Range Support",
+   "to": "BS",
+   "zfp": 37,
+   "conf": 70.0
   }
  ],
  "momentum": 0.5388,
  "chain": [
-  "BS->PBS@IP Resistance Ceiling"
+  "R->SS@Mid-Range Support",
+  "SS->BS@Key IP Support"
  ],
  "phase": "POST_BS_EARLY_BREAKOUT"
 }

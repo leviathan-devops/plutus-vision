@@ -9,34 +9,34 @@
    "x": 1788220800000,
    "shape": "BS",
    "conf": 60.0,
-   "zone": "Mid-Range Support",
+   "zone": "IP Resistance Ceiling",
    "day": "Mon"
   },
   {
    "x": 1788307200000,
-   "shape": "PBS",
-   "conf": 65.0,
+   "shape": "BS",
+   "conf": 60.0,
    "zone": "IP Resistance Ceiling",
    "day": "Tue"
   },
   {
    "x": 1788393600000,
-   "shape": "PBS",
-   "conf": 65.0,
+   "shape": "BS",
+   "conf": 60.0,
    "zone": "IP Resistance Ceiling",
    "day": "Wed"
   },
   {
    "x": 1788480000000,
-   "shape": "PBS",
-   "conf": 65.0,
+   "shape": "BS",
+   "conf": 60.0,
    "zone": "IP Resistance Ceiling",
    "day": "Thu"
   },
   {
    "x": 1788566400000,
-   "shape": "PBS",
-   "conf": 65.0,
+   "shape": "BS",
+   "conf": 60.0,
    "zone": "IP Resistance Ceiling",
    "day": "Fri"
   }
@@ -50,8 +50,6 @@
   }
  ],
  "momentum": 1.0,
- "chain": [
-  "BS->PBS@IP Resistance Ceiling"
- ],
+ "chain": [],
  "phase": "POST_BS_EARLY_BREAKOUT"
 }

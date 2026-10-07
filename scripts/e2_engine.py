@@ -109,7 +109,7 @@ class FabricationRefused(Exception):
 # ── §6.2 · THE CLASSIFICATION DECISION MATRIX — priority order ──────────────
 # "applied IN SEQUENCE — the highest priority match wins and classification stops"
 
-def classify(zones: list[Zone]) -> tuple[str, str]:
+def classify(zones: list[Zone], spot: float | None = None) -> tuple[str, str]:
     """Returns (shape, anchoring_zone_id). The anchor is REQUIRED.
 
     §6.2 APPLIED IN SEQUENCE, ON ZONE METRICS ALONE. Every row of the prompt's matrix is
@@ -119,6 +119,12 @@ def classify(zones: list[Zone]) -> tuple[str, str]:
     move") holds from the opening classification. The earlier build gated each row on the
     move's momentum (`is_breakout_risk and the momentum > 0`), which let a decisive move
     override the zone metrics — the exact inversion §6.4.1 forbids.
+
+    `spot` is the PRICE at the anchor (the target week's Monday), the only price the
+    classification may read. It enables §6.2 #1's full condition — "Price BREAKS THROUGH
+    zone with ZFP > 45%" — so a weak zone far from the price is not a breakout, and the
+    opening shape is a function of the price-zone relationship the canon defines (not a
+    momentum scalar, and not a bare ZFP predicate that fires BS on every map).
 
     The priority order is not arbitrary — each position fixes a specific
     misclassification the canon names: BS before SS (a pre-breakout pause is BS, not
@@ -141,14 +147,22 @@ def classify(zones: list[Zone]) -> tuple[str, str]:
             "E2_NO_SOLID_ZONES: every zone is MINIMAL (confluence < 4); the canon "
             "discards a score of 0-3, so there is nothing to anchor to")
 
-    # 1 · BS — a zone with ZFP > 45% is failing (§6.2: "breaks through zone with ZFP > 45%").
-    #     The ZFP is the predicate; the move's momentum is NOT read here (§6.4.1's law).
+    # 1 · BS — "Price BREAKS THROUGH zone with ZFP > 45%" (§6.2 #1). BOTH clauses: a zone
+    #     whose ZFP > 45% (failing) AND the price AT/THROUGH it (the break is happening).
+    #     The earlier build read the ZFP alone, so BS fired on every map that contained any
+    #     weak zone (measured: 5/5 cross-validation weeks → BS) while the price sat elsewhere.
+    _ztol = 0.15                                     # the canon's cluster band
     for z in solid:
-        if z.is_breakout_risk:
+        if not z.is_breakout_risk:
+            continue
+        if spot is None or (z.bottom - _ztol) <= spot <= (z.top + _ztol):
             return "BS", z.id
-    # 2 · WL — a zone with ZFP < 20% rejects (§6.2: "surges to zone with ZFP < 20% … rejects").
+    # 2 · WL — "surges to zone with ZFP < 20%, pierces, then rejects" (§6.2 #2): a zone that
+    #     is BOTH a hard wall AND at the price.
     for z in solid:
-        if z.is_hard_wall:
+        if not z.is_hard_wall:
+            continue
+        if spot is None or (z.bottom - _ztol) <= spot <= (z.top + _ztol):
             return "WL", z.id
     # 3 · R — stabilises at a mid-range zone (ZFP 20-40%), < 1 session
     # THE ANCHOR IS THE ZONE NEAREST THE SPOT (fix 2026-10-06). The earlier build returned
@@ -300,11 +314,11 @@ def tf_match(source_tf: str, target_tf: str) -> bool:
 # ── §6.6 · FORWARD MAPPING · steps 1-5 ─────────────────────────────────────
 
 def forward_map(zones: list[Zone], monday: dt.date,
-                tf_source: str = "1H") -> ShapeChain:
+                tf_source: str = "1H", spot: float | None = None) -> ShapeChain:
     """The five-step procedure. Every link carries its audit trail."""
     # STEP 1 — classify, or refuse
     try:
-        current, anchor = classify(zones)
+        current, anchor = classify(zones, spot)
     except FabricationRefused as e:
         return ShapeChain(current="", refusal=str(e))
 

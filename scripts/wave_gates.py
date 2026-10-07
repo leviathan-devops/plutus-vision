@@ -94,8 +94,13 @@ def test_e2_zfp_conditioned() -> None:
     body = m.group(0) if m else ""
     record("W3a  no bars_momentum inside classify()", body.count("bars_momentum") == 0,
            f"{body.count('bars_momentum')} occurrences")
-    record("W3b  classify() takes NO momentum parameter",
-           "def classify(zones: list[Zone])" in src, "signature: classify(zones)")
+    # THE INTENT: classify takes NO MOMENTUM parameter. It MAY take the PRICE (`spot`) — §6.2
+    # #1's "price breaks through" needs it, and the price is not the momentum axis §6.4.1 bans.
+    # The earlier check pinned the exact signature `classify(zones: list[Zone])`, which a
+    # canon-faithful `spot` addition (correctly) broke.
+    _sig = (re.search(r"def classify\(([^)]*)\)", src) or [None, ""])[1]
+    record("W3b  classify() takes NO momentum parameter", "momentum" not in _sig,
+           f"signature: classify({_sig.strip()})")
     mt = re.search(r"def transition\(.*?\n(?=\n# |\ndef )", src, re.S)
     tbody = mt.group(0) if mt else ""
     record("W3c  transition() reads target_zfp", "target_zfp" in tbody,
