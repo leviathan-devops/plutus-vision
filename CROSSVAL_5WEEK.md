@@ -6,9 +6,12 @@ just rewind there. You run the pipeline and you will literally see on the charts
 engine two accurately predict the actual price action that happened and are the engine one zones
 relevant to that specific trading week's price action?"*
 
-**VERDICT: THE MACHINERY HOLDS ACROSS WEEKS. The E1 zones are 88% relevant; the E2 path beats
-the naive baseline 5/5. THE DIRECTION IS THE WEAK AXIS (2/5) — the honest gap. SHIP PENDING the
-direction work.**
+**VERDICT: THE MACHINERY HOLDS ACROSS WEEKS. The E1 zones are 80% relevant and the v8 five-zone
+ladder renders on all 5 weeks (2 RES · 1 MID · 2 SUP, verified live + opened). THE E2 PRICE
+ACCURACY IS THE WEAK AXIS — it beats the naive baseline 1/5 and the direction matches 2/5. The
+accuracy WIDENED on 2026-10-07 when §6.2's classification was moved onto ZONE METRICS ALONE (no
+momentum scalar, per §6.4.1's law): a ZFP>45% zone now fires BS on every week. That is the honest,
+measured gap — the structural deliverable (the ladder) is green; the price accuracy is open.**
 
 ---
 
@@ -38,30 +41,36 @@ The harness: `/tmp/pv_crossval.py` → `evidence/crossval-5week.json` (every per
 
 | week | E1 zones | touched | E2 shape | E2 days | E2 MAE | naive | beat? | E2 dir / actual |
 |---|---|---|---|---|---|---|---|---|
-| 2026-04-13 | 4 | 3 (75%) | WLS | WLS/WLS/BS/R/SS | 0.903 | 0.923 | ✓ | up / **down** ✗ |
-| 2026-05-04 | 6 | 5 (83%) | R | R/WL/SS/SS/SS | 0.183 | 0.191 | ✓ | up / **down** ✗ |
-| 2026-06-15 | 5 | 5 (100%) | WLS | WLS×5 | 0.572 | 0.714 | ✓ | down / **up** ✗ |
-| 2026-06-29 | 6 | 6 (100%) | WLS | WLS×5 | 0.226 | 0.253 | ✓ | down / down ✓ |
-| 2026-08-24 | 6 | 5 (83%) | WLS | WLS/WLS/BS/R/SS | 0.204 | 0.350 | ✓ | up / up ✓ |
+| 2026-04-13 | 5 | 3 (60%) | BS | BS/R/SS/SS/SS | 1.760 | 0.923 | ✗ | up / **down** ✗ |
+| 2026-05-04 | 5 | 4 (80%) | BS | BS/PBS/PBS/PBS/PBS | 0.764 | 0.191 | ✗ | up / **down** ✗ |
+| 2026-06-15 | 5 | 5 (100%) | BS | BS/R/SS/SS/SS | 0.387 | 0.714 | ✓ | up / **up** ✓ |
+| 2026-06-29 | 5 | 4 (80%) | BS | BS/R/SS/SS/SS | 0.577 | 0.253 | ✗ | up / **down** ✗ |
+| 2026-08-24 | 5 | 4 (80%) | BS | BS/R/SS/SS/SS | 0.475 | 0.350 | ✗ | up / **up** ✓ |
 
-**AGGREGATES:** E1 relevance **88% mean** (≥75% every week) · E2 beat-naive **5/5** · E2 direction
-**2/5** · E2 MAE **0.417 mean**.
+**AGGREGATES (2026-10-07 — the ZONE-METRIC classify):** the v8 ladder **5/5** (5 zones,
+2 RES · 1 MID · 2 SUP on every week) · E1 relevance **80% mean** (≥60% every week) · E2 beat-naive
+**1/5** · E2 direction **2/5** · E2 MAE **0.793 mean**.
 
 ## 3 · WHAT THE NUMBERS SAY
 
-**THE E1 ZONES ARE RELEVANT ON ANY WEEK (88%).** On four of five weeks the price action traded
-THROUGH 5-6 of the 6 zones; on the fifth it touched 3 of 4. The clusters land where the market
-actually reacted — the zones are not a partition of the range, they are where independent evidence
-converges.
+**THE v8 LADDER IS STRUCTURALLY GREEN ON ALL 5 WEEKS.** Every week emits 5 zones — 2 RES, 1 MID,
+2 SUP, sorted top→down — and the live render draws 5 boxes + the E2 path (opened, per week). This
+is the operator's structural litmus test, met 5/5.
 
-**THE E2 PATH IS CLOSER THAN THE NAIVE BASELINE EVERY WEEK (5/5).** "Predict the prior close"
-(naive MAE mean 0.486) loses to the E2 path (mean 0.417) on every week. The path carries real
-information. The margin is widest on the volatile week (2026-08-24: 0.204 vs 0.350, a 42% cut).
+**THE E1 ZONES ARE RELEVANT ON ANY WEEK (80%).** On four of five weeks the price action traded
+THROUGH 4-5 of the 5 zones; on the fifth it touched 3 of 5. The clusters land where the market
+actually reacted — the zones are where independent evidence converges.
 
-**THE DIRECTION IS THE WEAK AXIS (2/5).** The E2's net call matched the week's net move on two of
-five. This is honest: the momentum is the net move of the 20 bars before the Monday divided by
-twice the ATR — a WEAK signal. The 2026-06-15 miss is the clearest: momentum −1.0 (a decisive
-down-move into the week) but the week closed UP.
+**THE E2 PRICE ACCURACY IS THE WEAK AXIS (beat-naive 1/5).** The E2 path beats "predict the prior
+close" on only one week (2026-06-15: 0.387 vs 0.714). The cause is measured and structural: §6.2's
+classification, moved onto ZONE METRICS ALONE (2026-10-07, per §6.4.1's law — no momentum scalar),
+fires **BS** on every week because a ZFP>45% zone (the LIGHT-degree support) exists in every map.
+BS anchors at that extreme, so the day path sits far from the actual closes. §6.2 #1's full
+condition is "Price breaks through zone with ZFP > 45% AND confirms" — the "breaks through" clause
+needs a price/spot reading the momentum-free classify no longer has. That is the open work.
+
+**THE DIRECTION IS ALSO WEAK (2/5).** The E2's opening shape maps BS→up; it matched the week's net
+move on two of five. Both weak axes trace to the same BS-over-fire.
 
 ## 4 · THE DEFECT FOUND AND FIXED (found BY this validation)
 
@@ -81,6 +90,15 @@ move travels toward (the canon's §6.2 #1/#2 momentum reads). Measured after the
 beats naive **5/5** (was 4/5); the days now VARY by week (WLS/WL/BS/R/SS) instead of a flat `R`.
 Battery: `e2_tests 36/0 · e1_st_18 8/0 · e1_tests 15/0`. **The operator's approved Jul-6 render is
 byte-identical (`282517ac622769bd`)** — the fix touches only fresh engine runs.
+
+**SUPERSEDED 2026-10-07 (the zone-metric change).** That momentum gating was itself the derailment
+the operator's W3 gate removed: §6.4.1's law is "the TARGET zone's ZFP decides, NOT the momentum of
+the current move", and the classify was reading the momentum scalar on four branches. The classify
+now reads ZONE METRICS ALONE (§6.2's ZFP bands), the walk direction seeds from the shape + the
+anchor's place in the map, and `grep -c bars_momentum scripts/e2_engine.py` = **0**. The measured
+cost is in §3: BS-over-fire, beat-naive 1/5. The canon-faithful classification is in; the
+price-accuracy work (restoring §6.2 #1's "price breaks through" clause without a momentum scalar)
+is open.
 
 ## 5 · THE RENDER — THE DYNAMIC WEEK REWIND (the operator's question #1)
 

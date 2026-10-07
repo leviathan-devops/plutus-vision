@@ -13,14 +13,30 @@
    "bars_actual": 117,
    "spot_prev_close": 99.096,
    "levels": 235,
-   "zones": 4,
+   "zones": 5,
    "zone_list": [
     {
-     "name": "IP Support Floor",
-     "cat": "SUP",
-     "top": 98.61433,
-     "bottom": 98.49717,
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 100.24717,
+     "bottom": 100.24717,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 99.1839,
+     "bottom": 99.16567,
      "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.1495,
+     "bottom": 99.00405,
+     "conf": 7,
      "tf": "1H"
     },
     {
@@ -32,56 +48,48 @@
      "tf": "1H"
     },
     {
-     "name": "Equilibrium Zone",
-     "cat": "MID",
-     "top": 99.1495,
-     "bottom": 99.00405,
-     "conf": 5,
-     "tf": "1H"
-    },
-    {
-     "name": "IP Resistance Ceiling",
-     "cat": "RES",
-     "top": 99.1839,
-     "bottom": 99.16567,
-     "conf": 5,
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 98.61433,
+     "bottom": 98.49717,
+     "conf": 7,
      "tf": "1H"
     }
    ],
    "momentum": 1.0,
    "e2_refusal": "",
-   "e2_current": "WLS",
-   "e2_links": 3,
+   "e2_current": "BS",
+   "e2_links": 2,
    "e2_days": [
     {
      "day": "Mon",
-     "shape": "WLS",
+     "shape": "BS",
      "conf": 60.0,
-     "zone": "Equilibrium Zone"
+     "zone": "Mid-Range Support"
     },
     {
      "day": "Tue",
-     "shape": "WLS",
-     "conf": 60.0,
-     "zone": "Equilibrium Zone"
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Wed",
-     "shape": "BS",
-     "conf": 85.0,
-     "zone": "Equilibrium Zone"
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Thu",
-     "shape": "R",
-     "conf": 75.0,
-     "zone": "Equilibrium Zone"
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Fri",
      "shape": "SS",
      "conf": 60.0,
-     "zone": "Equilibrium Zone"
+     "zone": "IP Resistance Ceiling"
     }
    ],
    "actual_days": [
@@ -112,17 +120,17 @@
    ],
    "week_hi": 99.136,
    "week_lo": 97.632,
-   "e2_mae": 0.90337,
+   "e2_mae": 1.76019,
    "naive_mae": 0.9226,
-   "beat_naive": true,
+   "beat_naive": false,
    "paired_days": 5,
    "zones_touched": [
     "Equilibrium Zone",
-    "IP Support Floor",
+    "Key IP Support",
     "Mid-Range Support"
    ],
    "zones_touched_n": 3,
-   "zone_relevance": 0.75,
+   "zone_relevance": 0.6,
    "net_actual": -0.118,
    "e2_direction": "up",
    "actual_direction": "down",
@@ -135,91 +143,83 @@
    "bars_actual": 117,
    "spot_prev_close": 98.162,
    "levels": 233,
-   "zones": 6,
+   "zones": 5,
    "zone_list": [
     {
-     "name": "IP Support 4",
-     "cat": "SUP",
-     "top": 97.5,
-     "bottom": 97.5,
-     "conf": 4,
-     "tf": "1H"
-    },
-    {
-     "name": "Key IP Support",
-     "cat": "SUP",
-     "top": 97.81685,
-     "bottom": 97.66767,
-     "conf": 8,
-     "tf": "1H"
-    },
-    {
-     "name": "IP Support Floor",
-     "cat": "SUP",
-     "top": 97.95928,
-     "bottom": 97.821,
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 99.08667,
+     "bottom": 99.003,
      "conf": 5,
      "tf": "1H"
     },
     {
-     "name": "Mid-Range Support",
-     "cat": "SUP",
-     "top": 98.12,
-     "bottom": 97.98033,
-     "conf": 8,
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 98.59125,
+     "bottom": 98.497,
+     "conf": 5,
      "tf": "1H"
     },
     {
      "name": "Equilibrium Zone",
      "cat": "MID",
-     "top": 98.276,
-     "bottom": 98.135,
-     "conf": 8,
+     "top": 98.25903,
+     "bottom": 98.16274,
+     "conf": 6,
      "tf": "1H"
     },
     {
-     "name": "IP Resistance Ceiling",
-     "cat": "RES",
-     "top": 98.455,
-     "bottom": 98.30707,
-     "conf": 5,
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 98.0387,
+     "bottom": 97.98033,
+     "conf": 7,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 97.74542,
+     "bottom": 97.70531,
+     "conf": 6,
      "tf": "1H"
     }
    ],
    "momentum": 0.1152,
    "e2_refusal": "",
-   "e2_current": "R",
+   "e2_current": "BS",
    "e2_links": 1,
    "e2_days": [
     {
      "day": "Mon",
-     "shape": "R",
+     "shape": "BS",
      "conf": 60.0,
-     "zone": "Mid-Range Support"
+     "zone": "Upper IP Resistance"
     },
     {
      "day": "Tue",
-     "shape": "SS",
-     "conf": 60.0,
-     "zone": "Mid-Range Support"
+     "shape": "PBS",
+     "conf": 65.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Wed",
-     "shape": "SS",
-     "conf": 60.0,
-     "zone": "Mid-Range Support"
+     "shape": "PBS",
+     "conf": 65.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Thu",
-     "shape": "SS",
-     "conf": 60.0,
-     "zone": "Mid-Range Support"
+     "shape": "PBS",
+     "conf": 65.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Fri",
-     "shape": "SS",
-     "conf": 60.0,
-     "zone": "Mid-Range Support"
+     "shape": "PBS",
+     "conf": 65.0,
+     "zone": "IP Resistance Ceiling"
     }
    ],
    "actual_days": [
@@ -250,19 +250,18 @@
    ],
    "week_hi": 98.579,
    "week_lo": 97.625,
-   "e2_mae": 0.21357,
+   "e2_mae": 0.76429,
    "naive_mae": 0.1912,
    "beat_naive": false,
    "paired_days": 5,
    "zones_touched": [
     "Equilibrium Zone",
-    "IP Resistance Ceiling",
-    "IP Support Floor",
     "Key IP Support",
-    "Mid-Range Support"
+    "Mid-Range Support",
+    "Upper IP Resistance"
    ],
-   "zones_touched_n": 5,
-   "zone_relevance": 0.833,
+   "zones_touched_n": 4,
+   "zone_relevance": 0.8,
    "net_actual": -0.624,
    "e2_direction": "up",
    "actual_direction": "down",
@@ -278,80 +277,80 @@
    "zones": 5,
    "zone_list": [
     {
-     "name": "Equilibrium Zone",
-     "cat": "MID",
-     "top": 99.63931,
-     "bottom": 99.49,
-     "conf": 6,
-     "tf": "1H"
-    },
-    {
-     "name": "IP Resistance 4",
+     "name": "IP Resistance Ceiling",
      "cat": "RES",
-     "top": 99.78333,
-     "bottom": 99.64667,
-     "conf": 7,
-     "tf": "1H"
-    },
-    {
-     "name": "IP Resistance 3",
-     "cat": "RES",
-     "top": 99.9499,
-     "bottom": 99.80173,
+     "top": 100.32824,
+     "bottom": 100.24717,
      "conf": 6,
      "tf": "1H"
     },
     {
      "name": "Upper IP Resistance",
      "cat": "RES",
-     "top": 100.08967,
-     "bottom": 99.952,
+     "top": 100.1354,
+     "bottom": 100.042,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 99.93842,
+     "bottom": 99.88135,
      "conf": 6,
      "tf": "1H"
     },
     {
-     "name": "IP Resistance Ceiling",
-     "cat": "RES",
-     "top": 100.2147,
-     "bottom": 100.1138,
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 99.83417,
+     "bottom": 99.7138,
+     "conf": 5,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 99.6595,
+     "bottom": 99.561,
      "conf": 6,
      "tf": "1H"
     }
    ],
    "momentum": -1.0,
    "e2_refusal": "",
-   "e2_current": "WLS",
-   "e2_links": 0,
+   "e2_current": "BS",
+   "e2_links": 2,
    "e2_days": [
     {
      "day": "Mon",
-     "shape": "WLS",
+     "shape": "BS",
      "conf": 60.0,
-     "zone": "IP Resistance 3"
+     "zone": "Mid-Range Support"
     },
     {
      "day": "Tue",
-     "shape": "WLS",
-     "conf": 60.0,
-     "zone": "IP Resistance 3"
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Wed",
-     "shape": "WLS",
+     "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance 3"
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Thu",
-     "shape": "WLS",
+     "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance 3"
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Fri",
-     "shape": "WLS",
+     "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance 3"
+     "zone": "IP Resistance Ceiling"
     }
    ],
    "actual_days": [
@@ -382,23 +381,23 @@
    ],
    "week_hi": 101.127,
    "week_lo": 99.384,
-   "e2_mae": 0.57204,
+   "e2_mae": 0.38692,
    "naive_mae": 0.7138,
    "beat_naive": true,
    "paired_days": 5,
    "zones_touched": [
     "Equilibrium Zone",
-    "IP Resistance 3",
-    "IP Resistance 4",
     "IP Resistance Ceiling",
+    "Key IP Support",
+    "Mid-Range Support",
     "Upper IP Resistance"
    ],
    "zones_touched_n": 5,
    "zone_relevance": 1.0,
    "net_actual": 1.107,
-   "e2_direction": "down",
+   "e2_direction": "up",
    "actual_direction": "up",
-   "direction_match": false,
+   "direction_match": true,
    "verdict": "MEASURED"
   },
   {
@@ -407,91 +406,83 @@
    "bars_actual": 117,
    "spot_prev_close": 101.366,
    "levels": 143,
-   "zones": 6,
+   "zones": 5,
    "zone_list": [
     {
-     "name": "Key IP Support",
-     "cat": "SUP",
-     "top": 100.89913,
-     "bottom": 100.75,
-     "conf": 5,
+     "name": "IP Resistance Ceiling",
+     "cat": "RES",
+     "top": 101.81467,
+     "bottom": 101.72435,
+     "conf": 6,
      "tf": "1H"
     },
     {
-     "name": "IP Support Floor",
-     "cat": "SUP",
-     "top": 101.084,
-     "bottom": 100.936,
-     "conf": 5,
-     "tf": "1H"
-    },
-    {
-     "name": "Mid-Range Support",
-     "cat": "SUP",
-     "top": 101.236,
-     "bottom": 101.092,
+     "name": "Upper IP Resistance",
+     "cat": "RES",
+     "top": 101.63027,
+     "bottom": 101.48565,
      "conf": 5,
      "tf": "1H"
     },
     {
      "name": "Equilibrium Zone",
      "cat": "MID",
-     "top": 101.39216,
+     "top": 101.38773,
      "bottom": 101.24746,
-     "conf": 7,
+     "conf": 5,
      "tf": "1H"
     },
     {
-     "name": "Upper IP Resistance",
-     "cat": "RES",
-     "top": 101.54942,
-     "bottom": 101.402,
-     "conf": 7,
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 101.005,
+     "bottom": 101.00255,
+     "conf": 5,
      "tf": "1H"
     },
     {
-     "name": "IP Resistance Ceiling",
-     "cat": "RES",
-     "top": 101.68846,
-     "bottom": 101.555,
-     "conf": 7,
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 100.885,
+     "bottom": 100.794,
+     "conf": 4,
      "tf": "1H"
     }
    ],
    "momentum": -0.7865,
    "e2_refusal": "",
-   "e2_current": "WLS",
-   "e2_links": 0,
+   "e2_current": "BS",
+   "e2_links": 2,
    "e2_days": [
     {
      "day": "Mon",
-     "shape": "WLS",
+     "shape": "BS",
      "conf": 60.0,
-     "zone": "Equilibrium Zone"
+     "zone": "Key IP Support"
     },
     {
      "day": "Tue",
-     "shape": "WLS",
-     "conf": 60.0,
-     "zone": "Equilibrium Zone"
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Wed",
-     "shape": "WLS",
+     "shape": "SS",
      "conf": 60.0,
-     "zone": "Equilibrium Zone"
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Thu",
-     "shape": "WLS",
+     "shape": "SS",
      "conf": 60.0,
-     "zone": "Equilibrium Zone"
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Fri",
-     "shape": "WLS",
+     "shape": "SS",
      "conf": 60.0,
-     "zone": "Equilibrium Zone"
+     "zone": "IP Resistance Ceiling"
     }
    ],
    "actual_days": [
@@ -522,24 +513,22 @@
    ],
    "week_hi": 101.595,
    "week_lo": 100.558,
-   "e2_mae": 0.22509,
+   "e2_mae": 0.57651,
    "naive_mae": 0.2528,
-   "beat_naive": true,
+   "beat_naive": false,
    "paired_days": 5,
    "zones_touched": [
     "Equilibrium Zone",
-    "IP Resistance Ceiling",
-    "IP Support Floor",
     "Key IP Support",
     "Mid-Range Support",
     "Upper IP Resistance"
    ],
-   "zones_touched_n": 6,
-   "zone_relevance": 1.0,
+   "zones_touched_n": 4,
+   "zone_relevance": 0.8,
    "net_actual": -0.268,
-   "e2_direction": "down",
+   "e2_direction": "up",
    "actual_direction": "down",
-   "direction_match": true,
+   "direction_match": false,
    "verdict": "MEASURED"
   },
   {
@@ -548,91 +537,83 @@
    "bars_actual": 117,
    "spot_prev_close": 98.808,
    "levels": 233,
-   "zones": 6,
+   "zones": 5,
    "zone_list": [
     {
-     "name": "IP Support Floor",
-     "cat": "SUP",
-     "top": 98.64705,
-     "bottom": 98.5,
-     "conf": 7,
-     "tf": "1H"
-    },
-    {
-     "name": "Mid-Range Support",
-     "cat": "SUP",
-     "top": 98.80701,
-     "bottom": 98.66042,
-     "conf": 7,
-     "tf": "1H"
-    },
-    {
-     "name": "IP Resistance 4",
+     "name": "IP Resistance Ceiling",
      "cat": "RES",
-     "top": 98.94313,
-     "bottom": 98.81059,
-     "conf": 7,
-     "tf": "1H"
-    },
-    {
-     "name": "IP Resistance 3",
-     "cat": "RES",
-     "top": 99.05407,
-     "bottom": 98.963,
-     "conf": 7,
+     "top": 99.72033,
+     "bottom": 99.66798,
+     "conf": 6,
      "tf": "1H"
     },
     {
      "name": "Upper IP Resistance",
      "cat": "RES",
-     "top": 99.395,
-     "bottom": 99.25,
-     "conf": 4,
+     "top": 99.497,
+     "bottom": 99.497,
+     "conf": 5,
      "tf": "1H"
     },
     {
-     "name": "IP Resistance Ceiling",
-     "cat": "RES",
-     "top": 99.5,
-     "bottom": 99.405,
+     "name": "Equilibrium Zone",
+     "cat": "MID",
+     "top": 98.963,
+     "bottom": 98.90298,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Mid-Range Support",
+     "cat": "SUP",
+     "top": 98.89267,
+     "bottom": 98.74298,
+     "conf": 6,
+     "tf": "1H"
+    },
+    {
+     "name": "Key IP Support",
+     "cat": "SUP",
+     "top": 98.58893,
+     "bottom": 98.50067,
      "conf": 5,
      "tf": "1H"
     }
    ],
    "momentum": 0.4756,
    "e2_refusal": "",
-   "e2_current": "WLS",
-   "e2_links": 3,
+   "e2_current": "BS",
+   "e2_links": 2,
    "e2_days": [
     {
      "day": "Mon",
-     "shape": "WLS",
+     "shape": "BS",
      "conf": 60.0,
-     "zone": "IP Resistance 3"
+     "zone": "Key IP Support"
     },
     {
      "day": "Tue",
-     "shape": "WLS",
-     "conf": 60.0,
-     "zone": "IP Resistance 3"
+     "shape": "R",
+     "conf": 75.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Wed",
-     "shape": "BS",
-     "conf": 85.0,
-     "zone": "IP Resistance 3"
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Thu",
-     "shape": "R",
-     "conf": 75.0,
-     "zone": "IP Resistance 3"
+     "shape": "SS",
+     "conf": 60.0,
+     "zone": "IP Resistance Ceiling"
     },
     {
      "day": "Fri",
      "shape": "SS",
      "conf": 60.0,
-     "zone": "IP Resistance 3"
+     "zone": "IP Resistance Ceiling"
     }
    ],
    "actual_days": [
@@ -663,19 +644,18 @@
    ],
    "week_hi": 99.726,
    "week_lo": 98.762,
-   "e2_mae": 0.20389,
+   "e2_mae": 0.47476,
    "naive_mae": 0.3504,
-   "beat_naive": true,
+   "beat_naive": false,
    "paired_days": 5,
    "zones_touched": [
-    "IP Resistance 3",
-    "IP Resistance 4",
+    "Equilibrium Zone",
     "IP Resistance Ceiling",
     "Mid-Range Support",
     "Upper IP Resistance"
    ],
-   "zones_touched_n": 5,
-   "zone_relevance": 0.833,
+   "zones_touched_n": 4,
+   "zone_relevance": 0.8,
    "net_actual": 0.71,
    "e2_direction": "up",
    "actual_direction": "up",
