@@ -291,10 +291,34 @@ def st14_determinism() -> None:
            f"= {ch.terminal_shape!r}")
 
 
+def st15_nonfinite_guard() -> None:
+    """ADVERSARIAL A5 — a NON-FINITE zone price is REFUSED by name, never silently anchored.
+
+    The LOUD FAIL law: a NaN/inf bound produced a NaN mid in `classify`, the comparisons
+    never matched, and a shape anchored to an undefined price (the fabricated-anchor case).
+    The guard is at the Zone boundary, so EVERY construction is validated."""
+    for bad in (float("nan"), float("inf"), float("-inf")):
+        try:
+            z("Zbad", bad, 1.14, 8, 30)
+            raised = False
+        except FabricationRefused:
+            raised = True
+        record(f"ST-15  top={bad} is REFUSED (not silently anchored)", raised,
+               "E2_ZONE_NONFINITE")
+    # NEGATIVE CONTROL: a finite zone is ACCEPTED (the guard does not over-fire)
+    try:
+        z("Zok", 1.15, 1.14, 8, 30)
+        ok = True
+    except FabricationRefused:
+        ok = False
+    record("ST-15b  a FINITE zone is accepted (the guard does not over-fire)", ok)
+
+
 def main() -> int:
     tests = [("ST-10", st10_shape_anchored), ("ST-11", st11_hardwall_rwl),
              ("ST-12", st12_day_decomp), ("ST-12F", st12_fine_path),
-             ("ST-13", st13_empty_corpus), ("ST-14", st14_determinism)]
+             ("ST-13", st13_empty_corpus), ("ST-14", st14_determinism),
+             ("ST-15", st15_nonfinite_guard)]
     want = (sys.argv[1].upper() if len(sys.argv) > 1 else None)
     for name, fn in tests:
         if want and not name.startswith(want):

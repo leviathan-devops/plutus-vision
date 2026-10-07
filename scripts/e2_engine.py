@@ -46,6 +46,19 @@ class Zone:
     bom: str = ""            # "BoM" | "MoM" — §6.1 discriminator
     reactions: int = 0        # the BATTLE count, not bars (Bible 4.14)
 
+    def __post_init__(self) -> None:
+        # THE LOUD-FAIL GUARD (adversarial A5, 2026-10-07). A NaN/inf price was SILENTLY
+        # tolerated: `classify` computed a NaN mid, the comparisons never matched, and the
+        # engine anchored a shape to a zone whose price is undefined — a fabricated anchor,
+        # the canon's forbidden case. A non-finite bound is REFUSED by name, so a bad E1
+        # payload fails loudly instead of drawing a zone that cannot exist.
+        for _f in ("top", "bottom"):
+            _v = getattr(self, _f)
+            if _v != _v or _v in (float("inf"), float("-inf")):
+                raise FabricationRefused(
+                    f"E2_ZONE_NONFINITE: zone {self.id!r} has {_f}={_v!r} — a price that is "
+                    f"not a finite number cannot anchor a shape")
+
     @property
     def degree(self) -> str:
         c = self.confluence
