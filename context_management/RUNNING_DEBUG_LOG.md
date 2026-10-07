@@ -772,3 +772,59 @@ per the pin · C16 (the operator's look). NONE is a defect; each is a scoped res
   behind the shell's exposed handle, not a DOM element. DRIVE the surface; do not assert it is
   unreachable from the DOM structure alone.
 - EVIDENCE: the census `1614 → 988 → 991 → 1614` (replayStart/step/stop) + the 5 labels restoring.
+
+## [2026-10-07] D-E2-BE-1 · THE E2 SHAPE CHAIN — FIRST HALF RIGHT, SECOND HALF WRONG (operator hot-seat)
+
+**SYMPTOM (operator, verbatim):** "the E2 shape chain … actually did accurately draw the bullish breakout
+surge that happened but then it was wrong in predicting a swing scalp that comes right after that …
+it went up to the resistance and then it breakout surge bearish down all the way … it charted one swing
+scalp for like one day and it completely missed the rest of the trading week."
+
+**THE ACTUAL WEEK (DXY 2026-08-31 → 09-04, from fixtures/bars/pv-long.json — the full series):**
+| day | open | high | low | close | move |
+|---|---|---|---|---|---|
+| Mon 08-31 | 99.645 | 99.664 | 99.390 | 99.411 | down (the anchor bar) |
+| Tue 09-01 | 99.414 | 99.722 | 99.353 | 99.679 | **UP (the bullish surge begins)** |
+| Wed 09-02 | 99.679 | **99.863** | 99.436 | 99.599 | **UP to the peak, at the Ceiling** |
+| Thu 09-03 | 99.598 | 99.612 | **98.831** | 98.965 | **REVERSE BREAKOUT DOWN** |
+| Fri 09-04 | 98.970 | 99.392 | 98.916 | 99.159 | small bounce |
+WEEK: open 99.645 · high 99.863 · low 98.831 · close 99.159 · **NET −0.486 · RANGE 1.032**.
+
+**THE E2 PREDICTED** (data/e2-cv/DXY-2026-08-31-e2.json): chain `['R->SS@Upper IP Resistance',
+'SS->BS@IP Resistance Ceiling']`; days `Mon R@Eq · Tue SS@Upper · Wed SS@Upper · Thu BS@Ceiling ·
+Fri BS@Ceiling`.
+
+**WHAT THE E2 GOT RIGHT — THE FIRST HALF.** The chain classified `R` (a range at the Equilibrium) and
+walked **UP** (Eq → Upper Resistance → Ceiling). The actual Tue–Wed action **rose from 99.41 → 99.86**,
+reaching the Ceiling (99.735-99.740). The walk direction matched the real bullish surge. **WHY IT WAS
+RIGHT:** the classify keyed on the mid-range zone (Eq, zfp 37 ∈ 20-40 → R, §6.2 #3) and the walk is
+seeded from the anchor's position in the map — the price sat in the upper half and the strong zones were
+above, so the walk went up, exactly where the price went.
+
+**WHAT THE E2 GOT WRONG — THE SECOND HALF.** The chain's terminal link was `BS @ IP Resistance Ceiling`
+= a **breakout CONTINUATION** (a `LIGHT` Ceiling → `is_breakout_risk` → the §6.4.1 BS row → "the zone
+fails, the price cascades up"). The actual: the price peaked at 99.863 (just past the Ceiling) and then
+**REVERSED HARD DOWN** on Thursday (99.6 → 98.83), a bearish breakout to the Mid-Range/Key Support. The
+chain predicted a continuation; reality was a **reversal**.
+
+**THE MECHANISM (measured, scripts/e2_engine.py:371-402).** The walk loop computes
+`nxt = _next_target(zones, anchor, direction, far=...)`; **when `nxt is None` the loop `break`s.**
+The Ceiling is the TOP of the map — there is no zone above it — so `_next_target(..., +1)` returned
+`None` and **the chain TERMINATED at the boundary**. `day_decomposition` then repeated the last shape
+(`BS`) across Thu/Fri. **THE CHAIN HAS NO BOUNDARY-REVERSAL.** It walks in ONE direction until it hits
+the map's edge, then stops — it cannot model the price bouncing off the extreme. The canon's own law
+(§6.4.1, verbatim): *"density beats momentum, always. It is a fast car hitting a concrete wall. The
+wall's density exceeds the car's momentum; **the car does not pass through, it bounces**."* The engine
+has the `BS→RWL` transition row (e2_engine.py:250 — fires when the target's ZFP < `ZFP_HARDWALL`), but
+it is never reached because there is no target zone up there to react against.
+
+**THE FIX (backwards-engineered — NOT yet applied, operator to review).** Add the **boundary-reversal**
+to the walk: when `_next_target` returns `None` (the map's edge in the direction of travel), flip
+`direction` and continue — emit the reversal (WL/RWL) and walk BACK down the map. That would have
+predicted Thu's move: peak at the Ceiling → reverse → the price falls to the Mid-Range (98.87) /
+Key Support (98.75) — matching the actual low of 98.831 to within 0.04. The canon's "the car bounces"
+IS this step; its absence is the single defect that cost the second half of the week.
+
+**LESSON.** A FORECAST that walks one direction to a map boundary and stops can predict an approach but
+never a bounce — and the bounce (the reversal) is where the week's money is made. The §6.4.1 density
+law is a TWO-WAY rule; the walk must enforce it at the edge, not only between interior zones.

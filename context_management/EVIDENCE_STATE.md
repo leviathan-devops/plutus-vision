@@ -341,3 +341,39 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
   beyond "it renders"; the origin-candle mapping has NOT been independently checked.
 - The carried-forward ship docs describe an EARLIER baseline and are NOT a current verification
   of this artifact.
+
+## [2026-10-07] — THE E2 BREAKTHROUGH-BAND + THE BACKWARDS-ENGINEERING EVIDENCE
+
+**THE ARTIFACT SHAs (measured this session).**
+```
+plutus-vision-v2.pine                         9c745705773cd0156805212876376f5b4180669899efc04e296e2b063fe72283
+plutus-vision-lqz/e1-render.pine              79fd8e2477bd7397c1c36d65a8900f95b44d081ccdefb4ea7eff79cd3d2d6555
+plutus-vision-v1.pine (SEALED, H1)            0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1
+```
+
+**THE BATTERY (re-run this session).**
+```
+python3 scripts/e1_st_18.py       RESULT pass=8  fail=0
+python3 scripts/e2_tests.py       RESULT pass=46 fail=0
+python3 scripts/e1_render_tests.py RESULT pass=24 fail=0
+python3 scripts/e1_tests.py       RESULT pass=18 fail=0
+scripts/wave_gates.py             17 pass / 4 fail (W1e · W2a · W2b · W2c — all operator-gated)
+```
+
+**THE FENCE.** `~/JARVIS_WORKSPACE/Shared_Workspace/JARVIS-CORE/b6/verdicts.jsonl` — a PASS row,
+`{"job":"fence","seat":"plutus-vision-lqz","verdict":"PASS","fence_exit":0}`; all 5 steps PASS
+(step-0-battery · step-1-e2-battery · step-2-structure · step-3-ladder · step-4-v1-seal).
+
+**THE E2 ACCURACY MEASUREMENT (the 5-week cross-validation, after §6.2 #1).**
+```
+beat-naive:  1/5 -> 3/5 week-check.py cv-2026-08-24 fixture -> evidence/crossval-5week.json
+MAE mean:    0.685 -> 0.518
+```
+
+**THE VISUAL CHECKPOINT.** `evidence/visual-checkpoints/e2-shape-chain-2026-08-31.png` (sha
+`2291f37d820c9aa4…`, 189726 bytes) — the E2 chain `R→SS→BS` walking Eq→Upper→Ceiling, opened by
+the operator this session.
+
+**THE MEASURED DEFECTS.** F-49 (the v8 zDeg is a fixed literal) · F-50 (a NaN price silently
+tolerated; ST-15) · F-51 (the E2 has no boundary-reversal). Each in FAILURE_LOG.md with its
+mechanism + file:line.

@@ -1026,3 +1026,25 @@ NO metric satisfies both gates on the v8's own data. The objective's W1e and W2a
 green for ANY engine that matches the v8 — the gates are internally inconsistent with the
 authority. Resolution requires the operator: which metric is "zfp", and whether the degree is
 DERIVED (canon-faithful; the anti-derail) or the v8's FIXED ladder (its literal structure).
+
+## [2026-10-07] F-51 · THE E2 CHAIN HAS NO BOUNDARY-REVERSAL (the second-half miss)
+
+**THE FINDING.** On the DXY 2026-08-31 week the E2 predicted `R→SS→BS` (a monotonic walk UP from the
+Equilibrium to the Light Ceiling) and `day_decomposition` repeated the terminal `BS` across Thu/Fri.
+The chain got the first half right (the Tue–Wed bullish surge to the ceiling 99.863) and the second
+half WRONG: the price REVERSED hard down on Thu (99.6 → 98.831, a bearish breakout to the Mid-Range
+Support), and the chain, having reached the map's TOP boundary, terminated instead of reversing.
+
+**THE MECHANISM.** `scripts/e2_engine.py:371-402` — the walk computes
+`nxt = _next_target(zones, anchor, direction, far=...)`; when `nxt is None` it `break`s. At the map's
+edge (the Ceiling is the highest zone) there is no target, so the chain stops. It cannot model the
+canon's own §6.4.1 law: *"density beats momentum … the car does not pass through, it bounces."* The
+`BS→RWL` recovery row exists (`e2_engine.py:250`) but is unreachable with no target to react against.
+
+**THE FIX (proposed, operator to approve).** At a map boundary (`_next_target is None`), flip
+`direction` and continue — emit the reversal (WL/RWL) and walk back down. Predicted Thu: peak →
+reverse → 98.87/98.75 (the actual low 98.831 — Δ0.04).
+
+**THE LESSON.** A one-directional walk to the boundary predicts an approach, never a bounce. §6.4.1
+is a TWO-WAY rule; the engine enforces it between interior zones but not at the edge — the single
+missing step that cost the week's decisive move.

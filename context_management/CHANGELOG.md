@@ -307,3 +307,27 @@ identical duplicate bands 0        labels 24 (the SMC's own)  LuxAlgo SMC boxes 
   and coexists with all 5 E1 zone labels (census: 2006 labels + 798 segs together).
 - EVIDENCE: census COMPILED 3697ms · 2 plots · 6 boxes · 101 lines · 2006 labels · 798 segs ·
   bars 1740. v1 seal 0d20e8314ce992fc unchanged. battery pass=8 fail=0. v2 04d7a89ae57d1f9f.
+
+
+## [2026-10-07] — THE E2 BREAKTHROUGH-BAND + THE BACKWARDS-ENGINEERING (operator hot-seat)
+
+**ACCOMPLISHED.** (1) Wired section 6.2 #1's price predicate — classify now requires the spot AT/THROUGH
+a ZFP>45% zone, not the zone's mere existence. (2) Tightened the predicate band 0.15 to 0.03 after the
+hot-seat showed a Light Ceiling selected while the price was 0.09 BELOW it (an EMPTY chain, a flat
+square-wave). (3) The E2's first realistic-looking chain (R -> SS -> BS) mapped the 08-31 week's bullish
+surge; backwards-engineered why the second half missed — the boundary-reversal gap (D-E2-BE-1 / F-51).
+
+**EVIDENCE.** battery: e1_st_18 8/0 · e2_tests 46/0 · e1_render_tests 24/0 · e1_tests 18/0. E2
+beat-naive 1/5 to 3/5 · MAE 0.685 to 0.518. v1 seal 0d20e831... INTACT. v2 9c745705...
+Commits cfa0770 · 0fdeeb7 · 27f303c · 5ca5311 · a3dd1ec.
+
+**DECISIONS.** The E2 chain's missing step is the BOUNDARY-REVERSAL (the canon's 6.4.1 "the car
+bounces") — proposed, operator to approve before implementation.
+
+**FAILURES + ROOT CAUSE.** F-49 (the v8 zDeg is a fixed 3-value literal, so W1e/W2a are mutually
+unsatisfiable) · F-50 (a NaN zone price was silently tolerated; ST-15 pins the refusal) · F-51 (the E2
+has no boundary-reversal — the second-half miss).
+
+**HONEST DISCLOSURES.** W1e/W2a remain operator-gated (a spec contradiction with the authority).
+W2b/W2c (options/analyst) remain NO-DATA — the nine-source harvest is DOWN; the wiring is done and
+proven. The tab-persistence bug and the shell environment are being fixed in parallel.

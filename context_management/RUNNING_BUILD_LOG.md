@@ -922,3 +922,24 @@ W5 ADJUDICATED AS A PROBE ERROR (two-sided):
   the injected zfp (not v8's width formula).
 - EVIDENCE: the pine's zfp `37,37,37,37,37,50` (varies by degree); `e1_st_18 8/0 · e2_tests 42/0`.
 - NEXT: W1 — the 6-dimension score (the heart of Engine 1); W3 — Engine 2 ZFP-conditioned.
+
+## [2026-10-07] W3-CLOSE + E2-BREAKTHROUGH-BAND + E2-BE-1 (operator hot-seat session)
+
+- **WHAT:** (1) wired §6.2 #1's "price BREAKS THROUGH zone with ZFP > 45%" clause into `classify`
+  (the band is `spot` within the zone ± a touch); (2) TIGHTENED that band 0.15 → 0.03 after the
+  operator's hot-seat eyeball showed the chain selecting a Light Ceiling the price was 0.09 BELOW —
+  which produced an EMPTY chain and a flat square-wave; (3) ran the operator's requested
+  backwards-engineering of the E2's first-half-right / second-half-wrong week (D-E2-BE-1).
+- **WHY:** §6.2 #1's condition is a PRICE predicate, not a bare ZFP one — "Price breaks through zone
+  with ZFP > 45% AND confirms". The earlier form fired BS on any map containing a weak zone (5/5
+  cross-val weeks), anchoring the whole week's path at the weakest zone.
+- **HOW:** `classify(zones, spot)`; `_ztol = 0.03`; the wire reads the E1 payload's `spot` (the
+  target week's Monday price) and passes it to `forward_map(..., spot=...)`. The crossval harness
+  now passes `bars` to `assemble` (regime + extreme bonus were silently 0).
+- **EVIDENCE:** E2 beat-naive 1/5 → **3/5**, MAE 0.685 → 0.518. The 08-31 chain went EMPTY → a real
+  walk (`R→SS→BS`). Commits `cfa0770` (the clause), `0fdeeb7` (the band tighten), `27f303c` (the
+  render), `5ca5311` (the cv renders), `a3dd1ec` (the stale-payload regen). Battery e1_st_18 8/0 ·
+  e2_tests 46/0 · e1_render_tests 24/0 · e1_tests 18/0. v1 seal `0d20e831…` INTACT.
+- **NEXT:** the operator reviews D-E2-BE-1 and rules on the boundary-reversal fix (the missing
+  bounce step). Blocked waves W1e/W2a (the v8 zDeg is a fixed 3-value literal — F-49) + W2b/W2c
+  (the options/analyst harvest is DOWN) remain operator-gated.
