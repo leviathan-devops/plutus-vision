@@ -1317,11 +1317,11 @@ if bar_index == 0
     e1_injected_confluence.push(8)
     e1_injected_confluence.push(10)
     e1_injected_confluence.push(10)
-    e1_injected_zfp.push(22)
-    e1_injected_zfp.push(10)
-    e1_injected_zfp.push(22)
-    e1_injected_zfp.push(10)
-    e1_injected_zfp.push(10)
+    e1_injected_zfp.push(9)
+    e1_injected_zfp.push(11)
+    e1_injected_zfp.push(19)
+    e1_injected_zfp.push(11)
+    e1_injected_zfp.push(5)
     e1_injected_cat.push("RES")
     e1_injected_cat.push("RES")
     e1_injected_cat.push("MID")
@@ -1393,31 +1393,31 @@ if bar_index == 0
     e2_injected_ghost_y.push(1.11741)
     e1_injected_tbl_pair.push("EURUSD")
     e1_injected_tbl_week.push("2026-10-05")
-    e1_injected_tbl_row.push("1.12853-1.12668 MODERATE-HEAVY 22%ZFP T1")
-    e1_injected_tbl_row.push("1.12665-1.12447 HEAVY 10%ZFP T1")
-    e1_injected_tbl_row.push("1.12429-1.12053 MODERATE-HEAVY 22%ZFP T1")
-    e1_injected_tbl_row.push("1.12028-1.1181 HEAVY 10%ZFP T1")
-    e1_injected_tbl_row.push("1.11792-1.1169 HEAVY 10%ZFP T1")
+    e1_injected_tbl_row.push("1.12853-1.12668 MODERATE-HEAVY 9%ZFP T1")
+    e1_injected_tbl_row.push("1.12665-1.12447 HEAVY 11%ZFP T1")
+    e1_injected_tbl_row.push("1.12429-1.12053 MODERATE-HEAVY 19%ZFP T1")
+    e1_injected_tbl_row.push("1.12028-1.1181 HEAVY 11%ZFP T1")
+    e1_injected_tbl_row.push("1.11792-1.1169 HEAVY 5%ZFP T1")
     e1_injected_chain.push("WL->RWL->SS")
     e1_injected_days.push("Mo:WL Tu:RWL We:SS Th:SS Fr:SS")
-    e1_injected_lsz_top.push(1.1259126750000001)
-    e1_injected_lsz_top.push(1.12610277)
+    e1_injected_lsz_top.push(1.11745845)
+    e1_injected_lsz_top.push(1.1199096750000002)
+    e1_injected_lsz_top.push(1.1220507450000001)
+    e1_injected_lsz_top.push(1.124652045)
     e1_injected_lsz_top.push(1.12630287)
-    e1_injected_lsz_top.push(1.12566255)
-    e1_injected_lsz_top.push(1.125412425)
-    e1_injected_lsz_top.push(1.12666305)
-    e1_injected_lsz_bottom.push(1.12535)
-    e1_injected_lsz_bottom.push(1.12554)
+    e1_injected_lsz_top.push(1.129094265)
+    e1_injected_lsz_bottom.push(1.1169)
+    e1_injected_lsz_bottom.push(1.11935)
+    e1_injected_lsz_bottom.push(1.12149)
+    e1_injected_lsz_bottom.push(1.12409)
     e1_injected_lsz_bottom.push(1.12574)
-    e1_injected_lsz_bottom.push(1.1251)
-    e1_injected_lsz_bottom.push(1.12485)
-    e1_injected_lsz_bottom.push(1.1261)
-    e1_injected_lsz_pri.push("DEMAND")
-    e1_injected_lsz_pri.push("SUPPLY")
-    e1_injected_lsz_pri.push("SUPPLY")
-    e1_injected_lsz_pri.push("DEMAND")
-    e1_injected_lsz_pri.push("DEMAND")
-    e1_injected_lsz_pri.push("SUPPLY")
+    e1_injected_lsz_bottom.push(1.12853)
+    e1_injected_lsz_pri.push("STANDARD")
+    e1_injected_lsz_pri.push("STANDARD")
+    e1_injected_lsz_pri.push("STANDARD")
+    e1_injected_lsz_pri.push("STANDARD")
+    e1_injected_lsz_pri.push("STANDARD")
+    e1_injected_lsz_pri.push("STANDARD")
     e1_injected_opt_pr.push(1.128)
     e1_injected_opt_pr.push(1.125)
     e1_injected_opt_pr.push(1.123)
@@ -1680,9 +1680,11 @@ f_e1Render() =>
     0
 
 if e1Enabled and barstate.islast
-    // ── THE LSZ (trident_v8.pine:368-377): GREEN FILLED boxes, NO LABELS, same x-span as the IP
-    // zones. Drawn FIRST (behind) so the IP zones render ON TOP — the IP fill is 75% opaque, so
-    // the category colour dominates the overlap while the green shows at the LSZ's edges. ────
+    // ── THE IP ZONES (LAYER 1, §10.7). ──────────────────────────────────────────────────────
+    f_e1Render()
+    // ── THE LSZ (LAYER 2, trident_v8.pine:452-459): GREEN boxes, NO LABELS, drawn AFTER the IP
+    // zones so they render ON TOP (the v8's own order). §10.7/LSZ_STD_F: fill = color.new(rgb(40,
+    // 180,80), 70); ACTIVE = brighter rgb(80,230,100) + thicker border. ──────────────────────
     _nl = array.size(e1_injected_lsz_top)
     if _nl > 0
         for i = 0 to _nl - 1
@@ -1694,11 +1696,9 @@ if e1Enabled and barstate.islast
             _lact = _lp == "ACTIVE"
             box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
                  xloc = xloc.bar_time,
-                 bgcolor = color.new(color.rgb(40,180,80), 60),
+                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 60) : color.new(color.rgb(40,180,80), 70),
                  border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
                  border_width = _lact ? 2 : 1)
-    // ── THE IP ZONES (ON TOP of the LSZ). ───────────────────────────────────────────────────
-    f_e1Render()
     // ── THE OPTION STRIKES (trident_v8.pine:378-388): AMBER horizontal lines + "$X.XB Option
     // Strike Target" labels. Renders the v8's amber layer when the options harvest is UP; an
     // empty array draws nothing (the data is external — never fabricated). ───────────────────
@@ -1709,9 +1709,11 @@ if e1Enabled and barstate.islast
                 break
             _op = array.get(e1_injected_opt_pr, i)
             _ov = array.get(e1_injected_opt_vol, i)
+            // Line width per §10.7: "$1.5B+ = 2, <$1.5B = 1".
+            _ow = str.tonumber(_ov) >= 1.5 ? 2 : 1
             line.new(e1_anchor_ms - 2 * 604800000, _op, e1_anchor_ms + 604800000, _op,
-                 xloc = xloc.bar_time, color = color.rgb(255,200,60), width = 2)
-            label.new(e1_anchor_ms + 604800000, _op, "$" + _ov + " Option Strike Target",
+                 xloc = xloc.bar_time, color = color.rgb(255,200,60), width = _ow)
+            label.new(e1_anchor_ms + 604800000, _op, "$" + _ov + "B Option Strike Target",
                  xloc = xloc.bar_time, style = label.style_none,
                  textcolor = color.rgb(255,200,60), size = size.small)
     // ── THE TABLE (the v8's 2×17 block). Rows: 0 header · 1 Chain · 2 Days · 3 ZONES · 4-8 the
@@ -1764,7 +1766,7 @@ if e1Enabled and barstate.islast
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ── INPUTS ──────────────────────────────────────────────────────────────────
-e2Enabled   = input.bool(true, "Show the E2 predicted price path", group = "E2 path")
+e2Enabled   = input.bool(false, "Show the E2 predicted price path", group = "E2 path")
 e2Opacity   = input.int(55, "Path opacity (a forecast, not price)", minval = 10, maxval = 90, group = "E2 path")
 e2Width     = input.int(3, "Brush width (px)", minval = 1, maxval = 6, group = "E2 path")
 e2ShowGhost = input.bool(true, "Show the alternative chain (dashed ghost)", group = "E2 path")

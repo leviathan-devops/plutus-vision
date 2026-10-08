@@ -239,9 +239,11 @@ f_e1Render() =>
     0
 
 if e1Enabled and barstate.islast
-    // ── THE LSZ (trident_v8.pine:368-377): GREEN FILLED boxes, NO LABELS, same x-span as the IP
-    // zones. Drawn FIRST (behind) so the IP zones render ON TOP — the IP fill is 75% opaque, so
-    // the category colour dominates the overlap while the green shows at the LSZ's edges. ────
+    // ── THE IP ZONES (LAYER 1, §10.7). ──────────────────────────────────────────────────────
+    f_e1Render()
+    // ── THE LSZ (LAYER 2, trident_v8.pine:452-459): GREEN boxes, NO LABELS, drawn AFTER the IP
+    // zones so they render ON TOP (the v8's own order). §10.7/LSZ_STD_F: fill = color.new(rgb(40,
+    // 180,80), 70); ACTIVE = brighter rgb(80,230,100) + thicker border. ──────────────────────
     _nl = array.size(e1_injected_lsz_top)
     if _nl > 0
         for i = 0 to _nl - 1
@@ -253,11 +255,9 @@ if e1Enabled and barstate.islast
             _lact = _lp == "ACTIVE"
             box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
                  xloc = xloc.bar_time,
-                 bgcolor = color.new(color.rgb(40,180,80), 60),
+                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 60) : color.new(color.rgb(40,180,80), 70),
                  border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
                  border_width = _lact ? 2 : 1)
-    // ── THE IP ZONES (ON TOP of the LSZ). ───────────────────────────────────────────────────
-    f_e1Render()
     // ── THE OPTION STRIKES (trident_v8.pine:378-388): AMBER horizontal lines + "$X.XB Option
     // Strike Target" labels. Renders the v8's amber layer when the options harvest is UP; an
     // empty array draws nothing (the data is external — never fabricated). ───────────────────
@@ -268,9 +268,11 @@ if e1Enabled and barstate.islast
                 break
             _op = array.get(e1_injected_opt_pr, i)
             _ov = array.get(e1_injected_opt_vol, i)
+            // Line width per §10.7: "$1.5B+ = 2, <$1.5B = 1".
+            _ow = str.tonumber(_ov) >= 1.5 ? 2 : 1
             line.new(e1_anchor_ms - 2 * 604800000, _op, e1_anchor_ms + 604800000, _op,
-                 xloc = xloc.bar_time, color = color.rgb(255,200,60), width = 2)
-            label.new(e1_anchor_ms + 604800000, _op, "$" + _ov + " Option Strike Target",
+                 xloc = xloc.bar_time, color = color.rgb(255,200,60), width = _ow)
+            label.new(e1_anchor_ms + 604800000, _op, "$" + _ov + "B Option Strike Target",
                  xloc = xloc.bar_time, style = label.style_none,
                  textcolor = color.rgb(255,200,60), size = size.small)
     // ── THE TABLE (the v8's 2×17 block). Rows: 0 header · 1 Chain · 2 Days · 3 ZONES · 4-8 the

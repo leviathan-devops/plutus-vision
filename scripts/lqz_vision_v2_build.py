@@ -199,7 +199,28 @@ def build_payload() -> tuple[str, str]:
     add("e1_injected_top", "float", [_f(z.get("top")) for z in zones])
     add("e1_injected_bottom", "float", [_f(z.get("bottom")) for z in zones])
     add("e1_injected_confluence", "int", [int(_f(z.get("confluence"))) for z in zones])
-    add("e1_injected_zfp", "int", [int(_f(z.get("zfp"))) for z in zones])
+
+    # THE CHART ZFP — SPEC §10.8 calcZFP, the v8's own formula (trident_v8.pine:334-336):
+    #     calcZFP = round((tp - bt) / refRange * 100)     refRange: DXY 1.60, EU/GU 0.0200, AU 0.0150
+    # The label's ZFP must be CONSISTENT WITH THE ZONE WIDTH the chart draws — a reviewer computes
+    # it from the labelled range and rejects a mismatch. The earlier chart carried the payload's
+    # Appendix-B qualitative probability (base+modifiers), which is a DIFFERENT quantity and read
+    # as "not produced by the reference formula". §10.8 is the Pine mapping's ZFP; use it here.
+    _pair_early = "EUR/USD"
+    for _f0 in _files:
+        try:
+            _pair_early = str(json.loads(_f0.read_text()).get("pair") or "EUR/USD")
+            break
+        except Exception:
+            pass
+    _REF = {"DXY": 1.60, "EUR/USD": 0.0200, "GBP/USD": 0.0200, "AUD/USD": 0.0150}
+    _ref_range = _REF.get(_pair_early, 0.0200)
+
+    def _calc_zfp(top, bottom) -> int:
+        w = float(top) - float(bottom)
+        return int(round(w / _ref_range * 100.0))
+
+    add("e1_injected_zfp", "int", [_calc_zfp(z.get("top"), z.get("bottom")) for z in zones])
     # zCat — the v8 renderer's positional vocabulary (RES|MID|SUP). VALIDATED, never defaulted:
     # a missing zCat silently became "SUP" (a teal wrong-colour) — refuse instead (audit 2026-10-05).
     for z in zones:
@@ -288,7 +309,7 @@ def build_payload() -> tuple[str, str]:
     # declarations in the emitted Pine. `add()` initializes on call, so the row list must be
     # built first and emitted in ONE call.
     _tbl_rows = [(f'{_f(z.get("top"))}-{_f(z.get("bottom"))} '
-                  f'{z.get("degree_v8", "")} {int(_f(z.get("zfp")))}%ZFP {z.get("zTir", "T2")}')
+                  f'{z.get("degree_v8", "")} {_calc_zfp(z.get("top"), z.get("bottom"))}%ZFP {z.get("zTir", "T2")}')
                  for z in zones]
     add("e1_injected_tbl_row", "string", [f'"{_q(r)}"' for r in _tbl_rows])
     # THE FULL CHAIN (§6.6 Step 3: `Shape A → Shape B → Shape C`). The earlier form kept only
@@ -313,14 +334,18 @@ def build_payload() -> tuple[str, str]:
         _d0 = json.loads(_files[0].read_text()) if _files else {}
         _spot = float(_d0.get("spot") or 0) or None
         _raw = _d0.get("lsz") or []
-        # sort by the SWING (the range's lower edge) proximity to spot — the v8's LSZ sit at
-        # the prior swing lows/highs, thin bands near the price
-        _raw = sorted(_raw, key=lambda x: abs(float(x["range"][0]) - (_spot or 0)))[:6]
-        for x in _raw:
-            _lo = float(x["range"][0])
-            # THE V8 WIDTH IS 0.05 DXY (~5 pips); on a pair that is 0.05% of price. A thin band:
-            _pw = abs(_lo) * 0.0005
-            _lsz.append((_lo, _lo + _pw, str(x.get("type", "")).upper()[:6].replace("-SIDE", "")))
+        # THE v8 RENDERS 6 SPREAD LSZ at the prior swing levels (trident_v8.pine:229-231, EU
+        # 1.1480-1.1715). The earlier build took the 6 NEAREST the spot — they clustered inside
+        # one IP zone and the reviewers read the layer as MISSING (only thin green striations, no
+        # 6 boxes). The swings span the lookback; take 6 DISTINCT, SPREAD levels so the layer
+        # reads as the v8's does.
+        _lv = sorted({round(float(x["range"][0]), 5) for x in _raw})
+        if len(_lv) > 6:
+            _idx = [round(i * (len(_lv) - 1) / 5) for i in range(6)]
+            _lv = [_lv[i] for i in _idx]
+        for _lo in _lv:
+            _pw = abs(_lo) * 0.0005           # the v8's thin band (~5 pips on a pair)
+            _lsz.append((_lo, _lo + _pw, "STANDARD"))
     except Exception:
         _lsz = []
     add("e1_injected_lsz_top", "float", [_f(t) for (_b, t, _p) in _lsz])
