@@ -301,8 +301,7 @@ def build_payload() -> tuple[str, str]:
         _raw = sorted(_raw, key=lambda x: abs(float(x["range"][0]) - (_spot or 0)))[:6]
         for x in _raw:
             _lo = float(x["range"][0])
-            # THE V8 WIDTH IS 0.05 DXY (~5 pips); on a pair that is 0.05% of price. The old
-            # `_w*0.15` (0.05*0.15=0.0075) drew 75-pip bands = a green wall. A thin band:
+            # THE V8 WIDTH IS 0.05 DXY (~5 pips); on a pair that is 0.05% of price. A thin band:
             _pw = abs(_lo) * 0.0005
             _lsz.append((_lo, _lo + _pw, str(x.get("type", "")).upper()[:6].replace("-SIDE", "")))
     except Exception:

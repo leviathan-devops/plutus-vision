@@ -370,3 +370,6 @@ grep -n 'xloc = xloc' plutus-vision-v2.pine
 - the LSZ z-order: plutus-vision-lqz/e1-render.pine:244
 - the pair-aware names: scripts/e1_extract.py:768
 - the EQ table tag: plutus-vision-lqz/e1-render.pine:261
+
+### ROUND-4 ANCHOR
+- the fill opacity: plutus-vision-lqz/e1-render.pine:28

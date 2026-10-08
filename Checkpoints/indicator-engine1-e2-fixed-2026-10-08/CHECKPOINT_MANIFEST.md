@@ -63,7 +63,7 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = 89f064d8c65f4edf8b06697fc708dcc8785694d639d77d48ca276bbf15f75fa3 (1802 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = 79fe8816e1854f8c26a8d170290ebb21a8d0e2b58e347047451c12ce6d9e2c26 (1802 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
 
 ## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
@@ -85,3 +85,9 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 - The zone names are PAIR-SPECIFIC (dxy_zNm vs eu_zNm): EURUSD uses "Key IP Resistance Band" /
   "IP Support Floor"; DXY uses "IP Resistance Ceiling" / "Key IP Support".
 - v2 = 89f064d8c65f4edf8b06697fc708dcc8785694d639d77d48ca276bbf15f75fa3 (1802 lines). visual = cea72d7c2925ae35b409864b74718e86340b064a109cca28047c9a96422ff96d.
+
+## THE FILL-OPACITY FIX (round 4, 2026-10-08)
+- The IP fill opacity was 70 (30% opaque); the LSZ green behind showed through and tinted the
+  RES zones green (the reviewers' persistent blocker). Bumped to 45 (55% opaque) so the
+  category color (RED/ORANGE/TEAL) DOMINATES. The RES zones now read RED.
+- v2 = 79fe8816e1854f8c26a8d170290ebb21a8d0e2b58e347047451c12ce6d9e2c26 (1802 lines). visual = 00217fe203844849cc423a9ad16d5c312855cdde0ea38b67286829cb7de72039.
