@@ -216,3 +216,17 @@ Reviewer (RevG) read the option count as 6/7 and the LSZ as 2/6 (clustered/blend
   '$X.XB Option Strike Target' labels render, no label overlap.
 - The LSZ bands are bright-green (border width 2, fill 55/60) so they read over the IP zones.
 - v2 = 668e89d79a08e68e35d0bf5a8c15f565e6ab297287b4e14d8a193e47e9178cb9 (1863 lines); render = 60f475ca8e1f8ca17ca22551d6f80b365892d620c8696743eb16330050a24706; battery 11 suites 0 fail.
+
+## ROUND 17 — TWO INDEPENDENT ZERO-CONTEXT REVIEWERS APPROVE (2026-10-09)
+The operator's bar: two fresh subagents, given ONLY the toolset spec + the render, must 100%
+confirm the rendered pixels match the toolset. MET:
+- RevI: APPROVED — "Structure matches §10.7/§10.8/§10.9. No element proven MISSING or WRONG.
+  Two ZFPs recomputed and match."
+- RevJ: APPROVED — "No MISSING, no WRONG. All §10.7 layers, §10.8 formula, §10.9 format, pine
+  ladder/labels/opacity/table-shape, option labels, Alt row, 4-decimals confirmed by pixels."
+  (20-element table, every element PRESENT+CORRECT; ZFP recomputed on two zones + cross-checks.)
+- v2 = 668e89d79a08e68e35d0bf5a8c15f565e6ab297287b4e14d8a193e47e9178cb9 (1863 lines); render = 60f475ca8e1f8ca17ca22551d6f80b365892d620c8696743eb16330050a24706.
+- The render: 5 IP zones (RED/RED/ORANGE #FF9800/TEAL/TEAL) + white style_none labels
+  "Name | Degree | ZFP% ZFP" + 6 GREEN LSZ (no labels) + 7 AMBER option strikes
+  ("$X.XB Option Strike Target") + the 2x17 table (Chain WL->RWL->SS, Alt PBS 60%, Days,
+  ZONES 5 rows, TRADES 6 rows). Battery: 11 suites 0 fail.
