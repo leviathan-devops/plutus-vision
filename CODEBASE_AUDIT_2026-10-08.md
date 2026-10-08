@@ -377,3 +377,6 @@ grep -n 'xloc = xloc' plutus-vision-v2.pine
 ### ROUND-5 ANCHORS
 - the E2 touch tolerance: scripts/e2_engine.py:175
 - the walk direction flip: scripts/e2_engine.py:381
+
+### ROUND-6 ANCHOR
+- the LSZ visibility: plutus-vision-lqz/e1-render.pine:244

@@ -1653,10 +1653,11 @@ f_e1Render() =>
     0
 
 if e1Enabled and barstate.islast
-    // ── THE LSZ (trident_v8.pine:368-377): GREEN filled boxes, NO LABELS, the same x-span as
-    // the IP zones. DRAWN FIRST so the IP zones render ON TOP — the reference draws the LSZ
-    // behind the IP boxes; drawing them after buried the RES zones under green (the reviewers'
-    // B1: "the Upper IP Resistance box is GREEN"). ACTIVE = a brighter/thicker green. ────────
+    // ── THE IP ZONES (drawn first). ─────────────────────────────────────────────────────────
+    f_e1Render()
+    // ── THE LSZ (trident_v8.pine:368-377): GREEN boxes, NO LABELS, the same x-span as the IP
+    // zones. Drawn ON TOP as THIN strips (the v8's ~5-pip band) so they read as distinct green
+    // liquidity lines, not a fill that buries the zone colours. ACTIVE = brighter/thicker. ───
     _nl = array.size(e1_injected_lsz_top)
     if _nl > 0
         for i = 0 to _nl - 1
@@ -1668,11 +1669,9 @@ if e1Enabled and barstate.islast
             _lact = _lp == "ACTIVE"
             box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
                  xloc = xloc.bar_time,
-                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 60) : color.new(color.rgb(40,180,80), 70),
-                 border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
-                 border_width = 1)
-    // ── THE IP ZONES (on top of the LSZ). ──────────────────────────────────────────────────
-    f_e1Render()
+                 bgcolor = color.new(color.rgb(40,220,90), 45),
+                 border_color = _lact ? color.rgb(120,255,140) : color.rgb(40,180,80),
+                 border_width = _lact ? 2 : 1)
     // ── THE TABLE (the v8's 2×17 block). Rows: 0 header · 1 Chain · 2 Days · 3 ZONES · 4-8 the
     // five zone rows. The TRADES rows (Engine 3) are out of scope and left blank. ────────────
     if array.size(e1_injected_tbl_row) > 0

@@ -63,7 +63,7 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = eeeeb60f9c3529208985e7b6431a101a52a535365ab87ae72534f7dca30c7bb2 (1802 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = af9eb8f2c714799ac7cdaea77bed34a9a31088b78ead7ff29d960e69df45ef9b (1801 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
 
 ## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
@@ -104,3 +104,13 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   Wed-Fri:SS@Equilibrium. The path drops to the support then recovers into the range — it
   resembles price action instead of a flat line at the ceiling.
 - v2 = eeeeb60f9c3529208985e7b6431a101a52a535365ab87ae72534f7dca30c7bb2 (1802 lines). visual = fafc8b51ab5cf1dd418a286f0c73455d5c2425da4afeda3aa3ca1c1db8cf885f.
+
+## THE LSZ VISIBILITY FIX (round 6, 2026-10-08)
+- The LSZ now draw ON TOP as visible bright-green strips (the v8's green liquidity boxes), which
+  the reviewers could not see when the LSZ were behind the IP zones. v2 = af9eb8f2c714799ac7cdaea77bed34a9a31088b78ead7ff29d960e69df45ef9b (1801 lines).
+- visual = e00be01cd3c2e3c3a6b6c093147df497dc4f96fd3ec9bd77dff2cbd467da4e95.
+- THE REVIEWERS' VERDICT (round 6): BOTH APPROVED the E1 structure — 5 IP zones, the
+  RED/ORANGE/TEAL color ladder, the EU zone names, the label format 'Name | Degree | N% ZFP',
+  the table ZONES block — all PRESENT+CORRECT. Remaining rejects: the option strikes (the harvest
+  is externally blocked 403/Cloudflare — NO DATA), the TRADES table rows (Engine 3, out of scope
+  per the pin), and the live-week vs the v8's fixed Apr20-24 example.
