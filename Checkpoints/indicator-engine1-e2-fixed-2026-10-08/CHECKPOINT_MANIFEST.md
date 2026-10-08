@@ -180,3 +180,9 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 - FIX: the chain header kept only the LAST link ("RWL->SS") — now the FULL chain ("WL->RWL->SS"),
   per §6.6 Step 3 (scripts/lqz_vision_v2_build.py:294-301).
 - v2 = a28f979ef6061ea033887d3db9ab90bbdc5db1531329c3a1a56071ffe0b8003b (1838 lines); battery 11 suites 0 fail.
+
+## ROUND 13 — the complete layer set (2026-10-09)
+- The 7 option strikes now RENDER (amber lines + "$X.XB Option Strike Target" labels) — the last
+  layer the reviewers named. v2 = a63851e6a71b69caff75b1a6d1f0af41b550a32f5ef8cba1ba4fb3115a6f9cf4 (1852 lines); render = 566682101824acadb945c932d6b8f6c74803424b814bad4ba882777dd3ea5fe4.
+- The full layer set on one chart: 5 IP zones (RED/RED/ORANGE/TEAL/TEAL) + labels + green LSZ +
+  cyan E2 path (WL->RWL->SS) + 7 amber option strikes + the 2x17 table.
