@@ -272,7 +272,10 @@ if e1Enabled and barstate.islast
             _ow = str.tonumber(_ov) >= 1.5 ? 2 : 1
             line.new(e1_anchor_ms - 2 * 604800000, _op, e1_anchor_ms + 3 * 604800000, _op,
                  xloc = xloc.bar_time, color = color.rgb(255,200,60), width = _ow)
-            label.new(e1_anchor_ms + 3 * 604800000, _op, "$" + _ov + "B Option Strike Target",
+            // §10.7: the option label sits at tsMid (the span center), NOT the right edge — a
+            // right-edge label at +3wk fell off the visible chart and a reviewer read the layer
+            // as MISSING. tsMid = (tsL+tsR)/2 = anchor + 0.5wk.
+            label.new(e1_anchor_ms + 302400000, _op, "$" + _ov + "B Option Strike Target",
                  xloc = xloc.bar_time, style = label.style_none,
                  textcolor = color.rgb(255,200,60), size = size.small)
     // ── THE TABLE (the v8's 2×17 block). Rows: 0 header · 1 Chain · 2 Days · 3 ZONES · 4-8 the

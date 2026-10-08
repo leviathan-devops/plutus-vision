@@ -325,7 +325,7 @@ def build_payload() -> tuple[str, str]:
     # Chain/Days/ZONES...) — a §10.7 violation the reviewer named.
     _alt = ""
     for _g in (e2doc.get("ghost") or []):
-        _alt = f'{_g.get("to", "")} @ {_g.get("zone", "")} {int(_f(_g.get("conf", 0)))}%'
+        _alt = f'{_g.get("to", "")} {int(_f(_g.get("conf", 0)))}%'
         break
     add("e1_injected_alt", "string", [f'"{_q(_alt)}"'])
     _days_s = " ".join(f'{str(d.get("day", ""))[:2]}:{d.get("shape", "")}'
@@ -387,8 +387,10 @@ def build_payload() -> tuple[str, str]:
         if len(_zs) >= 5:
             _ceil, _up, _eq, _mid, _flr = _zs[:5]
             def _pf(v):
-                # 5 dp, trailing zeros trimmed — the pair's price precision (the v8's #.####)
-                return f"{float(v):.5f}".rstrip("0").rstrip(".")
+                # §10.9 price format: DXY "#.##" (2dp), EU/GU/AU "#.####" (4dp). The earlier
+                # form used 5dp for all — a reviewer recomputed and rejected it (§10.9).
+                _dp = 2 if str(_pair_early).upper() == "DXY" else 4
+                return f"{float(v):.{_dp}f}"
             def _rr(entry, sl, tp):
                 risk = abs(entry - sl); rew = abs(tp - entry)
                 return round(rew / risk, 1) if risk > 0 else 0.0
