@@ -63,7 +63,7 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = 31decff180872e1654b106158ba7b2cc84fec99725be0cb2997d8b0791e5fda1 (1838 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = 8ae81df0ffc35ffd54dca4e950010b207f338bf295e59677abb9b469b12fe950 (1834 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
 
 ## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
@@ -165,3 +165,9 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 - The LSZ now draw as BOLD green boxes (border-only, no fill, width 3) — unmistakable green
   liquidity boxes, visible without burying the IP fills.
 - v2 = 31decff180872e1654b106158ba7b2cc84fec99725be0cb2997d8b0791e5fda1 (1838 lines). visual = f2b811a1a2cdf95bccd6b380966185d4362ec1b76370e2789ab848bbc629ff11.
+
+## ROUND 11 — the filled LSZ (2026-10-08)
+- The LSZ now render as FILLED green boxes (bgcolor green 60) behind the IP zones (the reviewers
+  want the v8's filled LSZ, not thin lines). The 75%-opaque IP fill keeps the category colour;
+  the green shows at the LSZ edges.
+- v2 = 8ae81df0ffc35ffd54dca4e950010b207f338bf295e59677abb9b469b12fe950 (1834 lines).
