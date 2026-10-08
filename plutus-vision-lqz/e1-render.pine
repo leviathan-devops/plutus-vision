@@ -255,9 +255,9 @@ if e1Enabled and barstate.islast
             _lact = _lp == "ACTIVE"
             box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 3 * 604800000, _lb,
                  xloc = xloc.bar_time,
-                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 60) : color.new(color.rgb(40,180,80), 70),
+                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 55) : color.new(color.rgb(40,180,80), 60),
                  border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
-                 border_width = _lact ? 2 : 1)
+                 border_width = _lact ? 2 : 2)
     // ── THE OPTION STRIKES (trident_v8.pine:378-388): AMBER horizontal lines + "$X.XB Option
     // Strike Target" labels. Renders the v8's amber layer when the options harvest is UP; an
     // empty array draws nothing (the data is external — never fabricated). ───────────────────

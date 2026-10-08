@@ -3210,8 +3210,8 @@
    "extended": false
   },
   {
-   "price": 1.128,
-   "label": "P3_OPTION_STRIKE_1.128",
+   "price": 1.1285,
+   "label": "P3_OPTION_STRIKE_1.1285",
    "level_type": "P3",
    "style": "line",
    "use_box": false,
@@ -3225,8 +3225,8 @@
    "extended": false
   },
   {
-   "price": 1.125,
-   "label": "P3_OPTION_STRIKE_1.125",
+   "price": 1.1265,
+   "label": "P3_OPTION_STRIKE_1.1265",
    "level_type": "P3",
    "style": "line",
    "use_box": false,
@@ -3240,8 +3240,8 @@
    "extended": false
   },
   {
-   "price": 1.123,
-   "label": "P3_OPTION_STRIKE_1.123",
+   "price": 1.1245,
+   "label": "P3_OPTION_STRIKE_1.1245",
    "level_type": "P3",
    "style": "line",
    "use_box": false,
@@ -3255,8 +3255,8 @@
    "extended": false
   },
   {
-   "price": 1.118,
-   "label": "P3_OPTION_STRIKE_1.118",
+   "price": 1.1225,
+   "label": "P3_OPTION_STRIKE_1.1225",
    "level_type": "P3",
    "style": "line",
    "use_box": false,
@@ -3270,8 +3270,8 @@
    "extended": false
   },
   {
-   "price": 1.126,
-   "label": "P3_OPTION_STRIKE_1.126",
+   "price": 1.1205,
+   "label": "P3_OPTION_STRIKE_1.1205",
    "level_type": "P3",
    "style": "line",
    "use_box": false,
@@ -3285,8 +3285,8 @@
    "extended": false
   },
   {
-   "price": 1.122,
-   "label": "P3_OPTION_STRIKE_1.122",
+   "price": 1.1185,
+   "label": "P3_OPTION_STRIKE_1.1185",
    "level_type": "P3",
    "style": "line",
    "use_box": false,
@@ -3300,8 +3300,8 @@
    "extended": false
   },
   {
-   "price": 1.12,
-   "label": "P3_OPTION_STRIKE_1.12",
+   "price": 1.117,
+   "label": "P3_OPTION_STRIKE_1.117",
    "level_type": "P3",
    "style": "line",
    "use_box": false,
