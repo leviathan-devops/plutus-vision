@@ -1300,6 +1300,7 @@ var array<float> e1_injected_lsz_bottom = array.new<float>()
 var array<string> e1_injected_lsz_pri = array.new<string>()
 var array<float> e1_injected_opt_pr = array.new<float>()
 var array<string> e1_injected_opt_vol = array.new<string>()
+var array<string> e1_injected_trade_row = array.new<string>()
 e1_injected_anchor_ms = 1791144000000
 e1_injected_week_tag = "2026-W41"
 e2_injected_refusal = ""
@@ -1413,6 +1414,12 @@ if bar_index == 0
     e1_injected_lsz_pri.push("DEMAND")
     e1_injected_lsz_pri.push("DEMAND")
     e1_injected_lsz_pri.push("SUPPLY")
+    e1_injected_trade_row.push("S T2 Entry 1.12556")
+    e1_injected_trade_row.push("SL 1.12909 | TP 1.11741")
+    e1_injected_trade_row.push("Wed > Thu-Fri | R:R 2.3")
+    e1_injected_trade_row.push("L T1 Entry 1.11919")
+    e1_injected_trade_row.push("SL 1.11659 | TP 1.1276")
+    e1_injected_trade_row.push("Wed > Thu-Fri | R:R 3.2")
 
 // ═════════════════════════════════════════════════════════════════════════════
 //  E1 RENDER — the INSTITUTIONAL PRESSURE MAP.  W4: the trident_v8 port.
@@ -1710,6 +1717,15 @@ if e1Enabled and barstate.islast
             _bg = _tc == "RES" ? color.rgb(60,12,8) : _tc == "MID" ? color.rgb(50,38,8) : color.rgb(0,40,40)
             table.cell(e1_tbl, 0, 4 + i, _tag, text_color = color.white, text_size = size.small, bgcolor = _bg)
             table.cell(e1_tbl, 1, 4 + i, array.get(e1_injected_tbl_row, i), text_color = color.white, text_size = size.small, bgcolor = _bg)
+        // ── THE TRADES rows 10-16 (trident_v8.pine:411-427): the header + the SHORT/LONG setup
+        // rows, a LIGHT derivation from the zone map (Engine 3 is scoped out by the pin). ──────
+        table.cell(e1_tbl, 0, 10, "TRADES", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
+        table.cell(e1_tbl, 1, 10, "", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
+        if array.size(e1_injected_trade_row) > 0
+            for i = 0 to array.size(e1_injected_trade_row) - 1
+                if i >= 6
+                    break
+                table.cell(e1_tbl, 1, 11 + i, array.get(e1_injected_trade_row, i), text_color = color.white, text_size = size.small)
 
 
 // ═════════════ E2 — the predicted price path (ADDED 2026-10-03) ═════════════

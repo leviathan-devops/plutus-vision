@@ -63,7 +63,7 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = 4bbbe15118fed93bf820b76e490c09b6bcab16162ab9f45f54776aaeef55994a (1818 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = 04e8f63372811eb20ed8d9f31512bac75195156be5481c67ec83d87330562155 (1834 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
 
 ## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
@@ -125,3 +125,10 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   return 0. The layer renders EMPTY (never fabricated) until the harvest flows. This is the
   loud-fail contract — an absent source is a named gap, not a substituted artifact.
 - v2 = 4bbbe15118fed93bf820b76e490c09b6bcab16162ab9f45f54776aaeef55994a (1818 lines).
+
+## THE TRADES TABLE ROWS (round 8, 2026-10-08)
+- The v8's TRADES rows (table rows 10-16, trident_v8.pine:411-427) were missing. The table now
+  renders the full 2x17: header / Chain / Days / ZONES + 5 rows / TRADES + 6 rows (S T2 Entry,
+  SL|TP, Days|R:R, L T1 Entry, SL|TP, Days|R:R), a LIGHT derivation from the zone map (Engine 3
+  is scoped out by the pin, so these are display rows, not the full Engine-3 construction).
+- v2 = 04e8f63372811eb20ed8d9f31512bac75195156be5481c67ec83d87330562155 (1834 lines). visual = 75dbb55348f4bed3a4d3b918ddcd3fbee3a9cda43b9b18f0a58489dfade74b58.

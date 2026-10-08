@@ -384,3 +384,7 @@ grep -n 'xloc = xloc' plutus-vision-v2.pine
 ### ROUND-7 ANCHOR
 - the option-strike layer: plutus-vision-lqz/e1-render.pine:261
 - the option emission: scripts/lqz_vision_v2_build.py:313
+
+### ROUND-8 ANCHOR
+- the trades rows: plutus-vision-lqz/e1-render.pine:297
+- the trade emission: scripts/lqz_vision_v2_build.py:329

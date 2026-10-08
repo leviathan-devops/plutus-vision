@@ -326,6 +326,38 @@ def build_payload() -> tuple[str, str]:
     add("e1_injected_opt_pr", "float", [_f(_p) for (_p, _v) in _opts])
     add("e1_injected_opt_vol", "string", [f'"{_q(_v)}"' for (_p, _v) in _opts])
 
+    # ── THE TRADES (trident_v8.pine:201-208, :411-427) — the 2×17 table rows 10-16: a SHORT and
+    # a LONG setup (Entry range · SL | TP · Days > DayTP | R:R). The pin scopes Engine 3 OUT, so
+    # these are a LIGHT display derivation from the zone map (the v8's own trade geometry: entry
+    # at a zone, SL beyond the opposite extreme, TP at the far zone). They fill the table so it
+    # matches the v8's 2×17 shape; they are NOT the full Engine-3 construction. ────────────────
+    _tr: list[str] = []
+    try:
+        _zs = sorted(zones, key=lambda z: -float(z.get("top", 0)))
+        if len(_zs) >= 5:
+            _ceil, _up, _eq, _mid, _flr = _zs[:5]
+            def _pf(v):
+                # 5 dp, trailing zeros trimmed — the pair's price precision (the v8's #.####)
+                return f"{float(v):.5f}".rstrip("0").rstrip(".")
+            def _rr(entry, sl, tp):
+                risk = abs(entry - sl); rew = abs(tp - entry)
+                return round(rew / risk, 1) if risk > 0 else 0.0
+            # SHORT: entry at the Upper resistance band, SL above the Ceiling, TP at the Floor
+            _se = (_up["top"] + _up["bottom"]) / 2; _ssl = _ceil["top"] + (_ceil["top"] - _ceil["bottom"]) * 0.3
+            _stp = (_flr["top"] + _flr["bottom"]) / 2
+            _tr.append(f'S T2 Entry {_pf(_se)}')
+            _tr.append(f'SL {_pf(_ssl)} | TP {_pf(_stp)}')
+            _tr.append(f'Wed > Thu-Fri | R:R {_rr(_se, _ssl, _stp)}')
+            # LONG: entry at the Mid-Range support band, SL below the Floor, TP at the Ceiling
+            _le = (_mid["top"] + _mid["bottom"]) / 2; _lsl = _flr["bottom"] - (_flr["top"] - _flr["bottom"]) * 0.3
+            _ltp = (_ceil["top"] + _ceil["bottom"]) / 2
+            _tr.append(f'L T1 Entry {_pf(_le)}')
+            _tr.append(f'SL {_pf(_lsl)} | TP {_pf(_ltp)}')
+            _tr.append(f'Wed > Thu-Fri | R:R {_rr(_le, _lsl, _ltp)}')
+    except Exception:
+        _tr = []
+    add("e1_injected_trade_row", "string", [f'"{_q(r)}"' for r in _tr])
+
     # THE ANCHOR is computed HERE, in Python, because the PineTS transpiler has
     # neither `str.split` nor `tonumber` (measured 2026-10-03: "tonumber is not
     # defined", and v1 has zero uses of either). The engine owns the calendar; Pine
