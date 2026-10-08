@@ -63,7 +63,7 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = 04e8f63372811eb20ed8d9f31512bac75195156be5481c67ec83d87330562155 (1834 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = fc332a04acbcb49b0bd1296a7970ecd66e228246f5f52a2a6c1f95e20b542c5c (1836 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
 
 ## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
@@ -141,3 +141,15 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   Equilibrium Zone, TEAL Mid-Range Support + IP Support Floor) with "<name> | <degree> | <zfp>% ZFP"
   labels; the 6 green LSZ; the option-strike layer (wired, empty on the blocked week); the full
   2x17 table (header/Chain/Days/ZONES/TRADES); the E2 path (WL->RWL->SS).
+
+## THE FINAL STATE (round 10, 2026-10-08)
+- v2 = fc332a04acbcb49b0bd1296a7970ecd66e228246f5f52a2a6c1f95e20b542c5c (1836 lines). The LSZ render as thin green liquidity lines (visible, no coverage).
+- THE REVIEWERS (rounds 7-9): the E1 structure (5 zones, RED/ORANGE/TEAL, EU names, label
+  format, table) is APPROVED by every reviewer. The remaining REJECT is the LSZ visibility +
+  the option strikes (data-blocked).
+- THE E2 ACCURACY (measured): on the one week with enough fixture bars (2026-07-06), the E2's
+  per-day directional calls hit 2/5 vs the real close-to-close moves. The forecast WALKS the map
+  (WL->RWL->SS) but the per-day direction is modest. (The fixture is only 382 bars, so the
+  multi-week measurement is data-limited.)
+- HONEST GAPS: the option strikes (harvest 403), the E2 per-day directional accuracy (2/5), and
+  the LSZ visibility (they sit at the same prices as the IP zones in this week's data).
