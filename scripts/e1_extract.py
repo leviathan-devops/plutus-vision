@@ -804,7 +804,7 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
         # the DISCRIMINATOR: a zone fed by many pillars reads a LOWER failure probability than a
         # thin one (the width formula read the same on all five zones — the "5 of 6 identical"
         # defect). Never a per-role constant.
-        _zf = {"top": top, "bottom": bot,
+        _zf = {"top": top, "bottom": bot, "confluence": conf,
                "levels": [{"level_type": str(l["label"]).split("_")[0]} for l in inband]}
         _zt = ZFP.classify_zone_type(_zf)
         _zfp = ZFP.zfp(_zf, bars, spot, [])
@@ -869,6 +869,13 @@ def zone_extreme_bonus(bot: float, top: float, bars: list, side: str = "BOTH") -
     extremes need."""
     if not bars:
         return 0.0
+    # THE WICK THRESHOLDS ARE PAIR-RELATIVE (the DXY constants do not scale). The canon's
+    # "lower wick >= 0.15 DXY" is 0.15% of price (0.15 at DXY 100); on EURUSD (~1.12) a
+    # literal 0.15 is impossible (the daily range is ~0.005), so the extreme bonus NEVER fired
+    # on a pair — every zone's score stayed flat (measured 2026-10-08: ext=0 on all 5 zones).
+    _px = bars[-1]["c"] if bars else 100.0
+    _wick = abs(_px) * 0.0015              # 0.15 at DXY 100
+    _rep = abs(_px) * 0.0005               # 0.05 at DXY 100
     daily: dict = {}
     for b in bars[-540:]:
         d = dt.datetime.fromtimestamp(b["t"] / 1000, dt.timezone.utc).date()
@@ -887,9 +894,9 @@ def zone_extreme_bonus(bot: float, top: float, bars: list, side: str = "BOTH") -
             continue
         lower_wick = min(r["o"], r["c"]) - r["l"]
         upper_wick = r["h"] - max(r["o"], r["c"])
-        if lower_wick >= 0.15 and (r["c"] - r["l"]) / rng >= 0.5:
+        if lower_wick >= _wick and (r["c"] - r["l"]) / rng >= 0.5:
             lows.append((dd, r["l"]))
-        if upper_wick >= 0.15 and (r["c"] - r["l"]) / rng <= 0.5:
+        if upper_wick >= _wick and (r["c"] - r["l"]) / rng <= 0.5:
             highs.append((dd, r["h"]))
 
     # ── STEP 0e · CONFLUENT FLOOR / CEILING — a swing extreme INSIDE the zone → +2 ──────
@@ -921,7 +928,7 @@ def zone_extreme_bonus(bot: float, top: float, bars: list, side: str = "BOTH") -
                 continue
             grp = [pts[i]]
             for j in range(i + 1, len(pts)):
-                if not used[j] and abs(pts[j][1] - pts[i][1]) <= 0.05:
+                if not used[j] and abs(pts[j][1] - pts[i][1]) <= _rep:
                     grp.append(pts[j])
                     used[j] = True
             used[i] = True

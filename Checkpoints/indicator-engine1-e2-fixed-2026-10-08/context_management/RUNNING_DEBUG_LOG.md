@@ -921,3 +921,9 @@ raises the extremes toward HEAVY and flips the E2 to the reversal the operator e
   file); the IDE restores from localStorage not disk (the render was stale until the editor load).
 
 **THE DIST:** `bf1f1972ad43f7a9ccba1db8` (4 zones, computed).
+
+## 2026-10-08 · THE RENDER BOXES DREW 0
+- SYMPTOM: counts.boxes:0 while 5 zones were in the payload.
+- ROOT CAUSE: the E1 box's right edge (_rx = _bAnchor + _bpw) was PAST the chart's last bar (the target week is the future) -> the renderer DROPPED the box.
+- FIX: xloc.bar_time (the canon Part X Principle 5) — _lx = e1_anchor_ms - 2w, _rx = e1_anchor_ms + 1w. Now boxes:5.
+- THE YELLOW BOXES: the E2 day tags (style_label_down) with color=color(na) -> the engine's default GOLD background. Fix: color.new(color.black,100).

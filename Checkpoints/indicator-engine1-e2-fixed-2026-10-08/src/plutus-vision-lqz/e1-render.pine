@@ -258,3 +258,20 @@ if e1Enabled and barstate.islast
                 break
             table.cell(e1_tbl, 0, 4 + i, array.get(e1PayloadCat, i), text_color = color.white, text_size = size.small)
             table.cell(e1_tbl, 1, 4 + i, array.get(e1_injected_tbl_row, i), text_color = color.white, text_size = size.small)
+
+    // ── THE LSZ (trident_v8.pine:368-377, VERBATIM): GREEN filled boxes, NO LABELS, the same
+    // x-span as the IP zones. ACTIVE = a brighter/thicker green. ────────────────────────────
+    _nl = array.size(e1_injected_lsz_top)
+    if _nl > 0
+        for i = 0 to _nl - 1
+            if i >= _nl
+                break
+            _lt = array.get(e1_injected_lsz_top, i)
+            _lb = array.get(e1_injected_lsz_bottom, i)
+            _lp = array.get(e1_injected_lsz_pri, i)
+            _lact = _lp == "ACTIVE"
+            box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
+                 xloc = xloc.bar_time,
+                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 60) : color.new(color.rgb(40,180,80), 70),
+                 border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
+                 border_width = 1)

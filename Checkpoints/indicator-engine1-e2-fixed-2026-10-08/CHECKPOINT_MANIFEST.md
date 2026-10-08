@@ -63,5 +63,17 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = 42f3a6126d8c804f82efdbd13f9ed24039325a717e5ddcbb52c41506df656a6a (1797 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = a18e6ee4e9066c4c2593358dd3e683550318d8b61b392d2092ccc1b86151d765 (1797 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
+
+## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
+- The structural-extreme bonus used the canon's DXY constants (wick >= 0.15, repeat <= 0.05); on
+  a pair (~1.12) a 0.15 wick is impossible, so `ext` was 0 on every zone and the degree was flat
+  (4/5 MODERATE-HEAVY). Made the wick/repeat thresholds PAIR-RELATIVE (`e1_extract.py:877`).
+- `classify_zone_type` now prefers the CONFLUENCE when no option wall exists (the harvest is DOWN):
+  a high-confluence zone is a harder wall. Without it every 3+-pillar zone read HARD_WALL and the
+  ZFP was flat 10% (`e1_zfp.py:111`).
+- RESULT (EURUSD-2026-10-05): degree MODERATE-HEAVY / HEAVY / MODERATE-HEAVY / HEAVY / HEAVY;
+  ZFP 22 / 10 / 22 / 10 / 10. DXY-2026-07-13: degree MOD-HEAVY / MOD-HEAVY / HEAVY / MOD-HEAVY /
+  MOD-HEAVY; ZFP 42 / 22 / 10 / 22 / 22.
+- v2 = c2af0c692e2679e7537784464ef6638e32c34c80a8d5857869e43f4f8e032e03 (1797 lines). visual = a18e6ee4e9066c4c2593358dd3e683550318d8b61b392d2092ccc1b86151d765.

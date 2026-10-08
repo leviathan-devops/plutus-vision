@@ -360,3 +360,8 @@ grep -n 'xloc = xloc' plutus-vision-v2.pine
 - the E2 chain: data/e2/DXY-2026-07-13-e2.json:1
 - the battery record: TESTING_LOG.md:1893
 - the EURUSD zones: data/e1/EURUSD-2026-10-05.json:2080
+
+### THE SPREAD FIX ANCHORS
+- the pair-relative wick threshold: scripts/e1_extract.py:877
+- the confluence-driven zone type: scripts/e1_zfp.py:111
+- the emitted ZFP spread: data/e1/EURUSD-2026-10-05.json:2088

@@ -108,6 +108,20 @@ def classify_zone_type(zone) -> str:
     zt = z.get("zone_type")
     if isinstance(zt, str) and zt in ZFP_BASE:
         return zt
+    # THE CONFLUENCE IS THE DISCRIMINATOR when there is no option wall (the harvest is DOWN).
+    # The canon's B.1 ranks a zone by the option wall AND the pillar count; with the option
+    # dimension absent, the CONFLUENCE SCORE (the canon's own strength measure) is the proxy:
+    # a high-confluence zone is a harder wall. Without this, every zone with 3+ pillars read
+    # HARD_WALL (base 10%) and the ZFP was flat (the operator's "5 of 6 identical" defect).
+    conf = z.get("confluence")
+    if isinstance(conf, (int, float)):
+        if conf >= 10:
+            return "HARD_WALL"
+        if conf >= 7:
+            return "STANDARD_WALL"
+        if conf >= 4:
+            return "SOFT_WALL"
+        return "ONE_TOUCH"
     lv = z.get("levels") or []
     pillars = {l.get("level_type") for l in lv
                if isinstance(l, dict) and l.get("level_type")}

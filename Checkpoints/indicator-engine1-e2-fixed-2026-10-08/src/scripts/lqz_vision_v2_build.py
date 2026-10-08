@@ -286,6 +286,31 @@ def build_payload() -> tuple[str, str]:
                        for d in (e2doc.get("days") or []))
     add("e1_injected_days", "string", [f'"{_q(_days_s)}"'])
 
+    # ── THE LSZ (trident_v8.pine:195-197, :368-377) — the Liquidity Sweep Zones, GREEN filled
+    # boxes, NO LABELS, same width as the IP zones. The v8 renders 6 per pair; take the 6
+    # NEAREST the spot. The range is the canon's `[swing, swing + 0.05]` — but 0.05 is a DXY
+    # constant, so on a pair the width is normalised to a fraction of price (the same
+    # pair-relative law the boxes use). Emitted from the payload's computed `lsz`. ──────────
+    _lsz = []
+    try:
+        _d0 = json.loads(_files[0].read_text()) if _files else {}
+        _spot = float(_d0.get("spot") or 0) or None
+        _raw = _d0.get("lsz") or []
+        # sort by the SWING (the range's lower edge) proximity to spot — the v8's LSZ sit at
+        # the prior swing lows/highs, thin bands near the price
+        _raw = sorted(_raw, key=lambda x: abs(float(x["range"][0]) - (_spot or 0)))[:6]
+        for x in _raw:
+            _lo = float(x["range"][0])
+            # THE V8 WIDTH IS 0.05 DXY (~5 pips); on a pair that is 0.05% of price. The old
+            # `_w*0.15` (0.05*0.15=0.0075) drew 75-pip bands = a green wall. A thin band:
+            _pw = abs(_lo) * 0.0005
+            _lsz.append((_lo, _lo + _pw, str(x.get("type", "")).upper()[:6].replace("-SIDE", "")))
+    except Exception:
+        _lsz = []
+    add("e1_injected_lsz_top", "float", [_f(t) for (_b, t, _p) in _lsz])
+    add("e1_injected_lsz_bottom", "float", [_f(b) for (b, _t, _p) in _lsz])
+    add("e1_injected_lsz_pri", "string", [f'"{_q(_p)}"' for (_b, _t, _p) in _lsz])
+
     # THE ANCHOR is computed HERE, in Python, because the PineTS transpiler has
     # neither `str.split` nor `tonumber` (measured 2026-10-03: "tonumber is not
     # defined", and v1 has zero uses of either). The engine owns the calendar; Pine

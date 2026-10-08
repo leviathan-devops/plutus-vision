@@ -365,3 +365,9 @@ needs to be drawn visibly on the chart."
    must be the live week's).
 3. **THE ENGINE-2 SHAPE CHAIN ON THE CHART.** The macro shape chain (SS>BS>R>WL etc.) is NOT
    drawn. `data/e2/` carries the E2 payload; the render must draw it (the shapes/labels visibly).
+
+## 2026-10-08 · QUEUED
+1. THE 5-WEEK CROSS-VALIDATION (the operator's litmus) — re-run against the fixed engine.
+2. THE E2 FORWARD-PREDICTION accuracy vs real forward price action — measure.
+3. THE TWO ZERO-CONTEXT SUBAGENT approvals (read the canon + the toolset, then judge the render).
+4. The option/analyst dimensions (harvest 403/Cloudflare) — unblock or re-weight.
