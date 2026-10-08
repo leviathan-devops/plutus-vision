@@ -9,49 +9,50 @@
    "x": 1791244800000,
    "shape": "WL",
    "conf": 60.0,
-   "zone": "IP Support Floor",
+   "zone": "Upper IP Resistance",
    "day": "Mon"
   },
   {
    "x": 1791331200000,
-   "shape": "SS",
-   "conf": 55.0,
-   "zone": "Key IP Resistance Band",
+   "shape": "RWL",
+   "conf": 70.0,
+   "zone": "IP Support Floor",
    "day": "Tue"
   },
   {
    "x": 1791417600000,
    "shape": "SS",
-   "conf": 55.0,
-   "zone": "Key IP Resistance Band",
+   "conf": 70.0,
+   "zone": "Equilibrium Zone",
    "day": "Wed"
   },
   {
    "x": 1791504000000,
    "shape": "SS",
-   "conf": 55.0,
-   "zone": "Key IP Resistance Band",
+   "conf": 70.0,
+   "zone": "Equilibrium Zone",
    "day": "Thu"
   },
   {
    "x": 1791590400000,
    "shape": "SS",
-   "conf": 55.0,
-   "zone": "Key IP Resistance Band",
+   "conf": 70.0,
+   "zone": "Equilibrium Zone",
    "day": "Fri"
   }
  ],
  "ghost": [
   {
-   "zone": "Key IP Resistance Band",
-   "to": "BS",
-   "zfp": 22,
-   "conf": 70.0
+   "zone": "IP Support Floor",
+   "to": "PBS",
+   "zfp": 10,
+   "conf": 60.0
   }
  ],
  "momentum": 0.0,
  "chain": [
-  "WL->SS@Key IP Resistance Band"
+  "WL->RWL@IP Support Floor",
+  "RWL->SS@Key IP Resistance Band"
  ],
  "phase": "MID"
 }

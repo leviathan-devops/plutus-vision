@@ -7,7 +7,7 @@
  "days": [
   {
    "x": 1783987200000,
-   "shape": "R",
+   "shape": "WL",
    "conf": 60.0,
    "zone": "Equilibrium Zone",
    "day": "Mon"
@@ -15,44 +15,43 @@
   {
    "x": 1784073600000,
    "shape": "SS",
-   "conf": 60.0,
-   "zone": "Mid-Range Support",
+   "conf": 55.0,
+   "zone": "Equilibrium Zone",
    "day": "Tue"
   },
   {
    "x": 1784160000000,
    "shape": "SS",
-   "conf": 60.0,
-   "zone": "Mid-Range Support",
+   "conf": 55.0,
+   "zone": "Equilibrium Zone",
    "day": "Wed"
   },
   {
    "x": 1784246400000,
-   "shape": "BS",
-   "conf": 80.0,
-   "zone": "Key IP Support",
+   "shape": "SS",
+   "conf": 55.0,
+   "zone": "Equilibrium Zone",
    "day": "Thu"
   },
   {
    "x": 1784332800000,
-   "shape": "BS",
-   "conf": 80.0,
-   "zone": "Key IP Support",
+   "shape": "SS",
+   "conf": 55.0,
+   "zone": "Equilibrium Zone",
    "day": "Fri"
   }
  ],
  "ghost": [
   {
-   "zone": "Mid-Range Support",
+   "zone": "Key IP Support",
    "to": "BS",
-   "zfp": 37,
+   "zfp": 22,
    "conf": 70.0
   }
  ],
  "momentum": 1.0,
  "chain": [
-  "R->SS@Mid-Range Support",
-  "SS->BS@Key IP Support"
+  "WL->SS@Key IP Support"
  ],
- "phase": "POST_BS_EARLY_BREAKOUT"
+ "phase": "MID"
 }

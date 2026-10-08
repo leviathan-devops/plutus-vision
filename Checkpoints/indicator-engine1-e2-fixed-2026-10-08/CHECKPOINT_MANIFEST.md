@@ -63,7 +63,7 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = 79fe8816e1854f8c26a8d170290ebb21a8d0e2b58e347047451c12ce6d9e2c26 (1802 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = eeeeb60f9c3529208985e7b6431a101a52a535365ab87ae72534f7dca30c7bb2 (1802 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
 
 ## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
@@ -91,3 +91,16 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   RES zones green (the reviewers' persistent blocker). Bumped to 45 (55% opaque) so the
   category color (RED/ORANGE/TEAL) DOMINATES. The RES zones now read RED.
 - v2 = 79fe8816e1854f8c26a8d170290ebb21a8d0e2b58e347047451c12ce6d9e2c26 (1802 lines). visual = 00217fe203844849cc423a9ad16d5c312855cdde0ea38b67286829cb7de72039.
+
+## THE ENGINE 2 FIX (round 5, 2026-10-08)
+- `classify`'s touch tolerance `_ztol=0.03` was a DXY constant — on EURUSD (~1.12) it made the
+  spot "at" EVERY zone, so the classify anchored to the wrong zone. Pair-relative now
+  (`e2_engine.py:175`).
+- The walk flipped direction on the classify's FIRST shape when it was a rejection (WL is in
+  `_REVERSALS`) — a WL at the upper resistance targeted the CEILING instead of walking down
+  (`e2_engine.py:381`). The flip now applies only to shapes the walk REACHED.
+- Range shapes (SS/R/WLS) now sit at the MID zone (a range is not a move to a boundary).
+- RESULT (EURUSD-2026-10-05): chain WL->RWL->SS (3 shapes), days Mon:WL@UpperIPRes Tue:RWL@Floor
+  Wed-Fri:SS@Equilibrium. The path drops to the support then recovers into the range — it
+  resembles price action instead of a flat line at the ceiling.
+- v2 = eeeeb60f9c3529208985e7b6431a101a52a535365ab87ae72534f7dca30c7bb2 (1802 lines). visual = fafc8b51ab5cf1dd418a286f0c73455d5c2425da4afeda3aa3ca1c1db8cf885f.

@@ -168,7 +168,11 @@ def classify(zones: list[Zone], spot: float | None = None) -> tuple[str, str]:
     #     selected the Ceiling 99.73 → an EMPTY chain → all 5 days at that one zone → the
     #     uniform square-wave floating above the price. "At the zone" now means within a
     #     small touch band (0.03 ≈ a third of the canon's 0.10 tight-confluence step).
-    _ztol = 0.03
+    # PAIR-RELATIVE (2026-10-08): 0.03 is a DXY constant (0.03 at DXY 100). On EURUSD
+    # (~1.12) a literal 0.03 is 300 PIPS — the spot 1.1254 was "at" EVERY zone (including
+    # the IP Support Floor), so the classify anchored to the wrong zone and the chain went
+    # WL->SS from the floor. 0.03% of price (0.00034 at 1.12) is the same touch band.
+    _ztol = abs(spot) * 0.0003 if spot else 0.03
     for z in solid:
         if not z.is_breakout_risk:
             continue
@@ -368,8 +372,13 @@ def forward_map(zones: list[Zone], monday: dt.date,
         _zc = zmap.get(anchor)
         _ac = (_zc.top + _zc.bottom) / 2.0 if _zc else _mid
         direction = 1 if _ac <= _mid else -1
-    for _ in range(MAX_CHAIN_LENGTH - 1):
-        if current in _REVERSALS:
+    for _i in range(MAX_CHAIN_LENGTH - 1):
+        # THE FLIP APPLIES ONLY TO A SHAPE THE WALK REACHED (not the classify's first shape).
+        # A rejection (WL) reverses the move that REACHED it — but the classify's WL already
+        # carries its direction (down); flipping it on iteration 0 sent the walk UP to the
+        # ceiling (measured 2026-10-08: a WL at the upper resistance targeted the ceiling and
+        # the chain collapsed to WL->SS). The classify's direction is authoritative for link 0.
+        if _i > 0 and current in _REVERSALS:
             direction = -direction      # a rejection reverses the move that reached it
         # the TARGET zone is the next one the move will meet, in `direction`.
         # DEFECT FOUND AND FIXED 2026-10-03: this passed `zmap[anchor]` — a Zone
@@ -607,10 +616,18 @@ def day_decomposition(chain: ShapeChain, zones: list[Zone],
     by_to: dict = {}
     for l in chain.chain:
         by_to.setdefault(l.to_shape, l)
+    # THE RANGE SHAPES SIT AT THE MID. An SS/R/WLS is a RANGE — the price oscillates around
+    # the equilibrium, not a move to a boundary. The chain's target for an SS is wherever the
+    # prior move ended (often a boundary); rendering the range there put the forecast at the
+    # ceiling (measured 2026-10-08). A range day anchors to the zone nearest the map's middle.
+    _mids = sorted(zones, key=lambda z: (z.top + z.bottom))
+    _midzone = _mids[len(_mids) // 2].id if _mids else _anchor0
     for i, name in enumerate(names):
         shape = seq[i]
         link = by_to.get(shape)
         key_zone = zseq[i] or _anchor0
+        if shape in ("SS", "R", "WLS", "RS"):
+            key_zone = _midzone
         # §6.6 TRACEABILITY: the day renders at the chain's walked zone (key_zone); the
         # Link's OWN trigger zone is preserved as `link_zone` for traceback through the chain.
         link_zone = link.trigger_zone_id if link else key_zone
