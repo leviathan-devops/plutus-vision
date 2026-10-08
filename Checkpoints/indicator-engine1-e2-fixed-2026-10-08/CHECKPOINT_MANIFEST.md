@@ -171,3 +171,12 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   want the v8's filled LSZ, not thin lines). The 75%-opaque IP fill keeps the category colour;
   the green shows at the LSZ edges.
 - v2 = 8ae81df0ffc35ffd54dca4e950010b207f338bf295e59677abb9b469b12fe950 (1834 lines).
+
+## ROUND 12 — the render-defect sweep (2026-10-09)
+- FIX: `e1_injected_tbl_row` was declared 5x (a `var array<string>` PER ROW, from the per-row
+  `add()` call) — now ONE declaration, N pushes (scripts/lqz_vision_v2_build.py:277-284).
+- FIX: the alternative-chain ghost's x was a PRICE (1.11792 ms = epoch 1970), so the ghost never
+  drew — now the week's DAY timestamps at the alt zone's mid (scripts/lqz_vision_v2_build.py:242-254).
+- FIX: the chain header kept only the LAST link ("RWL->SS") — now the FULL chain ("WL->RWL->SS"),
+  per §6.6 Step 3 (scripts/lqz_vision_v2_build.py:294-301).
+- v2 = a28f979ef6061ea033887d3db9ab90bbdc5db1531329c3a1a56071ffe0b8003b (1838 lines); battery 11 suites 0 fail.

@@ -239,10 +239,19 @@ def build_payload() -> tuple[str, str]:
         if d.get("x") is None or d.get("conf") is None:   # a malformed engine entry -> not drawn
             continue
         days.append((d.get("x"), _f((z.get("top") + z.get("bottom")) / 2), d.get("shape"), d.get("conf")))
+    # THE ALTERNATIVE CHAIN (spec §6.6 Step 4 / Rule 5): a thin DASHED ghost path. Its x must be
+    # the week's DAY TIMESTAMPS (the same anchors the primary chain uses) — the earlier form
+    # emitted `(z.top, z.top)` so the ghost's x was a PRICE (1.11792 ms ≈ epoch 1970), the point
+    # fell off the chart and the ghost never drew. Here the ghost spans the week's day anchors at
+    # the alternative zone's mid-price.
+    _day_x = [d[0] for d in days]
     for g in e2doc.get("ghost", []):
         z = zmap.get(g.get("zone"))
-        if z is not None:
-            ghosts.append((z.get("top"), z.get("top")))
+        if z is None or not _day_x:
+            continue
+        _gy = _f((z.get("top") + z.get("bottom")) / 2)
+        for _x in _day_x:
+            ghosts.append((_x, _gy))
 
     # THE FINE PATH (2026-07-05). `days` are the five DAY anchors; the engine expands them into
     # a CONTINUOUS, JAGGED intraday path (each day = its shape's geometric leg, chained
@@ -274,13 +283,21 @@ def build_payload() -> tuple[str, str]:
             pass
     add("e1_injected_tbl_pair", "string", [f'"{_q(_pair)}"'])
     add("e1_injected_tbl_week", "string", [f'"{_q(_week)}"'])
-    for z in zones:
-        _row = (f'{_f(z.get("top"))}-{_f(z.get("bottom"))} '
-                f'{z.get("degree_v8", "")} {int(_f(z.get("zfp")))}%ZFP {z.get("zTir", "T2")}')
-        add("e1_injected_tbl_row", "string", [f'"{_q(_row)}"'])
+    # ONE declaration, N pushes (fix 2026-10-09): the per-row `add()` call emitted a
+    # `var array<string> e1_injected_tbl_row = array.new<string>()` PER ROW — five identical
+    # declarations in the emitted Pine. `add()` initializes on call, so the row list must be
+    # built first and emitted in ONE call.
+    _tbl_rows = [(f'{_f(z.get("top"))}-{_f(z.get("bottom"))} '
+                  f'{z.get("degree_v8", "")} {int(_f(z.get("zfp")))}%ZFP {z.get("zTir", "T2")}')
+                 for z in zones]
+    add("e1_injected_tbl_row", "string", [f'"{_q(r)}"' for r in _tbl_rows])
+    # THE FULL CHAIN (§6.6 Step 3: `Shape A → Shape B → Shape C`). The earlier form kept only
+    # the LAST link (`_ch` overwritten per iteration) — the header read "RWL->SS" instead of the
+    # full "WL->RWL->SS". Reconstruct from the links: the first link's `from`, then each `to`.
+    _links = [str(_l).split("@")[0] for _l in (e2doc.get("chain") or [])]
     _ch = ""
-    for _l in (e2doc.get("chain") or []):
-        _ch = str(_l).split("@")[0]                     # "WL->SS@Zone" -> "WL->SS"
+    if _links:
+        _ch = _links[0].split("->")[0] + "->" + "->".join(l.split("->")[-1] for l in _links)
     add("e1_injected_chain", "string", [f'"{_q(_ch)}"'])
     _days_s = " ".join(f'{str(d.get("day", ""))[:2]}:{d.get("shape", "")}'
                        for d in (e2doc.get("days") or []))
