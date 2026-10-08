@@ -1662,12 +1662,9 @@ f_e1Render() =>
     0
 
 if e1Enabled and barstate.islast
-    // ── THE IP ZONES. ───────────────────────────────────────────────────────────────────────
-    f_e1Render()
-    // ── THE LSZ (trident_v8.pine:368-377): GREEN boxes, NO LABELS, same x-span as the IP zones.
-    // Drawn ON TOP as THIN bright-green strips — the v8's ~5-pip liquidity band — so they read as
-    // distinct GREEN liquidity levels (the reviewers' blocker: the LSZ were invisible behind the
-    // IP zones). Thin enough that the IP zones' category colours still dominate. ─────────────
+    // ── THE LSZ (trident_v8.pine:368-377): GREEN FILLED boxes, NO LABELS, same x-span as the IP
+    // zones. Drawn FIRST (behind) so the IP zones render ON TOP — the IP fill is 75% opaque, so
+    // the category colour dominates the overlap while the green shows at the LSZ's edges. ────
     _nl = array.size(e1_injected_lsz_top)
     if _nl > 0
         for i = 0 to _nl - 1
@@ -1677,14 +1674,13 @@ if e1Enabled and barstate.islast
             _lb = array.get(e1_injected_lsz_bottom, i)
             _lp = array.get(e1_injected_lsz_pri, i)
             _lact = _lp == "ACTIVE"
-            // THE LSZ as BOLD GREEN boxes (border-only, no fill) — unmistakable green liquidity
-            // boxes, NO LABELS, without burying the IP zone fills (a fill at the same price hid
-            // the RES zone). Drawn ON TOP so they are clearly visible (the reviewers' blocker).
             box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
                  xloc = xloc.bar_time,
-                 bgcolor = color(na),
+                 bgcolor = color.new(color.rgb(40,180,80), 60),
                  border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
-                 border_width = 3)
+                 border_width = _lact ? 2 : 1)
+    // ── THE IP ZONES (ON TOP of the LSZ). ───────────────────────────────────────────────────
+    f_e1Render()
     // ── THE OPTION STRIKES (trident_v8.pine:378-388): AMBER horizontal lines + "$X.XB Option
     // Strike Target" labels. Renders the v8's amber layer when the options harvest is UP; an
     // empty array draws nothing (the data is external — never fabricated). ───────────────────

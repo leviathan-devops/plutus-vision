@@ -63,7 +63,7 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = fc332a04acbcb49b0bd1296a7970ecd66e228246f5f52a2a6c1f95e20b542c5c (1836 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = 31decff180872e1654b106158ba7b2cc84fec99725be0cb2997d8b0791e5fda1 (1838 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
 
 ## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
@@ -153,3 +153,15 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   multi-week measurement is data-limited.)
 - HONEST GAPS: the option strikes (harvest 403), the E2 per-day directional accuracy (2/5), and
   the LSZ visibility (they sit at the same prices as the IP zones in this week's data).
+
+## THE REVIEWER APPROVAL (round 10, 2026-10-08)
+- **CanonReviewerO: APPROVED.** It verified EVERY element PRESENT+CORRECT: the 5 IP zones
+  (RED/RED/ORANGE/TEAL, EU names), the color ladder, the label format, the LSZ GREEN layer
+  (bright-green bands), the S/D exclusion, the pair isolation, and the full 2x17 info table
+  (header/Chain/Alt/Days/ZONES+5 rows/TRADES+6 rows). It named the option-strike absence a
+  "DATA gap not a code defect."
+- CanonReviewerP: REJECTED on the LSZ visibility only (it did not recognize the thin green lines;
+  they are now BOLD green boxes) + the data-blocked options.
+- The LSZ now draw as BOLD green boxes (border-only, no fill, width 3) — unmistakable green
+  liquidity boxes, visible without burying the IP fills.
+- v2 = 31decff180872e1654b106158ba7b2cc84fec99725be0cb2997d8b0791e5fda1 (1838 lines). visual = f2b811a1a2cdf95bccd6b380966185d4362ec1b76370e2789ab848bbc629ff11.
