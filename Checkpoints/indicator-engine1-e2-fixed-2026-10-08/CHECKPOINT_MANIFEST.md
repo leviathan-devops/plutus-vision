@@ -209,3 +209,10 @@ fell off the visible chart, and the amber lines were low-contrast under the 30% 
 - Trades rows 4-decimal (§10.9); Alt row = "SHAPE CONF%" (§10.7 row 2).
 - v2 = b25474900171898516b0d249eca87e8e3e87aba8c5279c133a84071040916e04 (1863 lines); render = 0a7da5477e1de9be36f1c75e3441b617bcfcd52705ae769ca4e99c69b4a725e3; battery 11 suites 0 fail.
 - Reviewer verdicts this round: RevH APPROVED (all layers, ZFP recomputes, 4-dec, options, Alt).
+
+## ROUND 16 — the option/LSZ visibility (2026-10-09)
+Reviewer (RevG) read the option count as 6/7 and the LSZ as 2/6 (clustered/blended).
+- The 7 option strikes are now SPREAD across the zone range (the v8's spacing) — all 7 lines +
+  '$X.XB Option Strike Target' labels render, no label overlap.
+- The LSZ bands are bright-green (border width 2, fill 55/60) so they read over the IP zones.
+- v2 = 668e89d79a08e68e35d0bf5a8c15f565e6ab297287b4e14d8a193e47e9178cb9 (1863 lines); render = 60f475ca8e1f8ca17ca22551d6f80b365892d620c8696743eb16330050a24706; battery 11 suites 0 fail.
