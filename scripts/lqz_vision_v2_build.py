@@ -308,7 +308,7 @@ def build_payload() -> tuple[str, str]:
     # `var array<string> e1_injected_tbl_row = array.new<string>()` PER ROW — five identical
     # declarations in the emitted Pine. `add()` initializes on call, so the row list must be
     # built first and emitted in ONE call.
-    _tbl_rows = [(f'{_f(z.get("top"))}-{_f(z.get("bottom"))} '
+    _tbl_rows = [(f'{float(z.get("top")):.4f}-{float(z.get("bottom")):.4f} '
                   f'{z.get("degree_v8", "")} {_calc_zfp(z.get("top"), z.get("bottom"))}%ZFP {z.get("zTir", "T2")}')
                  for z in zones]
     add("e1_injected_tbl_row", "string", [f'"{_q(r)}"' for r in _tbl_rows])
@@ -320,6 +320,14 @@ def build_payload() -> tuple[str, str]:
     if _links:
         _ch = _links[0].split("->")[0] + "->" + "->".join(l.split("->")[-1] for l in _links)
     add("e1_injected_chain", "string", [f'"{_q(_ch)}"'])
+    # THE ALT CHAIN (§10.7 row 2, §6.6 Step 4 / Rule 5). The alternative the E2 engine emits
+    # (the ghost): "SHAPE @ DECISION ZONE CONF%". The earlier table had NO Alt row (rows were
+    # Chain/Days/ZONES...) — a §10.7 violation the reviewer named.
+    _alt = ""
+    for _g in (e2doc.get("ghost") or []):
+        _alt = f'{_g.get("to", "")} @ {_g.get("zone", "")} {int(_f(_g.get("conf", 0)))}%'
+        break
+    add("e1_injected_alt", "string", [f'"{_q(_alt)}"'])
     _days_s = " ".join(f'{str(d.get("day", ""))[:2]}:{d.get("shape", "")}'
                        for d in (e2doc.get("days") or []))
     add("e1_injected_days", "string", [f'"{_q(_days_s)}"'])
