@@ -201,3 +201,11 @@ The reviewer (RevC) named 3 defects; all fixed:
 - LSZ = 6 SPREAD swings (was 6 nearest the spot, clustered). lqz_vision_v2_build.py:337-348.
 - E2 path opt-in (default off — §10.7 has no E2 chart layer; the chain lives in the table).
 - v2 = 8cf1788dccdc67079151d2220dbb3d2350f2d976ba93bc928026401878ba48c4 (1860 lines); render = 0c365497ef9864e8e6fe7208d54e091b155625bb6353263b49e7e328e2009a2a; battery 11 suites 0 fail.
+
+## ROUND 15 — the option-strike visibility fix (2026-10-09)
+Reviewer (RevE) read the option layer as MISSING: the labels sat at the right edge (+3wk) which
+fell off the visible chart, and the amber lines were low-contrast under the 30% fill.
+- The option label now sits at tsMid (§10.7: label.new(tsMid, op, oLbl)) — 6 of 7 strikes visible.
+- Trades rows 4-decimal (§10.9); Alt row = "SHAPE CONF%" (§10.7 row 2).
+- v2 = b25474900171898516b0d249eca87e8e3e87aba8c5279c133a84071040916e04 (1863 lines); render = 0a7da5477e1de9be36f1c75e3441b617bcfcd52705ae769ca4e99c69b4a725e3; battery 11 suites 0 fail.
+- Reviewer verdicts this round: RevH APPROVED (all layers, ZFP recomputes, 4-dec, options, Alt).
