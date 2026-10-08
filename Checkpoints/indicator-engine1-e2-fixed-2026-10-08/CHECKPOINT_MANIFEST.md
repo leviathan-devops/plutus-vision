@@ -132,3 +132,12 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   SL|TP, Days|R:R, L T1 Entry, SL|TP, Days|R:R), a LIGHT derivation from the zone map (Engine 3
   is scoped out by the pin, so these are display rows, not the full Engine-3 construction).
 - v2 = 04e8f63372811eb20ed8d9f31512bac75195156be5481c67ec83d87330562155 (1834 lines). visual = 75dbb55348f4bed3a4d3b918ddcd3fbee3a9cda43b9b18f0a58489dfade74b58.
+
+## THE FINAL RENDER (round 9)
+- The IP fill opacity raised to 25 (75% opaque) so the RED/ORANGE/TEAL category colour dominates
+  the LSZ green behind (the reviewers' "Upper IP Resistance reads green" blocker). The LSZ draw
+  behind the IP zones.
+- THE COMPLETE RENDER: 5 IP zones (RED Key IP Resistance Band + Upper IP Resistance, ORANGE
+  Equilibrium Zone, TEAL Mid-Range Support + IP Support Floor) with "<name> | <degree> | <zfp>% ZFP"
+  labels; the 6 green LSZ; the option-strike layer (wired, empty on the blocked week); the full
+  2x17 table (header/Chain/Days/ZONES/TRADES); the E2 path (WL->RWL->SS).

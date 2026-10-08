@@ -2641,3 +2641,34 @@ the right ZFP — the divergence is WHY the ZFP was flipped width↔failure-prob
 module, ONE docstring, and a test that pins the FORMULA IDENTITY (not just a value) is the fix for
 this class. The tests that crashed were the authority: they were written against the
 failure-probability contract, and the tree had regressed away from it.
+
+## D-2026-10-08b · THE E2 + RENDER FIDELITY (rounds 5-9)
+
+**F-6 · THE E2 CHAIN WAS DEGENERATE.** The chain was `WL->SS` with 4 identical SS days at the
+resistance band. THREE mechanisms: (a) `classify`'s `_ztol=0.03` is a DXY constant — on EURUSD
+(~1.12) it made the spot "at" EVERY zone (including the floor), anchoring the classify wrong
+(`e2_engine.py:175`); (b) the walk flipped direction on the classify's FIRST shape when it was a
+rejection (WL is in `_REVERSALS`), sending a WL-at-the-resistance UP to the ceiling
+(`e2_engine.py:381`); (c) range shapes (SS) anchored at a boundary, not the mid. FIXED: pair-relative
+`_ztol`; the flip applies only to shapes the walk REACHED; SS/R/WLS anchor at the mid zone. RESULT:
+EURUSD-2026-10-05 walks `WL->RWL->SS` (drop to the support, recover into the range).
+
+**F-7 · THE YELLOW BOXES (the operator's question).** The E2 day tags (`label.style_label_down`)
+passed `color = color(na)`, which the engine rendered as the DEFAULT GOLD background. FIXED:
+`color.new(color.black, 100)`.
+
+**F-8 · THE RENDER LAYERS (the reviewers' blockers).** (a) the 2×17 info table was DROPPED —
+restored (`counts.tables:1`); (b) the 6 LSZ green boxes were absent — restored (behind the IP
+zones); (c) the option-strike layer was absent — WIRED (amber lines + `$X.XB Option Strike Target`
+labels), proven with 3 injected test strikes (labels 10->13, lines 10->13), then the test data
+reverted (the real harvest is 403-blocked); (d) the TRADES rows 10-16 were absent — populated from
+the zone map; (e) the zone names were DXY names on a EURUSD chart — made PAIR-AWARE (dxy_zNm vs
+eu_zNm); (f) the IP fill (opacity 70) let the LSZ green tint the RES zones — raised to 25 (75%
+opaque) so the category colour dominates.
+
+**THE FIX CLASS (the lesson).** EVERY defect this session was the SAME class: a DXY-calibrated
+ABSOLUTE CONSTANT applied to a pair whose price is ~1.12. `_MIN_AMP=0.07` (the E2 amplitude),
+`_hw=0.02` (the box width), the extreme bonus's `wick >= 0.15`, `_ztol=0.03` (the touch tolerance),
+the LSZ `+0.05`. Each is correct at DXY ~100 and 100x wrong at EURUSD ~1.12. THE LAW: a threshold
+in PRICE UNITS must be a FRACTION of price, never an absolute. (The canon states its thresholds in
+DXY points because DXY is its worked example; the indicator is 4-pair.)

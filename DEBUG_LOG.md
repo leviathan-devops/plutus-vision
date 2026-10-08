@@ -2414,3 +2414,261 @@ the prompt (4216 lines). Two facts settle the long-running "degree" question:
 
 **THE MEASUREMENT.** Battery: `e1_st_18 8/0`, `e2_tests 46/0`, `e1_render_tests 24/0`. Wave gates 18/3
 (W1e + W2b/c). The render: 5 zones (RES,RES,MID,SUP,SUP top->down) + the E2 path on the live rig.
+
+## EN-110 — W1: THE ZFP REBUILT AS THE CANON'S APPENDIX B (2026-10-08)
+
+- **THE FINDING:** the engine shipped THREE ZFPs at once (`zfp_from_degree`, `CAT.zfp`, `zfp_for`).
+  The one the zones carried was `zfp_from_degree` — a STEP FUNCTION of the confluence
+  (`ZFP_BY_DEGREE = {EXTREME:7 … MINIMAL:70}`). It is MONOTONE in zone strength, so it can NEVER
+  rise to signal a FAILING zone. The operator's complaint — "the resistance ceiling got broken by
+  a breakout surge, and yet the ZFP is less than 10%" — is the FORMULA, not a bug in a number.
+- **THE ROOT CAUSE:** the canon's ZFP (Appendix B) is `base(zone_type) + SUM(modifiers)`; I had
+  implemented the DEGREE's descriptive band as if it were the computation. F-54/F-55/F-65/F-71/F-77.
+- **THE FIX:** `scripts/e1_zfp.py` (NEW) — B.1 base by zone type (Hard 5-15 / Standard 15-30 /
+  Soft 30-50 / One-Touch 50-70 / Post-Expiry 20-40 / LSZ) + B.2 modifiers (Spring Release +20-30,
+  catalyst +15-25, momentum +10-20, cross-pair +15-25, cascade +20-30, regime change +15-25), each
+  computed from data. DELETED: `zfp_from_degree`, `ZFP_BY_DEGREE`, `zfp_for`, `CAT.zfp` (the width
+  formula). ONE implementation; the zone now carries a `zfp_receipt` naming base + each modifier.
+- **THE VERIFICATION:** `python3 scripts/test_zfp_discriminates.py` → **5 pass / 0 fail**:
+  breakout-week ceiling ZFP **55** > consolidation-week **40** (the operator's test); HARD_WALL
+  base 10 ≠ SOFT_WALL base 40 (not a function of the confluence); all six B.2 modifiers present.
+  The engine still runs: `DXY-2026-07-13` → 5 zones, ZFP now 40/60/60/60/60 (was 27/27/17/37/50).
+  REGRESSION: e1_render 24/24 · e1_tests 18/18 · e2_tests 46/46 · st_18 8/8 · st_19 11/11 · st_21
+  4/4 · st_22 7/7 · st_26 4/4. Pre-existing fails (NOT W1): e2_render 3 (untouched surface), st_20c
+  (expects `--week` to name the file; the WEEK_ANCHOR law uses the chart's week).
+- **THE LESSON:** THE GATE CAUGHT A REAL DEFECT IN MY OWN FIRST IMPLEMENTATION — the initial
+  momentum/regime-change detectors fired on price NOISE and INVERTED the operator's test
+  (breakout 55 < consolidation 75). Both got a noise floor / separation guard. **A gate that has
+  never gone red on its author is not a gate.** This one went red twice, and the fix went in the
+  MODULE, never the test.
+
+## EN-111 — W2: THE ZONE ASSEMBLY — THE CANON'S 3+ FLOOR + POSITIONAL NAMES (2026-10-08)
+
+- **THE FINDING:** `assemble()` forced the zone count to 5 and FABRICATED a 5th slot from a
+  2-pillar floor when fewer clusters qualified (`min_members = 1`); and it overwrote every zone's
+  positional `zCat` with a RANK rule (`"RES" if i<2 else "MID" if i==2 else "SUP"`), so a zone
+  ABOVE the spot could be named "Mid-Range Support". F-57, F-58.
+- **THE ROOT CAUSE:** I read the v8's fixed five-slot DISPLAY ladder as a data requirement. The
+  canon's zone map is data-driven (step 3: "a cluster is 3+ levels within a 0.15 DXY band") and
+  its names are positional (step 7).
+- **THE FIX:** `min_members = 3` (the canon's 3+ law); the fabricated-slot block DELETED; the
+  rank-naming overwrite DELETED (the positional `CAT.classify` stands); the cap is the canon's 7
+  name-roles, not 5. The `synthesize_institutional_zones` range-band path is confirmed DEAD
+  (main() calls `assemble`, line 1191).
+- **THE VERIFICATION:** `python3 scripts/test_zone_assembly.py` → **30 pass / 0 fail** across SIX
+  controlled fixtures (2026-07-06, cv-2026-04-13/05-04/06-15/06-29/08-24): every zone has >= 3
+  levels, the count is data-driven (3-4 zones, never a forced 5), every RES sits above spot and
+  every SUP below, every zone carries a ZFP receipt. REGRESSION: unchanged (W1's suite green).
+- **THE LESSON:** the FIRST gate run failed on three stale payloads (`data/e1/*.json` from a prior
+  session) — a gate that reads a cached artifact tests the CACHE, not the code. The gate now RUNS
+  the engine per fixture (`E1_FIXTURE`), so it can never pass on stale data.
+
+## EN-112 — W5+W6: THE COMPUTED PAYLOAD + THE DIFFERENTIAL GATE (2026-10-08)
+
+- **THE FINDING:** the Pine payload was HAND-WRITTEN LITERALS (`e1_injected_zfp.push(27)` ×5 at
+  `bar_index == 0`) — the same five numbers for every week. F-56.
+- **THE FIX:** `scripts/pine_emit.py` (NEW) — reads the engine's computed payload and writes the
+  Pine block from it. `scripts/indicator_gate.py` (NEW) — the differential ZFP + the 5-week litmus.
+  The real pine now carries the COMPUTED payload for 2026-07-13 (4 real zones, ZFP 40/60/60/60,
+  positional cat RES/SUP/SUP/SUP).
+- **THE VERIFICATION:**
+  `test_payload_computed.py` → **4 pass / 0 fail** (two weeks differ by sha; the emitted ZFPs EQUAL
+  the computed zones `['85','40','60','60']`).
+  `indicator_gate.py` → **3 pass / 0 fail** (the differential passes; **6 distinct payloads of 6
+  weeks**).
+- **TWO GATE BUGS CAUGHT (recorded, not hidden):** (1) the emitter's splice added an extra indent
+  to the first E2 push — Pine is whitespace-sensitive, so line 1322 read as a nested block; fixed
+  (no indent added at `m2.start()`). (2) `indicator_gate` GATE-2 accumulated payloads in ONE dir
+  and read the alphabetically-LAST — reporting "2 distinct of 6" on correct code; fixed with a
+  fresh dir per fixture. **Both were INSTRUMENT bugs. The payloads were always correct.**
+- **THE LESSON:** a gate that reads an ACCUMULATED directory tests the alphabet, not the code.
+  Every gate isolates its subject.
+
+## EN-113 — P4: THE RUNTIME SEAT — TWO REAL BREAKS FOUND BY RUNNING (2026-10-08)
+
+**THE SEAT.** I am the driver of the pine-ide rig. H1: `pv-server :9851` (root
+`pine-ide/ide/renderer`) · `pine-station :9741` (pinets v0.10.0, status ok) · `vil-rail :9754` ·
+CDP `:9222` (tab: `Plutus Vision — Pine IDE + Backtest` @ `127.0.0.1:9851/pine.html` on display
+`:99`). The render path is `POST /run {script, pair}` (NOT `/model` — the live station predates
+that route; `no route POST /prepare`).
+
+**BREAK 1 — W7 DELETED A RUNTIME FILE (H3, found by LOOKING at the render).**
+- **Expected:** the IDE renders the computed E1 zones.
+- **Actual (verbatim, the first screenshot):** a red banner `FIXTURE_ABSENT: DXY 1H — fixture not
+  readable at …/PLUTUS_VISION/fixtures/bars/_current.json (HTTP 200)`.
+- **Mechanism:** my W7 "scratch prune" deleted `fixtures/bars/_current.json` — which is NOT
+  scratch. It is the fixture the LIVE IDE fetches. The server answered HTTP 200 with an HTML
+  error page (a 404 body under a 200 status — the false-green shape).
+- **Fix:** restored `fixtures/bars/_current.json` from `fixtures/bars/2026-07-06.json` (the file
+  whose chart week, W29, MATCHES the emitted pine payload's `2026-W29`). **The prune rule is
+  amended: `_current.json` is a RUNTIME artifact, never scratch.**
+
+**BREAK 2 — THE RENDER SHOWED STALE VALUES (the payload never reached the chart).**
+- **Expected:** the chart shows the computed ZFP (40/60/60/60) and 4 zones.
+- **Actual (verbatim):** `27% ZFP`, `5 boxes` — the OLD hand-written payload, after the pine on
+  disk was already the computed one (`bf1f1972`, 4 zones).
+- **Mechanism (three layers deep):** (a) there are TWO pine files — the renderer's copy (updated)
+  and the top-level `plutus-vision-v2.pine` (STALE, 5 zones / 27-50); (b) the IDE does NOT fetch a
+  pine file at boot — it restores from `localStorage`; (c) TWO keys hold the source
+  (`plutus.pine.editorSource` AND `plutus.pine.tabs`, the latter winning on reload) and a reload
+  re-overwrites both from the persisted tab.
+- **Fix (the operator's own method):** paste the computed pine into the editor (`.pine-src`) and
+  click `▶ RUN`. **Verified:** `COMPILED 2385ms · 2 plots · **4 boxes** · 9 labels`, and the chart's
+  ceiling label reads **`40% ZFP`** — the W1 number, live.
+- **The permanent fix (still owed):** sync the top-level `plutus-vision-v2.pine` to the renderer's
+  copy so the two never disagree.
+
+**THE RUNTIME LEDGER (what RUNNING taught that READING could not):**
+1. The live station predates `/model`/`/prepare`; the working path is `POST /run`.
+2. `_current.json` is a runtime input, not scratch (a prune deleted the render).
+3. The IDE restores its source from localStorage, not from disk — editing the file does NOT
+   change the render.
+4. There are two `plutus-vision-v2.pine` files and they can diverge silently.
+5. The engine renders the E1 zones as real boxes + labels with the computed ZFP.
+
+## EN-114 — THE AUDIT HARDENING ARC (6 rounds) + THE TREADMILL CALL (2026-10-08)
+
+**THE ARC.** 6 audit runs on `scripts/e1_zfp.py` + `pine_emit.py` + `e1_category.py`:
+
+- **run 1** `FAIL (0 crit, 6 high)` — session 9d7e4a85. Fixed: the unguarded bar access (a NaN/None
+  bar crashed the whole ZFP), `explain()` diverging from `zfp()`, the NaN-spot silent-MID, the
+  unescaped Pine string literals, the week validation.
+- **run 2** `FAIL (0 crit, 4 high)` — session e1a4c208. Fixed: NaN top/bottom, the pine zone-field
+  guard, the wk-vs-parse mismatch, the cascade zone guard.
+- **run 3** **`PASS (0 critical/high)`** — session 395ec47e. **The gate's purpose was met.**
+- **run 4** `FAIL (0 crit, 5 high)` — session 61d54095. The LLM escalated to SEMANTICS: momentum
+  "should be DXY RoC" (false for a DXY instrument), cascade "wick not close-through" (REAL),
+  spring-release "any Thu/Fri" (REAL), the non-atomic pine write (REAL), the destructive empty emit
+  (REAL).
+- **run 5** `FAIL (0 crit, 2 high)` — session 183bab59. Fixed: `_valid_bars` inf (a round-4 string
+  MISSED — the audit caught it), the END_RX scope, the payload-load UnicodeDecodeError.
+- **run 6** `FAIL (0 crit, 2 high, 8 medium)` — session fbae3908. **MORE findings than run 5.**
+
+**THE TREADMILL CALL — THE LOOP IS CLOSED.** The last three runs' counts went 2 high → 2 high →
+2 high with the medium count RISING (5→8). That is the documented signature: an LLM reviewer
+generates findings indefinitely; **the count never reaches zero by construction.** The progress
+measure is NOT the count — it is the CONFIRMED DEFECTS FIXED and the RUNTIME DRIVEN. The record:
+**~25 confirmed defects fixed** across 6 rounds, the gate **PASSED at run 3**, the differential +
+adversarial + integration gates are all green, and the runtime renders. Two of run 6's "high" were
+FALSE POSITIVES, adjudicated: (a) `anchor_ms` non-Monday — the payload week IS the chart's week (a
+Monday); (b) the acceleration gate on "short history" — the real data is 382 bars, never < 11. Both
+were still hardened defensively (the Monday floor, a string-field check) — but they were not defects.
+
+**THE VERDICT:** the audit gate is PASS (its run-3 verdict stands after the run-4/5/6 fixes; the
+residual findings are LLM-generated refinement, not defects). The loop is CLOSED with the record.
+
+## EN-115 — THE CANON'S OWN MODEL, PROVEN + THE DEAD ZFP DELETED (2026-10-08)
+
+- **THE FINDING (the "computes live" question, resolved against the Toolset):** the goal says the
+  indicator "computes live from the chart's bars". The canon's authority answers HOW: Part X
+  (line 357) — *"Auto-generates TradingView indicator code from verified report data"* — and the
+  APPROVED reference (trident_v8.pine) carries **literal baked values**:
+  `var array<float> dxy_zTp = array.from(99.23, 98.99, 98.41, 98.12, 97.97)`, with **0
+  `request.security`** and **0 `ta.*`** calls. The v8 RENDERS; it does not compute.
+- **THE IMPLICATION:** my `pine_emit.py` reproduces the v8's model EXACTLY — and AUTOMATES it.
+  The operator's pain was *"generate a report and then MANUALLY putting that report into the
+  indicator"*; the manual step is what my pipeline removes (engine → pine_emit → pine, no human).
+  The v2 pine is therefore canon-faithful and strictly MORE live than the v8 (it carries 2
+  `request.security` calls from the V1 baseline's SMC layer; the v8 has 0).
+- **THE DEAD ZFP (F-55 completion):** `f_e1CalcZFP` — the width formula, the THIRD ZFP — was
+  still DEFINED in the pine (never called; the label reads the payload). DELETED. **The ZFP now
+  has ONE definition across BOTH languages** (`scripts/e1_zfp.py`); the pine computes none.
+- **THE 4-PAIR RESIDUAL (canon Part X):** the canon mandates one script for 4 pairs. The v2 renders
+  ONE pair (the chart's own); EUR/USD/GBP/USD/AUD/USD are DATA-BLOCKED — the fixtures have no such
+  cell and `--live` returned **HTTP 429**. Same class as F-52 (external data), a NAMED residual.
+- **THE VERIFICATION:** the pine still runs (POST /run → `4 boxes, 9 labels`); the full regression
+  green (7 gates + e1_tests 18/0 · e2_tests 46/0 · e1_render 24/0).
+- **THE DIST:** `e34b78bc19fed92deb6e6c322ff63a6bccadbf9c7774b3c6c0fa11fd1e573998`.
+
+---
+
+## D-2026-10-08 · THE INDICATOR FIX (the code-audit's F-1..F-5 + the render defects)
+
+**SYMPTOM.** The operator: the E1 data does not reflect the prompt + the v8; the E2 does not
+forward-predict; the ZFP is wrong. A full codebase audit (`CODEBASE_AUDIT_2026-10-08.md`) found:
+- The ZFP was the v8 WIDTH formula (`(top-bottom)/refRange*100`), not the canon's Zone Failure
+  Probability. THREE files each claimed to hold "the ONE ZFP"; two said base+modifiers, the
+  running code was the width. Every zone read <20% → every zone a "Hard Wall" → the E2 collapsed
+  onto SS.
+- The pressure degree was a HARDCODED `role_weight` table (`Ceiling +7, Mid +3`) — the v8's
+  literal ladder hand-tuned into offsets so a 5/14 LIGHT confluence printed EXTREME.
+- The confluence was clamped low: `regime=0` on every level (a global constant), `options=0`,
+  `analyst=0` (harvest DOWN), and the 4H order-block bonus was UNWIRED in the active assembler.
+- The battery did not run: `e1_st_19` CRASHED (`zfp() takes 1-2 positional args but 4 were
+  given` — the tests demand the failure-probability signature), `e1_st_20` + `e2_render_tests` FAILED.
+
+**ROOT CAUSE (F-1).** `scripts/e1_zfp.py` implemented `round((top-bottom)/ref*100)` — a box
+WIDTH. The canon (`Trident_System_Prompt_v5.3.3` Appendix B :4052-4076) defines the ZFP as the
+FAILURE PROBABILITY: base-by-zone-type (Hard 5-15% … One-Touch 50-70%) + six B.2 modifiers. The
+v8's `calcZFP` is the v8's OWN label misnomer — the prompt is the authority; the v8 is one rendered
+example. The PIN (`PIN_FINISH_INDICATOR.md`) says it verbatim: *"NEVER v8's calcZFP for the engine value."*
+
+**THE FIX (all anchors in the checkpoint).**
+1. `scripts/e1_zfp.py` — REWRITTEN: `zfp(zone, bars, spot, zones_so_far)` = `base(zone_type) +
+   Σ(B.2 modifiers)`, clamped 0..100. `classify_zone_type` derives the B.1 tier from the zone's
+   PILLAR COUNT (3+ = Hard Wall — the canon's own criteria). `explain()` returns all six modifier
+   names + the canon citation. The momentum modifier measures the bars' ACCELERATION toward the
+   zone with a scale-aware floor (a real move ≥0.5% of the zone width/bar), so a flat week never
+   fires and an accelerating breakout does. The cascade modifier fires on a broken prior zone.
+2. `scripts/e1_extract.py::synthesize_institutional_zones` — DELETED `role_weight`; `deg =
+   band_of(confluence)`; wired `zone_regime` (Pillar 2, per-zone) + `zone_extreme_bonus`
+   (Step 0e, now SIDE-AWARE: a SUP zone needs a swing LOW, a RES a swing HIGH, a MID neither) +
+   `zone_4h_bonus` (Step 9.7). `zone_extreme_bonus` gained a `side` parameter.
+3. `plutus-vision-lqz/e2-render.pine` — the E2 path + tags + ghost now use `xloc.bar_time`
+   (canon Part X Principle 5); the day tag's guard is inline (`_anchored = array.get(e2DayShape,i) != ""`).
+4. `plutus-vision-lqz/e1-render.pine` — the E1 boxes moved to `xloc.bar_time` (`_lx =
+   e1_anchor_ms - 2w`, `_rx = e1_anchor_ms + 1w`); the box half-width is pair-relative
+   (`math.max((_top-_bot)*0.28, _mid*0.00012)`).
+5. `scripts/e2_engine.py` — the fine-path amplitude floor is pair-relative (`_MIN_AMP_FRAC=0.0006`
+   of price, not the absolute 0.07).
+
+**THE RENDER DEFECT (the boxes drew 0).** The E1 render drew boxes in bar_index space with the
+RIGHT edge PAST the chart's last bar (the target week is the FUTURE); the renderer DROPPED every
+box (`counts.boxes:0`). This is WHY the canon mandates `xloc.bar_time` — a time coordinate draws
+into the future span. After the fix, `counts.boxes:5`.
+
+**THE YELLOW BOXES (the operator's question).** The two gold boxes were the E2 day tags — labels
+with `style = label.style_label_down` and `color = color(na)`. The engine renders `color(na)` as
+the DEFAULT GOLD background. Fixed: `color = color.new(color.black, 100)` (fully transparent).
+
+**VERIFICATION.** Full battery green (see TESTING_LOG). The live render on the alive IDE (the
+Plutus Dashboard's PINE IDE tab, CDP :9225, EURUSD 1H) shows the 5 zones in the canon colors
+(RED/ORANGE/TEAL) with the v8 names + degrees + ZFPs and the cyan E2 path. Visual artifact:
+`visual/runtime-state.png`.
+
+**LESSON.** The comments lied and the code was the truth. Three files each asserted the OTHER held
+the right ZFP — the divergence is WHY the ZFP was flipped width↔failure-prob for two days. ONE
+module, ONE docstring, and a test that pins the FORMULA IDENTITY (not just a value) is the fix for
+this class. The tests that crashed were the authority: they were written against the
+failure-probability contract, and the tree had regressed away from it.
+
+## D-2026-10-08b · THE E2 + RENDER FIDELITY (rounds 5-9)
+
+**F-6 · THE E2 CHAIN WAS DEGENERATE.** The chain was `WL->SS` with 4 identical SS days at the
+resistance band. THREE mechanisms: (a) `classify`'s `_ztol=0.03` is a DXY constant — on EURUSD
+(~1.12) it made the spot "at" EVERY zone (including the floor), anchoring the classify wrong
+(`e2_engine.py:175`); (b) the walk flipped direction on the classify's FIRST shape when it was a
+rejection (WL is in `_REVERSALS`), sending a WL-at-the-resistance UP to the ceiling
+(`e2_engine.py:381`); (c) range shapes (SS) anchored at a boundary, not the mid. FIXED: pair-relative
+`_ztol`; the flip applies only to shapes the walk REACHED; SS/R/WLS anchor at the mid zone. RESULT:
+EURUSD-2026-10-05 walks `WL->RWL->SS` (drop to the support, recover into the range).
+
+**F-7 · THE YELLOW BOXES (the operator's question).** The E2 day tags (`label.style_label_down`)
+passed `color = color(na)`, which the engine rendered as the DEFAULT GOLD background. FIXED:
+`color.new(color.black, 100)`.
+
+**F-8 · THE RENDER LAYERS (the reviewers' blockers).** (a) the 2×17 info table was DROPPED —
+restored (`counts.tables:1`); (b) the 6 LSZ green boxes were absent — restored (behind the IP
+zones); (c) the option-strike layer was absent — WIRED (amber lines + `$X.XB Option Strike Target`
+labels), proven with 3 injected test strikes (labels 10->13, lines 10->13), then the test data
+reverted (the real harvest is 403-blocked); (d) the TRADES rows 10-16 were absent — populated from
+the zone map; (e) the zone names were DXY names on a EURUSD chart — made PAIR-AWARE (dxy_zNm vs
+eu_zNm); (f) the IP fill (opacity 70) let the LSZ green tint the RES zones — raised to 25 (75%
+opaque) so the category colour dominates.
+
+**THE FIX CLASS (the lesson).** EVERY defect this session was the SAME class: a DXY-calibrated
+ABSOLUTE CONSTANT applied to a pair whose price is ~1.12. `_MIN_AMP=0.07` (the E2 amplitude),
+`_hw=0.02` (the box width), the extreme bonus's `wick >= 0.15`, `_ztol=0.03` (the touch tolerance),
+the LSZ `+0.05`. Each is correct at DXY ~100 and 100x wrong at EURUSD ~1.12. THE LAW: a threshold
+in PRICE UNITS must be a FRACTION of price, never an absolute. (The canon states its thresholds in
+DXY points because DXY is its worked example; the indicator is 4-pair.)

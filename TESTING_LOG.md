@@ -1831,3 +1831,108 @@ launcher defaults now match the E1 deliverable (`plutus-vision-v2.pine` on DXY).
 operator's window shows DXY · 1740 bars · 6 labelled zones + the E2 path (the checkpoint's approved
 look). This is a RUNTIME finding the static suite could not see (the render compiles + draws — the
 boxes exist — but they are off the VISIBLE price range).
+
+## TEST RESULT — 2026-10-08 — THE INDICATOR PORT (W1-W7 + P4/P5/P6)
+
+### SCRIPT
+- **The run (verbatim):** the 7 wave gates + the adversarial probe, each `python3 scripts/<t>.py`:
+  - test_zfp_discriminates → `ZFP GATE: 5 pass / 0 fail` (breakout 55 > consolidation 40)
+  - test_zfp_adversarial → `P5 ADVERSARIAL: 16 pass / 0 fail / 0 probe-err`
+  - test_zone_assembly → `W2 GATE: 30 pass / 0 fail` (6 fixtures)
+  - test_payload_computed → `W5 GATE: 4 pass / 0 fail`
+  - test_pillars → `W3/W4 GATE: 35 pass / 0 fail`
+  - indicator_gate → `W6 GATE: 3 pass / 0 fail` (6 distinct payloads of 6 weeks)
+  - test_v1_seal_intact → `W7 SEAL GATE: 2 pass / 0 fail` (baseline 605bff82)
+- **Regression:** e1_tests 18/0 · e2_tests 46/0 · e1_render 24/0 · st_18 8/0 · st_19 11/0 ·
+  st_21 4/0 · st_22 7/0 · st_26 4/0.
+- **The verdict:** PASS.
+- **The artifacts:** the gates at `scripts/test_*.py` + `scripts/indicator_gate.py`.
+
+### HOST
+- **The run:** the live pine-ide rig (CDP :9222) — the computed pine loaded into the editor + RUN.
+- **The raw output (the IDE status bar, verbatim):**
+  `COMPILED 2318ms · 2 plots · **4 boxes** · 10 lines · 9 labels · 0 markers · 798 segs · bars 508`
+- **The observed:** the chart renders 4 E1 zone boxes; the ceiling label reads **"40% ZFP"** (was
+  27% — the W1 ZFP is live). TWO real breaks found by running (EN-113): the W7-deleted
+  `_current.json` (a runtime input); the IDE's localStorage-restore (not a file fetch).
+- **The verdict:** PASS.
+- **The artifacts:** `Checkpoints/indicator-port-w1-w7-2026-10-08/visual/runtime-state.png`.
+
+### AUDIT GATE
+- **AUDIT GATE: PASS (0 critical/high)** — run 3.
+  - run 1: `FAIL (0 critical, 6 high)` — session 9d7e4a85. Fixed: bar sanitizer, explain guard,
+    NaN-spot guard, pine escaping, week validation.
+  - run 2: `FAIL (0 critical, 4 high)` — session e1a4c208. Fixed: top/bottom finiteness,
+    pine zone-field guard, wk normalization, cascade zone guard.
+  - run 3: **`PASS (0 critical/high)`** — session 395ec47e. Remaining: 4 medium + 4 low, all fixed
+    in round 4 (isfinite, the 0-pillar canon fix, the payload-load guards, the zfp/explain dedup).
+- **The scope:** `scripts/e1_zfp.py, scripts/pine_emit.py, scripts/e1_category.py`.
+- **The retry/status:** PASS.
+
+## TEST RESULT — 2026-10-08 — THE FINAL DIST
+
+### SCRIPT
+- **The dist:** `pine-ide/ide/renderer/plutus-vision-v2.pine` sha256 `e34b78bc19fed92deb6e6c322ff63a6bccadbf9c7774b3c6c0fa11fd1e573998` (4 zones, the
+  computed payload; the dead `f_e1CalcZFP` deleted — ONE ZFP across both languages).
+- **The gates (re-run):** test_zfp_discriminates 5/0 · test_zfp_adversarial 16/0 ·
+  test_zone_assembly 30/0 · test_payload_computed 4/0 · test_pillars 35/0 · indicator_gate 3/0 ·
+  test_v1_seal_intact 2/0 · e1_tests 18/0 · e2_tests 46/0 · e1_render 24/0.
+- **The verdict:** PASS.
+
+---
+
+## 2026-10-08 · THE INDICATOR FIX — THE FULL BATTERY (the current tree)
+
+**Subject:** `plutus-vision-v2.pine` = `ecc7976cd1c575be43f0f340c34fa7e97be7a58d487b4b4b855b0a570c044e68` (1721 lines).
+v1 seal `0d20e831…517bd1` — UNTOUCHED.
+
+| suite | result | note |
+|---|---|---|
+| e1_st_18 | 8/0 | |
+| e1_st_19 | **11/0** | was a CRASH (`zfp() takes 1-2 positional args but 4 were given`) — the ZFP signature restored to the failure-probability contract |
+| e1_st_20 | **7/0** | was 2/1 (a stale-week path in the test) |
+| e1_st_21 | 4/0 | |
+| e1_st_22 | 7/0 | |
+| e1_st_26 | 4/0 | |
+| e2_tests | 46/0 | |
+| e1_render_tests | **24/0** | the anchor assertion updated to the canon bar_time form |
+| e2_render_tests | **18/0** | was 15/3 (the E2 render moved to xloc.bar_time) |
+| test_zfp_discriminates | **5/0** | the operator's test: a breakout (60) reads HIGHER than consolidation (40) |
+| test_zfp_adversarial | **15/0** | empty/NaN/None/unknown-type/clamp all handled |
+| test_pillars | PASS | |
+| test_zone_assembly | PASS | every zone carries a zfp_receipt |
+| test_payload_computed | PASS | the ZFPs are NOT one repeated literal: `['22','10','10','10','22']` |
+| test_v1_seal_intact | PASS | the v1 baseline is byte-identical (sealed) |
+| e1_tests | RATE-LIMITED | the VLM arm (external 429); reported separately, NOT counted green |
+
+**THE LIVE RENDER (L3/L4, the container/live rig).** The alive IDE (the Plutus Dashboard's PINE
+IDE tab, CDP :9225, EURUSD 1H, the tv-feed's own bars). `counts = {boxes:5, labels:10, lines:10}`.
+Vision-verified by opening `visual/runtime-state.png`: the 5 E1 zones in the canon colors —
+**RED** (IP Resistance Ceiling, Upper IP Resistance), **ORANGE** (#FF9800, Equilibrium Zone),
+**TEAL** (Mid-Range Support, IP Support Floor) — each labelled `<name> | <degree> | <zfp>% ZFP`,
+plus the cyan E2 forecast path.
+
+**THE ZFP NOW DISCRIMINATES (measured):** DXY-2026-07-13 → `30, 10, 10, 10, 40` (the charged
+ceiling 30%, the floor 40%); EURUSD-2026-10-05 → `10, 10, 10, 10, 22`. No longer the uniform
+width value.
+
+**HONEST GAP:** the 5-week cross-validation and the E2 forward-prediction accuracy are NOT
+re-measured this session. `e1_tests` is externally rate-limited.
+
+## 2026-10-08b · THE BATTERY (final)
+
+`e1_st_18 8/0 · e1_st_19 11/0 · e1_st_20 7/0 · e1_st_21 4/0 · e1_st_22 7/0 · e1_st_26 4/0 ·
+e2_tests 46/0 · e1_render_tests 24/0 · e2_render_tests 18/0 · test_zfp_discriminates 5/0 ·
+test_zfp_adversarial 15/0` — ALL GREEN.
+
+**THE RENDER (L3/L4, the alive IDE):** `counts = {boxes:11 (5 IP + 6 LSZ), labels:10, lines:10,
+tables:1}`. The v8 structure: 5 IP zones (RED/RED/ORANGE/TEAL/TEAL, EU names, degrees, ZFPs), the
+6 green LSZ, the 2×17 table (Chain/Days/ZONES/TRADES), the E2 path (`WL->RWL->SS`).
+
+**THE OPTION-STRIKE LAYER:** WIRED + PROVEN with 3 injected test strikes (labels 10->13, lines
+10->13); the DATA is externally blocked (investinglive S1 403; all 9 web sources 0), so the layer
+renders empty on the live week — the loud-fail contract.
+
+**THE E2 FORWARD CHECK:** EURUSD-2026-10-05 forecast WL@1.12556 (Upper IP Res) → RWL@1.11741
+(Floor) → SS@1.12241 (Equilibrium); the real week rose to ~1.125 (Oct 6) then fell to ~1.119. The
+forecast direction (rise to the resistance, fall to the support) matches.

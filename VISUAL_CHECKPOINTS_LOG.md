@@ -108,3 +108,12 @@ constant. Without the control, a scene read of `0` would be indistinguishable fr
   validation runs.
 - The named-refusal states (a dead VLM, an empty payload, the LSZ reference) — one frame each.
 - The BACKTEST-tab state (the room + the E1 overlay) — captured separately (a distinct surface).
+
+## 2026-10-08 · indicator-engine1-e2-fixed-2026-10-08
+- image: Checkpoints/indicator-engine1-e2-fixed-2026-10-08/visual/runtime-state.png
+- sha256: 2b1ace7f8f437a74a647eb22a87f8c605db3dabfb4b55679a9c80fce5c024ad3
+- state: the LIVE IDE render (Plutus Dashboard PINE IDE, EURUSD 1H) — the 5 E1 IP zones in the canon colors (RED ceiling/upper, ORANGE #FF9800 equilibrium, TEAL mid/floor) each labelled "<name> | <degree> | <zfp>% ZFP", plus the cyan E2 forecast path. The day-tag gold boxes removed.
+
+## 2026-10-08 · indicator-engine1-e2-fixed-2026-10-08 (final)
+- image: Checkpoints/indicator-engine1-e2-fixed-2026-10-08/visual/runtime-state.png
+- state: the LIVE IDE render (EURUSD 1H) — the 5 E1 IP zones in the canon colors (RED Key IP Resistance Band + Upper IP Resistance, ORANGE #FF9800 Equilibrium Zone, TEAL Mid-Range Support + IP Support Floor), each labelled "<name> | <degree> | <zfp>% ZFP"; the 6 green LSZ strips; the option-strike layer (wired; empty when the harvest is DOWN); the full 2x17 info table (header / Chain RWL->SS / Days / ZONES + 5 rows / TRADES + 6 rows); and the E2 cyan forecast path (WL->RWL->SS: a drop to the support then a recovery into the range).

@@ -1918,3 +1918,21 @@ width value.
 
 **HONEST GAP:** the 5-week cross-validation and the E2 forward-prediction accuracy are NOT
 re-measured this session. `e1_tests` is externally rate-limited.
+
+## 2026-10-08b · THE BATTERY (final)
+
+`e1_st_18 8/0 · e1_st_19 11/0 · e1_st_20 7/0 · e1_st_21 4/0 · e1_st_22 7/0 · e1_st_26 4/0 ·
+e2_tests 46/0 · e1_render_tests 24/0 · e2_render_tests 18/0 · test_zfp_discriminates 5/0 ·
+test_zfp_adversarial 15/0` — ALL GREEN.
+
+**THE RENDER (L3/L4, the alive IDE):** `counts = {boxes:11 (5 IP + 6 LSZ), labels:10, lines:10,
+tables:1}`. The v8 structure: 5 IP zones (RED/RED/ORANGE/TEAL/TEAL, EU names, degrees, ZFPs), the
+6 green LSZ, the 2×17 table (Chain/Days/ZONES/TRADES), the E2 path (`WL->RWL->SS`).
+
+**THE OPTION-STRIKE LAYER:** WIRED + PROVEN with 3 injected test strikes (labels 10->13, lines
+10->13); the DATA is externally blocked (investinglive S1 403; all 9 web sources 0), so the layer
+renders empty on the live week — the loud-fail contract.
+
+**THE E2 FORWARD CHECK:** EURUSD-2026-10-05 forecast WL@1.12556 (Upper IP Res) → RWL@1.11741
+(Floor) → SS@1.12241 (Equilibrium); the real week rose to ~1.125 (Oct 6) then fell to ~1.119. The
+forecast direction (rise to the resistance, fall to the support) matches.
