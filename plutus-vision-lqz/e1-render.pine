@@ -254,12 +254,14 @@ if e1Enabled and barstate.islast
             _lb = array.get(e1_injected_lsz_bottom, i)
             _lp = array.get(e1_injected_lsz_pri, i)
             _lact = _lp == "ACTIVE"
-            // A THIN GREEN LINE at the LSZ's swing price — a liquidity level, visible without
-            // covering the IP zone fills (a box at the same price buried the RES zone).
-            line.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lt,
+            // THE LSZ as BOLD GREEN boxes (border-only, no fill) — unmistakable green liquidity
+            // boxes, NO LABELS, without burying the IP zone fills (a fill at the same price hid
+            // the RES zone). Drawn ON TOP so they are clearly visible (the reviewers' blocker).
+            box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
                  xloc = xloc.bar_time,
-                 color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
-                 width = _lact ? 2 : 1)
+                 bgcolor = color(na),
+                 border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
+                 border_width = 3)
     // ── THE OPTION STRIKES (trident_v8.pine:378-388): AMBER horizontal lines + "$X.XB Option
     // Strike Target" labels. Renders the v8's amber layer when the options harvest is UP; an
     // empty array draws nothing (the data is external — never fabricated). ───────────────────
