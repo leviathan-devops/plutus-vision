@@ -258,6 +258,21 @@ if e1Enabled and barstate.islast
                  bgcolor = color.new(color.rgb(40,220,90), 45),
                  border_color = _lact ? color.rgb(120,255,140) : color.rgb(40,180,80),
                  border_width = _lact ? 2 : 1)
+    // ── THE OPTION STRIKES (trident_v8.pine:378-388): AMBER horizontal lines + "$X.XB Option
+    // Strike Target" labels. Renders the v8's amber layer when the options harvest is UP; an
+    // empty array draws nothing (the data is external — never fabricated). ───────────────────
+    _no = array.size(e1_injected_opt_pr)
+    if _no > 0
+        for i = 0 to _no - 1
+            if i >= _no
+                break
+            _op = array.get(e1_injected_opt_pr, i)
+            _ov = array.get(e1_injected_opt_vol, i)
+            line.new(e1_anchor_ms - 2 * 604800000, _op, e1_anchor_ms + 604800000, _op,
+                 xloc = xloc.bar_time, color = color.rgb(255,200,60), width = 2)
+            label.new(e1_anchor_ms + 604800000, _op, "$" + _ov + " Option Strike Target",
+                 xloc = xloc.bar_time, style = label.style_none,
+                 textcolor = color.rgb(255,200,60), size = size.small)
     // ── THE TABLE (the v8's 2×17 block). Rows: 0 header · 1 Chain · 2 Days · 3 ZONES · 4-8 the
     // five zone rows. The TRADES rows (Engine 3) are out of scope and left blank. ────────────
     if array.size(e1_injected_tbl_row) > 0

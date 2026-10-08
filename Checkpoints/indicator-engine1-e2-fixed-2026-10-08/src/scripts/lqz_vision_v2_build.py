@@ -310,6 +310,22 @@ def build_payload() -> tuple[str, str]:
     add("e1_injected_lsz_bottom", "float", [_f(b) for (b, _t, _p) in _lsz])
     add("e1_injected_lsz_pri", "string", [f'"{_q(_p)}"' for (_b, _t, _p) in _lsz])
 
+    # ── THE OPTION STRIKES (trident_v8.pine:199-200, :378-388) — the v8's AMBER lines +
+    # "$X.XB Option Strike Target" labels. Emitted from the E1 payload's OPTION_STRIKE levels
+    # (Pillar 3, the options harvest). When the harvest is DOWN there are none, so the layer
+    # renders EMPTY — never fabricated (the loud-fail law). ───────────────────────────────────
+    _opts = []
+    try:
+        _d0 = json.loads(_files[0].read_text()) if _files else {}
+        for _l in (_d0.get("levels") or []):
+            _lab = str(_l.get("label", ""))
+            if _lab.startswith("P3") or "OPTION" in _lab.upper() or "STRIKE" in _lab.upper():
+                _opts.append((float(_l["price"]), str(_l.get("notional_bn", "") or "")))
+    except Exception:
+        _opts = []
+    add("e1_injected_opt_pr", "float", [_f(_p) for (_p, _v) in _opts])
+    add("e1_injected_opt_vol", "string", [f'"{_q(_v)}"' for (_p, _v) in _opts])
+
     # THE ANCHOR is computed HERE, in Python, because the PineTS transpiler has
     # neither `str.split` nor `tonumber` (measured 2026-10-03: "tonumber is not
     # defined", and v1 has zero uses of either). The engine owns the calendar; Pine

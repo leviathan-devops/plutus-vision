@@ -63,7 +63,7 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = af9eb8f2c714799ac7cdaea77bed34a9a31088b78ead7ff29d960e69df45ef9b (1801 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = 4bbbe15118fed93bf820b76e490c09b6bcab16162ab9f45f54776aaeef55994a (1818 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
 
 ## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
@@ -114,3 +114,14 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   the table ZONES block — all PRESENT+CORRECT. Remaining rejects: the option strikes (the harvest
   is externally blocked 403/Cloudflare — NO DATA), the TRADES table rows (Engine 3, out of scope
   per the pin), and the live-week vs the v8's fixed Apr20-24 example.
+
+## THE OPTION-STRIKE LAYER (round 7, 2026-10-08) — WIRED + PROVEN, DATA BLOCKED
+- The v8's option-strike layer (amber lines + "$X.XB Option Strike Target" labels,
+  trident_v8.pine:378-388) is now WIRED: the build emits the strikes from the E1 payload's
+  OPTION_STRIKE levels, the render draws the amber lines + labels. PROVEN with 3 injected test
+  strikes (labels 10->13, lines 10->13; the capture `visual/runtime-state.png` shows the amber
+  "$1.9 / $2.6 / $1.1 Option Strike Target" lines).
+- THE DATA IS BLOCKED: the option source (investinglive S1) returns 403; all 9 web sources
+  return 0. The layer renders EMPTY (never fabricated) until the harvest flows. This is the
+  loud-fail contract — an absent source is a named gap, not a substituted artifact.
+- v2 = 4bbbe15118fed93bf820b76e490c09b6bcab16162ab9f45f54776aaeef55994a (1818 lines).

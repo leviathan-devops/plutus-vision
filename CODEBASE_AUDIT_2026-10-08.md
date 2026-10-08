@@ -380,3 +380,7 @@ grep -n 'xloc = xloc' plutus-vision-v2.pine
 
 ### ROUND-6 ANCHOR
 - the LSZ visibility: plutus-vision-lqz/e1-render.pine:244
+
+### ROUND-7 ANCHOR
+- the option-strike layer: plutus-vision-lqz/e1-render.pine:261
+- the option emission: scripts/lqz_vision_v2_build.py:313
