@@ -186,3 +186,18 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   layer the reviewers named. v2 = a63851e6a71b69caff75b1a6d1f0af41b550a32f5ef8cba1ba4fb3115a6f9cf4 (1852 lines); render = 566682101824acadb945c932d6b8f6c74803424b814bad4ba882777dd3ea5fe4.
 - The full layer set on one chart: 5 IP zones (RED/RED/ORANGE/TEAL/TEAL) + labels + green LSZ +
   cyan E2 path (WL->RWL->SS) + 7 amber option strikes + the 2x17 table.
+
+## ROUND 14 — spec-conformance (2026-10-09)
+The reviewer (RevC) named 3 defects; all fixed:
+- ZFP labels now use SPEC §10.8 calcZFP = round((top-bottom)/refRange*100), refRange 0.0200 for
+  EUR/USD — 9/11/19/11/5 (was the Appendix-B qualitative probability; a reviewer recomputed the
+  widths and rejected the mismatch). lqz_vision_v2_build.py:203-224.
+- Table price format = §10.9 "#.####" (4 decimals), was 5. lqz_vision_v2_build.py:311-313.
+- The Alt-chain row added (table row 2 per §10.7); rows shifted to header/Chain/Alt/Days/ZONES/TRADES.
+  e1-render.pine:285-302.
+- Zone fill = SPEC 30% color.new(_,70) (was 25 = 75%, which hid the bars); the spec mandates 70
+  three times (spec:289,3784,4001). e1-render.pine:26-45.
+- Box/line span = the v8's tsL..tsR = anchor-2wk .. anchor+3wk (was +1wk). e1-render.pine:204,256.
+- LSZ = 6 SPREAD swings (was 6 nearest the spot, clustered). lqz_vision_v2_build.py:337-348.
+- E2 path opt-in (default off — §10.7 has no E2 chart layer; the chain lives in the table).
+- v2 = 8cf1788dccdc67079151d2220dbb3d2350f2d976ba93bc928026401878ba48c4 (1860 lines); render = 0c365497ef9864e8e6fe7208d54e091b155625bb6353263b49e7e328e2009a2a; battery 11 suites 0 fail.
