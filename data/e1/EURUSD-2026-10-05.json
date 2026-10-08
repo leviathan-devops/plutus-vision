@@ -3212,7 +3212,7 @@
  ],
  "zones": [
   {
-   "name": "IP Resistance Ceiling",
+   "name": "Key IP Resistance Band",
    "top": 1.12853,
    "bottom": 1.12668,
    "zone_type": "STANDARD_WALL",

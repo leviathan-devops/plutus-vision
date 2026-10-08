@@ -760,12 +760,19 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
     hi = max(b["h"] for b in wk)
     lo = min(b["l"] for b in wk)
     rng = max(hi - lo, 1e-9)
+    # THE v8 ZONE NAMES ARE PAIR-SPECIFIC (trident_v8.pine:192 dxy_zNm vs :227 eu_zNm): DXY
+    # uses "IP Resistance Ceiling" / "Key IP Support"; the pairs use "Key IP Resistance Band" /
+    # "IP Support Floor". The middle three names are shared. (The reviewers flagged a DXY name
+    # on a EURUSD chart — a pair-isolation violation.)
+    _is_dxy = str(pair).upper() in ("DXY", "DX-Y.NYB", "DX")
+    _top_nm = "IP Resistance Ceiling" if _is_dxy else "Key IP Resistance Band"
+    _bot_nm = "Key IP Support" if _is_dxy else "IP Support Floor"
     bands = [
-        ("IP Resistance Ceiling", 0.85, 1.00, "RES"),
+        (_top_nm,                 0.85, 1.00, "RES"),
         ("Upper IP Resistance",   0.66, 0.85, "RES"),
         ("Equilibrium Zone",      0.34, 0.66, "MID"),
         ("Mid-Range Support",     0.15, 0.34, "SUP"),
-        ("IP Support Floor",      0.00, 0.15, "SUP"),
+        (_bot_nm,                 0.00, 0.15, "SUP"),
     ]
     # ── THE DEGREE IS A MEASUREMENT, NOT A POSITION (FAILURE_LOG F-56) ─────────────────
     # The deleted `role_weight` added a FIXED per-role offset (Ceiling +7, Mid +3) so the degrees

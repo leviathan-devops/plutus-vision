@@ -63,7 +63,7 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
 
 ## THE LSZ RESTORATION (2026-10-08, final)
 - The LSZ (trident_v8.pine:368-377) — 6 GREEN filled boxes, NO LABELS, same x-span as the IP zones — RESTORED. The payload computed 38; the 6 nearest the spot render. `counts.boxes:11` (5 IP + 6 LSZ).
-- v2 = a18e6ee4e9066c4c2593358dd3e683550318d8b61b392d2092ccc1b86151d765 (1797 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
+- v2 = 89f064d8c65f4edf8b06697fc708dcc8785694d639d77d48ca276bbf15f75fa3 (1802 lines). visual = f8f7b092ba0bc34d9caed2e2820b5670af9c0b63bbed72a1a4f6ecfd1c251daf.
 - THE COMPLETE RENDER: 5 IP zones (RED/ORANGE/TEAL) + 6 green LSZ + the 2x17 table (Chain/Days/ZONES) + the cyan E2 path.
 
 ## THE DEGREE + ZFP SPREAD FIX (2026-10-08, final)
@@ -77,3 +77,11 @@ test_zfp_discriminates 5/0 · test_zfp_adversarial 15/0
   ZFP 22 / 10 / 22 / 10 / 10. DXY-2026-07-13: degree MOD-HEAVY / MOD-HEAVY / HEAVY / MOD-HEAVY /
   MOD-HEAVY; ZFP 42 / 22 / 10 / 22 / 22.
 - v2 = c2af0c692e2679e7537784464ef6638e32c34c80a8d5857869e43f4f8e032e03 (1797 lines). visual = a18e6ee4e9066c4c2593358dd3e683550318d8b61b392d2092ccc1b86151d765.
+
+## THE REVIEWER-DRIVEN FIXES (round 3, 2026-10-08)
+- The LSZ now draw BEHIND the IP zones (z-order) — drawing them after buried the RES zones under
+  green (reviewer B1). The IP band is the FULL [top,bottom] range so its category color dominates.
+- The v8 table tag `EQ` (not `MID`) + the category-tinted cell bg (trident_v8.pine:403-404).
+- The zone names are PAIR-SPECIFIC (dxy_zNm vs eu_zNm): EURUSD uses "Key IP Resistance Band" /
+  "IP Support Floor"; DXY uses "IP Resistance Ceiling" / "Key IP Support".
+- v2 = 89f064d8c65f4edf8b06697fc708dcc8785694d639d77d48ca276bbf15f75fa3 (1802 lines). visual = cea72d7c2925ae35b409864b74718e86340b064a109cca28047c9a96422ff96d.

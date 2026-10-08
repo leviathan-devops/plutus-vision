@@ -1328,7 +1328,7 @@ if bar_index == 0
     e1_injected_cat.push("MID")
     e1_injected_cat.push("SUP")
     e1_injected_cat.push("SUP")
-    e1_injected_id.push("IP Resistance Ceiling")
+    e1_injected_id.push("Key IP Resistance Band")
     e1_injected_id.push("Upper IP Resistance")
     e1_injected_id.push("Equilibrium Zone")
     e1_injected_id.push("Mid-Range Support")
@@ -1635,13 +1635,11 @@ f_e1Render() =>
                 _top = array.get(e1PayloadTop, i)
                 _bot = array.get(e1PayloadBot, i)
                 _mid = (_top + _bot) / 2
-                // THE RENDERED BAND. The cluster spans [bottom, top]; rendering each at its FULL
-                // range made five adjacent bands read as ONE solid wall (operator, rejected). A
-                // NARROW band at the confluence CENTRE keeps the zones DISTINCT with visible gaps.
-                // THE HALF-WIDTH IS PAIR-RELATIVE: 28% of the zone's OWN width, floored at
-                // 0.012% of price. An ABSOLUTE 0.02 (the old value) is a thin band on DXY (~100)
-                // but 200 PIPS on EUR/USD (~1.12) — five giant overlapping boxes. Measured 2026-10-08.
-                _hw = math.max((_top - _bot) * 0.28, _mid * 0.00012)
+                // THE RENDERED BAND — the FULL [top, bottom] range (the v8 draws each IP zone at
+                // its whole range). A NARROW band left the RES/SUP boxes buried under the LSZ
+                // green behind them (the reviewers' B1: "the Upper IP Resistance box is GREEN").
+                // Pair-relative floor so a near-zero-width zone still reads as a band.
+                _hw = math.max((_top - _bot) * 0.5, _mid * 0.0004)
                 box.new(_lx, _mid + _hw, _rx, _mid - _hw,
                      xloc = xloc.bar_time,
                      bgcolor = f_e1Zfill(_cat, _deg),
@@ -1655,6 +1653,25 @@ f_e1Render() =>
     0
 
 if e1Enabled and barstate.islast
+    // ── THE LSZ (trident_v8.pine:368-377): GREEN filled boxes, NO LABELS, the same x-span as
+    // the IP zones. DRAWN FIRST so the IP zones render ON TOP — the reference draws the LSZ
+    // behind the IP boxes; drawing them after buried the RES zones under green (the reviewers'
+    // B1: "the Upper IP Resistance box is GREEN"). ACTIVE = a brighter/thicker green. ────────
+    _nl = array.size(e1_injected_lsz_top)
+    if _nl > 0
+        for i = 0 to _nl - 1
+            if i >= _nl
+                break
+            _lt = array.get(e1_injected_lsz_top, i)
+            _lb = array.get(e1_injected_lsz_bottom, i)
+            _lp = array.get(e1_injected_lsz_pri, i)
+            _lact = _lp == "ACTIVE"
+            box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
+                 xloc = xloc.bar_time,
+                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 60) : color.new(color.rgb(40,180,80), 70),
+                 border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
+                 border_width = 1)
+    // ── THE IP ZONES (on top of the LSZ). ──────────────────────────────────────────────────
     f_e1Render()
     // ── THE TABLE (the v8's 2×17 block). Rows: 0 header · 1 Chain · 2 Days · 3 ZONES · 4-8 the
     // five zone rows. The TRADES rows (Engine 3) are out of scope and left blank. ────────────
@@ -1670,25 +1687,13 @@ if e1Enabled and barstate.islast
         for i = 0 to array.size(e1_injected_tbl_row) - 1
             if i >= array.size(e1_injected_tbl_row)
                 break
-            table.cell(e1_tbl, 0, 4 + i, array.get(e1PayloadCat, i), text_color = color.white, text_size = size.small)
-            table.cell(e1_tbl, 1, 4 + i, array.get(e1_injected_tbl_row, i), text_color = color.white, text_size = size.small)
-
-    // ── THE LSZ (trident_v8.pine:368-377, VERBATIM): GREEN filled boxes, NO LABELS, the same
-    // x-span as the IP zones. ACTIVE = a brighter/thicker green. ────────────────────────────
-    _nl = array.size(e1_injected_lsz_top)
-    if _nl > 0
-        for i = 0 to _nl - 1
-            if i >= _nl
-                break
-            _lt = array.get(e1_injected_lsz_top, i)
-            _lb = array.get(e1_injected_lsz_bottom, i)
-            _lp = array.get(e1_injected_lsz_pri, i)
-            _lact = _lp == "ACTIVE"
-            box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
-                 xloc = xloc.bar_time,
-                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 60) : color.new(color.rgb(40,180,80), 70),
-                 border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
-                 border_width = 1)
+            // THE V8 TAG + BG (trident_v8.pine:403-404): the middle zone's tag is "EQ" (not
+            // "MID"), and the cell bg is category-tinted.
+            _tc = array.get(e1PayloadCat, i)
+            _tag = _tc == "RES" ? "RES" : _tc == "MID" ? "EQ" : "SUP"
+            _bg = _tc == "RES" ? color.rgb(60,12,8) : _tc == "MID" ? color.rgb(50,38,8) : color.rgb(0,40,40)
+            table.cell(e1_tbl, 0, 4 + i, _tag, text_color = color.white, text_size = size.small, bgcolor = _bg)
+            table.cell(e1_tbl, 1, 4 + i, array.get(e1_injected_tbl_row, i), text_color = color.white, text_size = size.small, bgcolor = _bg)
 
 
 // ═════════════ E2 — the predicted price path (ADDED 2026-10-03) ═════════════

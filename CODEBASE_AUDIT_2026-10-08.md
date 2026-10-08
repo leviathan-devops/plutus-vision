@@ -365,3 +365,8 @@ grep -n 'xloc = xloc' plutus-vision-v2.pine
 - the pair-relative wick threshold: scripts/e1_extract.py:877
 - the confluence-driven zone type: scripts/e1_zfp.py:111
 - the emitted ZFP spread: data/e1/EURUSD-2026-10-05.json:2088
+
+### ROUND-3 ANCHORS
+- the LSZ z-order: plutus-vision-lqz/e1-render.pine:244
+- the pair-aware names: scripts/e1_extract.py:768
+- the EQ table tag: plutus-vision-lqz/e1-render.pine:261
