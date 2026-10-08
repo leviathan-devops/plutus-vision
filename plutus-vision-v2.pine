@@ -1286,31 +1286,43 @@ var array<string> e2_injected_shape = array.new<string>()
 var array<int> e2_injected_conf = array.new<int>()
 var array<float> e2_injected_ghost_x = array.new<float>()
 var array<float> e2_injected_ghost_y = array.new<float>()
-e1_injected_anchor_ms = 1783886400000
-e1_injected_week_tag = "2026-W29"
+var array<string> e1_injected_tbl_pair = array.new<string>()
+var array<string> e1_injected_tbl_week = array.new<string>()
+var array<string> e1_injected_tbl_row = array.new<string>()
+var array<string> e1_injected_tbl_row = array.new<string>()
+var array<string> e1_injected_tbl_row = array.new<string>()
+var array<string> e1_injected_tbl_row = array.new<string>()
+var array<string> e1_injected_tbl_row = array.new<string>()
+var array<string> e1_injected_chain = array.new<string>()
+var array<string> e1_injected_days = array.new<string>()
+var array<float> e1_injected_lsz_top = array.new<float>()
+var array<float> e1_injected_lsz_bottom = array.new<float>()
+var array<string> e1_injected_lsz_pri = array.new<string>()
+e1_injected_anchor_ms = 1791144000000
+e1_injected_week_tag = "2026-W41"
 e2_injected_refusal = ""
 
 if bar_index == 0
-    e1_injected_top.push(101.294)
-    e1_injected_top.push(101.05716)
-    e1_injected_top.push(101.03933)
-    e1_injected_top.push(100.78633)
-    e1_injected_top.push(100.617)
-    e1_injected_bottom.push(101.2502)
-    e1_injected_bottom.push(101.05215)
-    e1_injected_bottom.push(100.88981)
-    e1_injected_bottom.push(100.74555)
-    e1_injected_bottom.push(100.59265)
-    e1_injected_confluence.push(8)
-    e1_injected_confluence.push(8)
-    e1_injected_confluence.push(10)
+    e1_injected_top.push(1.12853)
+    e1_injected_top.push(1.12665)
+    e1_injected_top.push(1.12429)
+    e1_injected_top.push(1.12028)
+    e1_injected_top.push(1.11792)
+    e1_injected_bottom.push(1.12668)
+    e1_injected_bottom.push(1.12447)
+    e1_injected_bottom.push(1.12053)
+    e1_injected_bottom.push(1.1181)
+    e1_injected_bottom.push(1.1169)
     e1_injected_confluence.push(7)
-    e1_injected_confluence.push(5)
-    e1_injected_zfp.push(27)
-    e1_injected_zfp.push(27)
-    e1_injected_zfp.push(17)
-    e1_injected_zfp.push(37)
-    e1_injected_zfp.push(50)
+    e1_injected_confluence.push(8)
+    e1_injected_confluence.push(8)
+    e1_injected_confluence.push(8)
+    e1_injected_confluence.push(8)
+    e1_injected_zfp.push(10)
+    e1_injected_zfp.push(10)
+    e1_injected_zfp.push(10)
+    e1_injected_zfp.push(10)
+    e1_injected_zfp.push(22)
     e1_injected_cat.push("RES")
     e1_injected_cat.push("RES")
     e1_injected_cat.push("MID")
@@ -1320,37 +1332,37 @@ if bar_index == 0
     e1_injected_id.push("Upper IP Resistance")
     e1_injected_id.push("Equilibrium Zone")
     e1_injected_id.push("Mid-Range Support")
-    e1_injected_id.push("Key IP Support")
-    e1_injected_degree.push("MODERATE-HEAVY")
-    e1_injected_degree.push("MODERATE-HEAVY")
-    e1_injected_degree.push("HEAVY")
+    e1_injected_id.push("IP Support Floor")
     e1_injected_degree.push("MODERATE")
-    e1_injected_degree.push("LIGHT")
-    e2_injected_x.push(1783987200000)
-    e2_injected_x.push(1784030400000)
-    e2_injected_x.push(1784073600000)
-    e2_injected_x.push(1784116800000)
-    e2_injected_x.push(1784160000000)
-    e2_injected_x.push(1784203200000)
-    e2_injected_x.push(1784246400000)
-    e2_injected_x.push(1784289600000)
-    e2_injected_x.push(1784332800000)
-    e2_injected_x.push(1784376000000)
-    e2_injected_x.push(1784419200000)
-    e2_injected_y.push(100.96457)
-    e2_injected_y.push(101.02146)
-    e2_injected_y.push(101.2721)
-    e2_injected_y.push(101.3351)
-    e2_injected_y.push(101.2721)
-    e2_injected_y.push(101.3351)
-    e2_injected_y.push(101.2721)
-    e2_injected_y.push(101.3351)
-    e2_injected_y.push(101.2721)
-    e2_injected_y.push(101.3351)
-    e2_injected_y.push(101.2721)
+    e1_injected_degree.push("MODERATE-HEAVY")
+    e1_injected_degree.push("MODERATE-HEAVY")
+    e1_injected_degree.push("MODERATE-HEAVY")
+    e1_injected_degree.push("MODERATE-HEAVY")
+    e2_injected_x.push(1791244800000)
+    e2_injected_x.push(1791288000000)
+    e2_injected_x.push(1791331200000)
+    e2_injected_x.push(1791374400000)
+    e2_injected_x.push(1791417600000)
+    e2_injected_x.push(1791460800000)
+    e2_injected_x.push(1791504000000)
+    e2_injected_x.push(1791547200000)
+    e2_injected_x.push(1791590400000)
+    e2_injected_x.push(1791633600000)
+    e2_injected_x.push(1791676800000)
+    e2_injected_y.push(1.11919)
+    e2_injected_y.push(1.12075)
+    e2_injected_y.push(1.1276)
+    e2_injected_y.push(1.12572)
+    e2_injected_y.push(1.11741)
+    e2_injected_y.push(1.11801)
+    e2_injected_y.push(1.11741)
+    e2_injected_y.push(1.11801)
+    e2_injected_y.push(1.11741)
+    e2_injected_y.push(1.11801)
+    e2_injected_y.push(1.11741)
     e2_injected_shape.push("WL")
     e2_injected_shape.push("")
-    e2_injected_shape.push("SS")
+    e2_injected_shape.push("RWL")
     e2_injected_shape.push("")
     e2_injected_shape.push("SS")
     e2_injected_shape.push("")
@@ -1361,17 +1373,44 @@ if bar_index == 0
     e2_injected_shape.push("")
     e2_injected_conf.push(60)
     e2_injected_conf.push(0)
-    e2_injected_conf.push(55)
+    e2_injected_conf.push(70)
     e2_injected_conf.push(0)
-    e2_injected_conf.push(55)
+    e2_injected_conf.push(70)
     e2_injected_conf.push(0)
-    e2_injected_conf.push(55)
+    e2_injected_conf.push(70)
     e2_injected_conf.push(0)
-    e2_injected_conf.push(55)
+    e2_injected_conf.push(70)
     e2_injected_conf.push(0)
     e2_injected_conf.push(0)
-    e2_injected_ghost_x.push(101.294)
-    e2_injected_ghost_y.push(101.294)
+    e2_injected_ghost_x.push(1.12853)
+    e2_injected_ghost_y.push(1.12853)
+    e1_injected_tbl_pair.push("EURUSD")
+    e1_injected_tbl_week.push("2026-10-05")
+    e1_injected_tbl_row.push("1.12853-1.12668 MODERATE 10%ZFP T2")
+    e1_injected_tbl_row.push("1.12665-1.12447 MODERATE-HEAVY 10%ZFP T1")
+    e1_injected_tbl_row.push("1.12429-1.12053 MODERATE-HEAVY 10%ZFP T1")
+    e1_injected_tbl_row.push("1.12028-1.1181 MODERATE-HEAVY 10%ZFP T1")
+    e1_injected_tbl_row.push("1.11792-1.1169 MODERATE-HEAVY 22%ZFP T1")
+    e1_injected_chain.push("RWL->SS")
+    e1_injected_days.push("Mo:WL Tu:RWL We:SS Th:SS Fr:SS")
+    e1_injected_lsz_top.push(1.1259126750000001)
+    e1_injected_lsz_top.push(1.12610277)
+    e1_injected_lsz_top.push(1.12630287)
+    e1_injected_lsz_top.push(1.12566255)
+    e1_injected_lsz_top.push(1.125412425)
+    e1_injected_lsz_top.push(1.12666305)
+    e1_injected_lsz_bottom.push(1.12535)
+    e1_injected_lsz_bottom.push(1.12554)
+    e1_injected_lsz_bottom.push(1.12574)
+    e1_injected_lsz_bottom.push(1.1251)
+    e1_injected_lsz_bottom.push(1.12485)
+    e1_injected_lsz_bottom.push(1.1261)
+    e1_injected_lsz_pri.push("DEMAND")
+    e1_injected_lsz_pri.push("SUPPLY")
+    e1_injected_lsz_pri.push("SUPPLY")
+    e1_injected_lsz_pri.push("DEMAND")
+    e1_injected_lsz_pri.push("DEMAND")
+    e1_injected_lsz_pri.push("SUPPLY")
 
 // ═════════════════════════════════════════════════════════════════════════════
 //  E1 RENDER — the INSTITUTIONAL PRESSURE MAP.  W4: the trident_v8 port.
@@ -1548,6 +1587,10 @@ e1PayloadId   = e1_injected_id
 e1_anchor_ms  = e1_injected_anchor_ms
 e1WeekTag     = e1_injected_week_tag
 
+// ── THE 2×17 INFO TABLE (trident_v8.pine:178, :390-427) — the E1+E2 summary block. ──────
+// Declared once at the global scope (Pine v6 requires the `var table` outside the render fn).
+var table e1_tbl = table.new(position.top_right, 2, 17, bgcolor = color.new(color.black, 10), border_color = color.rgb(40,40,45), border_width = 1)
+
 // ── THE PRICE SCALE — THE ZONES MUST FIT ────────────────────────────────────
 // The chart autoscales to the BARS. The zones extend above/below the recent bars, so the
 // upper zones (the resistance levels) fell OFF the top edge (the operator: "cut off"). Two
@@ -1562,19 +1605,17 @@ plot(_e1ZLo, "E1 floor (scale)", color = color.new(color.white, 100))
 // ── THE RENDER ──────────────────────────────────────────────────────────────
 f_e1Render() =>
     _n = array.size(e1PayloadTop)
-    // THE ANCHOR — THE TARGET WEEK'S MONDAY. The operator: "renders from Monday to Friday of
-    // this trading week". `e1_anchor_ms` is the analysis point (the target week's Monday), so
-    // the anchor bar is the one whose time is that Monday — derived from the CHART's own bars
-    // (the objective's `anchor = time`). Under replay, `time` moves and the anchor follows.
-    _bm = math.max(1, timeframe.in_seconds() * 1000)
-    _bAnchor = bar_index - math.round((time - e1_anchor_ms) / _bm)
-    // THE BAND SPAN — MONDAY to FRIDAY (5 trading days), never a multi-week ribbon.
-    _bpw = math.max(1, math.round(432000 / timeframe.in_seconds()))
-    // THE OPERATOR'S APPROVED WIDTH (2026-10-06): the zones reach ~2 weeks BACK to the left of
-    // the target Monday and ~1 week forward — the wide band the operator approved ("wide to the
-    // left side … you could see back like an extra week or two. Perfect.").
-    _lx = math.max(0, _bAnchor - 2 * _bpw)
-    _rx = _bAnchor + _bpw
+    // THE ANCHOR — THE TARGET WEEK'S MONDAY, in TIME (`e1_anchor_ms`). The canon Part X
+    // Principle 5: "All Drawings Use xloc=xloc.bar_time. Bar index coordinates are
+    // PROHIBITED." The zones extend PAST the chart's last bar (the target week is the
+    // FUTURE); a bar_index right edge beyond the last bar is DROPPED by the renderer, so
+    // every E1 box vanished on a real-time chart (measured 2026-10-08). TIME coordinates
+    // draw into the future span exactly as the E2 path does.
+    // THE OPERATOR'S APPROVED WIDTH (2026-10-06): ~2 weeks BACK to the left of the target
+    // Monday and ~1 week forward — the wide band the operator approved ("wide to the left
+    // side … you could see back like an extra week or two. Perfect.").
+    _lx = e1_anchor_ms - 2 * 604800000        // 2 weeks before the anchor Monday (ms)
+    _rx = e1_anchor_ms + 604800000            // 1 week after the anchor Monday (ms)
 
     // THE IP ZONES — trident_v8.pine:352-365, the loop, re-anchored to bar_index bounds.
     // Colour by zCat (RES|MID|SUP) × degree — the v8 ladder. The band height is inflated so
@@ -1597,8 +1638,12 @@ f_e1Render() =>
                 // THE RENDERED BAND. The cluster spans [bottom, top]; rendering each at its FULL
                 // range made five adjacent bands read as ONE solid wall (operator, rejected). A
                 // NARROW band at the confluence CENTRE keeps the zones DISTINCT with visible gaps.
-                _hw = 0.02
+                // THE HALF-WIDTH IS PAIR-RELATIVE: 28% of the zone's OWN width, floored at
+                // 0.012% of price. An ABSOLUTE 0.02 (the old value) is a thin band on DXY (~100)
+                // but 200 PIPS on EUR/USD (~1.12) — five giant overlapping boxes. Measured 2026-10-08.
+                _hw = math.max((_top - _bot) * 0.28, _mid * 0.00012)
                 box.new(_lx, _mid + _hw, _rx, _mid - _hw,
+                     xloc = xloc.bar_time,
                      bgcolor = f_e1Zfill(_cat, _deg),
                      border_color = f_e1Zbord(_cat, _deg),
                      border_width = 2,
@@ -1606,11 +1651,44 @@ f_e1Render() =>
                 // THE LABEL — the reference idiom: at the MID, style_none, white, size.normal.
                 // A subtle dark backing keeps the white text legible on the zone fill.
                 _lbl = array.get(e1PayloadId, i) + " | " + f_e1PressureLbl(_deg) + " | " + str.tostring(array.get(e1PayloadZfp, i)) + "% ZFP"
-                label.new((_lx + _rx) / 2, _mid, _lbl, style = label.style_none, textcolor = color.white, size = size.normal)
+                label.new((_lx + _rx) / 2, _mid, _lbl, xloc = xloc.bar_time, style = label.style_none, textcolor = color.white, size = size.normal)
     0
 
 if e1Enabled and barstate.islast
     f_e1Render()
+    // ── THE TABLE (the v8's 2×17 block). Rows: 0 header · 1 Chain · 2 Days · 3 ZONES · 4-8 the
+    // five zone rows. The TRADES rows (Engine 3) are out of scope and left blank. ────────────
+    if array.size(e1_injected_tbl_row) > 0
+        table.cell(e1_tbl, 0, 0, "PLUTUS VISION", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
+        table.cell(e1_tbl, 1, 0, array.get(e1_injected_tbl_pair, 0) + " " + array.get(e1_injected_tbl_week, 0), text_color = color.rgb(100,150,255), text_size = size.small, bgcolor = color.rgb(20,20,40))
+        table.cell(e1_tbl, 0, 1, "Chain", text_color = color.gray, text_size = size.small)
+        table.cell(e1_tbl, 1, 1, array.get(e1_injected_chain, 0), text_color = color.white, text_size = size.small)
+        table.cell(e1_tbl, 0, 2, "Days", text_color = color.gray, text_size = size.small)
+        table.cell(e1_tbl, 1, 2, array.get(e1_injected_days, 0), text_color = color.white, text_size = size.small)
+        table.cell(e1_tbl, 0, 3, "ZONES", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
+        table.cell(e1_tbl, 1, 3, "", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
+        for i = 0 to array.size(e1_injected_tbl_row) - 1
+            if i >= array.size(e1_injected_tbl_row)
+                break
+            table.cell(e1_tbl, 0, 4 + i, array.get(e1PayloadCat, i), text_color = color.white, text_size = size.small)
+            table.cell(e1_tbl, 1, 4 + i, array.get(e1_injected_tbl_row, i), text_color = color.white, text_size = size.small)
+
+    // ── THE LSZ (trident_v8.pine:368-377, VERBATIM): GREEN filled boxes, NO LABELS, the same
+    // x-span as the IP zones. ACTIVE = a brighter/thicker green. ────────────────────────────
+    _nl = array.size(e1_injected_lsz_top)
+    if _nl > 0
+        for i = 0 to _nl - 1
+            if i >= _nl
+                break
+            _lt = array.get(e1_injected_lsz_top, i)
+            _lb = array.get(e1_injected_lsz_bottom, i)
+            _lp = array.get(e1_injected_lsz_pri, i)
+            _lact = _lp == "ACTIVE"
+            box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
+                 xloc = xloc.bar_time,
+                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 60) : color.new(color.rgb(40,180,80), 70),
+                 border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
+                 border_width = 1)
 
 
 // ═════════════ E2 — the predicted price path (ADDED 2026-10-03) ═════════════
@@ -1661,61 +1739,57 @@ e2Refusal   = e2_injected_refusal
 // ── THE RENDER ──────────────────────────────────────────────────────────────
 f_e2Render() =>
     _n = array.size(e2DayX)
-    // THE COORDINATE SPACE. The E2 days are FUTURE timestamps (the target week, after the
-    // chart's last bar). `line.new(xloc=bar_time)` with a future offset does NOT draw (the vela
-    // renderer clamps at the last bar). So each day TIMESTAMP becomes a bar_index position —
-    // `bar_index + round((t - time)/bar_ms)` — the space the E1 zones render in. The conversion
-    // is INLINE (PineTS rejects a local typed helper `f(float x) =>`).
-    _bm = math.max(1, timeframe.in_seconds() * 1000)
+    // THE COORDINATE SPACE — `xloc = xloc.bar_time` (the canon Part X Principle 5: "All Drawings
+    // Use xloc=xloc.bar_time. Bar index coordinates are PROHIBITED"). The E2 days are FUTURE
+    // timestamps (the target week, after the chart's last bar); a bar_time line draws into that
+    // future span exactly as the E1 zone boxes do. The earlier bar_index conversion was a
+    // deviation and is gone.
 
     // THE REFUSAL IS VISIBLE. A silent empty chart reads as "the engine ran and found
     // nothing"; a NAMED refusal on the chart reads as "the engine refused to guess".
     if e2Refusal != "" and e2Enabled
-        label.new(bar_index - 120, high, "E2 REFUSED · " + e2Refusal,
-             xloc = xloc.bar_index, size = size.small,
+        label.new(time, high, "E2 REFUSED · " + e2Refusal,
+             xloc = xloc.bar_time, size = size.small,
              color = color.new(color.red, 22), textcolor = color.new(color.red, 90))
 
     if e2Enabled and _n >= 2
         // THE LINE. ONE continuous polyline through the engine's FINE PATH (the intraday
-        // expansion — many points per day, not a 5-vertex triangle). Drawn in bar_index space
-        // (the future day timestamps → bar positions), which the renderer draws reliably; the
-        // earlier over-draw was the `xloc=bar_time`+loop form.
+        // expansion — many points per day, not a 5-vertex triangle). TIME-anchored.
         for i = 0 to _n - 2
-            line.new(bar_index + math.round((array.get(e2DayX, i) - time) / _bm),
+            line.new(array.get(e2DayX, i),
                  array.get(e2DayY, i),
-                 bar_index + math.round((array.get(e2DayX, i + 1) - time) / _bm),
+                 array.get(e2DayX, i + 1),
                  array.get(e2DayY, i + 1),
-                 xloc = xloc.bar_index, color = color.new(e2ColPath, e2Opacity), width = e2Width)
+                 xloc = xloc.bar_time, color = color.new(e2ColPath, e2Opacity), width = e2Width)
 
         // THE DOT + TAG at each DAY anchor (the fine path carries a shape only at the day
-        // boundaries; an intraday point is never tagged — Rule 1).
+        // boundaries; an intraday point is never tagged — Rule 1). The guard is INLINE: a day
+        // with no shape draws no dot and no tag.
         if e2ShowTags
             for i = 0 to _n - 1
                 if i >= _n
                     break
-                _s = array.get(e2DayShape, i)
-                _c = array.get(e2DayConf, i)
-                _anchored = _s != ""
+                _anchored = array.get(e2DayShape, i) != ""
                 if _anchored
-                    label.new(bar_index + math.round((array.get(e2DayX, i) - time) / _bm),
+                    label.new(array.get(e2DayX, i),
                          array.get(e2DayY, i),
-                         str.tostring(_s) + " " + str.tostring(int(_c)) + "%",
-                         xloc = xloc.bar_index, style = label.style_label_down,
+                         str.tostring(array.get(e2DayShape, i)) + " " + str.tostring(int(array.get(e2DayConf, i))) + "%",
+                         xloc = xloc.bar_time, style = label.style_label_down,
                          size = size.tiny,
-                         color = color(na),
+                         color = color.new(color.black, 100),
                          textcolor = color.new(e2ColPath, math.min(100, e2Opacity + 30)))
 
-        // THE ALTERNATIVE — a THIN DASHED GHOST (the day-level chain).
+        // THE ALTERNATIVE — a THIN DASHED GHOST (the day-level chain). TIME-anchored.
         _gn = array.size(e2GhostX)
         if e2ShowGhost and _gn >= 2
             for i = 0 to _gn - 2
                 if i >= _gn - 1
                     break
-                line.new(bar_index + math.round((array.get(e2GhostX, i) - time) / _bm),
+                line.new(array.get(e2GhostX, i),
                      array.get(e2GhostY, i),
-                     bar_index + math.round((array.get(e2GhostX, i + 1) - time) / _bm),
+                     array.get(e2GhostX, i + 1),
                      array.get(e2GhostY, i + 1),
-                     xloc = xloc.bar_index, color = color.new(e2ColGhost, e2Opacity - 20),
+                     xloc = xloc.bar_time, color = color.new(e2ColGhost, e2Opacity - 20),
                      width = 1, style = line.style_dashed)
     0
 

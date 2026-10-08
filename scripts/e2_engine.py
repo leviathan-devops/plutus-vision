@@ -692,10 +692,12 @@ _SHAPE_AMP = {"WLS": 1.40, "PWL": 1.20, "PRWL": 1.20, "BS": 1.10, "PBS": 1.10,
               "RS": 1.00, "WL": 1.00, "RWL": 1.00, "SS": 1.00, "R": 0.80}
 
 DAY_MS = 86_400_000          # one trading day in ms — the intraday span of a day's leg
-_MIN_AMP = 0.07              # the per-day travel FLOOR (price units). The operator's
-#                              spec: "~0.10-0.25 per day" peak-to-peak; a template's
-#                              p2p is 2·amp·max|w| = 2·amp (max|w|=1), so amp 0.07
-#                              gives p2p ≈ 0.14 even on a flat (same-zone) day.
+_MIN_AMP_FRAC = 0.0006       # the per-day travel FLOOR as a FRACTION OF PRICE (0.06%). The
+#                              operator's spec was "~0.10-0.25 per day" on DXY (~100), i.e.
+#                              ~0.06-0.15% of price — so the floor scales with the instrument:
+#                              DXY 100 -> 0.060; EUR/USD 1.12 -> 0.00067. An ABSOLUTE floor
+#                              (the old 0.07) drew 7x-the-span spikes on a 1.12 pair — the
+#                              operator's "does not resemble price action". Measured 2026-10-08.
 _SPAN_FRAC = 0.35            # the wiggle as a fraction of the day's anchor-to-anchor
 #                              span, so a large travelling day bends proportionally more.
 _PRICE_DP = 5                # price rounding — the zone-map precision (e.g. 101.01033).
@@ -738,7 +740,8 @@ def fine_path(days: list[tuple], day_ms: int = DAY_MS) -> tuple[list[int], list[
     for i, (x0, y0, shape, conf) in enumerate(anchors):
         leg = _SHAPE_LEGS.get(shape, _SHAPE_LEGS["SS"])
         span = (float(anchors[i + 1][1]) - float(y0)) if i + 1 < len(anchors) else 0.0
-        amp = max(_MIN_AMP, _SPAN_FRAC * abs(span)) * _SHAPE_AMP.get(shape, 1.0)
+        _floor = _MIN_AMP_FRAC * abs(float(y0)) if y0 else 0.0
+        amp = max(_floor, _SPAN_FRAC * abs(span)) * _SHAPE_AMP.get(shape, 1.0)
         for k, (u, w) in enumerate(leg):
             if i > 0 and k == 0:
                 # the previous day's final point is ALREADY at this x — never duplicate,

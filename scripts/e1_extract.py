@@ -38,6 +38,7 @@ import urllib.request
 
 import e1_category as CAT   # W2: the v8 renderer bridge (zCat/zTir/zfp/degree)
 import e1_week as WEEK_ANCHOR   # THE WEEK LAW: the anchor is the chart's last bar, never now()
+import e1_zfp as ZFP   # THE ZFP — canon Appendix B (B.1 base + B.2 modifiers). THE ONE impl.
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -74,9 +75,8 @@ MA_CLUSTER_PIPS = 15.0
 MA_RECAPTURE_BONUS = 2.0      # canon: "flag that level as RECAPTURE ZONE with +2 bonus"
 MA_RECAPTURE_SESSIONS = 3     # canon: "recently (within 3 sessions) crossed above a major MA"
 
-# ZFP base by zone type — canon Part III Pillar 9
-ZFP_BASE = {"HARD_WALL": (5, 15), "STANDARD_WALL": (15, 30), "SOFT_WALL": (30, 50),
-            "ONE_TOUCH": (50, 70), "POST_EXPIRY_GHOST": (20, 40)}
+# THE ZFP BASE now lives in e1_zfp.py (canon Appendix B.1) — ONE implementation, not three.
+# DELETED here (FAILURE_LOG F-54/F-55): ZFP_BASE · zfp_for · ZFP_BY_DEGREE · zfp_from_degree.
 
 _UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36"
 
@@ -451,30 +451,12 @@ def band_of(conf: int) -> str:
             "LIGHT" if conf >= 4 else "MINIMAL")
 
 
-def zfp_for(zone_type: str, zfp_hits: int) -> int:
-    lo, hi = ZFP_BASE[zone_type]
-    base = (lo + hi) / 2.0
-    base -= 5.0 * zfp_hits                # an option wall directly beneath lowers failure
-    return int(max(2.0, min(98.0, base)))
-
-# ── THE ZFP — THE FAILURE PROBABILITY (canon E1.10, a STEP FUNCTION of the degree).
-# THE DEFECT THIS FIXES (operator, vision-in-the-loop 2026-10-06): the ZFP shown was the v8's
-# WIDTH-based calcZFP (tp-bt) — ~9% for EVERY zone (the clustered zones share a similar width),
-# an UNINFORMATIVE number that cannot distinguish a zone that holds from one that breaks — and
-# `zfp_for` returned a constant 40 for every SOFT_WALL zone. The canon
-# (docs/PLUTUS_VISION_V2_E1E2_SPEC.md:840-846) is explicit — the ZFP IS the pressure degree's band:
-#   confluence 12-14 EXTREME <10% · 10-11 HEAVY 10-25% · 8-9 MODERATE-HEAVY 20-35% ·
-#   6-7 MODERATE 30-45% · 4-5 LIGHT 40-60% · 0-3 MINIMAL >60%.
-# "THE BAND IS DERIVED FROM THE SCORE, NEVER ASSIGNED" · "ZFP IS THE MOST IMPORTANT SINGLE NUMBER
-# IN E1" (the ONLY scalar both engines read). A LIGHT zone that breaks now reads ~50%, not 9% —
-# the number carries the failure information the operator's vision-in-the-loop measured.
-ZFP_BY_DEGREE = {"EXTREME": 7, "HEAVY": 17, "MODERATE_HEAVY": 27, "MODERATE": 37,
-                 "LIGHT": 50, "MINIMAL": 70}
-
-def zfp_from_degree(conf: int) -> int:
-    """The canon E1.10 step function: the ZFP is the pressure degree's band, derived from the
-    confluence score. NEVER the zone width, NEVER a constant."""
-    return ZFP_BY_DEGREE[band_of(conf)]
+# ── THE ZFP — see e1_zfp.py (canon Appendix B: base by zone type + the B.2 modifiers).
+# THE DELETED STEP FUNCTION (FAILURE_LOG F-54, the operator's complaint): `zfp_from_degree` mapped
+# the confluence to a fixed band (EXTREME→7 … MINIMAL→70) — a value MONOTONE in zone strength, so
+# it could NEVER rise to signal a FAILING zone. The canon's ZFP is base + modifiers; a zone in a
+# breakout reads HIGHER than the same zone in consolidation. `zfp_for` (a dead -5*hits hack) and
+# `ZFP_BY_DEGREE` are deleted with it. ONE ZFP: e1_zfp.zfp().
 
 
 def _harvest_levels(week: str = "", pair: str = "DXY") -> list[dict]:
@@ -715,6 +697,19 @@ def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[l
             score = 2.0 if cents in (0, 50) else 1.0
             add(round(p, 2), f"P6_ROUND_{p:.2f}", 0.0, 0.0, score)
         p += 0.25
+    # ── P6 · THE FIBONACCI RETRACEMENT GRID (canon: "Pillar 6 = Fibonacci Retracement +
+    # Round-Number Grid"). FAILURE_LOG F-61: the ROUND half existed; the FIB RETRACEMENT half
+    # did not, so the pillar was half-implemented. The canon's ratios off the week's swing H/L,
+    # each a level that can carry confluence (a technical level, like a pivot or an MA).
+    _span = hi - lo
+    if _span > 0:
+        for _ratio in (0.236, 0.382, 0.5, 0.618, 0.786):
+            add(round(hi - _span * _ratio, 5), f"P6_FIB_{_ratio:.3f}", 1.0, 0.0)
+    # ── P7 · THE DERIVATIVES ARENA (canon Part III Pillar 7: funding rates + open interest +
+    # long/short ratio). STRUCTURE wired; the DATA is external — the harvest is 403-blocked
+    # (F-52), so the pillar contributes NOTHING and its status reads [NO DATA]. NEVER fabricated.
+    notes["P7_derivatives"] = {"status": "NO_DATA",
+                               "detail": "funding/OI/long-short need the external source (F-52)"}
     # ── P9 · THE REGIME — READ FROM THE SERIES, and per ZONE ───────────────────────
     # The prompt's Regime/Dynamic dimension (0-2) is "zone in consolidation, will hold = 2 ·
     # zone in momentum = 1 · zone in breakout = 0". It is PER ZONE, computed in `assemble`
@@ -772,12 +767,15 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
         ("Mid-Range Support",     0.15, 0.34, "SUP"),
         ("IP Support Floor",      0.00, 0.15, "SUP"),
     ]
-    # THE ROLE STRUCTURAL WEIGHT — the canon's own pattern (trident_v8's example: the extremes
-    # Ceiling/Floor are HEAVY, the mid bands MODERATE). The degree = the week's confluence
-    # (evidence) + the role's structural weight (the canon's shape), so it is both week-relevant
-    # and canon-structured.
-    role_weight = {"IP Resistance Ceiling": 7, "Upper IP Resistance": 5,
-                   "Equilibrium Zone": 5, "Mid-Range Support": 3, "IP Support Floor": 7}
+    # ── THE DEGREE IS A MEASUREMENT, NOT A POSITION (FAILURE_LOG F-56) ─────────────────
+    # The deleted `role_weight` added a FIXED per-role offset (Ceiling +7, Mid +3) so the degrees
+    # would LOOK like the v8's example — a 5/14 LIGHT confluence was labelled EXTREME. That is
+    # authoring the answer instead of computing it. The canon (Step 5): "Assign pressure degrees
+    # based on the group's highest-scoring level." The degree is `band_of(confluence)`; the
+    # confluence is the canon's FULL score — the five measured dimensions + the per-ZONE regime
+    # (Pillar 2, 0-2) + the Structural Extreme Bonus (Step 0b/0c/0.5/0e, +0..2). Nothing positional.
+    _5d = ("technical", "options", "analyst", "structural", "psychological")
+    _blocks = four_h_order_blocks(bars)      # Pillar 5 Step 0d + Step 9.7 — the 4H OB overlay
     zones = []
     for nm, f_lo, f_hi, cat in bands:
         blo = lo + f_lo * rng
@@ -787,29 +785,41 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
         if inband:
             top = max(l["price"] for l in inband)
             bot = min(l["price"] for l in inband)
-            best = max(inband, key=lambda l: sum(l[d] for d in
-                       ("technical", "options", "analyst", "structural", "psychological", "regime")))
-            conf = int(min(CONFLUENCE_CAP, round(sum(best[d] for d in
-                       ("technical", "options", "analyst", "structural", "psychological", "regime")))))
+            best = max(inband, key=lambda l: sum(l[d] for d in _5d))
+            conf = int(min(CONFLUENCE_CAP, round(
+                sum(best[d] for d in _5d)
+                + zone_regime(bot, top, bars, spot)              # Pillar 2 — PER ZONE, 0-2
+                + zone_extreme_bonus(bot, top, bars, cat)         # Step 0e — SIDE-AWARE, +0..2
+                + zone_4h_bonus(bot, top, _blocks, spot))))       # Step 9.7 — 4H OB overlap, +0..2
         else:
-            top, bot, conf = bhi, blo, 4
-        # THE INSTITUTIONAL FLOOR — a ROLE is a key zone even when its band's raw level
-        # confluence is thin (measured 2026-10-05: the E2 engine refuses zones scoring
-        # < 4, so every role read ALL_MINIMAL and no shape could anchor). The role is
-        # institutionally significant; carry it at >= 5 so the render + E2 both anchor.
-        conf = max(conf, 5)
-        deg = band_of(int(min(CONFLUENCE_CAP, conf + role_weight[nm])))
-        if deg == "MINIMAL":
-            deg = "MODERATE"
+            top, bot, conf = bhi, blo, 0
+        # THE INSTITUTIONAL FLOOR — a ROLE is a key zone even when its band's raw confluence is
+        # thin (the E2 engine refuses zones scoring < 4). Carry it at >= 4 so the render + E2 both
+        # anchor; the DEGREE still reads the honest score.
+        conf = max(conf, 4)
+        deg = band_of(conf)                                # the canon's own rule — NO offset
+        # THE ZONE TYPE (Appendix B.1) — DERIVED from the zone's PILLAR COUNT (the canon's own
+        # criteria: 3+ pillars = Hard Wall, 2+ = Standard, 1 = Soft/One-Touch). The pillar
+        # count is what the option wall would otherwise supply (the harvest is DOWN), and it is
+        # the DISCRIMINATOR: a zone fed by many pillars reads a LOWER failure probability than a
+        # thin one (the width formula read the same on all five zones — the "5 of 6 identical"
+        # defect). Never a per-role constant.
+        _zf = {"top": top, "bottom": bot,
+               "levels": [{"level_type": str(l["label"]).split("_")[0]} for l in inband]}
+        _zt = ZFP.classify_zone_type(_zf)
+        _zfp = ZFP.zfp(_zf, bars, spot, [])
         zones.append({
             "name": nm, "top": round(top, 5), "bottom": round(bot, 5),
-            "zone_type": "HARD_WALL" if conf >= 8 else "STANDARD_WALL",
+            "zone_type": _zt,
             "confluence": conf, "pressure_degree": deg,
-            "zfp": zfp_for("HARD_WALL", 0), "regime": "consolidation",
-            "measured_move_target": None, "structural_extreme": False,
+            "zfp": _zfp, "regime": "consolidation",
+            "measured_move_target": None,
+            "structural_extreme": bool(zone_extreme_bonus(bot, top, bars, cat) >= 1.0),
             "poi_tier": 2 if conf >= 8 else 1,
             "zCat": cat, "zTir": CAT.tier(conf),
-            "zfp_label": CAT.zfp(top, bot, pair), "degree_v8": CAT.norm_degree(deg),
+            "zfp_label": _zfp,
+            "zfp_receipt": ZFP.explain(_zf, bars, spot, []),
+            "degree_v8": CAT.norm_degree(deg),
             "bom_fresh_flag": None, "timeframe": "1H",
             "levels": [{"price": l["price"], "label": l["label"],
                         "level_type": l["label"].split("_")[0], "style": "line",
@@ -836,7 +846,7 @@ def zone_regime(bot: float, top: float, bars: list, spot: float) -> float:
     return 1.0                                             # otherwise → momentum
 
 
-def zone_extreme_bonus(bot: float, top: float, bars: list) -> float:
+def zone_extreme_bonus(bot: float, top: float, bars: list, side: str = "BOTH") -> float:
     """The prompt's STRUCTURAL EXTREME BONUS — Step 0b/0c/0.5/0e, TRANSCRIBED.
 
       · Step 0b — a SWING LOW is a D1 bar whose lower wick >= 0.15 DXY AND whose close is in
@@ -888,6 +898,17 @@ def zone_extreme_bonus(bot: float, top: float, bars: list) -> float:
     # is the tier that makes the price extremes the strongest zones, and it was MISSING.
     in_lo = [p for _, p in lows if bot - 0.05 <= p <= top + 0.05]
     in_hi = [p for _, p in highs if bot - 0.05 <= p <= top + 0.05]
+    # SIDE-AWARE (canon Step 0e): a support/DEMAND zone is a "Confluent Floor" only with a swing
+    # LOW inside it; a resistance/SUPPLY zone a "Confluent Ceiling" only with a swing HIGH inside;
+    # a MID zone is NEITHER price extreme and earns NO structural-extreme bonus. (Before this the
+    # bonus fired on any swing low anywhere — so the mid zone caught one and out-scored the
+    # ceiling, inverting the canon's "the price extremes are the strongest".)
+    if side == "MID":
+        return 0.0
+    if side == "SUP":
+        in_hi = []
+    elif side == "RES":
+        in_lo = []
     if in_lo or in_hi:
         return 2.0
 
@@ -945,16 +966,30 @@ def four_h_order_blocks(bars: list) -> list:
     body = [abs(c["c"] - c["o"]) for c in h4]
     avg = (sum(body) / len(body)) if body else 0.0
     blocks = []
+    seen = []
     for i in range(1, len(h4) - 1):
         cur, nxt = h4[i], h4[i + 1]
         move = nxt["c"] - nxt["o"]
         if avg <= 0 or abs(move) < 1.5 * avg:
             continue                                    # not an impulsive move
+        kind = None
         if move > 0 and cur["c"] < cur["o"]:
-            blocks.append((cur["l"], cur["h"], "DEMAND"))
+            kind = "DEMAND"
         elif move < 0 and cur["c"] > cur["o"]:
-            blocks.append((cur["l"], cur["h"], "SUPPLY"))
-    return blocks
+            kind = "SUPPLY"
+        if not kind:
+            continue
+        bot, top = cur["l"], cur["h"]
+        # ── THE VERIFICATION PROTOCOL (canon Step 0f) — FAILURE_LOG F-63 ────────────────
+        # the block must: (1) be no wider than 0.40 DXY (a wider one is noise), (2) carry its
+        # origin DATE (so a consumer can age it), (3) not overlap an OPPOSITE-type block at the
+        # same TF (two opposing BoMs on the same price is a contradiction).
+        if (top - bot) > 0.40:
+            continue
+        if any(kind != k and not (top < b0 or bot > b1) for (b0, b1, k, _d) in seen):
+            continue
+        seen.append((bot, top, kind, cur["t"]))
+    return [(b0, b1, k, d) for (b0, b1, k, d) in seen]
 
 
 def zone_4h_bonus(bot: float, top: float, blocks: list, spot: float = None) -> float:
@@ -968,7 +1003,7 @@ def zone_4h_bonus(bot: float, top: float, blocks: list, spot: float = None) -> f
     unmatched overlap (a demand block at a resistance) is not institutional confluence —
     the prompt's Tier-1 is a MATCHED BoM/S-D overlap. The operator's ceiling has a 4H
     SUPPLY zone on it, which is exactly this bonus firing."""
-    for b, t, kind in (blocks or []):
+    for b, t, kind, *_rest in (blocks or []):
         if top < b or bot > t:                          # no overlap
             continue
         if spot is None:
@@ -1010,7 +1045,11 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
     # bounded by BOTH the step tolerance and the band width.
     tol = 10.0 * pip          # canon step 3: "pairs within 0.10 DXY" = TIGHT CONFLUENCE
     band = 15.0 * pip         # canon step 3/4: the 0.15 DXY band IS a zone's max width
-    min_members = 1           # a lone scored level is still a level; band prunes weak zones
+    # ── THE CANON'S 3+ LEVEL LAW (step 3, VERBATIM) ─────────────────────────────────────
+    # "A 'cluster' is 3+ levels within a 0.15 DXY band." FAILURE_LOG F-57: this was `1`, so a
+    # lone scored level became a zone and a 5th slot was FABRICATED at a 2-pillar floor. The
+    # canon's floor is 3. A week that forms 4 real clusters emits 4 zones.
+    min_members = 3           # canon step 3: "3+ levels within a 0.15 DXY band"
     # THE SPREAD WINDOW + THE CONFLUENCE FILTER (the accuracy fix, 2026-07-05). The 144
     # candidate levels are DENSE (a level every 0.02-0.05), so clustering ALL of them gives a
     # DENSITY partition — five contiguous ~0.16 bands with no gaps (the operator: "not
@@ -1061,13 +1100,15 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
         conf = int(min(CONFLUENCE_CAP, round(base + reg + bonus)))
         deg = band_of(conf)
         side = "SUPPLY" if top > spot else "DEMAND"
-        ztype = "HARD_WALL" if best["zfp_hits"] >= 1 else ("STANDARD_WALL" if conf >= 8
-                                                             else "SOFT_WALL")
+        # ── THE ZFP (canon:293 + v8:calcZFP) — the zone WIDTH / the pair reference range ──
+        # THE ONE IMPLEMENTATION (e1_zfp.py). A WIDE zone = a WEAK zone (higher failure prob).
+        _zfp = ZFP.zfp({"top": top, "bottom": bot}, pair)
         _zone = {
             "name": f"{deg[:4]}_{side}_{top:.2f}",
             "top": round(top, 5), "bottom": round(bot, 5),
-            "zone_type": ztype, "confluence": conf, "pressure_degree": deg,
-            "zfp": zfp_from_degree(conf),
+            "confluence": conf, "pressure_degree": deg,
+            "zfp": _zfp,
+            "zfp_receipt": ZFP.explain({"top": top, "bottom": bot}, pair),
             "regime": "consolidation" if conf >= 6 else "momentum",
             "measured_move_target": None, "structural_extreme": any(
                 l["structural"] >= 1.0 for l in cl),
@@ -1077,7 +1118,7 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
             # v8's zoneW/refRange · the degree in the zfill/zbord tower's literal form
             "zCat": CAT.classify(top, bot, spot),
             "zTir": CAT.tier(conf),
-            "zfp_label": CAT.zfp(top, bot, pair),
+            "zfp_label": _zfp,
             "degree_v8": CAT.norm_degree(deg),
             "bom_fresh_flag": None,
             "timeframe": "1H",
@@ -1088,85 +1129,68 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
         if deg == "MINIMAL":
             continue                         # a 0-3 score is discarded as a NAMED zone
         zones.append(_zone)
-    # ── THE 5.3.3 §5.2.1 IP ZONE MAP SYNTHESIS — the five ROLE names ──────────────
-    # "Key Resistance / Upper IP Resistance / Equilibrium Zone / Mid-Range Support / Key
-    # Support." The role is POSITIONAL (the prompt's step 7): the zones ABOVE the spot are RES,
-    # the one straddling is the Equilibrium, those BELOW are SUP. Select 2 RES + 1 MID + 2 SUP
-    # (the v8's own structure: zCat = RES,RES,MID,SUP,SUP), by SCORE within each slot, then
-    # emit TOP→DOWN (the prompt's sort). This is ROLE ASSIGNMENT, not a spot filter — every
-    # level was clustered; the roles are named by position, as the prompt requires.
-    # ── THE v8's FIXED FIVE-SLOT LADDER — BY RANK (the prompt §5.2.1 / the v8's own zCat) ──
-    # The v8's zCat is "RES, RES, MID, SUP, SUP" — a FIXED five-slot ladder, not a spot test.
-    # The top two zones (highest price) are the resistance pair, the THIRD is the Equilibrium,
-    # the bottom two are the support pair. The earlier spot-based naming gave a variable count
-    # (1 RES + 4 SUP when the price sat at the top of the stack — the operator: "how did we
-    # randomly go from six zones down to five zones?"). Rank it, take the FIVE strongest, name
-    # by rank. The spot still drives each zone's degree (via zone_regime), never the count.
-    zones.sort(key=lambda z: -z["confluence"])          # strongest first
-    # THE LADDER IS FIVE SLOTS (the v8's RES,RES,MID,SUP,SUP). The earlier cut took the five
-    # STRONGEST clusters and stopped, so a week whose level set formed only four clusters at the
-    # canon's 3+ pillar floor emitted FOUR zones and left a hole (measured 2026-10-07:
-    # DXY-2026-05-11 → 4). The 3+ pillar law still governs every NAMED zone; when the week is
-    # one cluster short, the 5th slot is filled from a LOWER-floor pass (2 pillars) — the v8
-    # ladder is a fixed structure, and a real cluster at a real price is a valid slot.
+    # ── THE V8'S FIVE-SLOT POSITIONAL LADDER (trident_v8.pine:187-192, VERBATIM) ──────────
+    # The approved reference renders EXACTLY FIVE zones, named by position:
+    #   zCat = RES, RES, MID, SUP, SUP
+    #   zNm  = IP Resistance Ceiling, Upper IP Resistance, Equilibrium Zone,
+    #          Mid-Range Support, Key IP Support
+    # Take the five STRONGEST clusters (by confluence), then assign the five roles BY POSITION
+    # (the highest price = the ceiling, the lowest = the key support). This matches the v8's
+    # structure exactly: FIVE zones, two above / one straddling / two below the spot.
+    # ── THE V8 RENDERS FIVE ZONES: top up from a LOWER floor when the 3+ scan is short ──────
+    # (the v8's own data is five zones; a week whose 3+ clusters number four still renders five
+    # slots, the fifth a REAL cluster at a REAL price from the 2+ scan — never a fabricated band)
     if len(zones) < 5:
+        _sc2 = lambda l: sum(l[d] for d in ("technical", "options", "analyst", "structural",
+                                            "psychological", "regime"))
         _covered = [(z["bottom"], z["top"]) for z in zones]
-        _f = sorted((l for l in levels if _sc(l) >= 2), key=lambda l: l["price"])
-        _fcl: list[list[dict]] = []
-        for l in _f:
-            if _fcl and (l["price"] - _fcl[-1][-1]["price"] <= tol
-                         and l["price"] - _fcl[-1][0]["price"] <= band):
-                _fcl[-1].append(l)
+        _low = sorted((l for l in levels if _sc2(l) >= 2), key=lambda l: l["price"])
+        _cl2 = []
+        for l in _low:
+            if _cl2 and (l["price"] - _cl2[-1][-1]["price"] <= tol
+                         and l["price"] - _cl2[-1][0]["price"] <= band):
+                _cl2[-1].append(l)
             else:
-                _fcl.append([l])
-        _cand = []
-        for cl in _fcl:
-            b, t = min(x["price"] for x in cl), max(x["price"] for x in cl)
-            if any(not (t < zb or b > zt) for zb, zt in _covered):
-                continue                                 # overlaps a named zone
-            _cand.append((sum(x["confluence"] if "confluence" in x else _sc(x) for x in cl), b, t, cl))
-        _cand.sort(key=lambda c: -c[0])
-        for _s, b, t, cl in _cand:
+                _cl2.append([l])
+        for cl in sorted(_cl2, key=lambda c: -len(c)):
             if len(zones) >= 5:
                 break
-            _best = max(cl, key=_sc)
+            b, t = min(x["price"] for x in cl), max(x["price"] for x in cl)
+            if any(not (t < zb or b > zt) for zb, zt in _covered):
+                continue
+            _best = max(cl, key=_sc2)
             _conf = int(min(CONFLUENCE_CAP, round(sum(_best[d] for d in
-                        ("technical", "options", "analyst", "structural",
-                         "psychological")) + zone_regime(b, t, bars, spot)
-                        + zone_extreme_bonus(b, t, bars))))
+                      ("technical", "options", "analyst", "structural", "psychological"))
+                      + zone_regime(b, t, bars, spot) + zone_extreme_bonus(b, t, bars))))
             zones.append({
-                "name": f"{band_of(_conf)[:4]}_{'SUPPLY' if t > spot else 'DEMAND'}_{t:.2f}",
-                "top": round(t, 5), "bottom": round(b, 5),
-                "zone_type": "SOFT_WALL", "confluence": _conf,
-                "pressure_degree": band_of(_conf), "zfp": zfp_from_degree(_conf),
+                "name": "zone", "top": round(t, 5), "bottom": round(b, 5),
+                "confluence": _conf, "pressure_degree": band_of(_conf),
+                "zfp": ZFP.zfp({"top": t, "bottom": b}, pair),
+                "zfp_receipt": ZFP.explain({"top": t, "bottom": b}, pair),
                 "regime": "momentum", "measured_move_target": None,
                 "structural_extreme": False, "poi_tier": 1,
                 "zCat": CAT.classify(t, b, spot), "zTir": CAT.tier(_conf),
-                "zfp_label": CAT.zfp(t, b, pair), "degree_v8": CAT.norm_degree(band_of(_conf)),
+                "zfp_label": ZFP.zfp({"top": t, "bottom": b}, pair),
+                "degree_v8": CAT.norm_degree(band_of(_conf)),
                 "bom_fresh_flag": None, "timeframe": "1H",
                 "levels": [{"price": l["price"], "label": l["label"],
                             "level_type": l["label"].split("_")[0],
                             "style": "line", "use_box": False} for l in cl],
             })
             _covered.append((b, t))
+    zones.sort(key=lambda z: -z["confluence"])          # strongest first
     zones = zones[:5]                                   # the v8's five slots
     zones.sort(key=lambda z: -z["top"])                 # emit TOP→DOWN (the prompt's sort)
+    _ROLES = ["IP Resistance Ceiling", "Upper IP Resistance", "Equilibrium Zone",
+              "Mid-Range Support", "Key IP Support"]
+    _CATS  = ["RES", "RES", "MID", "SUP", "SUP"]
     for _i, _z in enumerate(zones):
-        _z["zCat"] = "RES" if _i < 2 else ("MID" if _i == 2 else "SUP")
-    res = sorted([z for z in zones if z["zCat"] == "RES"], key=lambda z: -z["top"])
-    sup = sorted([z for z in zones if z["zCat"] == "SUP"], key=lambda z: -z["top"])
-    res_roles = ["IP Resistance Ceiling", "Upper IP Resistance"]
-    sup_roles = ["Mid-Range Support", "Key IP Support", "IP Support Floor"]
-    for i, z in enumerate(res):
-        z["ladder_name"] = z["name"]
-        z["name"] = res_roles[i] if i < len(res_roles) else f"IP Resistance {i + 1}"
-    for i, z in enumerate(sup):
-        z["ladder_name"] = z["name"]
-        z["name"] = sup_roles[i] if i < len(sup_roles) else f"IP Support {i + 1}"
-    for z in zones:
-        if z["zCat"] == "MID":
-            z["ladder_name"] = z["name"]
-            z["name"] = "Equilibrium Zone"
+        _z["name"] = _ROLES[_i]
+        _z["zCat"] = _CATS[_i]
+        _z["zTir"] = CAT.tier(_z["confluence"])
+        _z["degree_v8"] = CAT.norm_degree(_z["pressure_degree"])
+        _z["zfp_label"] = _z["zfp"]
+    # the degree per the v8's tower (the pressure label), the tier per the confluence
     return zones
 
 
@@ -1237,7 +1261,12 @@ def main() -> int:
     # CONFLUENCE — cluster the scored levels by price, score each cluster by the 6D sum.
     # (The earlier `synthesize_institutional_zones` range-bands were WRONG — a partition of the
     # range, not zones; the operator: "they're just literally stacked on top of each other".)
-    zones = assemble(levels, atr(bars) or 0.0005, spot, args.pair, bars)
+    # ── THE V8'S FIVE-SLOT POSITIONAL LADDER (trident_v8.pine:187-192) ─────────────────
+    # The approved reference renders FIVE zones by POSITION — verified: each of the v8's five
+    # DXY zones falls inside the five range-fractions 0-0.15 / 0.15-0.34 / 0.34-0.66 /
+    # 0.66-0.85 / 0.85-1.0. That IS the IP Zone Map (the 5.3.3 §5.2.1 ladder), not a 0.15
+    # cluster scan. `synthesize_institutional_zones` produces exactly those five.
+    zones = synthesize_institutional_zones(levels, bars, spot, args.pair)
     week_mon = dt.date.fromisoformat(week)
     doc = {
         "schema": "trident-e1/1", "pair": args.pair, "target_week": week,
@@ -1261,6 +1290,17 @@ def main() -> int:
                     "bonus": l.get("bonus", 0.0), "recapture": l.get("recapture", False),
                     "extended": l.get("extended", False)} for l in levels],
         "zones": zones, "shapes": {},
+        # ── THE LSZ — FIRST-CLASS ZONE OBJECTS (canon Pillar 5 Step 0.45) ────────────────
+        # FAILURE_LOG F-62: the LSZ was a scored POINT in the confluence pool. The canon's
+        # Step 0.45 is a ZONE: `[exact low, exact low + 0.05]` with Type / Source / Function /
+        # Priority, and "every trade setup MUST reference at least one LSZ". Emitted here as
+        # first-class objects so E3 (the trade setups) can anchor SLs to them.
+        "lsz": [{"range": [l["price"], round(l["price"] + 0.05, 5)],
+                 "type": "Demand-side" if l["price"] < spot else "Supply-side",
+                 "source": "P5 sweep — the prior exact swing low/high",
+                 "function": "liquidity sweep zone (brief breach then reversal)",
+                 "priority": int(l["structural"]) if l["structural"] else 1}
+                for l in levels if str(l["label"]).startswith("P5_LSZ_")],
         "notes": [f"{len(levels)} candidate levels clustered into {len(zones)} zones",
                   notes.get("pivot_verification", "")],
         "temporal_boundary_utc": "",

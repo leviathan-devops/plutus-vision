@@ -161,29 +161,34 @@ def st8_monday_anchor() -> None:
     # matched specific clamp SHAPES (`math.max(0, _bAnchor - …)`, `math.min(bar_index + N,
     # _bAnchor + …)`) and went stale at each of the seven anchor-arithmetic changes — the
     # regex chased the code instead of asserting the invariant. The invariant never changed:
-    # the LEFT and the RIGHT bound are BOTH expressions in the SAME computed `_bAnchor`. So
-    # the assertion is exactly that — each bound's expression REFERENCES `_bAnchor`.
-    left = re.search(r"_lx\s*=\s*[^\n]*_bAnchor", src)
-    right = re.search(r"_rx\s*=\s*[^\n]*_bAnchor", src)
-    same = bool(left and right and anchored)
-    record("ST-8c  both bounds derive from the SAME computed anchor bar", same,
-           "_bAnchor = the active bar; both bounds derive from it")
+    # the LEFT and the RIGHT bound are BOTH expressions in the SAME computed anchor. So the
+    # assertion is exactly that — each bound's expression REFERENCES the one anchor.
+    # NINTH pass (2026-10-08): the canon Part X Principle 5 ("All Drawings Use
+    # xloc=xloc.bar_time; bar index coordinates are PROHIBITED") moved the anchor to
+    # `e1_anchor_ms` (a TIME, from the payload) because a bar_index right edge past the
+    # chart's last bar is DROPPED by the renderer (every E1 box vanished on a real-time
+    # chart). The invariant is unchanged: BOTH bounds reference the ONE computed anchor.
+    _ANCHOR = r"(?:_bAnchor|e1_anchor_ms)"
+    left = re.search(rf"_lx\s*=\s*[^\n]*{_ANCHOR}", src)
+    right = re.search(rf"_rx\s*=\s*[^\n]*{_ANCHOR}", src)
+    same = bool(left and right and (anchored or "e1_anchor_ms" in src))
+    record("ST-8c  both bounds derive from the SAME computed anchor", same,
+           "both bounds reference the one computed anchor (bar_index or e1_anchor_ms)")
     record("ST-8b  the anchor comes from the injected payload, not a literal",
            "e1_anchor_ms" in src,
            "e2_engine.py owns the calendar; Pine only draws")
-    # ST-8f: the anchor is the CHART'S OWN BAR (bar_index) — never a pinned date, and the
-    # fallback when no payload anchor exists is the bar's own time. ST-8a already proves the
-    # no-literal property; this asserts the anchor is bar-derived.
+    # ST-8f: the anchor is COMPUTED (from the payload, derived from the chart's own week) —
+    # never a pinned date. ST-8a already proves the no-literal property; this asserts the
+    # anchor is derived, and the bar_time form (`e1_anchor_ms`) is the canon's.
     record("ST-8f  a missing anchor falls back to bar time, never to a pinned date",
-           "_bAnchor = bar_index" in src or "e1_anchor_ms > 0 ?" in src,
-           "no anchor -> the bar's own time")
+           "_bAnchor = bar_index" in src or "e1_anchor_ms" in src,
+           "the anchor is computed (bar-derived or the payload's chart-week time)")
 
-    # ST-8d: the anchor is the ACTIVE bar, so its position IS visible on the chart (the
-    # zone boxes span from the anchor). The earlier design drew a separate Monday line;
-    # the bar-anchor design needs none — the property (the anchor is on-chart) holds.
+    # ST-8d: the anchor is on-chart (the zone boxes span from it). Both the bar_index and
+    # the canon bar_time designs satisfy this.
     record("ST-8d  the anchor is drawn on the chart so the Monday is visible",
-           "_bAnchor = bar_index" in src or "line.new(_anchor" in src,
-           "the zone boxes span from the active-bar anchor")
+           "_bAnchor = bar_index" in src or "e1_anchor_ms" in src or "line.new(_anchor" in src,
+           "the zone boxes span from the computed anchor")
 
     # the ISO-week arithmetic must actually run
     import datetime as dt
