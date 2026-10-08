@@ -239,8 +239,12 @@ f_e1Render() =>
     0
 
 if e1Enabled and barstate.islast
-    // ── THE LSZ (trident_v8.pine:368-377): GREEN boxes, NO LABELS. DRAWN FIRST (behind) so the
-    // IP zones render ON TOP in their category colours. ────────────────────────────────────
+    // ── THE IP ZONES. ───────────────────────────────────────────────────────────────────────
+    f_e1Render()
+    // ── THE LSZ (trident_v8.pine:368-377): GREEN boxes, NO LABELS, same x-span as the IP zones.
+    // Drawn ON TOP as THIN bright-green strips — the v8's ~5-pip liquidity band — so they read as
+    // distinct GREEN liquidity levels (the reviewers' blocker: the LSZ were invisible behind the
+    // IP zones). Thin enough that the IP zones' category colours still dominate. ─────────────
     _nl = array.size(e1_injected_lsz_top)
     if _nl > 0
         for i = 0 to _nl - 1
@@ -250,13 +254,12 @@ if e1Enabled and barstate.islast
             _lb = array.get(e1_injected_lsz_bottom, i)
             _lp = array.get(e1_injected_lsz_pri, i)
             _lact = _lp == "ACTIVE"
-            box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
+            // A THIN GREEN LINE at the LSZ's swing price — a liquidity level, visible without
+            // covering the IP zone fills (a box at the same price buried the RES zone).
+            line.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lt,
                  xloc = xloc.bar_time,
-                 bgcolor = color.new(color.rgb(40,180,80), 70),
-                 border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
-                 border_width = _lact ? 2 : 1)
-    // ── THE IP ZONES (ON TOP of the LSZ). ───────────────────────────────────────────────────
-    f_e1Render()
+                 color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
+                 width = _lact ? 2 : 1)
     // ── THE OPTION STRIKES (trident_v8.pine:378-388): AMBER horizontal lines + "$X.XB Option
     // Strike Target" labels. Renders the v8's amber layer when the options harvest is UP; an
     // empty array draws nothing (the data is external — never fabricated). ───────────────────
