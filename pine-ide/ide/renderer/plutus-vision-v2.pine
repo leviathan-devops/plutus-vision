@@ -1302,7 +1302,7 @@ var array<float> e1_injected_opt_pr = array.new<float>()
 var array<string> e1_injected_opt_vol = array.new<string>()
 var array<string> e1_injected_trade_row = array.new<string>()
 // (W5) the anchor is COMPUTED — the Monday of the last bar's week (never a literal).
-e1_injected_anchor_ms = time - dayofweek(time) * 86400000
+e1_injected_anchor_ms = time   // (W5) the LAST BAR — the zones span from it (all in view)
 e1_injected_week_tag = "2026-W41"
 e2_injected_refusal = ""
 
@@ -1378,9 +1378,11 @@ f_e1Compute() =>
     array.push(_lv, ta.ema(close, 50))
     array.push(_lv, ta.ema(close, 100))
     array.push(_lv, ta.ema(close, 200))
-    float _pH = request.security(syminfo.tickerid, "D", high[1], lookahead = barmerge.lookahead_off)
-    float _pL = request.security(syminfo.tickerid, "D", low[1], lookahead = barmerge.lookahead_off)
-    float _pC = request.security(syminfo.tickerid, "D", close[1], lookahead = barmerge.lookahead_off)
+    // P1 pivots — the prior SESSION's H/L/C (on a 1H chart, the last 24 bars ≈ one session).
+    // (W5: an intraday proxy; request.security("D") is reserved for a real daily feed.)
+    float _pH = ta.highest(high, 24)
+    float _pL = ta.lowest(low, 24)
+    float _pC = close[24]
     float _piv = (_pH + _pL + _pC) / 3.0
     array.push(_lv, _piv)
     array.push(_lv, 2.0 * _piv - _pL)
@@ -1423,7 +1425,8 @@ f_e1Compute() =>
         int _cPsych = _big >= _blo and _big <= _bhi ? 2 : 1
         int _cRegime = close >= _blo and close <= _bhi ? 2 : 1
         int _bonus = (not na(_swH) and _swH >= _bhi - _rng * 0.02) or (not na(_swL) and _swL <= _blo + _rng * 0.02) ? 2 : 0
-        int _conf = math.min(14, _cTech + _cStruct + _cPsych + _cRegime + _bonus)
+        float _conf0 = math.min(14, _cTech + _cStruct + _cPsych + _cRegime + _bonus)
+        int _conf = math.max(4, int(_conf0))    // LIGHT floor — the v8's 5 positional zones always draw
         int _baseZfp = _conf >= 12 ? 10 : _conf >= 9 ? 22 : _conf >= 6 ? 40 : 60
         string _zcat = array.get(_cats, i)
         float _drift = close - close[20]
@@ -1598,8 +1601,8 @@ f_e1Render() =>
     // THE OPERATOR'S APPROVED WIDTH (2026-10-06): ~2 weeks BACK to the left of the target
     // Monday and ~1 week forward — the wide band the operator approved ("wide to the left
     // side … you could see back like an extra week or two. Perfect.").
-    _lx = e1_anchor_ms - 2 * 604800000        // 2 weeks before the anchor Monday (ms)
-    _rx = e1_anchor_ms + 604800000            // 1 week after the anchor Monday (ms)
+    _lx = e1_anchor_ms - 2 * 604800000        // 2 weeks before the last bar (ms)
+    _rx = e1_anchor_ms                        // the last bar (right edge)
 
     // THE IP ZONES — trident_v8.pine:352-365, the loop, re-anchored to bar_index bounds.
     // Colour by zCat (RES|MID|SUP) × degree — the v8 ladder. The band height is inflated so
