@@ -1372,6 +1372,8 @@ e1g_swH    = ta.pivothigh(5, 5)
 e1g_swL    = ta.pivotlow(5, 5)
 e1g_pHi    = ta.highest(high, 24)
 e1g_pLo    = ta.lowest(low, 24)
+e1g_recentHi = ta.highest(high, 60)
+e1g_recentLo = ta.lowest(low, 60)
 
 f_e1Compute() =>
     array.clear(e1_injected_top)
@@ -1426,12 +1428,13 @@ f_e1Compute() =>
                 _cnt += 1
                 _tp := na(_tp) ? _p : math.max(_tp, _p)
                 _bt := na(_bt) ? _p : math.min(_bt, _p)
-        // THE ZONE IS A THIN BAND at the level (the v8's zTp/zBt are NARROW: 0.07-0.34 wide, NOT
-        // a full-height partition). The earlier `_tp=_bhi; _bt=_blo` filled the whole range → the
-        // zones were FAT BLOCKS crushing the candles (the operator's screenshot). The band's
-        // MIDPOINT = its position in the range; the height is a thin fraction of the range.
-        float _zmid = _rLo + ((_f0 + _f1) / 2.0) * _rng
-        float _zhw = _rng * 0.045                 // a thin band (~9% of the range tall)
+        // THE ZONE POSITION — around the SPOT (the v8: 2 RES above, 1 MID straddling, 2 SUP
+        // below), spaced by a fraction of the RECENT range. NOT a full-range partition (the
+        // fat-block defect) and NOT clustered at the bottom. i=0 the ceiling, i=4 the key support.
+        float _recent = e1g_recentHi - e1g_recentLo
+        float _sp = close
+        float _zmid = _sp + (2 - i) * (_recent * 0.30)
+        float _zhw = _recent * 0.12                 // a thin band
         _tp := _zmid + _zhw
         _bt := _zmid - _zhw
         // ── THE CANON'S 6-DIMENSION CONFLUENCE (canon:1465-1484) + the ZFP base/modifiers ────
