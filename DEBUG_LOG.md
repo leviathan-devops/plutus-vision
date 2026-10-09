@@ -2873,3 +2873,18 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
 - **THE VERIFICATION (the screenshot):** the E2 cyan forecast path renders (a diagonal rising from
   the Equilibrium), alongside the 5 computed E1 zones. `pv-load boxes:5 lines:5 labels:6 tables:1`.
 - **THE LESSON:** a dormant render is often an EMPTY payload, not a render bug — check the arrays.
+
+---
+
+## EN-128 — W5 · THE DEGREE LADDER MATCHES THE v8's STRUCTURE (2026-10-09)
+
+- **THE FINDING:** the flat degree ("all Light") — the confluence didn't vary across bands.
+- **THE FIX:** weight the Step 0e extreme bonus (the band holding the week's high/low) at ×3 and cap
+  the level-count term at 2: `conf = the6dims + the extreme bonus ×3 + min(2, level_count)`.
+- **THE VERIFICATION (the screenshot):** the extremes now read MODERATE-HEAVY (40% ZFP — the IP
+  Resistance Ceiling renders RED), the Equilibrium MODERATE (40%), the middle two LIGHT (60%) — the
+  v8's ladder STRUCTURE (the extremes strongest) now computed, not authored.
+- **THE REMAINING:** the exact v8 rungs (HEAVY at both extremes) differ (Moderate-Heavy vs Heavy);
+  the v8's zDeg is a hand-typed literal (F-123). The structure (extremes strongest) is now correct.
+- **THE LESSON:** a step-function ladder from a measured confluence lands close to an authored
+  example's SHAPE without copying its literals.

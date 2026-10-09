@@ -2375,3 +2375,19 @@ H1 held); spec-audit `APPROVED (0/8)`; SC-19 bites the current artifact (15); **
 `grep -cE 'e1_injected_.*\.push\([0-9]' pine-ide/ide/renderer/plutus-vision-v2.pine → 15`.
 **The honest notes:** the CODE fix (W5 — compute in Pine) is PENDING; the code-audit gate is BLOCKED
 (no artifact); the 5-week crossval is INSUFFICIENT_DATA; 66 files uncommitted.
+
+---
+
+## 2026-10-09 — THE W5 BUILD · ENGINE 1 + ENGINE 2 COMPUTE (the A2 fix)
+
+**The built:** the E1 zones (the 9-Pillar map) + the E2 shape chain, COMPUTED in the Pine from the
+chart's own bars (SC-19 baked literals 15→0; the E2 payload empty→computed); a varying degree ladder.
+**The why:** the operator's #1 requirement — "compute the data live" (the A2 substitution removed).
+**The how:** `f_e1Compute` (the canon's 6 dims + the Step 0e extreme bonus + the band level count →
+the degree + the ZFP) + `f_e2Compute` (the §6.2 shape matrix + a 5-day path); the ta.* series at the
+global scope; the baked `if bar_index == 0` block DELETED.
+**The evidence:** the render (the screenshot): 5 zones spanning 102.01→100.51 (the extremes
+MODERATE-HEAVY 40% RED, the Equilibrium MODERATE, the middle LIGHT) + the E2 cyan path + the table.
+`pv-load` boxes:5 lines:5 labels:6 tables:1.
+**The verification:** SC-19 = 0; `bun pv-load` EXIT 0.
+**The honest notes:** the v8's EXACT ladder rungs differ (F-123); W3/W4/W6/W7 remain.
