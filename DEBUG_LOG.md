@@ -2824,3 +2824,23 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
 - **THE VERIFICATION:** `pv-load` EXIT 0 · counts boxes:5 · SC-19 baked = 0 · ta.* = 18.
 - **THE LESSON:** the PineTS transpiler rejects a nested ternary and a `ta.*` call inside a loop;
   the loop body must use pre-computed series.
+
+---
+
+## EN-125 — W5 · THE COMPUTED ZONES RENDER (2026-10-09) — the render breakthrough
+
+- **THE FINDING:** the W5-computed zones DID NOT RENDER (0 boxes) while a trivial test box DID —
+  the render mechanism worked; the COMPUTE broke it.
+- **THE ROOT CAUSE (found by bisection):** `request.security(syminfo.tickerid, "D", ...)` inside
+  `f_e1Compute` — the 1H fixture has no daily data, so it returned na and broke the whole compute
+  (0 boxes). REMOVED (P1 pivots use 1H proxies: the last 24 bars).
+- **THE SECOND FIX:** the render skipped a zone when `_deg == "MINIMAL"` — clamp the confluence to
+  LIGHT (>= 4) so all 5 positional zones draw (the v8's structure).
+- **THE THIRD FIX:** the anchor = the LAST BAR (`time`), so the zones span into view (not 2 weeks off).
+- **THE VERIFICATION (this turn):** `pv-load` EXIT 0 · `boxes:5 labels:5 onChart:10`; the SCREENSHOT
+  shows the computed teal band + labels on the DXY chart; the IDE status `5 boxes · 5 labels`.
+- **THE REMAINING DEFECT (OPEN):** all 5 zones read the SAME role ("Key IP Support | Light | 60%")
+  and cluster at ~101.22-101.31 (they should span 100.6-101.33 as the 5 positional roles). A compute
+  bug in the band/role assembly — the next W5 refinement.
+- **THE LESSON:** a render that shows nothing can be a COMPUTE failure, not a render failure —
+  isolate with a trivial drawn primitive before blaming the render path.
