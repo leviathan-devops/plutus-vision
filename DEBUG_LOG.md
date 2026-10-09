@@ -2904,3 +2904,15 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
   the pv-load harness passes only pair/tf, not a dataFile — a harness extension).
 - **THE LESSON:** a "different week" test needs the BARS reloaded, not the file swapped; verify the
   bar count changed before trusting a multi-week run.
+
+---
+
+## EN-130 — THE VISION-IN-THE-LOOP BIBLE + THE FAT-BLOCK FIX (2026-10-09)
+
+- **THE SKILL:** `vision-in-the-loop` minted — the render LOOK law: render → capture → OPEN → read
+  vs the spec; the defect classes (the fat-block, the colour mismatch, the cluster, the scale blowout,
+  the off-screen, the overlap, the empty); the false-green killers (a count is not a verification).
+- **THE DEFECT:** the E1 zones rendered as FAT full-height blocks (the operator's screenshot). FIXED:
+  thin bands at the level's midpoint. See F-128.
+- **THE LESSON:** when the operator sends an image, they are SHOWING a defect — LOOK, name the delta,
+  fix it; never ask "what is this".

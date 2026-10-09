@@ -2207,3 +2207,21 @@ verdict was PASS; the run-4/5/6 findings were refinements, fixed, with 2 false p
   this rig.
 - **Disposition:** OPEN. The W5 CODE requirement stands (SC-19=0, deterministic). The VISUAL needs
   AUTO off + a settle + a capture, or pine-station's direct API. Not yet achieved.
+
+---
+
+## F-128 — THE FAT-BLOCK ZONES (the render derailed the spec) — 2026-10-09
+
+- **What happened:** the operator sent a screenshot: the 5 E1 zones rendered as FAT full-height
+  blocks filling the chart (100.4-102.0), CRUSHING the candles. The spec/v8 draws THIN bands at the
+  levels. A complete visual failure — a count (`boxes:5`) PASSED while the pixels were garbage.
+- **Found:** the operator's screenshot ("tf is this" / "look at it, observe what is wrong").
+- **Root cause:** the compute set the zone bounds to the BAND partition (`_tp=_bhi; _bt=_blo`) — a
+  full-range partition — instead of a THIN band at the level. The v8's zTp/zBt are NARROW (0.07-0.34
+  wide); a full-range partition is a derailment.
+- **Impact:** the render was unreadable (the candles crushed); the deliverable looked like garbage.
+- **Disposition:** FIXED — the zone = a THIN band at the band's midpoint (9% of the range tall)
+  (`plutus-vision-v2.pine:1433-1436`); SC-19 0, boxes 5 (48548ed). RE-LOOK pending (the rig).
+- **THE LESSON:** a COUNT proves geometry was created, not that the pixels match the spec. THE
+  VISION-IN-THE-LOOP LAW (the skill minted): render → capture → OPEN → read vs the spec. A count is
+  never the verdict; the pixels are.
