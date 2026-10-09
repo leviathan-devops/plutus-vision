@@ -5,19 +5,19 @@ renders them on the sealed V1 baseline — transcribed from the authority, never
 re-derived; computed, never typed; NO report.
 THE ONLY SUCCESS GATE IS THE JEV GATE. No person, agent, unit test, exit code, script,
 or battery decides. JEV decides. The run STOPS only when `bash JEV_GATE/run_gate.sh`
-returns `JEV VERDICT: YES` (route=act) AND the operator LOOKS at the live render (C16).
-ANYTHING ELSE IS REJECTED. ANY non-YES is a rejection, no appeal.
+returns `JEV VERDICT: YES` (route=act on EVERY context chunk) AND the operator LOOKS at
+the live render (C16). ANYTHING ELSE IS REJECTED. ANY non-YES is a rejection, no appeal.
 
 BASELINE (re-measure EVERY number THIS turn; inherited numbers are STALE)
 repo /home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION @ HEAD
-v1 seal plutus-vision-v1.pine = 0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1
+v1 seal pine-ide/ide/renderer/plutus-vision-v1.pine = 0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1
   — NEVER touch (HARD STOP H1).
-v2 plutus-vision-v2.pine = 668e89d79a08e68e35d0bf5a8c15f565e6ab297287b4e14d8a193e47e9178cb9 (1863 lines)
+v2 pine-ide/ide/renderer/plutus-vision-v2.pine = 668e89d79a08e68e35d0bf5a8c15f565e6ab297287b4e14d8a193e47e9178cb9 (1863 lines)
 AUTHORITY: Original_Canon_Data/Toolset/ (6 files) + Original_Canon_Data/Pine Scripts/trident_v8.pine.
 THE BUILD PACKAGE (the DERIVED plan, never the authority):
   packages/plutus-vision-e1-automatic/ + the DPL1 blueprint + PLUTUS_VISION_INDICATOR_PORT_SPEC.md
 rig: pv-server :9851, pine-station :9741, CDP :9222, the app on display :3.
-THE CONFIRMED DEFECT (the current state JEV rejects at noul=0.005):
+THE CONFIRMED DEFECT (JEV rejects the current build on EVERY chunk, max noul=0.364):
   pine-ide/ide/renderer/plutus-vision-v2.pine:1276-1316 — the baked zone arrays.
   grep -cE 'e1_injected_(top|bottom|cat|degree|zfp)\.push\([0-9]' pine-ide/ide/renderer/plutus-vision-v2.pine
   -> 15 (the port spec SC-19 requires 0). The zones are baked literals, not computed.
@@ -42,25 +42,25 @@ W4 — lsz-desk — the LSZ zone object + the 4H verification
   deliverable: the LSZ is a first-class zone (range/type/source/function/priority); 4H date + width <= 0.40
   gate: test_lsz_object — the E1 JSON carries lsz[] with range/type/function
 W5 — pine-desk — THE DELIVERABLE: the zones COMPUTED in Pine
-  files: plutus-vision-v2.pine, scripts/pine_emit.py
+  files: pine-ide/ide/renderer/plutus-vision-v2.pine, scripts/pine_emit.py
   deliverable: P1,P2,P5,P6,P9 computed IN the .pine from the chart's bars;
     the e1_injected_* ZONE arrays DELETED; only P3/P4/P7/P8 bake
   gate: test_render_computed — grep -cE 'e1_injected_*.push\([0-9]' plutus-vision-v2.pine == 0
     AND the zones built by ta.* / request.security
-W6 — gate-desk — the differential ZFP + the 5-week litmus
-  files: scripts/indicator_gate.py (NEW)
+W6 — gate-desk — the differential ZFP + the 5-week litmus + wire the live screenshot into the JEV gate
+  files: scripts/indicator_gate.py (NEW), JEV_GATE/run_gate.sh
   deliverable: the two-week differential probe wired into the chain; 5 random weeks rendered with
-    FORWARD price action visible (real bars, NOT INSUFFICIENT_DATA)
+    FORWARD price action visible (real bars, NOT INSUFFICIENT_DATA); the gate ingests the screenshot
   gate: test_5week_crossval — each week has >=5 zones with >=1 RES AND >=1 SUP AND the render ok:true
 W7 — cleanup-desk — the scratch + the seal
-  files: (deletions per the slump map) + the fence SPEC.md
+  files: (deletions per forensic/SLUMP_MAP.md) + the fence SPEC.md
   deliverable: the orphan renderers, the twin, the scratch dirs, the build target removed; the fence PASS row
   gate: test_tree_clean — git status --porcelain == 0 and no duplicate v2 renderer
 
 LAWS (binding every turn; a violation FAILS the wave on sight)
-THE JEV GATE IS THE ONLY SUCCESS GATE: `bash JEV_GATE/run_gate.sh` — JEV, given the full context
-  (spec + ship docs + graph + git + the artifact), returns one noul: act (>=0.8) = YES = pass,
-  anything else = REJECT. You NEVER grade, judge, test, or pass anything yourself.
+THE JEV GATE IS THE ONLY SUCCESS GATE: `bash JEV_GATE/run_gate.sh` — JEV, given the FULL context,
+  returns one noul per chunk: act (>=0.8) = YES, anything else = REJECT. You NEVER grade, judge,
+  test, or pass anything yourself.
 THE OD-1 RULING (RULED 2026-10-09, A3): P1,P2,P5,P6,P9 run LIVE in the indicator (Pine) from the
   chart's own bars; ONLY P3/P4/P7/P8 bake. A2 (baking ALL pillars and injecting literals) is FORBIDDEN.
 THE VERBATIM AUTHORITY: the prompt + the v8 are ONE authority; transcribe, cite file:line, never
@@ -98,50 +98,29 @@ AP-8 the crossval reported as accuracy over INSUFFICIENT_DATA (zero real bars).
 AP-9 treating an open decision (OD-n) as a default.
 AP-10 re-deriving where a named artifact exists (the Toolset). Transcribe.
 
-PROOF CONTRACT (the JEV gate IS the proof; there is no other)
-THE GATE: `bash JEV_GATE/run_gate.sh [artifact]` -> the noul decision. act = YES, else REJECT.
-THE CONTEXT THE GATE CONSUMES (full, no exceptions): PLUTUS_VISION_INDICATOR_PORT_SPEC.md +
-  the 6 ship docs (the latest entries) + the live graph + the git history + the artifact itself.
-  A JEV verdict reached WITHOUT this full context is VOID — re-supply the context and re-run.
-THE CONTEXT-COMPLETENESS CHECK (before trusting any YES): the gate must have been handed the spec
-  AND the ship docs AND the graph AND the artifact. If any is missing, the YES is REJECTED and the
-  gate re-run with the full context.
-INDEPENDENT: the gate is run by `run_gate.sh` (a mechanical script) over JEV (the local judge) —
-  never by the builder, never by a subagent, never by the agent's own reasoning.
-NAMED TESTS (regression guards only — they do NOT pass the build): test_zfp_discriminates,
-  test_v8_structure, test_6dim_score, test_lsz_object, test_render_computed, test_5week_crossval,
-  test_tree_clean.
-ADVERSARIAL-FIRST: the mutation/adversarial cases run BEFORE the happy path. Zero defects found = RED FLAG.
-THE LIVE PROOF: the render is captured (a screenshot) on the host-live rig and bound to the JEV
-  verdict + the results artifact; a claim without the opened screenshot is VOID.
-LOG ALL FAILURE DATA: every rejection, every BLOCKED, every F entry lands in FAILURE_LOG.md + the
-  DEBUG_LOG the moment it is observed.
-
-STOP
-The run stops ONLY when: the JEV gate returns `act` (YES) over the FULL context AND the operator
-LOOKS at the live render and says it is right (C16). ANYTHING LESS IS OPEN.
-FIRST REPLY: re-measure the baseline (the SHAs, the tree), run `bash JEV_GATE/run_gate.sh` to post
-the CURRENT verdict (it is REJECTED at noul=0.005 today), then FIRE W1 in the same turn.
-RESUME from DISK (SPEC.md, context_management/, .trident/wave-audit/), never from frozen numbers.
-
 THE MECHANICAL SUCCESS GATE — THE EXACT WIRING (mandatory; you are FORBIDDEN from bypassing this)
 The gate IS `bash JEV_GATE/run_gate.sh [artifact]`. It:
-  (1) assembles the FULL context (spec §0.1+§4+§6 · the 6 ship docs' latest · git log · the
-      artifact evidence) capped to ~48KB;
-  (2) builds the row {id, text: context + artifact};
-  (3) judges via `jm decision-tree --rows … --recipe JEV_GATE/recipe.json` (the local JevK5 at
-      :8090/v1/systemone; ONE noul; requests=1);
-  (4) routes: noul >= act(0.80) = route "act" = YES; >= flag(0.50) = "escalate" = REJECT;
-      < flag = "noop" = REJECT; policy.fail="closed" → a judge outage REFUSES (never a pass);
+  (1) assembles the FULL context (~227KB, nothing omitted): the WHOLE spec · the 6 ship docs ·
+      the git history (40 commits) · the checkpoints · the WHOLE theatricality log · the WHOLE
+      artifact source (the .pine);
+  (2) CHUNKS it (~38KB pieces; measured 7) because the judge's payload cap is ~48KB; the artifact
+      evidence header (sha, the SC-19 count, the ta.* count) is prepended to EVERY chunk;
+  (3) judges EACH chunk via `jm decision-tree --rows … --recipe JEV_GATE/recipe.json` (the local
+      JevK5 at :8090/v1/systemone; ONE noul per chunk; requests=1);
+  (4) routes + aggregates: noul >= act(0.80) = route "act" = YES; >= flag(0.50) = "escalate" =
+      REJECT; < flag = "noop" = REJECT; policy.fail="closed" → a judge outage REFUSES (never a pass).
+      The verdict is the AND: EVERY chunk must be act;
   (5) emits "JEV VERDICT: YES" (exit 0) or "JEV VERDICT: NO — REJECTED" (exit 1).
-THE BINARY: only route=act is YES. Everything else (escalate, noop, refusal, timeout, outage) is REJECT.
+THE BINARY: only all-chunks-act is YES. Everything else (escalate, noop, refusal, timeout, outage) is REJECT.
 THE WIRING FILES: JEV_GATE/recipe.json:1 · JEV_GATE/run_gate.sh:1 · JEV_GATE/WORKFLOW.md:1 ·
   JmManager/src/verbs/decision-tree.ts:155 (answersToPolicyValue) · JmManager/src/judge/policy.ts:31 (the route ladder).
 
-THE PERSISTENT TODO (immutable — pinned, never removed):
+THE PERSISTENT TODO (immutable — pinned, never removed; you are FORBIDDEN to bypass it)
   [PERMANENT] RUN THE JEV GATE AND POST ITS VERDICT — do not pass anything yourself.
-  the pass: route=act (only).  the context: full (partial context = REJECT).
-  failure to run the gate = the work is DELETED.
+    the gate:   bash JEV_GATE/run_gate.sh [artifact]
+    the pass:   route=act on EVERY context chunk (only).
+    the context: FULL (partial context = REJECT — the gate chunks the whole spec + docs + artifact).
+    failure to run the gate = the work is DELETED.
 
 THE CHEAT/BYPASS ANTI-PATTERNS (AP-G1..AP-G12 — each is an INSTANT, AUTOMATIC rejection)
 AP-G1 SELF-GRADING: you/subagent declaring your own work a PASS. The builder is a CLAIM; JEV judges.
@@ -158,7 +137,35 @@ AP-G11 THE SELF-REPORTED-VERDICT: typing "JEV VERDICT: YES" in prose. Only run_g
 AP-G12 THE BOOTSTRAPPED-JUDGE: modifying the judge (model/adapter/decision-tree.ts) to make it say yes.
 THE META-AP: any reasoning that concludes "this is fine" without the gate's `act` is AP-G1.
 
+PROOF CONTRACT (the JEV gate IS the proof; there is no other)
+THE GATE: `bash JEV_GATE/run_gate.sh [artifact]` -> the per-chunk noul decision. all-act = YES, else REJECT.
+THE CONTEXT THE GATE CONSUMES (full, no exceptions): the WHOLE spec + the 6 ship docs + the git
+  history + the checkpoints + the WHOLE theatricality log + the WHOLE artifact source. A JEV verdict
+  reached WITHOUT this full context is VOID — re-supply the context and re-run.
+THE CONTEXT-COMPLETENESS CHECK (before trusting any YES): the gate must have printed >= 5 chunks
+  (the whole spec + docs + artifact are large); a single tiny chunk means pieces were omitted -> REJECT.
+INDEPENDENT: the gate is run by `run_gate.sh` (a mechanical script) over JEV (the local judge) —
+  never by the builder, never by a subagent, never by the agent's own reasoning.
+NAMED TESTS (regression guards only — they do NOT pass the build): test_zfp_discriminates,
+  test_v8_structure, test_6dim_score, test_lsz_object, test_render_computed, test_5week_crossval,
+  test_tree_clean.
+ADVERSARIAL-FIRST: the mutation/adversarial cases run BEFORE the happy path. Zero defects found = RED FLAG.
+THE LIVE PROOF: the render is captured (a screenshot) on the host-live rig and bound to the JEV
+  verdict + the results artifact; a claim without the opened screenshot is VOID.
+LOG ALL FAILURE DATA: every rejection, every BLOCKED, every F entry lands in FAILURE_LOG.md + the
+  DEBUG_LOG the moment it is observed.
+
+STOP
+The run stops ONLY when: `bash JEV_GATE/run_gate.sh` returns `JEV VERDICT: YES` (route=act on EVERY
+chunk) over the FULL context AND the operator LOOKS at the live render and says it is right (C16).
+ANYTHING LESS IS OPEN.
+FIRST REPLY: re-measure the baseline (the SHAs, the tree), run `bash JEV_GATE/run_gate.sh` to post
+the CURRENT verdict (it is REJECTED — every chunk noop, max noul=0.364 today), then FIRE W1 in the
+same turn. Inherited numbers are STALE until re-run.
+RESUME from DISK (SPEC.md, context_management/, .trident/wave-audit/), never from frozen numbers.
+
 REFERENCES (file:line anchors — output + verification)
   PLUTUS_VISION_INDICATOR_PORT_SPEC.md:445 (the OD-1 ruling) · JEV_GATE/recipe.json:1 (the noul question)
   JEV_GATE/WORKFLOW.md:1 (the gate workflow) · JmManager/src/verbs/decision-tree.ts:155 (the aggregation)
-  the output of `bash JEV_GATE/run_gate.sh` is the only verdict; the verification is its exit code.
+  JEV_GATE/run_gate.sh:1 (the gate runner) · the output of `bash JEV_GATE/run_gate.sh` is the only
+  verdict; the verification is its exit code.
