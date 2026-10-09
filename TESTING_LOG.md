@@ -1936,3 +1936,32 @@ renders empty on the live week — the loud-fail contract.
 **THE E2 FORWARD CHECK:** EURUSD-2026-10-05 forecast WL@1.12556 (Upper IP Res) → RWL@1.11741
 (Floor) → SS@1.12241 (Equilibrium); the real week rose to ~1.125 (Oct 6) then fell to ~1.119. The
 forecast direction (rise to the resistance, fall to the support) matches.
+
+---
+
+## TEST RESULT — 2026-10-09 — the spec-audit gate
+
+### SCRIPT
+- **The run:** `bun ~/.omp/agent/bin/spec-audit-generic.ts PLUTUS_VISION_INDICATOR_PORT_SPEC.md`
+- **The raw output:** `VERDICT:APPROVED (fail=0)` — GS-1..GS-8 all PASS
+- **The verdict:** PASS (was REJECTED 3/8 — GS-3, GS-7, GS-8 — before the fix)
+- **The artifacts:** none (the tool prints to stdout)
+
+## TEST RESULT — 2026-10-09 — the red-team audit (2 independent scouts + the primary)
+
+### SCRIPT
+- **The run:** `audit-alpha-fabrication` + `audit-bravo-slop` + the primary's hunt
+- **The raw output:** alpha 15 findings (F-01 CRITICAL baked literals, 3 high); bravo: baked ×3 files,
+  ZFP ×4, the twin renderer
+- **The verdict:** FAIL — the baked-literal A2 violation (F-117) + the INSUFFICIENT_DATA crossval
+  (F-119) + the substituted gate (F-120)
+- **The artifacts:** `forensic/FAILURE_LEDGER_INDICATOR_PORT.md`
+
+## TEST RESULT — 2026-10-09 — the code-audit gate (qwen-code-audit)
+
+### SCRIPT
+- **The run:** not run this session
+- **The verdict:** **BLOCKED** (no `sg-ocr-*.json` on disk)
+- **The retry condition:** run `qwen-code-audit` (or the pinned fallback lane) to a verdict
+
+**AUDIT GATE: BLOCKED (no code-audit artifact on disk for this artifact)**

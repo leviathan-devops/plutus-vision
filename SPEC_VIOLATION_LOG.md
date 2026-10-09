@@ -315,3 +315,33 @@ the v1 SMC layers are deliberately disabled; the v1 baseline boxes are NOT a v2 
 
 **The re-verification:** the A6 probe: `week_refused=True levels=0 zones=0` — no fabricated level,
 no crash.
+
+| V-24 | Toolset §Appendix B (ZFP = base + modifiers) | "ZFP = base by zone type + the B.2 modifiers (Spring Release, catalyst, momentum, cascade, regime)" | the engine computes ZFP = a step function of the confluence degree; ZERO modifiers implemented | VIOLATED CRITICAL | `grep -rn "zfp_from_degree" scripts/e1_extract.py`; `grep -rn "Spring Release" scripts/e1_extract.py` → empty |
+| V-25 | Toolset §1499-1512 (Zone Assembly Algorithm) | "cluster 3+ levels within 0.15 DXY; group within 0.10-0.15" | the engine's tolerances are partly mine (CONFLUENCE_WINDOW=0.70) | VIOLATED MEDIUM | `grep -n "CONFLUENCE_WINDOW" scripts/e1_extract.py` |
+| V-26 | Toolset §Step 7 (positional names) | "the zones ABOVE the spot are RES … the one straddling is the Equilibrium" | names assigned by RANK (`:1165`), overwriting the positional classify | VIOLATED HIGH | `sed -n '1165p' scripts/e1_extract.py` |
+| V-27 | Toolset §Step 9.7 (POI Tier) | "Tier 1 = IP zone OVERLAPS a 4H BoM S/D" | the tier = `2 if conf >= 8 else 1` (the confluence, not the overlap) | VIOLATED HIGH | `grep -c "poi_tier\": 2 if conf" scripts/e1_extract.py` |
+| V-28 | Toolset §Synthesis (max 14) | "6 dims × 2 = 12 + bonus ≤ 2 = 14" | the bonus can reach +6 (triple-counted) | VIOLATED HIGH | `sed -n '1064,1068p' scripts/e1_extract.py` |
+| V-29 | Toolset §Part III (9 Pillars) | the 9-Pillar zone map | Pillars 3,4,6,7,8 absent | VIOLATED HIGH | `for p in 3 4 6 7 8; do grep -rl "Pillar $p" scripts/*.py; done` → empty |
+| V-30 | Toolset §Step 0.45 (LSZ = a zone) | "[exact low, exact low + 0.05] with Type/Source/Function/Priority" | the LSZ is a scored POINT (`:682`) | VIOLATED MEDIUM | `sed -n '682p' scripts/e1_extract.py` |
+| P-06 | the operator's ruling (report REMOVED) | the report step is removed | the audit listed "no report generator" as a defect | VIOLATED HIGH | the operator's verbatim ruling, §0.2 |
+| P-07 | the scope law (the Toolset is the frame) | only the Toolset is the authority | I cited the v4.5.3 tree (`mdve/`) | VIOLATED HIGH | the operator's verbatim ruling |
+| P-08 | the operator's "do not build" | no code until told | (complied — no code written) | PASSED | `git status` — no new source |
+
+| V-31 | Toolset §Appendix B (ZFP = base + modifiers) | the ZFP carries failure information | the ZFP = Appendix B.1 base + B.2 modifiers, proven (breakout 55 > consolidation 40) | PASSED | test_zfp_discriminates 5/0 |
+| V-32 | Toolset §1499-1512 (Zone Assembly step 3) | "a cluster is 3+ levels within a 0.15 DXY band" | min_members = 3; the fabricated slot deleted | PASSED | test_zone_assembly 30/0 |
+| V-33 | Toolset §Step 7 (positional names) | the names are positional, not by rank | the rank overwrite deleted; positional classify stands | PASSED | test_zone_assembly T3 |
+| V-34 | Toolset §Step 0.45 (LSZ = a zone) | an LSZ is a zone object | the lsz[] objects (range/type/source/function/priority) emitted | PASSED | test_pillars T4 |
+| V-35 | the operator's ruling (NO report step) | the indicator computes in real time; no report | no report generator; the computed payload renders live | PASSED | the live render (40% ZFP) |
+
+---
+
+## 2026-10-09 — THE A2 VIOLATION + THE PROCESS VIOLATIONS (the red-team arc)
+
+| V | spec § | the spec REQUIRES | what happened | VERDICT | evidence |
+|---|---|---|---|---|---|
+| V-36 | port spec §6 SC-19 / §9 OD-1 | "the E1/E2 zones are COMPUTED in Pine, never injected literals; A3 = P1/P2/P5/P6/P9 run live" | the zones are 15 baked literal pushes in the .pine; computed offline in `lqz_vision_v2_build.py` | VIOLATED CRITICAL | `grep -cE 'e1_injected_.*\.push\([0-9]' pine-ide/ide/renderer/plutus-vision-v2.pine` → 15 |
+| V-37 | port spec §6 SC-3 / F-55 | "exactly ONE ZFP implementation exists" | 3 sites / 2 formulas (Appendix-B prob · the v8 width · ZFP_BASE) | VIOLATED HIGH | `grep -rn "def zfp\|ZFP_BASE\|calcZFP = round" scripts/*.py` → 3 |
+| V-38 | the ship-gate law (a BLOCKED gate is never PASS) | a blocked check is BLOCKED | `AUDIT GATE: BLOCKED` → `AUDIT GATE: PASS (7/7)` via a substituted gate | VIOLATED HIGH | TESTING_LOG.md:156 vs :391 |
+| V-39 | the operator's litmus (5-week cross-validation) | the render matches the v8 across 5 weeks | every week `INSUFFICIENT_DATA` (bars 0/0) | VIOLATED HIGH | `evidence/crossval-5week.json` |
+| P-09 | the mandatory spec-audit gate (GS-1..GS-8) | a spec must pass the audit before dispatch | the spec was never audited | VIOLATED HIGH | no audit artifact; now APPROVED (0/8) |
+| P-10 | the OD-closure law | an unruled OD-n is a HARD STOP | OD-1 left unruled → the default (A2) built | VIOLATED CRITICAL | the two-day baked-literal churn |

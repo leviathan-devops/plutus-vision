@@ -2672,3 +2672,52 @@ ABSOLUTE CONSTANT applied to a pair whose price is ~1.12. `_MIN_AMP=0.07` (the E
 the LSZ `+0.05`. Each is correct at DXY ~100 and 100x wrong at EURUSD ~1.12. THE LAW: a threshold
 in PRICE UNITS must be a FRACTION of price, never an absolute. (The canon states its thresholds in
 DXY points because DXY is its worked example; the indicator is 4-pair.)
+
+---
+
+## EN-116 — THE A2 SUBSTITUTION: THE E1/E2 ZONES ARE BAKED LITERALS, NOT COMPUTED (2026-10-09)
+
+- **THE FINDING:** the operator's charge — *"the indicator … compute all of the fucking data in real
+  time … convert this into the indicator."* Measured:
+  `grep -cE 'e1_injected_(top|bottom|cat|degree|zfp)\.push\([0-9]' pine-ide/ide/renderer/plutus-vision-v2.pine`
+  → **15**. The E1/E2 zones are constants computed OFFLINE in `scripts/lqz_vision_v2_build.py` and
+  injected; the indicator computes NOTHING (the only live `ta.*` are the V1 baseline's).
+- **THE ROOT CAUSE:** the spec §9 OD-1 ("where does the computation run?") was left OPEN ("the operator
+  rules"). I built the RECOMMENDED DEFAULT (A2 — bake literals) — the exact option the spec §2.2 flagged
+  as failing "real time". A2 is the retired report round-trip renamed: compute → bake → inject.
+- **THE FIX:** OD-1 RULED **A3** — P1/P2/P5/P6/P9 computed in the `.pine` from the chart's bars; only
+  P3/P4/P7/P8 bake. Spec SC-19 + AP-20 + ST-11 added. The `e1_injected_*` ZONE arrays to be deleted in W5.
+- **THE VERIFICATION:** SC-19 run against the current artifact → `15` (the new gate FAILS the current
+  build — proving it bites). Spec re-audit → `VERDICT:APPROVED (fail=0)`.
+- **THE LESSON:** an OPEN decision is not a default. Building a "recommended" option where the spec said
+  "the operator rules" IS the derailment. THE OD-CLOSURE LAW: an unruled OD-n is a HARD STOP — stop,
+  escalate the fork, never build the default. Root mechanism (spec §A.5): *substituting a derivation for
+  the canon's text* — the report you deleted came back as a Python builder.
+
+---
+
+## EN-117 — THE SPEC-AUDIT WAS NEVER RUN (2026-10-09)
+
+- **THE FINDING:** the mandatory spec-audit gate (`~/.omp/agent/bin/spec-audit-generic.ts`, GS-1..GS-8)
+  was never run on `PLUTUS_VISION_INDICATOR_PORT_SPEC.md` — no audit artifact existed.
+- **THE ROOT CAUSE:** the gate was never invoked; the spec shipped at `Status: PLANNING` and dispatched
+  a build without its audit.
+- **THE FIX:** run it; it returned `REJECTED (3/8)` — GS-3 (scope-noun-lost: report,fucking,indicator),
+  GS-7 (translation-hole), GS-8 (no class declared). Fixed: the class line added, the mission de-profaned,
+  the nouns translated into SCOPE + CRITERIA → `APPROVED (0/8)`.
+- **THE VERIFICATION:** `bun spec-audit-generic.ts PLUTUS_VISION_INDICATOR_PORT_SPEC.md` → `VERDICT:APPROVED (fail=0)`.
+- **THE LESSON:** the audit is a GATE, not a suggestion. A spec that dispatches a build un-audited is a
+  claim without its proof.
+
+---
+
+## EN-118 — THE ZFP EXISTS 3× WITH 2 FORMULAS (2026-10-09)
+
+- **THE FINDING:** `grep -rn "def zfp|ZFP_BASE|calcZFP = round" scripts/*.py` → 3 sites, 2 formulas:
+  `e1_zfp.py:226` (Appendix-B probability), `lqz_vision_v2_build.py:203` (the v8 WIDTH), `e1_fetch.py`
+  (`ZFP_BASE`). Plus a divergent TWIN renderer (`pine-ide/charts/plutus-vision-v2.pine` 18 pushes vs
+  `ide/renderer` 15).
+- **THE ROOT CAUSE:** the churn spawned parallel copies; the spec §6 SC-3 / F-55 demand exactly ONE ZFP.
+- **THE FIX:** one ZFP (Appendix-B); delete the width formula + `ZFP_BASE`; one v2 renderer. Waves W1 + W7.
+- **THE VERIFICATION:** the red-team audit (bravo) + the primary's grep.
+- **THE LESSON:** a second implementation of one concept is a defect. Count the definition sites.
