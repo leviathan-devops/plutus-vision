@@ -2154,3 +2154,21 @@ verdict was PASS; the run-4/5/6 findings were refinements, fixed, with 2 false p
 - **Root cause:** two implementations of the 5-zone assembly; their outputs can diverge.
 - **Impact:** a test or the crossval can validate a DIFFERENT assembly than the shipped payload.
 - **Disposition:** OPEN (W7 cleanup) — one assembler; the tests must exercise the LIVE one.
+
+---
+
+## F-125 — THE W5 SPLICE DELETED THE RENDER HELPERS (2026-10-09)
+
+- **What happened:** the first W5 splice deleted `src[if bar_index == 0 : // ── THE PAYLOAD]` — a
+  region that ALSO contained the render helpers (f_e1Zfill/f_e1Zbord/f_e1PressureLbl/f_e1Degree/
+  f_e1CalcZFP/e1Enabled/e1MaxZones/_e1Ticker/_e1Pair). The Pine then failed: `PINE_RUNTIME_ERROR
+  e1Enabled is not defined`.
+- **Found:** the `pv-load` render (the compile error).
+- **Root cause:** the delete used a broad end marker (`// ── THE PAYLOAD`) that spanned more than the
+  baked block; the backup was overwritten on a second run (`shutil.copy2` before each write).
+- **Impact:** the helpers were lost; ~29 lines of uncommitted working-tree edits were lost when the
+  file was restored from `git show HEAD~1`.
+- **Disposition:** FIXED — restored from git; re-spliced with exact string boundaries
+  (delete `if bar_index == 0` .. the E1 RENDER comment ONLY); render EXIT 0, boxes 11.
+- **LESSON:** a region-delete must ASSERT its exact boundaries (the byte range), and a backup must be
+  guarded against overwrite (write it ONCE, or use a timestamped name).

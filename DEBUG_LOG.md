@@ -2782,3 +2782,25 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
   wave_gates 17 pass / 4 fail (W1e, W2a, W2b, W2c).
 - **THE LESSON:** a pin gate can encode a HYPOTHESIS the authority does not support. Surface the
   tension; never force the gate by re-adding the banned mechanism.
+
+---
+
+## EN-123 — W5 · THE E1 ZONES COMPUTED IN PINE (2026-10-09) — the A2 fix
+
+- **THE FINDING:** the operator's #1 requirement — the indicator computes the zones live from the
+  chart's bars — was unmet: the `e1_injected_*` arrays were 15 baked literals (the A2 substitution).
+- **THE FIX:** `plutus-vision-v2.pine` now computes the zones via `f_e1Compute()` from the chart's own
+  bars: P1 pivots (`request.security("D")`), P2 the MA grid (`ta.ema` 20/50/100/200), P5 the structural
+  swings (`ta.pivothigh/pivotlow`), P6 the round number; the 5 positional bands → the confluence (the
+  levels the band captures) → the degree + the ZFP. The baked `if bar_index == 0` block DELETED; the
+  anchor COMPUTED from `time`.
+- **THE VERIFICATION (tool results):** `grep -cE 'e1_injected_(top|bottom|cat|degree|zfp)\.push\([0-9]'`
+  → **0** (SC-19 PASS, was 15); `ta.*/request.security` → 18; `pv-load.mjs` → EXIT 0,
+  `boxes:11 labels:10 tables:1` on 508 bars (the computed zones render).
+- **THE DEFECT DURING THE W5 EDIT (recorded):** the first splice deleted the render HELPERS
+  (f_e1Zfill/f_e1Zbord/f_e1PressureLbl/f_e1Degree/f_e1CalcZFP/e1Enabled) — the region between the
+  baked block and the payload comment. RESTORED from `git show HEAD~1` (the last committed pine) and
+  re-spliced with exact string boundaries. ~29 lines of uncommitted working-tree edits were lost in
+  the restore (not in any commit) — the file is functional (renders 11 boxes) but the pre-splice
+  working tree is not byte-recoverable. LESSON: a region-delete splice must assert its boundaries.
+- **THE LESSON:** the compute is the requirement; the bake was the substitute.
