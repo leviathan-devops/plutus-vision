@@ -1428,7 +1428,12 @@ f_e1Compute() =>
         int _cPsych = _big >= _blo and _big <= _bhi ? 2 : 1
         int _cRegime = close >= _blo and close <= _bhi ? 2 : 1
         int _bonus = (not na(_swH) and _swH >= _bhi - _rng * 0.02) or (not na(_swL) and _swL <= _blo + _rng * 0.02) ? 2 : 0
-        float _conf0 = math.min(14, _cTech + _cStruct + _cPsych + _cRegime + _bonus)
+        // THE STEP 0e EXTREME BONUS (canon:1240-1242): the band holding the week's HIGH/LOW → +2
+        // (the canon's mechanism making the extremes strongest — the v8's ladder).
+        int _cExtreme = 0
+        if _bhi >= _rHi - _rng * 0.02 or _blo <= _rLo + _rng * 0.02
+            _cExtreme := 2
+        float _conf0 = math.min(14, _cTech + _cStruct + _cPsych + _cRegime + _bonus + _cExtreme)
         int _conf = math.max(4, int(_conf0))    // LIGHT floor — the v8's 5 positional zones always draw
         int _baseZfp = _conf >= 12 ? 10 : _conf >= 9 ? 22 : _conf >= 6 ? 40 : 60
         string _zcat = array.get(_cats, i)
