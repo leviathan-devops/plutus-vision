@@ -2888,3 +2888,19 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
   the v8's zDeg is a hand-typed literal (F-123). The structure (extremes strongest) is now correct.
 - **THE LESSON:** a step-function ladder from a measured confluence lands close to an authored
   example's SHAPE without copying its literals.
+
+---
+
+## EN-129 — W6 · THE RENDER IS DETERMINISTIC + THE BARS ARE REAL (2026-10-09)
+
+- **THE FINDING (determinism):** with AUTO off, `pv-load` gives IDENTICAL counts across 3 runs
+  (boxes:5 · lines:5 · labels:6) — F-126/F-127 resolved.
+- **THE FINDING (the bars):** the IDE runs 510 bars spanning 98.096–102.013; the computed zones
+  (102.01–100.74) are derived from the last 300 bars' range → the compute reads the chart's REAL
+  bars (not hardcoded). Verified: `P.workbench.getBars()` → n=510, hi=102.013, lo=98.096.
+- **THE W6 MECHANISM (open):** the IDE's bars are a FIXED loaded series; swapping the fixture FILE
+  on disk did NOT reload it (the 3-week test gave identical zones → the rig did not re-read). The
+  5-week litmus needs the rig to LOAD a different week (the station's `/bars?dataFile=` supports it;
+  the pv-load harness passes only pair/tf, not a dataFile — a harness extension).
+- **THE LESSON:** a "different week" test needs the BARS reloaded, not the file swapped; verify the
+  bar count changed before trusting a multi-week run.
