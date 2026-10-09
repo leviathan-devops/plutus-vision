@@ -2172,3 +2172,21 @@ verdict was PASS; the run-4/5/6 findings were refinements, fixed, with 2 false p
   (delete `if bar_index == 0` .. the E1 RENDER comment ONLY); render EXIT 0, boxes 11.
 - **LESSON:** a region-delete must ASSERT its exact boundaries (the byte range), and a backup must be
   guarded against overwrite (write it ONCE, or use a timestamped name).
+
+---
+
+## F-126 — THE W5 RENDER IS FLAKY (the box count varies across identical runs) — 2026-10-09
+
+- **What happened:** the SAME committed pine (43e79c8) rendered `boxes:5 onChart:10` in one `pv-load`
+  run and `boxes:0` in the next; the same for bfd3d50 (5, then 0) and 645ecab (11, then 0).
+- **Found:** the render bisection (`git checkout <rev>; pv-load`).
+- **Root cause (suspected, NOT yet proven):** the rig (`pine-station` PineTS + the pv-load harness)
+  does not reliably re-run the source between rapid loads — the drawn count is not deterministic
+  across back-to-back runs of an IDENTICAL file. NOT a Pine defect (same bytes, different count).
+- **Impact:** the W5 VISUAL verification is unreliable; the on-chart count cannot be trusted as a
+  pass/fail signal until the rig's determinism is established.
+- **Disposition:** OPEN. The W5 CODE requirement stands (SC-19 = 0; 18 ta.*/request.security; the
+  zones compute — a static, deterministic grep). The visual proof needs a rig-determinism fix.
+- **NOTE:** this is the class the SSTF/dead-instrument laws warn about: a measurement whose
+  determinism is unproven. Rule: establish the rig's determinism (a known-positive control before
+  trusting a silent/zero render) before using the on-chart count as evidence.
