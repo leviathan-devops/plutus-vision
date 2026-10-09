@@ -45,30 +45,51 @@ pass yourself is REJECTED on sight.**
 ## §2 — HOW IT WORKS (the data flow, exact)
 
 ```
-  JEV_GATE/run_gate.sh [artifact]
+  JEV_GATE/run_gate.sh [artifact]                                     (v2 — FULL CONTEXT)
         │
-        │ (1) ASSEMBLE THE FULL CONTEXT — the judge's payload cap is ~48KB
-        │     · the mission            (PLUTUS_VISION_INDICATOR_PORT_SPEC.md §0.1)
-        │     · the 8 non-negotiables  (the spec §4)
-        │     · the success criteria   (the spec §6, SC-1..SC-19)
-        │     · the 6 ship docs' latest entries (BUILD_REPORT … THEATRICALITY_LOG)
-        │     · the git history        (git log -15)
-        │     · the ARTIFACT EVIDENCE  (the SC-19 baked-literal count; the ta.* count)
-        │     → capped to 47000 bytes → context.txt
+        │ (1) ASSEMBLE THE FULL CONTEXT — nothing omitted (~227KB measured):
+        │     · the WHOLE spec (PLUTUS_VISION_INDICATOR_PORT_SPEC.md)
+        │     · the 6 ship docs (the latest entries)
+        │     · the git history (last 40 commits)
+        │     · the checkpoints (ls)
+        │     · the WHOLE theatricality log (the anti-patterns)
+        │     · the WHOLE artifact source (the .pine, 108KB)
+        │     → full_context.txt
         │
-        │ (2) BUILD THE ROW — {id, text: the context + the artifact}
+        │ (2) CHUNK — the judge's payload cap is ~48KB, so the full context is split on line
+        │     boundaries into ~38KB chunks (measured: 7 chunks). The artifact EVIDENCE header
+        │     (sha, the SC-19 count, the ta.* count) is prepended to EVERY chunk.
         │
-        │ (3) JUDGE — jm decision-tree --rows … --recipe JEV_GATE/recipe.json
-        │     → one `noul` from the local JevK5 model (requests=1)
+        │ (3) JUDGE EACH CHUNK — jm decision-tree --rows … --recipe JEV_GATE/recipe.json
+        │     → one `noul` per chunk (the local JevK5 model)
         │
-        │ (4) ROUTE — policy {act:0.8, flag:0.5, fail:closed}
+        │ (4) ROUTE + AGGREGATE — policy {act:0.8, flag:0.5, fail:closed}.
+        │     The verdict is the AND: EVERY chunk must be `act`. ANY chunk not act → REJECT.
         │
         └─(5) EMIT — "JEV VERDICT: YES" (exit 0)  |  "JEV VERDICT: NO — REJECTED" (exit 1)
 ```
 
+**MEASURED THIS SESSION (the current build, the full context):**
+```
+$ bash JEV_GATE/run_gate.sh
+chunks: 7  (sizes: [37964, 37914, 37999, 37859, 37998, 37996, 21601])
+JEV GATE (full context, 7 chunks):
+  chunk 0/6  noul=0.012   route=noop
+  chunk 1/6  noul=0.364   route=noop
+  chunk 2/6  noul=0.002   route=noop
+  chunk 3/6  noul=0.005   route=noop
+  chunk 4/6  noul=0.108   route=noop
+  chunk 5/6  noul=0.048   route=noop
+  chunk 6/6  noul=0.073   route=noop
+JEV VERDICT: NO — at least one context chunk is not act. THE ARTIFACT IS REJECTED.
+EXIT: 1
+```
+**The current build is REJECTED by JEV on every chunk (max noul=0.364).** That is the gate working
+over the FULL context — not a dense summary.
+
 **THE WIRING FILES:**
 - `JEV_GATE/recipe.json:1` — the `noul` question + the policy (the thresholds).
-- `JEV_GATE/run_gate.sh:1` — the runner: assemble → build → judge → route → emit.
+- `JEV_GATE/run_gate.sh:1` — the runner: assemble → chunk → judge each → aggregate (AND) → emit.
 - `JmManager/src/verbs/decision-tree.ts:149-165` — the aggregation (`answersToPolicyValue`).
 - `JmManager/src/judge/policy.ts:31-33` — the route ladder (`act` / `escalate` / `noop`).
 - the judge server — `http://127.0.0.1:8090/v1/systemone` (the local JevK5 4B GGUF).
@@ -106,17 +127,17 @@ Logged F-122 (FAILURE_LOG) + EN-119 (DEBUG_LOG).
 
 ## §5 — THE CONTEXT-COMPLETENESS LAW (the operator's second requirement)
 
-**A YES reached WITHOUT the full context is VOID.** Before trusting ANY `act`:
+**A YES reached WITHOUT the full context is VOID.** The gate (v2) assembles the FULL context and
+chunks it, so completeness is MECHANICAL — but verify before trusting ANY `act`:
 ```
 THE CONTEXT MUST CONTAIN (all of them, or the YES is REJECTED):
-  [ ] the spec (PLUTUS_VISION_INDICATOR_PORT_SPEC.md)
+  [ ] the WHOLE spec (PLUTUS_VISION_INDICATOR_PORT_SPEC.md)
   [ ] the 6 ship docs (the latest entries)
-  [ ] the live graph
-  [ ] the git history
-  [ ] the artifact itself
+  [ ] the live graph / the git history / the checkpoints
+  [ ] the WHOLE artifact source (the .pine)
 IF ANY IS MISSING → REJECT the YES, re-supply the context, re-run the gate.
 ```
-The gate prints the assembled context size; a context under ~40KB means pieces are missing → REJECT.
+The gate prints the chunk count + the sizes; a single tiny chunk means pieces were omitted → REJECT.
 
 ## §6 — THE ANTI-PATTERNS (every way to cheat/bypass — ALL BANNED)
 
