@@ -1446,8 +1446,10 @@ f_e1Compute() =>
         int _cExtreme = 0
         if _bhi >= _rHi - _rng * 0.02 or _blo <= _rLo + _rng * 0.02
             _cExtreme := 2
-        float _conf0 = math.min(14, _cTech + _cStruct + _cPsych + _cRegime + _bonus + _cExtreme)
-        int _conf = math.max(4, int(_conf0))    // LIGHT floor — the v8's 5 positional zones always draw
+        // THE CONFLUENCE varies: the canon's base (the 6 dims) + the level count the band captures
+        // + the Step 0e extreme bonus (the price extremes strongest — the v8's ladder). 0-14.
+        float _conf0 = _cTech + _cStruct + _cPsych + _cRegime + _bonus + _cExtreme + math.min(4, _cnt)
+        int _conf = math.max(4, int(math.min(14, _conf0)))    // LIGHT floor — all 5 zones draw
         int _baseZfp = _conf >= 12 ? 10 : _conf >= 9 ? 22 : _conf >= 6 ? 40 : 60
         string _zcat = array.get(_cats, i)
         float _drift = close - close[20]
