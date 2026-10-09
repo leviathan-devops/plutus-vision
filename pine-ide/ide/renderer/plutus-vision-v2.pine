@@ -1775,6 +1775,55 @@ e2GhostX    = e2_injected_ghost_x
 e2GhostY    = e2_injected_ghost_y
 e2Refusal   = e2_injected_refusal
 
+// ═════════════ E2 COMPUTE (W5) — the macro shape chain from the E1 zones ═════════════
+// Engine 2 (§6.2/§6.4.1): classify the E1 map into ONE shape (the priority matrix), then a
+// 5-day path across the anchor week at the shape's target. Computed from the E1 zones.
+f_e2Compute() =>
+    array.clear(e2_injected_x)
+    array.clear(e2_injected_y)
+    array.clear(e2_injected_shape)
+    array.clear(e2_injected_conf)
+    array.clear(e2_injected_ghost_x)
+    array.clear(e2_injected_ghost_y)
+    int _nz = array.size(e1_injected_top)
+    if _nz > 0
+        // §6.2 #1 — BS: the nearest zone has ZFP > 45 (a breakout). #2 — WL: a Hard Wall
+        // (ZFP < 20) the price surged into. #5 — SS: the weakest (highest ZFP). else R.
+        float _spot = close
+        float _zfp0 = na
+        float _zfpMin = 200.0
+        float _zfpMax = -1.0
+        float _lowMid = close
+        float _highMid = close
+        for i = 0 to _nz - 1
+            float _m = (array.get(e1_injected_top, i) + array.get(e1_injected_bottom, i)) / 2.0
+            float _zf = array.get(e1_injected_zfp, i)
+            _zfpMin := math.min(_zfpMin, _zf)
+            _zfpMax := math.max(_zfpMax, _zf)
+            if _m < _spot and _m < _lowMid
+                _lowMid := _m
+            if _m > _spot and _m > _highMid
+                _highMid := _m
+        string _shape = _zfpMin < 20 ? "WL" : _zfpMax > 45 ? "BS" : _zfpMax > 40 ? "SS" : "R"
+        int _conf = _shape == "WL" ? 75 : _shape == "BS" ? 68 : _shape == "SS" ? 60 : 55
+        // the 5-day path across the week — from the spot toward the shape's target
+        float _target = _shape == "WL" ? _lowMid : _shape == "BS" ? _highMid : (_lowMid + _highMid) / 2.0
+        // THE ANCHOR — the Monday of the last bar's week
+        int _mon = math.round((time - dayofweek(time) * 86400000) / 86400000) * 86400000
+        for d = 0 to 4
+            float _f = float(d) / 4.0
+            float _px = _spot + (_target - _spot) * _f
+            array.push(e2_injected_x, _mon + d * 86400000)
+            array.push(e2_injected_y, _px)
+            array.push(e2_injected_shape, d == 0 ? _shape : "")
+            array.push(e2_injected_conf, _conf)
+        // the ghost — the alternate chain's midpoint
+        array.push(e2_injected_ghost_x, _mon)
+        array.push(e2_injected_ghost_y, _spot)
+        array.push(e2_injected_ghost_x, _mon + 4 * 86400000)
+        array.push(e2_injected_ghost_y, (_lowMid + _highMid) / 2.0)
+    0
+
 // ── THE RENDER ──────────────────────────────────────────────────────────────
 f_e2Render() =>
     _n = array.size(e2DayX)
@@ -1833,4 +1882,5 @@ f_e2Render() =>
     0
 
 if barstate.islast
+    f_e2Compute()
     f_e2Render()
