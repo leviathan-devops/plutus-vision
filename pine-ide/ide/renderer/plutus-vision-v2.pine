@@ -1426,11 +1426,14 @@ f_e1Compute() =>
                 _cnt += 1
                 _tp := na(_tp) ? _p : math.max(_tp, _p)
                 _bt := na(_bt) ? _p : math.min(_bt, _p)
-        // THE ZONE IS ITS BAND (the v8's adjacent bands, spanning the range) — NOT the levels'
-        // extent, which collapses to a thin sliver when the levels cluster near the top. The
-        // levels set the CONFLUENCE (the count); the band sets the drawn span.
-        _tp := _bhi
-        _bt := _blo
+        // THE ZONE IS A THIN BAND at the level (the v8's zTp/zBt are NARROW: 0.07-0.34 wide, NOT
+        // a full-height partition). The earlier `_tp=_bhi; _bt=_blo` filled the whole range → the
+        // zones were FAT BLOCKS crushing the candles (the operator's screenshot). The band's
+        // MIDPOINT = its position in the range; the height is a thin fraction of the range.
+        float _zmid = _rLo + ((_f0 + _f1) / 2.0) * _rng
+        float _zhw = _rng * 0.045                 // a thin band (~9% of the range tall)
+        _tp := _zmid + _zhw
+        _bt := _zmid - _zhw
         // ── THE CANON'S 6-DIMENSION CONFLUENCE (canon:1465-1484) + the ZFP base/modifiers ────
         // 0-2 per dimension (Technical/Structural/Psychological/Regime; Options+Analyst = [NO DATA],
         // the harvest F-52) + the Step 0e bonus (<=2). The ZFP = the Appendix-B base by zone type
