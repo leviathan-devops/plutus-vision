@@ -2190,3 +2190,20 @@ verdict was PASS; the run-4/5/6 findings were refinements, fixed, with 2 false p
 - **NOTE:** this is the class the SSTF/dead-instrument laws warn about: a measurement whose
   determinism is unproven. Rule: establish the rig's determinism (a known-positive control before
   trusting a silent/zero render) before using the on-chart count as evidence.
+
+---
+
+## F-127 — THE RIG'S AUTO-RERUN BREAKS THE RENDER MEASUREMENT (2026-10-09)
+
+- **What happened:** the Pine IDE's `AUTO 120ms` toggle re-runs the script every 120ms; the IDE
+  status reads `running…` continuously, and `pv-load`'s drawn counts race the re-run (5 boxes one
+  read, 0 the next, for the IDENTICAL committed file 43e79c8). The screenshot after a settle shows
+  the candles but NO E1 zones.
+- **Found:** the determinism bisection (bfd3d50 vs 43e79c8 vs 645ecab; each 5→0 across runs) + the
+  settled IDE status (`running…`).
+- **Root cause:** the AUTO-rerun + the pv-load capture race the same PineTS sandbox; the on-chart
+  count is not a stable measurement while AUTO is on.
+- **Impact:** the C16 visual verification is blocked; the W5 visual cannot be measured reliably on
+  this rig.
+- **Disposition:** OPEN. The W5 CODE requirement stands (SC-19=0, deterministic). The VISUAL needs
+  AUTO off + a settle + a capture, or pine-station's direct API. Not yet achieved.
