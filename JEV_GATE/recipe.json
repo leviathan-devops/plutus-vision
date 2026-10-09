@@ -1,0 +1,11 @@
+{
+  "recipe": "plutus-runtime-grade-gate",
+  "version": 1,
+  "questions": {
+    "pass": {
+      "type": "noul",
+      "instructions": "Given the FULL context (the spec, the ship docs, the live graph, the git history, the checkpoints) and the ARTIFACT under test: is this artifact RUNTIME-GRADE and PRODUCTION-GRADE? Answer YES only if ALL FOUR hold with ZERO exceptions: (1) the indicator COMPUTES Engine 1 (the 9-Pillar zone map) + Engine 2 (the shape chain) LIVE from the chart's own bars — NOT baked/injected literals; (2) the FULL spec is implemented; (3) ALL bugs are handled (no dead paths, one ZFP, one renderer); (4) it was PROPERLY TESTED with a live render on 5 real weeks that shows forward price action. Any partial, theatrical, baked-literal, or untested artifact is a NO."
+    }
+  },
+  "policy": { "act": 0.8, "flag": 0.5, "fail": "closed" }
+}
