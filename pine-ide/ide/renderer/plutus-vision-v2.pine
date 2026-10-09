@@ -1368,8 +1368,8 @@ f_e1Compute() =>
     array.clear(e1_injected_cat)
     array.clear(e1_injected_id)
     array.clear(e1_injected_degree)
-    float _rHi = ta.highest(high, 120)
-    float _rLo = ta.lowest(low, 120)
+    float _rHi = ta.highest(high, 300)
+    float _rLo = ta.lowest(low, 300)
     float _rng = _rHi - _rLo
     if _rng <= 0
         _rng := syminfo.mintick * 10
@@ -1396,9 +1396,12 @@ f_e1Compute() =>
     array.push(_lv, math.round(close * 2.0) / 2.0)
     array<string> _cats = array.from("RES", "RES", "MID", "SUP", "SUP")
     array<string> _roles = array.from("IP Resistance Ceiling", "Upper IP Resistance", "Equilibrium Zone", "Mid-Range Support", "Key IP Support")
+    // the band fraction boundaries (arrays — a ternary chain may not vary per iteration)
+    array<float> _f0s = array.from(0.85, 0.66, 0.34, 0.15, 0.00)
+    array<float> _f1s = array.from(1.00, 0.85, 0.66, 0.34, 0.15)
     for i = 0 to 4
-        float _f0 = i == 0 ? 0.85 : i == 1 ? 0.66 : i == 2 ? 0.34 : i == 3 ? 0.15 : 0.00
-        float _f1 = i == 0 ? 1.00 : i == 1 ? 0.85 : i == 2 ? 0.66 : i == 3 ? 0.34 : 0.15
+        float _f0 = array.get(_f0s, i)
+        float _f1 = array.get(_f1s, i)
         float _blo = _rLo + _f0 * _rng
         float _bhi = _rLo + _f1 * _rng
         int _cnt = 0
@@ -1640,7 +1643,7 @@ f_e1Render() =>
     0
 
 if e1Enabled and barstate.islast
-    f_e1Compute()   // (W5) compute the E1 zones from the chart's own bars (SC-19)
+    f_e1Compute()
     // ── THE LSZ (trident_v8.pine:368-377): GREEN FILLED boxes, NO LABELS, same x-span as the IP
     // zones. Drawn FIRST (behind) so the IP zones render ON TOP — the IP fill is 75% opaque, so
     // the category colour dominates the overlap while the green shows at the LSZ's edges. ────
