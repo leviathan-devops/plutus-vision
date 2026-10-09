@@ -2844,3 +2844,19 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
   bug in the band/role assembly — the next W5 refinement.
 - **THE LESSON:** a render that shows nothing can be a COMPUTE failure, not a render failure —
   isolate with a trivial drawn primitive before blaming the render path.
+
+---
+
+## EN-126 — W5 · THE DEGREE VARIES (2026-10-09)
+
+- **THE FINDING:** the 5 computed zones all rendered "Light | 60%" — a flat degree.
+- **THE FIX:** the confluence = the canon's 6 dims + the Step 0e extreme bonus + the band's LEVEL
+  COUNT (`math.min(4, _cnt)`). The bands capturing more levels (the MA/pivot cluster) score higher.
+- **THE VERIFICATION (the screenshot):** the Equilibrium Zone now reads "Moderate-Heavy | 22% ZFP"
+  while the extremes read "Light | 60%" — the degree ladder VARIES (the levels cluster at the mid).
+  pv-load boxes:5 · SC-19 = 0.
+- **THE REMAINING:** the v8's exact ladder (HEAVY at BOTH extremes) is NOT produced — the canon's
+  measured degree gives the mid strongest for this fixture (F-123). The RES colour still renders
+  ORANGE (the colour-ladder mapping).
+- **THE LESSON:** a flat metric class (all zones identical) = an input-dimension constant; the level
+  count varying across bands breaks the tie.
