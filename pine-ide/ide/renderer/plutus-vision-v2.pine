@@ -1408,9 +1408,11 @@ f_e1Compute() =>
                 _cnt += 1
                 _tp := na(_tp) ? _p : math.max(_tp, _p)
                 _bt := na(_bt) ? _p : math.min(_bt, _p)
-        if na(_tp)
-            _tp := _bhi
-            _bt := _blo
+        // THE ZONE IS ITS BAND (the v8's adjacent bands, spanning the range) — NOT the levels'
+        // extent, which collapses to a thin sliver when the levels cluster near the top. The
+        // levels set the CONFLUENCE (the count); the band sets the drawn span.
+        _tp := _bhi
+        _bt := _blo
         int _conf = math.min(14, 4 + _cnt * 2)
         string _deg = _conf >= 12 ? "EXTREME" : _conf >= 10 ? "HEAVY" : _conf >= 8 ? "MODERATE-HEAVY" : _conf >= 6 ? "MODERATE" : _conf >= 4 ? "LIGHT" : "MINIMAL"
         int _zfp = math.max(5, math.min(70, 60 - _conf * 4))
