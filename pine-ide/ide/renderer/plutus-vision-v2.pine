@@ -1360,6 +1360,19 @@ T_F6 = color.new(color.rgb(80,210,200), 25), T_B6 = color.rgb(80,210,200)
 // (P1 pivots, P2 the MA grid, P5 the structural swings, P6 the round numbers); the 5 positional
 // bands become the zones; the confluence = the levels the band captures; the ZFP = the
 // Appendix-B failure probability (a lower confluence = a harder wall = a lower ZFP).
+// (W5) THE CHART SERIES — GLOBAL scope (Pine series calls must live at the global scope, not
+// inside a function invoked conditionally). The compute reads these.
+e1g_ema20  = ta.ema(close, 20)
+e1g_ema50  = ta.ema(close, 50)
+e1g_ema100 = ta.ema(close, 100)
+e1g_ema200 = ta.ema(close, 200)
+e1g_rHi    = ta.highest(high, 300)
+e1g_rLo    = ta.lowest(low, 300)
+e1g_swH    = ta.pivothigh(5, 5)
+e1g_swL    = ta.pivotlow(5, 5)
+e1g_pHi    = ta.highest(high, 24)
+e1g_pLo    = ta.lowest(low, 24)
+
 f_e1Compute() =>
     array.clear(e1_injected_top)
     array.clear(e1_injected_bottom)
@@ -1368,27 +1381,27 @@ f_e1Compute() =>
     array.clear(e1_injected_cat)
     array.clear(e1_injected_id)
     array.clear(e1_injected_degree)
-    float _rHi = ta.highest(high, 300)
-    float _rLo = ta.lowest(low, 300)
+    float _rHi = e1g_rHi
+    float _rLo = e1g_rLo
     float _rng = _rHi - _rLo
     if _rng <= 0
         _rng := syminfo.mintick * 10
     array<float> _lv = array.new<float>()
-    array.push(_lv, ta.ema(close, 20))
-    array.push(_lv, ta.ema(close, 50))
-    array.push(_lv, ta.ema(close, 100))
-    array.push(_lv, ta.ema(close, 200))
+    array.push(_lv, e1g_ema20)
+    array.push(_lv, e1g_ema50)
+    array.push(_lv, e1g_ema100)
+    array.push(_lv, e1g_ema200)
     // P1 pivots — the prior SESSION's H/L/C (on a 1H chart, the last 24 bars ≈ one session).
     // (W5: an intraday proxy; request.security("D") is reserved for a real daily feed.)
-    float _pH = ta.highest(high, 24)
-    float _pL = ta.lowest(low, 24)
+    float _pH = e1g_pHi
+    float _pL = e1g_pLo
     float _pC = close[24]
     float _piv = (_pH + _pL + _pC) / 3.0
     array.push(_lv, _piv)
     array.push(_lv, 2.0 * _piv - _pL)
     array.push(_lv, 2.0 * _piv - _pH)
-    float _swH = ta.pivothigh(5, 5)
-    float _swL = ta.pivotlow(5, 5)
+    float _swH = e1g_swH
+    float _swL = e1g_swL
     if not na(_swH)
         array.push(_lv, _swH)
     if not na(_swL)
