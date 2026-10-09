@@ -6,7 +6,7 @@ THE CONTRACT (this file is the whole of it):
 
   · NINE sources, attempted in the order the canon names them.
   · EIGHT are pure code (HTTP + parse). ONE — the investinglive options-table
-    IMAGE — is a single bounded call to the local vision arm at 127.0.0.1:8010.
+    IMAGE — is a single bounded call to the local vision arm at 127.0.0.1:4171.
   · EVERY failure emits `[NO DATA]` WITH ITS REASON. Nothing is ever invented:
     no strike, no notional, no URL, no spot price. The canon's zero-tolerance
     code: "If a data point is not explicitly present in a source, it does not
@@ -50,7 +50,7 @@ TEMPORAL_BOUNDARY_UTC   = "Friday 17:00 ET"      # canon: Temporal Boundary Rule
 NOTIONAL_MIN            = 0.1                    # canon: "ALREADY IN BILLIONS"
 NOTIONAL_MAX            = 500.0                  # a $500bn wall is beyond any FX option market
 ARM_URL                 = os.environ.get("E1_ARM_URL_OVERRIDE",
-                                    "http://127.0.0.1:8010/v1/chat/completions")
+                                    "http://127.0.0.1:4171/v1/chat/completions")
 ARM_MODEL               = "Qwen3.5-4B-Q4_K_M.gguf"
 ARM_BUDGET_SECONDS      = 120                    # measured: a 6-row control = 24.9 s
 
@@ -69,14 +69,9 @@ CONFLUENCE_DIMENSIONS   = {
 }
 CONFLUENCE_CAP          = 14   # 6 dimensions x 2 + the structural bonus capped at +2
 
-# ZFP base by zone type (canon Part III Pillar 9) — (low%, high%)
-ZFP_BASE = {
-    "hard_wall":          (5, 15),
-    "standard_wall":      (15, 30),
-    "soft_wall":          (30, 50),
-    "one_touch":          (50, 70),
-    "post_expiry_ghost":  (20, 40),
-}
+# THE ZFP BASE — REMOVED (FAILURE_LOG F-55: exactly ONE ZFP). The single base table lives in
+# scripts/e1_zfp.py (ZFP_BASE, the Appendix-B B.1 bands). This module never defined a live one;
+# the table here was a DEAD duplicate (no reader). Do not re-add — one ZFP, one base.
 ZFP_BREAKOUT_THRESHOLD  = 45    # canon: "ZFP > 45% = BREAKOUT THRESHOLD"
 ZFP_HARD_WALL_THRESHOLD = 20    # canon: "ZFP < 20% = HARD WALL"
 
@@ -207,54 +202,72 @@ def headless_fetch(url: str, timeout: int = 40) -> tuple[bool, str]:
             pass
         shutil.rmtree(profile, ignore_errors=True)
 
+    # ── THE HARD DEADLINE (2026-10-07) ─────────────────────────────────────────
+    # MEASURED: this function returned in ~42 s on EVERY call — it waited the FULL
+    # `timeout` (40 s) for a `Page.loadEventFired` that a heavy marketing page never
+    # fires inside a headless window, then read the DOM anyway. FOUR of the nine E1
+    # sources are CDP fetches, so a serial `e1_sources.py --live` spent ~170 s in these
+    # waits alone and the operator's >150 s ceiling tripped. TWO fixes, both here:
+    #   (1) the load event gets a SHORT budget — the DOM read below is what the sources
+    #       actually consume;
+    #   (2) every stage spends from ONE wall-clock deadline, so a call can never exceed
+    #       `timeout` — which is what lets e1_sources abandon a straggler safely.
+    LOAD_BUDGET_S = float(os.environ.get("E1_CDP_LOAD_BUDGET", "6"))
+    start = time.time()
+
+    def _left() -> float:
+        return max(0.0, timeout - (time.time() - start))
+
     try:
         import websocket  # type: ignore
     except ImportError:
         _cleanup()
         return False, "CDP: the websocket-client module is not installed"
- 
+
     try:
-        # 2 · wait for OUR chrome to come up
+        # 2 · wait for OUR chrome to come up (inside the deadline)
         target = None
-        for _ in range(40):
+        while _left() > 1.0:
             try:
-                with urllib.request.urlopen(f"http://127.0.0.1:{port}/json/list", timeout=2) as r:
+                with urllib.request.urlopen(f"http://127.0.0.1:{port}/json/list",
+                                            timeout=max(0.5, min(2.0, _left()))) as r:
                     tabs = json.loads(r.read().decode())
                 target = next((t for t in tabs if t.get("type") == "page"), None)
                 if target:
                     break
             except Exception:
                 pass
-            time.sleep(0.5)
+            time.sleep(max(0.0, min(0.5, _left())))
         if not target:
             _cleanup()
             return False, "the isolated headless chrome did not start"
 
-        ws = websocket.create_connection(target["webSocketDebuggerUrl"], timeout=timeout)
+        ws = websocket.create_connection(target["webSocketDebuggerUrl"], timeout=max(1.0, _left()))
     except Exception as e:
         _cleanup()
         return False, f"CDP connect failed: {e}"
- 
+
     try:
         ws.send(json.dumps({"id": 1, "method": "Page.navigate",
                             "params": {"url": url}}))
-        deadline = time.time() + timeout
-        html = ""
-        while time.time() < deadline:
-            ws.settimeout(max(1, int(deadline - time.time())))
+        # (1) the load event: a SHORT budget, never the whole timeout
+        load_deadline = time.time() + min(LOAD_BUDGET_S, _left())
+        while time.time() < load_deadline:
+            ws.settimeout(max(0.5, min(load_deadline - time.time(), _left())))
             try:
                 msg = json.loads(ws.recv())
             except Exception:
                 break
             if msg.get("method") == "Page.loadEventFired":
                 break
-        time.sleep(2.0)
+        time.sleep(max(0.0, min(1.2, _left() - 0.5)))   # let the first paint land, inside the deadline
         ws.send(json.dumps({"id": 2, "method": "Runtime.evaluate",
                             "params": {"expression": "document.documentElement.outerHTML",
                                        "returnByValue": True}}))
-        deadline = time.time() + timeout
+        html = ""
+        deadline = time.time() + _left()
         while time.time() < deadline:
-            ws.settimeout(max(1, int(deadline - time.time())))
+            ws.settimeout(max(0.5, min(deadline - time.time(), _left())))
             try:
                 msg = json.loads(ws.recv())
             except Exception:

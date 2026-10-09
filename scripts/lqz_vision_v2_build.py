@@ -200,27 +200,11 @@ def build_payload() -> tuple[str, str]:
     add("e1_injected_bottom", "float", [_f(z.get("bottom")) for z in zones])
     add("e1_injected_confluence", "int", [int(_f(z.get("confluence"))) for z in zones])
 
-    # THE CHART ZFP — SPEC §10.8 calcZFP, the v8's own formula (trident_v8.pine:334-336):
-    #     calcZFP = round((tp - bt) / refRange * 100)     refRange: DXY 1.60, EU/GU 0.0200, AU 0.0150
-    # The label's ZFP must be CONSISTENT WITH THE ZONE WIDTH the chart draws — a reviewer computes
-    # it from the labelled range and rejects a mismatch. The earlier chart carried the payload's
-    # Appendix-B qualitative probability (base+modifiers), which is a DIFFERENT quantity and read
-    # as "not produced by the reference formula". §10.8 is the Pine mapping's ZFP; use it here.
-    _pair_early = "EUR/USD"
-    for _f0 in _files:
-        try:
-            _pair_early = str(json.loads(_f0.read_text()).get("pair") or "EUR/USD")
-            break
-        except Exception:
-            pass
-    _REF = {"DXY": 1.60, "EUR/USD": 0.0200, "GBP/USD": 0.0200, "AUD/USD": 0.0150}
-    _ref_range = _REF.get(_pair_early, 0.0200)
-
-    def _calc_zfp(top, bottom) -> int:
-        w = float(top) - float(bottom)
-        return int(round(w / _ref_range * 100.0))
-
-    add("e1_injected_zfp", "int", [_calc_zfp(z.get("top"), z.get("bottom")) for z in zones])
+    # THE CHART ZFP — the ONE ZFP (e1_zfp.py: the Appendix-B base + the six B.2 modifiers).
+    # F-55: the v8's width formula (calcZFP = (tp-bt)/refRange*100) is DELETED — the ZFP is the
+    # failure PROBABILITY (the port spec §2.5 / §6 SC-1), never the box width. The zone already
+    # carries its computed `zfp` (e1_extract calls e1_zfp.zfp); read it directly.
+    add("e1_injected_zfp", "int", [int(_f(z.get("zfp"))) for z in zones])
     # zCat — the v8 renderer's positional vocabulary (RES|MID|SUP). VALIDATED, never defaulted:
     # a missing zCat silently became "SUP" (a teal wrong-colour) — refuse instead (audit 2026-10-05).
     for z in zones:
@@ -309,7 +293,7 @@ def build_payload() -> tuple[str, str]:
     # declarations in the emitted Pine. `add()` initializes on call, so the row list must be
     # built first and emitted in ONE call.
     _tbl_rows = [(f'{float(z.get("top")):.4f}-{float(z.get("bottom")):.4f} '
-                  f'{z.get("degree_v8", "")} {_calc_zfp(z.get("top"), z.get("bottom"))}%ZFP {z.get("zTir", "T2")}')
+                  f'{z.get("degree_v8", "")} {int(_f(z.get("zfp")))}%ZFP {z.get("zTir", "T2")}')
                  for z in zones]
     add("e1_injected_tbl_row", "string", [f'"{_q(r)}"' for r in _tbl_rows])
     # THE FULL CHAIN (§6.6 Step 3: `Shape A → Shape B → Shape C`). The earlier form kept only
