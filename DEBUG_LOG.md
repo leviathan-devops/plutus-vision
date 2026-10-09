@@ -2804,3 +2804,23 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
   the restore (not in any commit) — the file is functional (renders 11 boxes) but the pre-splice
   working tree is not byte-recoverable. LESSON: a region-delete splice must assert its boundaries.
 - **THE LESSON:** the compute is the requirement; the bake was the substitute.
+
+---
+
+## EN-124 — W5 REFINED · THE CANON-FAITHFUL CONFLUENCE IN PINE (2026-10-09)
+
+- **THE FINDING:** the W5 compute used a SIMPLIFIED confluence (`4 + count*2`) and a linear ZFP
+  (`60 - conf*4`) — a re-derivation (AP-10), not the canon's model.
+- **THE FIX:** the Pine compute now scores the canon's 6 dimensions per zone (Technical = the levels
+  in the band; Structural = a swing inside; Psychological = a round number; Regime = straddling the
+  price; Options+Analyst = [NO DATA], the harvest F-52) + the Step 0e bonus; the ZFP = the
+  Appendix-B base by zone type (HARD/STANDARD/SOFT/ONE_TOUCH) + the momentum modifier (canon B.2).
+- **THE BUGS FIXED DURING THE EDIT (each a real Pine-transpiler constraint):**
+  (1) a bare `cat` identifier (the render helper's PARAM name) leaked → renamed `_zcat`;
+  (2) a NESTED TERNARY (`_zcat == "RES" ? _drift > 0 : _zcat == "SUP" ? ... : false`) broke the
+      transpiler → rewritten as if/else;
+  (3) `ta.pivothigh/pivotlow` called INSIDE the `for` loop → 0 drawings → moved OUT (computed once);
+  (4) a DUPLICATE `ta.pivothigh` (my `_sH` vs the existing `_swH`) → 0 drawings → removed.
+- **THE VERIFICATION:** `pv-load` EXIT 0 · counts boxes:5 · SC-19 baked = 0 · ta.* = 18.
+- **THE LESSON:** the PineTS transpiler rejects a nested ternary and a `ta.*` call inside a loop;
+  the loop body must use pre-computed series.
