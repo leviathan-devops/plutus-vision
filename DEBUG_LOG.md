@@ -2735,3 +2735,33 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
   REJECTED). The gate run on the current artifact: `JEV VERDICT: NO — REJECTED` (noul=0.005).
 - **THE LESSON:** a gate is only as good as its aggregation. Test the gate with a known-positive
   AND a known-negative before trusting its silence. (This is the failToken-collision class.)
+
+---
+
+## EN-120 — W1 · THE ONE ZFP (2026-10-09, the build's first wave)
+
+- **THE FINDING:** F-55 — the ZFP existed in 3 places: `e1_zfp.py:226` (the Appendix-B probability,
+  the correct one), `e1_fetch.py:73 ZFP_BASE` (a DEAD duplicate base table), and
+  `lqz_vision_v2_build.py:219 _calc_zfp` (the v8's WIDTH formula `(tp-bt)/refRange*100`).
+- **THE ROOT CAUSE:** the churn left parallel copies; the width formula (a BOX WIDTH, not a
+  probability) survived as the chart's ZFP.
+- **THE FIX:** deleted the dead `ZFP_BASE` (e1_fetch.py) + the width `_calc_zfp` (lqz); every
+  consumer reads `e1_zfp.zfp` (the Appendix-B base + the six B.2 modifiers). The zone's computed
+  `zfp` is read directly for the chart label.
+- **THE VERIFICATION:** `grep -rn 'def zfp\|ZFP_BASE =' scripts/*.py` → 1 site; the width calls → 0;
+  `test_zfp_discriminates` 5/0 (breakout 60 > consolidation 40) · `test_zfp_adversarial` 15/0 ·
+  `e1_st_19` 11/0. Commit `dc6b34c`.
+- **THE LESSON:** one concept, one implementation. The width formula read as a plausible ZFP but
+  carried no failure signal (the operator's complaint).
+
+## EN-121 — W2 · THE DEGREE ORDERING (the active defect)
+
+- **THE FINDING:** `wave_gates.py` → W1e FAIL (floor zfp 22 > mid 10) + W2a FAIL (3 distinct zfp,
+  need 4). The v8's ladder is `HEAVY · MOD-HEAVY · MOD-HEAVY · MODERATE · HEAVY` (the EXTREMES
+  strongest); the engine gives the MID the strongest (conf 10 = HEAVY) and the extremes conf 8.
+- **THE ROOT CAUSE (under investigation):** the mid (Equilibrium) wins on the `technical` dimension
+  (the MA cluster, `e1_extract.py:621`) while the extremes rely on the Step 0e structural-extreme
+  bonus (`zone_extreme_bonus`, `e1_extract.py:856`). The mid over-scores; the extremes need the +2.
+- **THE FIX (in progress):** make the extremes the strongest per the canon (the Step 0e bonus must
+  fire on the ceiling + floor; the mid must not out-score them).
+- **THE STATUS:** OPEN — W2 active.
