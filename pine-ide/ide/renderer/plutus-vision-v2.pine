@@ -1289,8 +1289,11 @@ var array<float> e2_injected_ghost_y = array.new<float>()
 var array<string> e1_injected_tbl_pair = array.new<string>()
 var array<string> e1_injected_tbl_week = array.new<string>()
 var array<string> e1_injected_tbl_row = array.new<string>()
+var array<string> e1_injected_tbl_row = array.new<string>()
+var array<string> e1_injected_tbl_row = array.new<string>()
+var array<string> e1_injected_tbl_row = array.new<string>()
+var array<string> e1_injected_tbl_row = array.new<string>()
 var array<string> e1_injected_chain = array.new<string>()
-var array<string> e1_injected_alt = array.new<string>()
 var array<string> e1_injected_days = array.new<string>()
 var array<float> e1_injected_lsz_top = array.new<float>()
 var array<float> e1_injected_lsz_bottom = array.new<float>()
@@ -1299,11 +1302,244 @@ var array<float> e1_injected_opt_pr = array.new<float>()
 var array<string> e1_injected_opt_vol = array.new<string>()
 var array<string> e1_injected_trade_row = array.new<string>()
 // (W5) the anchor is COMPUTED — the Monday of the last bar's week (never a literal).
-e1_injected_anchor_ms = time - dayofweek(time) * 86400000 + (dayofweek(time) == dayofweek.sunday ? 0 : 0)
+e1_injected_anchor_ms = time - dayofweek(time) * 86400000
 e1_injected_week_tag = "2026-W41"
 e2_injected_refusal = ""
 
 // (W5) THE E1 PAYLOAD IS COMPUTED by f_e1Compute() — the baked literals DELETED (SC-19).
+// ═════════════════════════════════════════════════════════════════════════════
+//  E1 RENDER — the INSTITUTIONAL PRESSURE MAP.  W4: the trident_v8 port.
+//
+//  This is the v8 renderer, PORTED VERBATIM (trident_v8.pine:43-65, :67-155,
+//  :112-155, :157-158, :352-365) and re-anchored to the chart's own week. The
+//  colour is v8's exact ladder — RES=RED, MID=ORANGE, SUP=TEAL, each with six
+//  pressure-tier shades — so the operator reads the SAME colours as the reference.
+//
+//  THE THREE MOVES (blueprint §4):
+//    PORT   the colour ladder + zfill/zbord + the IP block, byte-for-byte
+//    ANCHOR to the chart (`e1_injected_anchor_ms` derived from the chart), not now()
+//    INJECT the live payload (top/bottom/cat/confluence), one derived field = zCat
+//
+//  It consumes ONLY the injected payload; it never reads the v1 liquidity arrays.
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ── INPUTS ──────────────────────────────────────────────────────────────────
+e1Enabled   = input.bool(true, "Show the E1 institutional pressure map", group = "E1 zones")
+e1MaxZones  = input.int(6, "MAX zones", minval = 1, maxval = 6, group = "E1 zones")
+e1BackWeeks = input.int(2, "Hindsight: weeks before the anchor", minval = 0, maxval = 8, group = "E1 zones")
+e1FwdWeeks  = input.int(3, "Foresight: weeks after the anchor", minval = 0, maxval = 8, group = "E1 zones")
+e1ShowFill  = input.bool(true, "Fill the zones", group = "E1 zones")
+
+// ── THE COLOUR LADDER — trident_v8.pine:43-65, VERBATIM ─────────────────────
+// IP Resistance (RED) — 6 pressure tiers
+R_F1 = color.new(color.rgb(180,40,30), 25),  R_B1 = color.rgb(180,40,30)
+R_F2 = color.new(color.rgb(200,60,35), 25),  R_B2 = color.rgb(200,60,35)
+R_F3 = color.new(color.rgb(210,80,40), 25),  R_B3 = color.rgb(210,80,40)
+R_F4 = color.new(color.rgb(220,100,50), 25), R_B4 = color.rgb(220,100,50)
+R_F5 = color.new(color.rgb(230,130,60), 25), R_B5 = color.rgb(230,130,60)
+R_F6 = color.new(color.rgb(240,160,90), 25), R_B6 = color.rgb(240,160,90)
+// IP Equilibrium (ORANGE #FF9800) — 6 pressure tiers
+G_F1 = color.new(color.rgb(255,152,0), 25),   G_B1 = color.rgb(255,152,0)
+G_F2 = color.new(color.rgb(245,145,10), 25),  G_B2 = color.rgb(245,145,10)
+G_F3 = color.new(color.rgb(235,138,20), 25),  G_B3 = color.rgb(235,138,20)
+G_F4 = color.new(color.rgb(225,131,30), 25),  G_B4 = color.rgb(225,131,30)
+G_F5 = color.new(color.rgb(215,124,40), 25),  G_B5 = color.rgb(215,124,40)
+G_F6 = color.new(color.rgb(205,117,50), 25),  G_B6 = color.rgb(205,117,50)
+// IP Support (TEAL) — 6 pressure tiers
+T_F1 = color.new(color.rgb(0,150,150), 25),  T_B1 = color.rgb(0,150,150)
+T_F2 = color.new(color.rgb(0,170,160), 25),  T_B2 = color.rgb(0,170,160)
+T_F3 = color.new(color.rgb(20,180,170), 25), T_B3 = color.rgb(20,180,170)
+T_F4 = color.new(color.rgb(40,190,180), 25), T_B4 = color.rgb(40,190,180)
+T_F5 = color.new(color.rgb(60,200,190), 25), T_B5 = color.rgb(60,200,190)
+T_F6 = color.new(color.rgb(80,210,200), 25), T_B6 = color.rgb(80,210,200)
+
+// ── zfill(cat, deg) — trident_v8.pine:67-155, VERBATIM (the FILL) ───────────
+// ═════════════ E1 COMPUTE (W5) — the zones from the CHART'S OWN BARS (SC-19) ═════════════
+// The port spec §6 SC-19: the E1 zones must be COMPUTED in the .pine from the chart's own bars
+// (ta.* / request.security), NEVER injected literals. The chart-computable pillars run here
+// (P1 pivots, P2 the MA grid, P5 the structural swings, P6 the round numbers); the 5 positional
+// bands become the zones; the confluence = the levels the band captures; the ZFP = the
+// Appendix-B failure probability (a lower confluence = a harder wall = a lower ZFP).
+f_e1Compute() =>
+    array.clear(e1_injected_top)
+    array.clear(e1_injected_bottom)
+    array.clear(e1_injected_confluence)
+    array.clear(e1_injected_zfp)
+    array.clear(e1_injected_cat)
+    array.clear(e1_injected_id)
+    array.clear(e1_injected_degree)
+    float _rHi = ta.highest(high, 120)
+    float _rLo = ta.lowest(low, 120)
+    float _rng = _rHi - _rLo
+    if _rng <= 0
+        _rng := syminfo.mintick * 10
+    array<float> _lv = array.new<float>()
+    array.push(_lv, ta.ema(close, 20))
+    array.push(_lv, ta.ema(close, 50))
+    array.push(_lv, ta.ema(close, 100))
+    array.push(_lv, ta.ema(close, 200))
+    float _pH = request.security(syminfo.tickerid, "D", high[1], lookahead = barmerge.lookahead_off)
+    float _pL = request.security(syminfo.tickerid, "D", low[1], lookahead = barmerge.lookahead_off)
+    float _pC = request.security(syminfo.tickerid, "D", close[1], lookahead = barmerge.lookahead_off)
+    float _piv = (_pH + _pL + _pC) / 3.0
+    array.push(_lv, _piv)
+    array.push(_lv, 2.0 * _piv - _pL)
+    array.push(_lv, 2.0 * _piv - _pH)
+    float _swH = ta.pivothigh(5, 5)
+    float _swL = ta.pivotlow(5, 5)
+    if not na(_swH)
+        array.push(_lv, _swH)
+    if not na(_swL)
+        array.push(_lv, _swL)
+    array.push(_lv, math.round(close * 2.0) / 2.0)
+    array<string> _cats = array.from("RES", "RES", "MID", "SUP", "SUP")
+    array<string> _roles = array.from("IP Resistance Ceiling", "Upper IP Resistance", "Equilibrium Zone", "Mid-Range Support", "Key IP Support")
+    for i = 0 to 4
+        float _f0 = i == 0 ? 0.85 : i == 1 ? 0.66 : i == 2 ? 0.34 : i == 3 ? 0.15 : 0.00
+        float _f1 = i == 0 ? 1.00 : i == 1 ? 0.85 : i == 2 ? 0.66 : i == 3 ? 0.34 : 0.15
+        float _blo = _rLo + _f0 * _rng
+        float _bhi = _rLo + _f1 * _rng
+        int _cnt = 0
+        float _tp = na
+        float _bt = na
+        for j = 0 to array.size(_lv) - 1
+            float _p = array.get(_lv, j)
+            if not na(_p) and _p >= _blo and _p <= _bhi
+                _cnt += 1
+                _tp := na(_tp) ? _p : math.max(_tp, _p)
+                _bt := na(_bt) ? _p : math.min(_bt, _p)
+        if na(_tp)
+            _tp := _bhi
+            _bt := _blo
+        int _conf = math.min(14, 4 + _cnt * 2)
+        string _deg = _conf >= 12 ? "EXTREME" : _conf >= 10 ? "HEAVY" : _conf >= 8 ? "MODERATE-HEAVY" : _conf >= 6 ? "MODERATE" : _conf >= 4 ? "LIGHT" : "MINIMAL"
+        int _zfp = math.max(5, math.min(70, 60 - _conf * 4))
+        array.push(e1_injected_top, _tp)
+        array.push(e1_injected_bottom, _bt)
+        array.push(e1_injected_cat, array.get(_cats, i))
+        array.push(e1_injected_confluence, _conf)
+        array.push(e1_injected_degree, _deg)
+        array.push(e1_injected_zfp, _zfp)
+        array.push(e1_injected_id, array.get(_roles, i))
+    0
+
+f_e1Zfill(string cat, string deg) =>
+    color result = color.gray
+    if cat == "RES"
+        if deg == "EXTREME"
+            result := R_F1
+        else if deg == "HEAVY"
+            result := R_F2
+        else if deg == "MODERATE-HEAVY"
+            result := R_F3
+        else if deg == "MODERATE"
+            result := R_F4
+        else if deg == "LIGHT"
+            result := R_F5
+        else
+            result := R_F6
+    else if cat == "MID"
+        if deg == "EXTREME"
+            result := G_F1
+        else if deg == "HEAVY"
+            result := G_F2
+        else if deg == "MODERATE-HEAVY"
+            result := G_F3
+        else if deg == "MODERATE"
+            result := G_F4
+        else if deg == "LIGHT"
+            result := G_F5
+        else
+            result := G_F6
+    else if cat == "SUP"
+        if deg == "EXTREME"
+            result := T_F1
+        else if deg == "HEAVY"
+            result := T_F2
+        else if deg == "MODERATE-HEAVY"
+            result := T_F3
+        else if deg == "MODERATE"
+            result := T_F4
+        else if deg == "LIGHT"
+            result := T_F5
+        else
+            result := T_F6
+    else
+        result := T_F4
+    result
+
+// ── zbord(cat, deg) — trident_v8.pine:112-155, VERBATIM (the BORDER) ────────
+f_e1Zbord(string cat, string deg) =>
+    color result = color.gray
+    if cat == "RES"
+        if deg == "EXTREME"
+            result := R_B1
+        else if deg == "HEAVY"
+            result := R_B2
+        else if deg == "MODERATE-HEAVY"
+            result := R_B3
+        else if deg == "MODERATE"
+            result := R_B4
+        else if deg == "LIGHT"
+            result := R_B5
+        else
+            result := R_B6
+    else if cat == "MID"
+        if deg == "EXTREME"
+            result := G_B1
+        else if deg == "HEAVY"
+            result := G_B2
+        else if deg == "MODERATE-HEAVY"
+            result := G_B3
+        else if deg == "MODERATE"
+            result := G_B4
+        else if deg == "LIGHT"
+            result := G_B5
+        else
+            result := G_B6
+    else if cat == "SUP"
+        if deg == "EXTREME"
+            result := T_B1
+        else if deg == "HEAVY"
+            result := T_B2
+        else if deg == "MODERATE-HEAVY"
+            result := T_B3
+        else if deg == "MODERATE"
+            result := T_B4
+        else if deg == "LIGHT"
+            result := T_B5
+        else
+            result := T_B6
+    else
+        result := T_B4
+    result
+
+// ── pressureLbl(deg) — trident_v8.pine:157-158, VERBATIM ────────────────────
+f_e1PressureLbl(string deg) =>
+    deg == "EXTREME" ? "Extreme" : deg == "HEAVY" ? "Heavy" : (deg == "MODERATE_HEAVY" or deg == "MODERATE-HEAVY") ? "Moderate-Heavy" : deg == "MODERATE" ? "Moderate" : deg == "LIGHT" ? "Light" : "Minimal"
+
+// ── THE DEGREE — confluence → v8's literal vocabulary (hyphen, the tower's branch) ──
+f_e1Degree(int c) =>
+    c >= 12 ? "EXTREME" :
+     c >= 10 ? "HEAVY" :
+     c >=  8 ? "MODERATE_HEAVY" :
+     c >=  6 ? "MODERATE" :
+     c >=  4 ? "LIGHT" : "MINIMAL"
+
+// ── calcZFP(tp, bt, pair) — trident_v8.pine:334-338, VERBATIM ────────────────
+// zone width as a percentage of the pair's typical weekly range.
+f_e1CalcZFP(float tp, float bt, string pair) =>
+    float refR = pair == "DXY" ? 1.60 : (pair == "EUR/USD" or pair == "GBP/USD") ? 0.0200 : 0.0150
+    math.round((tp - bt) / refR * 100.0)
+
+// ── THE PAIR — the chart's own (trident_v8.pine:120-126 pair detection) ──────
+// The ZFP reference range is pair-specific; the chart tells us which pair.
+_e1Ticker = str.upper(str.replace(syminfo.ticker, "/", ""))
+_e1Pair = str.contains(_e1Ticker, "DXY") ? "DXY" :
+          str.contains(_e1Ticker, "EURUSD") ? "EUR/USD" :
+          str.contains(_e1Ticker, "GBPUSD") ? "GBP/USD" :
+          str.contains(_e1Ticker, "AUDUSD") ? "AUD/USD" : "DXY"
+
 // ── THE PAYLOAD (injected typed arrays; the builder emits these) ────────────
 e1PayloadTop  = e1_injected_top
 e1PayloadBot  = e1_injected_bottom
@@ -1331,85 +1567,6 @@ plot(_e1ZHi, "E1 ceiling (scale)", color = color.new(color.white, 100))
 plot(_e1ZLo, "E1 floor (scale)", color = color.new(color.white, 100))
 
 // ── THE RENDER ──────────────────────────────────────────────────────────────
-
-// ═════════════ E1 COMPUTE (W5) — the zones from the CHART'S OWN BARS (SC-19) ═════════════
-// The port spec §6 SC-19: the E1 zones must be COMPUTED in the .pine from the chart's own
-// bars (ta.* / request.security), NEVER injected literals. The chart-computable pillars run
-// here; only P3/P4/P7/P8 (options/analyst/derivatives) would bake — none are wired (the
-// harvest is down), so every zone is computed. One ZFP (the degree band), one implementation.
-f_e1Compute() =>
-    array.clear(e1_injected_top)
-    array.clear(e1_injected_bottom)
-    array.clear(e1_injected_confluence)
-    array.clear(e1_injected_zfp)
-    array.clear(e1_injected_cat)
-    array.clear(e1_injected_id)
-    array.clear(e1_injected_degree)
-    // the WEEK's own range — the chart's recent bars (120 x 1H ≈ 5 sessions)
-    float _rHi = ta.highest(high, 120)
-    float _rLo = ta.lowest(low, 120)
-    float _rng = _rHi - _rLo
-    if _rng <= 0
-        _rng := syminfo.mintick * 10
-    // ── THE CHART-COMPUTABLE PILLAR LEVELS ──────────────────────────────────────────────
-    array<float> _lv = array.new<float>()
-    // P2 · the MA grid
-    array.push(_lv, ta.ema(close, 20))
-    array.push(_lv, ta.ema(close, 50))
-    array.push(_lv, ta.ema(close, 100))
-    array.push(_lv, ta.ema(close, 200))
-    // P1 · the classic pivots (the prior session's H/L/C)
-    float _pH = request.security(syminfo.tickerid, "D", high[1], lookahead = barmerge.lookahead_off)
-    float _pL = request.security(syminfo.tickerid, "D", low[1], lookahead = barmerge.lookahead_off)
-    float _pC = request.security(syminfo.tickerid, "D", close[1], lookahead = barmerge.lookahead_off)
-    float _piv = (_pH + _pL + _pC) / 3.0
-    array.push(_lv, _piv)
-    array.push(_lv, 2.0 * _piv - _pL)
-    array.push(_lv, 2.0 * _piv - _pH)
-    // P5 · the structural swings
-    float _swH = ta.pivothigh(5, 5)
-    float _swL = ta.pivotlow(5, 5)
-    if not na(_swH)
-        array.push(_lv, _swH)
-    if not na(_swL)
-        array.push(_lv, _swL)
-    // P6 · the round number (the nearest .00/.50)
-    array.push(_lv, math.round(close * 2.0) / 2.0)
-    // ── THE FIVE POSITIONAL BANDS → ZONES (the v8's zCat ladder) ────────────────────────
-    array<string> _cats = array.from("RES", "RES", "MID", "SUP", "SUP")
-    array<string> _roles = array.from("IP Resistance Ceiling", "Upper IP Resistance", "Equilibrium Zone", "Mid-Range Support", "Key IP Support")
-    for i = 0 to 4
-        float _f0 = i == 0 ? 0.85 : i == 1 ? 0.66 : i == 2 ? 0.34 : i == 3 ? 0.15 : 0.00
-        float _f1 = i == 0 ? 1.00 : i == 1 ? 0.85 : i == 2 ? 0.66 : i == 3 ? 0.34 : 0.15
-        float _blo = _rLo + _f0 * _rng
-        float _bhi = _rLo + _f1 * _rng
-        int _cnt = 0
-        float _tp = na
-        float _bt = na
-        for j = 0 to array.size(_lv) - 1
-            float _p = array.get(_lv, j)
-            if not na(_p) and _p >= _blo and _p <= _bhi
-                _cnt += 1
-                _tp := na(_tp) ? _p : math.max(_tp, _p)
-                _bt := na(_bt) ? _p : math.min(_bt, _p)
-        if na(_tp)
-            _tp := _bhi
-            _bt := _blo
-        // the confluence = the canon's 6 dims (0-12) + the extreme bonus (<=2); the level count
-        // inside the band is the chart-computable proxy (each pillar level the band captures).
-        int _conf = math.min(14, 4 + _cnt * 2)
-        string _deg = _conf >= 12 ? "EXTREME" : _conf >= 10 ? "HEAVY" : _conf >= 8 ? "MODERATE-HEAVY" : _conf >= 6 ? "MODERATE" : _conf >= 4 ? "LIGHT" : "MINIMAL"
-        // the ZFP = the Appendix-B failure probability (a LOWER conf = a HARDER wall = a lower ZFP)
-        int _zfp = math.max(5, math.min(70, 60 - _conf * 4))
-        array.push(e1_injected_top, _tp)
-        array.push(e1_injected_bottom, _bt)
-        array.push(e1_injected_cat, array.get(_cats, i))
-        array.push(e1_injected_confluence, _conf)
-        array.push(e1_injected_degree, _deg)
-        array.push(e1_injected_zfp, _zfp)
-        array.push(e1_injected_id, array.get(_roles, i))
-    0
-
 f_e1Render() =>
     _n = array.size(e1PayloadTop)
     // THE ANCHOR — THE TARGET WEEK'S MONDAY, in TIME (`e1_anchor_ms`). The canon Part X
@@ -1422,7 +1579,7 @@ f_e1Render() =>
     // Monday and ~1 week forward — the wide band the operator approved ("wide to the left
     // side … you could see back like an extra week or two. Perfect.").
     _lx = e1_anchor_ms - 2 * 604800000        // 2 weeks before the anchor Monday (ms)
-    _rx = e1_anchor_ms + 3 * 604800000            // 1 week after the anchor Monday (ms)
+    _rx = e1_anchor_ms + 604800000            // 1 week after the anchor Monday (ms)
 
     // THE IP ZONES — trident_v8.pine:352-365, the loop, re-anchored to bar_index bounds.
     // Colour by zCat (RES|MID|SUP) × degree — the v8 ladder. The band height is inflated so
@@ -1461,11 +1618,9 @@ f_e1Render() =>
 
 if e1Enabled and barstate.islast
     f_e1Compute()   // (W5) compute the E1 zones from the chart's own bars (SC-19)
-    // ── THE IP ZONES (LAYER 1, §10.7). ──────────────────────────────────────────────────────
-    f_e1Render()
-    // ── THE LSZ (LAYER 2, trident_v8.pine:452-459): GREEN boxes, NO LABELS, drawn AFTER the IP
-    // zones so they render ON TOP (the v8's own order). §10.7/LSZ_STD_F: fill = color.new(rgb(40,
-    // 180,80), 70); ACTIVE = brighter rgb(80,230,100) + thicker border. ──────────────────────
+    // ── THE LSZ (trident_v8.pine:368-377): GREEN FILLED boxes, NO LABELS, same x-span as the IP
+    // zones. Drawn FIRST (behind) so the IP zones render ON TOP — the IP fill is 75% opaque, so
+    // the category colour dominates the overlap while the green shows at the LSZ's edges. ────
     _nl = array.size(e1_injected_lsz_top)
     if _nl > 0
         for i = 0 to _nl - 1
@@ -1475,11 +1630,13 @@ if e1Enabled and barstate.islast
             _lb = array.get(e1_injected_lsz_bottom, i)
             _lp = array.get(e1_injected_lsz_pri, i)
             _lact = _lp == "ACTIVE"
-            box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 3 * 604800000, _lb,
+            box.new(e1_anchor_ms - 2 * 604800000, _lt, e1_anchor_ms + 604800000, _lb,
                  xloc = xloc.bar_time,
-                 bgcolor = _lact ? color.new(color.rgb(80,230,100), 55) : color.new(color.rgb(40,180,80), 60),
+                 bgcolor = color.new(color.rgb(40,180,80), 60),
                  border_color = _lact ? color.rgb(80,230,100) : color.rgb(40,180,80),
-                 border_width = _lact ? 2 : 2)
+                 border_width = _lact ? 2 : 1)
+    // ── THE IP ZONES (ON TOP of the LSZ). ───────────────────────────────────────────────────
+    f_e1Render()
     // ── THE OPTION STRIKES (trident_v8.pine:378-388): AMBER horizontal lines + "$X.XB Option
     // Strike Target" labels. Renders the v8's amber layer when the options harvest is UP; an
     // empty array draws nothing (the data is external — never fabricated). ───────────────────
@@ -1490,14 +1647,9 @@ if e1Enabled and barstate.islast
                 break
             _op = array.get(e1_injected_opt_pr, i)
             _ov = array.get(e1_injected_opt_vol, i)
-            // Line width per §10.7: "$1.5B+ = 2, <$1.5B = 1".
-            _ow = str.tonumber(_ov) >= 1.5 ? 2 : 1
-            line.new(e1_anchor_ms - 2 * 604800000, _op, e1_anchor_ms + 3 * 604800000, _op,
-                 xloc = xloc.bar_time, color = color.rgb(255,200,60), width = _ow)
-            // §10.7: the option label sits at tsMid (the span center), NOT the right edge — a
-            // right-edge label at +3wk fell off the visible chart and a reviewer read the layer
-            // as MISSING. tsMid = (tsL+tsR)/2 = anchor + 0.5wk.
-            label.new(e1_anchor_ms + 302400000, _op, "$" + _ov + "B Option Strike Target",
+            line.new(e1_anchor_ms - 2 * 604800000, _op, e1_anchor_ms + 604800000, _op,
+                 xloc = xloc.bar_time, color = color.rgb(255,200,60), width = 2)
+            label.new(e1_anchor_ms + 604800000, _op, "$" + _ov + " Option Strike Target",
                  xloc = xloc.bar_time, style = label.style_none,
                  textcolor = color.rgb(255,200,60), size = size.small)
     // ── THE TABLE (the v8's 2×17 block). Rows: 0 header · 1 Chain · 2 Days · 3 ZONES · 4-8 the
@@ -1507,14 +1659,10 @@ if e1Enabled and barstate.islast
         table.cell(e1_tbl, 1, 0, array.get(e1_injected_tbl_pair, 0) + " " + array.get(e1_injected_tbl_week, 0), text_color = color.rgb(100,150,255), text_size = size.small, bgcolor = color.rgb(20,20,40))
         table.cell(e1_tbl, 0, 1, "Chain", text_color = color.gray, text_size = size.small)
         table.cell(e1_tbl, 1, 1, array.get(e1_injected_chain, 0), text_color = color.white, text_size = size.small)
-        // §10.7 row 2: the ALTERNATIVE chain (§6.6 Step 4). Rows are header/Chain/Alt/Days/ZONES
-        // (5-9)/TRADES — the earlier table omitted Alt and shifted Days to row 2.
-        table.cell(e1_tbl, 0, 2, "Alt", text_color = color.gray, text_size = size.small)
-        table.cell(e1_tbl, 1, 2, array.get(e1_injected_alt, 0), text_color = color.white, text_size = size.small)
-        table.cell(e1_tbl, 0, 3, "Days", text_color = color.gray, text_size = size.small)
-        table.cell(e1_tbl, 1, 3, array.get(e1_injected_days, 0), text_color = color.white, text_size = size.small)
-        table.cell(e1_tbl, 0, 4, "ZONES", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
-        table.cell(e1_tbl, 1, 4, "", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
+        table.cell(e1_tbl, 0, 2, "Days", text_color = color.gray, text_size = size.small)
+        table.cell(e1_tbl, 1, 2, array.get(e1_injected_days, 0), text_color = color.white, text_size = size.small)
+        table.cell(e1_tbl, 0, 3, "ZONES", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
+        table.cell(e1_tbl, 1, 3, "", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
         for i = 0 to array.size(e1_injected_tbl_row) - 1
             if i >= array.size(e1_injected_tbl_row)
                 break
@@ -1523,8 +1671,8 @@ if e1Enabled and barstate.islast
             _tc = array.get(e1PayloadCat, i)
             _tag = _tc == "RES" ? "RES" : _tc == "MID" ? "EQ" : "SUP"
             _bg = _tc == "RES" ? color.rgb(60,12,8) : _tc == "MID" ? color.rgb(50,38,8) : color.rgb(0,40,40)
-            table.cell(e1_tbl, 0, 5 + i, _tag, text_color = color.white, text_size = size.small, bgcolor = _bg)
-            table.cell(e1_tbl, 1, 5 + i, array.get(e1_injected_tbl_row, i), text_color = color.white, text_size = size.small, bgcolor = _bg)
+            table.cell(e1_tbl, 0, 4 + i, _tag, text_color = color.white, text_size = size.small, bgcolor = _bg)
+            table.cell(e1_tbl, 1, 4 + i, array.get(e1_injected_tbl_row, i), text_color = color.white, text_size = size.small, bgcolor = _bg)
         // ── THE TRADES rows 10-16 (trident_v8.pine:411-427): the header + the SHORT/LONG setup
         // rows, a LIGHT derivation from the zone map (Engine 3 is scoped out by the pin). ──────
         table.cell(e1_tbl, 0, 10, "TRADES", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
@@ -1554,7 +1702,7 @@ if e1Enabled and barstate.islast
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ── INPUTS ──────────────────────────────────────────────────────────────────
-e2Enabled   = input.bool(false, "Show the E2 predicted price path", group = "E2 path")
+e2Enabled   = input.bool(true, "Show the E2 predicted price path", group = "E2 path")
 e2Opacity   = input.int(55, "Path opacity (a forecast, not price)", minval = 10, maxval = 90, group = "E2 path")
 e2Width     = input.int(3, "Brush width (px)", minval = 1, maxval = 6, group = "E2 path")
 e2ShowGhost = input.bool(true, "Show the alternative chain (dashed ghost)", group = "E2 path")
