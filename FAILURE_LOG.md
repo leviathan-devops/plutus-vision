@@ -2121,3 +2121,36 @@ verdict was PASS; the run-4/5/6 findings were refinements, fixed, with 2 false p
 - **Disposition:** FIXED + PROVEN. `answersToPolicyValue` now routes a `noul` answer on `noul` ONLY
   (`if (a?.type === "noul") { raise(a?.noul); continue; }`). Re-probe: item 0 (runtime-grade)
   `act` noul=0.816; item 1 (baked-literal) `noop` noul=0.086 → REJECTED. The gate discriminates.
+
+---
+
+## F-123 — W1e (THE FLOOR-STRONGER GATE) CONFLICTS WITH THE CANON'S MEASURED DEGREE (2026-10-09)
+
+- **What happened:** the W1 wave gate `test_v8_structure` W1e ("the floor zone's zfp < the mid
+  zone's zfp") FAILS: floor 22 vs mid 10. The v8's zDeg ladder `HEAVY·MOD-HEAVY·MOD-HEAVY·MODERATE·
+  HEAVY` puts HEAVY at both OUTER slots.
+- **Root cause:** the v8's zDeg is a HAND-TYPED LITERAL, IDENTICAL for every pair
+  (`dxy_zDeg == eu_zDeg == gu_zDeg == au_zDeg`, trident_v8.pine:190/225/258) — it is NOT computed.
+  The canon's ENGINE rule (canon:1498 step 5) is "Assign pressure degrees based on the group's
+  highest-scoring level", and the confluence = 6 dims (max 12) + the Structural Extreme Bonus (max
+  2). Measured for 2026-07-13: the Equilibrium (MID) honestly scores conf 10 (HEAVY) and the KEY
+  IP SUPPORT conf 8 — the MID must be stronger.
+- **The tension:** forcing the extremes strongest is the POSITIONAL `role_weight` offset the code
+  DELETED as "authoring the answer instead of computing it" (e1_extract.py:779). Two attempts
+  (a positional band-index grant; a data-driven "holds the week's extreme" grant) both re-implement
+  the banned offset; both REVERTED.
+- **Impact:** W1e cannot pass WITHOUT either (a) the positional offset F-56 bans, or (b) a canon
+  reading that makes the extremes measured-strongest (the Step 0e bonus fires only on a swing
+  INSIDE the zone; for 2026-07-13 the ceiling holds no detected swing high — the wick threshold
+  `_wick=px*0.0015` is not met).
+- **Disposition:** OPEN — surface to the operator (this is a pin-gate-vs-authority tension of the
+  F-49/F-53 class). The honest canon computation does NOT guarantee the extremes strongest.
+
+## F-124 — TWO ZONE-ASSEMBLY FUNCTIONS (a duplicated authority)
+
+- **What happened:** `main()` builds the payload via `synthesize_institutional_zones`
+  (e1_extract.py:748) while `e1_tests.py:229` and `pv_crossval.py:71` call `assemble`
+  (e1_extract.py:1031) — a SECOND zone assembler.
+- **Root cause:** two implementations of the 5-zone assembly; their outputs can diverge.
+- **Impact:** a test or the crossval can validate a DIFFERENT assembly than the shipped payload.
+- **Disposition:** OPEN (W7 cleanup) — one assembler; the tests must exercise the LIVE one.

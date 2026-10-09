@@ -2765,3 +2765,20 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
 - **THE FIX (in progress):** make the extremes the strongest per the canon (the Step 0e bonus must
   fire on the ceiling + floor; the mid must not out-score them).
 - **THE STATUS:** OPEN — W2 active.
+
+---
+
+## EN-122 — W2 · THE DEGREE MODEL: THE CANON'S MEASURED RULE vs THE v8's LITERAL LADDER (2026-10-09)
+
+- **THE FINDING:** W1e (the floor stronger than the mid) cannot be satisfied by the canon's
+  measured degree. The v8's zDeg is a hand-typed literal, identical for every pair; the canon's
+  rule (canon:1498) is the group's highest-scoring level, and the MID honestly wins for 2026-07-13.
+- **THE ROOT CAUSE:** the extreme bonus (Step 0e) fires only on a swing INSIDE the zone; the
+  ceiling (the week's high) has no detected swing (the pair-relative wick threshold). The MID
+  captures the most levels → the highest base.
+- **THE FIX:** NONE that is canon-faithful + F-56-compliant. Two forcing attempts reverted
+  (F-123). The engine stays canon-faithful.
+- **THE VERIFICATION:** the payload = [MOD-HEAVY 8, MOD-HEAVY 8, HEAVY 10, MOD-HEAVY 9, MOD-HEAVY 8];
+  wave_gates 17 pass / 4 fail (W1e, W2a, W2b, W2c).
+- **THE LESSON:** a pin gate can encode a HYPOTHESIS the authority does not support. Surface the
+  tension; never force the gate by re-adding the banned mechanism.

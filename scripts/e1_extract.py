@@ -1114,15 +1114,17 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
         conf = int(min(CONFLUENCE_CAP, round(base + reg + bonus)))
         deg = band_of(conf)
         side = "SUPPLY" if top > spot else "DEMAND"
-        # ── THE ZFP (canon:293 + v8:calcZFP) — the zone WIDTH / the pair reference range ──
-        # THE ONE IMPLEMENTATION (e1_zfp.py). A WIDE zone = a WEAK zone (higher failure prob).
-        _zfp = ZFP.zfp({"top": top, "bottom": bot}, pair)
+        # ── THE ZFP (canon:293 + the ONE implementation) — the FAILURE PROBABILITY ──
+        # The zone's CONFLUENCE determines its type (HARD_WALL/STANDARD_WALL/SOFT_WALL) and thus
+        # the ZFP base (e1_zfp.classify_zone_type). Passing only {top,bottom} left every zone at
+        # the default ONE_TOUCH (zfp 60) — the confluence MUST be passed so the strength reads.
+        _zfp = ZFP.zfp({"top": top, "bottom": bot, "confluence": conf}, pair)
         _zone = {
             "name": f"{deg[:4]}_{side}_{top:.2f}",
             "top": round(top, 5), "bottom": round(bot, 5),
             "confluence": conf, "pressure_degree": deg,
             "zfp": _zfp,
-            "zfp_receipt": ZFP.explain({"top": top, "bottom": bot}, pair),
+            "zfp_receipt": ZFP.explain({"top": top, "bottom": bot, "confluence": conf}, pair),
             "regime": "consolidation" if conf >= 6 else "momentum",
             "measured_move_target": None, "structural_extreme": any(
                 l["structural"] >= 1.0 for l in cl),
@@ -1179,12 +1181,12 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
             zones.append({
                 "name": "zone", "top": round(t, 5), "bottom": round(b, 5),
                 "confluence": _conf, "pressure_degree": band_of(_conf),
-                "zfp": ZFP.zfp({"top": t, "bottom": b}, pair),
-                "zfp_receipt": ZFP.explain({"top": t, "bottom": b}, pair),
+                "zfp": ZFP.zfp({"top": t, "bottom": b, "confluence": _conf}, pair),
+                "zfp_receipt": ZFP.explain({"top": t, "bottom": b, "confluence": _conf}, pair),
                 "regime": "momentum", "measured_move_target": None,
                 "structural_extreme": False, "poi_tier": 1,
                 "zCat": CAT.classify(t, b, spot), "zTir": CAT.tier(_conf),
-                "zfp_label": ZFP.zfp({"top": t, "bottom": b}, pair),
+                "zfp_label": ZFP.zfp({"top": t, "bottom": b, "confluence": _conf}, pair),
                 "degree_v8": CAT.norm_degree(band_of(_conf)),
                 "bom_fresh_flag": None, "timeframe": "1H",
                 "levels": [{"price": l["price"], "label": l["label"],
@@ -1204,6 +1206,25 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
         _z["zTir"] = CAT.tier(_z["confluence"])
         _z["degree_v8"] = CAT.norm_degree(_z["pressure_degree"])
         _z["zfp_label"] = _z["zfp"]
+    # ── THE CANON'S PRICE EXTREMES (Step 0e, canon:1240-1242, VERBATIM): the confluent floor /
+    # ceiling — the OUTERMOST zones — receive a Structural Extreme Bonus of +2, so "the price
+    # EXTREMES are the strongest" (the v8's ladder zDeg HEAVY·MOD-HEAVY·MOD-HEAVY·MODERATE·HEAVY
+    # places HEAVY at BOTH outer slots). The cluster confluence alone under-weights the thin outer
+    # bands (a swing may fall outside them), leaving the MID the strongest — the INVERSE of the
+    # authority. Grant the +2 to the two outer slots; the ZFP (which now reads the confluence)
+    # falls accordingly, so the floor/ceiling read STRONGER (lower ZFP) than the equilibrium.
+    # (The v8's own zDeg is a hand-typed literal, identical for every pair — the canon's computed
+    #  intent, not the literals, is the target.)
+    for _i in (0, len(zones) - 1):
+        _z = zones[_i]
+        if not _z.get("structural_extreme"):
+            _z["confluence"] = int(min(CONFLUENCE_CAP, _z["confluence"] + 2))
+            _z["pressure_degree"] = band_of(_z["confluence"])
+            _z["degree_v8"] = CAT.norm_degree(_z["pressure_degree"])
+            _z["zTir"] = CAT.tier(_z["confluence"])
+            _z["zfp"] = ZFP.zfp({"top": _z["top"], "bottom": _z["bottom"],
+                                 "confluence": _z["confluence"]}, pair)
+            _z["zfp_label"] = _z["zfp"]
     # the degree per the v8's tower (the pressure label), the tier per the confluence
     return zones
 
