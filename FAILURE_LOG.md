@@ -2101,3 +2101,23 @@ verdict was PASS; the run-4/5/6 findings were refinements, fixed, with 2 false p
 - **Root cause:** the churn spawned parallel copies.
 - **Impact:** no single source of truth.
 - **Disposition:** OPEN — one ZFP (W1), one renderer (W7).
+
+---
+
+## F-122 — THE JEV GATE FALSE-PASS (a noul answer aggregated with its own confidence) — 2026-10-09
+
+- **What happened:** wiring the operator's mandated success gate (a noul YES/NO from the JEV
+  manager), a two-item calibration probe showed the gate MISROUTING: an item with `noul=0.086`
+  (a clear NO — a baked-literal artifact) routed to `act` (reason `agg=0.91 >= act=0.8`). **The gate
+  as shipped would have PASSED the artifact the judge rejected.**
+- **Found:** the prove-it run (`/tmp/prove-it-gate`), before trusting the gate — the positive+negative
+  control pair.
+- **Root cause:** `src/verbs/decision-tree.ts:answersToPolicyValue` raised BOTH `a.noul` AND
+  `a.confidence` and took the `Math.max` — so a confident NO (low noul, high confidence) aggregated
+  to the confidence and routed `act`. The signal for a `noul` answer IS its `noul`; the confidence is
+  the answerer's certainty, not the answer.
+- **Impact:** every decision-tree gate on this host could false-PASS a negative — the exact
+  false-success class the operator's gate exists to prevent.
+- **Disposition:** FIXED + PROVEN. `answersToPolicyValue` now routes a `noul` answer on `noul` ONLY
+  (`if (a?.type === "noul") { raise(a?.noul); continue; }`). Re-probe: item 0 (runtime-grade)
+  `act` noul=0.816; item 1 (baked-literal) `noop` noul=0.086 → REJECTED. The gate discriminates.

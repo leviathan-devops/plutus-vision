@@ -2721,3 +2721,17 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
 - **THE FIX:** one ZFP (Appendix-B); delete the width formula + `ZFP_BASE`; one v2 renderer. Waves W1 + W7.
 - **THE VERIFICATION:** the red-team audit (bravo) + the primary's grep.
 - **THE LESSON:** a second implementation of one concept is a defect. Count the definition sites.
+
+---
+
+## EN-119 — THE JEV GATE: BUILT + THE FALSE-PASS FIXED (2026-10-09)
+
+- **THE FINDING:** the operator's only success gate is a noul YES/NO from JEV with full context.
+  Building it surfaced a FALSE-PASS: `decision-tree`'s `answersToPolicyValue` maxed `noul` with
+  `confidence`, so a confident NO routed `act`.
+- **THE ROOT CAUSE:** `raise(a?.noul)` fell through to `raise(a?.confidence)` on the same answer.
+- **THE FIX:** route a `noul` answer on `noul` ONLY (`src/verbs/decision-tree.ts:155-163`).
+- **THE VERIFICATION:** the control pair — good (noul 0.816 → act) vs bad (noul 0.086 → noop,
+  REJECTED). The gate run on the current artifact: `JEV VERDICT: NO — REJECTED` (noul=0.005).
+- **THE LESSON:** a gate is only as good as its aggregation. Test the gate with a known-positive
+  AND a known-negative before trusting its silence. (This is the failToken-collision class.)
