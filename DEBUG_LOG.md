@@ -2860,3 +2860,16 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
   ORANGE (the colour-ladder mapping).
 - **THE LESSON:** a flat metric class (all zones identical) = an input-dimension constant; the level
   count varying across bands breaks the tie.
+
+---
+
+## EN-127 — W5 · ENGINE 2 COMPUTES (2026-10-09)
+
+- **THE FINDING:** both the E1 AND E2 payloads were DORMANT — the `e1_injected_*` had been baked
+  literals, and the `e2_injected_*` arrays were EMPTY (never filled) → the E2 path never drew.
+- **THE FIX:** `f_e2Compute()` — the E2 shape chain computed from the E1 zones: §6.2 the priority
+  matrix (WL if a Hard Wall ZFP<20; BS if ZFP>45; SS if ZFP>40; else R) + a 5-day path across the
+  anchor week at the shape's target (the lowest/nearest zone midpoint).
+- **THE VERIFICATION (the screenshot):** the E2 cyan forecast path renders (a diagonal rising from
+  the Equilibrium), alongside the 5 computed E1 zones. `pv-load boxes:5 lines:5 labels:6 tables:1`.
+- **THE LESSON:** a dormant render is often an EMPTY payload, not a render bug — check the arrays.
