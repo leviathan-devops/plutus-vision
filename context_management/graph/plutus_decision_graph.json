@@ -1,0 +1,409 @@
+{
+  "graph_id": "7fdbaaee-4d52-4d3f-ab38-921f72fe80f5",
+  "nodes": [
+    {
+      "id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "type": "decision",
+      "properties": {
+        "category": "environment",
+        "outcome": "use_backtesting_eurusd_plus_fixture",
+        "confidence": 0.9,
+        "timestamp": 1791742387.465426,
+        "scenario": "Which real FX data to use when Yahoo/Stooq/Dukascopy/TradingView are blocked?",
+        "decision_maker": "claude-session-2026-10-11",
+        "reasoning": "Only GitHub/PyPI/npm reachable. PyPI package `backtesting` bundles real hourly EURUSD; repo fixture holds real TradingView Jul-2026 bars. Used both; did NOT synthesize or mock bars.",
+        "recorded_at": "2026-10-11T18:13:07.465454",
+        "content": "Which real FX data to use when Yahoo/Stooq/Dukascopy/TradingView are blocked?"
+      }
+    },
+    {
+      "id": "ENV_NET",
+      "type": "entity",
+      "properties": {
+        "name": "ENV_NET",
+        "content": "ENV_NET"
+      }
+    },
+    {
+      "id": "ENV_DATA",
+      "type": "entity",
+      "properties": {
+        "name": "ENV_DATA",
+        "content": "ENV_DATA"
+      }
+    },
+    {
+      "id": "category_environment",
+      "type": "category",
+      "properties": {
+        "name": "environment",
+        "content": "category_environment"
+      }
+    },
+    {
+      "id": "maker_claude-session-2026-10-11",
+      "type": "decision_maker",
+      "properties": {
+        "name": "claude-session-2026-10-11",
+        "content": "maker_claude-session-2026-10-11"
+      }
+    },
+    {
+      "id": "afeb020b-f575-4faf-a7ba-ef49bb662cd2",
+      "type": "decision",
+      "properties": {
+        "category": "tooling",
+        "outcome": "do_not_install_use_semantica_json",
+        "confidence": 0.9,
+        "timestamp": 1791742387.465816,
+        "scenario": "Install Ars Umbris (arsumbris/arsumbris)?",
+        "decision_maker": "claude-session-2026-10-11",
+        "reasoning": "macOS-only Electron alpha that runs code with no sandboxing; cannot run on this Linux container and executes arbitrary code. Cloned read-only to learn its typed-graph idea; did not install.",
+        "recorded_at": "2026-10-11T18:13:07.465828",
+        "content": "Install Ars Umbris (arsumbris/arsumbris)?"
+      }
+    },
+    {
+      "id": "A_SEMANTICA",
+      "type": "entity",
+      "properties": {
+        "name": "A_SEMANTICA",
+        "content": "A_SEMANTICA"
+      }
+    },
+    {
+      "id": "category_tooling",
+      "type": "category",
+      "properties": {
+        "name": "tooling",
+        "content": "category_tooling"
+      }
+    },
+    {
+      "id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "type": "decision",
+      "properties": {
+        "category": "tooling",
+        "outcome": "repo_committed_graph_plus_claude_md",
+        "confidence": 0.85,
+        "timestamp": 1791742387.46596,
+        "scenario": "How to persist knowledge/context across compaction?",
+        "decision_maker": "claude-session-2026-10-11",
+        "reasoning": "Semantica ContextGraph persisted as JSON in repo + stdlib resume.py + root CLAUDE.md pointing to it + canon docs copied into repo (container uploads are ephemeral).",
+        "recorded_at": "2026-10-11T18:13:07.465966",
+        "content": "How to persist knowledge/context across compaction?"
+      }
+    },
+    {
+      "id": "A_GRAPH",
+      "type": "entity",
+      "properties": {
+        "name": "A_GRAPH",
+        "content": "A_GRAPH"
+      }
+    },
+    {
+      "id": "A_CANON_DIR",
+      "type": "entity",
+      "properties": {
+        "name": "A_CANON_DIR",
+        "content": "A_CANON_DIR"
+      }
+    },
+    {
+      "id": "8573f576-c72f-41f4-8e32-90f9985f1735",
+      "type": "decision",
+      "properties": {
+        "category": "methodology",
+        "outcome": "hold_out_12_weeks_no_tuning",
+        "confidence": 0.9,
+        "timestamp": 1791742387.466122,
+        "scenario": "How to avoid contaminating the blind test?",
+        "decision_maker": "claude-session-2026-10-11",
+        "reasoning": "Picked 12 weeks by fixed seed, forecast from pre-anchor bars only, scored once, did NOT tune on them. Exploration used other weeks / pooled stats.",
+        "recorded_at": "2026-10-11T18:13:07.466128",
+        "content": "How to avoid contaminating the blind test?"
+      }
+    },
+    {
+      "id": "FND_FORECAST_V0",
+      "type": "entity",
+      "properties": {
+        "name": "FND_FORECAST_V0",
+        "content": "FND_FORECAST_V0"
+      }
+    },
+    {
+      "id": "category_methodology",
+      "type": "category",
+      "properties": {
+        "name": "methodology",
+        "content": "category_methodology"
+      }
+    },
+    {
+      "id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "type": "decision",
+      "properties": {
+        "category": "methodology",
+        "outcome": "report_negative_results_honestly",
+        "confidence": 0.95,
+        "timestamp": 1791742387.466243,
+        "scenario": "Report the null/negative results?",
+        "decision_maker": "claude-session-2026-10-11",
+        "reasoning": "OHLC-only E1 shows no edge vs shifted baselines; v0 forecaster underperforms 'always range'. Presented as limits of my reconstruction, not as evidence against live canon (missing options/analyst data).",
+        "recorded_at": "2026-10-11T18:13:07.466248",
+        "content": "Report the null/negative results?"
+      }
+    },
+    {
+      "id": "FND_E1_NULL",
+      "type": "entity",
+      "properties": {
+        "name": "FND_E1_NULL",
+        "content": "FND_E1_NULL"
+      }
+    },
+    {
+      "id": "8b266154-07c3-4943-a89a-3b6d677e1401",
+      "type": "decision",
+      "properties": {
+        "category": "governance",
+        "outcome": "hold_indicator_work",
+        "confidence": 1.0,
+        "timestamp": 1791742387.466388,
+        "scenario": "Start indicator work now?",
+        "decision_maker": "claude-session-2026-10-11",
+        "reasoning": "Operator: do not start until explicit permission. No indicator files were modified; rig run was read-only (LuxAlgo bundle rendered, nothing edited).",
+        "recorded_at": "2026-10-11T18:13:07.466393",
+        "content": "Start indicator work now?"
+      }
+    },
+    {
+      "id": "PHASE",
+      "type": "entity",
+      "properties": {
+        "name": "PHASE",
+        "content": "PHASE"
+      }
+    },
+    {
+      "id": "category_governance",
+      "type": "category",
+      "properties": {
+        "name": "governance",
+        "content": "category_governance"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "8b8f0acb-70df-5604-897a-cab141cf9522",
+      "familyId": "8b8f0acb-70df-5604-897a-cab141cf9522",
+      "source_id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "target_id": "ENV_NET",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "95acaddc-baf1-5dcc-812e-a7af33e27c58",
+      "familyId": "95acaddc-baf1-5dcc-812e-a7af33e27c58",
+      "source_id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "target_id": "ENV_DATA",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "168d6efd-1385-50e5-9c02-f7cd3f333e20",
+      "familyId": "168d6efd-1385-50e5-9c02-f7cd3f333e20",
+      "source_id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "target_id": "category_environment",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "c139ea0f-917a-51e4-b116-02400a2c7229",
+      "familyId": "c139ea0f-917a-51e4-b116-02400a2c7229",
+      "source_id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "target_id": "maker_claude-session-2026-10-11",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "7a3a4b42-44ec-5eaa-b01f-1c7a0bff3540",
+      "familyId": "7a3a4b42-44ec-5eaa-b01f-1c7a0bff3540",
+      "source_id": "afeb020b-f575-4faf-a7ba-ef49bb662cd2",
+      "target_id": "A_SEMANTICA",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "753c4265-3ae9-5565-9757-5c62ffb0a875",
+      "familyId": "753c4265-3ae9-5565-9757-5c62ffb0a875",
+      "source_id": "afeb020b-f575-4faf-a7ba-ef49bb662cd2",
+      "target_id": "category_tooling",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "8c6187e4-6992-5490-8fa3-45f9ee482da9",
+      "familyId": "8c6187e4-6992-5490-8fa3-45f9ee482da9",
+      "source_id": "afeb020b-f575-4faf-a7ba-ef49bb662cd2",
+      "target_id": "maker_claude-session-2026-10-11",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "383108fc-f3e4-5878-b363-f7011ff73830",
+      "familyId": "383108fc-f3e4-5878-b363-f7011ff73830",
+      "source_id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "target_id": "A_GRAPH",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.85
+      }
+    },
+    {
+      "id": "c424ee0c-36ff-5628-a051-985545ea76a1",
+      "familyId": "c424ee0c-36ff-5628-a051-985545ea76a1",
+      "source_id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "target_id": "A_CANON_DIR",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.85
+      }
+    },
+    {
+      "id": "18e10ce1-6e38-54ae-8df3-720cc23d1d0a",
+      "familyId": "18e10ce1-6e38-54ae-8df3-720cc23d1d0a",
+      "source_id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "target_id": "category_tooling",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "670ed56a-598c-5ff7-b07c-58b98bb23c30",
+      "familyId": "670ed56a-598c-5ff7-b07c-58b98bb23c30",
+      "source_id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "target_id": "maker_claude-session-2026-10-11",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "ed688ef7-6537-5942-9ae3-eda54c586877",
+      "familyId": "ed688ef7-6537-5942-9ae3-eda54c586877",
+      "source_id": "8573f576-c72f-41f4-8e32-90f9985f1735",
+      "target_id": "FND_FORECAST_V0",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "2faf4f02-02a2-5618-9b71-02535f80c3f7",
+      "familyId": "2faf4f02-02a2-5618-9b71-02535f80c3f7",
+      "source_id": "8573f576-c72f-41f4-8e32-90f9985f1735",
+      "target_id": "category_methodology",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "a4dac8c0-de58-5240-a0e9-7ba1084568a6",
+      "familyId": "a4dac8c0-de58-5240-a0e9-7ba1084568a6",
+      "source_id": "8573f576-c72f-41f4-8e32-90f9985f1735",
+      "target_id": "maker_claude-session-2026-10-11",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "a9ed3860-8956-5eaf-9c1d-eec345bb710f",
+      "familyId": "a9ed3860-8956-5eaf-9c1d-eec345bb710f",
+      "source_id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "target_id": "FND_E1_NULL",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.95
+      }
+    },
+    {
+      "id": "82439120-9c95-55e6-91b9-477f0172568c",
+      "familyId": "82439120-9c95-55e6-91b9-477f0172568c",
+      "source_id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "target_id": "FND_FORECAST_V0",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.95
+      }
+    },
+    {
+      "id": "00d46314-6d89-57e3-8844-41ae667d6094",
+      "familyId": "00d46314-6d89-57e3-8844-41ae667d6094",
+      "source_id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "target_id": "category_methodology",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "1d7e7b97-f380-552d-8539-eb5d8744e2d1",
+      "familyId": "1d7e7b97-f380-552d-8539-eb5d8744e2d1",
+      "source_id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "target_id": "maker_claude-session-2026-10-11",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "82eb2164-c377-5e7a-a4ee-2be820b659b0",
+      "familyId": "82eb2164-c377-5e7a-a4ee-2be820b659b0",
+      "source_id": "8b266154-07c3-4943-a89a-3b6d677e1401",
+      "target_id": "PHASE",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 1.0
+      }
+    },
+    {
+      "id": "8791f9a0-c8ff-5bba-8978-ca5304bbd234",
+      "familyId": "8791f9a0-c8ff-5bba-8978-ca5304bbd234",
+      "source_id": "8b266154-07c3-4943-a89a-3b6d677e1401",
+      "target_id": "category_governance",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "ab5a45a0-2ce3-5dac-b9c7-17cd897edb82",
+      "familyId": "ab5a45a0-2ce3-5dac-b9c7-17cd897edb82",
+      "source_id": "8b266154-07c3-4943-a89a-3b6d677e1401",
+      "target_id": "maker_claude-session-2026-10-11",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    }
+  ],
+  "links": []
+}
