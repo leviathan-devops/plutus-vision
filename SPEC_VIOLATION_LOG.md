@@ -345,3 +345,13 @@ no crash.
 | V-39 | the operator's litmus (5-week cross-validation) | the render matches the v8 across 5 weeks | every week `INSUFFICIENT_DATA` (bars 0/0) | VIOLATED HIGH | `evidence/crossval-5week.json` |
 | P-09 | the mandatory spec-audit gate (GS-1..GS-8) | a spec must pass the audit before dispatch | the spec was never audited | VIOLATED HIGH | no audit artifact; now APPROVED (0/8) |
 | P-10 | the OD-closure law | an unruled OD-n is a HARD STOP | OD-1 left unruled → the default (A2) built | VIOLATED CRITICAL | the two-day baked-literal churn |
+
+## DISPOSITIONS (2026-10-11, W1→W7 — appended, history above untouched)
+| ID | Standing | Evidence |
+|---|---|---|
+| V-36 (SC-19 baked zones) | RESOLVED | served .pine: 0 injected literals (all push forms + scalars censused), 26 ta.* calls; renders on station + :99 IDE |
+| V-37 (3 ZFPs) | RESOLVED | exactly ONE ZFP (Appendix-B); width calcZFP + ZFP_BASE deleted in Python AND Pine |
+| V-38 (BLOCKED-as-PASS) | STANDING (process law) | no substitution made; the qwen-code-audit gate stays BLOCKED, openly |
+| V-39 (5-week litmus) | RESOLVED | scripts/indicator_gate.py: 5/5 real weeks (400 bars each, RES+SUP, ceilings vary), screenshot bound |
+| P-09 (spec-audit gate) | STANDING | spec audit APPROVED (0/8) per TESTING_LOG 2026-10-09; re-audit not run this set |
+| P-10 (OD-1 unruled) | RESOLVED | OD-1 RULED A3 2026-10-09 (P1/P2/P5/P6/P9 live in Pine); the A2 payload deleted |

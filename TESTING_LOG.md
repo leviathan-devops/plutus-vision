@@ -1965,3 +1965,11 @@ forecast direction (rise to the resistance, fall to the support) matches.
 - **The retry condition:** run `qwen-code-audit` (or the pinned fallback lane) to a verdict
 
 **AUDIT GATE: BLOCKED (no code-audit artifact on disk for this artifact)**
+
+## TEST RESULT — 2026-10-11 — the W5/W6/W7 batteries + the litmus (this set)
+- test_render_computed 6/0 (SC-19=0 all forms · ta.* 26 · f_e1Compute/f_e2Compute present · ST-9 v1 region intact)
+- test_5week_crossval PASS (5/5 seeded real weeks, >=5 zones + RES + SUP + ok:true each; ceilings 37/40/55 vary)
+- indicator_gate --differential: wide Oct-02 (range 3.5, ceiling 10%) vs narrow Jul-24 (range 1.2, ceiling 25%) → DISCRIMINATES
+- test_tree_clean PASS (porcelain 0 · one v2 renderer) · fence PASS 5/5 · e1_tests 18/0 · e2_tests 46/0 · e1_render_tests 23/0 · W2 36/0 · W3/W4 35/0
+- JEV trajectory: all-noop (max 0.451) → litmus wired (chunk 6 escalate 0.733) → W7 committed (chunk 1 ACT 0.866). VERDICT: NO.
+- The qwen-code-audit gate REMAINS as stated above (BLOCKED, no artifact) — recorded here so the tail shows the CURRENT battery state alongside it, not instead of it.

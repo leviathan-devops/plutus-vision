@@ -2391,3 +2391,19 @@ MODERATE-HEAVY 40% RED, the Equilibrium MODERATE, the middle LIGHT) + the E2 cya
 `pv-load` boxes:5 lines:5 labels:6 tables:1.
 **The verification:** SC-19 = 0; `bun pv-load` EXIT 0.
 **The honest notes:** the v8's EXACT ladder rungs differ (F-123); W3/W4/W6/W7 remain.
+
+## 2026-10-11 — THE W6+W7 CLOSE · THE LITMUS IS WIRED, THE TREE IS CLEAN (no verdict claimed)
+**The deliverable:** the served .pine computes E1+E2 live (f4010d31, SC-19=0, 26 ta.* calls,
+v1 region byte-intact); scripts/indicator_gate.py renders 5 seeded REAL weeks (400 Friday-close
+bars each, RES+SUP per week, ceilings 37/40/55) + the --differential probe + a sha-bound :99
+screenshot, and JEV_GATE/run_gate.sh ingests the evidence into EVERY chunk (halts without JEV on
+any litmus failure). W7 deleted the slump per forensic/SLUMP_MAP.md (twin, orphans, scratch, 4
+checkpoint dupes, F-D/F-H code slump) and committed D11 with the fence PASS 5/5.
+**The evidence:** station 5 boxes / 5 lines / 6 labels on Oct data (spread 100.74→101.79) AND the
+:99 IDE on the Jul fixture (5 spread zones + E2 path + table object); the litmus evidence file;
+the bound screenshot (buffer-sha == artifact-sha).
+**The verification:** test_render_computed 6/0 · test_5week_crossval PASS · test_tree_clean PASS ·
+fence PASS 5/5 · JEV chunk 1 reached act (0.866), chunks 4/5/6 rising — VERDICT STILL NO.
+**The honest notes:** P3/P4/P7/P8 remain [NO DATA] (no feed); the E2 reads BS on all 5 litmus
+weeks (no shape discrimination on DXY uptrend data); the Vela build does not paint Pine tables;
+the qwen-code-audit gate stays BLOCKED (no artifact — not upgraded, not substituted).

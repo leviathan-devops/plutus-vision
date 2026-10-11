@@ -7,7 +7,8 @@
 | **Target** | `PLUTUS_VISION` — the Pine indicator (`plutus-vision-v2.pine`) rendering live on the V1 baseline |
 | **Generated** | 2026-10-07 |
 | **Trident Version** | v5.3.3 (the Toolset) |
-| **Status** | `PLANNING` — **NO CODE UNTIL THE OPERATOR SAYS BUILD** |
+| **Status** | `PLANNING` — **NO CODE UNTIL THE OPERATOR SAYS BUILD** (the Oct-07 row, kept as history) |
+| **Status (2026-10-11)** | `BUILT (W1→W7)` — the operator SAID BUILD (PIN_INDICATOR_PORT_BUILD.md:1); the zones compute live in Pine (SC-19=0), the 5-week litmus passes, the fence holds PASS 5/5. The success gate is the JEV verdict + the operator's look (C16). |
 | **Artifact Type** | `BUILD_SPEC (Layer 1 Prompt)` + CLEANUP PLAN |
 | **Authority** | `Original_Canon_Data/Toolset/` — the 6 approved files (fingerprints in §A) |
 | **Supersedes** | the report-generator frame (F-64, F-74) — **the report step is REMOVED by operator ruling** |

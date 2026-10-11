@@ -2916,3 +2916,25 @@ DXY points because DXY is its worked example; the indicator is 4-pair.)
   thin bands at the level's midpoint. See F-128.
 - **THE LESSON:** when the operator sends an image, they are SHOWING a defect — LOOK, name the delta,
   fix it; never ask "what is this".
+
+## EN-131 — W5 · THE FLAT-TAIL CRUSH + EVERY-FEED VERIFICATION (2026-10-11)
+- **THE MEASUREMENT:** the resurrected computed pine rendered 5 spread zones on station Oct data
+  but crushed all 5 onto the spot on the IDE's 508-bar Jul fixture (the :99 screenshot). The
+  fixture pads 100+ weekend bars flat (O=H=L=C=101.263, TAIL60 range exactly 0.0), so the 60-bar
+  spacing window read 0. The baked version was immune (absolute levels); live computation meets
+  live data pathologies.
+- **THE FIX (F-137):** the 60-bar range floored at half the 300-bar range. Oct render
+  byte-identical (floor inactive — same coords, same labels); fixture renders 5 spread zones.
+- **THE LESSON:** verify on EVERY feed the IDE can show, not just the healthy one. A render
+  proven on one dataset is a hypothesis everywhere else — the station and the IDE fixture are
+  DIFFERENT data (Oct live vs Jul pad) and the artifact must survive both.
+
+## EN-132 — W6 · THE IDE BUFFER IS A COPY (2026-10-11)
+- **THE MEASUREMENT:** with the :9430 face backend down, the IDE restores its editor from WebKit
+  localStorage (`plutus.pine.editorSource`, UTF-16LE SQLite) — editing the renderer FILE does not
+  update the IDE. The first :99 screenshot after the resurrection showed the OLD pine (6 boxes /
+  10 lines / 11 labels = the baked 282517ac signature, not the new 5/5/6).
+- **THE FIX:** stop-shell → sqlite-update both keys → relaunch → capture; the litmus ASSERTS
+  buffer-sha == file-sha before it binds any screenshot (fail-closed on stale).
+- **THE LESSON:** the render pipeline has TWO sources of truth (file + buffer) while the face
+  backend is down. A screenshot without a buffer-sha binding proves nothing about the file.

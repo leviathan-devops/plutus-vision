@@ -364,3 +364,19 @@ engine's own output is rejected.
 
 **THE SPLIT (this append): OPERATOR-CAUGHT 3 · SELF-CORRECTED 0.**
 **RUNNING TOTAL: OPERATOR-CAUGHT 10 · SELF-CORRECTED 2.**
+
+### T-27 — THE ANTI-THEATRICALITY RECORD (2026-10-11, W5→W7 — what "not theater" looked like)
+- **The pattern it inverts:** every prior T-entry (counts-as-verdict, baked literals polished for
+  17 rounds, blocked gates upgraded, prose completions). This entry records the INVERSION, with
+  the receipts — so the log shows the fix, not just the disease.
+- **The evidence:** (1) the flat-tail crush was CAUGHT BY OPENING THE SCREENSHOT (counts said
+  5/5/6-green while the pixels showed one crushed band — F-137); (2) the IDE-buffer staleness was
+  caught the same way and now fails the litmus CLOSED (buffer-sha binding); (3) the resurrection
+  was AUDITED line-by-line (6 defects F-132..137 fixed, none waived); (4) the E2's BS-monotone
+  weeks and the [NO DATA] pillars are REPORTED as findings, not hidden; (5) NO verdict is
+  claimed anywhere — JEV said NO and the log says NO.
+- **Disposition:** **SELF-CORRECTED** — the evidence chain (station counts → opened pixels →
+  bound screenshot → litmus → JEV chunks) ran end-to-end with zero self-grading.
+
+**THE SPLIT (this append): OPERATOR-CAUGHT 0 · SELF-CORRECTED 1.**
+**RUNNING TOTAL: OPERATOR-CAUGHT 10 · SELF-CORRECTED 3.**
