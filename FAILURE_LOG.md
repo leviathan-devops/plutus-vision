@@ -2225,3 +2225,58 @@ verdict was PASS; the run-4/5/6 findings were refinements, fixed, with 2 false p
 - **THE LESSON:** a COUNT proves geometry was created, not that the pixels match the spec. THE
   VISION-IN-THE-LOOP LAW (the skill minted): render → capture → OPEN → read vs the spec. A count is
   never the verdict; the pixels are.
+
+## F-132 — THE WL-FIRST TRANSCRIPTION ERROR (E2 §6.2 order) — 2026-10-11
+- **What happened:** the resurrected W5 E2 classified WL before BS, contradicting its own
+  comment (#1 BS, #2 WL) and scripts/e2_engine.py (BS #1, WL #2).
+- **Found:** code read during the 0b40379 resurrection audit (2026-10-11).
+- **Root cause:** priority-order slip in the 29a3622 E2 splice; masked because WL
+  (min ZFP < 20) almost never fires under the LIGHT floor.
+- **Disposition:** FIXED — BS first. Zero render change on the Oct + Jul fixtures.
+- **THE LESSON:** a transcriber's comment is a claim — diff it against the code.
+
+## F-133 — THE SATURDAY ANCHOR (E2 _mon off-by-two) — 2026-10-11
+- **What happened:** the Monday anchor subtracted dayofweek days and landed on SATURDAY
+  (dayofweek: Sun=1..Sat=7), starting the E2 path 2 days early.
+- **Found:** resurrection audit; verified against the Pine dayofweek contract.
+- **Root cause:** dayofweek treated as 0-based Monday..Sunday; it is 1-based Sunday..Saturday.
+- **Disposition:** FIXED — time minus (dayofweek+5)%7 days (Mon->0 … Sun->6).
+
+## F-134 — THE BAKED WEEK TAG ("2026-W41") — 2026-10-11
+- **What happened:** the "computed" artifact carried a typed week-tag literal a string
+  scalar, not a push — that the SC-19/W5 patterns cannot see.
+- **Found:** resurrection audit (the full-literal census, both push forms + scalars).
+- **Root cause:** the W5 splice computed the anchor ms but left the display tag typed.
+- **Disposition:** FIXED — computed from year()/weekofyear() (PineTS-probed 2026-10-11).
+- **THE LESSON:** the grep patterns are necessary, not sufficient — census scalars too.
+
+## F-135 — THE 5x TBL_ROW DECLARATION — 2026-10-11
+- **What happened:** five identical tbl_row array declarations (the per-row add() bug the
+  build comment claims was fixed 2026-10-09).
+- **Found:** resurrection audit (renderer copy predates/continues the build fix).
+- **Root cause:** build fixed, renderer copy re-baked from an older build or hand-spliced.
+- **Disposition:** FIXED — deduped to one declaration. Compiles identically.
+
+## F-136 — THE EMPTY TABLE (unfilled tbl/chain/days/trade arrays) — 2026-10-11
+- **What happened:** the computed artifact declared the v8 2x17 table arrays but never
+  filled them — the table guard hid the whole block. C16 parity gap vs the baked render.
+- **Found:** resurrection audit (push census: zero fills for 6 table arrays).
+- **Root cause:** the W5 splice computed zones + path but left the summary block on the
+  old injected contract with no injector.
+- **Disposition:** FIXED — pair/week/rows fill in f_e1Compute, chain/days/trades in
+  f_e2Compute (trade geometry transcribed from the build); f_e2Compute hoisted before
+  the table read with a standalone guard. Station: tables:1.
+  NOTE: the Vela renderer does not paint Pine tables ("geometry absent") — same as the
+  baked version — so the fill is correctness-verified but visually inert here.
+
+## F-137 — THE FLAT-TAIL CRUSH (fixture weekend pad) — 2026-10-11
+- **What happened:** on the IDE's 508-bar July fixture all 5 zones crushed into one band
+  at the spot: the fixture pads 100+ weekend bars flat (O=H=L=C, TAIL60 range 0.0), so
+  the 60-bar spacing window read 0.
+- **Found:** the :99 IDE screenshot after the resurrection (station Oct data was healthy).
+- **Root cause:** zone spacing trusted the 60-bar window unconditionally; the baked
+  version was immune (absolute levels), the computed version was not.
+- **Disposition:** FIXED — the 60-bar range floored at half the 300-bar range. Oct render
+  byte-identical (floor inactive); fixture renders 5 spread zones.
+- **THE LESSON:** live computation meets live data pathologies — verify on EVERY feed
+  the IDE can show, not just the healthy one.

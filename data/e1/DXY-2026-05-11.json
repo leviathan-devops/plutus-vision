@@ -12,7 +12,7 @@
   "tsMid": 1778932800000
  },
  "spot": 98.008,
- "data_as_of": "2026-10-07",
+ "data_as_of": "2026-10-08",
  "sources": {
   "EXTRACT_ohlc": {
    "status": "OK",
@@ -2168,17 +2168,55 @@
    "name": "IP Resistance Ceiling",
    "top": 98.60491,
    "bottom": 98.5,
-   "zone_type": "STANDARD_WALL",
+   "zone_type": "SOFT_WALL",
    "confluence": 8,
    "pressure_degree": "MODERATE_HEAVY",
-   "zfp": 27,
+   "zfp": 80,
+   "zfp_receipt": {
+    "zone_type": "SOFT_WALL",
+    "base": 40.0,
+    "modifiers": [
+     {
+      "modifier": "spring_release",
+      "value": 0,
+      "why": "outside expiry window (weekday=1)"
+     },
+     {
+      "modifier": "momentum",
+      "value": 15,
+      "why": "RoC +0.1010 accelerating toward zone"
+     },
+     {
+      "modifier": "cascade",
+      "value": 25,
+      "why": "zone @ 97.75-97.85 broke"
+     },
+     {
+      "modifier": "regime_change",
+      "value": 0,
+      "why": "price oscillating on the EMA200 (no meaningful separation)"
+     },
+     {
+      "modifier": "macro_catalyst",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "cross_pair",
+      "value": 0,
+      "why": "[NO DATA]"
+     }
+    ],
+    "zfp": 80,
+    "canon": "Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md Appendix B (B.1 base + B.2 modifiers)"
+   },
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 2,
    "zCat": "RES",
    "zTir": "T1",
-   "zfp_label": 7,
+   "zfp_label": 80,
    "degree_v8": "MODERATE-HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
@@ -2225,18 +2263,56 @@
    "name": "Upper IP Resistance",
    "top": 98.3667,
    "bottom": 98.24717,
-   "zone_type": "STANDARD_WALL",
-   "confluence": 9,
-   "pressure_degree": "MODERATE_HEAVY",
-   "zfp": 27,
+   "zone_type": "ONE_TOUCH",
+   "confluence": 11,
+   "pressure_degree": "HEAVY",
+   "zfp": 100,
+   "zfp_receipt": {
+    "zone_type": "ONE_TOUCH",
+    "base": 60.0,
+    "modifiers": [
+     {
+      "modifier": "spring_release",
+      "value": 0,
+      "why": "outside expiry window (weekday=1)"
+     },
+     {
+      "modifier": "momentum",
+      "value": 15,
+      "why": "RoC +0.1010 accelerating toward zone"
+     },
+     {
+      "modifier": "cascade",
+      "value": 25,
+      "why": "zone @ 97.75-97.85 broke"
+     },
+     {
+      "modifier": "regime_change",
+      "value": 0,
+      "why": "price oscillating on the EMA200 (no meaningful separation)"
+     },
+     {
+      "modifier": "macro_catalyst",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "cross_pair",
+      "value": 0,
+      "why": "[NO DATA]"
+     }
+    ],
+    "zfp": 100,
+    "canon": "Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md Appendix B (B.1 base + B.2 modifiers)"
+   },
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 2,
    "zCat": "RES",
    "zTir": "T1",
-   "zfp_label": 7,
-   "degree_v8": "MODERATE-HEAVY",
+   "zfp_label": 100,
+   "degree_v8": "HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -2297,179 +2373,62 @@
      "use_box": false
     }
    ],
-   "ladder_name": "MODE_SUPPLY_98.37"
-  },
-  {
-   "name": "Equilibrium Zone",
-   "top": 98.084,
-   "bottom": 97.95122,
-   "zone_type": "SOFT_WALL",
-   "confluence": 4,
-   "pressure_degree": "LIGHT",
-   "zfp": 50,
-   "regime": "momentum",
-   "measured_move_target": null,
-   "structural_extreme": false,
-   "poi_tier": 1,
-   "zCat": "MID",
-   "zTir": "T2",
-   "zfp_label": 8,
-   "degree_v8": "LIGHT",
-   "bom_fresh_flag": null,
-   "timeframe": "1H",
-   "levels": [
-    {
-     "price": 97.95122,
-     "label": "P2_SMA9",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 97.957,
-     "label": "P5_LSZ_97.9570",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 97.96358,
-     "label": "P2_EMA10",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 97.96471,
-     "label": "P2_EMA9",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 97.96768,
-     "label": "P2_EMA20",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 97.968,
-     "label": "P2_SMA20",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 97.972,
-     "label": "P5_LSZ_97.9720",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 97.983,
-     "label": "P5_LSZ_97.9830",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 97.992,
-     "label": "P5_LSZ_97.9920",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 97.99808,
-     "label": "P2_EMA50",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 98.0,
-     "label": "P6_ROUND_98.00",
-     "level_type": "P6",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 98.008,
-     "label": "P5_LSZ_98.0080",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 98.01636,
-     "label": "P2_SMA50",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 98.025,
-     "label": "P5_LSZ_98.0250",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 98.02941,
-     "label": "P2_SMA100",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 98.036,
-     "label": "P5_LSZ_98.0360",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 98.058,
-     "label": "P5_LSZ_98.0580",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 98.05987,
-     "label": "P2_EMA100",
-     "level_type": "P2",
-     "style": "line",
-     "use_box": false
-    },
-    {
-     "price": 98.084,
-     "label": "P5_LSZ_98.0840",
-     "level_type": "P5",
-     "style": "line",
-     "use_box": false
-    }
-   ],
-   "ladder_name": "LIGH_SUPPLY_98.08"
+   "ladder_name": "HEAV_SUPPLY_98.37"
   },
   {
    "name": "Mid-Range Support",
    "top": 97.85282,
    "bottom": 97.75455,
-   "zone_type": "STANDARD_WALL",
-   "confluence": 8,
-   "pressure_degree": "MODERATE_HEAVY",
-   "zfp": 27,
+   "zone_type": "ONE_TOUCH",
+   "confluence": 10,
+   "pressure_degree": "HEAVY",
+   "zfp": 60,
+   "zfp_receipt": {
+    "zone_type": "ONE_TOUCH",
+    "base": 60.0,
+    "modifiers": [
+     {
+      "modifier": "spring_release",
+      "value": 0,
+      "why": "outside expiry window (weekday=1)"
+     },
+     {
+      "modifier": "momentum",
+      "value": 0,
+      "why": "momentum not toward zone"
+     },
+     {
+      "modifier": "cascade",
+      "value": 0,
+      "why": "no adjacent zone broke"
+     },
+     {
+      "modifier": "regime_change",
+      "value": 0,
+      "why": "price oscillating on the EMA200 (no meaningful separation)"
+     },
+     {
+      "modifier": "macro_catalyst",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "cross_pair",
+      "value": 0,
+      "why": "[NO DATA]"
+     }
+    ],
+    "zfp": 60,
+    "canon": "Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md Appendix B (B.1 base + B.2 modifiers)"
+   },
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 2,
    "zCat": "SUP",
    "zTir": "T1",
-   "zfp_label": 6,
-   "degree_v8": "MODERATE-HEAVY",
+   "zfp_label": 60,
+   "degree_v8": "HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -2509,24 +2468,62 @@
      "use_box": false
     }
    ],
-   "ladder_name": "MODE_DEMAND_97.85"
+   "ladder_name": "HEAV_DEMAND_97.85"
   },
   {
    "name": "Key IP Support",
    "top": 97.65091,
    "bottom": 97.5956,
-   "zone_type": "SOFT_WALL",
-   "confluence": 6,
-   "pressure_degree": "MODERATE",
-   "zfp": 37,
+   "zone_type": "ONE_TOUCH",
+   "confluence": 8,
+   "pressure_degree": "MODERATE_HEAVY",
+   "zfp": 60,
+   "zfp_receipt": {
+    "zone_type": "ONE_TOUCH",
+    "base": 60.0,
+    "modifiers": [
+     {
+      "modifier": "spring_release",
+      "value": 0,
+      "why": "outside expiry window (weekday=1)"
+     },
+     {
+      "modifier": "momentum",
+      "value": 0,
+      "why": "momentum not toward zone"
+     },
+     {
+      "modifier": "cascade",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "regime_change",
+      "value": 0,
+      "why": "price oscillating on the EMA200 (no meaningful separation)"
+     },
+     {
+      "modifier": "macro_catalyst",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "cross_pair",
+      "value": 0,
+      "why": "[NO DATA]"
+     }
+    ],
+    "zfp": 60,
+    "canon": "Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md Appendix B (B.1 base + B.2 modifiers)"
+   },
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
-   "poi_tier": 1,
+   "poi_tier": 2,
    "zCat": "SUP",
-   "zTir": "T2",
-   "zfp_label": 3,
-   "degree_v8": "MODERATE",
+   "zTir": "T1",
+   "zfp_label": 60,
+   "degree_v8": "MODERATE-HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -2564,7 +2561,7 @@
  ],
  "shapes": {},
  "notes": [
-  "150 candidate levels clustered into 5 zones",
+  "150 candidate levels clustered into 4 zones",
   "12/12 pivot sets PASS the mandatory formula+symmetry+sanity+range verification (4 timeframes x 3 variants)"
  ],
  "temporal_boundary_utc": ""

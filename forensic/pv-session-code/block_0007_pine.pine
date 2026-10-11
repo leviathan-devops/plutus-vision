@@ -1,0 +1,3 @@
+float zoneW = tp - bt
+float refRange = pair == "DXY" ? 1.60 : ...
+int pct = math.round(zoneW / refRange * 100.0)

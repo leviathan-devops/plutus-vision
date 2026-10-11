@@ -10,7 +10,7 @@ THE ANTI-FABRICATION GUARD (the operator's worst failure — a fabricated level 
 `parse_strikes` returns [] on ANY unparseable output; the caller records `[NO DATA]`. A malformed
 model answer NEVER becomes a fabricated strike.
 
-THE AUTH PROBE: before any call, ping :8010/health. A silent-auth green is the #1 false-green —
+THE AUTH PROBE: before any call, ping :4171/health. A silent-auth green is the #1 false-green —
 a dead arm must read DEAD, never empty-but-OK.
 
     python3 scripts/e1_vlm_options.py --health        # the auth probe (exit 0 if the arm answers)
@@ -26,7 +26,7 @@ import re
 import sys
 import urllib.request
 
-ARM = "http://127.0.0.1:8010"
+ARM = "http://127.0.0.1:4171"
 
 STRIKE_EXTRACT_PROMPT = (
     "Extract the option strike table from this image as JSON. "

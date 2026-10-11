@@ -1,0 +1,5 @@
+fields:
+  klass: String
+  severity: String
+  anchor: String
+  mechanism: String

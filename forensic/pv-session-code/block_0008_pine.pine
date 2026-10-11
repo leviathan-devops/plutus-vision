@@ -1,0 +1,3 @@
+box.new(tsL, tp, tsR, bt, bgcolor=zfill(c,d), border_color=zbord(c,d), ...)
+int zfp = calcZFP(tp, bt, "DXY")
+lbl = nm + " | " + pressureLbl(d) + " | " + str.tostring(zfp) + "% ZFP"

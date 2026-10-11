@@ -52,6 +52,17 @@ while IFS= read -r f; do
                                  # (dossier.md + origin.json + manifest.sha16), the same
                                  # artifact class as .trident/* — produced by a tool, not
                                  # authored. Its LENGTH is set by the bug, not a doc law.
+    Original_Canon_Data/*) continue ;;  # the OPERATOR'S AUTHORITY CORPUS (2026-10-11,
+                                 # W7): verbatim EXTERNAL prompts/specs/reports — the authority
+                                 # transcribed FROM, never authored here. Editing it to add
+                                 # anchors would CORRUPT the authority (the transcribe law).
+                                 # Same class as packages/jarvis-upper-tier (W-1).
+    handovers/*)     continue ;;  # OPERATOR-PROVIDED context (2026-10-11, W7): verbatim
+                                 # external handover docs, not authored here. (W-1).
+    forensic/pv-session-*) continue ;;  # MACHINE-GENERATED forensics (2026-10-11, W7):
+                                 # session-transcript extracts + claim cards produced by
+                                 # tools. Same class as .trident/*. NARROW: forensic/*.md
+                                 # at the top (SLUMP_MAP, FAILURE_LEDGER) stays gated.
     .trident/*)    continue ;;   # the WORKING-STATE dir: machine-generated findings,
                                  # plans, audits, ledgers, test plans — produced by
                                  # tools, not authored. Same artifact class as

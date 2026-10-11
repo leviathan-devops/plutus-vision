@@ -1,0 +1,4 @@
+fields:
+  from_checkpoint: String
+  lost: String
+  evidence: String

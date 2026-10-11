@@ -38,6 +38,7 @@
       <div class="pine-face-bar">
         <button type="button" class="pine-face-view is-active" data-act="face-view" data-view="terminal" title="The agent's Orca terminal (its rendered screen) — typing here goes into that terminal">TERMINAL</button>
         <button type="button" class="pine-face-view" data-act="face-view" data-view="log" title="The workspace's log: notes, pushes, runs, verdicts">LOG</button>
+        <button type="button" class="pine-face-view" data-act="term-reset" title="RESTART this terminal: kills the session (and whatever runs in it) and opens a fresh one — the recovery path for a stuck or old adopted session">RESTART</button>
         <label class="pine-face-follow" title="When an agent queues a run/gate/capture, open its workspace and execute it on the chart"><input type="checkbox" data-act="face-follow" checked> FOLLOW AGENTS</label>
       </div>
       <pre class="pine-face-term" data-slot="face-term" aria-label="agent terminal mirror"></pre>

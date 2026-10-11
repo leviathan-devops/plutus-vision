@@ -1,0 +1,4 @@
+dxy_zTp  = array.from(99.23, 98.99, 98.41, 98.12, 97.97)   // zone tops
+dxy_zBt  = array.from(99.16, 98.77, 98.29, 98.00, 97.63)   // zone bottoms
+dxy_zCat = array.from("RES", "RES", "MID", "SUP", "SUP")
+dxy_zDeg = array.from("HEAVY","MODERATE-HEAVY","MODERATE-HEAVY","MODERATE","HEAVY")

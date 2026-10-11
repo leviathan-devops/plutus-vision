@@ -49,6 +49,28 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const STARTED = Date.now();
 const MAX_BODY = 12 * 1024 * 1024;
 
+/**
+ * THE MEMORY GUARD (added 2026-10-11 — the 12 GB incident).
+ *
+ * MEASURED FAILURE: this station ran 3 days (from 2026-10-08 20:11) and reached
+ * VmRSS 6.2 GB + VmSwap 26.7 GB — ~33 GB against a 30 GB host. The whole box
+ * thrashed (PSI memory avg60 11%). The leak is inside the AGPL `pinets` engine
+ * (native memory outside the V8 heap — `--max-old-space-size` alone does not
+ * bound it), so the guard is a BOUND, not a fix of the engine: past the cap the
+ * process exits(1) LOUDLY so the launcher's restart loop brings up a clean one,
+ * instead of the kernel swapping the box to death. Never a silent degradation.
+ */
+const RSS_CAP_MB = parseInt(process.env.PINE_STATION_RSS_CAP_MB || '2560', 10);
+if (Number.isFinite(RSS_CAP_MB) && RSS_CAP_MB > 0) {
+  setInterval(() => {
+    const rssMb = process.memoryUsage().rss / (1024 * 1024);
+    if (rssMb > RSS_CAP_MB) {
+      console.error(`[PINE-STATION] MEMORY_GUARD: RSS ${rssMb.toFixed(0)}MB > cap ${RSS_CAP_MB}MB — exiting for a clean restart`);
+      process.exit(1);
+    }
+  }, 15000).unref();
+}
+
 function log(...a) { console.log('[PINE-STATION]', ...a); }
 
 function send(res, code, obj) {

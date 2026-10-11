@@ -330,7 +330,11 @@ def arm_read_image(png: bytes, budget: int = ARM_BUDGET_SECONDS) -> tuple[bool, 
             {"type": "image_url", "image_url": {
                 "url": "data:image/png;base64," + base64.b64encode(png).decode()}}]}],
         "temperature": 0.0,
-        "max_tokens": 400,
+        # 1200, not 400: a 6-row JSON reply is ~430 chars and 400 TRUNCATES it
+        # mid-row (finish=length, 0/6 strikes — the ST-4b/c failure). Measured
+        # 2026-10-11: 400 -> length/0-6, 1200 -> stop/6-6. No reasoning preamble
+        # was observed; the budget, not thinking, was the ceiling.
+        "max_tokens": 1200,
     }
     req = urllib.request.Request(ARM_URL, data=json.dumps(payload).encode(),
                                  headers={"Content-Type": "application/json"})

@@ -1,0 +1,5 @@
+fields:
+  text: String
+  surface: String
+  verdict: String
+  contradicted_by: String

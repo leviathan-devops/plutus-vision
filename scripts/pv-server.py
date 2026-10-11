@@ -34,6 +34,15 @@ import pathlib
 import re
 import sys
 import mimetypes
+import codecs
+import fcntl
+import pty
+import select
+import shutil
+import struct
+import subprocess
+import termios
+import threading
 import urllib.error
 import urllib.request
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
@@ -165,6 +174,220 @@ def _prediction_space(bars):
     return out
 
 
+# ── THE LIVE TERMINAL (2026-10-07) — the pty transport the AGENT'S FACE 2.0.0 opens ──
+# FACE_VERSION 2.0.0 draws a real terminal: ONE cols×rows ANSI screen per workspace, fed by a
+# pty's OWN byte stream (createAnsiScreen in agent-face.mjs). Its transport is
+# `window.PlutusTerm` — in the DASHBOARD that is the Electron preload bridge over
+# `ipcMain.handle('term:*')` → electron/terminal-bridge.js (a `plutus-term-<workspace>`
+# tmux session attached through `script`). This standalone host runs in CHROME over HTTP:
+# there is no Electron IPC, so the port must SUPPLY the same transport. (Measured
+# 2026-10-07: :9430 exposes NO HTTP pty route — the bridge is IPC-only — so proxying a
+# prefix could never reach it; the route has to exist here.)
+#
+# THE SHAPE is the bridge's own, re-hosted on Python's stdlib pty (no node-pty on this host
+# either):  tmux new-session -d -s plutus-term-<ws> -x C -y R · tmux set-option window-size
+# manual · pty.openpty() + `tmux attach` whose slave IS a real tty. Writes to the master are
+# typed into the pane; reads are the pane's own rendering — the exact bytes createAnsiScreen
+# consumes. Same-origin under /api/v1/term/*, token-gated like the rest of the face.
+TERM_BUF_CAP = 1024 * 1024          # chars of scrollback retained per session (mirrors BUF_CAP)
+TERM_READ_CAP = 256 * 1024          # the most read() ever replays (mirrors READ_CAP)
+TERM_MAX = int(os.environ.get("PV_TERM_MAX", "4"))
+TERM_TOKEN = os.environ.get("PV_TERM_TOKEN") or "rw_dev_plutus_backtest"
+TERM_ID_RX = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:-]{0,63}$")
+TMUX = shutil.which("tmux") or "/usr/bin/tmux"
+
+_terms = {}
+_terms_lock = threading.RLock()
+
+
+def _term_dim(v, dflt):
+    try:
+        n = int(v)
+    except (TypeError, ValueError):
+        return dflt
+    return max(2, min(1000, n))
+
+
+def _set_winsize(fd, cols, rows):
+    """Give a pty its grid. THE CLIENT'S OWN tty size is what tmux draws at (measured in the
+    dashboard bridge, 2026-10-02: an unsized client pty made tmux fall back to 80x24 and clipped
+    a 99-column pane). pty.openpty() leaves the winsize 0x0, so it is set BEFORE tmux attaches."""
+    try:
+        fcntl.ioctl(fd, termios.TIOCSWINSZ, struct.pack("HHHH", rows, cols, 0, 0))
+    except Exception:
+        pass
+
+
+class TermSession:
+    """ONE live pty: a tmux session attached through a stdlib pty master."""
+
+    def __init__(self, wsid, cols, rows, cwd):
+        self.id = wsid
+        self.cols = _term_dim(cols, 120)
+        self.rows = _term_dim(rows, 32)
+        self.cwd = cwd if (cwd and os.path.isdir(str(cwd))) else os.getcwd()
+        # tmux forbids '.' and ':' in a session name — sanitise the id, keep the namespace ours
+        self.name = "plutus-term-" + re.sub(r"[^A-Za-z0-9_-]", "_", wsid)
+        self.buf = ""
+        self.seq = 0
+        self.exit = None
+        self.closed = False
+        self.lock = threading.RLock()
+        self._dec = codecs.getincrementaldecoder("utf-8")(errors="replace")
+        self._spawn()
+
+    def _has_session(self):
+        try:
+            subprocess.run([TMUX, "has-session", "-t", self.name], capture_output=True, timeout=5, check=True)
+            return True
+        except Exception:
+            return False
+
+    def _spawn(self):
+        # an existing session is ADOPTED, never re-created (the bridge's own crash-survival law:
+        # a tmux session outlives the server/app that made it; `new-session` on a live name fails
+        # with 'duplicate session' — measured 2026-10-07 after a pv-server restart).
+        if not self._has_session():
+            subprocess.run([TMUX, "new-session", "-d", "-s", self.name, "-x", str(self.cols), "-y", str(self.rows), "-c", self.cwd],
+                           check=True, capture_output=True, timeout=10)
+        subprocess.run([TMUX, "set-option", "-t", self.name, "window-size", "manual"],
+                       check=True, capture_output=True, timeout=10)
+        master, slave = pty.openpty()
+        _set_winsize(master, self.cols, self.rows)      # the CLIENT tty tmux draws at — sized BEFORE attach
+        self.master = master
+        env = dict(os.environ)
+        env["TERM"] = "xterm-256color"
+        env["COLORTERM"] = "truecolor"
+        env.pop("TMUX", None)
+        env.pop("TMUX_PANE", None)
+        # its own process group, so a kill reaches tmux attach (the emitted client), not just this pid
+        self.proc = subprocess.Popen([TMUX, "attach", "-t", self.name], stdin=slave, stdout=slave, stderr=slave,
+                                     cwd=self.cwd, env=env, close_fds=True, start_new_session=True)
+        os.close(slave)
+        threading.Thread(target=self._read_loop, name="pv-term-" + self.id, daemon=True).start()
+
+    def _read_loop(self):
+        while not self.closed:
+            try:
+                ready, _, _ = select.select([self.master], [], [], 0.5)
+            except (OSError, ValueError):
+                break
+            if not ready:
+                if self.proc.poll() is not None:
+                    break
+                continue
+            try:
+                chunk = os.read(self.master, 65536)
+            except OSError:
+                break
+            if not chunk:
+                break
+            self._emit(chunk)
+        self._mark_exit()
+
+    def _emit(self, chunk):
+        text = self._dec.decode(chunk)          # incremental: a split multibyte char is held, not mangled
+        if not text:
+            return
+        with self.lock:
+            self.buf = (self.buf + text)[-TERM_BUF_CAP:]
+            self.seq += len(text)
+
+    def _mark_exit(self):
+        with self.lock:
+            if self.exit is not None:
+                return
+            code = self.proc.poll()
+            self.exit = {"code": code if code is not None else None, "signal": None}
+
+    def write(self, data):
+        b = str(data).encode("utf-8")
+        with self.lock:
+            if self.closed:
+                raise KeyError("TERM_NO_SESSION")
+            os.write(self.master, b)
+        return {"bytes": len(b)}
+
+    def resize(self, cols, rows):
+        c, r = _term_dim(cols, self.cols), _term_dim(rows, self.rows)
+        _set_winsize(self.master, c, r)                 # the tmux CLIENT's tty: the width tmux draws at
+        try:
+            subprocess.run([TMUX, "resize-window", "-t", self.name, "-x", str(c), "-y", str(r)],
+                           capture_output=True, timeout=5)
+        except Exception:
+            pass
+        self.cols, self.rows = c, r
+        return {"cols": c, "rows": r}
+
+    def read(self):
+        with self.lock:
+            return {"buffer": self.buf[-TERM_READ_CAP:], "cursor": self.seq}
+
+    def poll(self, cursor):
+        with self.lock:
+            start = max(0, self.seq - len(self.buf))
+            if cursor is None or cursor < start:
+                data, cur = self.buf, self.seq          # resync (a reconnecting client, or a ring roll)
+            else:
+                data, cur = self.buf[cursor - start:], self.seq
+            return {"cursor": cur, "data": data, "name": self.name, "exit": self.exit}
+
+    def info(self):
+        return {"id": self.id, "name": self.name, "pid": self.proc.pid, "backend": "tmux+pty",
+                "cols": self.cols, "rows": self.rows, "cwd": self.cwd,
+                "alive": self.proc.poll() is None, "chars": len(self.buf)}
+
+    def close(self):
+        self.closed = True
+        try:
+            self.proc.terminate()
+        except Exception:
+            pass
+        try:
+            subprocess.run([TMUX, "kill-session", "-t", self.name], capture_output=True, timeout=5)
+        except Exception:
+            pass
+        try:
+            os.close(self.master)
+        except Exception:
+            pass
+        return {"closed": self.name}
+
+
+def term_open(wsid, cols, rows, cwd):
+    if not TERM_ID_RX.match(str(wsid or "")):
+        raise ValueError("BAD_WORKSPACE_ID")
+    with _terms_lock:
+        for k in [k for k, s in _terms.items() if s.closed]:
+            _terms.pop(k, None)
+        live = _terms.get(wsid)
+        if live and not live.closed and live.proc.poll() is None:
+            return live.info()
+        if live:
+            try:
+                live.close()
+            except Exception:
+                pass
+        if sum(1 for s in _terms.values() if s.proc.poll() is None) >= TERM_MAX:
+            raise ValueError("TERM_LIMIT")
+        try:
+            s = TermSession(wsid, cols, rows, cwd)
+        except subprocess.CalledProcessError as e:
+            raise ValueError("TERM_SPAWN_FAILED: " + (e.stderr or b"").decode("utf-8", "replace")[:160])
+        except OSError as e:
+            raise ValueError("TERM_SPAWN_FAILED: " + str(e)[:160])
+        _terms[wsid] = s
+        return s.info()
+
+
+def term_get(wsid):
+    with _terms_lock:
+        s = _terms.get(str(wsid or ""))
+        if not s or s.closed:
+            raise KeyError("TERM_NO_SESSION")
+        return s
+
+
 class Handler(SimpleHTTPRequestHandler):
     def log_message(self, fmt, *a):
         sys.stderr.write("[pv-server] " + (fmt % a) + "\n")
@@ -179,8 +402,82 @@ class Handler(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _term_ok(self, u):
+        q = parse_qs(u.query)
+        tok = (q.get("token") or [""])[0]
+        if not tok:
+            auth = self.headers.get("Authorization") or ""
+            if auth.lower().startswith("bearer "):
+                tok = auth[7:]
+        return tok == TERM_TOKEN
+
+    def _term_refusal(self):
+        return self._json(403, {"success": False, "code": "TERM_TOKEN_REQUIRED",
+                                "error": "the terminal bridge needs ?token= (or a Bearer header)"})
+
+    def _term_get(self, u):
+        if not self._term_ok(u):
+            return self._term_refusal()
+        q = parse_qs(u.query)
+        try:
+            if u.path == "/api/v1/term/sessions":
+                with _terms_lock:
+                    live = [s.info() for s in _terms.values() if not s.closed]
+                return self._json(200, {"success": True, "data": {"sessions": live}})
+            if u.path == "/api/v1/term/read":
+                return self._json(200, {"success": True, "data": term_get((q.get("id") or [""])[0]).read()})
+            if u.path == "/api/v1/term/poll":
+                cur = (q.get("cursor") or [""])[0]
+                cursor = int(cur) if cur.isdigit() else None
+                return self._json(200, {"success": True, "data": term_get((q.get("id") or [""])[0]).poll(cursor)})
+        except KeyError as e:
+            return self._json(200, {"success": False, "code": str(e.args[0]), "error": "no such terminal session"})
+        except ValueError as e:
+            return self._json(200, {"success": False, "code": str(e.args[0]), "error": "bad terminal request"})
+        except Exception as e:                        # a REAL failure is loud and named, never an empty screen
+            return self._json(500, {"success": False, "code": "TERM_ERROR",
+                                    "error": f"{type(e).__name__}: {str(e)[:160]}"})
+        return self._json(404, {"success": False, "code": "TERM_ROUTE_UNKNOWN", "error": u.path})
+
+    def _term_post(self, u):
+        if not self._term_ok(u):
+            return self._term_refusal()
+        n = int(self.headers.get("Content-Length") or 0)
+        raw = self.rfile.read(n) if n > 0 else b""
+        try:
+            body = json.loads(raw or b"{}")
+        except Exception:
+            return self._json(400, {"success": False, "code": "BAD_JSON", "error": "body is not JSON"})
+        try:
+            if u.path == "/api/v1/term/open":
+                return self._json(200, {"success": True, "data": term_open(
+                    body.get("id"), body.get("cols"), body.get("rows"), body.get("cwd"))})
+            if u.path == "/api/v1/term/write":
+                return self._json(200, {"success": True, "data": term_get(body.get("id")).write(body.get("data", ""))})
+            if u.path == "/api/v1/term/resize":
+                return self._json(200, {"success": True, "data": term_get(body.get("id")).resize(
+                    body.get("cols"), body.get("rows"))})
+            if u.path == "/api/v1/term/close":
+                out = term_get(body.get("id")).close()
+                with _terms_lock:
+                    _terms.pop(str(body.get("id")), None)
+                return self._json(200, {"success": True, "data": out})
+        except KeyError as e:
+            return self._json(200, {"success": False, "code": str(e.args[0]), "error": "no such terminal session"})
+        except ValueError as e:
+            msg = str(e.args[0])
+            return self._json(200, {"success": False, "code": msg.split(":")[0], "error": msg[:160]})
+        except OSError as e:
+            return self._json(200, {"success": False, "code": "TERM_WRITE_FAILED", "error": str(e)[:160]})
+        except Exception as e:
+            return self._json(500, {"success": False, "code": "TERM_ERROR",
+                                    "error": f"{type(e).__name__}: {str(e)[:160]}"})
+        return self._json(404, {"success": False, "code": "TERM_ROUTE_UNKNOWN", "error": u.path})
+
     def do_GET(self):
         u = urlparse(self.path)
+        if u.path.startswith("/api/v1/term/"):
+            return self._term_get(u)
         if face_route(u.path):
             return self._proxy("GET")
         if u.path == "/api/v1/chart/bars":
@@ -259,6 +556,9 @@ class Handler(SimpleHTTPRequestHandler):
         self.wfile.write(payload)
 
     def do_POST(self):
+        u = urlparse(self.path)
+        if u.path.startswith("/api/v1/term/"):
+            return self._term_post(u)
         if face_route(urlparse(self.path).path):
             return self._proxy("POST")
         self.send_error(501, "this host is read-only (only the face proxy accepts writes)")
@@ -297,4 +597,10 @@ if __name__ == "__main__":
     mimetypes.add_type("text/javascript", ".mjs")
     mimetypes.add_type("text/javascript", ".js")
     print(f"[pv-server] :{port} root={root} fixture={FIXTURE}")
-    ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()
+    srv = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    # a KEYS burst arrives as one request per keystroke (the face's transport); the default backlog
+    # is 5, so a 16-key word silently dropped connections (measured 2026-10-07: `echo PROBE_ALPHA`
+    # reached the pane as `echo PROBE_ALP`). The client batches now; the backlog is raised anyway.
+    srv.request_queue_size = 128
+    srv.daemon_threads = True
+    srv.serve_forever()

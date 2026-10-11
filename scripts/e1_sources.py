@@ -25,8 +25,10 @@ from __future__ import annotations
 import argparse
 import concurrent.futures as cf
 import json
+import os
 import pathlib
 import sys
+import time
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 FIXTURES = ROOT / "fixtures" / "bars"
@@ -104,20 +106,45 @@ def harvest_web(week: str, live: bool = False) -> dict:
     if not live:
         raise SourceDown("WEB_DRY: pass --live to hit the network (the nine web sources)")
     cutoff = F.boundary_for(week)
+    # ── THE NINE SOURCES RUN CONCURRENTLY, EACH UNDER ITS OWN DEADLINE (2026-10-07) ──
+    # They are INDEPENDENT network reads (four of them launch their own private headless
+    # Chrome), so the serial loop paid the SUM of their latencies. MEASURED 2026-10-07:
+    # S5_forexfactory / S7_yahoo_dxy / S8_tradingview / S9_forex_com each took ~42 s
+    # (a `Page.loadEventFired` wait that a modern page never fires inside headless), so
+    # `e1_sources.py --live` blew past the operator's 150 s ceiling and never returned.
+    # The harvest is allSettled by contract: a hung source is now a NAMED `TIMEOUT`
+    # pillar, never a hung run, and no source can spend more than its own deadline.
+    timeout_s = float(os.environ.get("E1_WEB_SOURCE_TIMEOUT", "60"))
+    budget_s = float(os.environ.get("E1_WEB_BUDGET", "100"))
+    workers = int(os.environ.get("E1_WEB_WORKERS", "6"))
+    names = [n for n, _ in F.SOURCES]
     out: dict = {}
-    for name, fn in F.SOURCES:
-        try:
-            levels = fn(cutoff)
-            # CAPTURE THE LEVELS (fix 2026-10-07). The earlier form recorded ONLY the count,
-            # so the harvested option-strike / analyst levels (the canon's S1/S9, the source of
-            # the Options + Analyst score dimensions) were discarded the moment they arrived —
-            # the two dimensions could never be wired. `levels` is the useful output.
-            out[name] = {"status": "OK", "count": len(levels), "levels": levels}
-        except Exception as e:                              # any source failure is [NO DATA]
-            out[name] = {"status": "DOWN", "reason": f"{type(e).__name__}: {str(e)[:200]}"}
+    t0 = time.time()
+    ex = cf.ThreadPoolExecutor(max_workers=max(1, min(workers, len(names))))
+    try:
+        futs = {ex.submit(fn, cutoff): name for name, fn in F.SOURCES}
+        for fut, name in futs.items():
+            left = max(0.5, min(timeout_s, budget_s - (time.time() - t0)))
+            try:
+                levels = fut.result(timeout=left)
+                # CAPTURE THE LEVELS (fix 2026-10-07). The earlier form recorded ONLY the count,
+                # so the harvested option-strike / analyst levels (the canon's S1/S9, the source of
+                # the Options + Analyst score dimensions) were discarded the moment they arrived —
+                # the two dimensions could never be wired. `levels` is the useful output.
+                out[name] = {"status": "OK", "count": len(levels), "levels": levels}
+            except cf.TimeoutError:
+                out[name] = {"status": "DOWN", "count": 0, "levels": [],
+                             "reason": f"TIMEOUT: no reply within {left:.0f}s"}
+            except Exception as e:                        # any source failure is [NO DATA]
+                out[name] = {"status": "DOWN", "count": 0, "levels": [],
+                             "reason": f"{type(e).__name__}: {str(e)[:200]}"}
+    finally:
+        # NEVER join a straggler: e1_fetch.headless_fetch is itself deadline-bounded, so an
+        # abandoned worker exits on its own and cannot hold this process open.
+        ex.shutdown(wait=False, cancel_futures=True)
+    out = {n: out.get(n, {"status": "DOWN", "count": 0, "levels": [], "reason": "NOT_RUN"}) for n in names}
     up = sum(1 for v in out.values() if v["status"] == "OK")
     return {"data": out, "label": f"web {up}/{len(out)} sources"}
-
 
 # the local pillars (always available); the web harvest is a separate, network-gated call
 SOURCE_PILLARS = {

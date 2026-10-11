@@ -22,6 +22,7 @@ WAVES (sequential; each owns DISJOINT files; each gate is MECHANICAL; the loop r
 - W5 — THE 5-WEEK CROSS-VALIDATION (the operator's litmus test). Owns `evidence/` + `CROSSVAL_5WEEK.md`. Deliverable: 5 random trading weeks rendered with the FORWARD price action visible, the E1 zones + the E2 chain, each captured + compared. Gate: for each of the 5 weeks the payload has ≥5 zones with ≥1 RES AND ≥1 SUP AND the render `ok:true`. Test id: `test_5week_crossval`.
 
 LAWS (binding on every turn — a violation FAILS the wave on sight)
+- THE OD-1 RULING (binding, 2026-10-09): the chart-computable pillars (P1,P2,P5,P6,P9) run LIVE in the indicator (Pine) from the chart's own bars; ONLY the external-data pillars (P3,P4,P7,P8) bake at build. **A2 — baking ALL pillars and injecting the values as Pine literals — is FORBIDDEN.** A2 is the retired report round-trip renamed (compute offline → bake literals → inject); it is the derailment of 2026-10-07…09. The E1/E2 zone arrays are COMPUTED in Pine (`ta.*` / `request.security`), NEVER injected. Gate: SC-19 — `grep -cE 'e1_injected_(top|bottom|cat|degree|zfp)\.push\([0-9]' plutus-vision-v2.pine` → 0. A nonzero literal push FAILS the build.
 - THE VERBATIM AUTHORITY: the prompt + the v8 are ONE authority. READ BOTH before ANY edit. Transcribe; NEVER author. Where the prompt is silent, FIND the answer in the prompt/pine — never invent.
 - THE ONE AUTHORIZED CHANGE: the LSZ (liquidity zones) are REMOVED from Engine 1 (the baseline has them). Nothing else changes.
 - SCOPE: Engine 1 + Engine 2 ONLY. Engine 3 is IGNORED.
@@ -36,6 +37,7 @@ LAWS (binding on every turn — a violation FAILS the wave on sight)
 - APPEND-ONLY DOCS: DEBUG_LOG, FAILURE_LOG, SPEC_VIOLATION_LOG, TESTING_LOG, THEATRICALITY_LOG — the fresh-capture rule (DEBUG+FAILURE first, at the moment).
 
 HARD STOPS (do not cross; each names its remedy)
+- an UNRULED open decision (OD-n) → STOP + escalate the fork to the operator; NEVER build the "recommended default" (a recommendation is not a ruling). This is NOT permission-asking (AP-15) — an unruled architectural fork IS the operator's to rule.
 - v1 drift: `sha256sum plutus-vision-v1.pine` != `0d20e831…517bd1` → `HARD STOP H1`, never build.
 - a fabricated level on the chart → STOP, revert, log the F entry.
 - secrets: keys live out-of-band; never in the repo, chat, logs, or doc rows.

@@ -1,0 +1,12 @@
+// v8:334 — THE ZFP IS A WIDTH FORMULA, not a degree lookup:
+calcZFP(float tp, float bt, string pair) =>
+    float zoneW = tp - bt
+    float refRange = pair == "DXY" ? 1.60 : ...
+    int pct = math.round(zoneW / refRange * 100.0)
+
+// v8:157 — the pressure LABEL is just the degree:
+pressureLbl(string deg) => deg=="HEAVY" ? "Heavy" : ... 
+
+// v8:187-192 — the degrees/widths are LITERALS (the manual Apr-20-24 input):
+dxy_zTp = array.from(99.23, 98.99, 98.41, 98.12, 97.97)
+dxy_zDeg = array.from("HEAVY","MODERATE-HEAVY","MODERATE-HEAVY","MODERATE","HEAVY")

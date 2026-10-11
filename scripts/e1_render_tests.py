@@ -34,6 +34,7 @@ def record(name: str, ok: bool, detail: str = "") -> None:
 PIN = os.path.join(ROOT, "plutus-vision-lqz", "e1-render.pine")
 V1 = os.path.join(ROOT, "plutus-vision-v1.pine")
 V1_SHA = "0d20e8314ce992fc"
+V1_SHA_FULL = "0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1"
 FLOOR = {"smc": 226, "ob": 6, "lqz": 4}
 
 
@@ -224,22 +225,32 @@ def st9_v1_floor() -> None:
 
 
 def st9b_modules_diff_clean() -> None:
-    """The v1 modules must be byte-identical to the sealed baseline checkpoint."""
-    ck = os.path.join(ROOT, "Checkpoints", "v1-working-baseline-2026-10-03")
-    pairs = [("plutus-vision-lqz/lqz-core.pine", "src/plutus-vision-lqz/lqz-core.pine"),
-             ("plutus-vision-lqz/lqz-render.pine", "src/plutus-vision-lqz/lqz-render.pine")]
-    if not os.path.isdir(ck):
-        record("ST-9d  the baseline checkpoint is present", False, f"missing {ck}")
-        return
-    for live, sealed in pairs:
-        lp, sp = os.path.join(ROOT, live), os.path.join(ck, sealed)
-        if not os.path.exists(sp):
-            record(f"ST-9d  {live} diff-clean", False, "no sealed copy")
-            continue
-        a = open(lp, "rb").read()
-        b = open(sp, "rb").read()
-        record(f"ST-9d  {os.path.basename(live)} diff-clean vs the baseline",
-               a == b, "identical" if a == b else f"DRIFT {len(a)} vs {len(b)} bytes")
+    """The v1 modules must REBUILD the sealed v1 byte-identically (F-D repoint).
+
+    The oracle was a Checkpoints path (v1-working-baseline-2026-10-03, deleted by the
+    W7 slump cleanup) — the map orders the repoint to the sealed v1 sha. The builder
+    is a deterministic splice, so rebuilding from the LIVE modules and comparing to
+    the seal proves the modules are drift-clean with no checkpoint involved."""
+    import hashlib
+    import subprocess
+    import tempfile
+    with tempfile.NamedTemporaryFile(suffix=".pine", delete=False) as t:
+        out = t.name
+    try:
+        r = subprocess.run([sys.executable, os.path.join(HERE, "lqz_vision_build.py"),
+                            out], capture_output=True, text=True, timeout=60)
+        if r.returncode != 0:
+            record("ST-9d  v1 rebuilds from the live modules", False,
+                   f"builder exit {r.returncode}: {(r.stderr or '')[:120]}")
+            return
+        sha = hashlib.sha256(open(out, "rb").read()).hexdigest()
+        record("ST-9d  v1 modules rebuild the seal byte-identically",
+               sha == V1_SHA_FULL, f"{sha[:16]} vs seal {V1_SHA_FULL[:16]}")
+    finally:
+        try:
+            os.unlink(out)
+        except OSError:
+            pass
 
 
 def test_render_port() -> None:

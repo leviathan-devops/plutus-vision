@@ -12,11 +12,20 @@ BASELINE (re-measure EVERY number THIS turn; inherited numbers are STALE)
 repo /home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION @ HEAD
 v1 seal pine-ide/ide/renderer/plutus-vision-v1.pine = 0d20e8314ce992fc23e27f1b97fed76b981c84e78c647bbe6b3d6e1206517bd1
   — NEVER touch (HARD STOP H1).
-v2 pine-ide/ide/renderer/plutus-vision-v2.pine = 668e89d79a08e68e35d0bf5a8c15f565e6ab297287b4e14d8a193e47e9178cb9 (1863 lines)
+v2 pine-ide/ide/renderer/plutus-vision-v2.pine = 282517ac622769bdb34296ebee94fa8079da28dbab30bff1c27ae2146a74f011
+  — CORRECTED 2026-10-10 (see ERRATA in the handover §24). The SERVED/approved render is 282517ac
+  (the operator's C16-approved Jul-6 render). The OLD text here read `668e89d7…` (1863 lines) — that
+  is the sha of the ROOT copy `./plutus-vision-v2.pine`, NOT the renderer copy; the path/sha were
+  mismatched. `668e89d7` is a build artifact, not the served indicator and not the approved render.
 AUTHORITY: Original_Canon_Data/Toolset/ (6 files) + Original_Canon_Data/Pine Scripts/trident_v8.pine.
 THE BUILD PACKAGE (the DERIVED plan, never the authority):
   packages/plutus-vision-e1-automatic/ + the DPL1 blueprint + PLUTUS_VISION_INDICATOR_PORT_SPEC.md
-rig: pv-server :9851, pine-station :9741, CDP :9222, the app on display :3.
+rig: pv-server :9851 (renderer + workspace proxy), pine-station :9741 (the Pine runner),
+  VIL rail :9754, judge :8090. THE APP = the native desktop shell `~/.local/bin/pine-ide`
+  (GTK+WebKit2) on the OPERATOR'S display (wayland-0).
+  — CORRECTED 2026-10-10 (see ERRATA §24): the OLD text read "CDP :9222, the app on display :3" —
+  BOTH ARE DEAD PATHS, forbidden by the operator (RULE-A/RULE-B). NEVER render via a Chrome --app
+  CDP window (:9222), NEVER via nested weston (:3) or agent xvfb (:99), NEVER more than ONE window.
 THE CONFIRMED DEFECT (JEV rejects the current build on EVERY chunk, max noul=0.364):
   pine-ide/ide/renderer/plutus-vision-v2.pine:1276-1316 — the baked zone arrays.
   grep -cE 'e1_injected_(top|bottom|cat|degree|zfp)\.push\([0-9]' pine-ide/ide/renderer/plutus-vision-v2.pine

@@ -1,0 +1,5 @@
+calcZFP(float tp, float bt, string pair) =>
+    float zoneW = tp - bt
+    float refRange = pair == "DXY" ? 1.60 : pair == "EUR/USD" ? 0.0200 : pair == "GBP/USD" ? 0.0200 : 0.0150
+    int pct = math.round(zoneW / refRange * 100.0)
+    pct

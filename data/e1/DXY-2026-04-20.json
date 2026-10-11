@@ -12,7 +12,7 @@
   "tsMid": 1777118400000
  },
  "spot": 98.3,
- "data_as_of": "2026-10-07",
+ "data_as_of": "2026-10-08",
  "sources": {
   "EXTRACT_ohlc": {
    "status": "OK",
@@ -1966,50 +1966,59 @@
  ],
  "zones": [
   {
-   "name": "IP Resistance Ceiling",
-   "top": 99.12633,
-   "bottom": 99.12633,
-   "zone_type": "SOFT_WALL",
-   "confluence": 5,
-   "pressure_degree": "LIGHT",
-   "zfp": 50,
-   "regime": "momentum",
-   "measured_move_target": null,
-   "structural_extreme": true,
-   "poi_tier": 1,
-   "zCat": "RES",
-   "zTir": "T2",
-   "zfp_label": 0,
-   "degree_v8": "LIGHT",
-   "bom_fresh_flag": null,
-   "timeframe": "1H",
-   "levels": [
-    {
-     "price": 99.12633,
-     "label": "P1_CLASSIC_D3_R3",
-     "level_type": "P1",
-     "style": "line",
-     "use_box": false
-    }
-   ],
-   "ladder_name": "LIGH_SUPPLY_99.13"
-  },
-  {
-   "name": "Upper IP Resistance",
+   "name": "Equilibrium Zone",
    "top": 98.3014,
    "bottom": 98.19433,
-   "zone_type": "STANDARD_WALL",
-   "confluence": 8,
-   "pressure_degree": "MODERATE_HEAVY",
-   "zfp": 27,
+   "zone_type": "ONE_TOUCH",
+   "confluence": 10,
+   "pressure_degree": "HEAVY",
+   "zfp": 85,
+   "zfp_receipt": {
+    "zone_type": "ONE_TOUCH",
+    "base": 60.0,
+    "modifiers": [
+     {
+      "modifier": "spring_release",
+      "value": 0,
+      "why": "outside expiry window (weekday=1)"
+     },
+     {
+      "modifier": "momentum",
+      "value": 0,
+      "why": "momentum not toward zone"
+     },
+     {
+      "modifier": "cascade",
+      "value": 25,
+      "why": "zone @ 97.98-98.03 broke"
+     },
+     {
+      "modifier": "regime_change",
+      "value": 0,
+      "why": "no EMA200 cross in window"
+     },
+     {
+      "modifier": "macro_catalyst",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "cross_pair",
+      "value": 0,
+      "why": "[NO DATA]"
+     }
+    ],
+    "zfp": 85,
+    "canon": "Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md Appendix B (B.1 base + B.2 modifiers)"
+   },
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 2,
-   "zCat": "RES",
+   "zCat": "MID",
    "zTir": "T1",
-   "zfp_label": 7,
-   "degree_v8": "MODERATE-HEAVY",
+   "zfp_label": 85,
+   "degree_v8": "HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -2070,23 +2079,61 @@
      "use_box": false
     }
    ],
-   "ladder_name": "MODE_SUPPLY_98.30"
+   "ladder_name": "HEAV_SUPPLY_98.30"
   },
   {
-   "name": "Equilibrium Zone",
+   "name": "Mid-Range Support",
    "top": 98.03385,
    "bottom": 97.98215,
-   "zone_type": "STANDARD_WALL",
+   "zone_type": "SOFT_WALL",
    "confluence": 8,
    "pressure_degree": "MODERATE_HEAVY",
-   "zfp": 27,
+   "zfp": 40,
+   "zfp_receipt": {
+    "zone_type": "SOFT_WALL",
+    "base": 40.0,
+    "modifiers": [
+     {
+      "modifier": "spring_release",
+      "value": 0,
+      "why": "outside expiry window (weekday=1)"
+     },
+     {
+      "modifier": "momentum",
+      "value": 0,
+      "why": "momentum not toward zone"
+     },
+     {
+      "modifier": "cascade",
+      "value": 0,
+      "why": "no adjacent zone broke"
+     },
+     {
+      "modifier": "regime_change",
+      "value": 0,
+      "why": "no EMA200 cross in window"
+     },
+     {
+      "modifier": "macro_catalyst",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "cross_pair",
+      "value": 0,
+      "why": "[NO DATA]"
+     }
+    ],
+    "zfp": 40,
+    "canon": "Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md Appendix B (B.1 base + B.2 modifiers)"
+   },
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 2,
-   "zCat": "MID",
+   "zCat": "SUP",
    "zTir": "T1",
-   "zfp_label": 3,
+   "zfp_label": 40,
    "degree_v8": "MODERATE-HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
@@ -2123,21 +2170,59 @@
    "ladder_name": "MODE_DEMAND_98.03"
   },
   {
-   "name": "Mid-Range Support",
+   "name": "Key IP Support",
    "top": 97.8529,
    "bottom": 97.80833,
-   "zone_type": "STANDARD_WALL",
-   "confluence": 8,
-   "pressure_degree": "MODERATE_HEAVY",
-   "zfp": 27,
+   "zone_type": "ONE_TOUCH",
+   "confluence": 10,
+   "pressure_degree": "HEAVY",
+   "zfp": 60,
+   "zfp_receipt": {
+    "zone_type": "ONE_TOUCH",
+    "base": 60.0,
+    "modifiers": [
+     {
+      "modifier": "spring_release",
+      "value": 0,
+      "why": "outside expiry window (weekday=1)"
+     },
+     {
+      "modifier": "momentum",
+      "value": 0,
+      "why": "momentum not toward zone"
+     },
+     {
+      "modifier": "cascade",
+      "value": 0,
+      "why": "no adjacent zone broke"
+     },
+     {
+      "modifier": "regime_change",
+      "value": 0,
+      "why": "no EMA200 cross in window"
+     },
+     {
+      "modifier": "macro_catalyst",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "cross_pair",
+      "value": 0,
+      "why": "[NO DATA]"
+     }
+    ],
+    "zfp": 60,
+    "canon": "Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md Appendix B (B.1 base + B.2 modifiers)"
+   },
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
    "poi_tier": 2,
    "zCat": "SUP",
    "zTir": "T1",
-   "zfp_label": 3,
-   "degree_v8": "MODERATE-HEAVY",
+   "zfp_label": 60,
+   "degree_v8": "HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -2184,24 +2269,62 @@
      "use_box": false
     }
    ],
-   "ladder_name": "MODE_DEMAND_97.85"
+   "ladder_name": "HEAV_DEMAND_97.85"
   },
   {
-   "name": "Key IP Support",
+   "name": "IP Support Floor",
    "top": 97.65167,
    "bottom": 97.63033,
-   "zone_type": "SOFT_WALL",
-   "confluence": 6,
-   "pressure_degree": "MODERATE",
-   "zfp": 37,
+   "zone_type": "ONE_TOUCH",
+   "confluence": 8,
+   "pressure_degree": "MODERATE_HEAVY",
+   "zfp": 60,
+   "zfp_receipt": {
+    "zone_type": "ONE_TOUCH",
+    "base": 60.0,
+    "modifiers": [
+     {
+      "modifier": "spring_release",
+      "value": 0,
+      "why": "outside expiry window (weekday=1)"
+     },
+     {
+      "modifier": "momentum",
+      "value": 0,
+      "why": "momentum not toward zone"
+     },
+     {
+      "modifier": "cascade",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "regime_change",
+      "value": 0,
+      "why": "no EMA200 cross in window"
+     },
+     {
+      "modifier": "macro_catalyst",
+      "value": 0,
+      "why": "[NO DATA]"
+     },
+     {
+      "modifier": "cross_pair",
+      "value": 0,
+      "why": "[NO DATA]"
+     }
+    ],
+    "zfp": 60,
+    "canon": "Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md Appendix B (B.1 base + B.2 modifiers)"
+   },
    "regime": "consolidation",
    "measured_move_target": null,
    "structural_extreme": true,
-   "poi_tier": 1,
+   "poi_tier": 2,
    "zCat": "SUP",
-   "zTir": "T2",
-   "zfp_label": 1,
-   "degree_v8": "MODERATE",
+   "zTir": "T1",
+   "zfp_label": 60,
+   "degree_v8": "MODERATE-HEAVY",
    "bom_fresh_flag": null,
    "timeframe": "1H",
    "levels": [
@@ -2239,7 +2362,7 @@
  ],
  "shapes": {},
  "notes": [
-  "136 candidate levels clustered into 5 zones",
+  "136 candidate levels clustered into 4 zones",
   "12/12 pivot sets PASS the mandatory formula+symmetry+sanity+range verification (4 timeframes x 3 variants)"
  ],
  "temporal_boundary_utc": ""

@@ -34,8 +34,14 @@ done
 up() { for i in $(seq 1 40); do curl -s -m 1 -o /dev/null "$1" && return 0; sleep 0.25; done; return 1; }
 
 # station :9741 (PineTS) on this tree's fixture
+# MEMORY BOUND (2026-10-11 — the 12 GB incident): the station leaked to ~33 GB
+# (RSS+swap) over 3 days and thrashed the host. Two bounds here: --max-old-space-size
+# caps the V8 heap, and the server's own MEMORY_GUARD exits(1) past RSS_CAP_MB (the
+# pinets leak is native, outside the heap). The `while` loop is the supervisor that
+# brings up a clean station on either exit — a bounded restart, never a dead rig.
 env -C "$W/pine-ide/pine-station" PINE_STATION_PORT=9741 PINE_STATION_HOST=127.0.0.1 \
-  PLUTUS_BARS_FIXTURE="$FIX" PLUTUS_LIVE_ROOT="$W" setsid -f node server.mjs > /tmp/pv-station.log 2>&1 < /dev/null
+  PLUTUS_BARS_FIXTURE="$FIX" PLUTUS_LIVE_ROOT="$W" PINE_STATION_RSS_CAP_MB=2560 \
+  setsid -f bash -c 'while :; do node --max-old-space-size=1536 server.mjs; c=$?; echo "[pv-ide] station exited ($c) — restarting in 1s"; sleep 1; done' > /tmp/pv-station.log 2>&1 < /dev/null
 # THE STATION CHECK PROBES THE WORK ROUTE, NOT THE LIVENESS ROUTE.
 # MEASURED (reports/lqz_second_operator.md): GET / and GET /health on :9741 can HANG —
 # http_code=000, curl exit 28, the FULL client timeout — while /catalog, /cells, /bars
@@ -45,7 +51,7 @@ env -C "$W/pine-ide/pine-station" PINE_STATION_PORT=9741 PINE_STATION_HOST=127.0
 station_up() {
   for i in $(seq 1 40); do
     R=$(curl -s -m 3 -X POST http://127.0.0.1:9741/run -H 'Content-Type: application/json' \
-        -d '{"script":"//@version=6\nindicator(\"probe\")\nplot(close)","pair":"EUR/USD","timeframe":"1H","limit":300}' 2>/dev/null)
+        -d '{"script":"//@version=6\nindicator(\"probe\")\nplot(close)","pair":"DXY","timeframe":"1H","limit":300}' 2>/dev/null)
     case "$R" in *'"success":true'*) return 0 ;; esac
     sleep 0.25
   done

@@ -1,0 +1,4 @@
+fields:
+  gap: String
+  kills: String
+  enforcement: String

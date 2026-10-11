@@ -258,17 +258,7 @@ def fetch_best(symbol: str = "DXY", timeframe: str = "1H",
     net = f"network: {err}; " if live else "network: skipped (default is the chart's fixture; pass --live); "
     return [], "", f"no OHLC from any source. {net}fixture: {prov}"
 
-def ema(values: list[float], n: int) -> list[float]:
-    """The standard EMA the canon's MA pillar assumes: seeded with an SMA of the first n."""
-    if len(values) < n:
-        return []
-    k = 2.0 / (n + 1)
-    out = [sum(values[:n]) / n]
-    for v in values[n:]:
-        out.append(v * k + out[-1] * (1 - k))
-    return out
-
-
+# (W7 F-H) ema() REMOVED — no callers (ema_series is the live one).
 # ── PILLAR 1 · THE PIVOT ENGINE — with its mandatory verification ─────────────
 def classic_pivots(h: float, l: float, c: float) -> dict:
     pp = (h + l + c) / 3.0
@@ -276,11 +266,7 @@ def classic_pivots(h: float, l: float, c: float) -> dict:
             "R3": h + 2 * (pp - l), "S3": l - 2 * (h - pp), "PP": pp}
 
 
-def verify_classic(p: dict, h: float, l: float) -> list[str]:
-    """Back-compat shim — the full four-check verification lives in `verify_pivot`."""
-    return verify_pivot("CLASSIC", p, h, l, p.get("PP", 0.0))
-
-
+# (W7 F-H) verify_classic() REMOVED — a back-compat shim with no callers.
 def fib_pivots(h: float, l: float, c: float) -> dict:
     """Trident 5.3.3 §3.1 Pillar 1 step 5, VERBATIM:
         PP = (H + L + C) / 3
@@ -745,6 +731,30 @@ def build_levels(bars: list[dict], pair: str = "DXY", week: str = "") -> tuple[l
     return levels, notes
 
 
+def _positional_ladder(zones: list[dict], spot: float, pair: str = "DXY") -> list[dict]:
+    """THE POSITIONAL LADDER (canon Step 7 + the v8 zNm, F-58 dead): name + zCat BY POSITION
+    vs spot — Resistance names only ABOVE the spot, Support names only BELOW, Equilibrium
+    only STRADDLING it. Rank-based role assignment (top slot = Ceiling regardless of where
+    the spot sits) is the F-58 defect this kills: on a rally week the top band sits BELOW
+    the spot and a rank-named 'Resistance' is a lie the T3/T4 gate refuses."""
+    _is_dxy = str(pair).upper() in ("DXY", "DX-Y.NYB", "DX")
+    _top_nm = "IP Resistance Ceiling" if _is_dxy else "Key IP Resistance Band"
+    _bot_nm = "Key IP Support" if _is_dxy else "IP Support Floor"
+    zones.sort(key=lambda z: -z["top"])
+    for z in zones:
+        z["zCat"] = CAT.classify(z["top"], z["bottom"], spot)
+    _res = [z for z in zones if z["zCat"] == "RES"]
+    _mid = [z for z in zones if z["zCat"] == "MID"]
+    _sup = [z for z in zones if z["zCat"] == "SUP"]
+    for _i, z in enumerate(_res):
+        z["name"] = _top_nm if _i == 0 else "Upper IP Resistance"
+    for z in _mid:
+        z["name"] = "Equilibrium Zone"
+    for _i, z in enumerate(_sup):
+        z["name"] = _bot_nm if _i == len(_sup) - 1 else "Mid-Range Support"
+    return zones
+
+
 def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: float,
                                    pair: str = "DXY") -> list[dict]:
     """THE 5 INSTITUTIONAL PRESSURE ROLES (Trident 5.3.3 section 5.2.1): the IP Zone Map is
@@ -753,9 +763,10 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
     to the strongest confluence levels inside its band. Deterministic from the week's data;
     never hand-drawn, never the canon's stale example.
 
-    zCat (RES|MID|SUP) follows the role: the two upper roles are RES, the centre is MID, the
-    two lower roles are SUP — the render's positional classify vs spot (the goal's one
-    missing field)."""
+    zCat (RES|MID|SUP) is POSITIONAL vs spot (CAT.classify), and the names follow the
+    position via _positional_ladder — never the band fraction. A band is a search window,
+    not a role: on a rally/selloff week the spot sits outside the middle band and the
+    band-fraction role would name a zone below the spot 'Resistance' (F-58)."""
     wk = bars[-120:] if len(bars) > 120 else bars   # the WEEK's own range (5 days of 1H)
     hi = max(b["h"] for b in wk)
     lo = min(b["l"] for b in wk)
@@ -800,6 +811,9 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
                 + zone_4h_bonus(bot, top, _blocks, spot))))       # Step 9.7 — 4H OB overlap, +0..2
         else:
             top, bot, conf = bhi, blo, 0
+        # POSITIONAL side (F-58): the band is a search window — the SIDE comes from the
+        # zone's position vs spot, so the side-aware extreme bonus + zCat read truth.
+        cat = CAT.classify(top, bot, spot)
         # THE INSTITUTIONAL FLOOR — a ROLE is a key zone even when its band's raw confluence is
         # thin (the E2 engine refuses zones scoring < 4). Carry it at >= 4 so the render + E2 both
         # anchor; the DEGREE still reads the honest score.
@@ -832,6 +846,8 @@ def synthesize_institutional_zones(levels: list[dict], bars: list[dict], spot: f
                         "level_type": l["label"].split("_")[0], "style": "line",
                         "use_box": False} for l in inband[:8]],
         })
+    # POSITIONAL names (F-58 dead): roles follow the position vs spot, never the band rank.
+    zones = _positional_ladder(zones, spot, pair)
     return zones
 
 def zone_regime(bot: float, top: float, bars: list, spot: float) -> float:
@@ -1196,13 +1212,9 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
             _covered.append((b, t))
     zones.sort(key=lambda z: -z["confluence"])          # strongest first
     zones = zones[:5]                                   # the v8's five slots
-    zones.sort(key=lambda z: -z["top"])                 # emit TOP→DOWN (the prompt's sort)
-    _ROLES = ["IP Resistance Ceiling", "Upper IP Resistance", "Equilibrium Zone",
-              "Mid-Range Support", "Key IP Support"]
-    _CATS  = ["RES", "RES", "MID", "SUP", "SUP"]
-    for _i, _z in enumerate(zones):
-        _z["name"] = _ROLES[_i]
-        _z["zCat"] = _CATS[_i]
+    # POSITIONAL (F-58 dead): names + zCat BY POSITION vs spot — never by rank.
+    zones = _positional_ladder(zones, spot, pair)
+    for _z in zones:
         _z["zTir"] = CAT.tier(_z["confluence"])
         _z["degree_v8"] = CAT.norm_degree(_z["pressure_degree"])
         _z["zfp_label"] = _z["zfp"]
@@ -1215,7 +1227,9 @@ def assemble(levels: list[dict], a: float, spot: float, pair: str = "DXY",
     # falls accordingly, so the floor/ceiling read STRONGER (lower ZFP) than the equilibrium.
     # (The v8's own zDeg is a hand-typed literal, identical for every pair — the canon's computed
     #  intent, not the literals, is the target.)
-    for _i in (0, len(zones) - 1):
+    # EMPTY GUARD (ST-6): no zones -> nothing to bonus; a single zone is both
+    # extremes at once, so dedupe the index pair (never +4 on one zone).
+    for _i in dict.fromkeys((0, len(zones) - 1)) if zones else ():
         _z = zones[_i]
         if not _z.get("structural_extreme"):
             _z["confluence"] = int(min(CONFLUENCE_CAP, _z["confluence"] + 2))

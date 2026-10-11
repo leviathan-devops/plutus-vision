@@ -12,7 +12,7 @@
   "tsMid": 1784376000000
  },
  "spot": 101.062,
- "data_as_of": "2026-10-08",
+ "data_as_of": "2026-10-09",
  "sources": {
   "EXTRACT_ohlc": {
    "status": "OK",

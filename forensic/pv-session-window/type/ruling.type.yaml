@@ -1,0 +1,4 @@
+fields:
+  order: String
+  when: String
+  scope: String

@@ -51,11 +51,27 @@ open(os.path.join(wd, "nchunks.txt"), "w").write(str(len(parts)))
 print(f"chunks: {len(parts)}  (sizes: {[len(p) for p in parts]})")
 PY
 
+# ── W6: THE LITMUS RUNS FRESH ON EVERY GATE INVOCATION ─────────────────────────────────
+# scripts/indicator_gate.py renders 5 real weeks + the differential + binds a live :99
+# screenshot to THIS artifact. Its evidence is prepended to EVERY chunk (below). A litmus
+# failure HALTS the gate with NO JEV calls and NO verdict line — JEV never judges an
+# artifact that cannot render 5 real weeks. (Pin-authorized: W6 owns this file; the
+# recipe.json question is FROZEN and untouched — JEV still decides every verdict.)
+if ! python3 "$ROOT/scripts/indicator_gate.py" --evidence > "$WORK/litmus.log" 2>&1; then
+  echo "W6 LITMUS: FAIL — the gate halts before JEV (no verdict; fix the render):"
+  tail -8 "$WORK/litmus.log"
+  exit 1
+fi
+LITMUS_EVIDENCE="$(cat "$ROOT/JEV_GATE/litmus_evidence.txt")"
+tail -3 "$WORK/litmus.log" | head -2
+
 # ── JUDGE EACH CHUNK; THE ARTIFACT EVIDENCE IS PREPENDED TO EVERY CHUNK ──────────────────
 EV="THE ARTIFACT UNDER TEST: $ART
   sha256: $(sha256sum "$ART" | awk '{print $1}')
   baked-literal zone pushes (SC-19 requires 0): $(grep -cE 'e1_injected_(top|bottom|cat|degree|zfp)\.push\([0-9]' "$ART" 2>/dev/null)
   live ta.*/request.security: $(grep -cE '\bta\.(pivothigh|pivotlow|highest|lowest|sma|ema|atr)|request\.security' "$ART" 2>/dev/null)
+
+$LITMUS_EVIDENCE
 "
 
 N=$(cat "$WORK/nchunks.txt")

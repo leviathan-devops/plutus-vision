@@ -58,11 +58,17 @@ def test_classify_gap() -> None:
     record("ST-19e  tier(8)==T1 and tier(7)==T2",
            C.tier(8) == "T1" and C.tier(7) == "T2" and C.tier(14) == "T1", "")
 
-    # ── C6 · zfp: v8's formula, verbatim ────────────────────────────────────────────
-    # DXY: 0.024/1.60*100 = 1.5 -> round 2 ; EUR/USD: 0.0020/0.0200*100 = 10
-    record("ST-19f  zfp uses v8's zoneW/refRange",
-           C.zfp(101.281, 101.257, "DXY") == 2 and C.zfp(1.0900, 1.0880, "EUR/USD") == 10,
-           "v8 ref ranges: DXY 1.60, EU 0.0200")
+    # ── C6 · THE ZFP (canon Appendix B) — base by type + the B.2 modifiers ────────────
+    # UPDATED (W1, FAILURE_LOG F-55): the width formula (zoneW/refRange) is DELETED. The ONE ZFP
+    # is e1_zfp: a SOFT_WALL base is 40 (the (30,50) midpoint). A HARD_WALL base is 10 (5-15).
+    import e1_zfp as Z
+    _soft = Z.zfp({"top": 101.281, "bottom": 101.257, "zone_type": "SOFT_WALL"}, [], None, [])
+    _hard = Z.zfp({"top": 101.281, "bottom": 101.257, "zone_type": "HARD_WALL"}, [], None, [])
+    record("ST-19f  the ZFP is base-by-type (Appendix B.1), not the deleted width formula",
+           _soft == 40 and _hard == 10,
+           f"SOFT base 40 / HARD base 10 (canon B.1 midpoints)")
+    record("ST-19f2 the width ZFP is GONE (no CAT.zfp)",
+           not hasattr(C, "zfp"), "the third ZFP is deleted — ONE implementation")
 
     # ── C7 · the degree bridge: MODERATE_HEAVY -> MODERATE-HEAVY ─────────────────────
     record("ST-19g  norm_degree bridges MODERATE_HEAVY -> MODERATE-HEAVY",

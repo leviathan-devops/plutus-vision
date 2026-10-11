@@ -86,8 +86,11 @@ def test_extract_contract() -> None:
              "--pair", "DXY", "--week", "2026-07-06", "--out", td],
             capture_output=True, text=True, cwd=ROOT, timeout=180)
         record("ST-20b  the extractor exits 0", r.returncode == 0, f"exit={r.returncode}")
-        path = os.path.join(td, "DXY-2026-07-06.json")
-        record("ST-20c  the payload file exists", os.path.exists(path), path)
+        # THE WEEK IS THE CHART'S (the extractor anchors to the bars' week, not --week). Find
+        # whatever payload the extractor wrote rather than pinning a stale week name.
+        _files = sorted(f for f in os.listdir(td) if f.endswith(".json"))
+        path = os.path.join(td, _files[0]) if _files else os.path.join(td, "DXY-NONE.json")
+        record("ST-20c  the payload file exists", len(_files) == 1, ", ".join(_files) or "(none)")
         if not os.path.exists(path):
             return
         doc = json.load(open(path))

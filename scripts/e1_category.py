@@ -27,8 +27,9 @@ import json
 import sys
 
 # v8's calcZFP reference ranges — trident_v8.pine:336, verbatim
-REF_RANGE = {"DXY": 1.60, "EUR/USD": 0.0200, "GBP/USD": 0.0200}
-REF_RANGE_DEFAULT = 0.0150  # AUD/USD and anything else
+# (REF_RANGE / REF_RANGE_DEFAULT DELETED with the width ZFP — FAILURE_LOG F-55. The ONE ZFP is
+# e1_zfp.py; this module computes no ZFP. Leaving the dicts risked a future reader re-introducing
+# the deleted formula.)
 
 # the tier threshold — the canon's; confluence >= 8 is T1
 TIER1_MIN = 8
@@ -48,38 +49,42 @@ class E1SpotMissing(Exception):
 
 def classify(top: float, bottom: float, spot: float | None) -> str:
     """Positional category vs spot — the v8 renderer's `zCat` vocabulary.
-
-    bottom > spot -> "RES"  (the zone sits ENTIRELY above price: resistance-coloured)
-    top < spot    -> "SUP"  (the zone sits ENTIRELY below price: support-coloured)
-    else          -> "MID"  (the zone STRADDLES spot: the equilibrium band)
-
-    The order matters: a zone straddling spot (bottom <= spot <= top) must fall to MID, so the
-    RES/SUP tests are "entirely above" / "entirely below", never a bare `top > spot` (which
-    would mislabel a straddler RES). A zero-height zone (top == bottom, the measured shape)
-    classifies by the same rule.
-    """
-    if spot is None or abs(spot) < 1e-9:
-        raise E1SpotMissing("E1_SPOT_MISSING — cannot derive a category without spot")
+    LOUD refusal when the spot is missing OR non-finite: `abs(nan) < 1e-9` is False and every
+    comparison with NaN is False, so an unguarded NaN falls through to MID (the code-audit's
+    high finding). A NaN/Inf spot is E1SpotMissing, never a silent MID."""
+    if spot is None:
+        raise E1SpotMissing("E1SpotMissing: spot is required to classify a zone")
+    try:
+        spot = float(spot)
+    except (TypeError, ValueError):
+        raise E1SpotMissing(f"E1SpotMissing: spot {spot!r} is not numeric")
+    if spot != spot or spot in (float("inf"), float("-inf")) or abs(spot) < 1e-9:
+        raise E1SpotMissing(f"E1SpotMissing: spot {spot!r} is not finite/non-zero")
+    # an INVERTED zone (top < bottom) or a non-finite edge is malformed — refuse, never
+    # mis-classify (the audit's high: NaN top/bottom makes every comparison False -> silent MID)
+    try:
+        top, bottom = float(top), float(bottom)
+    except (TypeError, ValueError):
+        raise ValueError(f"E1ZoneNonNumeric: top {top!r} bottom {bottom!r}")
+    if top != top or bottom != bottom or top in (float("inf"), float("-inf")) or bottom in (float("inf"), float("-inf")):
+        raise ValueError(f"E1ZoneNonFinite: top {top!r} bottom {bottom!r}")
+    if top < bottom:
+        raise ValueError(f"E1ZoneInverted: top {top} < bottom {bottom}")
     if bottom > spot:
         return "RES"
     if top < spot:
         return "SUP"
     return "MID"
 
-
 def tier(confluence: int) -> str:
     """The renderer's `zTir` vocabulary. The canon's threshold: >=8 is T1, else T2."""
     return "T1" if confluence >= TIER1_MIN else "T2"
 
 
-def zfp(top: float, bottom: float, pair: str = "DXY") -> int:
-    """v8's ZFP for the LABEL — trident_v8.pine:334-338, verbatim.
-    zoneW as a percentage of the pair's typical weekly range. NOT the engine's internal
-    zfp_for() (which is the canon's base+modifiers); the label shows THIS one."""
-    ref = REF_RANGE.get(pair, REF_RANGE_DEFAULT)
-    if not ref:                       # a ref of 0 would ZeroDivisionError — refuse the label
-        return 0                      # (REF_RANGE is hardcoded safe, but a future edit must not crash)
-    return round((top - bottom) / ref * 100.0)
+# ── THE ZFP IS DELETED HERE (FAILURE_LOG F-55) ──────────────────────────────────────────
+# This was the THIRD ZFP: the zone WIDTH / reference range (trident_v8.pine:334-338). It reads
+# ~9% for every clustered zone (they share a similar width), so it cannot distinguish one that
+# holds from one that breaks. The canon's ZFP is base + modifiers — see e1_zfp.py. ONE ZFP.
 
 
 def norm_degree(degree: str) -> str:
@@ -95,7 +100,7 @@ def derive(top: float, bottom: float, spot: float, confluence: int, degree: str,
     return {
         "zCat": classify(top, bottom, spot),
         "zTir": tier(confluence),
-        "zfp_label": zfp(top, bottom, pair),
+        "zfp_label": None,   # the ONE ZFP is e1_zfp.zfp(); this bridge computes no ZFP
         "degree_v8": norm_degree(degree),
     }
 
@@ -111,7 +116,7 @@ def main(argv: list[str]) -> int:
     args = ap.parse_args(argv)
     try:
         out = derive(args.top, args.bottom, args.spot, args.confluence, args.degree, args.pair)
-    except E1SpotMissing as e:
+    except (E1SpotMissing, ValueError) as e:
         print(str(e), file=sys.stderr)
         return 1
     print(json.dumps(out, indent=2))

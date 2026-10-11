@@ -1,3 +1,0 @@
-//@version=6
-indicator('planted defect', overlay = true)
-plot(na)

@@ -905,3 +905,25 @@ reproduce the v8's HEAVY-at-the-extremes, the score must see the same pressure t
 (a) the OPTIONS dimension (S1 strikes) and the ANALYST dimension (S9) — the harvest, currently DOWN;
 (b) the 4H-zone overlap (the prompt's Step 0d/9.7 Tier-1 +2) — not yet a dimension. Either wiring
 raises the extremes toward HEAVY and flips the E2 to the reversal the operator expects.
+
+---
+
+## 2026-10-08T09:42:55+04:00 — W1-W7 DEBUG (EN-110..EN-113 in DEBUG_LOG.md)
+
+- **EN-110 (W1):** the ZFP was a step function of the confluence (F-54) — rebuilt as Appendix B
+  (base + modifiers). **The gate caught a real defect in my own first build** (breakout 55 < 75 —
+  the noise-driven detectors inverted the operator's test).
+- **EN-111 (W2):** the zone count forced to 5 + a fabricated slot (F-57); rank-based names (F-58).
+  **A gate bug:** the first run read three STALE payloads — the gate now runs the engine per fixture.
+- **EN-112 (W5/W6):** the hand-written payload (F-56) — replaced by `pine_emit.py`. **Two instrument
+  bugs caught** (the splice indent; the accumulated-dir litmus).
+- **EN-113 (P4):** TWO runtime breaks found by LOOKING: `_current.json` deleted by W7 (a runtime
+  file); the IDE restores from localStorage not disk (the render was stale until the editor load).
+
+**THE DIST:** `bf1f1972ad43f7a9ccba1db8` (4 zones, computed).
+
+## 2026-10-08 · THE RENDER BOXES DREW 0
+- SYMPTOM: counts.boxes:0 while 5 zones were in the payload.
+- ROOT CAUSE: the E1 box's right edge (_rx = _bAnchor + _bpw) was PAST the chart's last bar (the target week is the future) -> the renderer DROPPED the box.
+- FIX: xloc.bar_time (the canon Part X Principle 5) — _lx = e1_anchor_ms - 2w, _rx = e1_anchor_ms + 1w. Now boxes:5.
+- THE YELLOW BOXES: the E2 day tags (style_label_down) with color=color(na) -> the engine's default GOLD background. Fix: color.new(color.black,100).

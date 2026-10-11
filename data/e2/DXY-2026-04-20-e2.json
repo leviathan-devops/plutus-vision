@@ -1,0 +1,55 @@
+{
+ "week": "2026-04-20",
+ "monday": "2026-04-20",
+ "pair": "DXY",
+ "zones_in": 4,
+ "refusal": "",
+ "days": [
+  {
+   "x": 1776729600000,
+   "shape": "BS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Mon"
+  },
+  {
+   "x": 1776816000000,
+   "shape": "BS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Tue"
+  },
+  {
+   "x": 1776902400000,
+   "shape": "BS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Wed"
+  },
+  {
+   "x": 1776988800000,
+   "shape": "BS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Thu"
+  },
+  {
+   "x": 1777075200000,
+   "shape": "BS",
+   "conf": 60.0,
+   "zone": "Equilibrium Zone",
+   "day": "Fri"
+  }
+ ],
+ "ghost": [
+  {
+   "zone": "Equilibrium Zone",
+   "to": "RWL",
+   "zfp": 85,
+   "conf": 85.0
+  }
+ ],
+ "momentum": 0.2578,
+ "chain": [],
+ "phase": "POST_BS_EARLY_BREAKOUT"
+}

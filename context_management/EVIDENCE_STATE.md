@@ -377,3 +377,12 @@ the operator this session.
 **THE MEASURED DEFECTS.** F-49 (the v8 zDeg is a fixed literal) · F-50 (a NaN price silently
 tolerated; ST-15) · F-51 (the E2 has no boundary-reversal). Each in FAILURE_LOG.md with its
 mechanism + file:line.
+
+## 2026-10-08T09:43:28+04:00 — THE W1-W7 EVIDENCE
+- test_zfp_discriminates 5/0 (breakout 55 > 40) · test_zone_assembly 30/0 (6 fixtures) ·
+  test_payload_computed 4/0 · test_pillars 35/0 · indicator_gate 3/0 (6 distinct of 6 weeks) ·
+  test_v1_seal_intact 2/0 · test_zfp_adversarial 16/0.
+- REGRESSION: e1_tests 18/0 · e2_tests 46/0 · e1_render_tests 24/0 · st_18 8/0 · st_19 11/0 ·
+  st_21 4/0 · st_22 7/0 · st_26 4/0.
+- THE LIVE RENDER: the IDE (CDP :9222) shows 4 boxes + the ceiling label "40% ZFP" (was 27%).
+- the checkpoint: `Checkpoints/indicator-port-w1-w7-2026-10-08/`
