@@ -29,6 +29,7 @@ import hashlib
 import json
 import os
 import random
+import re
 import sqlite3
 import subprocess
 import sys
@@ -166,6 +167,56 @@ def e2_shape(labels: list) -> str:
     return "/".join(days) if days else "NONE"
 
 
+def canonical(script: str) -> list[str]:
+    """Render the TWO canonical feeds (the station's default window + the IDE's
+    508-bar fixture) and return geometry evidence lines: zone boxes, day tags,
+    ghost span. Real measurements, fresh every run — the per-chunk header's
+    substance for slices whose own content cannot substantiate the verdict."""
+    out: list[str] = []
+    try:
+        fx = json.loads(urllib.request.urlopen(
+            "http://127.0.0.1:9851/api/v1/chart/bars?pair=DXY&timeframe=1H",
+            timeout=30).read())["data"]["bars"]
+    except Exception as e:
+        fail(f"IDE fixture unreachable: {e}")
+    for name,kw in (("station-Oct", {"limit": 382}), ("IDE-fixture", {"bars": fx})):
+        body = json.dumps({"script": script, "pair": "DXY", "timeframe": "1H",
+                           **kw}).encode()
+        q = urllib.request.Request(STATION, data=body,
+                                   headers={"Content-Type": "application/json"})
+        try:
+            d = json.loads(urllib.request.urlopen(q, timeout=120).read())
+        except Exception as e:
+            fail(f"canonical {name} render unreachable: {e}")
+        if not d.get("success"):
+            fail(f"canonical {name} render success=false")
+        dr = d["data"].get("drawings", {})
+        boxes = [(round(b["a"]["price"], 4), round(b["b"]["price"], 4))
+                 for b in (dr.get("boxes", []) or [])]
+        tags = [(l.get("text") or "") for l in (dr.get("labels", []) or [])]
+        days = [t for t in tags if "|" not in t and "%" in t]
+        out.append(f"canonical {name}: boxes={boxes} days={days} "
+                   f"tables={dr.get('other', {}).get('__tables__', 0)}")
+    return out
+
+
+def deadpaths() -> str:
+    """Live grep counts for every removed dead path (recipe clause 3: none remain).
+    Counts CODE occurrences (// comments stripped — the removal notes name the
+    symbols, the code must not). Any nonzero count FAILS the litmus."""
+    raw = open(ART, encoding="utf-8").read()
+    src = "\n".join(ln.split("//")[0] for ln in raw.splitlines())
+    syms = ["f_e1CalcZFP", "e1WeekTag", "_zfp0", "e1BackWeeks", "e1FwdWeeks",
+            "e1ShowFill", "e1_injected_lsz_top", "e1_injected_lsz_bottom",
+            "e1_injected_lsz_pri"]
+    hits = {s: len(re.findall(re.escape(s) + r"(?![A-Za-z0-9_])", src))
+            for s in syms}
+    bad = {s: n for s, n in hits.items() if n > 0}
+    if bad:
+        fail(f"dead paths resurrected in code: {bad}")
+    return "dead-path audit (live grep, comments stripped): all 9 symbols 0 in code"
+
+
 def screenshot(sha: str) -> tuple[str, str]:
     """Fresh :99 capture bound to THIS artifact (buffer sha must match the file)."""
     ls = os.path.expanduser("~/.local/share/pine-ide-webview.py/localstorage/"
@@ -280,12 +331,19 @@ def main() -> int:
 
     shotline, _ = screenshot(sha)
     print(f"  shot: {shotline}", flush=True)
+    canon = canonical(script)
+    for ln in canon:
+        print(f"  {ln[:160]}", flush=True)
+    dp = deadpaths()
+    print(f"  {dp}", flush=True)
 
     ev = [
         "LITMUS EVIDENCE (scripts/indicator_gate.py — FRESH this gate run)",
         f"artifact: pine-ide/ide/renderer/plutus-vision-v2.pine sha={sha}",
         f"data: DXY 1H yfinance, {len(rows)} bars, cache=data/litmus/dxy_1h.csv",
         f"seed: {SEED} · window: {WINDOW} real bars/Friday close · flat-cap: {MAXFLAT}h",
+        *canon,
+        dp,
     ]
     for fri, wr, nb, hr, hs, cz, sh, bars in per_week:
         ev.append(f"week {fri}: ok:true boxes={nb} RES={hr} SUP={hs} "
