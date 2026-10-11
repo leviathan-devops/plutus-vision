@@ -162,10 +162,8 @@ def ceiling_zfp(labels: list) -> int | None:
 
 
 def e2_shape(labels: list) -> str:
-    for t in labels:
-        if "|" not in t and "%" in t:
-            return t.strip()
-    return "NONE"
+    days = [t.strip() for t in labels if "|" not in t and "%" in t]
+    return "/".join(days) if days else "NONE"
 
 
 def screenshot(sha: str) -> tuple[str, str]:

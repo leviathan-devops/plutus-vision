@@ -2280,3 +2280,24 @@ verdict was PASS; the run-4/5/6 findings were refinements, fixed, with 2 false p
   byte-identical (floor inactive); fixture renders 5 spread zones.
 - **THE LESSON:** live computation meets live data pathologies — verify on EVERY feed
   the IDE can show, not just the healthy one.
+
+## F-138 — THE SINGLE-SHAPE E2 (untranscribed §6.2 matrix + fabricated confs) — 2026-10-11
+- **What happened:** the Pine E2 classified ONE shape per week from bare ZFP predicates
+  (no BS/WL proximity clause, R/SS order inverted vs the engine, the SS predicate
+  invented, fallback R instead of SS) and tagged it with per-shape confs (WL75/BS68/
+  SS60/R55) that appear NOWHERE — 68 is fabricated, the rest are misapplied
+  transition confs. Every litmus week read BS (monotone, undiscriminating).
+- **Found:** the audit re-read scripts/e2_engine.py against the Pine line by line
+  (2026-10-11); the engine's classify returns shape+anchor with NO confidence, and
+  day confs come from producing LINKS (60.0 when none did — the opening).
+- **Root cause:** the W5 E2 splice transcribed the shape NAMES but not the MATRIX
+  (proximity, order, predicates, walk, durations, ghost) — a reduction mistaken
+  for a transcription.
+- **Disposition:** FIXED — the full engine pipeline transcribed (§6.2 6 rows +
+  touch band; §6.6 walk with direction/targets/bounds; temporal; §6.6.4 ghost;
+  §6.6.5/§6.8/§6.10 decomposition). Oct renders R->SS->BS (R 60%, SS 60%x2,
+  BS 80%x2 — the 80 proves the SS->BS link); fixture R->SS. RWL omitted honestly
+  (reactions never populated upstream — the engine never fires it either).
+- **THE LESSON:** a transcription is proven predicate-by-predicate against its
+  source, not shape-by-shape against its output — the output can look right
+  (one tag, plausible %) while every rule is wrong.

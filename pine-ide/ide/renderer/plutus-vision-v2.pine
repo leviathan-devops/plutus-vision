@@ -1291,6 +1291,7 @@ var array<string> e1_injected_tbl_week = array.new<string>()
 var array<string> e1_injected_tbl_row = array.new<string>()
 var array<string> e1_injected_chain = array.new<string>()
 var array<string> e1_injected_days = array.new<string>()
+var array<string> e1_injected_alt = array.new<string>()
 // (W6) the LSZ arrays REMOVED — the operator ruled LSZ out of Engine 1 and nothing fills them.
 var array<float> e1_injected_opt_pr = array.new<float>()
 var array<string> e1_injected_opt_vol = array.new<string>()
@@ -1726,6 +1727,12 @@ if e1Enabled and barstate.islast
             _bg = _tc == "RES" ? color.rgb(60,12,8) : _tc == "MID" ? color.rgb(50,38,8) : color.rgb(0,40,40)
             table.cell(e1_tbl, 0, 4 + i, _tag, text_color = color.white, text_size = size.small, bgcolor = _bg)
             table.cell(e1_tbl, 1, 4 + i, array.get(e1_injected_tbl_row, i), text_color = color.white, text_size = size.small, bgcolor = _bg)
+        // ── THE ALT row 9 (§10.7 row 2 / §6.6 step 4): the ghost — "SHAPE CONF%" (the
+        // build's form). Guarded: the ghost exists whenever the E2 computed (the engine
+        // falls back to the anchor zone), but a missing cell must never crash the table.
+        if array.size(e1_injected_alt) > 0
+            table.cell(e1_tbl, 0, 9, "Alt", text_color = color.gray, text_size = size.small)
+            table.cell(e1_tbl, 1, 9, array.get(e1_injected_alt, 0), text_color = color.white, text_size = size.small)
         // ── THE TRADES rows 10-16 (trident_v8.pine:411-427): the header + the SHORT/LONG setup
         // rows, a LIGHT derivation from the zone map (Engine 3 is scoped out by the pin). ──────
         table.cell(e1_tbl, 0, 10, "TRADES", text_color = color.gray, text_size = size.small, bgcolor = color.rgb(8,8,12))
@@ -1782,9 +1789,96 @@ e2GhostX    = e2_injected_ghost_x
 e2GhostY    = e2_injected_ghost_y
 e2Refusal   = e2_injected_refusal
 
-// ═════════════ E2 COMPUTE (W5) — the macro shape chain from the E1 zones ═════════════
-// Engine 2 (§6.2/§6.4.1): classify the E1 map into ONE shape (the priority matrix), then a
-// 5-day path across the anchor week at the shape's target. Computed from the E1 zones.
+// ═════════════ E2 COMPUTE — the §6 chain, TRANSCRIBED from scripts/e2_engine.py ═════════════
+// (F-138) the W5 E2 classified ONE shape from bare ZFP predicates (no proximity clause, R/SS
+// inverted, SS predicate invented, fallback R instead of SS, per-shape confs ungrounded —
+// "BS 68%" appears NOWHERE in the canon or the engine). This is the engine's own pipeline:
+// classify (§6.2, 6 rows in order) → walk (§6.6: direction, targets, transitions, bounds) →
+// temporal completion (§6.4.1) → ghost alternative (§6.6 step 4) → day decomposition (§6.6
+// step 5 + §6.8 durations + §6.10 +1 day). Two honest adaptations, both commented at site:
+// (a) all zones are 1H (single-TF chart), so the §6.5 tf gate passes by its 1H→1H row;
+// (b) the §6.2 #6 RWL row is omitted — the battle count is never populated upstream
+// (reactions=0 always), so the engine never fires it either (same observable behavior).
+
+// f_e2TransHit/Shape/Conf — the §6.4.1 transition table (e2_engine.py:transition), row for row.
+// Three functions because Pine has no tuples — the SAME row order in each (a row edit touches
+// all three). Hit depends on the current shape alone: BS/SS/WLS/R/WL/RWL always match a row
+// (verified against every engine branch); PBS is terminal (None) and ends the walk.
+f_e2TransHit(string cur) =>
+    cur == "BS" or cur == "SS" or cur == "WLS" or cur == "R" or cur == "WL" or cur == "RWL"
+
+f_e2TransShape(string cur, int tz) =>
+    string _s = ""
+    if tz < 20 and cur == "BS"
+        _s := "RWL"
+    else if tz < 20 and (cur == "SS" or cur == "WLS")
+        _s := "SS"
+    else if cur == "BS" and tz > 80
+        _s := "PBS"
+    else if cur == "BS" and tz > 60
+        _s := "PBS"
+    else if cur == "BS" and tz >= 20 and tz <= 40
+        _s := "R"
+    else if cur == "SS" and tz > 45
+        _s := "BS"
+    else if cur == "BS" and tz > 40 and tz <= 60
+        _s := "PBS"
+    else if cur == "SS"
+        _s := "SS"
+    else if cur == "WLS"
+        _s := "BS"
+    else if cur == "R"
+        _s := "SS"
+    else if cur == "WL" and tz < 20
+        _s := "RWL"
+    else if cur == "WL"
+        _s := "SS"
+    else if cur == "RWL"
+        _s := "SS"
+    _s
+
+f_e2TransConf(string cur, int tz) =>
+    float _c = 0.0
+    if tz < 20 and cur == "BS"
+        _c := 85.0
+    else if tz < 20 and (cur == "SS" or cur == "WLS")
+        _c := 60.0
+    else if cur == "BS" and tz > 80
+        _c := 80.0
+    else if cur == "BS" and tz > 60
+        _c := 65.0
+    else if cur == "BS" and tz >= 20 and tz <= 40
+        _c := 75.0
+    else if cur == "SS" and tz > 45
+        _c := 80.0
+    else if cur == "BS" and tz > 40 and tz <= 60
+        _c := 65.0
+    else if cur == "SS"
+        _c := 70.0
+    else if cur == "WLS"
+        _c := 85.0
+    else if cur == "R"
+        _c := 60.0
+    else if cur == "WL" and tz < 20
+        _c := 70.0
+    else if cur == "WL"
+        _c := 55.0
+    else if cur == "RWL"
+        _c := 70.0
+    _c
+
+// f_e2AltShape/Conf — the §6.6 step-4 ghost (e2_engine.py:_alternative): the decision zone's
+// own band decides the OTHER branch (hard wall → WL 85; breakout → RWL 85; mid → BS 70).
+f_e2AltShape(int zfp) =>
+    zfp < 20 ? "WL" : zfp > 45 ? "RWL" : "BS"
+
+f_e2AltConf(int zfp) =>
+    zfp < 20 ? 85.0 : zfp > 45 ? 85.0 : 70.0
+
+// f_e2Dur — §6.8 expected duration in sessions, low end (e2_engine.py:_DURATION).
+f_e2Dur(string shape) =>
+    shape == "SS" or shape == "WLS" ? 2 : 1
+
 f_e2Compute() =>
     array.clear(e2_injected_x)
     array.clear(e2_injected_y)
@@ -1792,59 +1886,205 @@ f_e2Compute() =>
     array.clear(e2_injected_conf)
     array.clear(e2_injected_ghost_x)
     array.clear(e2_injected_ghost_y)
+    e2_injected_refusal := ""
     // (W5 F-136) the E2 table cells clear with the path — filled below from the COMPUTED chain.
     array.clear(e1_injected_chain)
     array.clear(e1_injected_days)
+    array.clear(e1_injected_alt)
     array.clear(e1_injected_trade_row)
     int _nz = array.size(e1_injected_top)
+    // E2_NO_ZONES (e2_engine.py:classify): an empty map refuses by NAME — Pine cannot raise,
+    // so the refusal text rides the refusal channel and the RENDER shows it (f_e2Render).
+    if _nz == 0
+        e2_injected_refusal := "E2_NO_ZONES: an empty zone map cannot classify a shape"
     if _nz > 0
-        // §6.2 #1 — BS: the nearest zone has ZFP > 45 (a breakout). #2 — WL: a Hard Wall
-        // (ZFP < 20) the price surged into. #5 — SS: the weakest (highest ZFP). else R.
+        // Zones are positional price-DESC (0 ceiling .. 4 floor); the engine sorts ASC and
+        // takes the FIRST match — so these scans keep the LAST match (== ASC-first).
         float _spot = close
-        float _zfpMin = 200.0
-        float _zfpMax = -1.0
-        float _lowMid = close
-        float _highMid = close
+        float _tol = math.abs(_spot) * 0.0003
+        // #1 BS — a zone with ZFP > 45 AND the spot AT/THROUGH it (the tight touch band).
+        string _sh0 = ""
+        int _ai0 = -1
         for i = 0 to _nz - 1
-            float _m = (array.get(e1_injected_top, i) + array.get(e1_injected_bottom, i)) / 2.0
-            float _zf = array.get(e1_injected_zfp, i)
-            _zfpMin := math.min(_zfpMin, _zf)
-            _zfpMax := math.max(_zfpMax, _zf)
-            if _m < _spot and _m < _lowMid
-                _lowMid := _m
-            if _m > _spot and _m > _highMid
-                _highMid := _m
-        // (W5 F-132) §6.2 priority order: #1 BS FIRST, then #2 WL — the WL-first form contradicted
-        // its own comment and scripts/e2_engine.py (BS #1, WL #2). A map with both extremes now
-        // classifies BS, per the engine.
-        string _shape = _zfpMax > 45 ? "BS" : _zfpMin < 20 ? "WL" : _zfpMax > 40 ? "SS" : "R"
-        int _conf = _shape == "WL" ? 75 : _shape == "BS" ? 68 : _shape == "SS" ? 60 : 55
-        // the 5-day path across the week — from the spot toward the shape's target
-        float _target = _shape == "WL" ? _lowMid : _shape == "BS" ? _highMid : (_lowMid + _highMid) / 2.0
-        // THE ANCHOR — the Monday of the last bar's week
-        // (W5 F-133) the Monday of the bar's week. dayofweek: Sun=1..Sat=7, so Monday is
-        // (dow+5)%7 days back (Mon->0, Fri->4, Sun->6). The old form subtracted dow days and
-        // landed on SATURDAY, starting the E2 path 2 days early.
+            float _zt = array.get(e1_injected_top, i)
+            float _zb = array.get(e1_injected_bottom, i)
+            int _zz = array.get(e1_injected_zfp, i)
+            if _zz > 45 and _spot >= _zb - _tol and _spot <= _zt + _tol
+                _sh0 := "BS"
+                _ai0 := i
+        // #2 WL — a Hard Wall (ZFP < 20) at the price (same tight band).
+        if _sh0 == ""
+            for i = 0 to _nz - 1
+                float _zt = array.get(e1_injected_top, i)
+                float _zb = array.get(e1_injected_bottom, i)
+                int _zz = array.get(e1_injected_zfp, i)
+                if _zz < 20 and _spot >= _zb - _tol and _spot <= _zt + _tol
+                    _sh0 := "WL"
+                    _ai0 := i
+        // #3 R — a mid-range zone exists (ZFP 20-40); the anchor is nearest the map middle.
+        if _sh0 == ""
+            int _mi = int(_nz / 2)
+            float _mm = (array.get(e1_injected_top, _mi) + array.get(e1_injected_bottom, _mi)) / 2.0
+            float _bd = na
+            for i = 0 to _nz - 1
+                int _zz = array.get(e1_injected_zfp, i)
+                if _zz >= 20 and _zz <= 40
+                    float _d = math.abs((array.get(e1_injected_top, i) + array.get(e1_injected_bottom, i)) / 2.0 - _mm)
+                    if na(_bd) or _d < _bd
+                        _sh0 := "R"
+                        _ai0 := i
+                        _bd := _d
+        // #4 WLS — a 3-zone window (by price) with top-spread 0.30-0.50; anchor = its lowest.
+        if _sh0 == "" and _nz >= 3
+            for i = 0 to _nz - 3
+                float _hi = math.max(array.get(e1_injected_top, i), math.max(array.get(e1_injected_top, i + 1), array.get(e1_injected_top, i + 2)))
+                float _lo = math.min(array.get(e1_injected_top, i), math.min(array.get(e1_injected_top, i + 1), array.get(e1_injected_top, i + 2)))
+                if _sh0 == "" and _hi - _lo >= 0.30 and _hi - _lo <= 0.50
+                    _sh0 := "WLS"
+                    _ai0 := i + 2
+        // #5 SS — 2+ zones with ZFP < 30; anchor = ASC-first (desc-LAST).
+        if _sh0 == ""
+            int _wc = 0
+            int _wl = -1
+            for i = 0 to _nz - 1
+                if array.get(e1_injected_zfp, i) < 30
+                    _wc += 1
+                    _wl := i
+            if _wc >= 2
+                _sh0 := "SS"
+                _ai0 := _wl
+        // #6 RWL OMITTED (reactions never populated upstream — the engine never fires it either).
+        // FALLBACK — SS at the STRONGEST zone (highest confluence, then highest ZFP).
+        if _sh0 == ""
+            _sh0 := "SS"
+            int _bc = -1
+            int _bz = -1
+            for i = 0 to _nz - 1
+                int _c = array.get(e1_injected_confluence, i)
+                int _z = array.get(e1_injected_zfp, i)
+                if _c > _bc or (_c == _bc and _z > _bz)
+                    _ai0 := i
+                    _bc := _c
+                    _bz := _z
+        // THE WALK (§6.6 step 3, MAX 5 shapes): direction from the shape+anchor, targets by
+        // mid-distance in the direction (nearest for range, FARTHEST for violent moves),
+        // transitions by target ZFP; ends on no-target / no-row / self-loop / cumul < 25.
+        array<string> _ch = array.new<string>()
+        array<int> _an = array.new<int>()
+        array<float> _lc = array.new<float>()
+        array.push(_ch, _sh0)
+        array.push(_an, _ai0)
+        float _cum = 100.0
+        string _cur = _sh0
+        int _anc = _ai0
+        float _mapm = 0.0
+        for i = 0 to _nz - 1
+            _mapm += (array.get(e1_injected_top, i) + array.get(e1_injected_bottom, i)) / 2.0
+        _mapm := _mapm / _nz
+        float _am = (array.get(e1_injected_top, _anc) + array.get(e1_injected_bottom, _anc)) / 2.0
+        int _dir = (_cur == "BS" or _cur == "PBS") ? 1 : (_cur == "WL" or _cur == "RWL" or _cur == "PWL" or _cur == "PRWL") ? -1 : (_am <= _mapm ? 1 : -1)
+        for _k = 0 to 3
+            if _k > 0 and (_cur == "WL" or _cur == "RWL" or _cur == "PWL" or _cur == "PRWL")
+                _dir := -_dir
+            bool _far = _cur == "WL" or _cur == "BS" or _cur == "RWL" or _cur == "PWL" or _cur == "PRWL" or _cur == "PBS"
+            float _cc = (array.get(e1_injected_top, _anc) + array.get(e1_injected_bottom, _anc)) / 2.0
+            int _tgt = -1
+            float _bd2 = na
+            for i = 0 to _nz - 1
+                if i != _anc and array.get(e1_injected_degree, i) != "MINIMAL"
+                    float _im = (array.get(e1_injected_top, i) + array.get(e1_injected_bottom, i)) / 2.0
+                    bool _ok = (_dir > 0 and _im > _cc) or (_dir < 0 and _im < _cc)
+                    if _ok
+                        float _dd = math.abs(_im - _cc)
+                        bool _better = na(_bd2) or (_far ? _dd > _bd2 : _dd < _bd2)
+                        if _better or (_dd == _bd2 and array.get(e1_injected_confluence, i) > array.get(e1_injected_confluence, _tgt))
+                            _tgt := i
+                            _bd2 := _dd
+            if _tgt == -1
+                break
+            // §6.5 tf gate: every Pine zone is 1H (single-TF chart) → the 1H→1H row passes.
+            int _tz = array.get(e1_injected_zfp, _tgt)
+            if not f_e2TransHit(_cur)
+                break
+            string _ns = f_e2TransShape(_cur, _tz)
+            float _nc = f_e2TransConf(_cur, _tz)
+            if _ns == _cur
+                break
+            array.push(_ch, _ns)
+            array.push(_an, _tgt)
+            array.push(_lc, _nc)
+            _cur := _ns
+            _anc := _tgt
+            _cum := _cum * _nc / 100.0
+            if _cum < 25.0
+                break
+        // TEMPORAL completion (§6.4.1): R/WL/RWL unresolved past its duration → SS @60.
+        if (_cur == "R" or _cur == "WL" or _cur == "RWL") and _cum >= 25.0
+            array.push(_ch, "SS")
+            array.push(_an, _anc)
+            array.push(_lc, 60.0)
+            _cur := "SS"
+            _cum := _cum * 60.0 / 100.0
+        // GHOST (§6.6 step 4): the decision zone (first link's target, else the anchor).
+        int _dec = array.size(_lc) > 0 ? array.get(_an, 1) : _ai0
+        int _dz = array.get(e1_injected_zfp, _dec)
+        string _alt = f_e2AltShape(_dz)
+        float _altc = f_e2AltConf(_dz)
+        array.push(e1_injected_alt, _alt + " " + str.tostring(int(_altc)) + "%")
+        // DAY DECOMPOSITION (§6.6 step 5 + §6.8 durations + §6.10 +1 day): each shape
+        // occupies its sessions; the terminal carries the tail; a day's confidence comes
+        // from the LINK that produced its shape (60.0 when no link did — the opening).
+        int _midzi = int(_nz / 2)
+        int _nch = array.size(_ch)
+        int _nlc = array.size(_lc)
+        array<string> _ds = array.new<string>()
+        array<int> _dz2 = array.new<int>()
+        array<float> _dc = array.new<float>()
+        for _k = 0 to _nch - 1
+            string _s = array.get(_ch, _k)
+            int _kz = (_s == "SS" or _s == "R" or _s == "WLS" or _s == "RS") ? _midzi : array.get(_an, _k)
+            float _pc = 60.0
+            for _j = 0 to _nlc - 1
+                if array.get(_ch, _j + 1) == _s
+                    _pc := array.get(_lc, _j)
+                    break
+            int _dur = f_e2Dur(_s)
+            for _r = 0 to _dur - 1
+                if array.size(_ds) >= 5
+                    break
+                array.push(_ds, _s)
+                array.push(_dz2, _kz)
+                array.push(_dc, _pc)
+        int _fill0 = array.size(_ds)
+        if _fill0 < 5
+            for _f = _fill0 to 4
+                array.push(_ds, array.get(_ds, array.size(_ds) - 1))
+                array.push(_dz2, array.get(_dz2, array.size(_dz2) - 1))
+                array.push(_dc, array.get(_dc, array.size(_dc) - 1))
+        // THE ANCHOR — the Monday of the last bar's week (F-133: (dow+5)%7 days back).
         int _mon = time - (dayofweek(time) + 5) % 7 * 86400000
         for d = 0 to 4
-            float _f = float(d) / 4.0
-            float _px = _spot + (_target - _spot) * _f
-            array.push(e2_injected_x, _mon + d * 86400000)
-            array.push(e2_injected_y, _px)
-            array.push(e2_injected_shape, d == 0 ? _shape : "")
-            array.push(e2_injected_conf, _conf)
-        // the ghost — the alternate chain's midpoint
-        array.push(e2_injected_ghost_x, _mon)
+            int _dx = _mon + (d + 1) * 86400000
+            float _dy = (array.get(e1_injected_top, array.get(_dz2, d)) + array.get(e1_injected_bottom, array.get(_dz2, d))) / 2.0
+            array.push(e2_injected_x, _dx)
+            array.push(e2_injected_y, _dy)
+            array.push(e2_injected_shape, array.get(_ds, d))
+            array.push(e2_injected_conf, int(array.get(_dc, d)))
+        // the ghost path — spot to the decision zone's mid (dashed; same Tue-Sat span).
+        float _altm = (array.get(e1_injected_top, _dec) + array.get(e1_injected_bottom, _dec)) / 2.0
+        array.push(e2_injected_ghost_x, _mon + 86400000)
         array.push(e2_injected_ghost_y, _spot)
-        array.push(e2_injected_ghost_x, _mon + 4 * 86400000)
-        array.push(e2_injected_ghost_y, (_lowMid + _highMid) / 2.0)
-        // (W5 F-136) the table Chain + Days cells — from the COMPUTED shape (the E2 classifies ONE
-        // shape for the week, so the chain cell carries it honestly, not a fabricated A->B->C).
-        array.push(e1_injected_chain, _shape + " " + str.tostring(_conf) + "%")
+        array.push(e2_injected_ghost_x, _mon + 5 * 86400000)
+        array.push(e2_injected_ghost_y, _altm)
+        // the table Chain cell — the FULL chain (the build's "A->B->C" form).
+        string _chstr = array.get(_ch, 0)
+        for _k = 1 to _nch - 1
+            _chstr := _chstr + "->" + array.get(_ch, _k)
+        array.push(e1_injected_chain, _chstr)
         array<string> _dn = array.from("Mo", "Tu", "We", "Th", "Fr")
         string _days = ""
         for dd = 0 to 4
-            _days := _days + (dd > 0 ? " " : "") + array.get(_dn, dd) + ":" + _shape
+            _days := _days + (dd > 0 ? " " : "") + array.get(_dn, dd) + ":" + array.get(_ds, dd)
         array.push(e1_injected_days, _days)
         // (W5 F-136) the table TRADES rows — transcribed from the build's trade geometry
         // (lqz_vision_v2_build.py: SHORT entry at the Upper band mid, SL above the Ceiling,
