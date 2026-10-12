@@ -9,7 +9,10 @@
 # EXIT:   0 = JEV said YES (every chunk act) — anything else = REJECTED
 set -uo pipefail
 export JM_JUDGE_URL="${JM_JUDGE_URL:-http://127.0.0.1:8090/v1/systemone}"
-ROOT="/home/leviathan/JARVIS_WORKSPACE/Shared_Workspace/PLUTUS_VISION"
+# (MIMO W-3) ROOT is the GATE'S OWN tree, not a hardcoded shared path — a hardcoded
+# ROOT made this worktree's gate judge the shared tree's artifact (wrong sha, another
+# lane's defects). Derive it from this script's location so each worktree gates itself.
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ART="${1:-$ROOT/pine-ide/ide/renderer/plutus-vision-v2.pine}"
 WORK="$(mktemp -d /tmp/jev-gate.XXXXXX)"
 CTX="$WORK/full_context.txt"

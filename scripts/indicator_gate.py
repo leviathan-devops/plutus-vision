@@ -218,11 +218,16 @@ def deadpaths() -> str:
 
 
 def screenshot(sha: str) -> tuple[str, str]:
-    """Fresh :99 capture bound to THIS artifact (buffer sha must match the file)."""
+    """Fresh capture bound to THIS artifact (buffer sha must match the file).
+
+    (MIMO W-3) The IDE lives on the operator's wayland-0 (handover RULE-A: the
+    WebKitGTK shell on the real display; :99 agent-xvfb is a DEAD path). The
+    buffer-sha binding is unchanged — it is what ties the shot to the artifact.
+    """
     ls = os.path.expanduser("~/.local/share/pine-ide-webview.py/localstorage/"
                             "http_127.0.0.1_9851.localstorage")
     if not os.path.exists(ls):
-        fail("IDE localStorage absent — the IDE is not up on :99")
+        fail("IDE localStorage absent — the IDE shell is not up")
     c = sqlite3.connect(f"file:{ls}?mode=ro", uri=True)
     try:
         raw = c.execute("SELECT value FROM ItemTable WHERE key='plutus.pine.editorSource'"
@@ -238,22 +243,27 @@ def screenshot(sha: str) -> tuple[str, str]:
         fail(f"IDE buffer is STALE (buffer {bufsha[:16]} != artifact {sha[:16]}) — "
              f"re-sync before the litmus binds a screenshot")
     try:
-        wins = subprocess.run(["xwininfo", "-root", "-children"], capture_output=True,
-                              text=True, env={**os.environ, "DISPLAY": ":99"},
-                              timeout=15).stdout
+        pg = subprocess.run(["pgrep", "-f", "pine-ide-webview.py"],
+                            capture_output=True, text=True, timeout=10).stdout.strip()
     except Exception as e:
-        fail(f":99 unreachable: {e}")
-    wid = next((ln.split()[0] for ln in wins.splitlines() if '"Plutus Vision"' in ln),
-               None)
-    if not wid:
-        fail("Plutus Vision window absent on :99")
-    subprocess.run(["import", "-window", wid, SHOT],
-                   env={**os.environ, "DISPLAY": ":99"}, timeout=60, check=True)
+        fail(f"shell probe failed: {e}")
+    if not pg:
+        fail("pine-ide-webview.py not running — no IDE window to capture")
+    env = {**os.environ, "XDG_RUNTIME_DIR": f"/run/user/{os.getuid()}",
+           "WAYLAND_DISPLAY": "wayland-0"}
+    env.pop("DISPLAY", None)
+    try:
+        subprocess.run(["gnome-screenshot", "-f", SHOT], env=env, timeout=60, check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        fail(f"wayland capture failed: {e}")
+    if not os.path.exists(SHOT) or os.path.getsize(SHOT) < 50_000:
+        fail("wayland capture too small / absent — the display did not render")
     info = subprocess.run(["identify", "-format", "%wx%h", SHOT], capture_output=True,
                           text=True, timeout=15).stdout.strip()
     shotsha = hashlib.sha256(open(SHOT, "rb").read()).hexdigest()
     mtime = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return f"{SHOT} {info} sha={shotsha[:16]} mtime={mtime}", shotsha
+    return (f"{SHOT} {info} sha={shotsha[:16]} mtime={mtime} "
+            f"buffer={bufsha[:16]} shell=wayland-0"), shotsha
 
 
 def render_week(script: str, rows: list, fri: str, end: int) -> tuple:

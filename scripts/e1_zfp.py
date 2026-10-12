@@ -117,7 +117,7 @@ def classify_zone_type(zone) -> str:
     if isinstance(conf, (int, float)):
         if conf >= 10:
             return "HARD_WALL"
-        if conf >= 7:
+        if conf >= 8:
             return "STANDARD_WALL"
         if conf >= 4:
             return "SOFT_WALL"
