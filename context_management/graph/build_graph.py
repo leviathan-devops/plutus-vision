@@ -233,6 +233,35 @@ n("NEXT_WHEN_PERMITTED", "task",
   "(5) acceptance harness: 12 blind weeks, Mon London open -> Fri close, claim/look/verdict ledger; (6) rename Trident->Plutus; (7) never modify frozen E1/E2 semantics.", "")
 e("NEXT_WHEN_PERMITTED", "PHASE", "gated_by")
 
+# ============================================================ HANDOVER + ViL + NATIVE RIG (added after handover absorption)
+n("RULE_VIL", "rule",
+  "MANDATORY WORKFLOW (operator, VISION_IN_THE_LOOP_ENGINEERING_BIBLE): the real native Pine IDE is the ONLY runtime; HEADLESS FORBIDDEN. Loop: write expectation from spec FIRST -> fresh extraction (bytes/magic/sha) -> independent multimodal read -> PASS|FAIL|INCONCLUSIVE with NAMED deltas (component, relationship, location, magnitude) -> classify SCRIPT/PIPELINE/TRANSPORT/ENVIRONMENT -> fix in owner file -> fresh re-render + read -> regression sweep vs last 5 frames -> log evidence pair named for proven expectation. "
+  "Unit tests/scripts are preflight only, never gates. 5 iterations same delta = systematic, escalate. Never approve-by-default (no judge => INCONCLUSIVE). Byte-identical re-render = change did nothing. Under-named deltas and 'framing artifact' excuses need a proof. Verdict language is grade-tagged (smoke PASS vs ViL PASS). Penalty for theatre: operator deletes everything.",
+  "uploads/VISION_IN_THE_LOOP_ENGINEERING_BIBLE.md")
+e("RULE_VIL", "MISSION", "governs")
+n("A_NATIVE_RIG", "artifact",
+  "Native desktop Pine IDE in this container: Xvfb :3 (rm stale /tmp/.X11-unix/X3 + /tmp/.X3-lock after restart) + desktop/pine-ide launcher (GTK3+WebKit2GTK 4.1; needs python3.12 shim /tmp/py312 for gi) + 3 servers (station :9741, vil-rail :9754, pv-server :9851). Capture with `import -window root`, drive with xdotool/xclip. Pick symbol 'DXY (FIXTURE)' (fixture is DXY-only; else FIXTURE_CELL_ABSENT). Screenshot every menu before clicking (range buttons ALL/1M silently switch TF). Pine tables do not paint in Vela (geometry absent). Do not use pkill -f/pgrep -f without excluding own pid.",
+  "pine-ide branch: desktop/pine-ide, desktop/pine-ide-webview.py")
+e("A_NATIVE_RIG", "A_RIG", "supersedes_headless")
+n("A_HANDOVER", "artifact",
+  "origin/handover + origin/pine-ide branches hold the prior agent's full state: plutus-vision-v2.pine (sha 653eea1a; 'Plutus Vision v1' = sealed LuxAlgo baseline + E1 f_e1Compute(5 bands) + E2 f_e2Compute/f_e2Render), JEV_GATE (needs judge :8090, absent here => gate cannot be run/claimed), OD-1=A3 (P1/P2/P5/P6/P9 live; P3/4/7/8 NO DATA; zero baked literals SC-19), FAILURE_LOG F-17/F-133..138, DECISION_CHAIN, ERRATA.",
+  "/home/user/handover, /home/user/pine-ide-app")
+e("A_HANDOVER", "MISSION", "implements")
+n("FND_VIL_APP11", "finding",
+  "ViL frame app_11 (DXY 1h, v2 indicator) = FAIL vs expectation. Deltas: (1) Equilibrium label collides with candles; (2) E2 path near-invisible dotted line, no readable day tags; (3) no 2x17 table (Vela limitation, ENVIRONMENT); (4) default view lands on flat weekend pad (looks blank until dragged). Not yet classified/fixed; no fix authorized. JEV gate not run (no judge).",
+  "scratchpad/app_11.png")
+e("FND_VIL_APP11", "A_NATIVE_RIG", "observed_in")
+
+n("RULE_GRAPH_LAW", "rule",
+  "GRAPH IS LAW (operator, GRAPH_BASED_STAIRSTEPPING_BIBLE): the graph is the external subconscious; never act in violation of it. First action after any compaction/session start: python3 context_management/graph/resume.py. Pre-flight before any code change: who-calls -> impact(depth 8) -> blast-radius -> safe-delete on the target (here: query the indicator code graph / grep callers of the Pine function first). Blast radius sets commit size (<=10 micro, <=50 category, <=200 domain). Graph diff before AND after every commit (nodes/edges/unwired/cycles); no new dead code or cycles. Test targets come from who-calls, never guesses. Never guess dependencies. Update THIS graph (build_graph.py) with every durable learning and commit it. Recovery card: query before code | diff before commit | blast_radius=commit_size.",
+  "uploads/GRAPH_BASED_STAIRSTEPPING_BIBLE.md")
+e("RULE_GRAPH_LAW", "MISSION", "governs")
+e("RULE_GRAPH_LAW", "RULE_VIL", "complements")
+n("OQ_SIDEBAR", "open_question",
+  "Operator wants live view of the Xvfb :3 desktop (chat left, computer right). This session exposes no live screen stream; only files in the working dir/scratchpad can be opened in the app. Interim: SendUserFile each frame (render) as it is captured. Do not claim live view exists.")
+n("D_ARS", "decision",
+  "Operator now explicitly demands Ars Umbris graph alongside Semantica. Ars Umbris is a macOS-only Electron alpha: cannot run in this Linux container. Semantica graph is the live one; Ars Umbris-compatible export is pending operator confirmation of acceptable form.")
+
 kg.save_to_file(OUT / "plutus_knowledge_graph.json")
 
 # ============================================================ DECISION / CONTEXT GRAPH (Semantica record_decision)

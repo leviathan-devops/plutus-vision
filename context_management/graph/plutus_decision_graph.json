@@ -1,18 +1,18 @@
 {
-  "graph_id": "7fdbaaee-4d52-4d3f-ab38-921f72fe80f5",
+  "graph_id": "ff740a6d-b148-4890-b1b0-c7dffa31889f",
   "nodes": [
     {
-      "id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "id": "fabc540a-32f4-41f0-8d2e-3a62cc9db16f",
       "type": "decision",
       "properties": {
         "category": "environment",
         "outcome": "use_backtesting_eurusd_plus_fixture",
         "confidence": 0.9,
-        "timestamp": 1791742387.465426,
+        "timestamp": 1791808516.062967,
         "scenario": "Which real FX data to use when Yahoo/Stooq/Dukascopy/TradingView are blocked?",
         "decision_maker": "claude-session-2026-10-11",
         "reasoning": "Only GitHub/PyPI/npm reachable. PyPI package `backtesting` bundles real hourly EURUSD; repo fixture holds real TradingView Jul-2026 bars. Used both; did NOT synthesize or mock bars.",
-        "recorded_at": "2026-10-11T18:13:07.465454",
+        "recorded_at": "2026-10-12T12:35:16.063017",
         "content": "Which real FX data to use when Yahoo/Stooq/Dukascopy/TradingView are blocked?"
       }
     },
@@ -49,17 +49,17 @@
       }
     },
     {
-      "id": "afeb020b-f575-4faf-a7ba-ef49bb662cd2",
+      "id": "7d9f2906-1b28-4d24-b153-cde332fe8947",
       "type": "decision",
       "properties": {
         "category": "tooling",
         "outcome": "do_not_install_use_semantica_json",
         "confidence": 0.9,
-        "timestamp": 1791742387.465816,
+        "timestamp": 1791808516.063663,
         "scenario": "Install Ars Umbris (arsumbris/arsumbris)?",
         "decision_maker": "claude-session-2026-10-11",
         "reasoning": "macOS-only Electron alpha that runs code with no sandboxing; cannot run on this Linux container and executes arbitrary code. Cloned read-only to learn its typed-graph idea; did not install.",
-        "recorded_at": "2026-10-11T18:13:07.465828",
+        "recorded_at": "2026-10-12T12:35:16.063688",
         "content": "Install Ars Umbris (arsumbris/arsumbris)?"
       }
     },
@@ -80,17 +80,17 @@
       }
     },
     {
-      "id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "id": "ffdd0e4c-c3bf-4988-8af8-1085c022ae34",
       "type": "decision",
       "properties": {
         "category": "tooling",
         "outcome": "repo_committed_graph_plus_claude_md",
         "confidence": 0.85,
-        "timestamp": 1791742387.46596,
+        "timestamp": 1791808516.063942,
         "scenario": "How to persist knowledge/context across compaction?",
         "decision_maker": "claude-session-2026-10-11",
         "reasoning": "Semantica ContextGraph persisted as JSON in repo + stdlib resume.py + root CLAUDE.md pointing to it + canon docs copied into repo (container uploads are ephemeral).",
-        "recorded_at": "2026-10-11T18:13:07.465966",
+        "recorded_at": "2026-10-12T12:35:16.063967",
         "content": "How to persist knowledge/context across compaction?"
       }
     },
@@ -111,17 +111,17 @@
       }
     },
     {
-      "id": "8573f576-c72f-41f4-8e32-90f9985f1735",
+      "id": "b6f90353-84a2-4cb6-a84d-3aacf02c5184",
       "type": "decision",
       "properties": {
         "category": "methodology",
         "outcome": "hold_out_12_weeks_no_tuning",
         "confidence": 0.9,
-        "timestamp": 1791742387.466122,
+        "timestamp": 1791808516.064464,
         "scenario": "How to avoid contaminating the blind test?",
         "decision_maker": "claude-session-2026-10-11",
         "reasoning": "Picked 12 weeks by fixed seed, forecast from pre-anchor bars only, scored once, did NOT tune on them. Exploration used other weeks / pooled stats.",
-        "recorded_at": "2026-10-11T18:13:07.466128",
+        "recorded_at": "2026-10-12T12:35:16.064481",
         "content": "How to avoid contaminating the blind test?"
       }
     },
@@ -142,17 +142,17 @@
       }
     },
     {
-      "id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "id": "929ddd5e-6e6c-4be2-b83b-644faac31f60",
       "type": "decision",
       "properties": {
         "category": "methodology",
         "outcome": "report_negative_results_honestly",
         "confidence": 0.95,
-        "timestamp": 1791742387.466243,
+        "timestamp": 1791808516.064758,
         "scenario": "Report the null/negative results?",
         "decision_maker": "claude-session-2026-10-11",
         "reasoning": "OHLC-only E1 shows no edge vs shifted baselines; v0 forecaster underperforms 'always range'. Presented as limits of my reconstruction, not as evidence against live canon (missing options/analyst data).",
-        "recorded_at": "2026-10-11T18:13:07.466248",
+        "recorded_at": "2026-10-12T12:35:16.064775",
         "content": "Report the null/negative results?"
       }
     },
@@ -165,17 +165,17 @@
       }
     },
     {
-      "id": "8b266154-07c3-4943-a89a-3b6d677e1401",
+      "id": "e75c1c72-8c8e-4774-8bd7-718187f9b3b7",
       "type": "decision",
       "properties": {
         "category": "governance",
         "outcome": "hold_indicator_work",
         "confidence": 1.0,
-        "timestamp": 1791742387.466388,
+        "timestamp": 1791808516.065061,
         "scenario": "Start indicator work now?",
         "decision_maker": "claude-session-2026-10-11",
         "reasoning": "Operator: do not start until explicit permission. No indicator files were modified; rig run was read-only (LuxAlgo bundle rendered, nothing edited).",
-        "recorded_at": "2026-10-11T18:13:07.466393",
+        "recorded_at": "2026-10-12T12:35:16.065074",
         "content": "Start indicator work now?"
       }
     },
@@ -198,9 +198,9 @@
   ],
   "edges": [
     {
-      "id": "8b8f0acb-70df-5604-897a-cab141cf9522",
-      "familyId": "8b8f0acb-70df-5604-897a-cab141cf9522",
-      "source_id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "id": "85c5180f-7991-598f-9e10-f89b15d43ed1",
+      "familyId": "85c5180f-7991-598f-9e10-f89b15d43ed1",
+      "source_id": "fabc540a-32f4-41f0-8d2e-3a62cc9db16f",
       "target_id": "ENV_NET",
       "type": "involves",
       "weight": 1.0,
@@ -209,9 +209,9 @@
       }
     },
     {
-      "id": "95acaddc-baf1-5dcc-812e-a7af33e27c58",
-      "familyId": "95acaddc-baf1-5dcc-812e-a7af33e27c58",
-      "source_id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "id": "e7bc7f81-ab66-5fb0-919c-f56125b040e9",
+      "familyId": "e7bc7f81-ab66-5fb0-919c-f56125b040e9",
+      "source_id": "fabc540a-32f4-41f0-8d2e-3a62cc9db16f",
       "target_id": "ENV_DATA",
       "type": "involves",
       "weight": 1.0,
@@ -220,27 +220,27 @@
       }
     },
     {
-      "id": "168d6efd-1385-50e5-9c02-f7cd3f333e20",
-      "familyId": "168d6efd-1385-50e5-9c02-f7cd3f333e20",
-      "source_id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "id": "725db4f6-b305-529b-b2d8-89dfe1bbeb1b",
+      "familyId": "725db4f6-b305-529b-b2d8-89dfe1bbeb1b",
+      "source_id": "fabc540a-32f4-41f0-8d2e-3a62cc9db16f",
       "target_id": "category_environment",
       "type": "belongs_to",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "c139ea0f-917a-51e4-b116-02400a2c7229",
-      "familyId": "c139ea0f-917a-51e4-b116-02400a2c7229",
-      "source_id": "04d3a585-8229-4798-930c-8fa904871b99",
+      "id": "c58f0f1f-1e13-52e7-97b8-3a0095694bd3",
+      "familyId": "c58f0f1f-1e13-52e7-97b8-3a0095694bd3",
+      "source_id": "fabc540a-32f4-41f0-8d2e-3a62cc9db16f",
       "target_id": "maker_claude-session-2026-10-11",
       "type": "made_by",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "7a3a4b42-44ec-5eaa-b01f-1c7a0bff3540",
-      "familyId": "7a3a4b42-44ec-5eaa-b01f-1c7a0bff3540",
-      "source_id": "afeb020b-f575-4faf-a7ba-ef49bb662cd2",
+      "id": "b64e77f8-1c34-535f-b7e5-8dc0a3bbb823",
+      "familyId": "b64e77f8-1c34-535f-b7e5-8dc0a3bbb823",
+      "source_id": "7d9f2906-1b28-4d24-b153-cde332fe8947",
       "target_id": "A_SEMANTICA",
       "type": "involves",
       "weight": 1.0,
@@ -249,27 +249,27 @@
       }
     },
     {
-      "id": "753c4265-3ae9-5565-9757-5c62ffb0a875",
-      "familyId": "753c4265-3ae9-5565-9757-5c62ffb0a875",
-      "source_id": "afeb020b-f575-4faf-a7ba-ef49bb662cd2",
+      "id": "30d49f96-ef9f-547b-98f2-90e409a97c04",
+      "familyId": "30d49f96-ef9f-547b-98f2-90e409a97c04",
+      "source_id": "7d9f2906-1b28-4d24-b153-cde332fe8947",
       "target_id": "category_tooling",
       "type": "belongs_to",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "8c6187e4-6992-5490-8fa3-45f9ee482da9",
-      "familyId": "8c6187e4-6992-5490-8fa3-45f9ee482da9",
-      "source_id": "afeb020b-f575-4faf-a7ba-ef49bb662cd2",
+      "id": "ed273fa6-93de-5f3a-90ad-004e189c3bb7",
+      "familyId": "ed273fa6-93de-5f3a-90ad-004e189c3bb7",
+      "source_id": "7d9f2906-1b28-4d24-b153-cde332fe8947",
       "target_id": "maker_claude-session-2026-10-11",
       "type": "made_by",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "383108fc-f3e4-5878-b363-f7011ff73830",
-      "familyId": "383108fc-f3e4-5878-b363-f7011ff73830",
-      "source_id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "id": "839e7792-0208-5478-bf3c-7ae5983c3945",
+      "familyId": "839e7792-0208-5478-bf3c-7ae5983c3945",
+      "source_id": "ffdd0e4c-c3bf-4988-8af8-1085c022ae34",
       "target_id": "A_GRAPH",
       "type": "involves",
       "weight": 1.0,
@@ -278,9 +278,9 @@
       }
     },
     {
-      "id": "c424ee0c-36ff-5628-a051-985545ea76a1",
-      "familyId": "c424ee0c-36ff-5628-a051-985545ea76a1",
-      "source_id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "id": "96fa74c3-17b6-5660-8630-f892bc72c371",
+      "familyId": "96fa74c3-17b6-5660-8630-f892bc72c371",
+      "source_id": "ffdd0e4c-c3bf-4988-8af8-1085c022ae34",
       "target_id": "A_CANON_DIR",
       "type": "involves",
       "weight": 1.0,
@@ -289,27 +289,27 @@
       }
     },
     {
-      "id": "18e10ce1-6e38-54ae-8df3-720cc23d1d0a",
-      "familyId": "18e10ce1-6e38-54ae-8df3-720cc23d1d0a",
-      "source_id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "id": "7e36b8b3-dcaf-5ff5-97b3-54989f25a989",
+      "familyId": "7e36b8b3-dcaf-5ff5-97b3-54989f25a989",
+      "source_id": "ffdd0e4c-c3bf-4988-8af8-1085c022ae34",
       "target_id": "category_tooling",
       "type": "belongs_to",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "670ed56a-598c-5ff7-b07c-58b98bb23c30",
-      "familyId": "670ed56a-598c-5ff7-b07c-58b98bb23c30",
-      "source_id": "33293f0c-8498-4dda-8d89-ecf26aee9532",
+      "id": "d8bcaf52-94ca-5698-821a-8800d9338cc5",
+      "familyId": "d8bcaf52-94ca-5698-821a-8800d9338cc5",
+      "source_id": "ffdd0e4c-c3bf-4988-8af8-1085c022ae34",
       "target_id": "maker_claude-session-2026-10-11",
       "type": "made_by",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "ed688ef7-6537-5942-9ae3-eda54c586877",
-      "familyId": "ed688ef7-6537-5942-9ae3-eda54c586877",
-      "source_id": "8573f576-c72f-41f4-8e32-90f9985f1735",
+      "id": "3aab20ca-2e86-5a77-8a9b-7a16c9a4e3b1",
+      "familyId": "3aab20ca-2e86-5a77-8a9b-7a16c9a4e3b1",
+      "source_id": "b6f90353-84a2-4cb6-a84d-3aacf02c5184",
       "target_id": "FND_FORECAST_V0",
       "type": "involves",
       "weight": 1.0,
@@ -318,27 +318,27 @@
       }
     },
     {
-      "id": "2faf4f02-02a2-5618-9b71-02535f80c3f7",
-      "familyId": "2faf4f02-02a2-5618-9b71-02535f80c3f7",
-      "source_id": "8573f576-c72f-41f4-8e32-90f9985f1735",
+      "id": "54445097-adb6-55df-812c-095989e1e157",
+      "familyId": "54445097-adb6-55df-812c-095989e1e157",
+      "source_id": "b6f90353-84a2-4cb6-a84d-3aacf02c5184",
       "target_id": "category_methodology",
       "type": "belongs_to",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "a4dac8c0-de58-5240-a0e9-7ba1084568a6",
-      "familyId": "a4dac8c0-de58-5240-a0e9-7ba1084568a6",
-      "source_id": "8573f576-c72f-41f4-8e32-90f9985f1735",
+      "id": "4541f212-eb2e-5f8c-93b6-734bd42711c0",
+      "familyId": "4541f212-eb2e-5f8c-93b6-734bd42711c0",
+      "source_id": "b6f90353-84a2-4cb6-a84d-3aacf02c5184",
       "target_id": "maker_claude-session-2026-10-11",
       "type": "made_by",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "a9ed3860-8956-5eaf-9c1d-eec345bb710f",
-      "familyId": "a9ed3860-8956-5eaf-9c1d-eec345bb710f",
-      "source_id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "id": "0567bed7-0bcc-52fb-84be-fa78f220ec7f",
+      "familyId": "0567bed7-0bcc-52fb-84be-fa78f220ec7f",
+      "source_id": "929ddd5e-6e6c-4be2-b83b-644faac31f60",
       "target_id": "FND_E1_NULL",
       "type": "involves",
       "weight": 1.0,
@@ -347,9 +347,9 @@
       }
     },
     {
-      "id": "82439120-9c95-55e6-91b9-477f0172568c",
-      "familyId": "82439120-9c95-55e6-91b9-477f0172568c",
-      "source_id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "id": "5f9b6454-f586-57c6-b4d5-2c2086787e87",
+      "familyId": "5f9b6454-f586-57c6-b4d5-2c2086787e87",
+      "source_id": "929ddd5e-6e6c-4be2-b83b-644faac31f60",
       "target_id": "FND_FORECAST_V0",
       "type": "involves",
       "weight": 1.0,
@@ -358,27 +358,27 @@
       }
     },
     {
-      "id": "00d46314-6d89-57e3-8844-41ae667d6094",
-      "familyId": "00d46314-6d89-57e3-8844-41ae667d6094",
-      "source_id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "id": "2fa146b9-7256-592d-9f24-90028e943d83",
+      "familyId": "2fa146b9-7256-592d-9f24-90028e943d83",
+      "source_id": "929ddd5e-6e6c-4be2-b83b-644faac31f60",
       "target_id": "category_methodology",
       "type": "belongs_to",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "1d7e7b97-f380-552d-8539-eb5d8744e2d1",
-      "familyId": "1d7e7b97-f380-552d-8539-eb5d8744e2d1",
-      "source_id": "1548dffd-d85d-47c4-ad28-bef4d89df34a",
+      "id": "18beeb2b-2610-570f-93cc-2c48cda3c742",
+      "familyId": "18beeb2b-2610-570f-93cc-2c48cda3c742",
+      "source_id": "929ddd5e-6e6c-4be2-b83b-644faac31f60",
       "target_id": "maker_claude-session-2026-10-11",
       "type": "made_by",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "82eb2164-c377-5e7a-a4ee-2be820b659b0",
-      "familyId": "82eb2164-c377-5e7a-a4ee-2be820b659b0",
-      "source_id": "8b266154-07c3-4943-a89a-3b6d677e1401",
+      "id": "36364277-a0e2-5cc1-9ede-d63a2114a147",
+      "familyId": "36364277-a0e2-5cc1-9ede-d63a2114a147",
+      "source_id": "e75c1c72-8c8e-4774-8bd7-718187f9b3b7",
       "target_id": "PHASE",
       "type": "involves",
       "weight": 1.0,
@@ -387,18 +387,18 @@
       }
     },
     {
-      "id": "8791f9a0-c8ff-5bba-8978-ca5304bbd234",
-      "familyId": "8791f9a0-c8ff-5bba-8978-ca5304bbd234",
-      "source_id": "8b266154-07c3-4943-a89a-3b6d677e1401",
+      "id": "f5aa0585-dfc1-548c-b557-3573e3c06d41",
+      "familyId": "f5aa0585-dfc1-548c-b557-3573e3c06d41",
+      "source_id": "e75c1c72-8c8e-4774-8bd7-718187f9b3b7",
       "target_id": "category_governance",
       "type": "belongs_to",
       "weight": 1.0,
       "properties": {}
     },
     {
-      "id": "ab5a45a0-2ce3-5dac-b9c7-17cd897edb82",
-      "familyId": "ab5a45a0-2ce3-5dac-b9c7-17cd897edb82",
-      "source_id": "8b266154-07c3-4943-a89a-3b6d677e1401",
+      "id": "67966a8a-1b93-59d1-b7d7-dea9ea79b9f6",
+      "familyId": "67966a8a-1b93-59d1-b7d7-dea9ea79b9f6",
+      "source_id": "e75c1c72-8c8e-4774-8bd7-718187f9b3b7",
       "target_id": "maker_claude-session-2026-10-11",
       "type": "made_by",
       "weight": 1.0,
