@@ -1,0 +1,110 @@
+[
+  {
+    "week": "2026-04-20",
+    "zone": "97.935-98.265",
+    "n": 6,
+    "zfp": 21,
+    "side": "above",
+    "verdict": "REACTED",
+    "week_range": 4.0
+  },
+  {
+    "week": "2026-05-04",
+    "zone": "97.935-98.265",
+    "n": 11,
+    "zfp": 21,
+    "side": "below",
+    "verdict": "PIERCED",
+    "week_range": 5.0
+  },
+  {
+    "week": "2026-05-04",
+    "zone": "98.395-98.594",
+    "n": 7,
+    "zfp": 12,
+    "side": "below",
+    "verdict": "REACTED",
+    "week_range": 5.0
+  },
+  {
+    "week": "2026-06-15",
+    "zone": "99.515-99.883",
+    "n": 8,
+    "zfp": 23,
+    "side": "below",
+    "verdict": "REACTED",
+    "week_range": 6.0
+  },
+  {
+    "week": "2026-06-15",
+    "zone": "99.956-100.060",
+    "n": 5,
+    "zfp": 6,
+    "side": "below",
+    "verdict": "PIERCED",
+    "week_range": 6.0
+  },
+  {
+    "week": "2026-06-29",
+    "zone": "100.755-100.803",
+    "n": 2,
+    "zfp": 3,
+    "side": "above",
+    "verdict": "REACTED",
+    "week_range": 7.0
+  },
+  {
+    "week": "2026-06-29",
+    "zone": "101.366-101.661",
+    "n": 4,
+    "zfp": 18,
+    "side": "below",
+    "verdict": "REACTED",
+    "week_range": 7.0
+  },
+  {
+    "week": "2026-07-06",
+    "zone": "100.755-100.803",
+    "n": 2,
+    "zfp": 3,
+    "side": "above",
+    "verdict": "REACTED",
+    "week_range": 7.0
+  },
+  {
+    "week": "2026-07-06",
+    "zone": "100.953-101.331",
+    "n": 5,
+    "zfp": 24,
+    "side": "below",
+    "verdict": "REACTED",
+    "week_range": 7.0
+  },
+  {
+    "week": "2026-08-24",
+    "zone": "98.781-99.179",
+    "n": 17,
+    "zfp": 25,
+    "side": "below",
+    "verdict": "INSIDE",
+    "week_range": 8.0
+  },
+  {
+    "week": "2026-08-24",
+    "zone": "99.186-99.544",
+    "n": 10,
+    "zfp": 22,
+    "side": "below",
+    "verdict": "REACTED",
+    "week_range": 8.0
+  },
+  {
+    "week": "2026-08-24",
+    "zone": "99.656-99.983",
+    "n": 16,
+    "zfp": 20,
+    "side": "below",
+    "verdict": "REACTED",
+    "week_range": 8.0
+  }
+]

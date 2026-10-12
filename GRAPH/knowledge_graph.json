@@ -1,0 +1,786 @@
+{
+  "schema": "plutus-canon-graph/1",
+  "producer": "GRAPH/build_graph.py",
+  "node_count": 56,
+  "edge_count": 64,
+  "nodes": [
+    {
+      "id": "engine.e1",
+      "type": "engine",
+      "label": "Engine 1 \u2014 Zone Map",
+      "source": "v5.3.3 Part II/III",
+      "note": "WHERE ARE THE WALLS. Live-validated ~95%. IMMUTABLE."
+    },
+    {
+      "id": "engine.e2",
+      "type": "engine",
+      "label": "Engine 2 \u2014 Shape Chain",
+      "source": "v5.3.3 Part VI",
+      "note": "WHAT PATH WILL ENERGY TAKE. Live-validated ~95%. IMMUTABLE."
+    },
+    {
+      "id": "engine.e3",
+      "type": "engine",
+      "label": "Engine 3 \u2014 Trade Setups",
+      "source": "CORRECTED_E3 (1685 lines)",
+      "note": "WHERE DO I SURF. ORIGINAL v5.3.3 E3 was BROKEN (18 defects). Fixed engine UNTESTED live."
+    },
+    {
+      "id": "elem.earth",
+      "type": "elemental_density",
+      "label": "EARTH \u2014 Liquidity & Institutional Pressure",
+      "source": "Fractal Architecture v2.3 \u00a72",
+      "note": "The foundation. IP zones = HEAVY earth (bedrock); LSZs = standard (soil). Everything anchors to Earth."
+    },
+    {
+      "id": "elem.fire",
+      "type": "elemental_density",
+      "label": "FIRE \u2014 Supply & Demand",
+      "source": "Fractal Architecture v2.3 \u00a72",
+      "note": "Firepower + direction. BoM = hottest (100% reaction if unmitigated). MoM = cooling, tends to pierce."
+    },
+    {
+      "id": "elem.water",
+      "type": "elemental_density",
+      "label": "WATER \u2014 Macro Shapes",
+      "source": "Fractal Architecture v2.3 \u00a72",
+      "note": "The visible wave forms. Gives Fire structure; without it S/D is untradeable chaos."
+    },
+    {
+      "id": "elem.air",
+      "type": "elemental_density",
+      "label": "AIR \u2014 Fibonacci (the Spiderweb)",
+      "source": "Fractal Architecture v2.3 \u00a72",
+      "note": "No intrinsic density. Becomes a STRUCTURE only when anchored to Earth points. Pierces FIRE, not Earth."
+    },
+    {
+      "id": "law.r3",
+      "type": "law",
+      "label": "R3 LAW \u2014 E2 DESIGNATES, E3 OBEYS",
+      "source": "CORRECTED_E3 \u00a78.0",
+      "note": "E3 never overrides E1/E2; every anchor traces to an E1 zone id + E2 shape day."
+    },
+    {
+      "id": "law.earth_fire_link",
+      "type": "law",
+      "label": "Earth and Fire are intrinsically linked",
+      "source": "Fractal Architecture \u00a74.3",
+      "note": "Fire w/o Earth = no fuel; Earth w/o Fire = no direction. A move needs BOTH."
+    },
+    {
+      "id": "law.mom_ladder_only",
+      "type": "law",
+      "label": "MoM zones = LADDER STEPS ONLY",
+      "source": "Fractal Architecture \u00a77",
+      "note": "No reversal entries at MoM, EVER. Virgin MoM = DEATH ZONE."
+    },
+    {
+      "id": "law.conservation",
+      "type": "law",
+      "label": "Conservation of energy \u2014 after 2 piercing moves, 1-2 days consolidation",
+      "source": "Fractal Architecture \u00a79",
+      "note": "The universal recovery law. Second Law of Thermodynamics applied to markets."
+    },
+    {
+      "id": "law.speed_3050",
+      "type": "law",
+      "label": "Trading speed rule \u2014 price moves at 30-50% of expected speed",
+      "source": "v5.3.3 \u00a76.10",
+      "note": "Add +1 day to timing; today's move becomes tomorrow's."
+    },
+    {
+      "id": "law.rrr_floor",
+      "type": "law",
+      "label": "RRR floor 3.0 (IRON LAW)",
+      "source": "CORRECTED_E3 \u00a78.20",
+      "note": "Enforced in CODE, never by the model. Executed standard 3.5; norm 4.0+; chain ceiling 15.0."
+    },
+    {
+      "id": "law.sequential_sweep",
+      "type": "law",
+      "label": "Price ALWAYS sweeps liquidity zone by zone, in sequence",
+      "source": "v5.3.3 \u00a72.0",
+      "note": "It never skips a zone. Unretested zones WILL be retested."
+    },
+    {
+      "id": "law.singular_candle",
+      "type": "law",
+      "label": "Singular-candle zone construction (zero tolerance)",
+      "source": "v5.3.3 \u00a73.2 Step 0f",
+      "note": "Zone = the SINGLE candle immediately before a strong directional move."
+    },
+    {
+      "id": "law.honest_absence",
+      "type": "law",
+      "label": "HONEST ABSENCE \u2014 never fabricate a level",
+      "source": "CORRECTED_E3 \u00a78.14 r16",
+      "note": "SL_INVALID/TP_NULL/RRR_BELOW_FLOOR => NO EMISSION. The 90% win rate depends on what the code REFUSES to emit."
+    },
+    {
+      "id": "q.zfp_geometric",
+      "type": "quantity",
+      "label": "ZFP (geometric) = zone_height / pair_ref_range x 100",
+      "source": "v5.3.3 \u00a710.8",
+      "note": "THE quantity E2 consumes. Narrow zone -> LOW ZFP -> HARD WALL. DXY ref 1.60 / EU 0.0200 / GU 0.0200 / AU 0.0150."
+    },
+    {
+      "id": "q.zfp_fundamental",
+      "type": "quantity",
+      "label": "Failure probability (fundamental) by zone TYPE",
+      "source": "v5.3.3 Appendix B",
+      "note": "Hard Wall 5-15% ... One-Touch 50-70%. Agrees with the geometric ZFP at the EXTREMES only."
+    },
+    {
+      "id": "q.confluence",
+      "type": "quantity",
+      "label": "Confluence score 0-14 (6 dimensions x2 + extreme bonus +2)",
+      "source": "v5.3.3 \u00a73.2 Synthesis",
+      "note": ""
+    },
+    {
+      "id": "q.pressure_degree",
+      "type": "quantity",
+      "label": "Pressure degree (EXTREME/HEAVY/MOD-HEAVY/MODERATE/LIGHT/MINIMAL)",
+      "source": "v5.3.3 \u00a73.2 Synthesis",
+      "note": "12-14 EXTREME ... 0-3 MINIMAL. Carries its OWN failure-probability column."
+    },
+    {
+      "id": "q.reaction_count",
+      "type": "quantity",
+      "label": "Zone reaction counter 0/1-2/3+",
+      "source": "v5.3.3 \u00a73.2 + CORRECTED_E3 \u00a78.1",
+      "note": "0 virgin (strongest if BoM, DEATH if MoM) / 1-2 active / 3+ depleted = TP only."
+    },
+    {
+      "id": "q.bom_mom",
+      "type": "quantity",
+      "label": "BoM / MoM classification",
+      "source": "v5.3.3 \u00a73.2",
+      "note": ""
+    },
+    {
+      "id": "q.poi_tier",
+      "type": "quantity",
+      "label": "POI tier 1/2/3 (confluent / IP-only / 4H-only)",
+      "source": "v5.3.3 \u00a73.2 Step 9.7",
+      "note": ""
+    },
+    {
+      "id": "q.zfp_band_wrong",
+      "type": "defect",
+      "label": "LIVE DEFECT \u2014 zfp_from_degree(confluence) substituted for the geometric ZFP",
+      "source": "ENGINE1_V8_VS_MINE.md",
+      "note": "Different quantity. Inverts E2's terminal shape at the extremes: a hard-wall Ceiling reads LIGHT/50% -> predicts BS continuation instead of RWL reversal."
+    },
+    {
+      "id": "shape.ss",
+      "type": "macro_shape",
+      "label": "SS \u2014 Swing Scalps",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "Range-bound oscillation. Both bounding zones ZFP<30%."
+    },
+    {
+      "id": "shape.bs",
+      "type": "macro_shape",
+      "label": "BS \u2014 Breakout Surge",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "Decisive break + directional surge. Failing zone ZFP>45%; 15+min confirmation."
+    },
+    {
+      "id": "shape.pbs",
+      "type": "macro_shape",
+      "label": "PBS \u2014 Piercing BS",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "BS that pierces intermediate zones. Failing zone ZFP>70%."
+    },
+    {
+      "id": "shape.r",
+      "type": "macro_shape",
+      "label": "R \u2014 Recovery",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "Always transitional. Mid-range zone ZFP 20-40%."
+    },
+    {
+      "id": "shape.rs",
+      "type": "macro_shape",
+      "label": "RS \u2014 Recovery Surge",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "Sharp directional retrace instead of slow consolidation."
+    },
+    {
+      "id": "shape.wl",
+      "type": "macro_shape",
+      "label": "WL \u2014 Whiplash",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "Spike-and-reject. The rejection is the signal, not the surge. Rejection zone ZFP<20%."
+    },
+    {
+      "id": "shape.rwl",
+      "type": "macro_shape",
+      "label": "RWL \u2014 Reverse Whiplash",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "WL opposite the preceding BS. Most common follow-on after a BS."
+    },
+    {
+      "id": "shape.pwl",
+      "type": "macro_shape",
+      "label": "PWL \u2014 Piercing WL",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "Pierces multiple zones before rejection."
+    },
+    {
+      "id": "shape.prwl",
+      "type": "macro_shape",
+      "label": "PRWL \u2014 Piercing Reverse Whiplash",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "STRONGEST reversal signal in the taxonomy."
+    },
+    {
+      "id": "shape.wls",
+      "type": "macro_shape",
+      "label": "WLS \u2014 Whiplash Storm",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "2-5 sessions of violent oscillation. Almost always resolves into a BS."
+    },
+    {
+      "id": "shape.dwl",
+      "type": "macro_shape",
+      "label": "SS(DWL) \u2014 Double Whiplash",
+      "source": "v5.3.3 \u00a76.1",
+      "note": "Two rapid whipsaws in the range; volatility precedes a breakout attempt."
+    },
+    {
+      "id": "chain.default",
+      "type": "chain",
+      "label": "SS -> BS -> R -> WL (HIGHEST frequency)",
+      "source": "v5.3.3 \u00a76.3",
+      "note": "The default weekly storyline: SS builds positioning pressure, the zone fails, BS, recovery, WL at target."
+    },
+    {
+      "id": "chain.false_breakout",
+      "type": "chain",
+      "label": "BS -> RWL -> SS -> BS",
+      "source": "v5.3.3 \u00a76.3",
+      "note": "Complete false-breakout cycle. The SECOND BS often succeeds."
+    },
+    {
+      "id": "chain.wls_resolve",
+      "type": "chain",
+      "label": "WLS -> BS (VERY HIGH)",
+      "source": "v5.3.3 \u00a76.4",
+      "note": "WLS almost always resolves into a BS; only the direction is in question."
+    },
+    {
+      "id": "e3.entry_ts1",
+      "type": "rule",
+      "label": "TS-1 SNIPER ENTRY = the zone edge CLOSEST to approaching price",
+      "source": "CORRECTED_E3 \u00a78.2",
+      "note": "SHORT from supply -> bottom edge. LONG from demand -> top edge."
+    },
+    {
+      "id": "e3.sl_ladder",
+      "type": "rule",
+      "label": "SL Ladder-Steps \u2014 3p outside the back edge, OR 1-2p inside the next rung's close edge",
+      "source": "CORRECTED_E3 \u00a78.2",
+      "note": "Relevant zone keyed on pressure state: INTACT -> LQZ shield / ABSORBED -> S/D / else golden SL."
+    },
+    {
+      "id": "e3.tp_single",
+      "type": "rule",
+      "label": "ONE TP per trade \u2014 regime-conditional, never partial",
+      "source": "CORRECTED_E3 \u00a78.3",
+      "note": "Strong zone -> near edge + 1-2p spread. Weak zone -> far edge. Law-14: TP >= 1.2 x SL."
+    },
+    {
+      "id": "e3.lifecycle",
+      "type": "rule",
+      "label": "Zone pressure lifecycle VIRGIN->ACTIVE-1->ACTIVE-2->DEPLETED->FORTRESS->BROKEN",
+      "source": "CORRECTED_E3 \u00a78.1",
+      "note": "100% / 80% / 50% / TP-only / 95% direction flip / never again. 4th+ battle is skipped."
+    },
+    {
+      "id": "e3.freshness",
+      "type": "rule",
+      "label": "4-Stage Freshness Gate (index i>2 skipped; any pierce = VIOLATED terminal)",
+      "source": "CORRECTED_E3 \u00a78.1",
+      "note": ""
+    },
+    {
+      "id": "e3.rrr_refine",
+      "type": "rule",
+      "label": "3-attempt refinement loop \u2014 ENTRY FIXED, re-anchor SL/TP only",
+      "source": "CORRECTED_E3 \u00a78.4",
+      "note": "The entry is the hard-won insight; SL/TP are engineering."
+    },
+    {
+      "id": "e3.avatar",
+      "type": "rule",
+      "label": "Master Trade Setup = E + FLR (Avatar State)",
+      "source": "CORRECTED_E3 \u00a78.9",
+      "note": "P(all four elements wrong) = 0.2^4 = 0.16%. Probability INTERSECTION, not addition."
+    },
+    {
+      "id": "e3.rocket",
+      "type": "rule",
+      "label": "Stop-limit trip-wire: trigger detects, the LIMIT fires at the entry zone",
+      "source": "CORRECTED_E3 \u00a78.7",
+      "note": "If price never returns the limit never fills => ZERO additional risk."
+    },
+    {
+      "id": "e3.ip_never_entry",
+      "type": "rule",
+      "label": "IP zones are NEVER entries (STRUCTURAL_ENTRY_SOURCES = ORDER_BLOCK, LQZ)",
+      "source": "CORRECTED_E3 \u00a78.1",
+      "note": "IP = confluence/ZFP/context + SL/TP rungs only. Mirror search SKIPS source=='PILLAR'."
+    },
+    {
+      "id": "pair.dxy",
+      "type": "pair_profile",
+      "label": "DXY \u2014 Air-Fire dominant, MASTER COMPASS",
+      "source": "Fractal Architecture \u00a710 / v5.3.3 \u00a72.0.3",
+      "note": "Directional conviction ONLY. Never arithmetically converted to pair levels (355-710 pip error class)."
+    },
+    {
+      "id": "pair.eu",
+      "type": "pair_profile",
+      "label": "EUR/USD \u2014 Fire-Earth dominant",
+      "source": "Fractal Architecture \u00a710 / v5.3.3 \u00a72.0.3",
+      "note": "Primary swing pair. 62.4% of DXY. PA touches the S/D-liquidity overlap DIRECTLY (NO liquidity shield)."
+    },
+    {
+      "id": "pair.gu",
+      "type": "pair_profile",
+      "label": "GBP/USD \u2014 Earth-Water dominant",
+      "source": "Fractal Architecture \u00a710 / v5.3.3 \u00a72.0.3",
+      "note": "Primary scalp pair. 'Liquidity is the only thing respected' -- S/D gets pierced. Earth LIQUIDITY SHIELDS form in front of Fire."
+    },
+    {
+      "id": "pair.au",
+      "type": "pair_profile",
+      "label": "AUD/USD \u2014 Earth dominant (slow)",
+      "source": "Fractal Architecture \u00a710 / v5.3.3 \u00a72.0.3",
+      "note": "Secondary swing. Molasses: 2-4 days per HTF move. Map the ladder and surf."
+    },
+    {
+      "id": "instr.v8pine",
+      "type": "artifact",
+      "label": "trident_v8.pine (668 lines) \u2014 GLM 5.1 reference indicator",
+      "source": "Original_Canon_Data/Pine Scripts/",
+      "note": "Renders E1 (5 zones + 6 LSZ + 7 option strikes) AND carries E2 chain summary + E3 trade rows in a 2x17 info table."
+    },
+    {
+      "id": "instr.livepine",
+      "type": "artifact",
+      "label": "plutus-vision-v0/v1/v2.pine \u2014 the LIVE build",
+      "source": "PLUTUS_VISION/ (handover)",
+      "note": "E1 zones render, but calcZFP is the degree-band, zDeg caps at 5/14, LSZ removed, options absent, E2+E3 absent from the render."
+    },
+    {
+      "id": "instr.engine3py",
+      "type": "artifact",
+      "label": "trident_engine3_v8.py (58KB)",
+      "source": "Original_Canon_Data/Toolset/",
+      "note": ""
+    },
+    {
+      "id": "instr.pineide",
+      "type": "artifact",
+      "label": "pine-ide / PLUTUS VISION IDE rig",
+      "source": "PLUTUS_VISION/pine-ide",
+      "note": ""
+    },
+    {
+      "id": "instr.exerciselab",
+      "type": "artifact",
+      "label": "LIVE CHART EXERCISE LAB (this workspace)",
+      "source": "DEEPSEEK_AGENT/EXERCISES",
+      "note": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "engine.e1",
+      "to": "engine.e2",
+      "type": "produces_input_for",
+      "why": "E2 forward-maps shape chains ANCHORED to the E1 zone map; a shape without an IP-zone anchor is illegal (E2 RULE 1)."
+    },
+    {
+      "from": "engine.e2",
+      "to": "engine.e3",
+      "type": "produces_input_for",
+      "why": "E3's Phase 1 consumes E2's day-by-day decomposition; without it E3 cannot assign DAY labels."
+    },
+    {
+      "from": "law.r3",
+      "to": "engine.e3",
+      "type": "constrains",
+      "why": "E3 obeys E1+E2; never re-designates, never invents levels."
+    },
+    {
+      "from": "q.zfp_geometric",
+      "to": "engine.e2",
+      "type": "conditions",
+      "why": "E2's ZFP-CONDITIONED TRANSITION table keys the next shape on the TARGET zone's ZFP. This is the single highest-leverage edge in the system."
+    },
+    {
+      "from": "q.zfp_fundamental",
+      "to": "q.zfp_geometric",
+      "type": "correlates_with",
+      "why": "Agree at the extremes (<20% hard wall, >45% failing) and diverge in the middle -- which is why substituting one for the other passes most zones and INVERTS the extremes."
+    },
+    {
+      "from": "q.zfp_band_wrong",
+      "to": "q.zfp_geometric",
+      "type": "substituted_for",
+      "why": "THE DEFECT. A wrong quantity in E1 silently flips the E2 chain, and therefore every downstream E3 setup."
+    },
+    {
+      "from": "q.confluence",
+      "to": "q.pressure_degree",
+      "type": "determines",
+      "why": "Score 0-14 maps to the pressure-degree band."
+    },
+    {
+      "from": "q.reaction_count",
+      "to": "e3.lifecycle",
+      "type": "instantiates",
+      "why": "The counter IS the lifecycle state."
+    },
+    {
+      "from": "q.bom_mom",
+      "to": "law.mom_ladder_only",
+      "type": "is_governed_by",
+      "why": "BoM may be an entry; MoM is ladder-step/TP only."
+    },
+    {
+      "from": "law.singular_candle",
+      "to": "q.bom_mom",
+      "type": "enables",
+      "why": "You cannot classify BoM/MoM without a real origin candle."
+    },
+    {
+      "from": "q.poi_tier",
+      "to": "e3.ip_never_entry",
+      "type": "reinforces",
+      "why": "Tier-1 confluent POI is the primary location, but the ENTRY anchor is still an order block / LQZ, not the IP zone."
+    },
+    {
+      "from": "elem.earth",
+      "to": "elem.fire",
+      "type": "fuels",
+      "why": "Fire needs Earth: an S/D zone with no liquidity cannot react with force."
+    },
+    {
+      "from": "elem.fire",
+      "to": "elem.water",
+      "type": "materializes_as",
+      "why": "Energy released by Fire flowing through Earth channels becomes the visible shape."
+    },
+    {
+      "from": "elem.water",
+      "to": "elem.air",
+      "type": "is_predicted_by",
+      "why": "The Fib spiderweb maps the wave's trajectory before it happens."
+    },
+    {
+      "from": "elem.air",
+      "to": "elem.earth",
+      "type": "creates",
+      "why": "Algorithms act on Fib levels; those levels become new liquidity. The cycle closes."
+    },
+    {
+      "from": "law.earth_fire_link",
+      "to": "elem.earth",
+      "type": "explains",
+      "why": "Why the strongest entries are at S/D + liquidity overlap."
+    },
+    {
+      "from": "elem.air",
+      "to": "elem.fire",
+      "type": "pierces_then_reverses",
+      "why": "Air pierces FIRE (4H BoM S/D), not Earth -- and the pierce is what triggers the whiplash reaction."
+    },
+    {
+      "from": "q.zfp_geometric",
+      "to": "shape.rwl",
+      "type": "selects_when_hard_wall",
+      "why": "BS reaching a target zone with ZFP<20% MUST predict RWL. The #1 historical E2 error was predicting continuation here."
+    },
+    {
+      "from": "q.zfp_geometric",
+      "to": "shape.pbs",
+      "type": "selects_when_weak",
+      "why": "BS reaching a zone with ZFP>60% (>=80% strong cascade) predicts PBS."
+    },
+    {
+      "from": "q.zfp_geometric",
+      "to": "shape.r",
+      "type": "selects_when_midrange",
+      "why": "BS reaching a zone with ZFP 20-40% predicts R (stabilisation), not rejection."
+    },
+    {
+      "from": "q.zfp_geometric",
+      "to": "shape.bs",
+      "type": "selects_when_bounding_fails",
+      "why": "SS with a bounding zone ZFP>45% predicts BS -- breakout imminent."
+    },
+    {
+      "from": "q.zfp_geometric",
+      "to": "shape.ss",
+      "type": "selects_when_both_hold",
+      "why": "SS with all bounding zones ZFP<30% predicts SS continues."
+    },
+    {
+      "from": "shape.wls",
+      "to": "shape.bs",
+      "type": "resolves_into",
+      "why": "VERY HIGH: WLS almost always resolves into a BS -- only the direction is open."
+    },
+    {
+      "from": "shape.bs",
+      "to": "shape.rwl",
+      "type": "most_common_followon",
+      "why": "RWL is the most common follow-on after a BS."
+    },
+    {
+      "from": "shape.bs",
+      "to": "shape.r",
+      "type": "transitions_to",
+      "why": "BS -> R when price reaches a Measured Move target (ZFP 20-40%)."
+    },
+    {
+      "from": "shape.r",
+      "to": "shape.ss",
+      "type": "reclassifies_to",
+      "why": "If stabilisation persists > 1 session it IS consolidation -- reclassify."
+    },
+    {
+      "from": "law.conservation",
+      "to": "shape.wls",
+      "type": "bounds",
+      "why": "No whiplash storm immediately after 2 strong piercing moves."
+    },
+    {
+      "from": "law.speed_3050",
+      "to": "chain.default",
+      "type": "time_shifts",
+      "why": "Add +1 day; today's move becomes tomorrow's, so the chain slips."
+    },
+    {
+      "from": "shape.wl",
+      "to": "shape.rwl",
+      "type": "varies_into",
+      "why": "RWL is a WL in the opposite direction of the preceding BS."
+    },
+    {
+      "from": "shape.wl",
+      "to": "shape.pwl",
+      "type": "varies_into",
+      "why": "PWL is a WL whose surge pierces multiple zones before rejection."
+    },
+    {
+      "from": "shape.rwl",
+      "to": "shape.prwl",
+      "type": "varies_into",
+      "why": "PRWL adds piercing characteristics -- the strongest reversal signal."
+    },
+    {
+      "from": "shape.bs",
+      "to": "shape.pbs",
+      "type": "varies_into",
+      "why": "PBS is a BS powerful enough to pierce intermediate zones without pausing."
+    },
+    {
+      "from": "shape.r",
+      "to": "shape.rs",
+      "type": "varies_into",
+      "why": "RS replaces slow consolidation with a sharp directional retrace."
+    },
+    {
+      "from": "shape.ss",
+      "to": "shape.dwl",
+      "type": "varies_into",
+      "why": "SS(DWL) is two rapid whipsaws inside the SS range."
+    },
+    {
+      "from": "chain.wls_resolve",
+      "to": "shape.wls",
+      "type": "resolves",
+      "why": "The WLS->BS resolution is the chain this node names."
+    },
+    {
+      "from": "shape.wl",
+      "to": "engine.e2",
+      "type": "is_classified_by",
+      "why": "WL is a taxonomy entry E2 must emit, anchored to an E1 zone."
+    },
+    {
+      "from": "shape.prwl",
+      "to": "law.conservation",
+      "type": "exhausts_into",
+      "why": "The strongest reversal is followed by the mandatory recovery phase."
+    },
+    {
+      "from": "law.sequential_sweep",
+      "to": "elem.water",
+      "type": "is_the_water_law",
+      "why": "Water flows through EVERY channel: price sweeps liquidity zone by zone, in order, and never skips one."
+    },
+    {
+      "from": "law.sequential_sweep",
+      "to": "e3.tp_single",
+      "type": "constrains",
+      "why": "The TP must be the NEAREST opposing structure on the walk -- a distant target would require skipping zones."
+    },
+    {
+      "from": "e3.sl_ladder",
+      "to": "e3.entry_ts1",
+      "type": "anchors_to",
+      "why": "SL distance is measured FROM the TS-1 sniper entry."
+    },
+    {
+      "from": "e3.sl_ladder",
+      "to": "e3.lifecycle",
+      "type": "reads",
+      "why": "The operative-defense zone is keyed on the zone's pressure state (INTACT vs ABSORBED)."
+    },
+    {
+      "from": "pair.au",
+      "to": "law.speed_3050",
+      "type": "is_the_extreme_case",
+      "why": "AU is 'molasses' -- 2-4 days per HTF move, the clearest instance of the 30-50% speed rule."
+    },
+    {
+      "from": "pair.au",
+      "to": "elem.earth",
+      "type": "dominated_by",
+      "why": "Pure Earth dominance: map the liquidity ladder and surf the shapes."
+    },
+    {
+      "from": "instr.pineide",
+      "to": "instr.livepine",
+      "type": "renders",
+      "why": "The Pine IDE is the rig that loads and renders the live build."
+    },
+    {
+      "from": "instr.v8pine",
+      "to": "q.zfp_geometric",
+      "type": "implements",
+      "why": "v8's calcZFP(tp,bt,pair) is the authority implementation of the geometric ZFP."
+    },
+    {
+      "from": "chain.default",
+      "to": "shape.ss",
+      "type": "starts_with",
+      "why": "SS builds positioning pressure first."
+    },
+    {
+      "from": "chain.false_breakout",
+      "to": "shape.rwl",
+      "type": "pivots_on",
+      "why": "The RWL reject is what makes the breakout false."
+    },
+    {
+      "from": "e3.lifecycle",
+      "to": "e3.freshness",
+      "type": "is_enforced_by",
+      "why": "The 4-stage gate reads the lifecycle to decide admissibility."
+    },
+    {
+      "from": "law.mom_ladder_only",
+      "to": "e3.ip_never_entry",
+      "type": "aligns_with",
+      "why": "Both forbid treating a weak/continuation structure as a reversal entry."
+    },
+    {
+      "from": "law.rrr_floor",
+      "to": "e3.rrr_refine",
+      "type": "gates",
+      "why": "The floor is the gate; the refinement loop is how a good entry survives a bad anchor."
+    },
+    {
+      "from": "e3.entry_ts1",
+      "to": "e3.tp_single",
+      "type": "determines",
+      "why": "Entry determines SL determines TP determines RRR -- an interlocking triangle."
+    },
+    {
+      "from": "e3.rocket",
+      "to": "e3.avatar",
+      "type": "composes",
+      "why": "E + FLR is the literal composition of the Avatar State."
+    },
+    {
+      "from": "law.honest_absence",
+      "to": "e3.rrr_refine",
+      "type": "bounds",
+      "why": "After 3 attempts the setup HARD REJECTS -- never a fabricated level to pass the floor."
+    },
+    {
+      "from": "law.honest_absence",
+      "to": "law.rrr_floor",
+      "type": "protects",
+      "why": "The floor is only meaningful if refusal is honest."
+    },
+    {
+      "from": "pair.dxy",
+      "to": "pair.eu",
+      "type": "cascades_inverse",
+      "why": "DXY up => EU down. Structural equivalence, NEVER arithmetic conversion."
+    },
+    {
+      "from": "pair.dxy",
+      "to": "pair.gu",
+      "type": "cascades_to",
+      "why": "GU mirror keeps direction; EU mirror inverts."
+    },
+    {
+      "from": "pair.eu",
+      "to": "pair.gu",
+      "type": "shares_mechanics",
+      "why": "Same shapes/zones/setups -- only price levels differ."
+    },
+    {
+      "from": "pair.gu",
+      "to": "elem.earth",
+      "type": "dominated_by",
+      "why": "On GU liquidity is the only thing respected; Earth shields protect Fire."
+    },
+    {
+      "from": "instr.v8pine",
+      "to": "instr.livepine",
+      "type": "is_the_reference_for",
+      "why": "The live build must reach the v8's render fidelity and then exceed it with E2+E3."
+    },
+    {
+      "from": "instr.livepine",
+      "to": "q.zfp_band_wrong",
+      "type": "exhibits",
+      "why": "The live build computes the wrong ZFP quantity."
+    },
+    {
+      "from": "instr.engine3py",
+      "to": "instr.v8pine",
+      "type": "generates",
+      "why": "The v8 Python engine emits the data the v8 pine renders."
+    },
+    {
+      "from": "instr.exerciselab",
+      "to": "engine.e1",
+      "type": "exercises",
+      "why": "Hand-identification of E1 zones on live bars."
+    },
+    {
+      "from": "instr.exerciselab",
+      "to": "engine.e2",
+      "type": "exercises",
+      "why": "Hand-derivation of the shape chain from live bars."
+    },
+    {
+      "from": "instr.exerciselab",
+      "to": "engine.e3",
+      "type": "exercises",
+      "why": "Hand-construction of setups from the derived zones+shapes."
+    }
+  ]
+}

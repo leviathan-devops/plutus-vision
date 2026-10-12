@@ -1,0 +1,3278 @@
+[
+  {
+    "week": "2026-04-20",
+    "pair": "DXY",
+    "tf": "1H",
+    "provenance": "the operator DXY 1H series, Apr 1 - Sep 30 2026",
+    "window": "2026-04-20 .. 2026-04-24",
+    "pre_bars": 309,
+    "pre_d1_bars": 16,
+    "week_bars": 117,
+    "week_open": 98.3,
+    "week_high": 98.939,
+    "week_low": 98.006,
+    "week_close": 98.51,
+    "week_net": 0.21,
+    "week_range": 0.933,
+    "swing_lows": 1,
+    "swing_highs": 0,
+    "lsz_count": 1,
+    "magnet_count": 0,
+    "ob_count": 6,
+    "d1_swings": {
+      "lows": [
+        {
+          "i": 6,
+          "ts": 1775606400000,
+          "price": 98.525,
+          "wick": 0.406
+        }
+      ],
+      "highs": []
+    },
+    "order_blocks": [
+      {
+        "type": "DEMAND",
+        "low": 99.685,
+        "high": 99.883,
+        "origin_ts": 1775001600000,
+        "moved": 0.635,
+        "formed": "04-01 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.981,
+        "high": 100.06,
+        "origin_ts": 1775160000000,
+        "moved": 1.117,
+        "formed": "04-02 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.838,
+        "high": 99.179,
+        "origin_ts": 1775664000000,
+        "moved": 0.7,
+        "formed": "04-08 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.002,
+        "high": 98.265,
+        "origin_ts": 1776153600000,
+        "moved": 0.504,
+        "formed": "04-14 08:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.054,
+        "high": 98.136,
+        "origin_ts": 1776196800000,
+        "moved": 0.534,
+        "formed": "04-14 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.935,
+        "high": 98.11,
+        "origin_ts": 1776312000000,
+        "moved": 0.53,
+        "formed": "04-16 04:00"
+      }
+    ],
+    "zones": [
+      {
+        "low": 97.935,
+        "high": 98.265,
+        "n": 6,
+        "width": 0.33,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 21,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 98.525,
+        "high": 98.525,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 98.838,
+        "high": 98.838,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.179,
+        "high": 99.179,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.685,
+        "high": 99.685,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.883,
+        "high": 100.06,
+        "n": 3,
+        "width": 0.177,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 11,
+        "verdict": "HARD WALL  -> rejection"
+      }
+    ],
+    "magnets": [],
+    "zone_events": [
+      {
+        "zone": "97.935-98.265",
+        "zfp": 21,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Mon 03:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "98.525-98.525",
+        "zfp": 0,
+        "tag": "SINGLETON LEVEL",
+        "first_touch": "Tue 17:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "98.838-98.838",
+        "zfp": 0,
+        "tag": "SINGLETON LEVEL",
+        "first_touch": "Thu 17:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      }
+    ],
+    "chain": [
+      {
+        "day": "Mon 04-20",
+        "open": 98.3,
+        "high": 98.395,
+        "low": 98.006,
+        "close": 98.077,
+        "net": -0.223,
+        "range": 0.389,
+        "shape": "SS",
+        "direction": "down",
+        "interaction": {
+          "zone": "97.935-98.265",
+          "zfp": 21
+        },
+        "shape_reason": "contained inside zone ZFP 21% \u2014 no boundary closed through",
+        "target_zone": "none",
+        "zfp_conditioned_next": null,
+        "rationale": "n/a"
+      },
+      {
+        "day": "Tue 04-21",
+        "open": 98.073,
+        "high": 98.567,
+        "low": 98.068,
+        "close": 98.376,
+        "net": 0.303,
+        "range": 0.499,
+        "shape": "WL",
+        "direction": "up",
+        "interaction": {
+          "zone": "98.525-98.525",
+          "zfp": 0
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 0% < 20%) and REJECTED (up->rejected)",
+        "target_zone": "98.525-98.525 ZFP=0% (SINGLETON LEVEL)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      },
+      {
+        "day": "Wed 04-22",
+        "open": 98.378,
+        "high": 98.643,
+        "low": 98.211,
+        "close": 98.615,
+        "net": 0.237,
+        "range": 0.432,
+        "shape": "R/transition",
+        "direction": "up",
+        "interaction": {
+          "zone": "98.525-98.525",
+          "zfp": 0,
+          "dir": "up"
+        },
+        "shape_reason": "crossed a zone with ZFP 0% (soft, not weak) heading up",
+        "target_zone": "98.838-98.838 ZFP=0% (SINGLETON LEVEL)",
+        "zfp_conditioned_next": "?",
+        "rationale": "unmapped current shape"
+      },
+      {
+        "day": "Thu 04-23",
+        "open": 98.618,
+        "high": 98.939,
+        "low": 98.534,
+        "close": 98.825,
+        "net": 0.207,
+        "range": 0.405,
+        "shape": "WL",
+        "direction": "up",
+        "interaction": {
+          "zone": "98.838-98.838",
+          "zfp": 0
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 0% < 20%) and REJECTED (up->rejected)",
+        "target_zone": "98.838-98.838 ZFP=0% (SINGLETON LEVEL)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      },
+      {
+        "day": "Fri 04-24",
+        "open": 98.829,
+        "high": 98.915,
+        "low": 98.489,
+        "close": 98.51,
+        "net": -0.319,
+        "range": 0.426,
+        "shape": "WL",
+        "direction": "down",
+        "interaction": {
+          "zone": "98.838-98.838",
+          "zfp": 0
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 0% < 20%) and REJECTED (up->rejected)",
+        "target_zone": "97.935-98.265 ZFP=21% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      }
+    ],
+    "realised_chain": "SS -> WL -> R"
+  },
+  {
+    "week": "2026-05-04",
+    "pair": "DXY",
+    "tf": "1H",
+    "provenance": "the operator DXY 1H series, Apr 1 - Sep 30 2026",
+    "window": "2026-05-04 .. 2026-05-08",
+    "pre_bars": 547,
+    "pre_d1_bars": 28,
+    "week_bars": 117,
+    "week_open": 98.165,
+    "week_high": 98.579,
+    "week_low": 97.625,
+    "week_close": 97.842,
+    "week_net": -0.323,
+    "week_range": 0.954,
+    "swing_lows": 3,
+    "swing_highs": 1,
+    "lsz_count": 4,
+    "magnet_count": 0,
+    "ob_count": 13,
+    "d1_swings": {
+      "lows": [
+        {
+          "i": 6,
+          "ts": 1775606400000,
+          "price": 98.525,
+          "wick": 0.406
+        },
+        {
+          "i": 14,
+          "ts": 1776384000000,
+          "price": 97.632,
+          "wick": 0.58
+        },
+        {
+          "i": 22,
+          "ts": 1777248000000,
+          "price": 98.214,
+          "wick": 0.249
+        }
+      ],
+      "highs": [
+        {
+          "i": 25,
+          "ts": 1777507200000,
+          "price": 99.093,
+          "wick": 0.24
+        }
+      ]
+    },
+    "order_blocks": [
+      {
+        "type": "DEMAND",
+        "low": 99.685,
+        "high": 99.883,
+        "origin_ts": 1775001600000,
+        "moved": 0.635,
+        "formed": "04-01 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.981,
+        "high": 100.06,
+        "origin_ts": 1775160000000,
+        "moved": 1.117,
+        "formed": "04-02 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.838,
+        "high": 99.179,
+        "origin_ts": 1775664000000,
+        "moved": 0.7,
+        "formed": "04-08 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.002,
+        "high": 98.265,
+        "origin_ts": 1776153600000,
+        "moved": 0.504,
+        "formed": "04-14 08:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.054,
+        "high": 98.136,
+        "origin_ts": 1776196800000,
+        "moved": 0.534,
+        "formed": "04-14 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.935,
+        "high": 98.11,
+        "origin_ts": 1776312000000,
+        "moved": 0.53,
+        "formed": "04-16 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.067,
+        "high": 98.21,
+        "origin_ts": 1776412800000,
+        "moved": 0.631,
+        "formed": "04-17 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.19,
+        "high": 98.395,
+        "origin_ts": 1776657600000,
+        "moved": 0.59,
+        "formed": "04-20 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.242,
+        "high": 98.567,
+        "origin_ts": 1776787200000,
+        "moved": 0.563,
+        "formed": "04-21 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.534,
+        "high": 98.781,
+        "origin_ts": 1776945600000,
+        "moved": 0.58,
+        "formed": "04-23 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.784,
+        "high": 98.915,
+        "origin_ts": 1776988800000,
+        "moved": 0.569,
+        "formed": "04-24 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.592,
+        "high": 99.343,
+        "origin_ts": 1777233600000,
+        "moved": 0.617,
+        "formed": "04-26 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.426,
+        "high": 98.594,
+        "origin_ts": 1777334400000,
+        "moved": 0.776,
+        "formed": "04-28 00:00"
+      }
+    ],
+    "zones": [
+      {
+        "low": 97.632,
+        "high": 97.632,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 97.935,
+        "high": 98.265,
+        "n": 11,
+        "width": 0.33,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 21,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 98.395,
+        "high": 98.594,
+        "n": 7,
+        "width": 0.199,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 12,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 98.781,
+        "high": 98.915,
+        "n": 4,
+        "width": 0.134,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 8,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.093,
+        "high": 99.179,
+        "n": 2,
+        "width": 0.086,
+        "tag": "TIGHT CONFLUENCE",
+        "authoritative": true,
+        "zfp": 5,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.343,
+        "high": 99.343,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.685,
+        "high": 99.685,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.883,
+        "high": 100.06,
+        "n": 3,
+        "width": 0.177,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 11,
+        "verdict": "HARD WALL  -> rejection"
+      }
+    ],
+    "magnets": [],
+    "zone_events": [
+      {
+        "zone": "97.632-97.632",
+        "zfp": 0,
+        "tag": "SINGLETON LEVEL",
+        "first_touch": "Wed 10:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "97.935-98.265",
+        "zfp": 21,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Mon 00:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "98.395-98.594",
+        "zfp": 12,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Mon 10:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      }
+    ],
+    "chain": [
+      {
+        "day": "Mon 05-04",
+        "open": 98.165,
+        "high": 98.536,
+        "low": 97.97,
+        "close": 98.466,
+        "net": 0.301,
+        "range": 0.566,
+        "shape": "SS",
+        "direction": "up",
+        "interaction": {
+          "zone": "97.935-98.265",
+          "zfp": 21
+        },
+        "shape_reason": "contained inside zone ZFP 21% \u2014 no boundary closed through",
+        "target_zone": "98.781-98.915 ZFP=8% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Tue 05-05",
+        "open": 98.465,
+        "high": 98.579,
+        "low": 98.296,
+        "close": 98.315,
+        "net": -0.15,
+        "range": 0.283,
+        "shape": "SS",
+        "direction": "down",
+        "interaction": {
+          "zone": "98.395-98.594",
+          "zfp": 12
+        },
+        "shape_reason": "contained inside zone ZFP 12% \u2014 no boundary closed through",
+        "target_zone": "97.935-98.265 ZFP=21% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Wed 05-06",
+        "open": 98.317,
+        "high": 98.342,
+        "low": 97.625,
+        "close": 98.05,
+        "net": -0.267,
+        "range": 0.717,
+        "shape": "WL",
+        "direction": "down",
+        "interaction": {
+          "zone": "97.632-97.632",
+          "zfp": 0
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 0% < 20%) and REJECTED (down->rejected)",
+        "target_zone": "97.632-97.632 ZFP=0% (SINGLETON LEVEL)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      },
+      {
+        "day": "Thu 05-07",
+        "open": 98.048,
+        "high": 98.282,
+        "low": 97.815,
+        "close": 98.229,
+        "net": 0.181,
+        "range": 0.467,
+        "shape": "SS",
+        "direction": "up",
+        "interaction": {
+          "zone": "97.935-98.265",
+          "zfp": 21
+        },
+        "shape_reason": "contained inside zone ZFP 21% \u2014 no boundary closed through",
+        "target_zone": "98.395-98.594 ZFP=12% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Fri 05-08",
+        "open": 98.227,
+        "high": 98.277,
+        "low": 97.829,
+        "close": 97.842,
+        "net": -0.385,
+        "range": 0.448,
+        "shape": "SS",
+        "direction": "down",
+        "interaction": {
+          "zone": "97.935-98.265",
+          "zfp": 21
+        },
+        "shape_reason": "contained inside zone ZFP 21% \u2014 no boundary closed through",
+        "target_zone": "97.632-97.632 ZFP=0% (SINGLETON LEVEL)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      }
+    ],
+    "realised_chain": "SS -> WL"
+  },
+  {
+    "week": "2026-06-15",
+    "pair": "DXY",
+    "tf": "1H",
+    "provenance": "the operator DXY 1H series, Apr 1 - Sep 30 2026",
+    "window": "2026-06-15 .. 2026-06-19",
+    "pre_bars": 1261,
+    "pre_d1_bars": 64,
+    "week_bars": 117,
+    "week_open": 99.514,
+    "week_high": 101.127,
+    "week_low": 99.384,
+    "week_close": 100.76,
+    "week_net": 1.246,
+    "week_range": 1.743,
+    "swing_lows": 6,
+    "swing_highs": 4,
+    "lsz_count": 10,
+    "magnet_count": 2,
+    "ob_count": 30,
+    "d1_swings": {
+      "lows": [
+        {
+          "i": 6,
+          "ts": 1775606400000,
+          "price": 98.525,
+          "wick": 0.406
+        },
+        {
+          "i": 14,
+          "ts": 1776384000000,
+          "price": 97.632,
+          "wick": 0.58
+        },
+        {
+          "i": 22,
+          "ts": 1777248000000,
+          "price": 98.214,
+          "wick": 0.249
+        },
+        {
+          "i": 26,
+          "ts": 1777593600000,
+          "price": 97.72,
+          "wick": 0.427
+        },
+        {
+          "i": 30,
+          "ts": 1778025600000,
+          "price": 97.625,
+          "wick": 0.425
+        },
+        {
+          "i": 56,
+          "ts": 1780617600000,
+          "price": 99.163,
+          "wick": 0.27
+        }
+      ],
+      "highs": [
+        {
+          "i": 25,
+          "ts": 1777507200000,
+          "price": 99.093,
+          "wick": 0.24
+        },
+        {
+          "i": 43,
+          "ts": 1779321600000,
+          "price": 99.515,
+          "wick": 0.315
+        },
+        {
+          "i": 49,
+          "ts": 1779926400000,
+          "price": 99.544,
+          "wick": 0.248
+        },
+        {
+          "i": 61,
+          "ts": 1781136000000,
+          "price": 100.314,
+          "wick": 0.263
+        }
+      ]
+    },
+    "order_blocks": [
+      {
+        "type": "DEMAND",
+        "low": 99.685,
+        "high": 99.883,
+        "origin_ts": 1775001600000,
+        "moved": 0.635,
+        "formed": "04-01 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.981,
+        "high": 100.06,
+        "origin_ts": 1775160000000,
+        "moved": 1.117,
+        "formed": "04-02 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.838,
+        "high": 99.179,
+        "origin_ts": 1775664000000,
+        "moved": 0.7,
+        "formed": "04-08 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.002,
+        "high": 98.265,
+        "origin_ts": 1776153600000,
+        "moved": 0.504,
+        "formed": "04-14 08:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.054,
+        "high": 98.136,
+        "origin_ts": 1776196800000,
+        "moved": 0.534,
+        "formed": "04-14 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.935,
+        "high": 98.11,
+        "origin_ts": 1776312000000,
+        "moved": 0.53,
+        "formed": "04-16 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.067,
+        "high": 98.21,
+        "origin_ts": 1776412800000,
+        "moved": 0.631,
+        "formed": "04-17 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.19,
+        "high": 98.395,
+        "origin_ts": 1776657600000,
+        "moved": 0.59,
+        "formed": "04-20 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.242,
+        "high": 98.567,
+        "origin_ts": 1776787200000,
+        "moved": 0.563,
+        "formed": "04-21 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.534,
+        "high": 98.781,
+        "origin_ts": 1776945600000,
+        "moved": 0.58,
+        "formed": "04-23 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.784,
+        "high": 98.915,
+        "origin_ts": 1776988800000,
+        "moved": 0.569,
+        "formed": "04-24 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.592,
+        "high": 99.343,
+        "origin_ts": 1777233600000,
+        "moved": 0.617,
+        "formed": "04-26 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.426,
+        "high": 98.594,
+        "origin_ts": 1777334400000,
+        "moved": 0.776,
+        "formed": "04-28 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.116,
+        "high": 98.533,
+        "origin_ts": 1777550400000,
+        "moved": 0.506,
+        "formed": "04-30 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 97.9,
+        "high": 98.24,
+        "origin_ts": 1777608000000,
+        "moved": 0.613,
+        "formed": "05-01 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.72,
+        "high": 98.021,
+        "origin_ts": 1777636800000,
+        "moved": 0.596,
+        "formed": "05-01 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.042,
+        "high": 98.165,
+        "origin_ts": 1777838400000,
+        "moved": 0.56,
+        "formed": "05-03 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.97,
+        "high": 98.215,
+        "origin_ts": 1777852800000,
+        "moved": 0.619,
+        "formed": "05-04 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.079,
+        "high": 98.253,
+        "origin_ts": 1778212800000,
+        "moved": 0.554,
+        "formed": "05-08 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 97.974,
+        "high": 98.104,
+        "origin_ts": 1778457600000,
+        "moved": 0.606,
+        "formed": "05-11 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.971,
+        "high": 99.194,
+        "origin_ts": 1779120000000,
+        "moved": 0.525,
+        "formed": "05-18 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.078,
+        "high": 99.347,
+        "origin_ts": 1779350400000,
+        "moved": 0.505,
+        "formed": "05-21 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.979,
+        "high": 99.122,
+        "origin_ts": 1779652800000,
+        "moved": 0.5,
+        "formed": "05-24 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.175,
+        "high": 99.258,
+        "origin_ts": 1779897600000,
+        "moved": 0.547,
+        "formed": "05-27 16:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.027,
+        "high": 99.186,
+        "origin_ts": 1780041600000,
+        "moved": 0.59,
+        "formed": "05-29 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.993,
+        "high": 99.081,
+        "origin_ts": 1780272000000,
+        "moved": 0.563,
+        "formed": "06-01 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.049,
+        "high": 99.158,
+        "origin_ts": 1780387200000,
+        "moved": 0.865,
+        "formed": "06-02 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.828,
+        "high": 99.983,
+        "origin_ts": 1780977600000,
+        "moved": 0.604,
+        "formed": "06-09 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.849,
+        "high": 99.956,
+        "origin_ts": 1781064000000,
+        "moved": 0.585,
+        "formed": "06-10 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.715,
+        "high": 100.017,
+        "origin_ts": 1781092800000,
+        "moved": 0.583,
+        "formed": "06-10 12:00"
+      }
+    ],
+    "zones": [
+      {
+        "low": 97.625,
+        "high": 97.72,
+        "n": 5,
+        "width": 0.095,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 6,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 97.9,
+        "high": 98.265,
+        "n": 23,
+        "width": 0.365,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 23,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 98.395,
+        "high": 98.594,
+        "n": 8,
+        "width": 0.199,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 12,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 98.781,
+        "high": 99.179,
+        "n": 17,
+        "width": 0.398,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 25,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 99.186,
+        "high": 99.347,
+        "n": 5,
+        "width": 0.161,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 10,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.515,
+        "high": 99.883,
+        "n": 8,
+        "width": 0.368,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 23,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 99.956,
+        "high": 100.06,
+        "n": 5,
+        "width": 0.104,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 6,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 100.314,
+        "high": 100.314,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      }
+    ],
+    "magnets": [
+      {
+        "side": "low",
+        "price": 97.6285,
+        "n": 2,
+        "confidence": "HIGH",
+        "bonus": 1.5,
+        "dates": [
+          "04-17",
+          "05-06"
+        ]
+      },
+      {
+        "side": "high",
+        "price": 99.5295,
+        "n": 2,
+        "confidence": "HIGH",
+        "bonus": 1.5,
+        "dates": [
+          "05-21",
+          "05-28"
+        ]
+      }
+    ],
+    "zone_events": [
+      {
+        "zone": "99.515-99.883",
+        "zfp": 23,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Mon 00:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "99.956-100.06",
+        "zfp": 6,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Wed 18:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "100.314-100.314",
+        "zfp": 0,
+        "tag": "SINGLETON LEVEL",
+        "first_touch": "Wed 19:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      }
+    ],
+    "chain": [
+      {
+        "day": "Mon 06-15",
+        "open": 99.514,
+        "high": 99.714,
+        "low": 99.384,
+        "close": 99.653,
+        "net": 0.139,
+        "range": 0.33,
+        "shape": "SS",
+        "direction": "up",
+        "interaction": {
+          "zone": "99.515-99.883",
+          "zfp": 23
+        },
+        "shape_reason": "contained inside zone ZFP 23% \u2014 no boundary closed through",
+        "target_zone": "99.956-100.06 ZFP=6% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Tue 06-16",
+        "open": 99.656,
+        "high": 99.791,
+        "low": 99.461,
+        "close": 99.551,
+        "net": -0.105,
+        "range": 0.33,
+        "shape": "SS",
+        "direction": "down",
+        "interaction": {
+          "zone": "99.515-99.883",
+          "zfp": 23
+        },
+        "shape_reason": "contained inside zone ZFP 23% \u2014 no boundary closed through",
+        "target_zone": "99.186-99.347 ZFP=10% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Wed 06-17",
+        "open": 99.554,
+        "high": 100.574,
+        "low": 99.491,
+        "close": 100.35,
+        "net": 0.796,
+        "range": 1.083,
+        "shape": "R/transition",
+        "direction": "up",
+        "interaction": {
+          "zone": "99.956-100.06",
+          "zfp": 6,
+          "dir": "up"
+        },
+        "shape_reason": "crossed a zone with ZFP 6% (soft, not weak) heading up",
+        "target_zone": "none",
+        "zfp_conditioned_next": null,
+        "rationale": "n/a"
+      },
+      {
+        "day": "Thu 06-18",
+        "open": 100.35,
+        "high": 100.918,
+        "low": 100.206,
+        "close": 100.83,
+        "net": 0.48,
+        "range": 0.712,
+        "shape": "WL",
+        "direction": "up",
+        "interaction": {
+          "zone": "100.314-100.314",
+          "zfp": 0
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 0% < 20%) and REJECTED (down->rejected)",
+        "target_zone": "none",
+        "zfp_conditioned_next": null,
+        "rationale": "n/a"
+      },
+      {
+        "day": "Fri 06-19",
+        "open": 100.827,
+        "high": 101.127,
+        "low": 100.697,
+        "close": 100.76,
+        "net": -0.067,
+        "range": 0.43,
+        "shape": "SS",
+        "direction": "down",
+        "interaction": null,
+        "shape_reason": "no mapped zone interacted with this day (vacuum / unmapped)",
+        "target_zone": "100.314-100.314 ZFP=0% (SINGLETON LEVEL)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      }
+    ],
+    "realised_chain": "SS -> R -> WL"
+  },
+  {
+    "week": "2026-06-29",
+    "pair": "DXY",
+    "tf": "1H",
+    "provenance": "the operator DXY 1H series, Apr 1 - Sep 30 2026",
+    "window": "2026-06-29 .. 2026-07-03",
+    "pre_bars": 1499,
+    "pre_d1_bars": 76,
+    "week_bars": 117,
+    "week_open": 101.369,
+    "week_high": 101.595,
+    "week_low": 100.558,
+    "week_close": 100.878,
+    "week_net": -0.491,
+    "week_range": 1.037,
+    "swing_lows": 6,
+    "swing_highs": 5,
+    "lsz_count": 11,
+    "magnet_count": 2,
+    "ob_count": 34,
+    "d1_swings": {
+      "lows": [
+        {
+          "i": 6,
+          "ts": 1775606400000,
+          "price": 98.525,
+          "wick": 0.406
+        },
+        {
+          "i": 14,
+          "ts": 1776384000000,
+          "price": 97.632,
+          "wick": 0.58
+        },
+        {
+          "i": 22,
+          "ts": 1777248000000,
+          "price": 98.214,
+          "wick": 0.249
+        },
+        {
+          "i": 26,
+          "ts": 1777593600000,
+          "price": 97.72,
+          "wick": 0.427
+        },
+        {
+          "i": 30,
+          "ts": 1778025600000,
+          "price": 97.625,
+          "wick": 0.425
+        },
+        {
+          "i": 56,
+          "ts": 1780617600000,
+          "price": 99.163,
+          "wick": 0.27
+        }
+      ],
+      "highs": [
+        {
+          "i": 25,
+          "ts": 1777507200000,
+          "price": 99.093,
+          "wick": 0.24
+        },
+        {
+          "i": 43,
+          "ts": 1779321600000,
+          "price": 99.515,
+          "wick": 0.315
+        },
+        {
+          "i": 49,
+          "ts": 1779926400000,
+          "price": 99.544,
+          "wick": 0.248
+        },
+        {
+          "i": 61,
+          "ts": 1781136000000,
+          "price": 100.314,
+          "wick": 0.263
+        },
+        {
+          "i": 68,
+          "ts": 1781827200000,
+          "price": 101.127,
+          "wick": 0.3
+        }
+      ]
+    },
+    "order_blocks": [
+      {
+        "type": "DEMAND",
+        "low": 99.685,
+        "high": 99.883,
+        "origin_ts": 1775001600000,
+        "moved": 0.635,
+        "formed": "04-01 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.981,
+        "high": 100.06,
+        "origin_ts": 1775160000000,
+        "moved": 1.117,
+        "formed": "04-02 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.838,
+        "high": 99.179,
+        "origin_ts": 1775664000000,
+        "moved": 0.7,
+        "formed": "04-08 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.002,
+        "high": 98.265,
+        "origin_ts": 1776153600000,
+        "moved": 0.504,
+        "formed": "04-14 08:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.054,
+        "high": 98.136,
+        "origin_ts": 1776196800000,
+        "moved": 0.534,
+        "formed": "04-14 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.935,
+        "high": 98.11,
+        "origin_ts": 1776312000000,
+        "moved": 0.53,
+        "formed": "04-16 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.067,
+        "high": 98.21,
+        "origin_ts": 1776412800000,
+        "moved": 0.631,
+        "formed": "04-17 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.19,
+        "high": 98.395,
+        "origin_ts": 1776657600000,
+        "moved": 0.59,
+        "formed": "04-20 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.242,
+        "high": 98.567,
+        "origin_ts": 1776787200000,
+        "moved": 0.563,
+        "formed": "04-21 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.534,
+        "high": 98.781,
+        "origin_ts": 1776945600000,
+        "moved": 0.58,
+        "formed": "04-23 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.784,
+        "high": 98.915,
+        "origin_ts": 1776988800000,
+        "moved": 0.569,
+        "formed": "04-24 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.592,
+        "high": 99.343,
+        "origin_ts": 1777233600000,
+        "moved": 0.617,
+        "formed": "04-26 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.426,
+        "high": 98.594,
+        "origin_ts": 1777334400000,
+        "moved": 0.776,
+        "formed": "04-28 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.116,
+        "high": 98.533,
+        "origin_ts": 1777550400000,
+        "moved": 0.506,
+        "formed": "04-30 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 97.9,
+        "high": 98.24,
+        "origin_ts": 1777608000000,
+        "moved": 0.613,
+        "formed": "05-01 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.72,
+        "high": 98.021,
+        "origin_ts": 1777636800000,
+        "moved": 0.596,
+        "formed": "05-01 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.042,
+        "high": 98.165,
+        "origin_ts": 1777838400000,
+        "moved": 0.56,
+        "formed": "05-03 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.97,
+        "high": 98.215,
+        "origin_ts": 1777852800000,
+        "moved": 0.619,
+        "formed": "05-04 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.079,
+        "high": 98.253,
+        "origin_ts": 1778212800000,
+        "moved": 0.554,
+        "formed": "05-08 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 97.974,
+        "high": 98.104,
+        "origin_ts": 1778457600000,
+        "moved": 0.606,
+        "formed": "05-11 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.971,
+        "high": 99.194,
+        "origin_ts": 1779120000000,
+        "moved": 0.525,
+        "formed": "05-18 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.078,
+        "high": 99.347,
+        "origin_ts": 1779350400000,
+        "moved": 0.505,
+        "formed": "05-21 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.979,
+        "high": 99.122,
+        "origin_ts": 1779652800000,
+        "moved": 0.5,
+        "formed": "05-24 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.175,
+        "high": 99.258,
+        "origin_ts": 1779897600000,
+        "moved": 0.547,
+        "formed": "05-27 16:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.027,
+        "high": 99.186,
+        "origin_ts": 1780041600000,
+        "moved": 0.59,
+        "formed": "05-29 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.993,
+        "high": 99.081,
+        "origin_ts": 1780272000000,
+        "moved": 0.563,
+        "formed": "06-01 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.049,
+        "high": 99.158,
+        "origin_ts": 1780387200000,
+        "moved": 0.865,
+        "formed": "06-02 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.828,
+        "high": 99.983,
+        "origin_ts": 1780977600000,
+        "moved": 0.604,
+        "formed": "06-09 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.849,
+        "high": 99.956,
+        "origin_ts": 1781064000000,
+        "moved": 0.624,
+        "formed": "06-10 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.712,
+        "high": 99.785,
+        "origin_ts": 1781280000000,
+        "moved": 0.768,
+        "formed": "06-12 16:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.315,
+        "high": 100.803,
+        "origin_ts": 1781769600000,
+        "moved": 0.591,
+        "formed": "06-18 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.755,
+        "high": 100.953,
+        "origin_ts": 1781827200000,
+        "moved": 0.6,
+        "formed": "06-19 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.366,
+        "high": 101.512,
+        "origin_ts": 1782259200000,
+        "moved": 0.544,
+        "formed": "06-24 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.471,
+        "high": 101.661,
+        "origin_ts": 1782360000000,
+        "moved": 0.672,
+        "formed": "06-25 04:00"
+      }
+    ],
+    "zones": [
+      {
+        "low": 97.625,
+        "high": 97.72,
+        "n": 5,
+        "width": 0.095,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 6,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 97.9,
+        "high": 98.265,
+        "n": 23,
+        "width": 0.365,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 23,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 98.395,
+        "high": 98.594,
+        "n": 8,
+        "width": 0.199,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 12,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 98.781,
+        "high": 99.179,
+        "n": 17,
+        "width": 0.398,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 25,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 99.186,
+        "high": 99.347,
+        "n": 5,
+        "width": 0.161,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 10,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.515,
+        "high": 99.883,
+        "n": 9,
+        "width": 0.368,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 23,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 99.956,
+        "high": 100.06,
+        "n": 4,
+        "width": 0.104,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 6,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 100.314,
+        "high": 100.315,
+        "n": 2,
+        "width": 0.001,
+        "tag": "TIGHT CONFLUENCE",
+        "authoritative": true,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 100.755,
+        "high": 100.803,
+        "n": 2,
+        "width": 0.048,
+        "tag": "TIGHT CONFLUENCE",
+        "authoritative": true,
+        "zfp": 3,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 100.953,
+        "high": 100.953,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 101.127,
+        "high": 101.127,
+        "n": 1,
+        "width": 0.0,
+        "tag": "SINGLETON LEVEL",
+        "authoritative": false,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 101.366,
+        "high": 101.661,
+        "n": 4,
+        "width": 0.295,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 18,
+        "verdict": "HARD WALL  -> rejection"
+      }
+    ],
+    "magnets": [
+      {
+        "side": "low",
+        "price": 97.6285,
+        "n": 2,
+        "confidence": "HIGH",
+        "bonus": 1.5,
+        "dates": [
+          "04-17",
+          "05-06"
+        ]
+      },
+      {
+        "side": "high",
+        "price": 99.5295,
+        "n": 2,
+        "confidence": "HIGH",
+        "bonus": 1.5,
+        "dates": [
+          "05-21",
+          "05-28"
+        ]
+      }
+    ],
+    "zone_events": [
+      {
+        "zone": "100.755-100.803",
+        "zfp": 3,
+        "tag": "TIGHT CONFLUENCE",
+        "first_touch": "Thu 12:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "100.953-100.953",
+        "zfp": 0,
+        "tag": "SINGLETON LEVEL",
+        "first_touch": "Thu 08:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "101.127-101.127",
+        "zfp": 0,
+        "tag": "SINGLETON LEVEL",
+        "first_touch": "Mon 15:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "101.366-101.661",
+        "zfp": 18,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Mon 00:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      }
+    ],
+    "chain": [
+      {
+        "day": "Mon 06-29",
+        "open": 101.369,
+        "high": 101.394,
+        "low": 101.071,
+        "close": 101.146,
+        "net": -0.223,
+        "range": 0.323,
+        "shape": "WL",
+        "direction": "down",
+        "interaction": {
+          "zone": "101.127-101.127",
+          "zfp": 0
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 0% < 20%) and REJECTED (down->rejected)",
+        "target_zone": "101.127-101.127 ZFP=0% (SINGLETON LEVEL)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      },
+      {
+        "day": "Tue 06-30",
+        "open": 101.147,
+        "high": 101.432,
+        "low": 101.049,
+        "close": 101.244,
+        "net": 0.097,
+        "range": 0.383,
+        "shape": "WL",
+        "direction": "up",
+        "interaction": {
+          "zone": "101.127-101.127",
+          "zfp": 0
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 0% < 20%) and REJECTED (down->rejected)",
+        "target_zone": "101.366-101.661 ZFP=18% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      },
+      {
+        "day": "Wed 07-01",
+        "open": 101.24,
+        "high": 101.595,
+        "low": 101.19,
+        "close": 101.407,
+        "net": 0.167,
+        "range": 0.405,
+        "shape": "SS",
+        "direction": "up",
+        "interaction": {
+          "zone": "101.366-101.661",
+          "zfp": 18
+        },
+        "shape_reason": "contained inside zone ZFP 18% \u2014 no boundary closed through",
+        "target_zone": "none",
+        "zfp_conditioned_next": null,
+        "rationale": "n/a"
+      },
+      {
+        "day": "Thu 07-02",
+        "open": 101.408,
+        "high": 101.43,
+        "low": 100.558,
+        "close": 100.973,
+        "net": -0.435,
+        "range": 0.872,
+        "shape": "WL",
+        "direction": "down",
+        "interaction": {
+          "zone": "100.755-100.803",
+          "zfp": 3
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 3% < 20%) and REJECTED (down->rejected)",
+        "target_zone": "100.953-100.953 ZFP=0% (SINGLETON LEVEL)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      },
+      {
+        "day": "Fri 07-03",
+        "open": 100.976,
+        "high": 100.992,
+        "low": 100.603,
+        "close": 100.878,
+        "net": -0.098,
+        "range": 0.389,
+        "shape": "WL",
+        "direction": "down",
+        "interaction": {
+          "zone": "100.755-100.803",
+          "zfp": 3
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 3% < 20%) and REJECTED (down->rejected)",
+        "target_zone": "100.755-100.803 ZFP=3% (TIGHT CONFLUENCE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      }
+    ],
+    "realised_chain": "WL -> SS"
+  },
+  {
+    "week": "2026-07-06",
+    "pair": "DXY",
+    "tf": "1H",
+    "provenance": "the operator DXY 1H series, Apr 1 - Sep 30 2026",
+    "window": "2026-07-06 .. 2026-07-10",
+    "pre_bars": 1618,
+    "pre_d1_bars": 82,
+    "week_bars": 117,
+    "week_open": 100.878,
+    "week_high": 101.275,
+    "week_low": 100.598,
+    "week_close": 100.965,
+    "week_net": 0.087,
+    "week_range": 0.677,
+    "swing_lows": 7,
+    "swing_highs": 5,
+    "lsz_count": 12,
+    "magnet_count": 2,
+    "ob_count": 35,
+    "d1_swings": {
+      "lows": [
+        {
+          "i": 6,
+          "ts": 1775606400000,
+          "price": 98.525,
+          "wick": 0.406
+        },
+        {
+          "i": 14,
+          "ts": 1776384000000,
+          "price": 97.632,
+          "wick": 0.58
+        },
+        {
+          "i": 22,
+          "ts": 1777248000000,
+          "price": 98.214,
+          "wick": 0.249
+        },
+        {
+          "i": 26,
+          "ts": 1777593600000,
+          "price": 97.72,
+          "wick": 0.427
+        },
+        {
+          "i": 30,
+          "ts": 1778025600000,
+          "price": 97.625,
+          "wick": 0.425
+        },
+        {
+          "i": 56,
+          "ts": 1780617600000,
+          "price": 99.163,
+          "wick": 0.27
+        },
+        {
+          "i": 74,
+          "ts": 1782432000000,
+          "price": 101.045,
+          "wick": 0.321
+        }
+      ],
+      "highs": [
+        {
+          "i": 25,
+          "ts": 1777507200000,
+          "price": 99.093,
+          "wick": 0.24
+        },
+        {
+          "i": 43,
+          "ts": 1779321600000,
+          "price": 99.515,
+          "wick": 0.315
+        },
+        {
+          "i": 49,
+          "ts": 1779926400000,
+          "price": 99.544,
+          "wick": 0.248
+        },
+        {
+          "i": 61,
+          "ts": 1781136000000,
+          "price": 100.314,
+          "wick": 0.263
+        },
+        {
+          "i": 68,
+          "ts": 1781827200000,
+          "price": 101.127,
+          "wick": 0.3
+        }
+      ]
+    },
+    "order_blocks": [
+      {
+        "type": "DEMAND",
+        "low": 99.685,
+        "high": 99.883,
+        "origin_ts": 1775001600000,
+        "moved": 0.635,
+        "formed": "04-01 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.981,
+        "high": 100.06,
+        "origin_ts": 1775160000000,
+        "moved": 1.117,
+        "formed": "04-02 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.838,
+        "high": 99.179,
+        "origin_ts": 1775664000000,
+        "moved": 0.7,
+        "formed": "04-08 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.002,
+        "high": 98.265,
+        "origin_ts": 1776153600000,
+        "moved": 0.504,
+        "formed": "04-14 08:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.054,
+        "high": 98.136,
+        "origin_ts": 1776196800000,
+        "moved": 0.534,
+        "formed": "04-14 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.935,
+        "high": 98.11,
+        "origin_ts": 1776312000000,
+        "moved": 0.53,
+        "formed": "04-16 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.067,
+        "high": 98.21,
+        "origin_ts": 1776412800000,
+        "moved": 0.631,
+        "formed": "04-17 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.19,
+        "high": 98.395,
+        "origin_ts": 1776657600000,
+        "moved": 0.59,
+        "formed": "04-20 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.242,
+        "high": 98.567,
+        "origin_ts": 1776787200000,
+        "moved": 0.563,
+        "formed": "04-21 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.534,
+        "high": 98.781,
+        "origin_ts": 1776945600000,
+        "moved": 0.58,
+        "formed": "04-23 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.784,
+        "high": 98.915,
+        "origin_ts": 1776988800000,
+        "moved": 0.569,
+        "formed": "04-24 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.592,
+        "high": 99.343,
+        "origin_ts": 1777233600000,
+        "moved": 0.617,
+        "formed": "04-26 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.426,
+        "high": 98.594,
+        "origin_ts": 1777334400000,
+        "moved": 0.776,
+        "formed": "04-28 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.116,
+        "high": 98.533,
+        "origin_ts": 1777550400000,
+        "moved": 0.506,
+        "formed": "04-30 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 97.9,
+        "high": 98.24,
+        "origin_ts": 1777608000000,
+        "moved": 0.613,
+        "formed": "05-01 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.72,
+        "high": 98.021,
+        "origin_ts": 1777636800000,
+        "moved": 0.596,
+        "formed": "05-01 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.042,
+        "high": 98.165,
+        "origin_ts": 1777838400000,
+        "moved": 0.56,
+        "formed": "05-03 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.97,
+        "high": 98.215,
+        "origin_ts": 1777852800000,
+        "moved": 0.619,
+        "formed": "05-04 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.079,
+        "high": 98.253,
+        "origin_ts": 1778212800000,
+        "moved": 0.554,
+        "formed": "05-08 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 97.974,
+        "high": 98.104,
+        "origin_ts": 1778457600000,
+        "moved": 0.606,
+        "formed": "05-11 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.971,
+        "high": 99.194,
+        "origin_ts": 1779120000000,
+        "moved": 0.525,
+        "formed": "05-18 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.078,
+        "high": 99.347,
+        "origin_ts": 1779350400000,
+        "moved": 0.505,
+        "formed": "05-21 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.979,
+        "high": 99.122,
+        "origin_ts": 1779652800000,
+        "moved": 0.5,
+        "formed": "05-24 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.175,
+        "high": 99.258,
+        "origin_ts": 1779897600000,
+        "moved": 0.547,
+        "formed": "05-27 16:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.027,
+        "high": 99.186,
+        "origin_ts": 1780041600000,
+        "moved": 0.59,
+        "formed": "05-29 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.993,
+        "high": 99.081,
+        "origin_ts": 1780272000000,
+        "moved": 0.563,
+        "formed": "06-01 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.049,
+        "high": 99.158,
+        "origin_ts": 1780387200000,
+        "moved": 0.865,
+        "formed": "06-02 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.828,
+        "high": 99.983,
+        "origin_ts": 1780977600000,
+        "moved": 0.604,
+        "formed": "06-09 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.849,
+        "high": 99.956,
+        "origin_ts": 1781064000000,
+        "moved": 0.624,
+        "formed": "06-10 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.712,
+        "high": 99.785,
+        "origin_ts": 1781280000000,
+        "moved": 0.768,
+        "formed": "06-12 16:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.315,
+        "high": 100.803,
+        "origin_ts": 1781769600000,
+        "moved": 0.591,
+        "formed": "06-18 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.755,
+        "high": 100.953,
+        "origin_ts": 1781827200000,
+        "moved": 0.6,
+        "formed": "06-19 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.366,
+        "high": 101.512,
+        "origin_ts": 1782259200000,
+        "moved": 0.544,
+        "formed": "06-24 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.471,
+        "high": 101.661,
+        "origin_ts": 1782360000000,
+        "moved": 0.672,
+        "formed": "06-25 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.188,
+        "high": 101.331,
+        "origin_ts": 1782720000000,
+        "moved": 0.571,
+        "formed": "06-29 08:00"
+      }
+    ],
+    "zones": [
+      {
+        "low": 97.625,
+        "high": 97.72,
+        "n": 5,
+        "width": 0.095,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 6,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 97.9,
+        "high": 98.265,
+        "n": 23,
+        "width": 0.365,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 23,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 98.395,
+        "high": 98.594,
+        "n": 8,
+        "width": 0.199,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 12,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 98.781,
+        "high": 99.179,
+        "n": 17,
+        "width": 0.398,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 25,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 99.186,
+        "high": 99.347,
+        "n": 5,
+        "width": 0.161,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 10,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 99.515,
+        "high": 99.883,
+        "n": 9,
+        "width": 0.368,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 23,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 99.956,
+        "high": 100.06,
+        "n": 4,
+        "width": 0.104,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 6,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 100.314,
+        "high": 100.315,
+        "n": 2,
+        "width": 0.001,
+        "tag": "TIGHT CONFLUENCE",
+        "authoritative": true,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 100.755,
+        "high": 100.803,
+        "n": 2,
+        "width": 0.048,
+        "tag": "TIGHT CONFLUENCE",
+        "authoritative": true,
+        "zfp": 3,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 100.953,
+        "high": 101.331,
+        "n": 5,
+        "width": 0.378,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 24,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 101.366,
+        "high": 101.661,
+        "n": 4,
+        "width": 0.295,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 18,
+        "verdict": "HARD WALL  -> rejection"
+      }
+    ],
+    "magnets": [
+      {
+        "side": "low",
+        "price": 97.6285,
+        "n": 2,
+        "confidence": "HIGH",
+        "bonus": 1.5,
+        "dates": [
+          "04-17",
+          "05-06"
+        ]
+      },
+      {
+        "side": "high",
+        "price": 99.5295,
+        "n": 2,
+        "confidence": "HIGH",
+        "bonus": 1.5,
+        "dates": [
+          "05-21",
+          "05-28"
+        ]
+      }
+    ],
+    "zone_events": [
+      {
+        "zone": "100.755-100.803",
+        "zfp": 3,
+        "tag": "TIGHT CONFLUENCE",
+        "first_touch": "Tue 01:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "100.953-101.331",
+        "zfp": 24,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Mon 01:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      }
+    ],
+    "chain": [
+      {
+        "day": "Mon 07-06",
+        "open": 100.878,
+        "high": 101.145,
+        "low": 100.838,
+        "close": 100.869,
+        "net": -0.009,
+        "range": 0.307,
+        "shape": "SS",
+        "direction": "down",
+        "interaction": {
+          "zone": "100.953-101.331",
+          "zfp": 24
+        },
+        "shape_reason": "contained inside zone ZFP 24% \u2014 no boundary closed through",
+        "target_zone": "100.755-100.803 ZFP=3% (TIGHT CONFLUENCE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Tue 07-07",
+        "open": 100.871,
+        "high": 101.194,
+        "low": 100.803,
+        "close": 101.186,
+        "net": 0.315,
+        "range": 0.391,
+        "shape": "WL",
+        "direction": "up",
+        "interaction": {
+          "zone": "100.755-100.803",
+          "zfp": 3
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 3% < 20%) and REJECTED (down->rejected)",
+        "target_zone": "101.366-101.661 ZFP=18% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      },
+      {
+        "day": "Wed 07-08",
+        "open": 101.189,
+        "high": 101.275,
+        "low": 100.946,
+        "close": 101.027,
+        "net": -0.162,
+        "range": 0.329,
+        "shape": "SS",
+        "direction": "down",
+        "interaction": {
+          "zone": "100.953-101.331",
+          "zfp": 24
+        },
+        "shape_reason": "contained inside zone ZFP 24% \u2014 no boundary closed through",
+        "target_zone": "100.755-100.803 ZFP=3% (TIGHT CONFLUENCE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Thu 07-09",
+        "open": 101.024,
+        "high": 101.039,
+        "low": 100.786,
+        "close": 100.913,
+        "net": -0.111,
+        "range": 0.253,
+        "shape": "WL",
+        "direction": "down",
+        "interaction": {
+          "zone": "100.755-100.803",
+          "zfp": 3
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 3% < 20%) and REJECTED (down->rejected)",
+        "target_zone": "100.755-100.803 ZFP=3% (TIGHT CONFLUENCE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      },
+      {
+        "day": "Fri 07-10",
+        "open": 100.915,
+        "high": 100.997,
+        "low": 100.598,
+        "close": 100.965,
+        "net": 0.05,
+        "range": 0.399,
+        "shape": "WL",
+        "direction": "up",
+        "interaction": {
+          "zone": "100.755-100.803",
+          "zfp": 3
+        },
+        "shape_reason": "tested a HARD WALL (ZFP 3% < 20%) and REJECTED (down->rejected)",
+        "target_zone": "101.366-101.661 ZFP=18% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "reversal/whiplash exhausts into a new range"
+      }
+    ],
+    "realised_chain": "SS -> WL"
+  },
+  {
+    "week": "2026-08-24",
+    "pair": "DXY",
+    "tf": "1H",
+    "provenance": "the operator DXY 1H series, Apr 1 - Sep 30 2026",
+    "window": "2026-08-24 .. 2026-08-28",
+    "pre_bars": 2451,
+    "pre_d1_bars": 124,
+    "week_bars": 117,
+    "week_open": 98.808,
+    "week_high": 99.726,
+    "week_low": 98.762,
+    "week_close": 99.677,
+    "week_net": 0.869,
+    "week_range": 0.964,
+    "swing_lows": 10,
+    "swing_highs": 5,
+    "lsz_count": 15,
+    "magnet_count": 3,
+    "ob_count": 52,
+    "d1_swings": {
+      "lows": [
+        {
+          "i": 6,
+          "ts": 1775606400000,
+          "price": 98.525,
+          "wick": 0.406
+        },
+        {
+          "i": 14,
+          "ts": 1776384000000,
+          "price": 97.632,
+          "wick": 0.58
+        },
+        {
+          "i": 22,
+          "ts": 1777248000000,
+          "price": 98.214,
+          "wick": 0.249
+        },
+        {
+          "i": 26,
+          "ts": 1777593600000,
+          "price": 97.72,
+          "wick": 0.427
+        },
+        {
+          "i": 30,
+          "ts": 1778025600000,
+          "price": 97.625,
+          "wick": 0.425
+        },
+        {
+          "i": 56,
+          "ts": 1780617600000,
+          "price": 99.163,
+          "wick": 0.27
+        },
+        {
+          "i": 74,
+          "ts": 1782432000000,
+          "price": 101.045,
+          "wick": 0.321
+        },
+        {
+          "i": 86,
+          "ts": 1783641600000,
+          "price": 100.598,
+          "wick": 0.317
+        },
+        {
+          "i": 106,
+          "ts": 1785715200000,
+          "price": 99.418,
+          "wick": 0.299
+        },
+        {
+          "i": 121,
+          "ts": 1787184000000,
+          "price": 98.557,
+          "wick": 0.232
+        }
+      ],
+      "highs": [
+        {
+          "i": 25,
+          "ts": 1777507200000,
+          "price": 99.093,
+          "wick": 0.24
+        },
+        {
+          "i": 43,
+          "ts": 1779321600000,
+          "price": 99.515,
+          "wick": 0.315
+        },
+        {
+          "i": 49,
+          "ts": 1779926400000,
+          "price": 99.544,
+          "wick": 0.248
+        },
+        {
+          "i": 61,
+          "ts": 1781136000000,
+          "price": 100.314,
+          "wick": 0.263
+        },
+        {
+          "i": 68,
+          "ts": 1781827200000,
+          "price": 101.127,
+          "wick": 0.3
+        }
+      ]
+    },
+    "order_blocks": [
+      {
+        "type": "DEMAND",
+        "low": 99.685,
+        "high": 99.883,
+        "origin_ts": 1775001600000,
+        "moved": 0.635,
+        "formed": "04-01 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.981,
+        "high": 100.06,
+        "origin_ts": 1775160000000,
+        "moved": 1.117,
+        "formed": "04-02 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.838,
+        "high": 99.179,
+        "origin_ts": 1775664000000,
+        "moved": 0.7,
+        "formed": "04-08 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.002,
+        "high": 98.265,
+        "origin_ts": 1776153600000,
+        "moved": 0.504,
+        "formed": "04-14 08:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.054,
+        "high": 98.136,
+        "origin_ts": 1776196800000,
+        "moved": 0.534,
+        "formed": "04-14 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.935,
+        "high": 98.11,
+        "origin_ts": 1776312000000,
+        "moved": 0.53,
+        "formed": "04-16 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.067,
+        "high": 98.21,
+        "origin_ts": 1776412800000,
+        "moved": 0.631,
+        "formed": "04-17 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.19,
+        "high": 98.395,
+        "origin_ts": 1776657600000,
+        "moved": 0.59,
+        "formed": "04-20 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.242,
+        "high": 98.567,
+        "origin_ts": 1776787200000,
+        "moved": 0.563,
+        "formed": "04-21 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.534,
+        "high": 98.781,
+        "origin_ts": 1776945600000,
+        "moved": 0.58,
+        "formed": "04-23 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.784,
+        "high": 98.915,
+        "origin_ts": 1776988800000,
+        "moved": 0.569,
+        "formed": "04-24 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.592,
+        "high": 99.343,
+        "origin_ts": 1777233600000,
+        "moved": 0.617,
+        "formed": "04-26 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 98.426,
+        "high": 98.594,
+        "origin_ts": 1777334400000,
+        "moved": 0.776,
+        "formed": "04-28 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.116,
+        "high": 98.533,
+        "origin_ts": 1777550400000,
+        "moved": 0.506,
+        "formed": "04-30 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 97.9,
+        "high": 98.24,
+        "origin_ts": 1777608000000,
+        "moved": 0.613,
+        "formed": "05-01 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.72,
+        "high": 98.021,
+        "origin_ts": 1777636800000,
+        "moved": 0.596,
+        "formed": "05-01 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.042,
+        "high": 98.165,
+        "origin_ts": 1777838400000,
+        "moved": 0.56,
+        "formed": "05-03 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 97.97,
+        "high": 98.215,
+        "origin_ts": 1777852800000,
+        "moved": 0.619,
+        "formed": "05-04 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.079,
+        "high": 98.253,
+        "origin_ts": 1778212800000,
+        "moved": 0.554,
+        "formed": "05-08 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 97.974,
+        "high": 98.104,
+        "origin_ts": 1778457600000,
+        "moved": 0.606,
+        "formed": "05-11 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.971,
+        "high": 99.194,
+        "origin_ts": 1779120000000,
+        "moved": 0.525,
+        "formed": "05-18 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.078,
+        "high": 99.347,
+        "origin_ts": 1779350400000,
+        "moved": 0.505,
+        "formed": "05-21 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.979,
+        "high": 99.122,
+        "origin_ts": 1779652800000,
+        "moved": 0.5,
+        "formed": "05-24 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.175,
+        "high": 99.258,
+        "origin_ts": 1779897600000,
+        "moved": 0.547,
+        "formed": "05-27 16:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.027,
+        "high": 99.186,
+        "origin_ts": 1780041600000,
+        "moved": 0.59,
+        "formed": "05-29 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 98.993,
+        "high": 99.081,
+        "origin_ts": 1780272000000,
+        "moved": 0.563,
+        "formed": "06-01 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.049,
+        "high": 99.158,
+        "origin_ts": 1780387200000,
+        "moved": 0.865,
+        "formed": "06-02 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.828,
+        "high": 99.983,
+        "origin_ts": 1780977600000,
+        "moved": 0.604,
+        "formed": "06-09 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.849,
+        "high": 99.956,
+        "origin_ts": 1781064000000,
+        "moved": 0.624,
+        "formed": "06-10 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.712,
+        "high": 99.785,
+        "origin_ts": 1781280000000,
+        "moved": 0.768,
+        "formed": "06-12 16:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.315,
+        "high": 100.803,
+        "origin_ts": 1781769600000,
+        "moved": 0.591,
+        "formed": "06-18 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.755,
+        "high": 100.953,
+        "origin_ts": 1781827200000,
+        "moved": 0.6,
+        "formed": "06-19 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.366,
+        "high": 101.512,
+        "origin_ts": 1782259200000,
+        "moved": 0.544,
+        "formed": "06-24 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.471,
+        "high": 101.661,
+        "origin_ts": 1782360000000,
+        "moved": 0.672,
+        "formed": "06-25 04:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.188,
+        "high": 101.331,
+        "origin_ts": 1782720000000,
+        "moved": 0.571,
+        "formed": "06-29 08:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.768,
+        "high": 100.992,
+        "origin_ts": 1783036800000,
+        "moved": 0.534,
+        "formed": "07-03 00:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 100.93,
+        "high": 101.126,
+        "origin_ts": 1783440000000,
+        "moved": 0.588,
+        "formed": "07-07 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 100.95,
+        "high": 101.125,
+        "origin_ts": 1783483200000,
+        "moved": 0.621,
+        "formed": "07-08 04:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.91,
+        "high": 100.956,
+        "origin_ts": 1783627200000,
+        "moved": 0.631,
+        "formed": "07-09 20:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.774,
+        "high": 100.898,
+        "origin_ts": 1783670400000,
+        "moved": 0.569,
+        "formed": "07-10 08:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 100.727,
+        "high": 100.989,
+        "origin_ts": 1783699200000,
+        "moved": 0.612,
+        "formed": "07-10 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 100.759,
+        "high": 100.895,
+        "origin_ts": 1784073600000,
+        "moved": 0.552,
+        "formed": "07-15 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.695,
+        "high": 101.029,
+        "origin_ts": 1784116800000,
+        "moved": 0.514,
+        "formed": "07-15 12:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 100.707,
+        "high": 100.849,
+        "origin_ts": 1784505600000,
+        "moved": 0.515,
+        "formed": "07-20 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 101.109,
+        "high": 101.148,
+        "origin_ts": 1784750400000,
+        "moved": 0.563,
+        "formed": "07-22 20:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.324,
+        "high": 101.488,
+        "origin_ts": 1784908800000,
+        "moved": 0.703,
+        "formed": "07-24 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 101.116,
+        "high": 101.268,
+        "origin_ts": 1785110400000,
+        "moved": 0.51,
+        "formed": "07-27 00:00"
+      },
+      {
+        "type": "DEMAND",
+        "low": 99.861,
+        "high": 100.74,
+        "origin_ts": 1785412800000,
+        "moved": 0.532,
+        "formed": "07-30 12:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.857,
+        "high": 100.091,
+        "origin_ts": 1785427200000,
+        "moved": 0.655,
+        "formed": "07-30 16:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.726,
+        "high": 99.806,
+        "origin_ts": 1786003200000,
+        "moved": 0.574,
+        "formed": "08-06 08:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.709,
+        "high": 99.884,
+        "origin_ts": 1786521600000,
+        "moved": 0.545,
+        "formed": "08-12 08:00"
+      },
+      {
+        "type": "SUPPLY",
+        "low": 99.475,
+        "high": 99.656,
+        "origin_ts": 1786708800000,
+        "moved": 0.88,
+        "formed": "08-14 12:00"
+      }
+    ],
+    "zones": [
+      {
+        "low": 97.625,
+        "high": 97.72,
+        "n": 5,
+        "width": 0.095,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 6,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 97.9,
+        "high": 98.265,
+        "n": 23,
+        "width": 0.365,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 23,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 98.395,
+        "high": 98.594,
+        "n": 10,
+        "width": 0.199,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 12,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 98.781,
+        "high": 99.179,
+        "n": 17,
+        "width": 0.398,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 25,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 99.186,
+        "high": 99.544,
+        "n": 10,
+        "width": 0.358,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 22,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 99.656,
+        "high": 99.983,
+        "n": 16,
+        "width": 0.327,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 20,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 100.06,
+        "high": 100.091,
+        "n": 2,
+        "width": 0.031,
+        "tag": "TIGHT CONFLUENCE",
+        "authoritative": true,
+        "zfp": 2,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 100.314,
+        "high": 100.315,
+        "n": 2,
+        "width": 0.001,
+        "tag": "TIGHT CONFLUENCE",
+        "authoritative": true,
+        "zfp": 0,
+        "verdict": "HARD WALL  -> rejection"
+      },
+      {
+        "low": 100.598,
+        "high": 100.992,
+        "n": 20,
+        "width": 0.394,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 25,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 101.029,
+        "high": 101.366,
+        "n": 13,
+        "width": 0.337,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 21,
+        "verdict": "MID-RANGE   -> pause (R)"
+      },
+      {
+        "low": 101.471,
+        "high": 101.661,
+        "n": 4,
+        "width": 0.19,
+        "tag": "HIGH-DENSITY ZONE",
+        "authoritative": true,
+        "zfp": 12,
+        "verdict": "HARD WALL  -> rejection"
+      }
+    ],
+    "magnets": [
+      {
+        "side": "low",
+        "price": 98.541,
+        "n": 2,
+        "confidence": "HIGH",
+        "bonus": 1.5,
+        "dates": [
+          "04-08",
+          "08-20"
+        ]
+      },
+      {
+        "side": "low",
+        "price": 97.6285,
+        "n": 2,
+        "confidence": "HIGH",
+        "bonus": 1.5,
+        "dates": [
+          "04-17",
+          "05-06"
+        ]
+      },
+      {
+        "side": "high",
+        "price": 99.5295,
+        "n": 2,
+        "confidence": "HIGH",
+        "bonus": 1.5,
+        "dates": [
+          "05-21",
+          "05-28"
+        ]
+      }
+    ],
+    "zone_events": [
+      {
+        "zone": "98.781-99.179",
+        "zfp": 25,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Mon 00:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "99.186-99.544",
+        "zfp": 22,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Wed 14:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      },
+      {
+        "zone": "99.656-99.983",
+        "zfp": 20,
+        "tag": "HIGH-DENSITY ZONE",
+        "first_touch": "Fri 16:00",
+        "closed_through": true,
+        "reaction": "PIERCED"
+      }
+    ],
+    "chain": [
+      {
+        "day": "Mon 08-24",
+        "open": 98.808,
+        "high": 99.063,
+        "low": 98.762,
+        "close": 98.967,
+        "net": 0.159,
+        "range": 0.301,
+        "shape": "SS",
+        "direction": "up",
+        "interaction": {
+          "zone": "98.781-99.179",
+          "zfp": 25
+        },
+        "shape_reason": "contained inside zone ZFP 25% \u2014 no boundary closed through",
+        "target_zone": "99.186-99.544 ZFP=22% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Tue 08-25",
+        "open": 98.964,
+        "high": 99.118,
+        "low": 98.863,
+        "close": 98.915,
+        "net": -0.049,
+        "range": 0.255,
+        "shape": "SS",
+        "direction": "down",
+        "interaction": {
+          "zone": "98.781-99.179",
+          "zfp": 25
+        },
+        "shape_reason": "contained inside zone ZFP 25% \u2014 no boundary closed through",
+        "target_zone": "98.395-98.594 ZFP=12% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Wed 08-26",
+        "open": 98.916,
+        "high": 99.231,
+        "low": 98.898,
+        "close": 99.122,
+        "net": 0.206,
+        "range": 0.333,
+        "shape": "SS",
+        "direction": "up",
+        "interaction": {
+          "zone": "98.781-99.179",
+          "zfp": 25
+        },
+        "shape_reason": "contained inside zone ZFP 25% \u2014 no boundary closed through",
+        "target_zone": "99.186-99.544 ZFP=22% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Thu 08-27",
+        "open": 99.12,
+        "high": 99.26,
+        "low": 99.07,
+        "close": 99.111,
+        "net": -0.009,
+        "range": 0.19,
+        "shape": "SS",
+        "direction": "down",
+        "interaction": {
+          "zone": "98.781-99.179",
+          "zfp": 25
+        },
+        "shape_reason": "contained inside zone ZFP 25% \u2014 no boundary closed through",
+        "target_zone": "98.395-98.594 ZFP=12% (HIGH-DENSITY ZONE)",
+        "zfp_conditioned_next": "SS",
+        "rationale": "both boundaries solid -> consolidation continues"
+      },
+      {
+        "day": "Fri 08-28",
+        "open": 99.113,
+        "high": 99.726,
+        "low": 99.098,
+        "close": 99.677,
+        "net": 0.564,
+        "range": 0.628,
+        "shape": "R/transition",
+        "direction": "up",
+        "interaction": {
+          "zone": "99.186-99.544",
+          "zfp": 22,
+          "dir": "up"
+        },
+        "shape_reason": "crossed a zone with ZFP 22% (soft, not weak) heading up",
+        "target_zone": "100.06-100.091 ZFP=2% (TIGHT CONFLUENCE)",
+        "zfp_conditioned_next": "?",
+        "rationale": "unmapped current shape"
+      }
+    ],
+    "realised_chain": "SS -> R"
+  }
+]

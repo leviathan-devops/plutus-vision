@@ -85,12 +85,35 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     continue   # the local ref was deleted; nothing to scan
   fi
   if [ -z "${remote_sha:-}" ] || [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
-    RANGE="$local_sha"          # NEW ref: scan all commits reachable from it
-    NEW_REF=1
+    # FIXED (2026-10-12, DEEPSEEK_AGENT — measured on a live new-branch push):
+    # RANGE="$local_sha" made scan_phantom re-examine ALL reachable history. In this
+    # repo origin/main is 424 commits BEHIND the working branch, and two of those
+    # commits (4514895 "claimed data/e1/sources.json does not exist", 0a4f9fc
+    # "claimed vision.mjs does not exist") carry phantom claims — so EVERY new
+    # branch was unpushable, rejected over commits the remote ALREADY HAS. A gate
+    # that rejects every push enforces nothing: it never checked a NEW commit.
+    # The range is now the commits NOT reachable from ANY remote-tracking ref —
+    # i.e. the actual content of this push. Nothing new => nothing to scan.
+    OLDEST_NEW="$(git rev-list --reverse "$local_sha" --not --remotes 2>/dev/null | head -n 1)"
+    if [ -n "$OLDEST_NEW" ]; then
+      if git rev-parse -q --verify "${OLDEST_NEW}^" >/dev/null 2>&1; then
+        RANGE="${OLDEST_NEW}^..${local_sha}"
+        NEW_REF=0
+      else
+        RANGE="$OLDEST_NEW"       # root commit — no parent to subtract
+        NEW_REF=1
+      fi
+    else
+      RANGE=""                    # everything already published — nothing to check
+      NEW_REF=0
+    fi
   else
     RANGE="${remote_sha}..${local_sha}"
     NEW_REF=0
   fi
+
+  # Nothing new in this ref — skip both checks (the ref is already on the remote).
+  [ -z "$RANGE" ] && continue
 
   # --- CHECK 3 (W-3 phantom-completion): a commit in this ref's range claims a
   #     file was created/added, but that file does not exist at the commit.

@@ -1,0 +1,66 @@
+[
+  {
+    "week": "2026-04-20",
+    "zone": "97.935-98.265",
+    "n": 6,
+    "zfp": 21,
+    "entry": "above",
+    "pierced": false
+  },
+  {
+    "week": "2026-05-04",
+    "zone": "98.395-98.594",
+    "n": 7,
+    "zfp": 12,
+    "entry": "below",
+    "pierced": false
+  },
+  {
+    "week": "2026-06-15",
+    "zone": "99.956-100.060",
+    "n": 5,
+    "zfp": 6,
+    "entry": "below",
+    "pierced": true
+  },
+  {
+    "week": "2026-06-29",
+    "zone": "100.755-100.803",
+    "n": 2,
+    "zfp": 3,
+    "entry": "above",
+    "pierced": true
+  },
+  {
+    "week": "2026-07-06",
+    "zone": "100.755-100.803",
+    "n": 2,
+    "zfp": 3,
+    "entry": "above",
+    "pierced": true
+  },
+  {
+    "week": "2026-07-06",
+    "zone": "100.953-101.331",
+    "n": 5,
+    "zfp": 24,
+    "entry": "below",
+    "pierced": false
+  },
+  {
+    "week": "2026-08-24",
+    "zone": "99.186-99.544",
+    "n": 10,
+    "zfp": 22,
+    "entry": "below",
+    "pierced": true
+  },
+  {
+    "week": "2026-08-24",
+    "zone": "99.656-99.983",
+    "n": 16,
+    "zfp": 20,
+    "entry": "below",
+    "pierced": false
+  }
+]
