@@ -1,0 +1,1 @@
+RECOMMENDED: author SUPERSEDED_NOTES.md naming (1) wave-1 "3 trades/+2.52R" mis-anchor (file: 32 rows/+25.30R), (2) "~20/46 with born-off" misread (exact 19C/27E/0F/0B), (3) computeLmvTP STALE-tag retraction, (4) Monday-gold non-acceptance standing ruling R1.
