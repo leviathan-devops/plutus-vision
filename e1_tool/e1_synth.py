@@ -130,16 +130,24 @@ def assemble(pair, monday, expiries, K, spot):
     # S7 names (P452:1148-1153): five standard roles. Equilibrium = the MODERATE+ zone at / nearest spot; above it the two
     # highest-scoring zones (upper = RESISTANCE CEILING, lower = UPPER RESISTANCE); below it the two highest-scoring
     # (nearer = MID-RANGE SUPPORT, further = KEY SUPPORT BAND). Assumption A3.
-    # A3': a synthesis zone is MODERATE+ and holds a candle structure (4H supply/demand candle or sweep zone) or an option wall;
-    # on each side of the equilibrium the two NEAREST such zones take the names in order of position.
-    cand = [z for z in zones if z['score'] >= 6 and (z['structs'] or z['sweeps'] or z['wall'] <= 2)]
+    # A3'': Step 9.5 treats adjacent mapped zones as >= 0.20 apart (closer = the same area). Take MODERATE+ clusters by score,
+    # skipping any within 0.20 of one already taken (tie: holds a candle structure / wall, then nearer to spot). The zone at /
+    # nearest spot is the Equilibrium; the two nearest taken zones above it and the two below it get the names by position.
+    gap = 20 * D.PIP[pair]
     dist = lambda z: 0 if z['bot'] <= spot <= z['top'] else min(abs(z['bot'] - spot), abs(z['top'] - spot))
+    # a pressure zone is where levels meet a candle structure or a wall (L-39): those clusters rank first, then by score
+    rank = lambda z: 2 if (z['structs'] or z['wall'] <= 2) else 1 if z['sweeps'] else 0
+    cand = sorted([z for z in zones if z['score'] >= 6], key=lambda z: (-rank(z), -z['score'], dist(z)))
+    taken = []
+    for z in cand:
+        if all(z['bot'] - t['top'] >= gap or t['bot'] - z['top'] >= gap for t in taken):
+            taken.append(z)
     named = []
-    if cand:
-        eq = min(cand, key=dist)
+    if taken:
+        eq = min(taken, key=dist)
         eq['name'] = 'EQUILIBRIUM ZONE'; named.append(eq)
-        up = sorted([z for z in cand if z is not eq and z['bot'] >= eq['top']], key=dist)[:2]
-        dn = sorted([z for z in cand if z is not eq and z['top'] <= eq['bot']], key=dist)[:2]
+        up = sorted([z for z in taken if z is not eq and z['bot'] >= eq['top']], key=dist)[:2]
+        dn = sorted([z for z in taken if z is not eq and z['top'] <= eq['bot']], key=dist)[:2]
         up.sort(key=lambda z: -z['top']); dn.sort(key=lambda z: -z['top'])
         for z, nm in zip(up, ['RESISTANCE CEILING', 'UPPER RESISTANCE'] if len(up) == 2 else ['RESISTANCE CEILING']):
             z['name'] = nm; named.append(z)

@@ -28,7 +28,8 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - e1_tool/e1_data.py DONE (bars, boundary, daily, weekly). e1_tool/e1_pillars.py: pillar1 DONE + verified; step0f DONE, matches the report's 4H zones structurally (journal 21:45).
 - DONE + checked (journal 22:00): step0_swings (0b/0c/0h grades), step045_lsz, step05_magnets, pillar2 (MA grid), pillar6 (fibs, round numbers), k_factor / strike_to_dxy / tier (all 8 report strikes reproduce exactly).
 - e1_tool/e1_synth.py WRITTEN, first run OK (journal 22:15): run `cd e1_tool && python3 e1_synth.py 2026-04-20`.
-- NEXT, in this order (details in journal 22:15): (1) 4H zone noise rejection + unmitigated-only joining; (2) five-role naming (A3); (3) sweep zones per A2; (4) Step 0d/0e D1 order blocks + Step 1 HWC/LWC;
+- STATUS 22:50: synthesis runs; ceiling matches the report; role selection for the other four zones still off - diagnosis and next fixes in journal 22:50 (equilibrium first at spot; separation on level spans; re-read scoring table).
+- NEXT, in this order (details in journal 22:15 and 22:50): (1) 4H zone noise rejection + unmitigated-only joining; (2) five-role naming (A3); (3) sweep zones per A2; (4) Step 0d/0e D1 order blocks + Step 1 HWC/LWC;
   (5) expiry loader with Day-1 page + Day-2 forward rows; (6) e1_report.py printout in the report's section order; (7) e1_pine.py (trident_v8 form + L-39 rendering); (8) render Apr 20-24 DXY in Pinebox, open the frame, compare with the original;
   (9) other weeks and EURUSD / GBPUSD; (10) morning report for the operator: what matches, what differs and why, the assumptions A1-A3, frames.
 - Assumptions made so far (list for the operator's morning report): A1 strong move = inefficiency gap (journal 21:45). A2 sweep zones from every D1 swing + last-5-day lows/highs, wick test = grade only (journal 22:00). A3 five-role selection of synthesis zones (journal 22:15).

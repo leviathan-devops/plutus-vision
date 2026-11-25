@@ -135,3 +135,15 @@ STILL TO FIX (re-read the prompt text for each before coding; do not tune):
   Then re-check the per-level scoring against the prompt's table so one dense pivot area cannot outscore a wall + structure zone: Technical is ONE dimension (max 2) - verify nothing else is inflated (e.g. Structural from mere proximity to daily highs/lows).
 - Expected after that for Apr 20-24: ceiling ~99.13-99.31 (wall 99.22), upper resistance = the cluster joined to BoM Supply 98.884-99.038, equilibrium ~98.29-98.44 (+ MoM Supply 98.33-98.41), mid-range support ~98.00-98.14 (+ BoM Demand 97.83-98.09), key support ~97.50-97.83 (+ sweep 97.63-97.68).
 - Code state: e1_tool/e1_synth.py has owner() (F1) and the A3' block (replace it with A3''). `python3 e1_synth.py 2026-04-20` prints named zones + the report line.
+
+## 2026-11-25 ~22:50 UTC - A3'' (score-ranked, zones >= 0.20 apart, structure/wall clusters first) coded in e1_tool/e1_synth.py; result for DXY Apr 20-24
+ RESISTANCE CEILING 99.13-99.31 HEAVY 11 Hard Wall (= report)  ·  UPPER RESISTANCE 98.46-98.59 (wall 1.1750 -> 98.49 + sweep 98.53-98.58)  ·  EQUILIBRIUM 97.83-98.09 (BoM Demand 04-16)  ·  KEY SUPPORT 97.36-97.49.
+ Spread is right now (no bunching), the ceiling matches, but three roles land on other clusters than the report's (98.77-98.99 / 98.29-98.41 / 98.00-98.12 / 97.63-97.97).
+WHY (diagnosed, not yet fixed):
+ - the 0.20 separation is measured on JOINED extents, so the supply-candle zone (levels 98.80-98.94 + BoM Supply 98.884-99.038 -> top 99.04) is rejected for being 0.09 under the ceiling zone (99.13). Measure separation between LEVEL spans or let touching zones coexist when each holds its own structure.
+ - nearly every cluster scores 10-11, so the order is decided by ties. The scoring needs an honest re-read against the prompt table: per-level Technical should need THIS level to be a pivot/MA/fib match, Structural 2 needs an exact anchor + extreme; check that
+   daily highs/lows of the last 5 days within 10 pips are not handing Structural 1 to everything, and that the tier +2 only comes from a BoM 0X-1X overlap. The report's scores were 7-11 with clear separation.
+ - the Equilibrium should be the zone AT spot (98.226): cluster 98.14-98.29 / 98.29-98.44 (+ MoM Supply 98.33-98.41, BoM Supply 98.19-98.29); it was skipped because a higher-ranked neighbour within 0.20 was taken first.
+   Consider fixing the Equilibrium FIRST (the MODERATE+ cluster at / nearest spot), then taking the others outward with the 0.20 separation.
+ - The report's implicit rule, visible in its key drivers: every named zone sits on a candle structure or sweep target (supply candle, MoM supply, BoM demand, sweep 97.63) or a wall (99.22). Prefer that reading (it is also L-39).
+NEXT STEPS UNCHANGED after this: report printout, Pine generator (trident_v8 form + levels inside zones), Pinebox render of Apr 20-24, open the frame, compare with the original; then other weeks / pairs; morning report with assumptions A1-A3.
