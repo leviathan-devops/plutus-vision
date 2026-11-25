@@ -24,6 +24,15 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## STATE (NEWEST) - TASK = TRANSLATE THE PROMPT'S E1 INTO PYTHON (04 L-30..L-34). Read memory/10_FAILURE_RECORD.md first.
+- Done: read E1 first-hand in P533 (lines 802-1163, 1163-1340, 1341-1514) and P452 (637-1205). Pseudocode with line refs: `e1_tool/E1_PSEUDOCODE.md` (committed).
+- Reference to reproduce: Leviathan_DXY_IL_Report_Apr20-24_2026.pdf (upload 5212e9bd; pages 1-6 read: option tables, K factor, pivots, 5 IP zones, 4 4H zones with origin candle OHLC, 6 LSZ, clustering scan)
+  and Original_Canon_Data/Pine Scripts/trident_v8.pine (output form). Frames of the original: evidence/trident_v8_original_*_allzones.png.
+- NOT started: the Python tool (e1_tool/). Waiting on the operator's answers to 3 points where the report's practice differs from the prompt's text
+  (4H move threshold: report kept zones with 0.35/2d, 0.26 intraday, 0.12 continuation vs prompt >= 0.5 / >= 3 days; how the point inside a ZFP range and a zone's edges are chosen: the prompt gives ranges / "cluster within 0.10-0.15", the LLM picked).
+- Pinebox dies on every session restart: `pinebox down; pinebox up --session plutus-main --adapter xvfb` before rendering. Price-axis fit snippet is in the journal (setManualScale on resolveScaleHolder).
+- E1 v3 code still sits in indicator/plutus-vision-engines.pine (rejected). E2/E3 off. Do not build anything else.
+
 ## STATE (NEWEST, after the operator's rejection of E1 v3) - STOP: NO CODE, NO AGENTS until he approves (04 L-27, L-28)
 - The workflow wf_13ddfb31-159 (e1-zone-mechanics-redesign) was killed by the operator. Do not resume it unless he asks.
 - I gave him the gap analysis: prompt vs GLM W14 report vs my engine (06 LS-25 lists my inventions and the prompt's actual rules with line numbers).
