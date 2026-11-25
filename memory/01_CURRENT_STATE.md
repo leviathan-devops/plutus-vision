@@ -1,3 +1,9 @@
+## STATE (NEWEST, container clock 2026-11-25 ~22:05 UTC) - E1 PYTHON TOOL RUNS END TO END (see journal entry of the same time for everything)
+- Run: `cd e1_tool && python3 e1_zones.py MONDAY PAIR` (zones) / `python3 e1_pine.py MONDAY PAIR > out/E1_PAIR_MONDAY.pine` (the Pine output) / `python3 e1_outcome.py MONDAY PAIR` (facts) ; render `tools/e1render PAIR MONDAY`.
+- Zone assembly lives in e1_tool/e1_zones.py build() + gap_scan(); e1_synth.assemble*/__main__ are superseded.
+- DXY Apr 20-24 reproduces the report's five zones on the same structures (frame evidence/e1tool_DXY_1H_2026-04-20.png). 13 week/pair frames opened; verdict: NOT uniformly 90% - weak in sell-off/breakout weeks. Never claim 90%.
+- Next: e1_report.py audit printout; more weeks; morning report listing assumptions A1-A4 and the bad weeks. E2/E3 untouched (out of scope).
+
 # 01 — CURRENT STATE (overwrite; keep under ~60 lines)
 Updated: 2026-11-25 ~12:25 UTC (container clock)
 

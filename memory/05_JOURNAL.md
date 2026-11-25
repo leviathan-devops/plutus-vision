@@ -182,3 +182,27 @@ Result DXY Apr 20-24 (TV candles, sidecar K 108.155, sidecar expiries = Friday p
 What the candles did that week (seen in the frame): Mon low ~98.0 inside Mid-Range Support then rally; Tue-Wed consolidation inside Equilibrium; Thu high ~98.93 inside Upper Resistance then reversal; Ceiling and Key Support not reached.
 Differences that are data-source, not logic: wall 1.1600 lands at 99.29 with sidecar K (99.22 with report K) so the ceiling zone has no wall inside; expiries differ (Friday page vs the report's Monday page); TV candle wicks vs yfinance.
 Visual to improve: level lines are dense (37-39 levels in two zones), labels sit on the zone's top edge.
+
+## 2026-11-25 (container clock ~22:05 UTC) - E1 TOOL WORKS END TO END; 13 week/pair renders made and opened; honest status
+TOOL (all in e1_tool/): e1_data.py (bars, boundary) -> e1_pillars.py (pivots, MAs, fibs, K, Step 0 swings, 0.45 LSZ, 0.5 magnets, 0f 4H candles) -> e1_synth.py (collect levels + 6-dimension scoring; its assemble()/assemble_anchored() are superseded, kept only because e1_zones imports collect/score_level/degree)
+ -> e1_zones.py build() = THE zone assembly + gap_scan() (Step 9.5) -> e1_pine.py (generator; `python3 e1_pine.py MONDAY PAIR > out/E1_PAIR_MONDAY.pine`) ; e1_outcome.py prints plain facts of what the week's candles did at each zone.
+One command per render: `tools/e1render PAIR MONDAY` -> evidence/e1tool_PAIR_1H_MONDAY.png (tools/pbfit fits the axis around visible candles +-60%).
+RULES ADDED SINCE THE LAST ENTRY (each from re-reading the prompt): sweep targets = ALL graded D1 swings in 90 daily bars (I had wrongly cut to 10 days) + every swing of the last 10 days; drawn LSZ = recent 10 days + older unswept;
+ level zones of one side within 0.10 = one cluster (<=0.40 wide); candle zones NOT clustered (it merged the report's Ceiling + Upper Resistance - tried, reverted);
+ Step 9.5 gap in-fill: only BETWEEN mapped zones, 2+ supporting signals within 3 pips, >=0.20 from zones and each other (an earlier version with map edges at weekly R3/S3 and 0.15 spacing spammed 12 lines per chart - removed).
+FRAMES OPENED (evidence/e1tool_*): DXY 03-09, 04-20, 05-18, 06-08, 07-27, 08-17, 10-05; EURUSD 04-20, 06-22, 09-14; GBPUSD 04-20, 07-27, 10-26.
+WHAT THE CANDLES DID (facts from e1_outcome.py + frames; NOT an accuracy score):
+ - DXY 04-20 (reference week): Mid-Range Support 97.81-98.12 caught Monday's low, +82 pips; Equilibrium held price 44h; Upper Resistance 98.82-99.08 capped the week high (reversal 33 pips); Ceiling and lower zones not reached. Matches the original's behaviour.
+ - DXY 03-09: support 98.42-98.59 caught the week low, +195 pips; Upper Resistance 99.15-99.44 was closed through within 1h; Ceiling 99.63-99.85 stalled price then broke (trend week).
+ - DXY 05-18: week chopped around the Ceiling 99.27-99.36 (34h inside); lows reacted at the gap in-fill 99.00-99.04; all other zones far below, not reached.
+ - DXY 06-08: range between Upper Resistance 100.06-100.16 (repeated highs) and gap in-fill 99.66-99.70 (lows, never closed through).
+ - DXY 07-27: Upper Resistance 101.49-101.59 capped Mon-Tue (week high 101.62) then the sell-off closed through Equilibrium (2h) and three stacked supports 100.31-100.80 (bunched, pierced on Jul 30) - BAD, same complaint as before.
+ - DXY 08-17: Mid-Range Support 99.36-99.52 held 60h then broke; Key Support 99.12-99.21 closed through in 1h; nothing mapped below 99.12 where the week ended (98.6) - BAD.
+ - DXY 10-05: Ceiling 102.16-102.25 (MODERATE) pierced at first touch, price chopped around it; Equilibrium 101.59-101.92 held the Tuesday low; highs 102.45-102.5 had no zone; seven far supports never reached.
+ - EURUSD 04-20: Mid-Range Support 1.1659-1.1701 caught the week low; Upper Resistance untouched by 5 pips. EURUSD 06-22 / 09-14: trend-down weeks, candle zones all above price, lower side nearly empty.
+ - GBPUSD 04-20: chop inside Equilibrium all week. GBPUSD 07-27, 10-26: mixed.
+HONEST VERDICT: the reference week reproduces (five zones on the report's structures, candles react as in the original). Across other weeks it is NOT uniformly at the reference's level: strong when the week trades inside recent 4H structure,
+ weak in break-out / sell-off weeks (zones behind price, stacked supports pierced, empty space ahead). Do not claim 90%.
+ASSUMPTIONS TO TELL THE OPERATOR: A1 strong move = inefficiency gap (b[i+1] vs b[i-1]); A2 sweep zones from every graded D1 swing + last-10-day swings; A3 named zones = valid 4H candles + unswept sweep-level clusters (not every level cluster), names by position, Equilibrium = zone at the weekly PP;
+ A4 demand candle below spot's reach (spot under it) / supply candle with spot over it = dropped; one-time use = keep <=1X; expiries = sidecar's as-of page (Friday forward rows when Monday's page is published after 06:00Z), K from Fed H.10 rates in the sidecar.
+NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order blocks, Step 0g 1H nested precision, Step 1 HWC/LWC (optional), Pillar 4/7 (optional -> NO DATA).
