@@ -89,3 +89,8 @@
 - It pooled 459 levels (88 pivots, 25 MAs, ...) and formed zones as "the 0.15-wide band holding the most levels". HIGH-DENSITY flagged 450 of 459 levels -> every price is dense -> 23 zones, 21 of them 0.115-0.150 wide (the rule fills the width). Then a render cap hid 17 (banned, R-37).
 - Zone 2 (approved) scored LIGHT because the prior-close / prior-high anchors (Pillar 5 Steps 1-5, the v4.5.2 placeholder) were not implemented and option walls were converted with week-old H.10 rates.
 - Lesson: zones must be seeded by STRUCTURAL ANCHORS scored across dimensions (a pivot/MA/round/option/analyst level scores a dimension when it coincides with the anchor within the canon pip tolerance), not by counting levels in a band. A level with one dimension stays MINIMAL and never becomes a zone. The zone's extent is the confluence itself.
+
+## Memory graph (OmniGraph 0.16.0, live)
+- Install: `curl -fsSL https://raw.githubusercontent.com/ModernRelay/omnigraph/main/scripts/install.sh | VERSION=v0.16.0 bash`; then `tools/mem/mem rebuild`. Graph at /home/user/.plutus-mem (rebuilt from memory/*.md + memory/graph_log.jsonl; markdown is the source of truth).
+- Use: `tools/mem/mem q "<words>" [-n 5]`, `mem get <id>` (ids: T3, D-06, L-05, LS-02, J-YYYYMMDD-HHMM), `mem add <type> <id> <title> <body>`, `mem link <from> <edge> <to>`, `mem status`. Read verbs auto-sync.
+- More engine facts (probe2): timeframe.in_seconds(), time_close, timestamp(tz,...), year/month/dayofmonth/hour/dayofweek with tz, str.format_time, map, matrix, array.sort/median/max all work. DXY week opens Sunday 18:00 New York in the store.

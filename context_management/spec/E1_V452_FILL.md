@@ -49,8 +49,11 @@ Gaps in the text: Condition A is written for demand only (supply is the mirror �
 - 0h-b "Tag each as "Minor Swing Level" with:" exact price, date, timeframe (D1 or 4H); "Why it did not meet Step 0 criteria (e.g., "wick 0.12, close 47th%")"; "Whether price subsequently reacted at this level" (V452:776-779)
 - 0h-c "**Scoring:** Minor Swing Levels receive Structural dimension score = 0.5 (half the weight of full swing extremes, but still included in map)." (V452:781)
 
-Code-ready: `minor_low = lower_wick >= 0.08 and close_pos >= 0.60` ; `minor_high = upper_wick >= 0.08 and close_pos <= 0.40`, where `close_pos = (C-L)/(H-L)` — and the bar failed Step 0 (wick ≥ 0.15 and close in upper/lower 50%, V452:541/548). Timeframes D1 **and 4H** (Step 0 is D1 only).
-Reading note: the literal text is "upper/lower 40% of range (reduced from 50%)". The example "close 47th%" given as a reason for failing Step 0 (which needs the close in the upper 50%) fits a low whose close sits at 47% of the range from the bottom, i.e. fails ≥50%. Under the literal "upper 40%" reading that bar would also fail 0h (needs ≥60%); under a "relaxed" reading the threshold would be ≥40% from the bottom. The words say "upper 40%" but the label says "reduced/relaxed" and the example suggests the relaxed reading. **CONFLICT inside V452:773 vs V452:778 — not resolvable from text.**
+Code-ready constants: wick ≥ 0.08; close-position number 40 (was 50); timeframes D1 **and 4H** (Step 0 is D1 only); applies to bars that failed Step 0 (wick ≥ 0.15 and close in upper/lower 50%, V452:541/548). With `close_pos = (C-L)/(H-L)` the close test has two readings:
+- Reading R (relaxed threshold): swing low needs `close_pos >= 0.40`, swing high needs `close_pos <= 0.60`.
+- Reading L (literal "upper/lower 40%"): swing low needs `close_pos >= 0.60`, swing high needs `close_pos <= 0.40`.
+
+Text evidence: the step is titled "Relaxed criteria" (V452:769); the number is "(reduced from 50%)" in parallel with the wick "(reduced from 0.15)" (V452:772-773); the example of a bar that failed Step 0 and belongs here is "wick 0.12, close 47th%" (V452:778) — that bar passes under R and fails under L. Reading L would make 0h stricter than Step 0, which contradicts "relaxed". The sentence itself still says "upper/lower 40%". **AMBIGUOUS wording (V452:773 vs V452:769/778); R is the reading consistent with the step's own example. Operator confirmation needed before coding.**
 The alternative criterion ("Clear 1H/4H demand/supply zone reaction at this level") has no numeric definition — **STILL UNKNOWN**.
 
 ### 1.3 Steps 1-5 — Price anchors, HWC/LWC, recapture, structural extreme memory, scoring — V452:785-831

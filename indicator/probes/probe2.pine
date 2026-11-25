@@ -1,0 +1,30 @@
+//@version=6
+indicator("probe2", overlay=true, max_boxes_count=500, max_lines_count=500, max_labels_count=500)
+string TZ = "America/New_York"
+int SH = 7 * 3600000
+int ts = time + SH
+int dKey = year(ts, TZ) * 10000 + month(ts, TZ) * 100 + dayofmonth(ts, TZ)
+int sdow = dayofweek(ts, TZ)
+int shr = hour(ts, TZ)
+int tfms = timeframe.in_seconds() * 1000
+int tclose = time_close
+bool newDay = dKey != dKey[1]
+bool newWeek = newDay and sdow < nz(sdow[1], 8)
+int anc = timestamp(TZ, year(ts, TZ), month(ts, TZ), dayofmonth(ts, TZ), 2, 0)
+var int nW = 0
+var int nD = 0
+var string log = ""
+if newDay
+    nD += 1
+if newWeek
+    nW += 1
+    if nW > 38
+        log += str.format("\nW{0} {1} sdow={2} shr={3} tfms={4} tc-t={5} anc-t={6}", nW, str.format_time(time, "yyyy-MM-dd HH:mm", TZ), sdow, shr, tfms, tclose - time, anc - time)
+var float[] a = array.new_float()
+if barstate.islast
+    a := array.from(3.0, 1.0, 2.0)
+    a.sort(order.descending)
+    m = matrix.new<float>(2, 2, 0.0)
+    mp = map.new<string, float>()
+    mp.put("k", 1.5)
+    label.new(bar_index, high, str.format("nD={0} nW={1} med={2} max={3} map={4} sorted0={5} mult={6} tickerid={7} t={8}", nD, nW, a.median(), a.max(), mp.get("k"), a.get(0), timeframe.multiplier, syminfo.ticker, timeframe.period) + log, style=label.style_label_left, textalign=text.align_left)
