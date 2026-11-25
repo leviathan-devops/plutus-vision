@@ -35,20 +35,61 @@ case "${1:-}" in
       st="$(ev "(function(){return [...document.querySelectorAll('.pine-shell *')].filter(e=>e.children.length==0 && /EXPORTED|EXPORT_/.test(e.textContent)).map(e=>e.textContent.slice(0,140)).join(' | ')})()")"
       case "$st" in *EXPORTED*|*EXPORT_*) echo "$st"; break ;; esac; sleep 2
     done ;;
-  bt-apply) # pb bt-apply "Indicator Title": on the Backtest chart remove every on-chart script, then add the named one from My Scripts
+  bt-apply) # pb bt-apply "Indicator Title": on the Backtest chart remove every on-chart script, then add the named one from My Scripts (verified)
     pinebox tab --session $S --to backtest >/dev/null; sleep 1
-    ev "(async function(){const sl=ms=>new Promise(r=>setTimeout(r,ms)); const vis=e=>{const r=e.getBoundingClientRect(); return r.width>0&&r.height>0;};
-      const open=()=>[...document.querySelectorAll('.vela-dialog-title')].some(e=>e.textContent.trim()==='Indicators'&&vis(e));
-      if(!open()){ const b=[...document.querySelectorAll('button')].find(b=>/Indicators/.test(b.textContent)&&vis(b)&&b.getBoundingClientRect().y<140&&b.getBoundingClientRect().y>90); if(!b) return {err:'no Indicators button'}; b.click(); await sl(700); }
-      let removed=0; for(let k=0;k<6;k++){ const t=[...document.querySelectorAll('.vela-ip-trash')].find(vis); if(!t) break; t.click(); removed++; await sl(500); }
-      const inp=[...document.querySelectorAll('input')].find(i=>vis(i)&&/Search/.test(i.placeholder||'')); if(inp){ inp.focus(); inp.value=$(printf '%s' "$2" | jq -Rs .); inp.dispatchEvent(new Event('input',{bubbles:true})); await sl(700); }
-      const row=[...document.querySelectorAll('.vela-ip-name')].find(e=>vis(e)&&e.textContent.trim()===$(printf '%s' "$2" | jq -Rs .)); if(!row) return {err:'script not in list',removed};
-      (row.closest('button,[role=button],.vela-ip-row')||row.parentElement).click(); await sl(700);
-      const onchart=[...document.querySelectorAll('.vela-ip-trash')].filter(vis).length;
-      const c=[...document.querySelectorAll('.vela-dialog-close')].find(vis); if(c) c.click();
-      return {removed,onchart};})()" ;;
-  wait-engine) # pb wait-engine: block until the station engine has finished computing (bounded: 4 minutes)
-    for i in $(seq 1 80); do sleep 3; station_idle && { sleep 2; station_idle && { echo idle; exit 0; }; }; done; echo "still busy"; exit 1 ;;
+    JS_COMMON="const sl=ms=>new Promise(r=>setTimeout(r,ms)); const vis=e=>{const r=e.getBoundingClientRect(); return r.width>0&&r.height>0;}; const dlgOpen=()=>[...document.querySelectorAll('.vela-dialog-title')].some(e=>e.textContent.trim()==='Indicators'&&vis(e)); const openDlg=async()=>{ if(dlgOpen()) return true; const b=[...document.querySelectorAll('button')].find(b=>/Indicators/.test(b.textContent)&&vis(b)&&b.getBoundingClientRect().y<140&&b.getBoundingClientRect().y>90); if(!b) return false; b.click(); await sl(800); return dlgOpen(); }; const closeDlg=async()=>{ const c=[...document.querySelectorAll('.vela-dialog-close')].find(vis); if(c){ c.click(); await sl(400);} };"
+    ev "(async function(){ $JS_COMMON if(!(await openDlg())) return {err:'no Indicators dialog'}; let removed=0; for(let k=0;k<10;k++){ const t=[...document.querySelectorAll('.vela-ip-trash')].find(vis); if(!t) break; t.click(); removed++; await sl(700); } await closeDlg(); return {removed}; })()"
+    sleep 1
+    ev "(async function(){ $JS_COMMON if(!(await openDlg())) return {err:'no Indicators dialog'}; const N=$(printf '%s' "$2" | jq -Rs .);
+      const inp=[...document.querySelectorAll('input')].find(i=>vis(i)&&/Search/.test(i.placeholder||'')); if(inp){ inp.focus(); const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set; set.call(inp,N); inp.dispatchEvent(new Event('input',{bubbles:true})); await sl(800); }
+      const row=[...document.querySelectorAll('.vela-ip-name')].find(e=>vis(e)&&e.textContent.trim()===N); if(!row) { await closeDlg(); return {err:'script not in list'}; }
+      (row.closest('button,[role=button],.vela-ip-row')||row.parentElement).click(); await sl(900);
+      const onchart=[...document.querySelectorAll('.vela-ip-trash')].filter(vis).length; await closeDlg(); await sl(500);
+      const legend=[...document.querySelectorAll('*')].filter(e=>e.children.length==0&&e.textContent.trim()===N&&vis(e)).length;
+      return {onchart,legend}; })()" ;;
+  ide) # pb ide FILE [PAIR] [TF] [KEY=VALUE ...] : Pine IDE tab - load FILE, apply input overrides the way the IDE's own panel does (rewrite defaults in the editor), run on the IDE's FULL bar set (not the default newest 400)
+    f="$2"; pair="${3:-DXY}"; tf="${4:-1H}"; shift 4 2>/dev/null || shift $#
+    tmp="$(mktemp --suffix=.pine)"; cp "$f" "$tmp"
+    for kv in "$@"; do k="${kv%%=*}"; v="${kv#*=}"; sed -i -E "s/^($k[[:space:]]*=[[:space:]]*input\.[a-z]+\()[^,]+,/\1$v,/" "$tmp"; done
+    pinebox tab --session $S --to pine >/dev/null; sleep 1
+    ev "(async function(){const P=window.PlutusPineShell; if(!P) return {err:'no shell'}; const sl=ms=>new Promise(r=>setTimeout(r,ms));
+      P.editor.setSource($(jq -Rs . < "$tmp")); P.editor.flush(); await sl(2500);
+      let rr=null;
+      for(let k=0;k<4;k++){ await P.loadBars({pair:'$pair', timeframe:'$tf', limit:20000}); await sl(2500); rr=await P.run({silent:false}); if(!rr.ok) return {err:'RUN_FAILED', code:rr.code, detail:String(rr.error||'').slice(0,300)}; await sl(2000); if(rr.run.bars>400) break; }
+      const d=P.chart.drawings.toJSON().drawings; const wk=[...new Set(d.filter(x=>x.type==='box').map(x=>x.anchors[0].time))].sort().map(t=>new Date(t).toISOString().slice(0,10));
+      return {title:rr.run.title, counts:rr.run.counts, runBars:rr.run.bars, onChart:d.length, weeks:wk};})()"
+    rm -f "$tmp" ;;
+  ide-input) # pb ide-input KEY VALUE [KEY VALUE ...] : Pine IDE tab - open the script's inputs panel (legend gear), set inputs by variable name, Apply
+    shift
+    if [ "$(ev "(function(){return document.querySelector('.pv-dlg')?1:0})()")" != 1 ]; then
+      R="$(ev "(function(){const vis=e=>{const r=e.getBoundingClientRect(); return r.width>0&&r.height>0;}; const el=[...document.querySelectorAll('.pine-shell *, .vela-workspace *')].filter(e=>e.children.length==0&&vis(e)&&e.getBoundingClientRect().y<140&&e.getBoundingClientRect().y>100&&e.getBoundingClientRect().x>600&&/^Plutus Vision/.test(e.textContent.trim())); const name=el[0]; if(!name) return {err:1}; const r=name.getBoundingClientRect(); return {r:Math.round(r.right),y:Math.round(r.y+r.height/2),t:name.textContent.trim()};})()")"
+      pinebox drive --session $S --action click --x "$(jq '.r+38' <<<"$R")" --y "$(jq '.y' <<<"$R")" >/dev/null; sleep 1
+    fi
+    while [ $# -ge 2 ]; do
+      ev "(function(){const i=document.querySelector('.pv-dlg [data-pv-input=\"$1\"]'); if(!i) return {err:'no input $1'}; if(i.type==='checkbox'){ const want=('$2'==='true'); if(i.checked!==want) i.click(); } else { const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set; set.call(i,'$2'); i.dispatchEvent(new Event('input',{bubbles:true})); i.dispatchEvent(new Event('change',{bubbles:true})); } return {set:'$1',to:i.type==='checkbox'?i.checked:i.value};})()"
+      shift 2
+    done
+    ev "(function(){const b=[...document.querySelectorAll('.pv-dlg button')].find(b=>b.textContent.trim()==='Apply'); if(!b) return {err:'no Apply'}; b.click(); return {applied:true};})()" ;;
+  set-input) # pb set-input "Indicator Title" "label regex" VALUE : open the script's Settings dialog on the visible chart, set one input, press Ok
+    ev "(async function(){const vis=e=>{const r=e.getBoundingClientRect(); return r.width>0&&r.height>0;}; const sl=ms=>new Promise(r=>setTimeout(r,ms));
+      const name=[...document.querySelectorAll('*')].find(e=>e.children.length==0&&e.textContent.trim()===$(printf '%s' "$2" | jq -Rs .)&&vis(e)&&!e.closest('.vela-dialog,[class*=dialog]')); if(!name) return {err:'legend not found'};
+      const b=[...name.parentElement.parentElement.querySelectorAll('button,[role=button]')].find(b=>(b.getAttribute('aria-label')||b.title)==='Settings'); if(!b) return {err:'no settings button'}; b.click(); await sl(900);
+      const dlg=[...document.querySelectorAll('.vela-dialog')].find(d=>vis(d)&&d.querySelector('.vela-dialog-title')&&d.querySelector('.vela-dialog-title').textContent.trim()===$(printf '%s' "$2" | jq -Rs .)); if(!dlg) return {err:'settings dialog not found'};
+      const rx=new RegExp($(printf '%s' "$3" | jq -Rs .),'i'); let target=null;
+      const seq=[...dlg.querySelectorAll('*')].filter(e=>e.tagName==='INPUT'||(e.children.length==0&&e.textContent.trim()));
+      for(let i=0;i<seq.length&&!target;i++){ const e=seq[i]; if(e.tagName!=='INPUT') continue;
+        const prev=seq.slice(0,i).reverse().find(x=>x.tagName!=='INPUT'); const next=seq.slice(i+1).find(x=>x.tagName!=='INPUT');
+        const lab=e.type==='checkbox'?(next?next.textContent:''):(prev?prev.textContent:''); if(rx.test(lab)) target=e; }
+      if(!target) return {err:'input not found'};
+      const val=$(printf '%s' "$4" | jq -Rs .);
+      if(target.type==='checkbox'){ const want=(val==='true'||val==='1'); if(target.checked!==want) target.click(); }
+      else { const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set; set.call(target,val); target.dispatchEvent(new Event('input',{bubbles:true})); target.dispatchEvent(new Event('change',{bubbles:true})); }
+      await sl(300); const ok=[...dlg.querySelectorAll('button')].find(b=>b.textContent.trim()==='Ok'); if(!ok) return {err:'no Ok'}; ok.click(); return {ok:true,type:target.type,val};})()" ;;
+  shotc) # pb shotc NAME : capture and crop to the chart pane (smaller frame)
+    n="$2"; mkdir -p "$ROOT/evidence"; pinebox shot --session $S --out "$ROOT/evidence/$n.full.png" >/dev/null && convert "$ROOT/evidence/$n.full.png" -crop 1262x622+26+88 +repage "$ROOT/evidence/$n.png" && rm -f "$ROOT/evidence/$n.full.png" && echo "$ROOT/evidence/$n.png" ;;
+  wait-engine) # pb wait-engine: block until the station engine has been idle for 15 s in a row (bounded: 8 minutes)
+    quiet=0
+    for i in $(seq 1 160); do sleep 3; if station_idle; then quiet=$((quiet+1)); else quiet=0; fi; [ $quiet -ge 5 ] && { echo idle; exit 0; }; done; echo "still busy"; exit 1 ;;
   x) shift; v="$1"; shift; pinebox "$v" --session $S "$@" ;;
   *) sed -n 2,8p "$0" ;;
 esac

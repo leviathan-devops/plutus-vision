@@ -15,13 +15,16 @@ indicator("Plutus Vision Engines", "PV-E", overlay = true, max_boxes_count = 500
 //   4. History (x[1]) is read only at global scope: inside a block this engine returns x[0].
 // ═════════════════════════════════════════════════════════════════════════════════════════════
 
+// ═══ PLUTUS ENGINES ═══
+// (the line above is the Pinebox IDE's section marker: its inputs panel lists only inputs declared under one)
 string GRP_A = "Anchor"
 string GRP_V = "Visibility"
-int    i_anchorHour = input.int(2, "Monday anchor hour (New York)", minval = 0, maxval = 23, group = GRP_A)
-int    i_weeks      = input.int(2, "Weeks drawn (active week + N-1 to its left)", minval = 1, maxval = 60, group = GRP_V)
-bool   i_showE1     = input.bool(true, "E1 institutional pressure zones", group = GRP_V)
-bool   i_showSD     = input.bool(false, "E1 4H origin-candle supply/demand (canon Step 0f)", group = GRP_V)
-bool   i_showAudit  = input.bool(false, "E1 audit: text block per week", group = GRP_V)
+i_anchorHour = input.int(2, "Monday anchor hour (New York)", minval = 0, maxval = 23, group = GRP_A)
+i_weeks      = input.int(2, "Weeks drawn (active week + N-1 to its left)", minval = 1, maxval = 60, group = GRP_V)
+i_back       = input.int(0, "Look back: shift the drawn window N weeks into the past", minval = 0, maxval = 120, group = GRP_V)
+i_showE1     = input.bool(true, "E1 institutional pressure zones", group = GRP_V)
+i_showSD     = input.bool(false, "E1 4H origin-candle supply/demand (canon Step 0f)", group = GRP_V)
+i_showAudit  = input.bool(false, "E1 audit: text block per week", group = GRP_V)
 
 // ── instrument units: 1 pip = 0.01 on DXY, 0.0001 on a 1.x FX pair (SP:2610, SP:3874) ───────────
 bool   IS_INDEX = str.contains(syminfo.ticker, "DXY") or close > 20
@@ -692,7 +695,7 @@ if not frozen and not na(anchorTs) and time_close > anchorTs
     Zone[] Z = f_zones(L, S, spot)
     int wkEnd = anchorTs + (4 * 24 + 17 - i_anchorHour) * 3600000      // Friday 17:00 New York
     fcs.push(WeekFc.new(anchorTs, asof, anchorTs, wkEnd, spot, Z, L, S))
-    if fcs.size() > i_weeks
+    if fcs.size() > i_weeks + i_back
         fcs.shift()
 
 // 3) fold this chart bar into the bars being built
@@ -738,7 +741,9 @@ if barstate.islast
     for l in lb
         label.delete(l)
     lb.clear()
-    for f in fcs
+    int nDraw = math.min(i_weeks, fcs.size())
+    for fi = 0 to math.max(0, nDraw - 1)
+        WeekFc f = nDraw > 0 ? fcs.get(fi) : WeekFc.new(0, 0, 0, 0, 0.0, array.new<Zone>(), array.new<Lv>(), array.new<SD>())
         if i_showE1
             for z in f.zones
                 color c = z.side > 0 ? C_RES : z.side < 0 ? C_SUP : C_EQ
