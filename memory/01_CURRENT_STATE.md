@@ -1,3 +1,10 @@
+## STATE (NEWEST, 2026-11-26, later) - ALL THREE ENGINES EXIST AND RENDER; QUALITY OUTSIDE THE ANCHOR WEEK IS LOW -> keep looping (memory/14 goal)
+- Code: e1_tool/ e1_zones.py (E1, 1H zones + 4H overview) -> e2_shapes.py (E2 chain + day map + path) -> e3_setups.py (E3 setups + simulate) -> e1_pine.py (one Pine with toggles). Run `e1_tool/e1 MONDAY PAIR`; render `tools/e1render PAIR MONDAY [TF key=value...]` (E1TAG=_x adds a suffix to the frame name).
+- Measure (facts for debugging, never quoted as accuracy): `python3 tools/research/e23_all_weeks.py DXY` (E2 day match + E3 results), `python3 tools/research/e1_first_touch_mfe.py DXY`.
+- Latest DXY 40-week facts: E2 forecast day = classifier day 66/200, direction right 46/91; E3 18 TP / 38 SL / 65 not filled (after per-day anchor cap + 8.18 direction consensus + MoM trend rule). Anchor week Apr 20-24: E2 path matches the week; E3 LONG 98.05 -> TP 98.75.
+- Open work, in order: E2 day shapes anchored to zone events and prior-week behaviour (current logic too crude, always "SS -> BS -> R"); E3 reversal shorts/longs at the BS target (Fri short at 98.75 on the anchor week was lost to the direction filter), reinforcements, entry timing 8.25;
+  EURUSD/GBPUSD (pair translation: same shapes, inverted direction); pixel checks on 4 weeks; external adversarial review; ship package + two blind sub-agents (2 unseen weeks each).
+
 ## STATE (NEWEST, 2026-11-26) - STANDING ORDER = memory/14_GOAL_PROMPT.md. Phase P1 (E1 on 1H per L-40) in progress: e1_zones.valid_sd now uses 1H candles with 4H overview; reference week re-rendered (evidence/e1tool_DXY_1H_2026-04-20.png, 7 zones, Monday low on the 1H BoM demand 97.94-98.05). Next: finish P1 checks on a few weeks, then P2 (E2) and P3 (E3) on the anchor week DXY Apr 20-24.
 
 ## STATE (NEWEST, container clock 2026-11-25 ~22:05 UTC) - E1 PYTHON TOOL RUNS END TO END (see journal entry of the same time for everything)

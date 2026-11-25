@@ -33,9 +33,27 @@ def build(pair, monday, r):
             return None                                 # never anchor LONGs at supply / SHORTs at demand (8.1)
         if any(s['mit'] > 2 for s in z['structs']):
             return None                                 # freshness gate: 3rd+ battle = TP target only
-        key = (id(z), direction)
+        key = (id(z), day['day'])
         if key in used:
-            return None                                 # per-anchor emission cap / dedup identity
+            return None                                 # MAX_MIRRORS_PER_ANCHOR_PER_DAY = 1 (8.5): cap key = (pair, anchor, day)
+        # 8.18 direction validation (the checks Engine 1/2 can answer): 4H trend, nearest 4H BoM, macro shape day direction, chain direction
+        want_up = direction == 'LONG'
+        boms = [t for t in zs if any(q.get('h4bom') for q in t['structs'])]
+        nb = min(boms, key=lambda t: min(abs(t['bot'] - day['path'][0][1]), abs(t['top'] - day['path'][0][1]))) if boms else None
+        checks = [e2['bias'] == ('up' if want_up else 'down')]
+        if nb is not None:
+            checks.append((side(nb) == 'Demand') == want_up)
+        if day['dir'] != 'range':
+            checks.append((day['dir'] == 'up') == want_up)
+        cd = next((d['dir'] for d in e2['days'] if d['shape'] in ('BS', 'PBS')), None)
+        if cd:
+            checks.append((cd == 'up') == want_up)
+        if sum(1 for c in checks if not c) > len(checks) / 2:
+            return None                                 # consensus against the direction -> reject
+        # MoM zones are ladder steps for trend-aligned trades only; never a reversal entry against the 4H storyline (Trading Laws via P533 change 2)
+        is_bom = any(q.get('h4bom') for q in z['structs'])
+        if z['structs'] and not is_bom and not checks[0]:
+            return None
         ref = day['path'][0][1]
         lo, hi = anchor_band(z, direction, ref)
         if direction == 'SHORT':
