@@ -1,3 +1,8 @@
+## STATE (NEWEST, 2026-11-26 end of this run) - pipeline complete E1+E2+E3, anchor week passes on pixels, but measured edge is at CHANCE level -> goal NOT met; reported to operator
+- Read memory/05_JOURNAL.md entries dated 2026-11-26 (KEY FINDING, split test) and the UPDATE block at the top of memory/13.
+- Latest commit on AGENT holds: 1H-worked zones with strict one-time use; E2 chain + alternative branch + pair translation; E3 scalps / reversals / transitions with arming and the 4H gate; Pine draws all three.
+- If the operator says continue: use the BUILD/VERIFY split for every change (tools/research/e1_split_features.py, e23_all_weeks.py), never tune on all 40 weeks; candidate next source of truth = his WINNING_TRADE_LIBRARY (/home/user/inputs/trades) to check whether the tool's zones cover the entries he actually took.
+
 ## STATE (NEWEST, 2026-11-26, later) - ALL THREE ENGINES EXIST AND RENDER; QUALITY OUTSIDE THE ANCHOR WEEK IS LOW -> keep looping (memory/14 goal)
 - Code: e1_tool/ e1_zones.py (E1, 1H zones + 4H overview) -> e2_shapes.py (E2 chain + day map + path) -> e3_setups.py (E3 setups + simulate) -> e1_pine.py (one Pine with toggles). Run `e1_tool/e1 MONDAY PAIR`; render `tools/e1render PAIR MONDAY [TF key=value...]` (E1TAG=_x adds a suffix to the frame name).
 - Measure (facts for debugging, never quoted as accuracy): `python3 tools/research/e23_all_weeks.py DXY` (E2 day match + E3 results), `python3 tools/research/e1_first_touch_mfe.py DXY`.
