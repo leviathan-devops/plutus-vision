@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# pb - thin helpers over the pinebox CLI for this build (session plutus-main).
+#   pb shot NAME [chart|plot]        capture -> evidence/NAME.png (prints the path)
+#   pb goto FROM TO [bt]             frame the IDE (or, with bt, the Backtest) chart on [FROM,TO] (ISO dates/times, UTC) through the page's own renderer
+#   pb eval 'JS'                     evaluate JS in the page (returns JSON)
+#   pb load FILE [PAIR] [TF]         load + run a .pine in the IDE
+#   pb x ...                         raw pinebox verb with the session filled in
+set -uo pipefail
+export PATH="$HOME/.local/bin:$PATH" XDG_RUNTIME_DIR=/run/user/0
+S=plutus-main; ROOT="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+CDP_PORT="$(pinebox list --session $S | jq -r '.instances[0].ports.cdp')"
+CORE="$HOME/.omp/agent/extensions/computer-use-v2/core"
+ev() { node "$CORE/cdp.mjs" "$CDP_PORT" evaluate "$1" | jq -c 'select(has("value")) | .value'; }
+case "${1:-}" in
+  shot) n="$2"; sec="${3:-chart}"; mkdir -p "$ROOT/evidence"; if [ "$sec" = full ]; then secarg=(); else secarg=(--section "$sec"); fi; pinebox shot --session $S --out "$ROOT/evidence/$n.png" "${secarg[@]}" | jq -r '.path' ;;
+  eval) ev "$2" ;;
+  load) pinebox load --session $S --pine "$2" ${3:+--pair "$3"} ${4:+--tf "$4"} 2>&1 | tail -1 | jq -c '{ok, status:.load.status_row, counts:.load.result.counts, bars:.load.result.bars, err:(.error // null)}' 2>/dev/null || pinebox load --session $S --pine "$2" ${3:+--pair "$3"} ${4:+--tf "$4"} 2>&1 | tail -3 ;;
+  goto)
+    f="$(date -u -d "$2" +%s)000"; t="$(date -u -d "$3" +%s)000"
+    CH="window.PlutusPineShell?.chart"; [ "${4:-ide}" = bt ] && CH="window.PlutusBacktestChart?.api?.chart"
+    ev "(function(){const P={chart:$CH}; const r=P?.chart?.rendererControl?.renderer; if(!r) return {absent:true};
+      const b=r.bars, n=b.length; let i0=0,i1=n-1; for(let i=0;i<n;i++){ if(b[i].time<$f) i0=i; if(b[i].time<=$t) i1=i; }
+      i0=Math.min(i0+1,n-1); const span=Math.max(i1-i0+1,5); const pad=Math.max(2,Math.round(span*0.04));
+      r.animator?.stop(); r.panVelocity=0;
+      const rt=-(n-1-i1)+pad; const bs=r.coords.width/((span+2*pad)*r.coords.spacingScale);
+      let v; try{ v=r.clampViewport(bs, rt); }catch(e){ return {err:String(e)}; }
+      r.coords.setViewport(v); r.targetBarSpacing=v.barSpacing; if(r.applyViewport) r.applyViewport(v); else r.requestRender?.();
+      const vr=P.chart.getVisibleRange(); return {n,i0,i1,want:{from:$f,to:$t},got:vr,fromISO:new Date(vr.from).toISOString(),toISO:new Date(vr.to).toISOString(),v};})()" ;;
+  x) shift; v="$1"; shift; pinebox "$v" --session $S "$@" ;;
+  *) sed -n 2,8p "$0" ;;
+esac

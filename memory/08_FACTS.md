@@ -37,3 +37,21 @@
   Part VI-B Engine 3 (superseded by corrected doc) 2058-2575 · Part IX multi-pair 3257-3688 · Appendix A strike->DXY 4011 · B ZFP 4052 · C pivots 4078.
 - Web sources named in Part III: forex.com (14 mentions), investinglive.com (6), tradingview.com, federalreserve.gov (H.10), ice.com.
 - Digests (written by reader agents, verify before trusting): `context_management/spec/{E1_ALGO,E2_ALGO,E3_ALGO,HANDOVER_DIGEST,PINEBOX_ENGINE_NOTES,LAWS_DIGEST}.md`, `context_management/oracle/*`.
+
+## E1 canon essentials (from context_management/spec/E1_ALGO.md, cites SP:line = v5.3.3 prompt)
+- Assembly SP:1496-1505: collect ALL levels from 9 pillars, never filter by distance to spot (SP:735); score each level on 6 dimensions (0-2 each) + structural-extreme bonus (<=2) = 0-14;
+  cluster: 3+ levels within 0.15 DXY = HIGH-DENSITY ZONE, pairs within 0.10 = TIGHT CONFLUENCE; group at 0.10-0.15; zone degree = its highest-scoring level; name the zones.
+- Pressure degree: 12-14 EXTREME, 10-11 HEAVY, 8-9 MODERATE-HEAVY, 6-7 MODERATE, 4-5 LIGHT, 0-3 MINIMAL. Synthesis shows MODERATE and above.
+- Pivots (P1): classic, fibonacci (0.382/0.618/1.0), camarilla (1.1/12,/6,/4,/2) on prior week HLC and each of the last 3 trading days.
+- MA grid (P2): EMA+SMA 9,10,20,50,100,200 (daily by inference); 3+ MAs within 0.15 = cluster; recapture (cross above 50/100/200 within 3 sessions) +2.
+- Structural (P5): 90 D1 bars; swing low = lower wick >= 0.15 and close in upper half (mirror for highs); D1 order block = base before a move >= 1.0 lasting >= 5 days;
+  repeated extremes within 0.05 on 2+ dates (+1.5 / +2.0), role reversal +2.0; LSZ = 0.05-wide band at the exact swing extreme (extension 0.05-0.10);
+  4H S/D = the single 4H origin candle [low, high] before a move >= 0.5 lasting >= 3 trading days, max width 0.40, 60-day scan, drop if > 3 weeks old with no interaction.
+- Round numbers (P6): .00/.50 = 2 pts, .25/.75 = 1 pt (DXY). Fib retracements of prior-week range + swings (ratios 0.236/0.382/0.618, ext 1.618).
+- Options (P3/P8): strikes from investinglive 10am NY cut; tier 1 >= $1.5B (CRITICAL OPTION WALL), tier 2 $850M-$1.499B (SIGNIFICANT MAGNET), below = excluded.
+  EUR/USD strike -> DXY: DXY = K * EURUSD^-0.576, K = 50.14348112 * USDJPY^0.136 * GBPUSD^-0.119 * USDCAD^0.091 * USDSEK^0.042 * USDCHF^0.036 (spots from Fed H.10). NEVER convert DXY zones to pair zones.
+- Analysts (P4): explicit S/R levels; tier 1 = ING, forex.com (Matt Weller); 2+ tier-1 agree = 2 pts.
+- ZFP (Appendix B): Hard Wall 5-15% (needs option wall >= $1.5B + 3 pillars + confluent floor/ceiling), Standard 15-30%, Soft 30-50%, One-Touch 50-70%; modifiers only add. ZFP by pixel width is banned (R-17).
+- POI tier: IP zone overlapping a 4H BoM (0X-1X) = Tier 1; IP only = Tier 2; 4H only = Tier 3.
+- Pairs run their OWN full pipeline on their own price; DXY gives direction only (SP:101, 3313, 3639). Pip: DXY 0.01, pairs 0.0001.
+- PLACEHOLDERS in v5.3.3 ("unchanged from v4.5.2"): P5 steps 0g/0h/1-5, P6, P7, P8 core, P9 -> full text in the v4.5.2 prompt on the handover branch.

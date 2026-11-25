@@ -11,3 +11,11 @@
 - 11:10 Network hosts approved; OpenCode Go key saved (proxy-injected). investinglive/fed/opencode all answer 200.
 - 11:20 Memory folder created. Reasoning on the "no hardcode" vs "web data" tension: the indicator source must hold no values; weekly external data enters as inputs written by the sidecar for the week being viewed.
   Unknown yet: how Pinebox passes inputs. To test.
+- 11:30 Pinebox verbs exercised first-hand. IDE: `load` v1 on DXY 1H -> 20 boxes / 28 labels / 42 lines, all near the LAST bar (Nov 2026); navigating the IDE chart back to Jul 6-10 shows candles only (frame evidence/v1_baseline_DXY_1H_golden_week.png) -> an indicator that only draws "current state" is invisible on past weeks in the IDE tab.
+  Backtest tab: `backtest --op create --name gw-dxy-jul06 --symbol DXY --start 2026-07-06T06:00 --end 2026-07-11 --tf 1H` puts the replay cursor at Mon Jul 6 06:00Z (bar 8751/10879) with all earlier bars visible = the Monday anchor simulated natively.
+  EXPORT TO BACKTEST (IDE button at x=247,y=771) -> script appears in the room "ON CHART" (Indicators dialog), but V1 drew NOTHING on the room chart at the cursor (frame bt_003). Cause unknown yet (await PINEBOX_ENGINE_NOTES).
+  Range buttons (1D/7D/1M...) under the charts CHANGE THE TIMEFRAME (1M -> 30m). Do not use them; use `tools/pb goto FROM TO [bt]`.
+- 11:40 Read E1_ALGO.md digest in full (652 lines). Big findings: (a) seven E1 pillar blocks in v5.3.3 are "[unchanged from v4.5.2]" placeholders -> the missing text is in
+  /home/user/handover-branch/Original_Canon_Data/TTE System Prompts/Trident_Trading_Engine_System_Prompt_v4.5.2 (1).md; (b) all tolerances are written in DXY points (cluster 0.15, tight 0.10, LSZ 0.05, wick 0.15, 4H zone max 0.40, 4H move >=0.5/3 days, D1 OB >=1.0/5 days); pair-unit tolerances are not in canon;
+  (c) canon's own data boundary is Friday 17:00 ET; operator's live ruling is Monday London open (operator wins, both forbid in-week data); (d) zone names: RESISTANCE CEILING, UPPER RESISTANCE, EQUILIBRIUM ZONE, MID-RANGE SUPPORT, KEY SUPPORT BAND, LIQUIDITY SWEEP ZONE, BREAKOUT EXTENSION TARGET; score 0-14 -> EXTREME/HEAVY/MODERATE-HEAVY/MODERATE/LIGHT/MINIMAL.
+  (e) Without options/analyst data the score ceiling is 10 (HEAVY) -> the web sidecar is what lifts zones to EXTREME; consistent with the operator's order to fetch it.
