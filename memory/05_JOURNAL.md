@@ -283,3 +283,10 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   They never pass RRR >= 3: e.g. Aug 17 short E 99.45 SL 99.62 (17 pips) target 99.22 -> 1.35. Either the stop must follow the spec's rule (b) "1-2 pips inside the close edge of the next step" (i.e. just back inside the broken zone, ~5 pips) or the target must be the next mapped zone beyond the measured move. Not decided; test both against the spec text 8.3 Phase 4.2 before choosing.
 - Tag e123-anchor-apr20 exists LOCALLY only (pushing tags is refused with 403; branch pushes work). Checkpoint commit = the one with message "ledger: anchor week all three engines PASS frame".
 - Three-pair facts file: e1_tool/out/e23_all_weeks_3pairs.txt (written by tools/research/e23_all_weeks.py DXY EURUSD GBPUSD; last two lines = totals).
+
+## 2026-11-26 - pair translation added; session-bracketed fills tried and reverted
+- e2_shapes.chain(lead_dir=): for EURUSD/GBPUSD the chain direction = inverse of the DXY chain (P533 6.6 pair translation); e1_pine.run() runs DXY first for a pair. EURUSD anchor week: Mon SHORT at Upper Resistance E 1.1786 -> TP 1.1714 hit; Fri LONG at 1.1675 filled, +3.1R at the close.
+- Facts before the session bracket (all fills any time from the setup's day): DXY 18 TP / 39 SL; EURUSD+GBPUSD 41 TP / 133 SL. Three pairs with pair translation roughly 59 TP / 172 SL (about 1 in 4 at RRR >= 3: break-even).
+- TRIED: fills only inside the setup's assigned day + session (Consolidation = London 02-08 ET, others NY 08-17 ET). Result 24 TP / 93 SL / 306 not filled and the anchor-week Monday long (fills 11:00 ET) no longer fills. Reverted (git checkout e3_setups.py). Session stays a label.
+- The stop-out rate is THE problem for E3 (and it is really an E1 problem: first touch of a 1H-worked zone runs >= 3R only about 1 time in 4). Ideas still untested, all from canon: entry timing by retest count (8.25: virgin zone = scalp only, swing entry valid on the 3rd test),
+  SL rule (b) next-rung instead of 3 pips past the band, 15m precision entries (zones on 1H, entry refined on 15m), BoM-only reversals, reaction-counter gating (1-2 reactions = active, 3+ depleted).

@@ -101,7 +101,12 @@ def run(pair, monday, K=None):
     spot = D.closed(pair, '60', monday)[-1]['close']
     exp = [dict(e, day=e.get('cut_date', '')[5:]) for e in side['expiries'].get('EURUSD' if pair == 'DXY' else pair, [])]
     r = Z.build(pair, monday, exp, K, spot)
-    r['e2'] = E2.chain(pair, monday, r)
+    lead = None
+    if pair != 'DXY':
+        # the weekly shape chain is mapped on DXY and translated to the pair with inverted direction (P533 6.6, Part IX 9.2)
+        dx = run('DXY', monday)
+        lead = 'down' if dx['e2']['bdir'] == 'up' else 'up'
+    r['e2'] = E2.chain(pair, monday, r, lead_dir=lead)
     import e3_setups as E3
     r['e3'] = E3.build(pair, monday, r)
     return r

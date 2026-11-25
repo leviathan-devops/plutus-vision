@@ -26,7 +26,7 @@ def strength(z):
     return (HOLD[z['type']], z['score'], 1 if z['tier'].startswith('Tier 1') else 0)
 
 
-def chain(pair, monday, r, force_dir=None):
+def chain(pair, monday, r, force_dir=None, lead_dir=None):
     zs = sorted(r['zones'], key=lambda z: z['bot'])
     spot, b0 = r['spot'], D.boundary_ms(monday)
     days = D.daily(pair, monday)
@@ -58,6 +58,8 @@ def chain(pair, monday, r, force_dir=None):
         weaker = C or F
     bdir = 'up' if weaker is C else 'down'
     both_hold = C and F and HOLD[C['type']] >= 3 and HOLD[F['type']] >= 3
+    if lead_dir and not force_dir:                  # 6.6 pair translation: same shapes as the DXY chain, direction inverted
+        bdir, weaker = lead_dir, (C if lead_dir == 'up' else F)
     if force_dir:                                   # Step 4: the alternative chain = the other side of the range gives way
         bdir, weaker, both_hold = force_dir, (C if force_dir == 'up' else F), False
     # a momentum rejection on the last day (WL closing beyond the prior day's close) skips the consolidation: WL -> RWL (6.4.1)
