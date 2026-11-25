@@ -43,3 +43,14 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
   EURUSD R2 1.1600-1.1640 BoM 15% 9/14 ; R1 1.1545-1.1575 MoM 30% 7/14 ; D1 1.1495-1.1515 MoM 35% 8/14 ; D2 1.1430-1.1460 BoM 20% 8/14.
   GBPUSD R2 1.3400-1.3480 BoM 12% ; R1 1.3300-1.3350 MoM 28% ; D2 1.3250-1.3280 MoM 32% ; D1 1.3150-1.3200 BoM 22%.
 - L-18 E3 remark (for later, not now): his setups need RRR 4x+.
+
+## 2026-11-25 ~16:10 UTC - operator answers the accuracy question (BINDING)
+- L-19 Acceptance metric for E1 = "Reacts on first touch at 90% or better" (his pick from my three options).
+- L-20 He accepts that the W14 report may have had forward data ("whatever makes sense. I can understand"). He still wants to SEE the W14 zones rendered so we look at the same thing
+  (frames evidence/oracle_w14_report_zones_{DXY,EURUSD,GBPUSD}_1h.png were sent; resend when asked).
+- L-21 His three reference screenshots (golden week Jul 6-10, DXY 1h/1h/4h, manual charting "at the beginning of a week", saved under the session images dir 1.webp/2.webp/3.webp):
+  green bands 101.19-101.29 (white mid line 101.24), 100.94-100.985 (thin pivot band), 100.545-100.675 (white mid line 100.61); red "4H (Unmitigated) | BoM" supply 101.33-101.44;
+  blue "1H (Unmitigated) | BoM" demand 100.655-100.74; blue "4H (Unmitigated) | MoM" demand 100.24-100.34; white box = the week. Circles mark the candle each band was drawn from
+  (Jul 1 candle at 101.24; Jul 3 low wick at 100.56-100.66). Week high 101.27 turned inside the top band, Friday low 100.60 bounced inside the bottom band, the middle band was a pivot crossed all week.
+  HIS WORDS: those bands are "based purely on price action candles", already covered by the V1 baseline (S/D + liquidity). E1 = "the other side of the coin, the institutional pressure zones
+  rendered on top of this based on all of the data available from the web fetch sources that are spoken in the prompt". Same degree of accuracy as his drawing, any random week, Monday London-open data only.

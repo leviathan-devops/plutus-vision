@@ -24,6 +24,14 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## STATE 16:15 UTC - metric fixed by the operator: FIRST-TOUCH REACTION >= 90% (L-19). Width is the open trade-off.
+- His hand-drawn bands are ~10-13 pips wide on DXY. Current E1 v2 bands are 0.3 x weekly range (~36 pips): on the golden week mine are 101.25-101.61 / 100.49-100.85 / 99.90-100.26
+  vs his 101.19-101.29 / 100.545-100.675 - right places, three times too wide (frame evidence/ide_110_e1v2_dxy_1h_golden.png).
+- MEASURED (DEV, reaction = 0.1 x weekly range): thin bands on the week's option walls: total width 0.08 / 0.12 / 0.16 x weekly range -> first-touch 69 / 72 / 78%;
+  tier-1 live walls 70 / 74 / 78%; walls confirmed by 2+ price-action structures 74 / 73 / 80%. 90% needs ~0.3 width (or a smaller reaction threshold).
+- Asked the operator: (1) width vs hit-rate, (2) what size of bounce counts as a reaction, (3) whether a pivot band (like his middle one) may be drawn. His answers decide the tuning.
+- Golden-week walls for reference: 100.64 tier-1 (inside his bottom band), 101.28 ghost tier-1 (inside his top band), 101.14 tier-1, 100.89 tier-2, 101.40 tier-1.
+
 ## STATE 15:45 UTC - E1 v2 IS IN THE PINE FILE; IT DOES NOT REACH 90%; operator has been told the measured limits
 - indicator/plutus-vision-engines.pine now draws the E1 v2 band map (f_bands / f_band / f_wscore; freeze block calls f_bands; old f_zones is unused code kept for comparison).
   <= 2 bands above + 2 below the anchor price, width 0.3 x mean weekly range, taken at the nearest window (>= 0.15 away) whose extreme-type evidence >= 5
