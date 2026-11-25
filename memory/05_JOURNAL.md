@@ -147,3 +147,12 @@ WHY (diagnosed, not yet fixed):
    Consider fixing the Equilibrium FIRST (the MODERATE+ cluster at / nearest spot), then taking the others outward with the 0.20 separation.
  - The report's implicit rule, visible in its key drivers: every named zone sits on a candle structure or sweep target (supply candle, MoM supply, BoM demand, sweep 97.63) or a wall (99.22). Prefer that reading (it is also L-39).
 NEXT STEPS UNCHANGED after this: report printout, Pine generator (trident_v8 form + levels inside zones), Pinebox render of Apr 20-24, open the frame, compare with the original; then other weeks / pairs; morning report with assumptions A1-A3.
+
+## 2026-11-25 ~23:00 UTC - equilibrium-first + separation on level spans: DXY Apr 20-24 now gives five SPREAD zones
+ CEILING 99.13-99.31 HEAVY 11 Hard Wall (matches report) · UPPER RESISTANCE 98.56-98.78 (BoM Demand 04-10; report: 98.77-98.99 supply candle) · EQUILIBRIUM 98.14-98.29 (BoM Supply 04-17 + sweep 98.24-98.29; report 98.29-98.41)
+ · MID-RANGE SUPPORT 97.68-97.83 (report 98.00-98.12) · KEY SUPPORT 97.15-97.25 (report 97.63-97.97).
+ Honest status: structure of the output is right (5 named, spread, each with type / range ZFP / tier / drivers), ONE of five zones matches the report; the other four sit one cluster away from the report's.
+ Known causes still open: (1) clusters are cut every 0.15 from the top level down, so cluster boundaries are arbitrary - the prompt says count, for EACH level, the others within 0.15 (density), i.e. clusters should be centred on density peaks, not sliced;
+ (2) score ties (almost everything 10-11) - re-read the scoring table and tighten to the literal text; (3) TV spot 98.226 vs report 98.10 moves the equilibrium; (4) the candle structure should anchor the zone (report: supply candle = Upper Resistance,
+ MoM supply = Equilibrium, BoM demand 04-16 = Mid-Range Support, sweep 97.63 + demand = Key Support) - try: build the named zones FROM the kept 4H structures and sweep targets / walls first, attach to each the levels within 0.15, score, then name by position.
+ That last reading is the most literal match to both the report's key drivers and ruling L-39 ("C in the shape of A plus B") - implement it next, compare all five, then go on to the report printout and the Pine generator.

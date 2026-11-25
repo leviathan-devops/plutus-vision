@@ -138,9 +138,13 @@ def assemble(pair, monday, expiries, K, spot):
     # a pressure zone is where levels meet a candle structure or a wall (L-39): those clusters rank first, then by score
     rank = lambda z: 2 if (z['structs'] or z['wall'] <= 2) else 1 if z['sweeps'] else 0
     cand = sorted([z for z in zones if z['score'] >= 6], key=lambda z: (-rank(z), -z['score'], dist(z)))
+    # the Equilibrium is fixed first: the MODERATE+ cluster at / nearest spot. Separation is measured between LEVEL spans.
+    sep = lambda z, t: z['lv_lo'] - t['lv_hi'] >= gap or t['lv_lo'] - z['lv_hi'] >= gap
     taken = []
+    if cand:
+        taken.append(min(cand, key=lambda z: (dist(z), -rank(z), -z['score'])))
     for z in cand:
-        if all(z['bot'] - t['top'] >= gap or t['bot'] - z['top'] >= gap for t in taken):
+        if z not in taken and all(sep(z, t) for t in taken):
             taken.append(z)
     named = []
     if taken:
