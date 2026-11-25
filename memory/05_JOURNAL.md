@@ -259,3 +259,10 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   primary path + alternative path, each tied to "zone X holds / fails", and E3 must carry setups for both branches (the setup is valid only when its branch's trigger happens). The day forecast is then judged by: did price follow one of the two mapped branches, and did the branch switch at the decision zone.
 - E3 current facts DXY 40 weeks: 18 TP / 38 SL / 65 not filled.
 - NEXT: implement the alternative chain as a second path (dashed grey) with its decision zone label; E3 setups per branch with the trigger written on the label; then pixel-check the anchor week + 3 more weeks.
+
+## 2026-11-26 - alternative branch added (E2 alt_days, E3 branch=ALT, grey path in Pine); facts got WORSE until setups are gated on their trigger
+- e2_shapes.chain(force_dir) builds the other-direction chain; result keys: days, alt_days, bdir, decision_zone, primary, alternative. e3 builds setups for both branches (label "(ALT)"), sorted by day, cap 11.
+- DXY 40 weeks now: 20 TP / 58 SL / 108 not filled. The ALT setups and the BS-day "with the move" setups are resting orders with no condition: they fill when the OTHER branch is playing out and stop.
+- FIX NEXT: (1) every non-SS setup carries an activation condition taken from its branch: PRIMARY BS up = "1H close above the decision zone's far edge", ALT = "decision zone rejected: 1H close back below its near edge after a touch" (canon 6.2: BS confirmed by a sustained move beyond the zone, 15+ min);
+  simulate() must only arm a setup after its condition is met, and the Pine label must state the condition. (2) BS-day entry anchor = the broken zone itself retested from the other side (role reversal: broken resistance = new support, spec 8.1 lifecycle BROKEN) - Law 27 "SS -> BS: range boundary break becomes BS entry";
+  not the far demand zone behind price. (3) keep SS scalps unconditional at the range bounds.

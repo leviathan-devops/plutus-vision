@@ -26,7 +26,7 @@ def strength(z):
     return (HOLD[z['type']], z['score'], 1 if z['tier'].startswith('Tier 1') else 0)
 
 
-def chain(pair, monday, r):
+def chain(pair, monday, r, force_dir=None):
     zs = sorted(r['zones'], key=lambda z: z['bot'])
     spot, b0 = r['spot'], D.boundary_ms(monday)
     days = D.daily(pair, monday)
@@ -58,12 +58,16 @@ def chain(pair, monday, r):
         weaker = C or F
     bdir = 'up' if weaker is C else 'down'
     both_hold = C and F and HOLD[C['type']] >= 3 and HOLD[F['type']] >= 3
+    if force_dir:                                   # Step 4: the alternative chain = the other side of the range gives way
+        bdir, weaker, both_hold = force_dir, (C if force_dir == 'up' else F), False
     # a momentum rejection on the last day (WL closing beyond the prior day's close) skips the consolidation: WL -> RWL (6.4.1)
     momentum = cur_shape == 'WL' and ((days[-1]['close'] > days[-2]['close']) if cur_dir == 'up' else (days[-1]['close'] < days[-2]['close'])) and abs(days[-1]['close'] - days[-2]['close']) > 0.25 * adr
     if cur_shape == 'BS':
         ss_days = 1                     # BS -> R (< 1 session) -> next
     elif momentum:
-        ss_days = 1; bdir = cur_dir; weaker = C if bdir == 'up' else F
+        ss_days = 1
+        if not force_dir:
+            bdir = cur_dir; weaker = C if bdir == 'up' else F
     else:
         ss_days = 2                     # trading speed rule: today's move is tomorrow's move
     plan = []
@@ -134,7 +138,11 @@ def chain(pair, monday, r):
     alt_dir = 'down' if bdir == 'up' else 'up'
     dz = (C if bdir == 'up' else F)
     alt = f"DECISION ZONE: {dz['name'] if dz else 'none'} holds -> ALTERNATIVE: SS -> WL at the zone -> BS {alt_dir}"
-    return {'days': out, 'primary': primary, 'alternative': alt, 'audit': audit, 'current': (cur_shape, cur_dir), 'bias': bias, 'adr': adr}
+    res_alt = None
+    if not force_dir:
+        res_alt = chain(pair, monday, r, force_dir=alt_dir)
+        alt = f"DECISION ZONE: {dz['name'] if dz else 'none'} holds -> ALTERNATIVE: {res_alt['primary']}"
+    return {'alt_days': res_alt['days'] if res_alt else [], 'bdir': bdir, 'decision_zone': dz['name'] if dz else 'none', 'days': out, 'primary': primary, 'alternative': alt, 'audit': audit, 'current': (cur_shape, cur_dir), 'bias': bias, 'adr': adr}
 
 
 def actual(pair, monday):

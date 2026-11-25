@@ -45,7 +45,7 @@ def build(pair, monday, r):
             checks.append((side(nb) == 'Demand') == want_up)
         if day['dir'] != 'range':
             checks.append((day['dir'] == 'up') == want_up)
-        cd = next((d['dir'] for d in e2['days'] if d['shape'] in ('BS', 'PBS')), None)
+        cd = next((d['dir'] for d in day.get('_chain', e2['days']) if d['shape'] in ('BS', 'PBS')), None)
         if cd:
             checks.append((cd == 'up') == want_up)
         if sum(1 for c in checks if not c) > len(checks) / 2:
@@ -83,7 +83,11 @@ def build(pair, monday, r):
         return {'day': day['day'], 'dayidx': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].index(day['day']), 'shape': shape, 'category': category, 'dir': direction, 'zone': z['name'], 'zone_rng': (z['bot'], z['top']),
                 'entry': entry, 'sl': sl, 'tp': tp, 'rrr': rrr, 'tp_zone': tz['name'], 'session': ses[0], 't0': day['t0'], 't1': day['t1'], 'tier': z['tier'][:6], 'score': z['score']}
 
-    for day in e2['days']:
+    branches = [('PRIMARY', d) for d in e2['days']] + [('ALT', d) for d in e2.get('alt_days', [])]
+    for d in e2.get('alt_days', []):
+        d['_chain'] = e2['alt_days']
+    for branch, day in branches:
+        n_before = len(out)
         ref = day['path'][0][1]
         # a zone the price is already inside is being mitigated, not approached: entries only at zones price comes to from outside
         above = [z for z in zs if z['bot'] > ref]
@@ -115,6 +119,11 @@ def build(pair, monday, r):
             if zz:
                 c = candidate(day, zz[0], d, 'Reversal', sh)
                 if c: out.append(c)
+        for c in out[n_before:]:
+            c['branch'] = branch
+            c['trigger'] = (f"{e2['decision_zone']} gives way" if branch == 'PRIMARY' else f"{e2['decision_zone']} holds") if day['shape'] not in ('SS',) else 'range holds'
+    # primary-branch setups first, then the alternative branch, in day order; cap 11 per week per pair (CLAUDE.md hard constraint)
+    out.sort(key=lambda c: (c['dayidx'], c['branch'] != 'PRIMARY'))
     out = out[:CAP]
     for i, s in enumerate(out):
         s['n'] = i + 1
@@ -158,4 +167,4 @@ if __name__ == '__main__':
     ss = simulate(pair, monday, build(pair, monday, r))
     print(f"ENGINE 3 {pair} {monday} | E2: {r['e2']['primary']}")
     for s in ss:
-        print(f"  #{s['n']} {s['day']} {s['session']:<6} {s['dir']:<5} {s['category']:<13} [{s['shape']}] at {s['zone']} {f % s['zone_rng'][0]}-{f % s['zone_rng'][1]} | E {f % s['entry']} SL {f % s['sl']} TP {f % s['tp']} ({s['tp_zone']}) RRR {s['rrr']:.1f} | {s['result']}{' filled ' + D.ts(s['fill'])[5:13] + 'h' if s['fill'] else ''}")
+        print(f"  #{s['n']} {s['branch'][:3]} {s['day']} {s['session']:<6} {s['dir']:<5} {s['category']:<13} [{s['shape']}] at {s['zone']} {f % s['zone_rng'][0]}-{f % s['zone_rng'][1]} | E {f % s['entry']} SL {f % s['sl']} TP {f % s['tp']} ({s['tp_zone']}) RRR {s['rrr']:.1f} | {s['result']}{' filled ' + D.ts(s['fill'])[5:13] + 'h' if s['fill'] else ''}")
