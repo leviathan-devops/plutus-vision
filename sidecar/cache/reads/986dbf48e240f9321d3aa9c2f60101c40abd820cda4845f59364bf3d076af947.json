@@ -1,0 +1,11 @@
+{
+ "key": "986dbf48e240f9321d3aa9c2f60101c40abd820cda4845f59364bf3d076af947",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "11436a87f190c0768bcf6cf3c3c754d1e738c28b8a8231845d9309b846ae8881",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.34797\",\"role\":\"level\",\"quote\":\"extending its rally toward a key swing level at 1.34797 .\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.3398\",\"role\":\"level\",\"quote\":\"retracing back to its converged 100-day and 200-day moving averages near 1.3398 .\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.3517\",\"role\":\"level\",\"quote\":\"the next upside target comes in near 1.3517 ,\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.35573\",\"role\":\"level\",\"quote\":\"followed by the July high at 1.35573 .\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1471\",\"role\":\"support\",\"quote\":\"Support would be defined by the old ceiling-turned-floor between 1.1471 and 1.1482,\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1482\",\"role\":\"support\",\"quote\":\"Support would be defined by the old ceiling-turned-floor between 1.1471 and 1.1482,\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1500\",\"role\":\"level\",\"quote\":\"The subsequent move back above the 1.1500 level has added to the improving bullish tone.\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1524\",\"role\":\"resistance\",\"quote\":\"while resistance remains at the 38.2% retracement near 1.1524.\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.15356\",\"role\":\"level\",\"quote\":\"followed by a break of yesterday's high at 1.15356, would strengthen the bullish case\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.15675\",\"role\":\"level\",\"quote\":\"shift the focus toward the falling 100-day moving average at 1.15675.\"}]}"
+}

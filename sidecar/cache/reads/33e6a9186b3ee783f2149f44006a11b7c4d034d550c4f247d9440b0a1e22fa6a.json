@@ -1,0 +1,11 @@
+{
+ "key": "33e6a9186b3ee783f2149f44006a11b7c4d034d550c4f247d9440b0a1e22fa6a",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "e7aa571a77ea03e1dba016d5764e550374bc5c307fe8a06cbb35f06035d1ca32",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\": [{\"article\": 1, \"instrument\": \"EURUSD\", \"price\": \"1.1800\", \"role\": \"level\", \"quote\": \"the technical scope dictates that there is room for the upside to extend towards 1.1800 next.\"}]}"
+}

@@ -1,0 +1,11 @@
+{
+ "key": "a7b83e13df348937778d7e5de6a70cac872b5e365c66a693d5fdeffa08927105",
+ "kind": "expiry_read_B1",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "daa15fcc689d19dabe1528cc25e3b1af56cec655a8741134cbefb5b0cd6db3b7",
+ "image": "cache/views/31ecbc27d700d3c7/B1.png",
+ "image_sha256": "ea5741376e9c3e8b001a8af5d62ed222477fb670c642b5a14aa67a2c0bbf91d3",
+ "text": "{\"pairs\":[\"EUR/USD\",\"USD/JPY\",\"GBP/USD\",\"USD/CHF\"],\"spot\":{\"EUR/USD\":\"1.1609\",\"USD/JPY\":\"156.06\",\"GBP/USD\":\"1.3507\",\"USD/CHF\":\"0.8104\"},\"rows\":[{\"label\":\"Monday\",\"date\":\"07/09\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1500\",\"notional\":\"€729m\"},{\"strike\":\"1.1595\",\"notional\":\"€603m\"},{\"strike\":\"1.1600\",\"notional\":\"€821m\"},{\"strike\":\"1.1620\",\"notional\":\"€512m\"},{\"strike\":\"1.1650\",\"notional\":\"€507m\"},{\"strike\":\"1.1700\",\"notional\":\"€758m\"},{\"strike\":\"1.1725\",\"notional\":\"€650m\"}],\"USD/JPY\":[{\"strike\":\"155.75\",\"notional\":\"$1.1bn\"},{\"strike\":\"157.00\",\"notional\":\"$501m\"}],\"GBP/USD\":[],\"USD/CHF\":[]}},{\"label\":\"Tuesday\",\"date\":\"08/09\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1500\",\"notional\":\"€937m\"},{\"strike\":\"1.1530\",\"notional\":\"€516m\"},{\"strike\":\"1.1550\",\"notional\":\"€998m\"},{\"strike\":\"1.1560\",\"notional\":\"€1.1bn\"},{\"strike\":\"1.1570\",\"notional\":\"€980m\"},{\"strike\":\"1.1585\",\"notional\":\"€550m\"},{\"strike\":\"1.1590\",\"notional\":\"€748m\"},{\"strike\":\"1.1635\",\"notional\":\"€779m\"},{\"strike\":\"1.1650\",\"notional\":\"€1.2bn\"},{\"strike\":\"1.1670\",\"notional\":\"€513m\"},{\"strike\":\"1.1700\",\"notional\":\"€2.1bn\"}],\"USD/JPY\":[{\"strike\":\"155.00\",\"notional\":\"$693m\"},{\"strike\":\"157.00\",\"notional\":\"$963m\"},{\"strike\":\"158.00\",\"notional\":\"$4.7bn\"}],\"GBP/USD\":[],\"USD/CHF\":[{\"strike\":\"0.8100\",\"notional\":\"$532m\"}]}}]}"
+}

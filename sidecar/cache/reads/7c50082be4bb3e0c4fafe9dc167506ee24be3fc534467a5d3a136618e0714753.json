@@ -1,0 +1,11 @@
+{
+ "key": "7c50082be4bb3e0c4fafe9dc167506ee24be3fc534467a5d3a136618e0714753",
+ "kind": "expiry_read_B2",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "daa15fcc689d19dabe1528cc25e3b1af56cec655a8741134cbefb5b0cd6db3b7",
+ "image": "cache/views/31ecbc27d700d3c7/B2.png",
+ "image_sha256": "ebfe01a64982f15ff33b0d223bc3b944b3fa0457667f73d630ebc2b60f582b64",
+ "text": "{\"pairs\":[\"USD/CAD\",\"AUD/USD\",\"NZD/USD\",\"EUR/GBP\"],\"spot\":{\"USD/CAD\":\"1.3835\",\"AUD/USD\":\"0.7204\",\"NZD/USD\":\"0.5873\",\"EUR/GBP\":\"0.8591\"},\"rows\":[{\"label\":\"Monday\",\"date\":\"07/09\",\"cells\":{\"USD/CAD\":[],\"AUD/USD\":[],\"NZD/USD\":[],\"EUR/GBP\":[]}},{\"label\":\"Tuesday\",\"date\":\"08/09\",\"cells\":{\"USD/CAD\":[{\"strike\":\"1.3785\",\"notional\":\"$506m\"}],\"AUD/USD\":[{\"strike\":\"0.7135\",\"notional\":\"A$1.8bn\"},{\"strike\":\"0.7150\",\"notional\":\"A$553m\"}],\"NZD/USD\":[{\"strike\":\"0.5810\",\"notional\":\"NZ$603m\"}],\"EUR/GBP\":[{\"strike\":\"0.8600\",\"notional\":\"€725m\"}]}}]}"
+}

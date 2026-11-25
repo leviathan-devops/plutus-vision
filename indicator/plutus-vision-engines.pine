@@ -23,6 +23,7 @@ i_anchorHour = input.int(2, "Monday anchor hour (New York)", minval = 0, maxval 
 i_weeks      = input.int(2, "Weeks drawn (active week + N-1 to its left)", minval = 1, maxval = 60, group = GRP_V)
 i_back       = input.int(0, "Look back: shift the drawn window N weeks into the past", minval = 0, maxval = 120, group = GRP_V)
 i_showE1     = input.bool(true, "E1 institutional pressure zones", group = GRP_V)
+i_showE2     = input.bool(true, "E2 shape chain (day boxes + path)", group = GRP_V)
 i_showSD     = input.bool(false, "E1 4H origin-candle supply/demand (canon Step 0f)", group = GRP_V)
 i_showAudit  = input.bool(false, "E1 audit: text block per week", group = GRP_V)
 string GRP_D = "Weekly data (written by the sidecar, dated, as of each Monday anchor)"
@@ -208,6 +209,18 @@ type Zone
     int    side     // 1 resistance · 0 equilibrium · -1 support
     string drivers
 
+type DayFc
+    int    t0
+    int    t1
+    string shape    // SS · BS · PBS · R · WL · RWL
+    int    dir      // 1 up · -1 down · 0 range
+    float  lo       // expected zone-to-zone range of the day
+    float  hi
+    float  p0       // expected path: start and end price of the day
+    float  p1
+    float  conf     // cumulative chain confidence
+    string key      // the IP zone that anchors the shape (Rule 1, SP:1919)
+
 type WeekFc
     int    anchor
     int    asof         // close time of the newest bar that fed the forecast (must be <= anchor)
@@ -217,6 +230,8 @@ type WeekFc
     Zone[] zones
     Lv[]   levels
     SD[]   sds
+    DayFc[] days
+    string chain
 
 var WeekFc[] fcs = array.new<WeekFc>()
 
@@ -751,6 +766,157 @@ f_zones(Lv[] L, SD[] sds, float spot) =>
                     z.name := k == m - 1 ? "Key IP Support" : "Mid-Range Support"
     Z
 
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// E2 — MACRO SHAPE CHAIN (Part VI). Zone-anchored: every shape is decided by E1 zone metrics (Rules 1 and 4, SP:1919-1924)
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// one completed day against the zone map: 2 / -2 = closed through a zone (BS up / down) · 1 / -1 = pierced a zone and closed back (WL up / down) · 0 = range
+f_dayClass(float o, float h, float l, float c, Zone[] Z) =>
+    int k = 0
+    for z in Z
+        if o < z.bot and c > z.top
+            k := 2
+        else if o > z.top and c < z.bot
+            k := -2
+        else if k == 0 and o < z.bot and c < z.bot and h >= (z.top + z.bot) / 2
+            k := 1
+        else if k == 0 and o > z.top and c > z.top and l <= (z.top + z.bot) / 2
+            k := -1
+    k
+
+f_tier(string t) =>
+    t == "H" ? 0.8 : t == "MH" ? 0.65 : t == "M" ? 0.5 : 0.35          // SPEC:549-557
+
+// clamped zone read: this engine evaluates both sides of a conditional, so an index test alone does not protect a .get()
+f_zc(Zone[] Z, int i) =>
+    Z.get(math.max(0, math.min(Z.size() - 1, i)))
+
+f_e2(Zone[] Zin, float spot, int weekOpen) =>
+    DayFc[] D = array.new<DayFc>()
+    string chain = ""
+    int m = Zin.size()
+    int nd = dC.size()
+    if m >= 2 and nd >= 2
+        // zones in ascending price order
+        float[] tp = array.new_float()
+        for z in Zin
+            tp.push(z.top)
+        int[] o = tp.sort_indices(order.ascending)
+        Zone[] Z = array.new<Zone>()
+        for k = 0 to m - 1
+            Z.push(Zin.get(o.get(k)))
+        // the cage: floor = highest zone lying more than 0.15 (the canon cluster band) below price, ceiling = lowest zone more than
+        // 0.15 above. Zones closer than that are the pivot cluster price is sitting in, not bounds (SS = oscillation between
+        // ceiling and floor zones, SP:1776)
+        int iF = -1
+        int iC = m
+        for k = 0 to m - 1
+            Zone z = Z.get(k)
+            if z.top < spot - T_CLUSTER
+                iF := k
+        for k = m - 1 to 0
+            Zone z = Z.get(k)
+            if z.bot > spot + T_CLUSTER
+                iC := k
+        // STEP 1 — current shape as of the anchor (matrix 6.2 on the last two completed days, SP:1770-1781)
+        int c1 = f_dayClass(dO.get(nd - 1), dH.get(nd - 1), dL.get(nd - 1), dC.get(nd - 1), Z)
+        int c2 = f_dayClass(dO.get(nd - 2), dH.get(nd - 2), dL.get(nd - 2), dC.get(nd - 2), Z)
+        string S = math.abs(c1) == 2 ? "BS" : math.abs(c1) == 1 ? "WL" : c2 != 0 ? "R" : "SS"
+        int dir = c1 != 0 ? (c1 > 0 ? 1 : -1) : c2 != 0 ? (c2 > 0 ? 1 : -1) : 0
+        chain := "S0 " + S + (dir > 0 ? " up" : dir < 0 ? " down" : "")
+        // a BS / WL that completed before the anchor has already reached its target: the week opens on what follows it
+        float conf = 1.0
+        if S == "BS"
+            int iT = dir > 0 ? iC : iF
+            float zf = iT >= 0 and iT < m ? f_zc(Z, iT).zfp : 50.0
+            S := zf < 20 ? "RWL" : "R"                                       // ZFP-conditioned (SP:1825-1826)
+            conf *= f_tier("H")
+        else if S == "WL"
+            S := "RWL"                                                       // dir stays the direction of the rejected spike
+            conf *= f_tier("MH")
+        // STEPS 2-3 — extend shape by shape, one trading day per step (SS that opens the chain holds two days: "liquidity accumulates Monday-Tuesday", FA:9)
+        int day = 0
+        int piercing = 0
+        float px = spot
+        bool first = true
+        while day < 5 and (conf >= 0.25 or S == "SS")          // a terminal SS runs to the end of the week (SPEC:539-541)
+            float fTop = iF >= 0 ? f_zc(Z, iF).top : px - (iC < m ? f_zc(Z, iC).bot - px : T_CLUSTER)
+            float cBot = iC < m ? f_zc(Z, iC).bot : px + (iF >= 0 ? px - f_zc(Z, iF).top : T_CLUSTER)
+            float zfF = iF >= 0 ? f_zc(Z, iF).zfp : 50.0
+            float zfC = iC < m ? f_zc(Z, iC).zfp : 50.0
+            string keyF = iF >= 0 ? f_zc(Z, iF).name : "open space"
+            string keyC = iC < m ? f_zc(Z, iC).name : "open space"
+            int span = 1
+            string nxt = "SS"
+            float lo = fTop
+            float hi = cBot
+            float pEnd = px
+            int dd = 0
+            string key = keyF + " / " + keyC
+            if S == "SS" or S == "R"
+                span := S == "SS" and first ? 2 : 1
+                pEnd := (fTop + cBot) / 2
+                // SS: a bounding zone with ZFP > 45 fails next (SP:1829); both < 30 hold (SP:1830); R that persists becomes SS (SP:1832)
+                if S == "R"
+                    nxt := "SS"
+                    conf *= f_tier("MH")
+                else if math.max(zfF, zfC) > 45 and piercing < 2
+                    nxt := "BS"
+                    dir := zfC >= zfF ? 1 : -1
+                    conf *= f_tier("H")
+                else
+                    nxt := "SS"
+                    conf *= f_tier(zfF < 30 and zfC < 30 ? "H" : "MH")
+            else if S == "BS" or S == "PBS"
+                dd := dir
+                piercing += 1
+                // the failing bound is crossed; the target is the next zone beyond it
+                int iT = dir > 0 ? iC + 1 : iF - 1
+                bool has = iT >= 0 and iT < m
+                float tgt = has ? (dir > 0 ? f_zc(Z, iT).bot : f_zc(Z, iT).top) : (dir > 0 ? cBot + (cBot - fTop) : fTop - (cBot - fTop))   // measured move (V452:1007-1010)
+                float zfT = has ? f_zc(Z, iT).zfp : 50.0
+                key := (dir > 0 ? keyC : keyF) + " -> " + (has ? f_zc(Z, iT).name : "measured move")
+                lo := dir > 0 ? fTop : tgt
+                hi := dir > 0 ? tgt : cBot
+                pEnd := tgt
+                if dir > 0
+                    iF := iC
+                    iC := iC + 1
+                else
+                    iC := iF
+                    iF := iF - 1
+                // the TARGET zone's ZFP decides what follows (SP:1825-1828)
+                if zfT < 20
+                    nxt := "RWL"
+                    conf *= f_tier("H")
+                else if zfT <= 40
+                    nxt := "R"
+                    conf *= f_tier("H")
+                else if zfT > 60
+                    nxt := "PBS"
+                    conf *= f_tier("M")
+                else
+                    nxt := "R"
+                    conf *= f_tier("M")
+            else
+                // WL / RWL: rejected at the wall, back to the origin zone (SP:1939-1940)
+                dd := -dir
+                piercing += 1
+                pEnd := dir > 0 ? fTop : cBot
+                key := (dir > 0 ? keyC : keyF) + " rejects"
+                dir := -dir
+                nxt := "SS"
+                conf *= f_tier("H")
+            for k = 1 to span
+                if day < 5
+                    D.push(DayFc.new(weekOpen + day * 86400000, weekOpen + (day + 1) * 86400000, S, dd, lo, hi, px, pEnd, conf, key))
+                    day += 1
+            chain += " > " + S + (dd > 0 ? " up" : dd < 0 ? " down" : "")
+            px := pEnd
+            first := false
+            // conservation of energy: after 2 piercing moves, consolidation (SP:486)
+            S := piercing >= 2 and (nxt == "BS" or nxt == "PBS") ? "SS" : nxt
+    [D, chain]
+
 f_assertAnchor(int asof, int anchor) =>
     if asof > anchor
         runtime.error("ANCHOR VIOLATION: forecast read a bar that closed after the Monday anchor")
@@ -768,7 +934,9 @@ if not frozen and not na(anchorTs) and time_close > anchorTs
     Lv[] L = f_e1(spot, S, weekKey)
     Zone[] Z = f_zones(L, S, spot)
     int wkEnd = anchorTs + (4 * 24 + 17 - i_anchorHour) * 3600000      // Friday 17:00 New York
-    fcs.push(WeekFc.new(anchorTs, asof, anchorTs, wkEnd, spot, Z, L, S))
+    int weekOpen = anchorTs - (i_anchorHour + 7) * 3600000          // Sunday 17:00 New York
+    [DY, chainTxt] = f_e2(Z, spot, weekOpen)
+    fcs.push(WeekFc.new(anchorTs, asof, anchorTs, wkEnd, spot, Z, L, S, DY, chainTxt))
     if fcs.size() > i_weeks + i_back
         fcs.shift()
 
@@ -807,8 +975,12 @@ color C_EQ  = color.rgb(255, 152, 0)
 color C_SUP = color.rgb(0, 150, 150)
 var box[]   bx = array.new_box()
 var label[] lb = array.new_label()
+var line[]  ln = array.new_line()
 
 if barstate.islast
+    for l in ln
+        line.delete(l)
+    ln.clear()
     for b in bx
         box.delete(b)
     bx.clear()
@@ -817,18 +989,25 @@ if barstate.islast
     lb.clear()
     int nDraw = math.min(i_weeks, fcs.size())
     for fi = 0 to math.max(0, nDraw - 1)
-        WeekFc f = nDraw > 0 ? fcs.get(fi) : WeekFc.new(0, 0, 0, 0, 0.0, array.new<Zone>(), array.new<Lv>(), array.new<SD>())
+        WeekFc f = nDraw > 0 ? fcs.get(fi) : WeekFc.new(0, 0, 0, 0, 0.0, array.new<Zone>(), array.new<Lv>(), array.new<SD>(), array.new<DayFc>(), "")
         if i_showE1
             for z in f.zones
                 color c = z.side > 0 ? C_RES : z.side < 0 ? C_SUP : C_EQ
                 bx.push(box.new(f.t0, z.top, f.t1, z.bot, xloc = xloc.bar_time, bgcolor = color.new(c, 72), border_color = c, border_width = 1))
                 lb.push(label.new(f.t0, (z.top + z.bot) / 2, z.name + " | " + z.degree + " | " + str.tostring(z.zfp) + "% ZFP", xloc = xloc.bar_time, style = label.style_label_left, color = color.new(c, 100), textcolor = color.new(color.white, 10), size = size.small))
+        if i_showE2
+            float lastTo = na
+            for d in f.days
+                color c = d.shape == "SS" ? color.rgb(150, 150, 160) : d.shape == "R" ? color.rgb(160, 120, 220) : d.dir > 0 ? color.rgb(60, 200, 120) : color.rgb(240, 90, 90)
+                bx.push(box.new(d.t0, d.hi, d.t1, d.lo, xloc = xloc.bar_time, bgcolor = color.new(c, 94), border_color = color.new(c, 30), border_width = 1, border_style = line.style_dashed))
+                lb.push(label.new(d.t0, d.hi, str.format_time(d.t0 + 43200000, "EEE", TZ) + ": " + d.shape + (d.dir > 0 ? " up" : d.dir < 0 ? " down" : " range") + " " + str.tostring(math.round(d.conf * 100)) + "%", xloc = xloc.bar_time, style = label.style_label_lower_left, color = color.new(c, 100), textcolor = c, size = size.small))
+                ln.push(line.new(d.t0, d.p0, d.t1, d.p1, xloc = xloc.bar_time, color = color.new(color.yellow, 20), width = 2))
         if i_showSD
             for s in f.sds
                 color c = s.side > 0 ? color.rgb(242, 54, 69) : color.rgb(49, 121, 245)
                 bx.push(box.new(s.t, s.top, f.t1, s.bot, xloc = xloc.bar_time, bgcolor = color.new(c, 85), border_color = color.new(c, 40), border_width = 1, text = (s.scale == 240 ? "4H " : "1H ") + (s.mit == 0 ? "(Unmitigated)" : str.tostring(s.mit) + "X") + " | BoM", text_color = color.new(c, 20), text_size = size.small))
         if i_showAudit
-            string t = "asof " + str.format_time(f.asof, "yyyy-MM-dd HH:mm", TZ) + " NY | anchor " + str.format_time(f.anchor, "yyyy-MM-dd HH:mm", TZ) + " | spot " + str.tostring(f.spot) + " | levels " + str.tostring(f.levels.size())
+            string t = "E2 " + f.chain + "\nasof " + str.format_time(f.asof, "yyyy-MM-dd HH:mm", TZ) + " NY | anchor " + str.format_time(f.anchor, "yyyy-MM-dd HH:mm", TZ) + " | spot " + str.tostring(f.spot) + " | levels " + str.tostring(f.levels.size())
             for z in f.zones
                 t += "\nZ " + str.tostring(math.round(z.bot / PIP) * PIP) + "-" + str.tostring(math.round(z.top / PIP) * PIP) + " " + z.name + " " + z.degree + " " + str.tostring(z.score) + " cf" + str.tostring(z.conf) + " p" + str.tostring(z.pillars) + " T" + str.tostring(z.tier) + " [" + z.drivers + "]"
             for s in f.sds

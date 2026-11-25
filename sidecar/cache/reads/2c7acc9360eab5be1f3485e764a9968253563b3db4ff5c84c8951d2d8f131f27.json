@@ -1,0 +1,11 @@
+{
+ "key": "2c7acc9360eab5be1f3485e764a9968253563b3db4ff5c84c8951d2d8f131f27",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "600229e3a8d7c23fa5f663bdd66e5c1f2d5b36f8d8ac94456ea02a8575769e56",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1560\",\"role\":\"support\",\"quote\":\"break to pile in for a drop into the 1.1560 support targeting a break.\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.14\",\"role\":\"support\",\"quote\":\"bearish bets into the major 1.14 support next.\"}]}"
+}

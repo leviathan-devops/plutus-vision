@@ -23,6 +23,7 @@ CANON_DECIMALS = {
     '0.0', '0.5', '1.0', '1.5', '2.0', '3.0', '4.0', '5.0', '6.0', '14.0', '20.0', '50.0', '95.0',
     '0.236', '0.382', '0.618', '1.1',          # fib ratios, camarilla factor (SP:997-1008, V452:843-849)
     '0.4', '0.6',                              # close-position thresholds (SP:1223, V452:773)
+    '0.8', '0.65', '0.35', '0.25',             # E2 transition confidence tiers and the 25% chain stop (SPEC:549-557, SP:1893)
 }
 FORBIDDEN = [
     (r'\brequest\s*\.', 'request.* (other-symbol / higher-timeframe data can leak the future and is dead in Pinebox)'),

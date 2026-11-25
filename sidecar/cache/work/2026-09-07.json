@@ -1,0 +1,1300 @@
+{
+ "week": "2026-09-07",
+ "anchor": 1788760800000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-09-07T06:00:00Z",
+  "discover: 2 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W36, 2026-W37",
+  "https://investinglive.com/orders/fx-option-expiries-for-4-september-10am-new-york-cut/: no table image in the article body",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/: reads A/B agree on 29 of 29 entries; third read for columns []",
+  "accept: 29 strike/notional entries accepted (2+ reads identical), 0 dropped"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "monday",
+   "url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "lastmod": "2026-09-07T05:39:41+00:00",
+   "cut_date": "2026-09-07",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-07/investinglive_orders_fx-option-expiries-for-7-september-10am-new-york-cut.html",
+   "published_at": "2026-09-07T05:39:41Z",
+   "image_url": "https://investinglive.com/cms/media/images/FXO%2007092026.jpg",
+   "image_file": "/home/user/plutus-vision/sidecar/raw/2026-09-07/investinglive_orders_fx-option-expiries-for-7-september-10am-new-york-cut__FXO_07092026.jpg",
+   "views_dir": "/home/user/plutus-vision/sidecar/cache/views/31ecbc27d700d3c7",
+   "views": {
+    "grid_ok": true,
+    "hlines": [
+     20,
+     42,
+     64,
+     243,
+     490
+    ],
+    "pair_columns": 8,
+    "size": [
+     1419,
+     521
+    ],
+    "source": "investinglive_orders_fx-option-expiries-for-7-september-10am-new-york-cut__FXO_07092026.jpg",
+    "views": {
+     "A": {
+      "box": [
+       0,
+       0,
+       1419,
+       521
+      ],
+      "file": "A.png",
+      "scale": 1.3953,
+      "size": [
+       1980,
+       727
+      ]
+     },
+     "B1": {
+      "box": [
+       222,
+       17,
+       812,
+       494
+      ],
+      "file": "B1.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "scale": 2.5515,
+      "size": [
+       1980,
+       1217
+      ]
+     },
+     "B2": {
+      "box": [
+       810,
+       17,
+       1401,
+       494
+      ],
+      "file": "B2.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       4,
+       5,
+       6,
+       7
+      ],
+      "scale": 2.5483,
+      "size": [
+       1980,
+       1216
+      ]
+     },
+     "C0": {
+      "box": [
+       222,
+       17,
+       371,
+       494
+      ],
+      "file": "C0.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       0
+      ],
+      "scale": 4.1509,
+      "size": [
+       1391,
+       1980
+      ]
+     },
+     "C1": {
+      "box": [
+       369,
+       17,
+       518,
+       494
+      ],
+      "file": "C1.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       1
+      ],
+      "scale": 4.1509,
+      "size": [
+       1391,
+       1980
+      ]
+     },
+     "C2": {
+      "box": [
+       516,
+       17,
+       665,
+       494
+      ],
+      "file": "C2.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       2
+      ],
+      "scale": 4.1509,
+      "size": [
+       1391,
+       1980
+      ]
+     },
+     "C3": {
+      "box": [
+       663,
+       17,
+       812,
+       494
+      ],
+      "file": "C3.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       3
+      ],
+      "scale": 4.1509,
+      "size": [
+       1391,
+       1980
+      ]
+     },
+     "C4": {
+      "box": [
+       810,
+       17,
+       959,
+       494
+      ],
+      "file": "C4.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       4
+      ],
+      "scale": 4.1509,
+      "size": [
+       1391,
+       1980
+      ]
+     },
+     "C5": {
+      "box": [
+       957,
+       17,
+       1106,
+       494
+      ],
+      "file": "C5.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       5
+      ],
+      "scale": 4.1509,
+      "size": [
+       1391,
+       1980
+      ]
+     },
+     "C6": {
+      "box": [
+       1104,
+       17,
+       1253,
+       494
+      ],
+      "file": "C6.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       6
+      ],
+      "scale": 4.1509,
+      "size": [
+       1391,
+       1980
+      ]
+     },
+     "C7": {
+      "box": [
+       1251,
+       17,
+       1400,
+       494
+      ],
+      "file": "C7.png",
+      "label_box": [
+       37,
+       17,
+       223,
+       494
+      ],
+      "pair_index": [
+       7
+      ],
+      "scale": 4.1509,
+      "size": [
+       1391,
+       1980
+      ]
+     }
+    },
+    "vlines": [
+     67,
+     222,
+     369,
+     516,
+     663,
+     810,
+     957,
+     1104,
+     1251,
+     1398
+    ]
+   },
+   "reads": {
+    "A": "828ab175fdc90f378c73d95c2d5c0dde3b213998b4f09267ab4e9c9cd304aa17",
+    "B1": "a7b83e13df348937778d7e5de6a70cac872b5e365c66a693d5fdeffa08927105",
+    "B2": "7c50082be4bb3e0c4fafe9dc167506ee24be3fc534467a5d3a136618e0714753"
+   },
+   "tiebreak": []
+  },
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/orders/fx-option-expiries-for-4-september-10am-new-york-cut/",
+   "lastmod": "2026-09-04T06:02:09+00:00",
+   "cut_date": "2026-09-04",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-07/investinglive_orders_fx-option-expiries-for-4-september-10am-new-york-cut.html",
+   "published_at": "2026-09-04T06:02:09Z",
+   "image_url": null
+  }
+ ],
+ "analyst": [
+  {
+   "url": "https://investinglive.com/technical-analysis/usd-technical-analysis-what-levels-are-in-play-for-the-eurusd-usdjpy-gbpusd-ahead-of-the-jobs-data/",
+   "lastmod": "2026-09-04T12:13:50+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-07/investinglive_technical-analysis_usd-technical-analysis-what-levels-are-in-play-for-the-eurusd-usdjpy-gbpusd-ahead-of-the-jobs-data.html",
+   "published_at": "2026-09-04T12:13:50Z"
+  },
+  {
+   "url": "https://investinglive.com/forex/eur-usd-pulls-back-as-hawkish-fed-bets-stabilise-traders-await-the-key-us-cpi-report/",
+   "lastmod": "2026-09-03T08:11:10+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-07/investinglive_forex_eur-usd-pulls-back-as-hawkish-fed-bets-stabilise-traders-await-the-key-us-cpi-report.html",
+   "published_at": "2026-09-03T08:11:10Z"
+  },
+  {
+   "url": "https://investinglive.com/forex/usd-jpy-bounces-near-the-major-155-00-support-pullback-or-the-start-of-a-rally-into-new-highs/",
+   "lastmod": "2026-09-04T07:06:52+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-07/investinglive_forex_usd-jpy-bounces-near-the-major-155-00-support-pullback-or-the-start-of-a-rally-into-new-highs.html",
+   "published_at": "2026-09-04T07:06:52Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/usdchf-technicals-the-usdchf-is-sharply-lower-on-usd-selling-what-has-the-technicals-been-telling-traders/",
+   "lastmod": "2026-09-03T17:06:57+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-07/investinglive_technical-analysis_usdchf-technicals-the-usdchf-is-sharply-lower-on-usd-selling-what-has-the-technicals-been-telling-traders.html",
+   "published_at": "2026-09-03T17:06:57Z"
+  }
+ ],
+ "h10": {
+  "release_date": "2026-08-31",
+  "published_at": "2026-08-31T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260831/",
+  "rate_day": "Aug. 28",
+  "rates": {
+   "EURUSD": 1.1598,
+   "USDJPY": 159.97,
+   "GBPUSD": 1.3555,
+   "USDCAD": 1.3895,
+   "USDSEK": 9.5949,
+   "USDCHF": 0.8085
+  },
+  "k_h10": 108.434177,
+  "dxy_h10": 99.5592
+ },
+ "accepted": [
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-07",
+   "strike": "1.1500",
+   "notional_m": 729,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-07",
+   "strike": "1.1595",
+   "notional_m": 603,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-07",
+   "strike": "1.1600",
+   "notional_m": 821,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-07",
+   "strike": "1.1620",
+   "notional_m": 512,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-07",
+   "strike": "1.1650",
+   "notional_m": 507,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-07",
+   "strike": "1.1700",
+   "notional_m": 758,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-07",
+   "strike": "1.1725",
+   "notional_m": 650,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1500",
+   "notional_m": 937,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1530",
+   "notional_m": 516,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1550",
+   "notional_m": 998,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1560",
+   "notional_m": 1100,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1570",
+   "notional_m": 980,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1585",
+   "notional_m": 550,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1590",
+   "notional_m": 748,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1635",
+   "notional_m": 779,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1650",
+   "notional_m": 1200,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1670",
+   "notional_m": 513,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-09-08",
+   "strike": "1.1700",
+   "notional_m": 2100,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-09-07",
+   "strike": "155.75",
+   "notional_m": 1100,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-09-07",
+   "strike": "157.00",
+   "notional_m": 501,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-09-08",
+   "strike": "155.00",
+   "notional_m": 693,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-09-08",
+   "strike": "157.00",
+   "notional_m": 963,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-09-08",
+   "strike": "158.00",
+   "notional_m": 4700,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "USDCHF",
+   "date": "2026-09-08",
+   "strike": "0.8100",
+   "notional_m": 532,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-09-08",
+   "strike": "1.3785",
+   "notional_m": 506,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-09-08",
+   "strike": "0.7135",
+   "notional_m": 1800,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-09-08",
+   "strike": "0.7150",
+   "notional_m": 553,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "NZDUSD",
+   "date": "2026-09-08",
+   "strike": "0.5810",
+   "notional_m": 603,
+   "ccy": "NZD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  },
+  {
+   "pair": "EURGBP",
+   "date": "2026-09-08",
+   "strike": "0.8600",
+   "notional_m": 725,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+   "published_at": "2026-09-07T05:39:41Z"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [
+   {
+    "price": 1.14,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/eur-usd-pulls-back-as-hawkish-fed-bets-stabilise-traders-await-the-key-us-cpi-report/",
+    "published_at": "2026-09-03T08:11:10Z",
+    "quote": "bearish bets into the major 1.14 support next."
+   },
+   {
+    "price": 1.156,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/eur-usd-pulls-back-as-hawkish-fed-bets-stabilise-traders-await-the-key-us-cpi-report/",
+    "published_at": "2026-09-03T08:11:10Z",
+    "quote": "break to pile in for a drop into the 1.1560 support targeting a break."
+   }
+  ],
+  "GBPUSD": []
+ },
+ "stats": {
+  "entries_seen": 29,
+  "agreed_first_two_reads": 29,
+  "accepted": 29,
+  "dropped": 0
+ },
+ "h10_src": {
+  "url": "https://www.federalreserve.gov/releases/h10/20260831/",
+  "published_at": "2026-08-31T20:15:00Z",
+  "kind": "h10_release"
+ },
+ "analyst_key": "2c7acc9360eab5be1f3485e764a9968253563b3db4ff5c84c8951d2d8f131f27",
+ "out": {
+  "week": "2026-09-07",
+  "anchor_utc": "2026-09-07T06:00:00Z",
+  "sources": [
+   {
+    "url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+    "published_at": "2026-09-07T05:39:41Z",
+    "kind": "expiry_post_monday"
+   },
+   {
+    "url": "https://investinglive.com/cms/media/images/FXO%2007092026.jpg",
+    "published_at": "2026-09-07T05:39:41Z",
+    "kind": "expiry_image"
+   },
+   {
+    "url": "https://investinglive.com/orders/fx-option-expiries-for-4-september-10am-new-york-cut/",
+    "published_at": "2026-09-04T06:02:09Z",
+    "kind": "expiry_post_prior"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/usd-technical-analysis-what-levels-are-in-play-for-the-eurusd-usdjpy-gbpusd-ahead-of-the-jobs-data/",
+    "published_at": "2026-09-04T12:13:50Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/forex/eur-usd-pulls-back-as-hawkish-fed-bets-stabilise-traders-await-the-key-us-cpi-report/",
+    "published_at": "2026-09-03T08:11:10Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/forex/usd-jpy-bounces-near-the-major-155-00-support-pullback-or-the-start-of-a-rally-into-new-highs/",
+    "published_at": "2026-09-04T07:06:52Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/usdchf-technicals-the-usdchf-is-sharply-lower-on-usd-selling-what-has-the-technicals-been-telling-traders/",
+    "published_at": "2026-09-03T17:06:57Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://www.federalreserve.gov/releases/h10/20260831/",
+    "published_at": "2026-08-31T20:15:00Z",
+    "kind": "h10_release"
+   },
+   {
+    "url": "pinebox-bar-store:TVC_DXY/60/2026-09.json#time=1788757200000",
+    "published_at": "2026-09-07T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_EURUSD/60/2026-09.json#time=1788757200000",
+    "published_at": "2026-09-07T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_GBPUSD/60/2026-09.json#time=1788757200000",
+    "published_at": "2026-09-07T06:00:00Z",
+    "kind": "spot_bar"
+   }
+  ],
+  "expiries": {
+   "EURUSD": [
+    {
+     "strike": 1.15,
+     "notional_m": 729,
+     "ccy": "EUR",
+     "cut_date": "2026-09-07",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.15979,
+     "notional_m": 1424,
+     "ccy": "EUR",
+     "cut_date": "2026-09-07",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "cluster_of": [
+      {
+       "strike": 1.1595,
+       "notional_m": 603
+      },
+      {
+       "strike": 1.16,
+       "notional_m": 821
+      }
+     ],
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.162,
+     "notional_m": 512,
+     "ccy": "EUR",
+     "cut_date": "2026-09-07",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.165,
+     "notional_m": 507,
+     "ccy": "EUR",
+     "cut_date": "2026-09-07",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.17,
+     "notional_m": 758,
+     "ccy": "EUR",
+     "cut_date": "2026-09-07",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.1725,
+     "notional_m": 650,
+     "ccy": "EUR",
+     "cut_date": "2026-09-07",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.15,
+     "notional_m": 937,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.153,
+     "notional_m": 516,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.15552,
+     "notional_m": 2098,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "cluster_of": [
+      {
+       "strike": 1.155,
+       "notional_m": 998
+      },
+      {
+       "strike": 1.156,
+       "notional_m": 1100
+      }
+     ],
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.157,
+     "notional_m": 980,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.15879,
+     "notional_m": 1298,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "cluster_of": [
+      {
+       "strike": 1.1585,
+       "notional_m": 550
+      },
+      {
+       "strike": 1.159,
+       "notional_m": 748
+      }
+     ],
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.1635,
+     "notional_m": 779,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.165,
+     "notional_m": 1200,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.167,
+     "notional_m": 513,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 1.17,
+     "notional_m": 2100,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    }
+   ],
+   "GBPUSD": [],
+   "USDJPY": [
+    {
+     "strike": 155.75,
+     "notional_m": 1100,
+     "ccy": "USD",
+     "cut_date": "2026-09-07",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 157,
+     "notional_m": 501,
+     "ccy": "USD",
+     "cut_date": "2026-09-07",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 155,
+     "notional_m": 693,
+     "ccy": "USD",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 157,
+     "notional_m": 963,
+     "ccy": "USD",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 158,
+     "notional_m": 4700,
+     "ccy": "USD",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    }
+   ],
+   "AUDUSD": [
+    {
+     "strike": 0.7135,
+     "notional_m": 1800,
+     "ccy": "AUD",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    },
+    {
+     "strike": 0.715,
+     "notional_m": 553,
+     "ccy": "AUD",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    }
+   ],
+   "EURGBP": [
+    {
+     "strike": 0.86,
+     "notional_m": 725,
+     "ccy": "EUR",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    }
+   ],
+   "NZDUSD": [
+    {
+     "strike": 0.581,
+     "notional_m": 603,
+     "ccy": "NZD",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    }
+   ],
+   "USDCAD": [
+    {
+     "strike": 1.3785,
+     "notional_m": 506,
+     "ccy": "USD",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    }
+   ],
+   "USDCHF": [
+    {
+     "strike": 0.81,
+     "notional_m": 532,
+     "ccy": "USD",
+     "cut_date": "2026-09-08",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/",
+     "published_at": "2026-09-07T05:39:41Z"
+    }
+   ]
+  },
+  "spots": {
+   "from": "pinebox bar store, last 1H close before the anchor",
+   "bar_close_utc": "2026-09-07T06:00:00Z",
+   "DXY": 99.114,
+   "EURUSD": 1.16142,
+   "GBPUSD": 1.35186
+  },
+  "k_anchor": 108.036086,
+  "h10": {
+   "release_date": "2026-08-31",
+   "published_at": "2026-08-31T20:15:00Z",
+   "source_url": "https://www.federalreserve.gov/releases/h10/20260831/",
+   "rate_day": "Aug. 28",
+   "rates": {
+    "EURUSD": 1.1598,
+    "USDJPY": 159.97,
+    "GBPUSD": 1.3555,
+    "USDCAD": 1.3895,
+    "USDSEK": 9.5949,
+    "USDCHF": 0.8085
+   },
+   "k_h10": 108.434177,
+   "dxy_h10": 99.5592
+  },
+  "dxy_levels": [
+   {
+    "price": 99.1942,
+    "from_pair": "EURUSD",
+    "strike": 1.15979,
+    "notional_m": 1424,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-09-07"
+   },
+   {
+    "price": 99.6797,
+    "from_pair": "EURUSD",
+    "strike": 1.15,
+    "notional_m": 937,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-09-08"
+   },
+   {
+    "price": 99.4052,
+    "from_pair": "EURUSD",
+    "strike": 1.15552,
+    "notional_m": 2098,
+    "tier": 1,
+    "state": "live",
+    "code": 1,
+    "cut_date": "2026-09-08"
+   },
+   {
+    "price": 99.3319,
+    "from_pair": "EURUSD",
+    "strike": 1.157,
+    "notional_m": 980,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-09-08"
+   },
+   {
+    "price": 99.2435,
+    "from_pair": "EURUSD",
+    "strike": 1.15879,
+    "notional_m": 1298,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-09-08"
+   },
+   {
+    "price": 98.9385,
+    "from_pair": "EURUSD",
+    "strike": 1.165,
+    "notional_m": 1200,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-09-08"
+   },
+   {
+    "price": 98.6947,
+    "from_pair": "EURUSD",
+    "strike": 1.17,
+    "notional_m": 2100,
+    "tier": 1,
+    "state": "live",
+    "code": 1,
+    "cut_date": "2026-09-08"
+   }
+  ],
+  "analyst_levels": {
+   "DXY": [],
+   "EURUSD": [
+    {
+     "price": 1.14,
+     "role": "support",
+     "source_url": "https://investinglive.com/forex/eur-usd-pulls-back-as-hawkish-fed-bets-stabilise-traders-await-the-key-us-cpi-report/",
+     "published_at": "2026-09-03T08:11:10Z",
+     "quote": "bearish bets into the major 1.14 support next."
+    },
+    {
+     "price": 1.156,
+     "role": "support",
+     "source_url": "https://investinglive.com/forex/eur-usd-pulls-back-as-hawkish-fed-bets-stabilise-traders-await-the-key-us-cpi-report/",
+     "published_at": "2026-09-03T08:11:10Z",
+     "quote": "break to pile in for a drop into the 1.1560 support targeting a break."
+    }
+   ],
+   "GBPUSD": []
+  },
+  "read_stats": {
+   "entries_seen": 29,
+   "agreed_first_two_reads": 29,
+   "accepted": 29,
+   "dropped": 0
+  },
+  "model": {
+   "id": "muse-spark-1.3-contributor",
+   "effort": "high",
+   "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+   "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+  },
+  "dropped": [],
+  "log": [
+   "anchor = Monday 02:00 America/New_York = 2026-09-07T06:00:00Z",
+   "discover: 2 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W36, 2026-W37",
+   "https://investinglive.com/orders/fx-option-expiries-for-4-september-10am-new-york-cut/: no table image in the article body",
+   "asof_gate: every fetched page was published at or before the anchor",
+   "https://investinglive.com/orders/fx-option-expiries-for-7-september-10am-new-york-cut/: reads A/B agree on 29 of 29 entries; third read for columns []",
+   "accept: 29 strike/notional entries accepted (2+ reads identical), 0 dropped",
+   "emit: as-of gate passed for 11 sources and every datum"
+  ]
+ }
+}

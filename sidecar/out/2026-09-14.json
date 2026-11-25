@@ -1,0 +1,193 @@
+{
+ "week": "2026-09-14",
+ "anchor_utc": "2026-09-14T06:00:00Z",
+ "sources": [
+  {
+   "url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+   "published_at": "2026-09-11T05:01:21Z",
+   "kind": "expiry_post_prior"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi/",
+   "published_at": "2026-09-10T16:22:44Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/kickstart-the-na-trading-day-with-a-technical-look-at-the-eurusd-usdjpy-and-gbpusd-what-levels-are-key/",
+   "published_at": "2026-09-10T12:08:39Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/forex/eur-usd-almost-erased-warsh-driven-selloff-ahead-of-the-ecb-decision-what-to-watch-next/",
+   "published_at": "2026-09-10T10:26:51Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/usdcad-technicals-usdcad-extends-higher-but-stalls-at-key-trendline-resistance/",
+   "published_at": "2026-09-11T18:55:36Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://www.federalreserve.gov/releases/h10/20260908/",
+   "published_at": "2026-09-08T20:15:00Z",
+   "kind": "h10_release"
+  },
+  {
+   "url": "pinebox-bar-store:TVC_DXY/60/2026-09.json#time=1789362000000",
+   "published_at": "2026-09-14T06:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_EURUSD/60/2026-09.json#time=1789362000000",
+   "published_at": "2026-09-14T06:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_GBPUSD/60/2026-09.json#time=1789362000000",
+   "published_at": "2026-09-14T06:00:00Z",
+   "kind": "spot_bar"
+  }
+ ],
+ "expiries": {
+  "EURUSD": [],
+  "GBPUSD": [],
+  "USDJPY": []
+ },
+ "spots": {
+  "from": "pinebox bar store, last 1H close before the anchor",
+  "bar_close_utc": "2026-09-14T06:00:00Z",
+  "DXY": 99.314,
+  "EURUSD": 1.15698,
+  "GBPUSD": 1.35056
+ },
+ "k_anchor": 108.015521,
+ "h10": {
+  "release_date": "2026-09-08",
+  "published_at": "2026-09-08T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260908/",
+  "rate_day": "Sep. 4",
+  "rates": {
+   "EURUSD": 1.1618,
+   "USDJPY": 156.11,
+   "GBPUSD": 1.3521,
+   "USDCAD": 1.3834,
+   "USDSEK": 9.5646,
+   "USDCHF": 0.8096
+  },
+  "k_h10": 108.054536,
+  "dxy_h10": 99.1122
+ },
+ "dxy_levels": [],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [
+   {
+    "price": 1.14,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/eur-usd-almost-erased-warsh-driven-selloff-ahead-of-the-ecb-decision-what-to-watch-next/",
+    "published_at": "2026-09-10T10:26:51Z",
+    "quote": "the 1.14 support"
+   },
+   {
+    "price": 1.1559,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi/",
+    "published_at": "2026-09-10T16:22:44Z",
+    "quote": "and then the 100 day moving average at 1.1559."
+   },
+   {
+    "price": 1.156,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/eur-usd-almost-erased-warsh-driven-selloff-ahead-of-the-ecb-decision-what-to-watch-next/",
+    "published_at": "2026-09-10T10:26:51Z",
+    "quote": "after bouncing from the 1.1560 support."
+   },
+   {
+    "price": 1.15738,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi/",
+    "published_at": "2026-09-10T16:22:44Z",
+    "quote": "the 38.2% retracement of the move up from the end of July low at 1.15738"
+   },
+   {
+    "price": 1.15849,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi/",
+    "published_at": "2026-09-10T16:22:44Z",
+    "quote": "stopping short of the swing level at 1.15849 (see red numbered circles on the chart below)"
+   },
+   {
+    "price": 1.16071,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi/",
+    "published_at": "2026-09-10T16:22:44Z",
+    "quote": "On renewed weakness, the 200-hour moving average at 1.16137and the lower end of the nearby swing area at 1.16071 become the first support targets."
+   },
+   {
+    "price": 1.16137,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi/",
+    "published_at": "2026-09-10T16:22:44Z",
+    "quote": "On renewed weakness, the 200-hour moving average at 1.16137and the lower end of the nearby swing area at 1.16071 become the first support targets."
+   },
+   {
+    "price": 1.16252,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi/",
+    "published_at": "2026-09-10T16:22:44Z",
+    "quote": "The 100-hour moving average comes in at 1.16252, while the key 200-day moving average is just above at 1.16321."
+   },
+   {
+    "price": 1.16321,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi/",
+    "published_at": "2026-09-10T16:22:44Z",
+    "quote": "The 100-hour moving average comes in at 1.16252, while the key 200-day moving average is just above at 1.16321."
+   },
+   {
+    "price": 1.1661,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/eur-usd-almost-erased-warsh-driven-selloff-ahead-of-the-ecb-decision-what-to-watch-next/",
+    "published_at": "2026-09-10T10:26:51Z",
+    "quote": "high around the 1.1661 is going to be key"
+   },
+   {
+    "price": 1.1711,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/eur-usd-almost-erased-warsh-driven-selloff-ahead-of-the-ecb-decision-what-to-watch-next/",
+    "published_at": "2026-09-10T10:26:51Z",
+    "quote": "the 1.1711 high"
+   },
+   {
+    "price": 1.185,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/eur-usd-almost-erased-warsh-driven-selloff-ahead-of-the-ecb-decision-what-to-watch-next/",
+    "published_at": "2026-09-10T10:26:51Z",
+    "quote": "rally into the 1.1850 level next."
+   }
+  ],
+  "GBPUSD": []
+ },
+ "read_stats": {
+  "entries_seen": 0,
+  "agreed_first_two_reads": 0,
+  "accepted": 0,
+  "dropped": 0
+ },
+ "model": {
+  "id": "muse-spark-1.3-contributor",
+  "effort": "high",
+  "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+  "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+ },
+ "dropped": [],
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-09-14T06:00:00Z",
+  "Monday expiry post https://investinglive.com/orders/fx-option-expiries-for-14-september-10am-new-york-cut/ published 2026-09-14T06:58:44+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W37, 2026-W38",
+  "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/: no table image in the article body",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "accept: 0 strike/notional entries accepted (2+ reads identical), 0 dropped",
+  "emit: as-of gate passed for 9 sources and every datum"
+ ]
+}

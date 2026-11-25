@@ -1,0 +1,606 @@
+{
+ "week": "2026-03-02",
+ "anchor_utc": "2026-03-02T07:00:00Z",
+ "sources": [
+  {
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z",
+   "kind": "expiry_post_prior"
+  },
+  {
+   "url": "https://investinglive.com/cms/media/migrated/images/FXO%2027-02_id_a8c4d8de-68f0-4e5a-b07f-518ccc1302ca_size900.jpg",
+   "published_at": "2026-02-27T06:41:04Z",
+   "kind": "expiry_image"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226/",
+   "published_at": "2026-02-26T20:01:13Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+   "published_at": "2026-02-26T13:18:47Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/forex/eurusd-stays-rangebound-as-focus-turns-to-us-iran-talks-and-the-nfp-report-20260226/",
+   "published_at": "2026-02-26T08:15:50Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/audusd-technicals-audusd-closing-with-a-more-bullish-bias-what-would-tarnish-the-bias-20260227/",
+   "published_at": "2026-02-27T20:07:07Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://www.federalreserve.gov/releases/h10/20260223/",
+   "published_at": "2026-02-23T21:15:00Z",
+   "kind": "h10_release"
+  },
+  {
+   "url": "pinebox-bar-store:TVC_DXY/60/2026-03.json#time=1772431200000",
+   "published_at": "2026-03-02T07:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_EURUSD/60/2026-03.json#time=1772431200000",
+   "published_at": "2026-03-02T07:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_GBPUSD/60/2026-03.json#time=1772431200000",
+   "published_at": "2026-03-02T07:00:00Z",
+   "kind": "spot_bar"
+  }
+ ],
+ "expiries": {
+  "EURUSD": [
+   {
+    "strike": 1.17,
+    "notional_m": 536,
+    "ccy": "EUR",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 1.175,
+    "notional_m": 2500,
+    "ccy": "EUR",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 1.18,
+    "notional_m": 1400,
+    "ccy": "EUR",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 1.18541,
+    "notional_m": 1706,
+    "ccy": "EUR",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.185,
+      "notional_m": 1000
+     },
+     {
+      "strike": 1.186,
+      "notional_m": 706
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 1.19,
+    "notional_m": 1600,
+    "ccy": "EUR",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 1.195,
+    "notional_m": 1000,
+    "ccy": "EUR",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 1.17,
+    "notional_m": 624,
+    "ccy": "EUR",
+    "cut_date": "2026-03-02",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 1.175,
+    "notional_m": 1900,
+    "ccy": "EUR",
+    "cut_date": "2026-03-02",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 1.18,
+    "notional_m": 2100,
+    "ccy": "EUR",
+    "cut_date": "2026-03-02",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   }
+  ],
+  "GBPUSD": [],
+  "USDJPY": [
+   {
+    "strike": 155,
+    "notional_m": 1800,
+    "ccy": "USD",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 156.5,
+    "notional_m": 549,
+    "ccy": "USD",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 157,
+    "notional_m": 939,
+    "ccy": "USD",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 157,
+    "notional_m": 565,
+    "ccy": "USD",
+    "cut_date": "2026-03-02",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   }
+  ],
+  "AUDUSD": [
+   {
+    "strike": 0.708,
+    "notional_m": 589,
+    "ccy": "AUD",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   },
+   {
+    "strike": 0.725,
+    "notional_m": 907,
+    "ccy": "AUD",
+    "cut_date": "2026-02-27",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   }
+  ],
+  "USDCHF": [
+   {
+    "strike": 0.7725,
+    "notional_m": 798,
+    "ccy": "USD",
+    "cut_date": "2026-03-02",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+    "published_at": "2026-02-27T06:41:04Z"
+   }
+  ]
+ },
+ "spots": {
+  "from": "pinebox bar store, last 1H close before the anchor",
+  "bar_close_utc": "2026-03-02T07:00:00Z",
+  "DXY": 98.257,
+  "EURUSD": 1.17322,
+  "GBPUSD": 1.33815
+ },
+ "k_anchor": 107.727373,
+ "h10": {
+  "release_date": "2026-02-23",
+  "published_at": "2026-02-23T21:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260223/",
+  "rate_day": "Feb. 20",
+  "rates": {
+   "EURUSD": 1.1781,
+   "USDJPY": 154.99,
+   "GBPUSD": 1.35,
+   "USDCAD": 1.3688,
+   "USDSEK": 9.0571,
+   "USDCHF": 0.7756
+  },
+  "k_h10": 107.451754,
+  "dxy_h10": 97.7716
+ },
+ "dxy_levels": [
+  {
+   "price": 98.1712,
+   "from_pair": "EURUSD",
+   "strike": 1.175,
+   "notional_m": 2500,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-02-27"
+  },
+  {
+   "price": 97.9314,
+   "from_pair": "EURUSD",
+   "strike": 1.18,
+   "notional_m": 1400,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-02-27"
+  },
+  {
+   "price": 97.6737,
+   "from_pair": "EURUSD",
+   "strike": 1.18541,
+   "notional_m": 1706,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-02-27"
+  },
+  {
+   "price": 97.4565,
+   "from_pair": "EURUSD",
+   "strike": 1.19,
+   "notional_m": 1600,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-02-27"
+  },
+  {
+   "price": 97.2215,
+   "from_pair": "EURUSD",
+   "strike": 1.195,
+   "notional_m": 1000,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-02-27"
+  },
+  {
+   "price": 98.1712,
+   "from_pair": "EURUSD",
+   "strike": 1.175,
+   "notional_m": 1900,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-03-02"
+  },
+  {
+   "price": 97.9314,
+   "from_pair": "EURUSD",
+   "strike": 1.18,
+   "notional_m": 2100,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-03-02"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [
+   {
+    "price": 1.1691,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "1.1691,\nwhere the 100-day MA comes into focus"
+   },
+   {
+    "price": 1.1741,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "1.1741,\nlast week’s double bottom"
+   },
+   {
+    "price": 1.175,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/eurusd-stays-rangebound-as-focus-turns-to-us-iran-talks-and-the-nfp-report-20260226/",
+    "published_at": "2026-02-26T08:15:50Z",
+    "quote": "for a drop\ninto the 1.1750 support next."
+   },
+   {
+    "price": 1.1765,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "1.1765–1.1778,\nthe swing area floor for the week"
+   },
+   {
+    "price": 1.1778,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "1.1765–1.1778,\nthe swing area floor for the week"
+   },
+   {
+    "price": 1.1793,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "buyers stepped in at the 100-hour MA near 1.1793 ."
+   },
+   {
+    "price": 1.1801,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "MA at 1.1801 , but buyers stepped in"
+   },
+   {
+    "price": 1.1807,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/eurusd-stays-rangebound-as-focus-turns-to-us-iran-talks-and-the-nfp-report-20260226/",
+    "published_at": "2026-02-26T08:15:50Z",
+    "quote": "buyers will likely step in around the 1.1807 support with"
+   },
+   {
+    "price": 1.183,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "That 1.1830–1.1834 area is key resistance."
+   },
+   {
+    "price": 1.1834,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "That 1.1830–1.1834 area is key resistance."
+   },
+   {
+    "price": 1.185,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/forex/eurusd-stays-rangebound-as-focus-turns-to-us-iran-talks-and-the-nfp-report-20260226/",
+    "published_at": "2026-02-26T08:15:50Z",
+    "quote": "to extend the rally into the 1.1850 resistance."
+   },
+   {
+    "price": 1.186,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "1.1860\nas the next upside target"
+   },
+   {
+    "price": 1.1889,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "1.1889,\nthe broken 38.2% retracement of the 2026 trading range"
+   },
+   {
+    "price": 1.1927,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/eurusd-stays-rangebound-as-focus-turns-to-us-iran-talks-and-the-nfp-report-20260226/",
+    "published_at": "2026-02-26T08:15:50Z",
+    "quote": "setup around the\n1.1927 level to position for a drop"
+   }
+  ],
+  "GBPUSD": [
+   {
+    "price": 1.33926,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226/",
+    "published_at": "2026-02-26T20:01:13Z",
+    "quote": "Support:\n1.3445 (200-day MA level)\n1.33926 (100 day MA level)"
+   },
+   {
+    "price": 1.34448,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226/",
+    "published_at": "2026-02-26T20:01:13Z",
+    "quote": "testing the rising 200-day moving average at 1.34448 — a key technical level."
+   },
+   {
+    "price": 1.3445,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226/",
+    "published_at": "2026-02-26T20:01:13Z",
+    "quote": "Support:\n1.3445 (200-day MA level)"
+   },
+   {
+    "price": 1.3488,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226/",
+    "published_at": "2026-02-26T20:01:13Z",
+    "quote": "Resistance:\n1.3488 (lows from yesterdya)"
+   },
+   {
+    "price": 1.3512,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "rising 100-hour MA at 1.3512"
+   },
+   {
+    "price": 1.3512,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226/",
+    "published_at": "2026-02-26T20:01:13Z",
+    "quote": "Resistance:\n1.3488 (lows from yesterdya)\n1.3512 (100-hour MA)"
+   },
+   {
+    "price": 1.35125,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226/",
+    "published_at": "2026-02-26T20:01:13Z",
+    "quote": "100-hour MA (1.35125)"
+   },
+   {
+    "price": 1.3521,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226/",
+    "published_at": "2026-02-26T20:01:13Z",
+    "quote": "200-hour MA (1.3521)"
+   },
+   {
+    "price": 1.3526,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "below the 200-hour MA at 1.3526"
+   },
+   {
+    "price": 1.3536,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "now trading back above 1.3536 .\nHolding above that reclaimed swing area keeps buyers in"
+   },
+   {
+    "price": 1.3537,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "under the 1.3526–1.3537 swing area"
+   },
+   {
+    "price": 1.3575,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "A break above 1.3575 would bring the 1.3582–1.3590"
+   },
+   {
+    "price": 1.3582,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "it stalled just ahead of the swing resistance zone between 1.3582 and 1.3590 ."
+   },
+   {
+    "price": 1.359,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+    "published_at": "2026-02-26T13:18:47Z",
+    "quote": "it stalled just ahead of the swing resistance zone between 1.3582 and 1.3590 ."
+   }
+  ]
+ },
+ "read_stats": {
+  "entries_seen": 17,
+  "agreed_first_two_reads": 17,
+  "accepted": 17,
+  "dropped": 0
+ },
+ "model": {
+  "id": "muse-spark-1.3-contributor",
+  "effort": "high",
+  "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+  "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+ },
+ "dropped": [],
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-03-02T07:00:00Z",
+  "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-2-march-10am-new-york-cut-20260302/ published 2026-03-02T07:27:54+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W09, 2026-W10",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/: reads A/B agree on 17 of 17 entries; third read for columns []",
+  "accept: 17 strike/notional entries accepted (2+ reads identical), 0 dropped",
+  "emit: as-of gate passed for 10 sources and every datum"
+ ]
+}

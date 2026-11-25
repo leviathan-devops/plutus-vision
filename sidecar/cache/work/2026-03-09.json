@@ -1,0 +1,957 @@
+{
+ "week": "2026-03-09",
+ "anchor": 1773036000000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-03-09T06:00:00Z",
+  "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-9-march-10am-new-york-cut-20260309/ published 2026-03-09T06:41:21+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W10, 2026-W11",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/: reads A/B agree on 16 of 16 entries; third read for columns []",
+  "accept: 16 strike/notional entries accepted (2+ reads identical), 0 dropped"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "lastmod": "2026-03-06T07:01:09+00:00",
+   "cut_date": "2026-03-06",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-09/investinglive_orders_fx-option-expiries-for-6-march-10am-new-york-cut-20260306.html",
+   "published_at": "2026-03-06T07:01:09Z",
+   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2006-03_id_96e6d48e-ac74-4954-9518-dc6c3a86b0d3_size900.jpg",
+   "image_file": "/home/user/plutus-vision/sidecar/raw/2026-03-09/investinglive_orders_fx-option-expiries-for-6-march-10am-new-york-cut-20260306__FXO_06-03_id_96e6d48e-ac74-4954-9518-dc6c3a86b0d3_size900.jpg",
+   "views_dir": "/home/user/plutus-vision/sidecar/cache/views/4654767404df16b4",
+   "views": {
+    "grid_ok": true,
+    "hlines": [
+     11,
+     25,
+     39,
+     159,
+     258
+    ],
+    "pair_columns": 8,
+    "size": [
+     900,
+     271
+    ],
+    "source": "investinglive_orders_fx-option-expiries-for-6-march-10am-new-york-cut-20260306__FXO_06-03_id_96e6d48e-ac74-4954-9518-dc6c3a86b0d3_size900.jpg",
+    "views": {
+     "A": {
+      "box": [
+       0,
+       0,
+       900,
+       271
+      ],
+      "file": "A.png",
+      "scale": 2.2,
+      "size": [
+       1980,
+       596
+      ]
+     },
+     "B1": {
+      "box": [
+       135,
+       8,
+       514,
+       262
+      ],
+      "file": "B1.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "scale": 3.89,
+      "size": [
+       1980,
+       988
+      ]
+     },
+     "B2": {
+      "box": [
+       512,
+       8,
+       892,
+       262
+      ],
+      "file": "B2.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       4,
+       5,
+       6,
+       7
+      ],
+      "scale": 3.8824,
+      "size": [
+       1980,
+       986
+      ]
+     },
+     "C0": {
+      "box": [
+       135,
+       8,
+       231,
+       262
+      ],
+      "file": "C0.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       0
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1524
+      ]
+     },
+     "C1": {
+      "box": [
+       229,
+       8,
+       326,
+       262
+      ],
+      "file": "C1.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       1
+      ],
+      "scale": 6,
+      "size": [
+       1362,
+       1524
+      ]
+     },
+     "C2": {
+      "box": [
+       324,
+       8,
+       420,
+       262
+      ],
+      "file": "C2.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       2
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1524
+      ]
+     },
+     "C3": {
+      "box": [
+       418,
+       8,
+       514,
+       262
+      ],
+      "file": "C3.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       3
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1524
+      ]
+     },
+     "C4": {
+      "box": [
+       512,
+       8,
+       608,
+       262
+      ],
+      "file": "C4.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       4
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1524
+      ]
+     },
+     "C5": {
+      "box": [
+       606,
+       8,
+       702,
+       262
+      ],
+      "file": "C5.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       5
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1524
+      ]
+     },
+     "C6": {
+      "box": [
+       700,
+       8,
+       796,
+       262
+      ],
+      "file": "C6.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       6
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1524
+      ]
+     },
+     "C7": {
+      "box": [
+       794,
+       8,
+       891,
+       262
+      ],
+      "file": "C7.png",
+      "label_box": [
+       6,
+       8,
+       136,
+       262
+      ],
+      "pair_index": [
+       7
+      ],
+      "scale": 6,
+      "size": [
+       1362,
+       1524
+      ]
+     }
+    },
+    "vlines": [
+     36,
+     135,
+     229,
+     324,
+     418,
+     512,
+     606,
+     700,
+     794,
+     889
+    ]
+   },
+   "reads": {
+    "A": "fa9e92141f62225254b882e431b94c902d2fedea8b08c1a2804073d23e7ad0c6",
+    "B1": "bad08c1e886c3c25f638a7b355af1429c52788d648803223892e55d93628ee59",
+    "B2": "cd71946f987263ff5b1a5dbc7b7df8ed0126074b4e92179b1ab186fcb49c5ce7"
+   },
+   "tiebreak": []
+  }
+ ],
+ "analyst": [
+  {
+   "url": "https://investinglive.com/forex/euro-nears-the-november-lows-as-energy-crisis-looms-20260309/",
+   "lastmod": "2026-03-09T01:27:25+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-09/investinglive_forex_euro-nears-the-november-lows-as-energy-crisis-looms-20260309.html",
+   "published_at": "2026-03-09T01:27:25Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/the-usd-moved-lower-but-has-since-bounce-back-after-the-weaker-than-expected-jobs-report-20260306/",
+   "lastmod": "2026-03-06T14:48:48+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-09/investinglive_technical-analysis_the-usd-moved-lower-but-has-since-bounce-back-after-the-weaker-than-expected-jobs-report-20260306.html",
+   "published_at": "2026-03-06T14:48:48Z"
+  },
+  {
+   "url": "https://investinglive.com/forex/high-energy-prices-and-ecb-rate-hike-bets-weigh-on-the-euro-as-growth-outlook-worsens-20260306/",
+   "lastmod": "2026-03-06T11:09:48+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-09/investinglive_forex_high-energy-prices-and-ecb-rate-hike-bets-weigh-on-the-euro-as-growth-outlook-worsens-20260306.html",
+   "published_at": "2026-03-06T11:09:48Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/nzdusd-finding-support-against-a-familiar-channel-trend-line-20260305/",
+   "lastmod": "2026-03-05T17:46:49+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-09/investinglive_technical-analysis_nzdusd-finding-support-against-a-familiar-channel-trend-line-20260305.html",
+   "published_at": "2026-03-05T17:46:49Z"
+  }
+ ],
+ "h10": {
+  "release_date": "2026-03-02",
+  "published_at": "2026-03-02T21:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260302/",
+  "rate_day": "Feb. 27",
+  "rates": {
+   "EURUSD": 1.1822,
+   "USDJPY": 156.05,
+   "GBPUSD": 1.3455,
+   "USDCAD": 1.3632,
+   "USDSEK": 9.0199,
+   "USDCHF": 0.7686
+  },
+  "k_h10": 107.500331,
+  "dxy_h10": 97.6202
+ },
+ "accepted": [
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-06",
+   "strike": "1.1490",
+   "notional_m": 550,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-06",
+   "strike": "1.1600",
+   "notional_m": 1100,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-06",
+   "strike": "1.1700",
+   "notional_m": 525,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-06",
+   "strike": "1.1720",
+   "notional_m": 686,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-06",
+   "strike": "1.1750",
+   "notional_m": 1000,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-06",
+   "strike": "1.1800",
+   "notional_m": 635,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-09",
+   "strike": "1.1690",
+   "notional_m": 694,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-03-06",
+   "strike": "156.40",
+   "notional_m": 955,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-03-06",
+   "strike": "158.25",
+   "notional_m": 571,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-03-09",
+   "strike": "155.00",
+   "notional_m": 1400,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-03-09",
+   "strike": "157.70",
+   "notional_m": 605,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-03-06",
+   "strike": "1.3600",
+   "notional_m": 1800,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-03-06",
+   "strike": "0.7050",
+   "notional_m": 687,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-03-06",
+   "strike": "0.7100",
+   "notional_m": 630,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-03-09",
+   "strike": "0.7000",
+   "notional_m": 543,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  },
+  {
+   "pair": "EURGBP",
+   "date": "2026-03-06",
+   "strike": "0.8750",
+   "notional_m": 603,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+   "published_at": "2026-03-06T07:01:09Z"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [
+   {
+    "price": 1.11,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/euro-nears-the-november-lows-as-energy-crisis-looms-20260309/",
+    "published_at": "2026-03-09T01:27:25Z",
+    "quote": "could lead to a quick move down to 1.11, where there is stronger support."
+   },
+   {
+    "price": 1.14,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/high-energy-prices-and-ecb-rate-hike-bets-weigh-on-the-euro-as-growth-outlook-worsens-20260306/",
+    "published_at": "2026-03-06T11:09:48Z",
+    "quote": "1.14 handle next."
+   },
+   {
+    "price": 1.1575,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/high-energy-prices-and-ecb-rate-hike-bets-weigh-on-the-euro-as-growth-outlook-worsens-20260306/",
+    "published_at": "2026-03-06T11:09:48Z",
+    "quote": "see that EURUSD stalled at the key 1.1575"
+   },
+   {
+    "price": 1.1655,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/high-energy-prices-and-ecb-rate-hike-bets-weigh-on-the-euro-as-growth-outlook-worsens-20260306/",
+    "published_at": "2026-03-06T11:09:48Z",
+    "quote": "If the price bounces and breaks above the 1.1655 high, we can expect the"
+   }
+  ],
+  "GBPUSD": []
+ },
+ "stats": {
+  "entries_seen": 16,
+  "agreed_first_two_reads": 16,
+  "accepted": 16,
+  "dropped": 0
+ },
+ "h10_src": {
+  "url": "https://www.federalreserve.gov/releases/h10/20260302/",
+  "published_at": "2026-03-02T21:15:00Z",
+  "kind": "h10_release"
+ },
+ "analyst_key": "e1e10ce0b922341f2b9daa3fa1c4b118340fda5b7e4c93cc957ff3ee26fb64c5",
+ "out": {
+  "week": "2026-03-09",
+  "anchor_utc": "2026-03-09T06:00:00Z",
+  "sources": [
+   {
+    "url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+    "published_at": "2026-03-06T07:01:09Z",
+    "kind": "expiry_post_prior"
+   },
+   {
+    "url": "https://investinglive.com/cms/media/migrated/images/FXO%2006-03_id_96e6d48e-ac74-4954-9518-dc6c3a86b0d3_size900.jpg",
+    "published_at": "2026-03-06T07:01:09Z",
+    "kind": "expiry_image"
+   },
+   {
+    "url": "https://investinglive.com/forex/euro-nears-the-november-lows-as-energy-crisis-looms-20260309/",
+    "published_at": "2026-03-09T01:27:25Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/the-usd-moved-lower-but-has-since-bounce-back-after-the-weaker-than-expected-jobs-report-20260306/",
+    "published_at": "2026-03-06T14:48:48Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/forex/high-energy-prices-and-ecb-rate-hike-bets-weigh-on-the-euro-as-growth-outlook-worsens-20260306/",
+    "published_at": "2026-03-06T11:09:48Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/nzdusd-finding-support-against-a-familiar-channel-trend-line-20260305/",
+    "published_at": "2026-03-05T17:46:49Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://www.federalreserve.gov/releases/h10/20260302/",
+    "published_at": "2026-03-02T21:15:00Z",
+    "kind": "h10_release"
+   },
+   {
+    "url": "pinebox-bar-store:TVC_DXY/60/2026-03.json#time=1773032400000",
+    "published_at": "2026-03-09T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_EURUSD/60/2026-03.json#time=1773032400000",
+    "published_at": "2026-03-09T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_GBPUSD/60/2026-03.json#time=1773032400000",
+    "published_at": "2026-03-09T06:00:00Z",
+    "kind": "spot_bar"
+   }
+  ],
+  "expiries": {
+   "EURUSD": [
+    {
+     "strike": 1.149,
+     "notional_m": 550,
+     "ccy": "EUR",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 1.16,
+     "notional_m": 1100,
+     "ccy": "EUR",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 1.17,
+     "notional_m": 525,
+     "ccy": "EUR",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 1.172,
+     "notional_m": 686,
+     "ccy": "EUR",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 1.175,
+     "notional_m": 1000,
+     "ccy": "EUR",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 1.18,
+     "notional_m": 635,
+     "ccy": "EUR",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 1.169,
+     "notional_m": 694,
+     "ccy": "EUR",
+     "cut_date": "2026-03-09",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    }
+   ],
+   "GBPUSD": [],
+   "USDJPY": [
+    {
+     "strike": 156.4,
+     "notional_m": 955,
+     "ccy": "USD",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 158.25,
+     "notional_m": 571,
+     "ccy": "USD",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 155,
+     "notional_m": 1400,
+     "ccy": "USD",
+     "cut_date": "2026-03-09",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 157.7,
+     "notional_m": 605,
+     "ccy": "USD",
+     "cut_date": "2026-03-09",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    }
+   ],
+   "AUDUSD": [
+    {
+     "strike": 0.705,
+     "notional_m": 687,
+     "ccy": "AUD",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 0.71,
+     "notional_m": 630,
+     "ccy": "AUD",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    },
+    {
+     "strike": 0.7,
+     "notional_m": 543,
+     "ccy": "AUD",
+     "cut_date": "2026-03-09",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    }
+   ],
+   "EURGBP": [
+    {
+     "strike": 0.875,
+     "notional_m": 603,
+     "ccy": "EUR",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    }
+   ],
+   "USDCAD": [
+    {
+     "strike": 1.36,
+     "notional_m": 1800,
+     "ccy": "USD",
+     "cut_date": "2026-03-06",
+     "state": "ghost",
+     "tier": 1,
+     "code": 3,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/",
+     "published_at": "2026-03-06T07:01:09Z"
+    }
+   ]
+  },
+  "spots": {
+   "from": "pinebox bar store, last 1H close before the anchor",
+   "bar_close_utc": "2026-03-09T06:00:00Z",
+   "DXY": 99.247,
+   "EURUSD": 1.15675,
+   "GBPUSD": 1.33334
+  },
+  "k_anchor": 107.93029,
+  "h10": {
+   "release_date": "2026-03-02",
+   "published_at": "2026-03-02T21:15:00Z",
+   "source_url": "https://www.federalreserve.gov/releases/h10/20260302/",
+   "rate_day": "Feb. 27",
+   "rates": {
+    "EURUSD": 1.1822,
+    "USDJPY": 156.05,
+    "GBPUSD": 1.3455,
+    "USDCAD": 1.3632,
+    "USDSEK": 9.0199,
+    "USDCHF": 0.7686
+   },
+   "k_h10": 107.500331,
+   "dxy_h10": 97.6202
+  },
+  "dxy_levels": [
+   {
+    "price": 99.0867,
+    "from_pair": "EURUSD",
+    "strike": 1.16,
+    "notional_m": 1100,
+    "tier": 2,
+    "state": "ghost",
+    "code": 4,
+    "cut_date": "2026-03-06"
+   },
+   {
+    "price": 98.3562,
+    "from_pair": "EURUSD",
+    "strike": 1.175,
+    "notional_m": 1000,
+    "tier": 2,
+    "state": "ghost",
+    "code": 4,
+    "cut_date": "2026-03-06"
+   }
+  ],
+  "analyst_levels": {
+   "DXY": [],
+   "EURUSD": [
+    {
+     "price": 1.11,
+     "role": "support",
+     "source_url": "https://investinglive.com/forex/euro-nears-the-november-lows-as-energy-crisis-looms-20260309/",
+     "published_at": "2026-03-09T01:27:25Z",
+     "quote": "could lead to a quick move down to 1.11, where there is stronger support."
+    },
+    {
+     "price": 1.14,
+     "role": "level",
+     "source_url": "https://investinglive.com/forex/high-energy-prices-and-ecb-rate-hike-bets-weigh-on-the-euro-as-growth-outlook-worsens-20260306/",
+     "published_at": "2026-03-06T11:09:48Z",
+     "quote": "1.14 handle next."
+    },
+    {
+     "price": 1.1575,
+     "role": "level",
+     "source_url": "https://investinglive.com/forex/high-energy-prices-and-ecb-rate-hike-bets-weigh-on-the-euro-as-growth-outlook-worsens-20260306/",
+     "published_at": "2026-03-06T11:09:48Z",
+     "quote": "see that EURUSD stalled at the key 1.1575"
+    },
+    {
+     "price": 1.1655,
+     "role": "level",
+     "source_url": "https://investinglive.com/forex/high-energy-prices-and-ecb-rate-hike-bets-weigh-on-the-euro-as-growth-outlook-worsens-20260306/",
+     "published_at": "2026-03-06T11:09:48Z",
+     "quote": "If the price bounces and breaks above the 1.1655 high, we can expect the"
+    }
+   ],
+   "GBPUSD": []
+  },
+  "read_stats": {
+   "entries_seen": 16,
+   "agreed_first_two_reads": 16,
+   "accepted": 16,
+   "dropped": 0
+  },
+  "model": {
+   "id": "muse-spark-1.3-contributor",
+   "effort": "high",
+   "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+   "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+  },
+  "dropped": [],
+  "log": [
+   "anchor = Monday 02:00 America/New_York = 2026-03-09T06:00:00Z",
+   "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-9-march-10am-new-york-cut-20260309/ published 2026-03-09T06:41:21+00:00 is AFTER the anchor: excluded, not fetched",
+   "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W10, 2026-W11",
+   "asof_gate: every fetched page was published at or before the anchor",
+   "https://investinglive.com/Orders/fx-option-expiries-for-6-march-10am-new-york-cut-20260306/: reads A/B agree on 16 of 16 entries; third read for columns []",
+   "accept: 16 strike/notional entries accepted (2+ reads identical), 0 dropped",
+   "emit: as-of gate passed for 10 sources and every datum"
+  ]
+ }
+}

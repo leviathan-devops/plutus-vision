@@ -1,0 +1,11 @@
+{
+ "key": "a1d372d5bf0eb435be479e2f3b8d370dedace857f9364afe6d218bce035a5bf0",
+ "kind": "expiry_read_A",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "eb731a7b12b96ef0b38f63bd495c865935212f9f89a26f28b69971c282e5101f",
+ "image": "cache/views/f419316e682a17be/A.png",
+ "image_sha256": "9787423f148895ffa1dbe2f6156e4f872c673b85089767bd08f9b3cd3cb26a0e",
+ "text": "{\"pairs\":[\"EUR/USD\",\"USD/JPY\",\"GBP/USD\",\"USD/CHF\",\"USD/CAD\",\"AUD/USD\",\"NZD/USD\",\"EUR/GBP\"],\"spot\":{\"EUR/USD\":\"1.1536\",\"USD/JPY\":\"159.32\",\"GBP/USD\":\"1.3232\",\"USD/CHF\":\"0.7983\",\"USD/CAD\":\"1.3909\",\"AUD/USD\":\"0.6879\",\"NZD/USD\":\"0.5709\",\"EUR/GBP\":\"0.8715\"},\"rows\":[{\"label\":\"Thursday\",\"date\":\"02/04\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1400\",\"notional\":\"€929m\"},{\"strike\":\"1.1425\",\"notional\":\"€551m\"},{\"strike\":\"1.1500\",\"notional\":\"€1.3bn\"},{\"strike\":\"1.1540\",\"notional\":\"€778m\"},{\"strike\":\"1.1590\",\"notional\":\"€619m\"},{\"strike\":\"1.1650\",\"notional\":\"€1.3bn\"}],\"USD/JPY\":[{\"strike\":\"157.00\",\"notional\":\"$1.5bn\"},{\"strike\":\"157.35\",\"notional\":\"$606m\"},{\"strike\":\"159.00\",\"notional\":\"$917m\"},{\"strike\":\"159.75\",\"notional\":\"$858m\"},{\"strike\":\"160.00\",\"notional\":\"$1.0bn\"},{\"strike\":\"160.50\",\"notional\":\"$575m\"},{\"strike\":\"160.55\",\"notional\":\"$688m\"}],\"GBP/USD\":[],\"USD/CHF\":[],\"USD/CAD\":[{\"strike\":\"1.3705\",\"notional\":\"$730m\"},{\"strike\":\"1.3825\",\"notional\":\"$558m\"}],\"AUD/USD\":[{\"strike\":\"0.6800\",\"notional\":\"A$885m\"},{\"strike\":\"0.6900\",\"notional\":\"A$664m\"},{\"strike\":\"0.7025\",\"notional\":\"A$740m\"}],\"NZD/USD\":[],\"EUR/GBP\":[]}},{\"label\":\"Friday\",\"date\":\"03/04\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1550\",\"notional\":\"€826m\"}],\"USD/JPY\":[],\"GBP/USD\":[],\"USD/CHF\":[],\"USD/CAD\":[],\"AUD/USD\":[],\"NZD/USD\":[],\"EUR/GBP\":[]}},{\"label\":\"Monday\",\"date\":\"06/04\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1400\",\"notional\":\"€794m\"},{\"strike\":\"1.1800\",\"notional\":\"€748m\"}],\"USD/JPY\":[],\"GBP/USD\":[],\"USD/CHF\":[],\"USD/CAD\":[],\"AUD/USD\":[],\"NZD/USD\":[],\"EUR/GBP\":[]}}]}"
+}

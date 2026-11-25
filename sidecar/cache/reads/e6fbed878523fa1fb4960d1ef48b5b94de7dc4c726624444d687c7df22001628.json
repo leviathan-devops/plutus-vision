@@ -1,0 +1,11 @@
+{
+ "key": "e6fbed878523fa1fb4960d1ef48b5b94de7dc4c726624444d687c7df22001628",
+ "kind": "expiry_read_C0",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "84da2d96a9e4eb6860873db3b7558eab75314f22b6ebc051728e48a8910eda24",
+ "image": "cache/views/29218b7f5ce1bc3f/C0.png",
+ "image_sha256": "72f24b26de3b7f9abf180c7ab449a76d112b980c55f7847fbae0d413b935bdb3",
+ "text": "{\"pairs\":[\"EUR/USD\"],\"spot\":{\"EUR/USD\":\"1.1540\"},\"rows\":[{\"label\":\"Monday\",\"date\":\"23/03\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1500\",\"notional\":\"€758m\"},{\"strike\":\"1.1550\",\"notional\":\"€889m\"},{\"strike\":\"1.1600\",\"notional\":\"€1.8bn\"},{\"strike\":\"1.1650\",\"notional\":\"€761m\"}]}}]}"
+}

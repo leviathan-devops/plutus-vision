@@ -1,0 +1,11 @@
+{
+ "key": "4e2c4b84aa009c457d9eff21bb76c2fc1c02da3accfddc5fe209825fffd6a06f",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "2f6edda08d0e040a9a2a63bb85bd32da84a88b8d09dfca9ecd6925d8ec3e33dd",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.13\",\"role\":\"level\",\"quote\":\"drop into the 1.13 handle.\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.18\",\"role\":\"level\",\"quote\":\"to increase the bullish bets into the 1.18 handle next.\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.15\",\"role\":\"support\",\"quote\":\"the 1.15 handle should now act as key support.\"}]}"
+}

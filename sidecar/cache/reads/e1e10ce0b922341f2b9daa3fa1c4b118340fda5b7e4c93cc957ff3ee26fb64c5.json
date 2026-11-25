@@ -1,0 +1,11 @@
+{
+ "key": "e1e10ce0b922341f2b9daa3fa1c4b118340fda5b7e4c93cc957ff3ee26fb64c5",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "1956b3c685db001a24110eb10381b83d0baf53dc46a9c35fda3af1785a68040d",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\": [{\"article\": 1, \"instrument\": \"EURUSD\", \"price\": \"1.11\", \"role\": \"support\", \"quote\": \"could lead to a quick move down to 1.11, where there is stronger support.\"}, {\"article\": 3, \"instrument\": \"EURUSD\", \"price\": \"1.1575\", \"role\": \"level\", \"quote\": \"see that EURUSD stalled at the key 1.1575\"}, {\"article\": 3, \"instrument\": \"EURUSD\", \"price\": \"1.1655\", \"role\": \"level\", \"quote\": \"If the price bounces and breaks above the 1.1655 high, we can expect the\"}, {\"article\": 3, \"instrument\": \"EURUSD\", \"price\": \"1.14\", \"role\": \"level\", \"quote\": \"1.14 handle next.\"}]}"
+}

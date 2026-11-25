@@ -1,0 +1,1231 @@
+{
+ "week": "2026-08-31",
+ "anchor": 1788156000000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-08-31T06:00:00Z",
+  "Monday expiry post https://investinglive.com/orders/fx-option-expiries-for-31-august-10am-new-york-cut/ published 2026-08-31T06:10:15+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W35, 2026-W36",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/: reads A/B agree on 22 of 22 entries; third read for columns []",
+  "accept: 22 strike/notional entries accepted (2+ reads identical), 0 dropped"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "lastmod": "2026-08-28T05:37:08+00:00",
+   "cut_date": "2026-08-28",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-08-31/investinglive_orders_fx-option-expiries-for-28-august-10am-new-york-cut.html",
+   "published_at": "2026-08-28T05:37:08Z",
+   "image_url": "https://investinglive.com/cms/media/images/8-28-2026-1-31-12-pm.jpg",
+   "image_file": "/home/user/plutus-vision/sidecar/raw/2026-08-31/investinglive_orders_fx-option-expiries-for-28-august-10am-new-york-cut__8-28-2026-1-31-12-pm.jpg",
+   "views_dir": "/home/user/plutus-vision/sidecar/cache/views/3b9ecbc8fc000a44",
+   "views": {
+    "grid_ok": true,
+    "hlines": [
+     18,
+     40,
+     62,
+     244,
+     428
+    ],
+    "pair_columns": 8,
+    "size": [
+     1414,
+     450
+    ],
+    "source": "investinglive_orders_fx-option-expiries-for-28-august-10am-new-york-cut__8-28-2026-1-31-12-pm.jpg",
+    "views": {
+     "A": {
+      "box": [
+       0,
+       0,
+       1414,
+       450
+      ],
+      "file": "A.png",
+      "scale": 1.4003,
+      "size": [
+       1980,
+       630
+      ]
+     },
+     "B1": {
+      "box": [
+       213,
+       15,
+       803,
+       432
+      ],
+      "file": "B1.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "scale": 2.5515,
+      "size": [
+       1980,
+       1064
+      ]
+     },
+     "B2": {
+      "box": [
+       801,
+       15,
+       1392,
+       432
+      ],
+      "file": "B2.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       4,
+       5,
+       6,
+       7
+      ],
+      "scale": 2.5483,
+      "size": [
+       1980,
+       1063
+      ]
+     },
+     "C0": {
+      "box": [
+       213,
+       15,
+       362,
+       432
+      ],
+      "file": "C0.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       0
+      ],
+      "scale": 4.7482,
+      "size": [
+       1591,
+       1980
+      ]
+     },
+     "C1": {
+      "box": [
+       360,
+       15,
+       509,
+       432
+      ],
+      "file": "C1.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       1
+      ],
+      "scale": 4.7482,
+      "size": [
+       1591,
+       1980
+      ]
+     },
+     "C2": {
+      "box": [
+       507,
+       15,
+       656,
+       432
+      ],
+      "file": "C2.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       2
+      ],
+      "scale": 4.7482,
+      "size": [
+       1591,
+       1980
+      ]
+     },
+     "C3": {
+      "box": [
+       654,
+       15,
+       803,
+       432
+      ],
+      "file": "C3.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       3
+      ],
+      "scale": 4.7482,
+      "size": [
+       1591,
+       1980
+      ]
+     },
+     "C4": {
+      "box": [
+       801,
+       15,
+       950,
+       432
+      ],
+      "file": "C4.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       4
+      ],
+      "scale": 4.7482,
+      "size": [
+       1591,
+       1980
+      ]
+     },
+     "C5": {
+      "box": [
+       948,
+       15,
+       1097,
+       432
+      ],
+      "file": "C5.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       5
+      ],
+      "scale": 4.7482,
+      "size": [
+       1591,
+       1980
+      ]
+     },
+     "C6": {
+      "box": [
+       1095,
+       15,
+       1244,
+       432
+      ],
+      "file": "C6.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       6
+      ],
+      "scale": 4.7482,
+      "size": [
+       1591,
+       1980
+      ]
+     },
+     "C7": {
+      "box": [
+       1242,
+       15,
+       1391,
+       432
+      ],
+      "file": "C7.png",
+      "label_box": [
+       28,
+       15,
+       214,
+       432
+      ],
+      "pair_index": [
+       7
+      ],
+      "scale": 4.7482,
+      "size": [
+       1591,
+       1980
+      ]
+     }
+    },
+    "vlines": [
+     58,
+     213,
+     360,
+     507,
+     654,
+     801,
+     948,
+     1095,
+     1242,
+     1389
+    ]
+   },
+   "reads": {
+    "A": "6f8ae3d784b489bc4e76c5e3030cfe7027c76f4f4e19db5e73301b4946426a35",
+    "B1": "2771d7adebb3e19660e7136e08a64a732d4e494a6d0b32d3427cec1d4ee4fcf2",
+    "B2": "68beb00827e5f2810a8a17b611ff0d4eebdff3ab4ec1c89c33ec0488dff0b3b8"
+   },
+   "tiebreak": []
+  }
+ ],
+ "analyst": [
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+   "lastmod": "2026-08-28T16:23:44+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-08-31/investinglive_technical-analysis_eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels.html",
+   "published_at": "2026-08-28T16:23:44Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/kickstart-kevin-warsh-speech-day-with-a-technical-look-at-the-eurusd-usdjpy-and-gbpusd/",
+   "lastmod": "2026-08-28T12:25:23+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-08-31/investinglive_technical-analysis_kickstart-kevin-warsh-speech-day-with-a-technical-look-at-the-eurusd-usdjpy-and-gbpusd.html",
+   "published_at": "2026-08-28T12:25:23Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/kickstart-the-na-session-with-a-technical-look-at-the-eurusd-usdjpy-and-gbpusd-key-levels-in-play/",
+   "lastmod": "2026-08-27T12:14:17+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-08-31/investinglive_technical-analysis_kickstart-the-na-session-with-a-technical-look-at-the-eurusd-usdjpy-and-gbpusd-key-levels-in-play.html",
+   "published_at": "2026-08-27T12:14:17Z"
+  },
+  {
+   "url": "https://investinglive.com/forex/eur-usd-remains-supported-amid-bessent-put-steady-inflation-traders-await-warsh-s-speech-at-jackson-hole/",
+   "lastmod": "2026-08-27T07:15:45+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-08-31/investinglive_forex_eur-usd-remains-supported-amid-bessent-put-steady-inflation-traders-await-warsh-s-speech-at-jackson-hole.html",
+   "published_at": "2026-08-27T07:15:45Z"
+  }
+ ],
+ "h10": {
+  "release_date": "2026-08-24",
+  "published_at": "2026-08-24T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260824/",
+  "rate_day": "Aug. 21",
+  "rates": {
+   "EURUSD": 1.1684,
+   "USDJPY": 158.91,
+   "GBPUSD": 1.3644,
+   "USDCAD": 1.3765,
+   "USDSEK": 9.4632,
+   "USDCHF": 0.8008
+  },
+  "k_h10": 108.059283,
+  "dxy_h10": 98.7937
+ },
+ "accepted": [
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-28",
+   "strike": "1.1575",
+   "notional_m": 528,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-28",
+   "strike": "1.1600",
+   "notional_m": 812,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-28",
+   "strike": "1.1625",
+   "notional_m": 765,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-28",
+   "strike": "1.1650",
+   "notional_m": 1100,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-28",
+   "strike": "1.1680",
+   "notional_m": 759,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-28",
+   "strike": "1.1725",
+   "notional_m": 840,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-31",
+   "strike": "1.1600",
+   "notional_m": 1900,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-31",
+   "strike": "1.1625",
+   "notional_m": 997,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-31",
+   "strike": "1.1650",
+   "notional_m": 709,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-31",
+   "strike": "1.1675",
+   "notional_m": 1200,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-31",
+   "strike": "1.1680",
+   "notional_m": 717,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-31",
+   "strike": "1.1725",
+   "notional_m": 650,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-08-28",
+   "strike": "158.20",
+   "notional_m": 1100,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-08-28",
+   "strike": "161.00",
+   "notional_m": 665,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-08-31",
+   "strike": "159.00",
+   "notional_m": 2000,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-08-31",
+   "strike": "159.50",
+   "notional_m": 620,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-08-31",
+   "strike": "159.65",
+   "notional_m": 1000,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-08-31",
+   "strike": "159.68",
+   "notional_m": 781,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-08-31",
+   "strike": "159.70",
+   "notional_m": 676,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "GBPUSD",
+   "date": "2026-08-28",
+   "strike": "1.3700",
+   "notional_m": 832,
+   "ccy": "GBP",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "USDCHF",
+   "date": "2026-08-28",
+   "strike": "0.8000",
+   "notional_m": 1500,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-08-31",
+   "strike": "0.7120",
+   "notional_m": 558,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+   "published_at": "2026-08-28T05:37:08Z"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [
+   {
+    "price": 1.15,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/eur-usd-remains-supported-amid-bessent-put-steady-inflation-traders-await-warsh-s-speech-at-jackson-hole/",
+    "published_at": "2026-08-27T07:15:45Z",
+    "quote": "drop into the 1.15 handle next"
+   },
+   {
+    "price": 1.15356,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "The next downside targets would come near 1.15578, followed by the 50% retracement at 1.15356."
+   },
+   {
+    "price": 1.15578,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "The next downside targets would come near 1.15578, followed by the 50% retracement at 1.15356."
+   },
+   {
+    "price": 1.157,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "Just below that zone sits the 38.2% retracement of the rally from the July low at 1.15733, along with the rising 100-day moving average near 1.1570."
+   },
+   {
+    "price": 1.15733,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "Just below that zone sits the 38.2% retracement of the rally from the July low at 1.15733, along with the rising 100-day moving average near 1.1570."
+   },
+   {
+    "price": 1.15872,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "The price is now testing a swing area between 1.15937 and 1.15872."
+   },
+   {
+    "price": 1.15937,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "The price is now testing a swing area between 1.15937 and 1.15872."
+   },
+   {
+    "price": 1.16215,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "Holding the cluster could lead to a corrective rotation back toward 1.16215 and the 200-day moving average at 1.16302."
+   },
+   {
+    "price": 1.163,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "The subsequent break below the 200-day moving average, currently near 1.1630, added to the bearish technical bias"
+   },
+   {
+    "price": 1.16302,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "Holding the cluster could lead to a corrective rotation back toward 1.16215 and the 200-day moving average at 1.16302."
+   },
+   {
+    "price": 1.1655,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "buyers would still need to reclaim the 100- and 200-hour moving averages near the 1.1655–1.1660 area to take back more meaningful control."
+   },
+   {
+    "price": 1.166,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "quote": "buyers would still need to reclaim the 100- and 200-hour moving averages near the 1.1655–1.1660 area to take back more meaningful control."
+   },
+   {
+    "price": 1.185,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/eur-usd-remains-supported-amid-bessent-put-steady-inflation-traders-await-warsh-s-speech-at-jackson-hole/",
+    "published_at": "2026-08-27T07:15:45Z",
+    "quote": "high around the 1.1850 level"
+   }
+  ],
+  "GBPUSD": []
+ },
+ "stats": {
+  "entries_seen": 22,
+  "agreed_first_two_reads": 22,
+  "accepted": 22,
+  "dropped": 0
+ },
+ "h10_src": {
+  "url": "https://www.federalreserve.gov/releases/h10/20260824/",
+  "published_at": "2026-08-24T20:15:00Z",
+  "kind": "h10_release"
+ },
+ "analyst_key": "2a59318d4c91b36c120795f06c0185c1424765e956d137f5036c60ef02582565",
+ "out": {
+  "week": "2026-08-31",
+  "anchor_utc": "2026-08-31T06:00:00Z",
+  "sources": [
+   {
+    "url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+    "published_at": "2026-08-28T05:37:08Z",
+    "kind": "expiry_post_prior"
+   },
+   {
+    "url": "https://investinglive.com/cms/media/images/8-28-2026-1-31-12-pm.jpg",
+    "published_at": "2026-08-28T05:37:08Z",
+    "kind": "expiry_image"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+    "published_at": "2026-08-28T16:23:44Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/kickstart-kevin-warsh-speech-day-with-a-technical-look-at-the-eurusd-usdjpy-and-gbpusd/",
+    "published_at": "2026-08-28T12:25:23Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/kickstart-the-na-session-with-a-technical-look-at-the-eurusd-usdjpy-and-gbpusd-key-levels-in-play/",
+    "published_at": "2026-08-27T12:14:17Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/forex/eur-usd-remains-supported-amid-bessent-put-steady-inflation-traders-await-warsh-s-speech-at-jackson-hole/",
+    "published_at": "2026-08-27T07:15:45Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://www.federalreserve.gov/releases/h10/20260824/",
+    "published_at": "2026-08-24T20:15:00Z",
+    "kind": "h10_release"
+   },
+   {
+    "url": "pinebox-bar-store:TVC_DXY/60/2026-08.json#time=1788152400000",
+    "published_at": "2026-08-31T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_EURUSD/60/2026-08.json#time=1788152400000",
+    "published_at": "2026-08-31T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_GBPUSD/60/2026-08.json#time=1788152400000",
+    "published_at": "2026-08-31T06:00:00Z",
+    "kind": "spot_bar"
+   }
+  ],
+  "expiries": {
+   "EURUSD": [
+    {
+     "strike": 1.1575,
+     "notional_m": 528,
+     "ccy": "EUR",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.16,
+     "notional_m": 812,
+     "ccy": "EUR",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.1625,
+     "notional_m": 765,
+     "ccy": "EUR",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.165,
+     "notional_m": 1100,
+     "ccy": "EUR",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.168,
+     "notional_m": 759,
+     "ccy": "EUR",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.1725,
+     "notional_m": 840,
+     "ccy": "EUR",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.16,
+     "notional_m": 1900,
+     "ccy": "EUR",
+     "cut_date": "2026-08-31",
+     "state": "live",
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.1625,
+     "notional_m": 997,
+     "ccy": "EUR",
+     "cut_date": "2026-08-31",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.165,
+     "notional_m": 709,
+     "ccy": "EUR",
+     "cut_date": "2026-08-31",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.16769,
+     "notional_m": 1917,
+     "ccy": "EUR",
+     "cut_date": "2026-08-31",
+     "state": "live",
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "cluster_of": [
+      {
+       "strike": 1.1675,
+       "notional_m": 1200
+      },
+      {
+       "strike": 1.168,
+       "notional_m": 717
+      }
+     ],
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 1.1725,
+     "notional_m": 650,
+     "ccy": "EUR",
+     "cut_date": "2026-08-31",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    }
+   ],
+   "GBPUSD": [
+    {
+     "strike": 1.37,
+     "notional_m": 832,
+     "ccy": "GBP",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    }
+   ],
+   "USDJPY": [
+    {
+     "strike": 158.2,
+     "notional_m": 1100,
+     "ccy": "USD",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 161,
+     "notional_m": 665,
+     "ccy": "USD",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 159,
+     "notional_m": 2000,
+     "ccy": "USD",
+     "cut_date": "2026-08-31",
+     "state": "live",
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 159.5,
+     "notional_m": 620,
+     "ccy": "USD",
+     "cut_date": "2026-08-31",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    },
+    {
+     "strike": 159.673,
+     "notional_m": 2457,
+     "ccy": "USD",
+     "cut_date": "2026-08-31",
+     "state": "live",
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "cluster_of": [
+      {
+       "strike": 159.65,
+       "notional_m": 1000
+      },
+      {
+       "strike": 159.68,
+       "notional_m": 781
+      },
+      {
+       "strike": 159.7,
+       "notional_m": 676
+      }
+     ],
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    }
+   ],
+   "AUDUSD": [
+    {
+     "strike": 0.712,
+     "notional_m": 558,
+     "ccy": "AUD",
+     "cut_date": "2026-08-31",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    }
+   ],
+   "USDCHF": [
+    {
+     "strike": 0.8,
+     "notional_m": 1500,
+     "ccy": "USD",
+     "cut_date": "2026-08-28",
+     "state": "ghost",
+     "tier": 1,
+     "code": 3,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/",
+     "published_at": "2026-08-28T05:37:08Z"
+    }
+   ]
+  },
+  "spots": {
+   "from": "pinebox bar store, last 1H close before the anchor",
+   "bar_close_utc": "2026-08-31T06:00:00Z",
+   "DXY": 99.6,
+   "EURUSD": 1.15903,
+   "GBPUSD": 1.35467
+  },
+  "k_anchor": 108.437095,
+  "h10": {
+   "release_date": "2026-08-24",
+   "published_at": "2026-08-24T20:15:00Z",
+   "source_url": "https://www.federalreserve.gov/releases/h10/20260824/",
+   "rate_day": "Aug. 21",
+   "rates": {
+    "EURUSD": 1.1684,
+    "USDJPY": 158.91,
+    "GBPUSD": 1.3644,
+    "USDCAD": 1.3765,
+    "USDSEK": 9.4632,
+    "USDCHF": 0.8008
+   },
+   "k_h10": 108.059283,
+   "dxy_h10": 98.7937
+  },
+  "dxy_levels": [
+   {
+    "price": 99.3057,
+    "from_pair": "EURUSD",
+    "strike": 1.165,
+    "notional_m": 1100,
+    "tier": 2,
+    "state": "ghost",
+    "code": 4,
+    "cut_date": "2026-08-28"
+   },
+   {
+    "price": 99.552,
+    "from_pair": "EURUSD",
+    "strike": 1.16,
+    "notional_m": 1900,
+    "tier": 1,
+    "state": "live",
+    "code": 1,
+    "cut_date": "2026-08-31"
+   },
+   {
+    "price": 99.4286,
+    "from_pair": "EURUSD",
+    "strike": 1.1625,
+    "notional_m": 997,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-08-31"
+   },
+   {
+    "price": 99.1739,
+    "from_pair": "EURUSD",
+    "strike": 1.16769,
+    "notional_m": 1917,
+    "tier": 1,
+    "state": "live",
+    "code": 1,
+    "cut_date": "2026-08-31"
+   }
+  ],
+  "analyst_levels": {
+   "DXY": [],
+   "EURUSD": [
+    {
+     "price": 1.15,
+     "role": "level",
+     "source_url": "https://investinglive.com/forex/eur-usd-remains-supported-amid-bessent-put-steady-inflation-traders-await-warsh-s-speech-at-jackson-hole/",
+     "published_at": "2026-08-27T07:15:45Z",
+     "quote": "drop into the 1.15 handle next"
+    },
+    {
+     "price": 1.15356,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "The next downside targets would come near 1.15578, followed by the 50% retracement at 1.15356."
+    },
+    {
+     "price": 1.15578,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "The next downside targets would come near 1.15578, followed by the 50% retracement at 1.15356."
+    },
+    {
+     "price": 1.157,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "Just below that zone sits the 38.2% retracement of the rally from the July low at 1.15733, along with the rising 100-day moving average near 1.1570."
+    },
+    {
+     "price": 1.15733,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "Just below that zone sits the 38.2% retracement of the rally from the July low at 1.15733, along with the rising 100-day moving average near 1.1570."
+    },
+    {
+     "price": 1.15872,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "The price is now testing a swing area between 1.15937 and 1.15872."
+    },
+    {
+     "price": 1.15937,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "The price is now testing a swing area between 1.15937 and 1.15872."
+    },
+    {
+     "price": 1.16215,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "Holding the cluster could lead to a corrective rotation back toward 1.16215 and the 200-day moving average at 1.16302."
+    },
+    {
+     "price": 1.163,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "The subsequent break below the 200-day moving average, currently near 1.1630, added to the bearish technical bias"
+    },
+    {
+     "price": 1.16302,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "Holding the cluster could lead to a corrective rotation back toward 1.16215 and the 200-day moving average at 1.16302."
+    },
+    {
+     "price": 1.1655,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "buyers would still need to reclaim the 100- and 200-hour moving averages near the 1.1655–1.1660 area to take back more meaningful control."
+    },
+    {
+     "price": 1.166,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-lows-and-tests-a-key-cluster-of-technical-levels/",
+     "published_at": "2026-08-28T16:23:44Z",
+     "quote": "buyers would still need to reclaim the 100- and 200-hour moving averages near the 1.1655–1.1660 area to take back more meaningful control."
+    },
+    {
+     "price": 1.185,
+     "role": "level",
+     "source_url": "https://investinglive.com/forex/eur-usd-remains-supported-amid-bessent-put-steady-inflation-traders-await-warsh-s-speech-at-jackson-hole/",
+     "published_at": "2026-08-27T07:15:45Z",
+     "quote": "high around the 1.1850 level"
+    }
+   ],
+   "GBPUSD": []
+  },
+  "read_stats": {
+   "entries_seen": 22,
+   "agreed_first_two_reads": 22,
+   "accepted": 22,
+   "dropped": 0
+  },
+  "model": {
+   "id": "muse-spark-1.3-contributor",
+   "effort": "high",
+   "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+   "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+  },
+  "dropped": [],
+  "log": [
+   "anchor = Monday 02:00 America/New_York = 2026-08-31T06:00:00Z",
+   "Monday expiry post https://investinglive.com/orders/fx-option-expiries-for-31-august-10am-new-york-cut/ published 2026-08-31T06:10:15+00:00 is AFTER the anchor: excluded, not fetched",
+   "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W35, 2026-W36",
+   "asof_gate: every fetched page was published at or before the anchor",
+   "https://investinglive.com/orders/fx-option-expiries-for-28-august-10am-new-york-cut/: reads A/B agree on 22 of 22 entries; third read for columns []",
+   "accept: 22 strike/notional entries accepted (2+ reads identical), 0 dropped",
+   "emit: as-of gate passed for 10 sources and every datum"
+  ]
+ }
+}

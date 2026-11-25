@@ -1,0 +1,11 @@
+{
+ "key": "122637e0b547a25270c5c66f65ee3a55ebe8e8ace98191a212f5dbb7a7e68c49",
+ "kind": "expiry_read_C6",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "84da2d96a9e4eb6860873db3b7558eab75314f22b6ebc051728e48a8910eda24",
+ "image": "cache/views/29218b7f5ce1bc3f/C6.png",
+ "image_sha256": "f88cebbc608854450aaec0445770625ec4014b3f8ca09b5453b2e12c5525dae7",
+ "text": "{\"pairs\":[\"NZD/USD\"],\"spot\":{\"NZD/USD\":\"0.5804\"},\"rows\":[{\"label\":\"Monday\",\"date\":\"23/03\",\"cells\":{\"NZD/USD\":[]}}]}"
+}
