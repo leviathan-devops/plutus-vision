@@ -1,0 +1,11 @@
+{
+ "key": "62c2fecc24a324f5490c3ec28b70637972239376a8ef1250f3069aaae1c34651",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "0766b2a5d0121822fe5d1ddcff38624a64ba6c0110ace10ae2ac0ca674f109f0",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\": [{\"article\": 2, \"instrument\": \"EURUSD\", \"price\": \"1.1254\", \"role\": \"resistance\", \"quote\": \"buyers are now contesting resistance from the 23.6 Fib retracement level of the swing lower from August to October, at around 1.1254.\"}, {\"article\": 2, \"instrument\": \"EURUSD\", \"price\": \"1.1275-80\", \"role\": \"level\", \"quote\": \"A firm break above that will then draw in the swing highs from earlier this month around 1.1275-80 next.\"}, {\"article\": 2, \"instrument\": \"EURUSD\", \"price\": \"1.1340-50\", \"role\": \"level\", \"quote\": \"And after that, there is the region around 1.1340-50 to tackle with the 38.2 Fib retracement level at 1.1341 sitting thereabouts.\"}, {\"article\": 2, \"instrument\": \"EURUSD\", \"price\": \"1.1341\", \"role\": \"level\", \"quote\": \"And after that, there is the region around 1.1340-50 to tackle with the 38.2 Fib retracement level at 1.1341 sitting thereabouts.\"}]}"
+}

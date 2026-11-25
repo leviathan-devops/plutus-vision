@@ -1,0 +1,49 @@
+{
+ "week": "2026-10-12",
+ "anchor": 1791784800000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-10-12T06:00:00Z",
+  "discover: 2 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W41, 2026-W42"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "monday",
+   "url": "https://investinglive.com/orders/fx-option-expiries-for-12-october-10am-new-york-cut/",
+   "lastmod": "2026-10-12T04:20:04+00:00",
+   "cut_date": "2026-10-12"
+  },
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/orders/fx-option-expiries-for-9-october-10am-new-york-cut/",
+   "lastmod": "2026-10-09T05:41:32+00:00",
+   "cut_date": "2026-10-09"
+  }
+ ],
+ "analyst": [
+  {
+   "url": "https://investinglive.com/technical-analysis/chart-of-the-day-eur-gbp-breakdown-adds-to-signs-of-euro-weakness-amid-france-s-fiscal-troubles/",
+   "lastmod": "2026-10-08T04:39:18+00:00"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/usdchf-is-stuck-in-50-pip-trading-range-since-midday-monday-what-does-that-say-to-you/",
+   "lastmod": "2026-10-09T15:03:13+00:00"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/usdcad-jumps-on-weak-canada-jobs-report-but-fails-to-hold-above-key-resistance/",
+   "lastmod": "2026-10-09T13:01:34+00:00"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/morning-kickstart-dollar-mixed-stocks-rebound-and-oil-retreats-amid-iran-uncertainty/",
+   "lastmod": "2026-10-09T12:17:51+00:00"
+  }
+ ],
+ "h10": null,
+ "accepted": [],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [],
+  "GBPUSD": []
+ },
+ "stats": {}
+}

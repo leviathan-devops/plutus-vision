@@ -1,0 +1,873 @@
+{
+ "week": "2026-02-02",
+ "anchor_utc": "2026-02-02T07:00:00Z",
+ "sources": [
+  {
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+   "published_at": "2026-02-02T06:29:34Z",
+   "kind": "expiry_post_monday"
+  },
+  {
+   "url": "https://investinglive.com/cms/media/migrated/images/FXO%2002-02_id_11f7379e-4afa-453a-a8c2-1f10c244573c_size900.jpg",
+   "published_at": "2026-02-02T06:29:34Z",
+   "kind": "expiry_image"
+  },
+  {
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+   "published_at": "2026-01-30T06:46:46Z",
+   "kind": "expiry_post_prior"
+  },
+  {
+   "url": "https://investinglive.com/cms/media/migrated/images/FXO%2030-01_id_1e5ae829-4ce6-4b20-962b-7957c012ae3a_size900.jpg",
+   "published_at": "2026-01-30T06:46:46Z",
+   "kind": "expiry_image"
+  },
+  {
+   "url": "https://investinglive.com/forex/gbpusd-trades-at-the-highest-level-since-2021-as-the-dollar-continues-to-get-beaten-20260129/",
+   "published_at": "2026-01-29T08:21:03Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/forex/german-chancellor-merz-warns-weak-dollar-is-hurting-exporters-backs-push-for-digital-euro-20260128/",
+   "published_at": "2026-01-28T22:25:54Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/forex/usdjpy-consolidates-below-a-key-resistance-as-intervention-fears-wane-whats-next-20260129/",
+   "published_at": "2026-01-29T09:22:04Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://www.federalreserve.gov/releases/h10/20260126/",
+   "published_at": "2026-01-26T21:15:00Z",
+   "kind": "h10_release"
+  },
+  {
+   "url": "pinebox-bar-store:TVC_DXY/60/2026-02.json#time=1770012000000",
+   "published_at": "2026-02-02T07:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_EURUSD/60/2026-02.json#time=1770012000000",
+   "published_at": "2026-02-02T07:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_GBPUSD/60/2026-02.json#time=1770012000000",
+   "published_at": "2026-02-02T07:00:00Z",
+   "kind": "spot_bar"
+  }
+ ],
+ "expiries": {
+  "EURUSD": [
+   {
+    "strike": 1.175,
+    "notional_m": 677,
+    "ccy": "EUR",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.18,
+    "notional_m": 2500,
+    "ccy": "EUR",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.185,
+    "notional_m": 2100,
+    "ccy": "EUR",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.19,
+    "notional_m": 4100,
+    "ccy": "EUR",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.1925,
+    "notional_m": 807,
+    "ccy": "EUR",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.195,
+    "notional_m": 879,
+    "ccy": "EUR",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.2,
+    "notional_m": 625,
+    "ccy": "EUR",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.211,
+    "notional_m": 892,
+    "ccy": "EUR",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.17,
+    "notional_m": 862,
+    "ccy": "EUR",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.17605,
+    "notional_m": 1240,
+    "ccy": "EUR",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.1755,
+      "notional_m": 555
+     },
+     {
+      "strike": 1.1765,
+      "notional_m": 685
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.18,
+    "notional_m": 1200,
+    "ccy": "EUR",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.185,
+    "notional_m": 780,
+    "ccy": "EUR",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.19,
+    "notional_m": 793,
+    "ccy": "EUR",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.1925,
+    "notional_m": 1400,
+    "ccy": "EUR",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.2,
+    "notional_m": 4600,
+    "ccy": "EUR",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.1745,
+    "notional_m": 697,
+    "ccy": "EUR",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.1785,
+    "notional_m": 848,
+    "ccy": "EUR",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.18,
+    "notional_m": 935,
+    "ccy": "EUR",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.185,
+    "notional_m": 3900,
+    "ccy": "EUR",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.1865,
+    "notional_m": 616,
+    "ccy": "EUR",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.18944,
+    "notional_m": 1265,
+    "ccy": "EUR",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.189,
+      "notional_m": 714
+     },
+     {
+      "strike": 1.19,
+      "notional_m": 551
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.19374,
+    "notional_m": 2900,
+    "ccy": "EUR",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.1935,
+      "notional_m": 1500
+     },
+     {
+      "strike": 1.194,
+      "notional_m": 1400
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.195,
+    "notional_m": 1100,
+    "ccy": "EUR",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.2,
+    "notional_m": 1400,
+    "ccy": "EUR",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   }
+  ],
+  "GBPUSD": [
+   {
+    "strike": 1.35,
+    "notional_m": 686,
+    "ccy": "GBP",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.355,
+    "notional_m": 545,
+    "ccy": "GBP",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   }
+  ],
+  "USDJPY": [
+   {
+    "strike": 149.75,
+    "notional_m": 600,
+    "ccy": "USD",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 155,
+    "notional_m": 864,
+    "ccy": "USD",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 156,
+    "notional_m": 1300,
+    "ccy": "USD",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 156.5,
+    "notional_m": 576,
+    "ccy": "USD",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 151,
+    "notional_m": 1300,
+    "ccy": "USD",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 153.4,
+    "notional_m": 639,
+    "ccy": "USD",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 155,
+    "notional_m": 612,
+    "ccy": "USD",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 155.7,
+    "notional_m": 591,
+    "ccy": "USD",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 157,
+    "notional_m": 650,
+    "ccy": "USD",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 155.75,
+    "notional_m": 952,
+    "ccy": "USD",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   }
+  ],
+  "AUDUSD": [
+   {
+    "strike": 0.68,
+    "notional_m": 815,
+    "ccy": "AUD",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   }
+  ],
+  "NZDUSD": [
+   {
+    "strike": 0.58,
+    "notional_m": 888,
+    "ccy": "NZD",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   }
+  ],
+  "USDCAD": [
+   {
+    "strike": 1.35,
+    "notional_m": 964,
+    "ccy": "USD",
+    "cut_date": "2026-01-30",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/",
+    "published_at": "2026-01-30T06:46:46Z"
+   },
+   {
+    "strike": 1.35,
+    "notional_m": 1300,
+    "ccy": "USD",
+    "cut_date": "2026-02-02",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   },
+   {
+    "strike": 1.359,
+    "notional_m": 577,
+    "ccy": "USD",
+    "cut_date": "2026-02-03",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/",
+    "published_at": "2026-02-02T06:29:34Z"
+   }
+  ]
+ },
+ "spots": {
+  "from": "pinebox bar store, last 1H close before the anchor",
+  "bar_close_utc": "2026-02-02T07:00:00Z",
+  "DXY": 97.154,
+  "EURUSD": 1.18536,
+  "GBPUSD": 1.36753
+ },
+ "k_anchor": 107.151546,
+ "h10": {
+  "release_date": "2026-01-26",
+  "published_at": "2026-01-26T21:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260126/",
+  "rate_day": "Jan. 23",
+  "rates": {
+   "EURUSD": 1.1771,
+   "USDJPY": 157.57,
+   "GBPUSD": 1.359,
+   "USDCAD": 1.3726,
+   "USDSEK": 8.9953,
+   "USDCHF": 0.7879
+  },
+  "k_h10": 107.665333,
+  "dxy_h10": 98.0138
+ },
+ "dxy_levels": [
+  {
+   "price": 97.408,
+   "from_pair": "EURUSD",
+   "strike": 1.18,
+   "notional_m": 2500,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-01-30"
+  },
+  {
+   "price": 97.171,
+   "from_pair": "EURUSD",
+   "strike": 1.185,
+   "notional_m": 2100,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-01-30"
+  },
+  {
+   "price": 96.9356,
+   "from_pair": "EURUSD",
+   "strike": 1.19,
+   "notional_m": 4100,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-01-30"
+  },
+  {
+   "price": 96.7018,
+   "from_pair": "EURUSD",
+   "strike": 1.195,
+   "notional_m": 879,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-01-30"
+  },
+  {
+   "price": 95.9638,
+   "from_pair": "EURUSD",
+   "strike": 1.211,
+   "notional_m": 892,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-01-30"
+  },
+  {
+   "price": 97.8866,
+   "from_pair": "EURUSD",
+   "strike": 1.17,
+   "notional_m": 862,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-02"
+  },
+  {
+   "price": 97.5963,
+   "from_pair": "EURUSD",
+   "strike": 1.17605,
+   "notional_m": 1240,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-02"
+  },
+  {
+   "price": 97.408,
+   "from_pair": "EURUSD",
+   "strike": 1.18,
+   "notional_m": 1200,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-02"
+  },
+  {
+   "price": 96.8185,
+   "from_pair": "EURUSD",
+   "strike": 1.1925,
+   "notional_m": 1400,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-02"
+  },
+  {
+   "price": 96.4695,
+   "from_pair": "EURUSD",
+   "strike": 1.2,
+   "notional_m": 4600,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-02-02"
+  },
+  {
+   "price": 97.408,
+   "from_pair": "EURUSD",
+   "strike": 1.18,
+   "notional_m": 935,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-03"
+  },
+  {
+   "price": 97.171,
+   "from_pair": "EURUSD",
+   "strike": 1.185,
+   "notional_m": 3900,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-02-03"
+  },
+  {
+   "price": 96.9619,
+   "from_pair": "EURUSD",
+   "strike": 1.18944,
+   "notional_m": 1265,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-03"
+  },
+  {
+   "price": 96.7606,
+   "from_pair": "EURUSD",
+   "strike": 1.19374,
+   "notional_m": 2900,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-02-03"
+  },
+  {
+   "price": 96.7018,
+   "from_pair": "EURUSD",
+   "strike": 1.195,
+   "notional_m": 1100,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-03"
+  },
+  {
+   "price": 96.4695,
+   "from_pair": "EURUSD",
+   "strike": 1.2,
+   "notional_m": 1400,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-03"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [],
+  "GBPUSD": [
+   {
+    "price": 1.35,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/gbpusd-trades-at-the-highest-level-since-2021-as-the-dollar-continues-to-get-beaten-20260129/",
+    "published_at": "2026-01-29T08:21:03Z",
+    "quote": "position for a correction into the major trendline around the 1.35 handle."
+   },
+   {
+    "price": 1.375,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/gbpusd-trades-at-the-highest-level-since-2021-as-the-dollar-continues-to-get-beaten-20260129/",
+    "published_at": "2026-01-29T08:21:03Z",
+    "quote": "The most recent swing low around the 1.3750 level should act as support."
+   },
+   {
+    "price": 1.3789,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/gbpusd-trades-at-the-highest-level-since-2021-as-the-dollar-continues-to-get-beaten-20260129/",
+    "published_at": "2026-01-29T08:21:03Z",
+    "quote": "price falling back below the previous cycle high at 1.3789 to position for a correction"
+   }
+  ]
+ },
+ "read_stats": {
+  "entries_seen": 51,
+  "agreed_first_two_reads": 51,
+  "accepted": 51,
+  "dropped": 0
+ },
+ "model": {
+  "id": "muse-spark-1.3-contributor",
+  "effort": "high",
+  "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+  "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+ },
+ "dropped": [],
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-02-02T07:00:00Z",
+  "discover: 2 expiry post(s), 3 analyst candidate(s) from sitemaps 2026-W05, 2026-W06",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/Orders/fx-option-expiries-for-2-february-10am-new-york-cut-20260202/: reads A/B agree on 28 of 28 entries; third read for columns []",
+  "https://investinglive.com/Orders/fx-option-expiries-for-30-january-10am-new-york-cut-20260130/: reads A/B agree on 23 of 23 entries; third read for columns []",
+  "accept: 51 strike/notional entries accepted (2+ reads identical), 0 dropped",
+  "emit: as-of gate passed for 11 sources and every datum"
+ ]
+}

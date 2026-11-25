@@ -1,0 +1,11 @@
+{
+ "key": "3751495be63a838b3ac93bbe226301fa575af628c26c0f0574af03848fcc513d",
+ "kind": "expiry_read_A",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "eb731a7b12b96ef0b38f63bd495c865935212f9f89a26f28b69971c282e5101f",
+ "image": "cache/views/0a3b010629b89038/A.png",
+ "image_sha256": "cf95181197e1334ebeaf4b8054fdb250be5b86f3548475792b7c59bb956b6807",
+ "text": "{\"pairs\":[\"EUR/USD\",\"USD/JPY\",\"GBP/USD\",\"USD/CHF\",\"USD/CAD\",\"AUD/USD\",\"NZD/USD\",\"EUR/GBP\"],\"spot\":{\"EUR/USD\":\"1.1230\",\"USD/JPY\":\"158.06\",\"GBP/USD\":\"1.3333\",\"USD/CHF\":\"0.8243\",\"USD/CAD\":\"1.4121\",\"AUD/USD\":\"0.6974\",\"NZD/USD\":\"0.5659\",\"EUR/GBP\":\"0.8422\"},\"rows\":[{\"label\":\"Monday\",\"date\":\"19/10\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1175\",\"notional\":\"€547m\"},{\"strike\":\"1.1180\",\"notional\":\"€640m\"},{\"strike\":\"1.1200\",\"notional\":\"€1.5bn\"},{\"strike\":\"1.1225\",\"notional\":\"€671m\"},{\"strike\":\"1.1260\",\"notional\":\"€812m\"},{\"strike\":\"1.1265\",\"notional\":\"€840m\"},{\"strike\":\"1.1280\",\"notional\":\"€672m\"},{\"strike\":\"1.1300\",\"notional\":\"€2.1bn\"}],\"USD/JPY\":[{\"strike\":\"157.15\",\"notional\":\"$554m\"}],\"GBP/USD\":[{\"strike\":\"1.3435\",\"notional\":\"£550m\"}],\"USD/CHF\":[{\"strike\":\"0.8300\",\"notional\":\"$1.0bn\"}],\"USD/CAD\":[{\"strike\":\"1.4165\",\"notional\":\"$749m\"}],\"AUD/USD\":[{\"strike\":\"0.6950\",\"notional\":\"A$610m\"},{\"strike\":\"0.6970\",\"notional\":\"A$757m\"},{\"strike\":\"0.6975\",\"notional\":\"A$961m\"},{\"strike\":\"0.7010\",\"notional\":\"A$508m\"}],\"NZD/USD\":[],\"EUR/GBP\":[]}},{\"label\":\"Tuesday\",\"date\":\"20/10\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1250\",\"notional\":\"€782m\"},{\"strike\":\"1.1265\",\"notional\":\"€4.1bn\"},{\"strike\":\"1.1275\",\"notional\":\"€523m\"}],\"USD/JPY\":[{\"strike\":\"157.00\",\"notional\":\"$503m\"},{\"strike\":\"158.00\",\"notional\":\"$686m\"},{\"strike\":\"159.00\",\"notional\":\"$1.1bn\"}],\"GBP/USD\":[],\"USD/CHF\":[{\"strike\":\"0.8325\",\"notional\":\"$809m\"}],\"USD/CAD\":[{\"strike\":\"1.4200\",\"notional\":\"$707m\"}],\"AUD/USD\":[],\"NZD/USD\":[],\"EUR/GBP\":[{\"strike\":\"0.8600\",\"notional\":\"€963m\"}]}}]}"
+}

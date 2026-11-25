@@ -1,0 +1,623 @@
+{
+ "week": "2026-02-09",
+ "anchor": 1770620400000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-02-09T07:00:00Z",
+  "discover: 2 expiry post(s), 0 analyst candidate(s) from sitemaps 2026-W06, 2026-W07",
+  "asof_gate: every fetched page was published at or before the anchor"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "monday",
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+   "lastmod": "2026-02-09T06:41:43+00:00",
+   "cut_date": "2026-02-09",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-02-09/investinglive_orders_fx-option-expiries-for-9-february-10am-new-york-cut-20260209.html",
+   "published_at": "2026-02-09T06:41:43Z",
+   "image_url": "https://investinglive.com/cms/media/migrated/images/FX%2009-02_id_7b7bb55f-6714-4e51-a45a-1d0216987489_size900.jpg",
+   "image_file": "/home/user/plutus-vision/sidecar/raw/2026-02-09/investinglive_orders_fx-option-expiries-for-9-february-10am-new-york-cut-20260209__FX_09-02_id_7b7bb55f-6714-4e51-a45a-1d0216987489_size900.jpg",
+   "views_dir": "/home/user/plutus-vision/sidecar/cache/views/183149a54c369c1d",
+   "views": {
+    "grid_ok": true,
+    "hlines": [
+     7,
+     21,
+     35,
+     149,
+     289
+    ],
+    "pair_columns": 8,
+    "size": [
+     900,
+     304
+    ],
+    "source": "investinglive_orders_fx-option-expiries-for-9-february-10am-new-york-cut-20260209__FX_09-02_id_7b7bb55f-6714-4e51-a45a-1d0216987489_size900.jpg",
+    "views": {
+     "A": {
+      "box": [
+       0,
+       0,
+       900,
+       304
+      ],
+      "file": "A.png",
+      "scale": 2.2,
+      "size": [
+       1980,
+       669
+      ]
+     },
+     "B1": {
+      "box": [
+       132,
+       4,
+       510,
+       293
+      ],
+      "file": "B1.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "scale": 3.8976,
+      "size": [
+       1980,
+       1126
+      ]
+     },
+     "B2": {
+      "box": [
+       508,
+       4,
+       887,
+       293
+      ],
+      "file": "B2.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       4,
+       5,
+       6,
+       7
+      ],
+      "scale": 3.89,
+      "size": [
+       1980,
+       1124
+      ]
+     },
+     "C0": {
+      "box": [
+       132,
+       4,
+       228,
+       293
+      ],
+      "file": "C0.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       0
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1734
+      ]
+     },
+     "C1": {
+      "box": [
+       226,
+       4,
+       322,
+       293
+      ],
+      "file": "C1.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       1
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1734
+      ]
+     },
+     "C2": {
+      "box": [
+       320,
+       4,
+       416,
+       293
+      ],
+      "file": "C2.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       2
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1734
+      ]
+     },
+     "C3": {
+      "box": [
+       414,
+       4,
+       510,
+       293
+      ],
+      "file": "C3.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       3
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1734
+      ]
+     },
+     "C4": {
+      "box": [
+       508,
+       4,
+       604,
+       293
+      ],
+      "file": "C4.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       4
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1734
+      ]
+     },
+     "C5": {
+      "box": [
+       602,
+       4,
+       698,
+       293
+      ],
+      "file": "C5.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       5
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1734
+      ]
+     },
+     "C6": {
+      "box": [
+       696,
+       4,
+       792,
+       293
+      ],
+      "file": "C6.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       6
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1734
+      ]
+     },
+     "C7": {
+      "box": [
+       790,
+       4,
+       886,
+       293
+      ],
+      "file": "C7.png",
+      "label_box": [
+       3,
+       4,
+       133,
+       293
+      ],
+      "pair_index": [
+       7
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1734
+      ]
+     }
+    },
+    "vlines": [
+     33,
+     132,
+     226,
+     320,
+     414,
+     508,
+     602,
+     696,
+     790,
+     884
+    ]
+   }
+  },
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+   "lastmod": "2026-02-06T06:55:32+00:00",
+   "cut_date": "2026-02-06",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-02-09/investinglive_orders_fx-option-expiries-for-6-february-10am-new-york-cut-20260206.html",
+   "published_at": "2026-02-06T06:55:32Z",
+   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2006-02_id_a0b52f51-9fc7-4c88-b0d5-f3627945c39b_size900.jpg",
+   "image_file": "/home/user/plutus-vision/sidecar/raw/2026-02-09/investinglive_orders_fx-option-expiries-for-6-february-10am-new-york-cut-20260206__FXO_06-02_id_a0b52f51-9fc7-4c88-b0d5-f3627945c39b_size900.jpg",
+   "views_dir": "/home/user/plutus-vision/sidecar/cache/views/f0ac323485068f25",
+   "views": {
+    "grid_ok": true,
+    "hlines": [
+     11,
+     25,
+     39,
+     145,
+     251
+    ],
+    "pair_columns": 8,
+    "size": [
+     900,
+     261
+    ],
+    "source": "investinglive_orders_fx-option-expiries-for-6-february-10am-new-york-cut-20260206__FXO_06-02_id_a0b52f51-9fc7-4c88-b0d5-f3627945c39b_size900.jpg",
+    "views": {
+     "A": {
+      "box": [
+       0,
+       0,
+       900,
+       261
+      ],
+      "file": "A.png",
+      "scale": 2.2,
+      "size": [
+       1980,
+       574
+      ]
+     },
+     "B1": {
+      "box": [
+       131,
+       8,
+       511,
+       255
+      ],
+      "file": "B1.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "scale": 3.8824,
+      "size": [
+       1980,
+       959
+      ]
+     },
+     "B2": {
+      "box": [
+       509,
+       8,
+       889,
+       255
+      ],
+      "file": "B2.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       4,
+       5,
+       6,
+       7
+      ],
+      "scale": 3.8824,
+      "size": [
+       1980,
+       959
+      ]
+     },
+     "C0": {
+      "box": [
+       131,
+       8,
+       228,
+       255
+      ],
+      "file": "C0.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       0
+      ],
+      "scale": 6,
+      "size": [
+       1362,
+       1482
+      ]
+     },
+     "C1": {
+      "box": [
+       226,
+       8,
+       322,
+       255
+      ],
+      "file": "C1.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       1
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1482
+      ]
+     },
+     "C2": {
+      "box": [
+       320,
+       8,
+       416,
+       255
+      ],
+      "file": "C2.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       2
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1482
+      ]
+     },
+     "C3": {
+      "box": [
+       414,
+       8,
+       511,
+       255
+      ],
+      "file": "C3.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       3
+      ],
+      "scale": 6,
+      "size": [
+       1362,
+       1482
+      ]
+     },
+     "C4": {
+      "box": [
+       509,
+       8,
+       605,
+       255
+      ],
+      "file": "C4.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       4
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1482
+      ]
+     },
+     "C5": {
+      "box": [
+       603,
+       8,
+       699,
+       255
+      ],
+      "file": "C5.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       5
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1482
+      ]
+     },
+     "C6": {
+      "box": [
+       697,
+       8,
+       794,
+       255
+      ],
+      "file": "C6.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       6
+      ],
+      "scale": 6,
+      "size": [
+       1362,
+       1482
+      ]
+     },
+     "C7": {
+      "box": [
+       792,
+       8,
+       888,
+       255
+      ],
+      "file": "C7.png",
+      "label_box": [
+       2,
+       8,
+       132,
+       255
+      ],
+      "pair_index": [
+       7
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1482
+      ]
+     }
+    },
+    "vlines": [
+     32,
+     131,
+     226,
+     320,
+     414,
+     509,
+     603,
+     697,
+     792,
+     886
+    ]
+   }
+  }
+ ],
+ "analyst": [],
+ "h10": {
+  "release_date": "2026-02-02",
+  "published_at": "2026-02-02T21:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260202/",
+  "rate_day": "Jan. 30",
+  "rates": {
+   "EURUSD": 1.1885,
+   "USDJPY": 154.34,
+   "GBPUSD": 1.3729,
+   "USDCAD": 1.3557,
+   "USDSEK": 8.8656,
+   "USDCHF": 0.771
+  },
+  "k_h10": 106.962886,
+  "dxy_h10": 96.8353
+ },
+ "accepted": [],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [],
+  "GBPUSD": []
+ },
+ "stats": {},
+ "h10_src": {
+  "url": "https://www.federalreserve.gov/releases/h10/20260202/",
+  "published_at": "2026-02-02T21:15:00Z",
+  "kind": "h10_release"
+ }
+}
