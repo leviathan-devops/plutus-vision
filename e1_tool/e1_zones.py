@@ -88,7 +88,8 @@ def build(pair, monday, expiries, K, spot):
     out = []
     for z in zones:
         m = out[-1] if out else None
-        # level zones (no candle) of one side that sit within 0.10 of each other are one cluster (P452:1140), kept under the 0.40 width limit
+        # level zones (no candle) of one side within 0.10 of each other are one cluster (P452:1140), kept under 0.40 wide. Candle zones stay
+        # separate unless they overlap: merging them joined the report's Resistance Ceiling and Upper Resistance into one (tried, rejected)
         tight = m and m['kind'] == 'levels' and z['kind'] == 'levels' and z['bot'] - m['top'] <= u(10) and z['top'] - m['bot'] <= u(40)
         if m and m['side'] == z['side'] and (z['bot'] <= m['top'] or tight):
             m['top'] = max(m['top'], z['top']); m['structs'] += z['structs']; m['sweeps'] += z['sweeps']
@@ -123,12 +124,10 @@ def build(pair, monday, expiries, K, spot):
 
 def gap_scan(pair, monday, L, shown, eq):
     """STEP 9.5 (P452:1159-1184): gaps >= 0.20 between adjacent mapped zones; a gap-region level with 2+ supporting signals is a
-    GAP IN-FILL LEVEL (Confidence MODERATE, Structural = 1). A5: the weekly classic R3 / S3 close the map at its two ends."""
+    GAP IN-FILL LEVEL (Confidence MODERATE, Structural = 1). Only gaps BETWEEN mapped zones are scanned (literal). An in-fill level
+    splits its gap; a remaining part is scanned again only if it is still >= 0.20, so in-fill levels sit >= 0.20 from zones and from each other."""
     u = lambda pips: P._u(pair, pips)
-    wk = P.pillar1(pair, monday)['weekly']['classic']
     edges = [(z['bot'], z['top']) for z in shown]
-    edges.append((max(wk['R3'], max(e[1] for e in edges)), ) * 2)
-    edges.append((min(wk['S3'], min(e[0] for e in edges)), ) * 2)
     edges.sort()
     kind = lambda x: ('round' if x['dim'] == 'psy' else 'option strike' if x['dim'] == 'opt' else 'weekly pivot' if x['tag'].startswith('Weekly') and x['pillar'] == 'P1'
                       else 'daily pivot' if x['pillar'] == 'P1' else 'swing level' if x['dim'] == 'extreme' else 'daily close' if 'close' in x['tag'] else None)
@@ -138,7 +137,7 @@ def gap_scan(pair, monday, L, shown, eq):
             continue
         cands = []
         for x in L:
-            if not (lo_t < x['p'] < hi_b) or kind(x) is None:
+            if not (lo_t + u(20) <= x['p'] <= hi_b - u(20)) or kind(x) is None:
                 continue
             sup = {}
             for y in L:
@@ -146,11 +145,10 @@ def gap_scan(pair, monday, L, shown, eq):
                     sup.setdefault(kind(y), y)
             if len(sup) >= 2:
                 cands.append({'p': x['p'], 'signals': sorted(sup), 'levels': list(sup.values()), 'n': len(sup)})
-        # one in-fill level per 0.15 band: the one with the most supporting signals
         cands.sort(key=lambda c: (-c['n'], -c['p']))
         took = []
         for c in cands:
-            if all(abs(c['p'] - t['p']) > u(15) for t in took):
+            if all(abs(c['p'] - t['p']) >= u(20) for t in took):
                 took.append(c)
         for t in took:
             ps = [y['p'] for y in t['levels']]

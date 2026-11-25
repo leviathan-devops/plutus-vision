@@ -5,6 +5,7 @@ show_zones = input.bool(true, "IP Zones")
 show_candles = input.bool(true, "Candle structures (A)")
 show_levels = input.bool(true, "Computed levels (B)")
 show_lsz = input.bool(true, "LSZ")
+show_infill = input.bool(true, "Gap in-fill levels")
 show_options = input.bool(true, "Option Strikes")
 isPair = str.contains(syminfo.ticker, "EURUSD")
 if barstate.islast and isPair
@@ -107,7 +108,18 @@ if barstate.islast and isPair
         label.new(1774933200000, 1.1476, "MoM Demand 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
     if show_levels
         line.new(1776459600000, 1.1475, 1777064400000, 1.1475, xloc=xloc.bar_time, color=color.new(color.rgb(150,150,150), 35), width=1, style=line.style_dotted)
+    if show_infill
+        box.new(1776459600000, 1.1734, 1777064400000, 1.1728, bgcolor=color.new(color.rgb(0,150,150), 85), border_color=color.new(color.rgb(0,150,150), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776805200000, 1.1734, "Gap In-fill | MODERATE | daily pivot + weekly pivot", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.white, 25), size=size.small)
+        box.new(1776459600000, 1.1628, 1777064400000, 1.1625, bgcolor=color.new(color.rgb(0,150,150), 85), border_color=color.new(color.rgb(0,150,150), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776805200000, 1.1628, "Gap In-fill | MODERATE | round + swing level", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.white, 25), size=size.small)
+        box.new(1776459600000, 1.1600, 1777064400000, 1.1600, bgcolor=color.new(color.rgb(0,150,150), 85), border_color=color.new(color.rgb(0,150,150), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776805200000, 1.1600, "Gap In-fill | MODERATE | option strike + round", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.white, 25), size=size.small)
+        box.new(1776459600000, 1.1575, 1777064400000, 1.1573, bgcolor=color.new(color.rgb(0,150,150), 85), border_color=color.new(color.rgb(0,150,150), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776805200000, 1.1575, "Gap In-fill | MODERATE | round + weekly pivot", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.white, 25), size=size.small)
     if show_lsz
+        box.new(1775854800000, 1.1929, 1777064400000, 1.1924, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
+        box.new(1775854800000, 1.1448, 1777064400000, 1.1443, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1775854800000, 1.1510, 1777064400000, 1.1505, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1775854800000, 1.1669, 1777064400000, 1.1664, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1775854800000, 1.1811, 1777064400000, 1.1806, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
