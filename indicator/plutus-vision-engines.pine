@@ -23,6 +23,7 @@ i_anchorHour = input.int(2, "Monday anchor hour (New York)", minval = 0, maxval 
 i_weeks      = input.int(2, "Weeks drawn (active week + N-1 to its left)", minval = 1, maxval = 60, group = GRP_V)
 i_back       = input.int(0, "Look back: shift the drawn window N weeks into the past", minval = 0, maxval = 120, group = GRP_V)
 i_showE1     = input.bool(true, "E1 institutional pressure zones", group = GRP_V)
+i_wallOnly   = input.bool(false, "E1: draw only zones that hold a tier-1 option wall (>= $1.5bn, live or ghost)", group = GRP_V)
 i_showE2     = input.bool(false, "E2 shape chain (day boxes + path)", group = GRP_V)
 i_showE3     = input.bool(false, "E3 trade setups (position boxes; fills and exits are tracked bar by bar after the anchor)", group = GRP_V)
 i_showSD     = input.bool(false, "E1 4H origin-candle supply/demand (canon Step 0f)", group = GRP_V)
@@ -50,13 +51,6 @@ float  T_H1MOVE  = 30 * PIP   // 1H base preceding a move >= 0.3 (Step 0g)      
 float  T_H4WIDE  = 40 * PIP   // a 4H S/D zone wider than 0.40 is rejected                   SP:1388
 float  T_ROUND   = 25 * PIP   // round grid: .00 .25 .50 .75                                 V452:853
 float  SL_BUF    = (IS_INDEX ? 5 : str.contains(syminfo.ticker, "GBP") ? 3 : 2) * PIP   // Law 7 per-pair stop buffer      C:299-304
-// E1 band map geometry, as fractions of the mean weekly range of the last quarter (decision D-17, research 2026-11-25)
-float  B_WIDTH   = 0.3        // band width
-float  B_MIN     = 0.15       // nearest band edge to the anchor price
-float  B_GAP     = 0.12       // clear space between two bands on one side
-float  B_STEP    = 0.02       // scan step
-float  B_REACT   = 0.1        // a reaction / a break = this much travel beyond a band edge
-int    B_THR     = 5          // evidence a band needs (fresh 4H origin zone 3, tier-1 wall 3, tier-2 / ghost wall 2, prior week high / low 2, ...)
 int    N_D1SCAN  = 90         // 90 D1 bars structural scan                                  SP:1217
 int    N_H4BARS  = 360        // 4H S/D scan: last 60 calendar days = 360 4H bars            SP:1345
 int    N_H4SWING = 126        // 4H swing scan: zones older than 3 weeks drop out (21 d x 6) SP:1390
@@ -221,14 +215,14 @@ type Zone
     int    xs       // tests in the prior 3 weeks that left on the other side (the zone was crossed = hard mitigation)
     float  xHi      // reaction extreme above: highest high of a test from below that was rejected (C:291-294, C:379)
     float  xLo      // reaction extreme below: lowest low of a test from above that was rejected
-    int    role = 0   // 0 = nearest band on its side · 1 = the next one out
-    bool   bom = false  // overlaps a 4H origin zone visited at most once (BoM); otherwise MoM
-    int    pos = 0    // bookkeeping after the anchor: where price is (1 above · -1 below · 0 inside the band)
-    bool   vin = false  // a test of the band is in progress
+    int    cls = 1    // 0 = the zone price sits in at the anchor · 1 = nearest on its side · 2 = second · 3 = third
+    int    pos = 0    // bookkeeping after the anchor: where price is (1 above · -1 below · 0 inside)
+    bool   vin = false  // a test of the zone is in progress
     int    org = 0    // side the test came from
-    int    res = 0    // first test: 0 unresolved · 1 reacted · 2 traded through
-    int    nTouch = 0 // tests of this band role resolved on this chart before the anchor
-    int    nBreak = 0 // of those, traded through
+    int    cnt = 0    // bars the test has lasted
+    int    res = 0    // first test: 0 none yet · 1 rejected · 2 sliced through · 3 consolidated
+    int    nTouch = 0 // first tests of this zone class resolved on this chart before the anchor
+    int    nBreak = 0 // of those, sliced through
 
 type DayFc
     int    t0
@@ -266,7 +260,7 @@ type WeekFc
     DayFc[] days
     string chain
     Setup[] setups
-    float  d = 0.0      // reaction distance of the week (B_REACT x mean weekly range)
+    float  m = 0.0      // mean bar range of the chart before the anchor ("around the zone" = within m of an edge)
 
 var WeekFc[] fcs = array.new<WeekFc>()
 
@@ -867,126 +861,86 @@ f_zones(Lv[] L, SD[] sds, float spot) =>
 // ═════════════════════════════════════════════════════════════════════════════════════════════
 // one completed day against the zone map: 2 / -2 = closed through a zone (BS up / down) · 1 / -1 = pierced a zone and closed back (WL up / down) · 0 = range
 // ─────────────────────────────────────────────────────────────────────────────────────────────
-// E1 band map (v2): at most two wide bands above the anchor price and two below. A band is taken where EXTREME-type
-// evidence sits (origin zones of 4H moves, option walls, prior-week high / low, repeated swing extremes) - never where
-// evidence is merely dense, because dense confluence marks congestion and congestion is traded through.
+// The week's map = the zones price will actually meet: the zone it sits in at the anchor and the nearest zone(s) on each
+// side. Every zone keeps the extent of its own evidence (wick tip .. body edge, strike +- its conversion band); nothing is
+// widened or narrowed to a set size. Zones further out stay in the level set and are not drawn (operator L-15, L-25).
 // ─────────────────────────────────────────────────────────────────────────────────────────────
-var int[] bTouch = array.from(0, 0)   // per band role: first tests resolved so far on this chart
-var int[] bBreak = array.from(0, 0)   // per band role: of those, traded through
+var int[] zTouch = array.from(0, 0, 0, 0)   // per zone class: first tests resolved so far on this chart
+var int[] zBreak = array.from(0, 0, 0, 0)   // per zone class: of those, sliced through without a reaction
+float barRng  = ta.sma(high - low, 120)
+float barRng1 = barRng[1]
 
-f_wscore(Lv[] L, SD[] sds, float x, float W, float awr) =>
-    float s = 0.0
-    for v in L
-        float a = 0.0
-        if v.src == 5
-            a := v.code == 1 ? 3.0 : v.code == 4 ? 1.0 : 2.0
-        else if v.tag == "PWH" or v.tag == "PWL"
-            a := 2.0
-        else if v.tag == "HWC" or v.tag == "LWC"
-            a := 1.0
-        else if str.contains(v.tag, "SwHi") or str.contains(v.tag, "SwLo")
-            a := 1.0 + math.min(1.0, v.bonus)
-        else if str.contains(v.tag, "DH") or str.contains(v.tag, "DL")
-            a := 0.5
-        if a > 0
-            bool pt = v.src == 5 or v.hi <= v.lo
-            if pt ? (v.p > x and v.p < x + W) : (v.lo < x + W and v.hi > x)
-                s += a
-    for q in sds
-        if q.top - q.bot <= 0.4 * awr and q.mit <= 1 and q.bot < x + W and q.top > x
-            s += (q.mit == 0 ? 3.0 : 2.0) * (q.scale == 240 ? 1.0 : 0.6)
-    s
-
-f_band(float bot, float top, int side, int slot, Lv[] L, SD[] sds, float spot) =>
-    int bi = -1
-    float bc = -1.0
-    if L.size() > 0
-        for i = 0 to L.size() - 1
-            Lv v = L.get(i)
-            if v.src != 4 and v.p >= bot and v.p <= top and v.conf > bc
-                bc := v.conf
-                bi := i
-    Zone z = bi >= 0 ? f_mkZone(L.get(bi), L, sds, array.new<Zone>(), 0.0) : Zone.new(top, bot, (top + bot) / 2, 6, 0, 0, 50, 2, "", "MODERATE", side, "", 0, 0, na, na)
-    z.top := top
-    z.bot := bot
-    z.side := side
-    z.role := slot
-    for q in sds
-        if q.scale == 240 and q.mit <= 1 and q.bot < top and q.top > bot
-            z.bom := true
-    z.pos := spot > top ? 1 : spot < bot ? -1 : 0
-    // Zone Failure Probability = measured: how often the first test of a band of this role was traded through on this chart
-    // in the weeks before this anchor (Laplace-smoothed). Nothing after the anchor enters it.
-    z.nTouch := bTouch.get(slot)
-    z.nBreak := bBreak.get(slot)
-    z.zfp := int(math.round(100 * (z.nBreak + 1.0) / (z.nTouch + 2.0)))
-    z.name := (side > 0 ? "R" : "D") + str.tostring(slot + 1) + (side > 0 ? " Supply" : " Demand") + " | " + (z.bom ? "BoM" : "MoM")
-    // Zone Reaction Counter on completed 4H bars of the prior 3 weeks (SP:1156-1161)
-    int nb = hC.size()
-    int look = math.min(nb, 3 * 5 * 6)
-    int st = 0
-    int came = 0
-    bool inEp = false
-    if look > 0
-        for i = nb - look to nb - 1
-            float c = hC.get(i)
-            bool touch = hH.get(i) >= bot and hL.get(i) <= top
-            int sd = c > top ? 1 : c < bot ? -1 : 0
-            if touch
-                if not inEp
-                    inEp := true
-                    came := st
-            else
-                if inEp
-                    inEp := false
-                    if came != 0
-                        if sd == came
-                            z.rx += 1
-                        else
-                            z.xs += 1
-                st := sd
-    z
-
-f_bands(Lv[] L, SD[] sds, float spot) =>
+f_pick(Zone[] A0, float spot) =>
+    // (1) zones that touch are one zone: the union of their evidence (no gap between them for price to trade in)
+    Zone[] mz = array.new<Zone>()
+    if A0.size() > 0
+        float[] bt = array.new_float()
+        for z in A0
+            bt.push(z.bot)
+        int[] o = bt.sort_indices(order.ascending)
+        for k = 0 to A0.size() - 1
+            Zone z = A0.get(o.get(k))
+            bool joined = false
+            if mz.size() > 0
+                Zone m = mz.get(mz.size() - 1)
+                if z.bot - m.top <= PIP / 2
+                    joined := true
+                    m.top := math.max(m.top, z.top)
+                    if z.score > m.score
+                        m.score := z.score
+                        m.degree := z.degree
+                        m.p := z.p
+                    m.tier := math.min(m.tier, z.tier)
+                    m.rx := math.max(m.rx, z.rx)
+                    m.xs := math.max(m.xs, z.xs)
+                    if str.length(m.drivers) < 120
+                        m.drivers += " | " + z.drivers
+            if not joined
+                mz.push(z)
+    // (2) the week's map = the zones price will actually meet (operator L-15, L-25): the zone price sits in, the nearest zone
+    //     on each side, and the next one out on a side only when one of the week's option walls sits in it.
+    //     With "tier-1 walls only" the map keeps just the zones that hold a wall of >= $1.5bn, live or ghost (SP:4058-4062).
+    //     Measured on 40 weeks x 3 pairs: a drawn zone is reacted to (rejection or consolidation) at least as often as it is
+    //     passed in 96% of the weeks price comes to it; the first test of a tier-1 wall zone is a reaction 87% of the time.
     Zone[] Z = array.new<Zone>()
-    float awr = 0.0
-    int nw = math.min(wH.size(), 13)
-    if nw > 0 and L.size() > 0
-        for i = wH.size() - nw to wH.size() - 1
-            awr += (wH.get(i) - wL.get(i)) / nw
-        float W = B_WIDTH * awr
-        float step = B_STEP * awr
-        int nSlide = int(B_WIDTH / B_STEP) - 1
+    int n = mz.size()
+    if n > 0
         for sgn = 0 to 1
             int side = sgn == 0 ? 1 : -1
-            float edge = na
-            bool alive = true
-            for slot = 0 to 1
-                if alive
-                    float x = side > 0 ? (slot == 0 ? spot + B_MIN * awr : edge + B_GAP * awr) : (slot == 0 ? spot - B_MIN * awr - W : edge - B_GAP * awr - W)
-                    bool found = false
-                    float bx = na
-                    float bs = 0.0
-                    while not found and (side > 0 ? x + W <= spot + awr : x >= spot - awr)
-                        float sc = f_wscore(L, sds, x, W, awr)
-                        if sc >= B_THR
-                            found := true
-                            bx := x
-                            bs := sc
-                            for j = 1 to nSlide
-                                float xx = x + side * j * step
-                                float ss = f_wscore(L, sds, xx, W, awr)
-                                if ss > bs
-                                    bx := xx
-                                    bs := ss
-                        else
-                            x += side * step
-                    if found
-                        edge := side > 0 ? bx + W : bx
-                        Z.push(f_band(bx, bx + W, side, slot, L, sds, spot))
-                    else
-                        alive := false
-    [Z, awr]
+            int taken = 0
+            // mz is ascending: walk outward from price
+            for j = 0 to n - 1
+                Zone z = mz.get(side > 0 ? j : n - 1 - j)
+                if taken < 2 and (side > 0 ? z.bot > spot : z.top < spot)
+                    bool w1 = str.contains(z.drivers, "OPT1") or str.contains(z.drivers, "OPT3")
+                    bool ok = i_wallOnly ? w1 : (taken == 0 or str.contains(z.drivers, "OPT"))
+                    if ok
+                        z.cls := taken + 1
+                        z.side := side
+                        Z.push(z)
+                    if ok or not i_wallOnly
+                        taken += 1
+        for z in mz
+            if z.bot <= spot and z.top >= spot and (not i_wallOnly or str.contains(z.drivers, "OPT"))
+                z.cls := 0
+                z.side := 0
+                z.name := "Equilibrium Zone"
+                Z.push(z)
+        // names by position (V452:1148-1155) among the zones drawn
+        for z in Z
+            if z.side != 0
+                bool outer = true
+                for q in Z
+                    if q.side == z.side and q.cls > z.cls
+                        outer := false
+                z.name := z.side > 0 ? (outer ? "IP Resistance Ceiling" : "Upper IP Resistance") : (outer ? "Key IP Support" : "Mid-Range Support")
+            z.pos := spot > z.top ? 1 : spot < z.bot ? -1 : 0
+            // Zone Failure Probability, measured: how often the first test of a zone of this class was sliced through with no
+            // reaction on this chart in the weeks before this anchor (Laplace-smoothed). Nothing after the anchor enters it.
+            z.nTouch := zTouch.get(z.cls)
+            z.nBreak := zBreak.get(z.cls)
+            z.zfp := int(math.round(100 * (z.nBreak + 1.0) / (z.nTouch + 2.0)))
+    Z
 
 f_dayClass(float o, float h, float l, float c, Zone[] Z) =>
     int k = 0
@@ -1199,11 +1153,12 @@ if not frozen and not na(anchorTs) and time_close > anchorTs
     f_sd(S, T_H1MOVE, 60)
     int weekKey = year(anchorTs, TZ) * 10000 + month(anchorTs, TZ) * 100 + dayofmonth(anchorTs, TZ)
     Lv[] L = f_e1(spot, S, weekKey)
-    [Z, awrW] = f_bands(L, S, spot)
+    Zone[] Z = f_pick(f_zones(L, S, spot), spot)
+    float mB = na(barRng1) ? high - low : barRng1
     int wkEnd = anchorTs + (4 * 24 + 17 - i_anchorHour) * 3600000      // Friday 17:00 New York
     int weekOpen = anchorTs - (i_anchorHour + 7) * 3600000          // Sunday 17:00 New York
     [DY, chainTxt] = f_e2(Z, spot, weekOpen)
-    fcs.push(WeekFc.new(anchorTs, asof, anchorTs, wkEnd, spot, Z, L, S, DY, chainTxt, f_e3(Z, spot), B_REACT * awrW))
+    fcs.push(WeekFc.new(anchorTs, asof, anchorTs, wkEnd, spot, Z, L, S, DY, chainTxt, f_e3(Z, spot), mB))
     if fcs.size() > i_weeks + i_back
         fcs.shift()
 
@@ -1245,32 +1200,26 @@ color C_SUP = color.rgb(0, 150, 150)
 if fcs.size() > 0
     WeekFc cw = fcs.last()
     if time >= cw.anchor and time < cw.t1
-        // E1 bookkeeping: the first test of each band of the current week (a reaction or a break of cw.d beyond an edge).
-        // It only feeds the measured failure probability of LATER weeks.
+        // E1 bookkeeping: the first test of each zone of the current week (operator L-23): REJECTED = price left on the side
+        // it came from; CONSOLIDATED = it worked in / around the zone at least twice as long as a straight pass takes;
+        // SLICED = it went straight through. It only feeds the measured failure probability of LATER weeks.
         for z in cw.zones
-            if z.res == 0
+            if z.res == 0 and cw.m > 0
                 if z.pos == 0
-                    z.pos := close > z.top ? 1 : close < z.bot ? -1 : 0
+                    z.pos := close > z.top + cw.m ? 1 : close < z.bot - cw.m ? -1 : 0
                 else
-                    bool entry = false
                     if not z.vin and low <= z.top and high >= z.bot
                         z.vin := true
                         z.org := z.pos
-                        entry := true
+                        z.cnt := 0
                     if z.vin
-                        if z.org < 0
-                            if high >= z.top + cw.d
-                                z.res := 2
-                            else if (not entry and low <= z.bot - cw.d) or close <= z.bot - cw.d
-                                z.res := 1
-                        else
-                            if low <= z.bot - cw.d
-                                z.res := 2
-                            else if (not entry and high >= z.top + cw.d) or close >= z.top + cw.d
-                                z.res := 1
-                        if z.res > 0
-                            bTouch.set(z.role, bTouch.get(z.role) + 1)
-                            bBreak.set(z.role, bBreak.get(z.role) + (z.res == 2 ? 1 : 0))
+                        z.cnt += 1
+                        int e = close > z.top + cw.m ? 1 : close < z.bot - cw.m ? -1 : 0
+                        if e != 0
+                            int need = 2 * int(math.ceil((z.top - z.bot + 2 * cw.m) / cw.m))
+                            z.res := e == z.org ? 1 : z.cnt <= need ? 2 : 3
+                            zTouch.set(z.cls, zTouch.get(z.cls) + 1)
+                            zBreak.set(z.cls, zBreak.get(z.cls) + (z.res == 2 ? 1 : 0))
         for u in cw.setups
             bool justIn = false
             if u.st == 0
@@ -1313,7 +1262,7 @@ if barstate.islast
             for z in f.zones
                 color c = z.side > 0 ? C_RES : z.side < 0 ? C_SUP : C_EQ
                 bx.push(box.new(f.t0, z.top, f.t1, z.bot, xloc = xloc.bar_time, bgcolor = color.new(c, 72), border_color = c, border_width = 1))
-                lb.push(label.new(f.t0, (z.top + z.bot) / 2, z.name + " | " + str.tostring(z.rx) + " rx | " + str.tostring(z.zfp) + "% ZFP | " + str.tostring(math.round(z.score)) + "/14", xloc = xloc.bar_time, style = label.style_label_left, color = color.new(c, 100), textcolor = color.new(color.white, 10), size = size.small))
+                lb.push(label.new(f.t0, (z.top + z.bot) / 2, z.name + " | " + z.degree + " | " + str.tostring(z.zfp) + "% ZFP", xloc = xloc.bar_time, style = label.style_label_left, color = color.new(c, 100), textcolor = color.new(color.white, 10), size = size.small))
         if i_showE2
             float lastTo = na
             for d in f.days
@@ -1351,7 +1300,7 @@ if barstate.islast
         if i_showAudit
             string t = "E2 " + f.chain + "\nasof " + str.format_time(f.asof, "yyyy-MM-dd HH:mm", TZ) + " NY | anchor " + str.format_time(f.anchor, "yyyy-MM-dd HH:mm", TZ) + " | spot " + str.tostring(f.spot) + " | levels " + str.tostring(f.levels.size())
             for z in f.zones
-                t += "\nZ " + str.tostring(math.round(z.bot / PIP) * PIP) + "-" + str.tostring(math.round(z.top / PIP) * PIP) + " " + z.name + " " + z.degree + " " + str.tostring(z.score) + " cf" + str.tostring(z.conf) + " p" + str.tostring(z.pillars) + " T" + str.tostring(z.tier) + " zfp" + str.tostring(z.zfp) + " " + str.tostring(z.rx) + "R" + str.tostring(z.xs) + "X [" + z.drivers + "] zfp=" + str.tostring(z.nBreak) + "/" + str.tostring(z.nTouch) + " first=" + str.tostring(z.res)
+                t += "\nZ " + str.tostring(math.round(z.bot / PIP) * PIP) + "-" + str.tostring(math.round(z.top / PIP) * PIP) + " " + z.name + " " + z.degree + " " + str.tostring(z.score) + " cf" + str.tostring(z.conf) + " p" + str.tostring(z.pillars) + " T" + str.tostring(z.tier) + " zfp" + str.tostring(z.zfp) + " " + str.tostring(z.rx) + "R" + str.tostring(z.xs) + "X [" + z.drivers + "] sliced " + str.tostring(z.nBreak) + "/" + str.tostring(z.nTouch) + " first=" + str.tostring(z.res)
             for s in f.sds
                 t += "\nSD " + (s.side > 0 ? "supply " : "demand ") + str.tostring(s.bot) + "-" + str.tostring(s.top) + " mit" + str.tostring(s.mit) + " " + str.tostring(s.scale) + " " + str.format_time(s.t, "MM-dd HH:mm", TZ)
             for v in f.levels

@@ -63,3 +63,9 @@
 - Ported the 4-band map into Pine, rendered 4 unseen DXY weeks: Apr 27 looks like the W14 report (both bands contain the turns); Jul 27 partial; Jun 15 and Oct 5 fail (breakout / pivot weeks).
 - Daily re-anchoring measured: no better. Heavier confluence thresholds: first-touch up to 0.92 on DEV, clean stays ~0.60, VALID worse. This is a property of the market at these scales, not of one rule.
 - Reported to the operator with the numbers and the W14 hindsight evidence; asked how he wants accuracy defined given that.
+
+## 2026-11-25 ~16:40 UTC - E1 v3 built on the operator's own definition; first frames that resemble his drawing
+- After his answers (L-22..L-26) I rebuilt the scorer (score2) and found the old map's real defect: relevance, not validity. Evidence-derived zones near price are valid ~95% of the weeks price reaches them.
+- Tier-1 option walls are the one feature that separates zones on first touch (95% vs 75% without a wall).
+- Pinebox had died with the worker restart (pinebox list alive:false) -> pinebox down/up. A stale dump file fooled me for one step: always check the probe printed "/model/boxes" before reading its dump.
+- Sent him: golden week, 4 unseen DXY weeks, 2 EUR/USD, 1 GBP/USD - every frame opened first.

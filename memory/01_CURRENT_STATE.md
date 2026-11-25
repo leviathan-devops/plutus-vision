@@ -24,6 +24,20 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## STATE 16:40 UTC (NEWEST) - E1 v3 is in the Pine file and shown to the operator; waiting for his verdict. E2/E3 OFF.
+- RULE NOW IN indicator/plutus-vision-engines.pine (f_pick after f_zones): touching zones merge into one (union of evidence); DRAWN = the zone price sits in + nearest zone each side
+  + the next one out on a side only if an option wall sits in it. Switch `i_wallOnly` = only zones holding a tier-1 wall (>= $1.5bn live or ghost).
+  Zone extents are the evidence's own (median 10 pips on DXY, like his hand-drawn bands). ZFP = measured share of first tests of that zone class sliced through on the chart before the anchor
+  (zTouch/zBreak; bookkeeping after each anchor uses the L-23 definition with m = mean bar range). The fixed-width band code (f_bands) is GONE.
+- SCORER THAT MATCHES HIS EYE: tools/research/score2.py (REJECT / CONSOLIDATE / SLICED; week verdict VALID when reactions >= slices). Calibration: his golden bands 3/3 valid; W14 bands 0.90; rejected v1 map 0.37-0.54.
+- NUMBERS (4H dump zones, 3 pairs): ALL 40 weeks: touched zones valid 0.957 (308 of 322), lenient 0.951, strict (untouched count against) 0.784, FIRST-TOUCH reaction 0.814, 3.3 zones/week.
+  TEST 8 weeks: 69 of 69 touched valid, first-touch 0.75. Tier-1-only: first-touch 0.874 all weeks (0.92 DEV, 1.00 VALID, 0.76 TEST), 1.8 zones/week, GBPUSD almost empty.
+  KEY FINDING: a zone holding a tier-1 wall reacts on first touch 95% (n=58, DEV+VALID nearest/second zones); tier-2 81%; no wall 75%. Institutional data is what lifts first-touch.
+- FRAMES OPENED AND LOGGED: 07 rows 31-39 (golden 4/4; DXY Aug 31 3/3, Oct 5 3/3, Jun 15 2/3, Jul 27 partial; EURUSD Aug 31 3/3, Jul 27 3/4; GBPUSD Oct 5 pivots). By my eye ~24 of 28 touched zones valid.
+- WEAK POINTS TOLD TO THE OPERATOR: breakout/news candles slice zones (Jun 15, Jul 27); after a breakout price trades where nothing is drawn; strict first-touch is 81%, not 90%; GBPUSD has almost no >= $850m strikes;
+  only investinglive feeds the walls (forex.com / ING / FXStreet hosts are blocked) - more institutional sources is the lever for first-touch.
+- NEXT (after his verdict): if approved -> single-file delivery with sealed V1, then E2. If not -> his specifics. Ultracode feature hunt (02 queue) still available with score2 as the metric.
+
 ## STATE 14:15 UTC (container clock; newest) - metric and width rules now come from the operator (04 L-22..L-26)
 - Failure = price SLICES THROUGH a zone with no reaction. Sharp rejection OR consolidation in/around the zone = valid. Pivot zones valid. Width = extent of the zone's own evidence, never a constant. Draw only what qualifies.
 - So: E1 v2's fixed-width bands (0.3 x weekly range) are rejected; go back to evidence-derived extents (v1 had them) but with far better selection, and score with REJECT / CONSOLIDATE / SLICED.
