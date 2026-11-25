@@ -81,7 +81,7 @@ def generate(pair, monday, r):
     if r.get('e3'):
         o.append('    if show_e3')
         for t in r['e3']:
-            tE = tsR
+            tE = min(tsR, t['t0'] + 2 * 86400000)
             o.append(f"        box.new({t['t0']}, {g(max(t['entry'], t['tp']))}, {tE}, {g(min(t['entry'], t['tp']))}, bgcolor=color.new(color.rgb(60,200,90), 88), border_color=color.new(color.rgb(60,200,90), 30), border_width=1, xloc=xloc.bar_time)")
             o.append(f"        box.new({t['t0']}, {g(max(t['entry'], t['sl']))}, {tE}, {g(min(t['entry'], t['sl']))}, bgcolor=color.new(color.rgb(230,60,60), 80), border_color=color.new(color.rgb(230,60,60), 30), border_width=1, xloc=xloc.bar_time)")
             o.append(f"        line.new({t['t0']}, {g(t['entry'])}, {tE}, {g(t['entry'])}, xloc=xloc.bar_time, color=color.rgb(90,160,255), width=2)")

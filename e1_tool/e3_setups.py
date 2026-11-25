@@ -67,8 +67,9 @@ def build(pair, monday, r):
 
     for day in e2['days']:
         ref = day['path'][0][1]
-        above = [z for z in zs if z['bot'] >= ref or z['bot'] <= ref <= z['top']]
-        below = [z for z in zs if z['top'] <= ref or z['bot'] <= ref <= z['top']][::-1]
+        # a zone the price is already inside is being mitigated, not approached: entries only at zones price comes to from outside
+        above = [z for z in zs if z['bot'] > ref]
+        below = [z for z in zs if z['top'] < ref][::-1]
         sup = [z for z in above if side(z) == 'Supply']
         dem = [z for z in below if side(z) == 'Demand']
         sh, dr = day['shape'], day['dir']

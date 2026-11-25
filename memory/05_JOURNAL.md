@@ -232,3 +232,13 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - Anchor week DXY Apr 20-24: #1 Mon LONG at Mid-Range Support E 98.05 SL 97.91 TP 98.75 RRR 5.1 -> TP hit; #2 Mon SHORT in Equilibrium E 98.25 -> SL; #3 Fri SHORT at Upper Resistance E 98.75 TP 98.07 -> filled, open +2.4R at week end.
   Only 3 setups: the BS days produce none because the demand zone was already used by #1 (dedup). Jul 27: 2 setups (1 SL, 1 not filled). NEXT: more of the spec (reinforcements on BS days, re-entry rules, SS scalps inside the range on 30m/15m), then pixel check.
 - Entry point for everything is still `e1_tool/e1 MONDAY PAIR` / `tools/e1render PAIR MONDAY` (Pine now carries E1 + E2 + E3 with toggles).
+
+## 2026-11-26 - E2 v1 / E3 v1 measured over all 40 DXY weeks: FAR from the goal (facts, not accuracy claims)
+- Script (scratchpad, re-creatable): loops sidecar weeks, G.run -> E2.actual() day classifier vs forecast, E3.simulate().
+- E2: forecast day shape+direction equal to my day classifier on 66 of 200 days; on directional forecast days the day closed in the forecast direction 46 of 91 (coin flip). Typical output is always "SS -> BS x -> R" - the engine barely discriminates weeks.
+- E3: 84 setups in 40 weeks (about 2 per week - far below "catch the obvious trades"); 8 TP, 40 SL, 33 not filled, 3 open. Anchor week Apr 20-24: LONG 98.05 -> TP 98.75 hit; the SHORT inside the zone price sat in was removed by a fix (no entries at zones price is already inside).
+- Fixes applied this round: E2 direction = failing ZFP class, same class -> 4H storyline (score/tier tiebreak removed); E3 skips zones containing price.
+- DIAGNOSIS TO DO NEXT (in this order): (1) E3 stop-outs: measure on first touch of each E1 zone how far price runs in favour before it trades 3 pips past the entry band / past the whole zone - decides tight SL (rule a) vs next-rung SL (rule b) per the spec's confidence rule,
+  and whether entries should wait for the spec's Phase 2.5 "1-2-3 retest" entry timing (canon 8.25) instead of a resting limit at the edge; (2) E3 count: SS days need scalps at BOTH range bounds every SS day and BS days need the with-move entry + reinforcements - currently dedup kills them;
+  (3) E2: the current-shape step and the day classifier are crude (thresholds mine); re-read 6.2 priority order and anchor each day's shape to zone events (broke / rejected / inside) instead of candle body ratios; use the previous week's actual zone interactions.
+- Frames: evidence/e1tool_DXY_1H_2026-04-20.png (E1+E2+E3 all layers), evidence/e1tool_DXY_1H_2026-04-20_e23.png (levels/LSZ/options hidden; not yet opened).

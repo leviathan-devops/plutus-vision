@@ -51,7 +51,9 @@ def chain(pair, monday, r):
     rng_lo = inside['bot'] if inside else (F['top'] if F else pos - adr)
     rng_hi = inside['top'] if inside else (C['bot'] if C else pos + adr)
     if C and F:
-        weaker = C if strength(C) < strength(F) else F if strength(F) < strength(C) else (C if (cur_dir if cur_dir != 'range' else bias) == 'up' else F)
+        # 6.4.1: the bounding zone whose ZFP class is failing gives the direction; same class on both sides = unclear -> the 4H storyline decides (Pressure Reading Rules)
+        hc, hf = HOLD[C['type']], HOLD[F['type']]
+        weaker = C if hc < hf else F if hf < hc else (C if bias == 'up' else F)
     else:
         weaker = C or F
     bdir = 'up' if weaker is C else 'down'
