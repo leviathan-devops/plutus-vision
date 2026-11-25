@@ -24,6 +24,15 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## STATE (NEWEST, after the operator's rejection of E1 v3) - STOP: NO CODE, NO AGENTS until he approves (04 L-27, L-28)
+- The workflow wf_13ddfb31-159 (e1-zone-mechanics-redesign) was killed by the operator. Do not resume it unless he asks.
+- I gave him the gap analysis: prompt vs GLM W14 report vs my engine (06 LS-25 lists my inventions and the prompt's actual rules with line numbers).
+- The Pine file still holds E1 v3 (f_pick: merge touching zones, nearest per side + wall rule, measured ZFP). He rejected it. Leave it until he says what to build.
+- When he approves: implement the prompt LITERALLY - Step 0f single-origin-candle S/D zones as real candle [Low, High]; BoM/MoM + reaction counter on every zone; 0.10-0.15 clustering;
+  degree = highest-scoring level (6 dimensions + structural-extreme bonus) + POI tier; MODERATE and above only; no trimming / padding / merging / caps of my own.
+- Known concrete defects to fix first: (a) Oct 5 DXY demand zone 101.71-101.77 existed in the engine but was cut by my 2-per-side cap; (b) Oct 5 top zone was a LIGHT gap in-fill (score 5) drawn although the prompt
+  shows MODERATE+ only, and it got no structural-extreme / round-number / 4H-BoM credit; (c) Jul 27 three supports with 1-2 pip gaps should have been ONE cluster by the 0.10-0.15 rule.
+
 ## STATE 16:40 UTC (NEWEST) - E1 v3 is in the Pine file and shown to the operator; waiting for his verdict. E2/E3 OFF.
 - RULE NOW IN indicator/plutus-vision-engines.pine (f_pick after f_zones): touching zones merge into one (union of evidence); DRAWN = the zone price sits in + nearest zone each side
   + the next one out on a side only if an option wall sits in it. Switch `i_wallOnly` = only zones holding a tier-1 wall (>= $1.5bn live or ghost).

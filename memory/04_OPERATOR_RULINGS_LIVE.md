@@ -64,3 +64,10 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
   Do NOT restrict E1 to rejection zones. Apply the Fractal Architecture doc as authoritative context when reading his examples.
 - L-25 Draw only zones that qualify; fewer than four is fine.
 - L-26 He caught that the frame I sent as "my engine on the golden week" (ide_110) had NO zones on it: the render had failed and I had not looked at it. RULE: never send or cite a frame I have not opened.
+
+## 2026-11-25 late - operator stops the redesign (BINDING)
+- L-27 "I didn't approve any redesign." He killed the multi-agent workflow. DO NOT write or change E1 code, and do not launch agents, until he approves what will be built.
+  He asked for an EXPLANATION: read the prompt, state exactly how E1 zones are supposed to be built, and show the gap between that / the GLM W14 report and what I do.
+- L-28 His verdict on the E1 v3 frames: only DXY Oct 5 is close ("most accurate so far ... precise candle body edges to wicks") but it misses a 4th zone (the demand at the bottom, Tue low 101.77)
+  and its pressure labels are wrong (top zone "LIGHT" although it whiplashed price hardest). Everything else: garbage - bloated rectangles ("40 pips with 200 candles inside"), three supports bunched and pierced (Jul 27).
+  My "81% / 96%" claims were rejected ("more like 18%"). Zones are built from candle / price-action data per the prompt, not from tuned geometry.

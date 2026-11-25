@@ -29,3 +29,10 @@
 - LS-23 (2026-11-25) I sent the operator a blank frame (ide_110) without opening it. Always Read a frame before sending or scoring it; check the run's box count in the pb output first (0 boxes = failed render).
 - LS-24 (2026-11-25) My scorer's BROKEN/"clean" notions were stricter than the operator's eye: consolidation in or around a zone followed by a break is a VALID reaction to him; only a straight slice-through is a failure.
   The measured "57% clean ceiling" therefore does not bound his metric. Re-measure with: REJECT / CONSOLIDATE / SLICED (score2 in tools/research).
+
+- LS-25 (2026-11-25) I kept inventing zone mechanics instead of implementing the prompt. Inventions NOT in the prompt, all mine: trimming a zone against its neighbour, a 5-pip minimum and 15-pip cap on height,
+  padding option walls by their conversion band, "HEAVY peaks only need non-overlap", merging touching zones, fixed-fraction bands, "nearest N per side" caps, a per-class measured ZFP, a 0.3 threshold for S/D.
+  What the prompt actually says (canon/Toolset/...v5.3.3...md): S/D zone = [Low, High] of the SINGLE 4H origin candle before a move >= 0.5 lasting >= 3 trading days, must match a real candle (1341-1368);
+  BoM/MoM and reaction counter for EVERY IP zone (1145-1161); levels grouped where they cluster within 0.10-0.15, degree from the group's highest-scoring level on 6 dimensions + structural-extreme bonus (1461-1505);
+  POI Tier 1 = IP zone overlapping a 4H BoM 0X-1X, +2 (1509-1514); synthesis shows MODERATE and above only with columns Range / Pressure Degree / POI Tier / ZFP / BoM flag / sweep status / Engine 3 status (1632-1644).
+- LS-26 A research scorer is not the operator's eye. Never report a percentage from it as "accuracy" to him; show frames and say what each zone did.
