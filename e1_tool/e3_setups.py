@@ -83,6 +83,36 @@ def build(pair, monday, r):
         return {'day': day['day'], 'dayidx': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].index(day['day']), 'shape': shape, 'category': category, 'dir': direction, 'zone': z['name'], 'zone_rng': (z['bot'], z['top']),
                 'entry': entry, 'sl': sl, 'tp': tp, 'rrr': rrr, 'tp_zone': tz['name'], 'session': ses[0], 't0': day['t0'], 't1': day['t1'], 'tier': z['tier'][:6], 'score': z['score']}
 
+    def retest(day, B, direction, chain_days):
+        """Law 27: SS -> BS, the range boundary break becomes the BS entry. The broken zone is retested from the other side (8.1 lifecycle: broken resistance = new support).
+        Armed only after a 1H close beyond the zone (6.2: breakout confirmed by a sustained move beyond the zone)."""
+        key = (id(B), day['day'], 'retest')
+        if key in used:
+            return None
+        if direction == 'LONG':
+            entry, lvl = B['top'], B['top']
+            bands = [(q['bot'], q['top']) for q in B['structs']] or [(B['bot'], B['top'])]
+            lo = max(bands, key=lambda q: q[1])[0]
+            sl = lo - BUF[pair] * pip
+            opp = [t for t in zs if t['bot'] > entry + 5 * pip]
+        else:
+            entry, lvl = B['bot'], B['bot']
+            bands = [(q['bot'], q['top']) for q in B['structs']] or [(B['bot'], B['top'])]
+            hi = min(bands, key=lambda q: q[0])[1]
+            sl = hi + BUF[pair] * pip
+            opp = [t for t in zs if t['top'] < entry - 5 * pip][::-1]
+        risk = abs(entry - sl)
+        if risk <= 0 or risk > SL_MAX_PIPS * pip:
+            return None
+        for t in opp:
+            p = (t['bot'] - pip) if direction == 'LONG' else (t['top'] + pip)
+            if abs(p - entry) / risk >= RRR_FLOOR:
+                used.add(key)
+                return {'day': day['day'], 'dayidx': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].index(day['day']), 'shape': 'SS->BS', 'category': 'Transition', 'dir': direction, 'zone': B['name'], 'zone_rng': (B['bot'], B['top']),
+                        'entry': entry, 'sl': sl, 'tp': p, 'rrr': abs(p - entry) / risk, 'tp_zone': t['name'], 'session': 'NY', 't0': e2['days'][0]['t0'], 't1': day['t1'], 'tier': B['tier'][:6], 'score': B['score'],
+                        'arm': ('up' if direction == 'LONG' else 'down', lvl)}
+        return None
+
     branches = [('PRIMARY', d) for d in e2['days']] + [('ALT', d) for d in e2.get('alt_days', [])]
     for d in e2.get('alt_days', []):
         d['_chain'] = e2['alt_days']
@@ -102,10 +132,10 @@ def build(pair, monday, r):
                     c = candidate(day, z, d, 'Consolidation', sh)
                     if c: out.append(c)
         elif sh in ('BS', 'PBS'):
-            # HTF swing with the move: anchor = the nearest zone behind price on the move's side (demand for up, supply for down)
-            z = (dem[0] if dem else None) if dr == 'up' else (sup[0] if sup else None)
-            if z:
-                c = candidate(day, z, 'LONG' if dr == 'up' else 'SHORT', 'HTF Swing', sh)
+            chain_days = e2['days'] if branch == 'PRIMARY' else e2['alt_days']
+            first_bs = next(d for d in chain_days if d['shape'] in ('BS', 'PBS'))
+            if day is first_bs and day['key'] is not None:
+                c = retest(day, day['key'], 'LONG' if dr == 'up' else 'SHORT', chain_days)
                 if c: out.append(c)
         elif sh in ('WL', 'RWL', 'R'):
             # Reversal at the zone that rejects: after an up move the short anchors at the supply reached; after a down move the long at the demand reached
@@ -118,7 +148,13 @@ def build(pair, monday, r):
                 d = 'LONG'
             if zz:
                 c = candidate(day, zz[0], d, 'Reversal', sh)
-                if c: out.append(c)
+                if c:
+                    chain_days = e2['days'] if branch == 'PRIMARY' else e2['alt_days']
+                    fb = next((x for x in chain_days if x['shape'] in ('BS', 'PBS') and x['key'] is not None), None)
+                    if fb:
+                        c['arm'] = (fb['dir'], fb['key']['top'] if fb['dir'] == 'up' else fb['key']['bot'])
+                        c['t0'] = e2['days'][0]['t0']
+                    out.append(c)
         for c in out[n_before:]:
             c['branch'] = branch
             c['trigger'] = (f"{e2['decision_zone']} gives way" if branch == 'PRIMARY' else f"{e2['decision_zone']} holds") if day['shape'] not in ('SS',) else 'range holds'
@@ -137,8 +173,13 @@ def simulate(pair, monday, setups):
     for s in setups:
         long = s['dir'] == 'LONG'
         st, fill = 'not filled', None
+        armed = 'arm' not in s
         for x in bars:
             if x['time'] < s['t0']:
+                continue
+            if not armed:
+                if (x['close'] > s['arm'][1]) if s['arm'][0] == 'up' else (x['close'] < s['arm'][1]):
+                    armed = True
                 continue
             if fill is None:
                 if x['low'] <= s['entry'] <= x['high']:
@@ -167,4 +208,6 @@ if __name__ == '__main__':
     ss = simulate(pair, monday, build(pair, monday, r))
     print(f"ENGINE 3 {pair} {monday} | E2: {r['e2']['primary']}")
     for s in ss:
+        if not s['fill'] and s['result'] == 'not filled' and 'arm' in s:
+            s['result'] = 'not filled (armed by 1H close %s %s)' % ('above' if s['arm'][0] == 'up' else 'below', f % s['arm'][1])
         print(f"  #{s['n']} {s['branch'][:3]} {s['day']} {s['session']:<6} {s['dir']:<5} {s['category']:<13} [{s['shape']}] at {s['zone']} {f % s['zone_rng'][0]}-{f % s['zone_rng'][1]} | E {f % s['entry']} SL {f % s['sl']} TP {f % s['tp']} ({s['tp_zone']}) RRR {s['rrr']:.1f} | {s['result']}{' filled ' + D.ts(s['fill'])[5:13] + 'h' if s['fill'] else ''}")

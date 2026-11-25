@@ -89,6 +89,8 @@ def generate(pair, monday, r):
             o.append(f"        box.new({t['t0']}, {g(max(t['entry'], t['sl']))}, {tE}, {g(min(t['entry'], t['sl']))}, bgcolor=color.new(color.rgb(230,60,60), 80), border_color=color.new(color.rgb(230,60,60), 30), border_width=1, xloc=xloc.bar_time)")
             o.append(f"        line.new({t['t0']}, {g(t['entry'])}, {tE}, {g(t['entry'])}, xloc=xloc.bar_time, color=color.rgb(90,160,255), width=2)")
             txt = f"#{t['n']} {t['day']} {t['session']} {t['dir']} {t['shape']}{'' if t['branch'] == 'PRIMARY' else ' (ALT)'} | E {g(t['entry'])} SL {g(t['sl'])} TP {g(t['tp'])} | RRR {t['rrr']:.1f}"
+            if 'arm' in t:
+                txt += f" | only after a 1H close {'above' if t['arm'][0] == 'up' else 'below'} {g(t['arm'][1])}"
             o.append(f"        label.new({t['t0']}, {g(t['entry'])}, \"{txt}\", xloc=xloc.bar_time, style=label.style_label_{'up' if t['dir'] == 'LONG' else 'down'}, color=color.new(color.rgb(20,40,90), 0), textcolor=color.white, size=size.small)")
     return '\n'.join(o) + '\n'
 
