@@ -71,3 +71,11 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
 - L-28 His verdict on the E1 v3 frames: only DXY Oct 5 is close ("most accurate so far ... precise candle body edges to wicks") but it misses a 4th zone (the demand at the bottom, Tue low 101.77)
   and its pressure labels are wrong (top zone "LIGHT" although it whiplashed price hardest). Everything else: garbage - bloated rectangles ("40 pips with 200 candles inside"), three supports bunched and pierced (Jul 27).
   My "81% / 96%" claims were rejected ("more like 18%"). Zones are built from candle / price-action data per the prompt, not from tuned geometry.
+
+## 2026-11-25 night - the reference the operator means by "90% accurate" (CONFIRMED BY HIM)
+- L-29 The chart he remembers = `Original_Canon_Data/Pine Scripts/trident_v8.pine` run UNMODIFIED (DXY, week Apr 20-24 2026), its own colour scheme (red resistance / orange equilibrium / teal support, green LSZ, amber option-strike lines).
+  Frames: evidence/trident_v8_original_DXY_1h_apr20.png and _wide.png. He said: "that's the color scheme I remember ... actually reacting to the zones pretty well".
+  Source report: Leviathan_DXY_IL_Report_Apr20-24_2026.pdf (upload id 5212e9bd; same as Original_Canon_Data report; v4.5.2 engine).
+  It shows the construction explicitly: (sec 4/9) four 4H zones, each = one origin candle's [Low, High] with its OHLC and timestamp (BoM Demand 97.93-98.11, BoM Supply 98.77-98.99, BoM Demand 97.63-97.94, MoM Supply 98.34-98.42);
+  (sec 5) six LSZ = D1 swing low/high + 0.05; (sec 8) clustering scan of 126 levels into 22 clusters; (sec 3) five IP zones named by position with Pressure, Score x/14, ZFP, POI tier and drivers per pillar.
+- Do NOT build anything until he says what to build. Use the original script and this report as the visual and structural reference, not my own renders.
