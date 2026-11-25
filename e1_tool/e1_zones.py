@@ -16,7 +16,8 @@ def valid_sd(pair, monday, spot):
             # A4: a demand candle the market now trades UNDER (or a supply candle it trades OVER) is no longer that zone
             broken = (spot < z['bot']) if z['type'] == 'Demand' else (spot > z['top'])
             why = ('wider than 0.40' if z['top'] - z['bot'] > P._u(pair, 40) else f'older than {max_age_days} days' if z['origin_time'] < b0 - max_age_days * 86400000
-                   else 'price beyond it at the boundary (broken)' if broken else f"{z['mit']}X mitigated" if z['mit'] > 1 else None)
+                   else 'price beyond it at the boundary (broken)' if broken else f"{z['mit']}X mitigated ({z['hard']} hard)" if (z['mit'] > 1 or z['hard'] > 0) else None)
+            # one-time use (operator's SMC notes): a candle is a zone only while unmitigated; a single soft wick tap 'barely counts' (P452:716) and is kept
             z['excluded'] = why
             (drop if why else keep).append(z)
         return keep, drop

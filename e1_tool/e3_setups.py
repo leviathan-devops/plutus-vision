@@ -52,6 +52,8 @@ def build(pair, monday, r):
             return None                                 # consensus against the direction -> reject
         # MoM zones are ladder steps for trend-aligned trades only; never a reversal entry against the 4H storyline (Trading Laws via P533 change 2)
         is_bom = any(q.get('h4bom') for q in z['structs'])
+        if not designated and not checks[0]:            # 8.18 check 1 as a gate: no entry against the 4H trend unless E2 designates the reversal at this zone
+            return None
         if not designated and z['structs'] and not is_bom and not checks[0]:
             return None
         ref = day['path'][0][1]
