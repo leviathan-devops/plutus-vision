@@ -1,5 +1,6 @@
 # PLUTUS VISION — read this first (auto-loaded)
 
+**READ `memory/10_FAILURE_RECORD.md` BEFORE ANY E1 WORK: execute the v5.3.3 prompt exactly as written, do only what the operator says, no redesigns.**
 **After any compaction/reset, read `memory/00_COMPACTION_SURVIVAL.md` FIRST and follow its read order** (state, live operator rulings, task queue, decisions, lessons, facts, journal).
 Update `memory/01_CURRENT_STATE.md` + `memory/05_JOURNAL.md` every 3-5 turns and before any long run.
 Older graph (foundation phase, still valid for canon concepts): `python3 context_management/graph/resume.py` (`--node E3`, `--grep <word>`).
