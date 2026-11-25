@@ -1,0 +1,83 @@
+{
+ "week": "2026-09-14",
+ "anchor": 1789365600000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-09-14T06:00:00Z",
+  "Monday expiry post https://investinglive.com/orders/fx-option-expiries-for-14-september-10am-new-york-cut/ published 2026-09-14T06:58:44+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W37, 2026-W38",
+  "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/: no table image in the article body",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "accept: 0 strike/notional entries accepted (2+ reads identical), 0 dropped"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+   "lastmod": "2026-09-11T05:01:21+00:00",
+   "cut_date": "2026-09-11",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-14/investinglive_orders_fx-option-expiries-for-11-september-10am-new-york-cut-0.html",
+   "published_at": "2026-09-11T05:01:21Z",
+   "image_url": null
+  }
+ ],
+ "analyst": [
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi/",
+   "lastmod": "2026-09-10T16:22:44+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-14/investinglive_technical-analysis_eurusd-technicals-the-eurusd-bounces-and-retraces-the-declines-from-the-ppi.html",
+   "published_at": "2026-09-10T16:22:44Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/kickstart-the-na-trading-day-with-a-technical-look-at-the-eurusd-usdjpy-and-gbpusd-what-levels-are-key/",
+   "lastmod": "2026-09-10T12:08:39+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-14/investinglive_technical-analysis_kickstart-the-na-trading-day-with-a-technical-look-at-the-eurusd-usdjpy-and-gbpusd-what-levels-are-key.html",
+   "published_at": "2026-09-10T12:08:39Z"
+  },
+  {
+   "url": "https://investinglive.com/forex/eur-usd-almost-erased-warsh-driven-selloff-ahead-of-the-ecb-decision-what-to-watch-next/",
+   "lastmod": "2026-09-10T10:26:51+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-14/investinglive_forex_eur-usd-almost-erased-warsh-driven-selloff-ahead-of-the-ecb-decision-what-to-watch-next.html",
+   "published_at": "2026-09-10T10:26:51Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/usdcad-technicals-usdcad-extends-higher-but-stalls-at-key-trendline-resistance/",
+   "lastmod": "2026-09-11T18:55:36+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-09-14/investinglive_technical-analysis_usdcad-technicals-usdcad-extends-higher-but-stalls-at-key-trendline-resistance.html",
+   "published_at": "2026-09-11T18:55:36Z"
+  }
+ ],
+ "h10": {
+  "release_date": "2026-09-08",
+  "published_at": "2026-09-08T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260908/",
+  "rate_day": "Sep. 4",
+  "rates": {
+   "EURUSD": 1.1618,
+   "USDJPY": 156.11,
+   "GBPUSD": 1.3521,
+   "USDCAD": 1.3834,
+   "USDSEK": 9.5646,
+   "USDCHF": 0.8096
+  },
+  "k_h10": 108.054536,
+  "dxy_h10": 99.1122
+ },
+ "accepted": [],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [],
+  "GBPUSD": []
+ },
+ "stats": {
+  "entries_seen": 0,
+  "agreed_first_two_reads": 0,
+  "accepted": 0,
+  "dropped": 0
+ },
+ "h10_src": {
+  "url": "https://www.federalreserve.gov/releases/h10/20260908/",
+  "published_at": "2026-09-08T20:15:00Z",
+  "kind": "h10_release"
+ }
+}
