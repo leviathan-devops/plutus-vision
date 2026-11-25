@@ -28,7 +28,7 @@ def build(pair, monday, r):
     zs = sorted(r['zones'], key=lambda z: z['bot'])
     out, used = [], set()
 
-    def candidate(day, z, direction, category, shape):
+    def candidate(day, z, direction, category, shape, designated=False):
         if (direction == 'LONG') != (side(z) == 'Demand'):
             return None                                 # never anchor LONGs at supply / SHORTs at demand (8.1)
         if any(s['mit'] > 2 for s in z['structs']):
@@ -48,11 +48,11 @@ def build(pair, monday, r):
         cd = next((d['dir'] for d in day.get('_chain', e2['days']) if d['shape'] in ('BS', 'PBS')), None)
         if cd:
             checks.append((cd == 'up') == want_up)
-        if sum(1 for c in checks if not c) > len(checks) / 2:
+        if not designated and sum(1 for c in checks if not c) > len(checks) / 2:
             return None                                 # consensus against the direction -> reject
         # MoM zones are ladder steps for trend-aligned trades only; never a reversal entry against the 4H storyline (Trading Laws via P533 change 2)
         is_bom = any(q.get('h4bom') for q in z['structs'])
-        if z['structs'] and not is_bom and not checks[0]:
+        if not designated and z['structs'] and not is_bom and not checks[0]:
             return None
         ref = day['path'][0][1]
         lo, hi = anchor_band(z, direction, ref)
@@ -125,6 +125,8 @@ def build(pair, monday, r):
         sup = [z for z in above if side(z) == 'Supply']
         dem = [z for z in below if side(z) == 'Demand']
         sh, dr = day['shape'], day['dir']
+        if branch == 'ALT' and (sh in ('SS', 'WLS') or (sh == 'R' and dr == 'range')):
+            continue                                    # range scalps belong to the range, not to a branch: mapped once (primary days)
         if sh in ('SS', 'WLS') or (sh == 'R' and dr == 'range'):
             # Consolidation: swing scalps both directions at the range boundaries
             for z, d in ((dem[0] if dem else None, 'LONG'), (sup[0] if sup else None, 'SHORT')):
@@ -134,9 +136,7 @@ def build(pair, monday, r):
         elif sh in ('BS', 'PBS'):
             chain_days = e2['days'] if branch == 'PRIMARY' else e2['alt_days']
             first_bs = next(d for d in chain_days if d['shape'] in ('BS', 'PBS'))
-            if day is first_bs and day['key'] is not None:
-                c = retest(day, day['key'], 'LONG' if dr == 'up' else 'SHORT', chain_days)
-                if c: out.append(c)
+            pass        # with-the-move entries = 8R reinforcement stop-limits (not built yet); the retest-of-broken-zone entry was measured 0 TP / 9 SL and removed
         elif sh in ('WL', 'RWL', 'R'):
             # Reversal at the zone that rejects: after an up move the short anchors at the supply reached; after a down move the long at the demand reached
             tgt = day['path'][1][1] if sh == 'WL' else day['path'][0][1]
@@ -147,7 +147,7 @@ def build(pair, monday, r):
                 zz = [z for z in zs if side(z) == 'Demand' and z['bot'] <= tgt + 5 * pip][::-1]
                 d = 'LONG'
             if zz:
-                c = candidate(day, zz[0], d, 'Reversal', sh)
+                c = candidate(day, zz[0], d, 'Reversal', sh, designated=True)      # E2 designates the reversal at this zone, E3 obeys (R3 law)
                 if c:
                     chain_days = e2['days'] if branch == 'PRIMARY' else e2['alt_days']
                     fb = next((x for x in chain_days if x['shape'] in ('BS', 'PBS') and x['key'] is not None), None)
