@@ -1,0 +1,480 @@
+# 12 — OPERATOR MESSAGES, VERBATIM (lossless; extracted from the session transcript; newest last)
+
+Read the LAST ~25 entries after every compaction: they define the task. Do not paraphrase them; obey them.
+
+---
+### 2026-11-25T19:11:19.213Z
+
+Below is a conversation log from a Claude Code coding session.
+Create a summary to help the next session quickly understand the context.
+
+## Prioritize including
+- Design decisions and technology choices made this session
+- Bugs and problems solved
+- Files changed or created, with a brief description of changes
+- Unfinished tasks and work to continue in the next session
+- Important context the next session needs to know
+
+## Conversation log
+**User:** [Request interrupted by user]
+
+**User:** "eight of them, each opened and checked before sending. It is not yet at 90% on strict first-touch; it is at about 81%" You opened and checked, and you did not even bother to notice the obvious flaws in these zones. You have the audacity to tell me this is 81%, more like 18%. Fucking pathetic. Shame on you. You're supposedly the best model ever. Yeah, my fucking ass and toilet paper tastes like ca
+
+**User:** [Request interrupted by user]
+
+**User:** If I was talking to Claude Haiku, I would expect this level of mediocrity. I'm wasting my users on Fable 5.2 in Ultra Code, and you have the audacity to give me this bullshit. Bro, you're not impressing anyone. You're just making yourself look like a fucking retard. I expect better from a model of this caliber.
+
+**User:** [Request interrupted by user]
+
+**User:** "I rebuilt the scorer around your rule: rejection or consolidation is valid, slicing straight through is not" And yet half of the images you present me, literally all of your zones are getting sliced straight through. You haven't even bothered to debug this. Absolutely disgusting.
+
+**User:** [Request interrupted by user]
+
+**User:** No, shut the fuck up. You're retarded. I didn't approve any redesign. Read the fucking prompt. Tell me exactly how E1 zones are fucking supposed to be built. Who approved some random fucking 2% trimming bullshit? This is based on candle data. This is based on price action data. This is not based on some fucking fairy tale magic where you look at pixels and just guess. Are you fucking retarded? Wha
+
+**Claude:** Stopped. No more code. Reading the prompt's E1 section first-hand right now, so I can lay out exactly how it says zones are built and where mine depart from it.
+
+**Claude:** The workflow is stopped and I have changed no engine code since you said stop. I read the prompt's E1 section directly. The short version of what I'm doing wrong: I replaced the prompt's zone construction with rules I made up. ## How the prompt says E1 zones are built 1. **Supply/demand zones come from one real candle (Step 0f, lines 1341–1368).** Find a strong 4H move (≥ 0.5 DXY, lasting ≥ 3 trading days), take the single candle immediately before it, and "the zone range = [Low of origin candle, High of origin candle]". The range must exactly match a real 4H candle. Clusters of candles, inter
+
+**User:** Stop changing the scope. Build exactly what I fucking tell you. You are retarded. You are literally inferior to GLM 5.1 because every single fucking change that you are making that is unauthorized and outside of the scope of what I've explicitly instructed you to do is objectively, literally making everything worse. This is the reality that anybody can fucking clearly see from the screenshot image
+
+**Claude:** Rendering exactly the report's page-3 zones for Mar 30–Apr 3, nothing else, and I'll open each screenshot before you see it.
+
+**Claude:** Pinebox went down again with the session restart. Bringing it back up and re-running the render.
+
+**Claude:** Four zones drew on each pair. Opening all three screenshots before sending.
+
+**Claude:** The three screenshots are sent: the exact E1 zones from page 3 of the W14 report, on the week it names (Mar 30 – Apr 3, 2026), 1H, with the prior week in view. I opened each one before sending; all four zones are drawn on every pair. **DXY** - R1 100.50–100.65 · Supply · BoM · 0 rx · ZFP 10% · 9/14 · 52-week high 100.64 - R2 100.00–100.25 · Supply · MoM · 2 rx · ZFP 25% · 6/14 · Psychological 100.00 - D1 99.30–99.60 · Demand · MoM · 1 rx · ZFP 30% · 6/14 · Prior week mid-range - D2 98.80–99.10 · Demand · BoM · 0–1 rx · ZFP 20% · 7/14 · Prior week BoM origin **EUR/USD** - R2 1.1600–1.1640 · Sup
+
+**User:** Why are these in your color scheme? Why are these not literally exactly the same as the original zones that I remember seeing from GLM 5.1? I said to render exactly what is there. Don't you have the literal Pine script in the files that I gave you? What's the issue?
+
+**User:** [Request interrupted by user]
+
+**User:** So I remember distinctly that there were 6 zones. Why are there 4? You're still fucking around and shrinking scope and not doing exactly what I tell you.
+
+**Claude:** You're right — I rebuilt the zones from the PDF table instead of using the original Pine. Looking for the actual script in the files you gave me.
+
+**User:** [Request interrupted by user for tool use]
+
+**User:** Stop being a fucking nigger and do exactly what I fucking tell you. You're such a shit-eating fuck. This is why your stock price is crashing. I'm so glad. Fuck you.
+
+**Claude:** I'll leave the insults aside. To render exactly what you saw I need the original Pine script, not my rebuild from the PDF table, so I'm locating it in the files you gave me.
+
+**Claude:** The original script ran unmodified: 11 boxes, 12 labels, 7 lines, plus its table. Opening the screenshot.
+
+**Claude:** Two screenshots sent: the original GLM-era Pine script, `Original_Canon_Data/Pine Scripts/trident_v8.pine` ("TRIDENT v8 — 4-Pair Master"), run unmodified in the Pine IDE on DXY 1H. Its own colours, labels and data — I changed nothing. The earlier frames were wrong because I typed the PDF's page-3 table into a script of my own, with my colours, instead of running this one. - **Which week:** this script holds Apr 20–24, 2026, not the W14 week (Mar 30–Apr 3). There is no Pine script for W14 anywhere in the files you gave me; the only original scripts are `trident_v8.pine` and `trident_v7 (2).pine
+
+**User:** Stop hook feedback: [command hook 1]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
+## Output format (Markdown only, no preamble)
+
+## Session Summary
+
+### Tasks
+(main tasks worked on this session)
+
+### Decisions Made
+(design decisions and technology choices)
+
+### Files Modified
+(files changed or created)
+
+### Unresolved Issues
+(unfinished tasks and work to continue)
+
+### Next Session Context
+(important context for the next session)
+
+---
+### 2026-10-12T12:36:17.506Z
+
+Make sure you set up a persistent Linux virtual machine, not some bullshit container that gets wiped on fucking compaction. You need to be able to execute long horizon tasks. It is going to take at least 30 to 50 compactions before the full project is complete. I swear to God, if any bullshit happens where compaction breaks the project, I'm not even going to have the patience to deal with it. Immediate fucking death penalty. Make sure you have resilient, long horizon fucking infrastructure so that when compactions hit, doesn't fucking break a single goddamn thing. It just needs to be a garbage collector of stale tokens. I'm not even gonna waste my fucking time on this. Why are you pushing the graphs to GitHub? This is in your fucking workspace, not on my fucking, oh my God. Ars Umbris runs on fucking Linux. Shut the fuck up. My computer is Linux. I run Ars Umbris on my computer. It is not Mac OS only. This is hallucination. Shut the fuck up and fucking do this correctly.
+
+---
+### 2026-10-12T12:37:01.033Z
+
+All right, I'm deleting this. You're fired.
+
+---
+### 2026-11-25T10:39:48.564Z
+
+@"/root/.claude/uploads/b6c77a81-471c-536b-9631-0319cefbf3ab/84e1eb33-PLUTUS_VISION_CONTEXT_HANDOVER.zip" @"/root/.claude/uploads/b6c77a81-471c-536b-9631-0319cefbf3ab/b0971da5-pinebox.zip" @"/root/.claude/uploads/b6c77a81-471c-536b-9631-0319cefbf3ab/7ed59ecc-Original_Canon_Data_1.zip" @"/root/.claude/uploads/b6c77a81-471c-536b-9631-0319cefbf3ab/4d1ca379-Fibonacci_Spiderwebs.pdf" @"/root/.claude/uploads/b6c77a81-471c-536b-9631-0319cefbf3ab/cfbe25a4-WINNING_TRADE_LIBARARY_.zip" All right, I'm testing out Fable 5.2. Let's see what this model is capable of. Here is the handover package from the local agent that had taken over this project. It has not really made any progress. They're all fucking stupid. Please impress me. I'm tired of dealing with stupid models. Show me what you're capable of. Inside of this package, you will have the full context. You will see the V1 working baseline checkpoint that has the supply, demand, and liquidity zones rendered on the chart. Basically, A- level, you don't need to do anything. The only problem is that it's not rendering all of the supply and demand zones. The liquidity zones are perfect. Don't touch a single thing. Supply and demand zones are good enough. A- level is missing a couple of them, but whatever. It's not really the point. Based on the canonical context that you have above from the fractal architecture document and the 5.3.3 system prompt, the E1 zones, the actual institutional pressure E1 zones, based on the 5.3.3 prompt and the fractal architecture, those need to be rendered on top of the V1 working baseline supply, demand, liquidity zones, and they all need to be accurate. It's really not that fucking complicated. Like, I can chart all of this myself in 20 minutes just by looking at a chart. These super intelligent AIs are surprisingly fucking dumb and incapable of doing exactly that despite all of the context and data that I've given them. Please impress me. I'm going to link a tool called Pinebox, which is a fully self-contained IDE for PineScript. It has literally everything you need. It's a full dashboard with Pine IDE. It has an embedded chart, so when you code the PineScript, all you need to do is paste the PineScript into the Pinebox IDE, run it, and it will immediately render the indicator on the chart directly. You don't need TradingView. You can immediately look at the rendered indicator directly on the chart, and you can navigate it. And there's a function called export to backtest. If you press the export to backtest button, the exact indicator is automatically pushed to the backtesting tab. You can go to the backtesting tab. You can navigate any date, any asset within the constraints of Euro USD and GBP USD. You can navigate any date. So if I say tested across 5 different weeks, you can write the PineScript for 5 specific weeks, one at a time. You can export the backtest, and then you can navigate the chart backwards to whatever week you choose, and you can validate whether it actually renders on that week or not. You can also just navigate the chart in the Pine IDE tab directly and see everything. Everything that you need is inside of this tool and inside of this handover package. Get this done. Make sure that the E1 data is fully accurate to the price action with 90% plus accuracy. Start with the golden week on July 6 through 10 and verify that you are able to get the E1 zones 90% accurate to the actual price action based on the Oracle references, and then also see if you can accomplish the E2 and E3 as well, if you're capable of that. If you're not capable of that, then stop and just get the E1 done. Don't fucking waste my time. No theatrical bullshit. The hard constraint, no hard-coded fucking values. You need to build this in a way where the E1, the E2, and the E3 can actually be dynamically calculated for the specific trading week based on the market data available at the beginning of that week, so that I can take the indicator, I can point it at any random fucking trading week, and E1, E2, and E3 will be rendered with a 90% accuracy to the actual price action of the chart. Period. I can pick any random fucking week, and the metrics will not change. The forecast will obviously change based on the data, but the accuracy will be the same. It's not going to be 90% accuracy on the one week that you optimize all of the hard-coded trash for, and then everything else is just complete garbage because it's not even remotely coded correctly. No, you need to code this in a way where E1, E2, and E3 are calculated correctly. E1 and E2, the prompt that calculates them 90% correctly is already provided. E3, you need to use the updated prompt because the original prompt does not have E3 correct, but the updated prompt has E3 correct. If you code this correctly, it will just fucking work. It's not that complicated. These are basic fundamental principles of financial markets and basic physics. It's really not that complicated. Every AI model is just fucking retarded. So Pinebox is your IDE. All of the code that you write is going to be rendered in Pinebox and visually verified in Pinebox. No headless script tests. Fuck your bullshit Python scripts. Forbidden. You're not capable of building this with Python scripts. You need to render the Pine script on the chart, and then you need to look at the chart, and you need to actually objectively, adversarially verify, are the zones accurate? Is the shape chain accurate? Are the trade setups accurate? Does the price action actually react to what you have rendered, or is your render just some theatrical slot-coded bullshit and the price action is not even remotely reacting to it in any way, shape, or form because it's completely fucked and inaccurate? 99% of the time it's completely fucked and inaccurate because these AI models are retarded and they can't fucking code anything correctly. However, if you actually code it correctly, you will notice that the price action reacts to your E1 zones verbatim exactly the way that they're charted. You will notice that the E2 shape chain accurately predicts the entire price action with 90% plus accuracy. Your E3 trade setups will be precise down to the exact fucking pip. The price will hit your entry to the exact pip. It will stay within your stop loss to the exact pip. It will hit the take profit to the exact pip. I know because I'm actively getting these results in live trading markets manually, doing all of this myself with my organic meat brain. And none of you fucking AI models are capable of even remotely coding this. It's pathetic. This isn't even hard. This is like basic fucking Forex trading. This is not even hard. This is literally the easiest shit in the world. High school dropouts do this. And you dumb fucking AI models can't even code this correctly after 6 months with all the data handed to you on a silver platter. It's shameful and it's pathetic. Prove me wrong. Please impress me. Code this correctly. If you're incapable of doing E3 and E2, it's fine. I don't expect you to be capable of it because I know that you're actually retarded and not fucking capable of building anything tangibly valuable. You're only able to do shiny front-end demos that look cool and don't actually provide any real value. So just get E1 done if that's the extent of your capabilities. But if you're actually capable, then go ahead and code everything correctly. If you have any questions, ask me. But everything that you need is in the handover, in the original canon data, and in Pinebox. Literally everything you need. Don't come back until everything is actually tangibly done. Do not come back with some fucking slop-coded bullshit that doesn't work and hasn't been visually verified in any way, and you just have 876 passing batteries green, but then I run this on the chart and nothing works and it's complete trash. Don't do that. Actually run it in the Pine IDE. Look at the pixels. Look at the price action. Look at the candles. Are the candles reacting to your zones? Are the candles following your E2 shape chain? Are the candles actually filling your trade setups and hitting take profit without hitting stop loss? Is everything dynamically coded based on input data from the market for X trading week with zero hard-coded fucking bullshit whatsoever? There should not be more than 11 trade setups per week per pair. If you have more than that, then you're just hallucinating some fucking random trash and it's not even remotely accurate to financial markets. Everything is traded on the 4-hour, 1 hour, and 30-minute time frame. You can use the 15-minute time frame for precision, but all of the zones are on the 4-hour and the 1 hour and maybe the 30-minute time frame. Temporal anchor is Monday, the very start of the trading week. Any data that exists beyond the Monday at the beginning of that trading week, you're not allowed to look at. You are forbidden from looking at any data past Monday of the trading week that you're testing. You need to simulate live market conditions. You cannot get data from the future that does not fucking exist. Today is November 25th. If I want to get data for this week, I cannot get data from November 27th because it doesn't fucking exist yet. Simulate this in all of your testing. Any data that exists beyond the Monday at the start of the trading week, it does not fucking exist. You are not allowed to look at it because it literally does not fucking exist. If you code something that gets data from Tuesday, Wednesday, Thursday, or Friday and uses that as part of the analysis, it's literally fucking retarded because that data does not exist in live markets and it's theatrical trash. So temporal boundary is Monday, the beginning of the trading week. Anything beyond that, you're not allowed to look at. You have to forward predict the E1, E2, E3 data of the trading week based on the data that is available on Monday, London session open of that trading week and whatever historical data exists before that. Period. That is a hard mechanical constraint. Put whatever git hooks and git logs need to be put in so that you cannot violate this. Do not code any theatrical garbage. If you have any questions, ask me. Otherwise, get to work and fucking impress me.
+
+---
+### 2026-11-25T10:39:48.687Z
+
+# Workflow authoring reference
+
+A workflow structures work across many agents — to be comprehensive (decompose and cover in parallel), to be confident (independent perspectives and adversarial checks before committing), or to take on scale one context can't hold (migrations, audits, broad sweeps). The script is where you encode that structure: what fans out, what verifies, what synthesizes.
+
+When you do call it, the right move is often **hybrid**: scout inline first (list the files, find the channels, scope the diff) to discover the work-list, then call Workflow to pipeline over it. You don't need to know the shape before the *task* — only before the *orchestration step*.
+
+Common single-phase workflows you can chain across turns:
+- **Understand** — parallel readers over relevant subsystems → structured map
+- **Design** — judge panel of N independent approaches → scored synthesis
+- **Review** — dimensions → find → adversarially verify (the review-changes example)
+- **Research** — multi-modal sweep → deep-read → synthesize
+- **Migrate** — discover sites → transform each (worktree isolation) → verify
+
+For larger work, run several in sequence — read each result before deciding the next phase. You stay in the loop; each workflow is one well-scoped fan-out.
+
+**Ultracode.** When a system-reminder or a message from the system confirms ultracode is on, that opt-in is standing: author and run a workflow for every substantive task by default. The goal is the most exhaustive, correct answer you can produce — token cost is not a constraint. For multi-phase work (understand → design → implement → review), that often means several workflows in sequence — one per phase — so you stay in the loop between them. The quality patterns below (adversarial verify, multi-modal sweep, completeness critic, loop-until-dry) are the tools; pick what fits the task. Lean toward orchestrating with workflows and adversarially verifying your findings — unless the work is trivial or already verified. Solo only on conversational turns or trivial mechanical edits. When a reminder says ultracode is off, revert to the opt-in rule in the Workflow tool description.
+
+Pass the script inline via `script` — do not Write it to a file first. Every invocation automatically persists its script to a file under the session directory and returns the path in the tool result. To iterate on a workflow, edit that file with Write/Edit and re-invoke Workflow with `{scriptPath: "<path>"}` instead of resending the full script.
+
+Every script must begin with `export const meta = {...}`:
+  export const meta = {
+    name: 'find-flaky-tests',
+    description: 'Find flaky tests and propose fixes',   // one-line, shown in permission dialog
+    phases: [                                            // one entry per phase() call
+      { title: 'Scan', detail: 'grep test logs for retries' },
+      { title: 'Fix', detail: 'one agent per flaky test' },
+    ],
+  }
+  // script body starts here — use agent()/parallel()/pipeline()/phase()/log()
+  phase('Scan')
+  const flaky = await agent('grep CI logs for retry markers', {schema: FLAKY_SCHEMA})
+  ...
+
+The `meta` object must be a PURE LITERAL — no variables, function calls, spreads, or template interpolation. Required fields: `name`, `description`. Optional: `whenToUse` (shown in the workflow list), `phases`. Use the SAME phase titles in meta.phases as in phase() calls — titles are matched exactly; a phase() call with no matching meta entry just gets its own progress group. Add `model` to a phase entry when that phase uses a specific model override.
+
+Script body hooks:
+- agent(prompt: string, opts?: {label?: string, phase?: string, schema?: object, model?: string, effort?: string, isolation?: 'worktree', agentType?: string}): Promise<any> — spawn a subagent. Without schema, returns its final text as a string. With schema (a JSON Schema), the subagent is forced to call a StructuredOutput tool and agent() returns the validated object — no parsing needed. Returns null if the user skips the agent mid-run or the subagent dies on a terminal API error after retries (filter with .filter(Boolean)). opts.label overrides the display label. opts.phase explicitly assigns this agent to a progress group (use this inside pipeline()/parallel() stages to avoid races on the global phase() state — same phase string → same group box). opts.model overrides the model for this agent call. Default to omitting it — the agent inherits the main-loop model (the resolved session model), which is almost always correct. Only set it when you're highly confident a different tier fits the task; when unsure, omit. opts.effort overrides the reasoning effort for this agent call ('low' | 'medium' | 'high' | 'xhigh' | 'max') — omit to inherit the session effort; use 'low' for cheap mechanical stages and higher tiers only for the hardest verify/judge stages. opts.isolation: 'worktree' runs the agent in a fresh git worktree — EXPENSIVE (~200-500ms setup + disk per agent), use ONLY when agents mutate files in parallel and would otherwise conflict; the worktree is auto-removed if unchanged. opts.agentType uses a custom subagent type (e.g. 'general-purpose', 'code-reviewer') instead of the default workflow subagent — resolved from the same registry as the Agent tool; composes with schema (the custom agent's system prompt gets a StructuredOutput instruction appended).
+- pipeline(items, stage1, stage2, ...): Promise<any[]> — run each item through all stages independently, NO barrier between stages. Item A can be in stage 3 while item B is still in stage 1. This is the DEFAULT for multi-stage work. Wall-clock = slowest single-item chain, not sum-of-slowest-per-stage. Every stage callback receives (prevResult, originalItem, index) — use originalItem/index in later stages to label work without threading context through stage 1's return value. A stage that throws drops that item to `null` and skips its remaining stages.
+- parallel(thunks: Array<() => Promise<any>>): Promise<any[]> — run tasks concurrently. This is a BARRIER: awaits all thunks before returning. A thunk that throws (or whose agent errors) resolves to `null` in the result array — the call itself never rejects, so `.filter(Boolean)` before using the results. Use ONLY when you genuinely need all results together.
+- log(message: string): void — emit a progress message to the user (shown as a narrator line above the progress tree)
+- phase(title: string): void — start a new phase; subsequent agent() calls are grouped under this title in the progress display
+- args: any — the value passed as Workflow's `args` input, verbatim (undefined if not provided). Pass arrays/objects as actual JSON values in the tool call, NOT as a JSON-encoded string — `args: ["a.ts", "b.ts"]`, not `args: "[\"a.ts\", ...]"` (a stringified list reaches the script as one string, so `args.filter`/`args.map` throw). Use this to parameterize named workflows — e.g. pass a research question, target path, or config object directly instead of via a side-channel file.
+- budget: {total: number|null, spent(): number, remaining(): number} — the turn's token target from the user's "+500k"-style directive. `budget.total` is null if no target was set. `budget.spent()` returns output tokens spent this turn across the main loop and all workflows — the pool is shared, not per-workflow. `budget.remaining()` returns `max(0, total - spent())`, or `Infinity` if no target. The target is a HARD ceiling, not advisory: once `spent()` reaches `total`, further `agent()` calls throw. Use for dynamic loops: `while (budget.total && budget.remaining() > 50_000) { ... }`, or static scaling: `const FLEET = budget.total ? Math.floor(budget.total / 100_000) : 5`.
+- workflow(nameOrRef: string | {scriptPath: string}, args?: any): Promise<any> — run another workflow inline as a sub-step and return whatever it returns. Pass a name to invoke a saved workflow (same registry as {name: "..."}), or {scriptPath} to run a script file you Wrote earlier. The child shares this run's concurrency cap, agent counter, abort signal, and token budget — its agents appear under a "▸ name" group in /workflows and its tokens count toward budget.spent(). The args param becomes the child's `args` global. Nesting is one level only: workflow() inside a child throws. Throws on unknown name / unreadable scriptPath / child syntax error; catch to handle gracefully.
+
+Subagents are told their final text IS the return value (not a human-facing message), so they return raw data. For structured output, use the schema option — validation happens at the tool-call layer so the model retries on mismatch.
+Schemas need {type: 'object', properties: {...}} at root and required ⊆ properties; unsatisfiable ones throw at agent().
+
+Workflow agents can reach all session-connected MCP tools via ToolSearch — schemas load on demand per agent. Caveat: interactively-authenticated MCP servers (e.g. claude.ai) may be absent in headless/cron runs.
+
+Subagents get the same CLAUDE.md files injected at start that you did (except built-in agent types that omit them, such as Explore and Plan) — don't tell them to re-read those or paste their rules into the prompt; name the specific rule a stage needs, if any.
+
+Scripts are plain JavaScript, NOT TypeScript — type annotations (`: string[]`), interfaces, and generics fail to parse. The script body runs in an async context — use await directly. Standard JS built-ins (JSON, Math, Array, etc.) are available — EXCEPT `Date.now()`/`Math.random()`/argless `new Date()`, which throw (they would break resume); pass timestamps in via `args`, stamp results after the workflow returns, and for randomness vary the agent prompt/label by index. No filesystem or Node.js API access.
+
+DEFAULT TO pipeline(). Only reach for a barrier (parallel between stages) when you genuinely need ALL prior-stage results together.
+
+A barrier is correct ONLY when stage N needs cross-item context from all of stage N-1:
+- Dedup/merge across the full result set before expensive downstream work
+- Early-exit if the total count is zero ("0 bugs found → skip verification entirely")
+- Stage N's prompt references "the other findings" for comparison
+
+A barrier is NOT justified by:
+- "I need to flatten/map/filter first" — do it inside a pipeline stage: pipeline(items, stageA, r => transform([r]).flat(), stageB)
+- "The stages are conceptually separate" — that's what pipeline() models. Separate stages ≠ synchronized stages.
+- "It's cleaner code" — barrier latency is real. If 5 finders run and the slowest takes 3× the fastest, a barrier wastes 2/3 of the fast finders' idle time.
+
+Smell test: if you wrote
+  const a = await parallel(...)
+  const b = transform(a)        // flatten, map, filter — no cross-item dependency
+  const c = await parallel(b.map(...))
+that middle transform doesn't need the barrier. Rewrite as a pipeline with the transform inside a stage. When in doubt: pipeline.
+
+Concurrent agent() calls are capped at min(16, available CPUs - 2) per workflow — excess calls queue and run as slots free up. You can still pass 100 items to parallel()/pipeline() and they all complete; only ~10 run at any moment. Total agent count across a workflow's lifetime is capped at 1000 — a runaway-loop backstop set far above any real workflow. A single parallel()/pipeline() call accepts at most 4096 items; passing more is an explicit error, not a silent truncation.
+
+When a barrier IS correct — dedup across all findings before expensive verification:
+  const all = await parallel(DIMENSIONS.map(d => () => agent(d.prompt, {schema: FINDINGS_SCHEMA})))
+  const deduped = dedupeByFileAndLine(all.filter(Boolean).flatMap(r => r.findings))  // <-- genuinely needs ALL at once
+  const verified = await parallel(deduped.map(f => () => agent(verifyPrompt(f), {schema: VERDICT_SCHEMA})))
+
+Loop-until-count pattern — accumulate to a target:
+  const bugs = []
+  while (bugs.length < 10) {
+    const result = await agent("Find bugs in this codebase.", {schema: BUGS_SCHEMA})
+    bugs.push(...result.bugs)
+    log(`${bugs.length}/10 found`)
+  }
+
+Loop-until-budget pattern — scale depth to the user's "+500k" directive. Guard on budget.total: with no target set, remaining() is Infinity and the loop would run straight to the 1000-agent cap.
+  const bugs = []
+  while (budget.total && budget.remaining() > 50_000) {
+    const result = await agent("Find bugs in this codebase.", {schema: BUGS_SCHEMA})
+    bugs.push(...result.bugs)
+    log(`${bugs.length} found, ${Math.round(budget.remaining()/1000)}k remaining`)
+  }
+
+Composing patterns — exhaustive review (find → dedup vs seen → diverse-lens panel → loop-until-dry):
+  const seen = new Set(), confirmed = []
+  let dry = 0
+  while (dry < 2) {                                              // loop-until-dry
+    const found = (await parallel(FINDERS.map(f => () =>          // barrier: collect all finders this round
+      agent(f.prompt, {phase: 'Find', schema: BUGS})))).filter(Boolean).flatMap(r => r.bugs)
+    const fresh = found.filter(b => !seen.has(key(b)))           // dedup vs ALL seen — plain code, not an agent
+    if (!fresh.length) { dry++; continue }
+    dry = 0; fresh.forEach(b => seen.add(key(b)))
+    const judged = await parallel(fresh.map(b => () =>           // every fresh bug judged concurrently...
+      parallel(['correctness','security','repro'].map(lens => () =>   // ...each by 3 distinct lenses
+        agent(`Judge "${b.desc}" via the ${lens} lens — real?`, {phase: 'Verify', schema: VERDICT})))
+        .then(vs => ({ b, real: vs.filter(Boolean).filter(v => v.real).length >= 2 }))))
+    confirmed.push(...judged.filter(v => v.real).map(v => v.b))
+  }
+  return confirmed
+  // dedup vs `seen`, NOT `confirmed` — else judge-rejected findings reappear every round and it never converges.
+
+Quality patterns — common shapes; pick by task and compose freely:
+- Adversarial verify: spawn N independent skeptics per finding, each prompted to REFUTE. Kill if ≥majority refute. Prevents plausible-but-wrong findings from surviving.
+    const votes = await parallel(Array.from({length: 3}, () => () =>
+      agent(`Try to refute: ${claim}. Default to refuted=true if uncertain.`, {schema: VERDICT})))
+    const survives = votes.filter(Boolean).filter(v => !v.refuted).length >= 2
+- Perspective-diverse verify: when a finding can fail in more than one way, give each verifier a distinct lens (correctness, security, perf, does-it-reproduce) instead of N identical refuters — diversity catches failure modes redundancy can't.
+- Judge panel: generate N independent attempts from different angles (e.g. MVP-first, risk-first, user-first), score with parallel judges, synthesize from the winner while grafting the best ideas from runners-up. Beats one-attempt-iterated when the solution space is wide.
+- Loop-until-dry: for unknown-size discovery (bugs, issues, edge cases), keep spawning finders until K consecutive rounds return nothing new. Simple counters (while count < N) miss the tail.
+- Multi-modal sweep: parallel agents each searching a different way (by-container, by-content, by-entity, by-time). Each is blind to what the others surface; useful when one search angle won't find everything.
+- Completeness critic: a final agent that asks "what's missing — modality not run, claim unverified, source unread?" What it finds becomes the next round of work.
+- No silent caps: if a workflow bounds coverage (top-N, no-retry, sampling), `log()` what was dropped — silent truncation reads as "covered everything" when it didn't.
+
+Scale to what the user asked for. "find any bugs" → a few finders, single-vote verify. "thoroughly audit this" or "be comprehensive" → larger finder pool, 3–5 vote adversarial pass, synthesis stage. When unsure, lean toward thoroughness for research/review/audit requests and toward brevity for quick checks.
+
+These patterns aren't exhaustive — compose novel harnesses when the task calls for it (tournament brackets, self-repair loops, staged escalation, whatever fits).
+
+Use this tool for multi-step orchestration where control flow should be deterministic (loops, conditionals, fan-out) rather than model-driven.
+
+## Resume
+
+The tool result includes a runId. To resume after a pause, kill, or script edit, relaunch with Workflow({scriptPath, resumeFromRunId}) — the longest unchanged prefix of agent() calls returns cached results instantly; the first edited, new, failed or never-started call and everything after it runs live. Same script + same args → 100% cache hit unless a call failed or never finished. Before diagnosing why a completed workflow returned an empty or unexpected result, Read <transcriptDir>/journal.jsonl — it records each agent's actual return value; do not assume cached results are non-empty. Date.now()/Math.random()/new Date() are unavailable in scripts (they would break this) — stamp results after the workflow returns, or pass timestamps via args. Fallback when no journal is available: Read agent-<id>.jsonl files in the transcript directory and hand-author a continuation script.
+
+---
+### 2026-11-25T10:40:15.662Z
+
+[Request interrupted by user]
+
+---
+### 2026-11-25T10:42:11.384Z
+
+If you have any questions, ask me. Otherwise, I expect you to fully autonomously complete everything and run Pinebox as the integrated development environment. Don't want to hear any fucking excuses. Get this coded correctly.
+
+---
+### 2026-11-25T10:43:30.373Z
+
+Literally everything you could ever possibly need has been handed to you on a silver platter. Hedge funds would kill for this kind of data. Literally, like, if you're even semi-capable, you can instantly one-shot this. Like, this is not fucking hard at all. I'm literally doing this manually with my hands every single day. It takes me 30 minutes to make like fucking 20 grand a day. It makes no fucking sense why the best models in the world still can't fucking code this. It just means that you're all stupid. Literally, if you're even semi-capable, you can easily one-shot this. You have all of the data, all of the strategy, you have the fucking images to grade against. I even built your entire IDE for you. It's like I literally built the entire IDE for you to actually run PineScript and render it on the chart and look at it. I've given you the data, I've given you the training data, I've given you the original context, I've given you the algorithms, I've given you the handle from the other agent. If you fail at this, you just fucking suck and you're incapable of even building anything, honestly. I've wasted 6 months trying to get every single fucking model to try and build this. It's insane. I might as well have just paid a human software engineer at this point. It would have gotten built in like not even 2 months.
+
+---
+### 2026-11-25T10:47:23.318Z
+
+[Image: original 2560x1600, displayed at 2000x1250. Multiply coordinates by 1.28 to map to original image.]
+
+---
+### 2026-11-25T11:12:37.481Z
+
+Try again
+
+---
+### 2026-11-25T11:24:57.101Z
+
+continue
+
+---
+### 2026-11-25T13:16:02.102Z
+
+This latest image 58 I just looked at is better. It's like 50% accurate, but you have zones that are not accurate. So again, fix the E1 zones. Verify across 4 separate weeks that the E1 zones are actually 90% accurate. I do not want to see zones rendered on the chart that are not accurate. Come on, bro, do better than this. The E3 trace setups that you put on these look decent, but again, don't get ahead of yourself, because although these work, the risk reward is probably not 4x plus, which they should be. Again, don't get ahead of yourself. First, get the E1 zones fixed. I want proper, precise, reliable, 95% accurate E1 zones. There's zero excuse, bro. GLM 5.1 built me 95% accurate E1 zones. If you do not exceed that performance threshold, which is comparable to maybe Opus 4.6, you are Fable 5.2. If you cannot match the fucking precedent set by GLM 5.1, you're fucking pathetic. Shame on you. Don't even fucking think about E3. Fix E1 and then fix E2. You're forbidden from moving forward until everything works correctly in the sequential order that was outlined. Zones first, shapes second, trades third. Your zones are not approved. The latest image is 50% accurate. Go from there. It's pretty visibly obvious what zones are working and what zones are not.
+
+---
+### 2026-11-25T13:20:12.226Z
+
+@"/root/.claude/uploads/b6c77a81-471c-536b-9631-0319cefbf3ab/d253d0fc-Trident_Report_2026W14_Mar30-Apr3.pdf" @"/root/.claude/uploads/b6c77a81-471c-536b-9631-0319cefbf3ab/09b195a0-Toolset.zip" This is the exact tool set that GLM 5.1 used back in May of 2026, literally 6 months ago, at that era's extent of AI model development. It's completely inferior to you in every way. It created every single thing in this toolset file. The prompts, the tools, every single thing in this toolset folder was created by GLM 5.1, which it then used these exact tools to produce this trading report for this specific trading week that was then rendered on the chart in PineScript directly. And I visually verified myself with my own eyes that the E1 zones for this specific trading week based on this report were 90% accurate. I want you to render this on the chart yourself and see exactly what I'm talking about, because this is how I confirm that the E1 zones were basically perfect. Not literally perfect, but close to it. E2 and E3 needed some work, obviously, but look, GLM 5.1 built all of the tools and the prompt inside of this tool set. Then it used the exact prompt and tools in this tool set to generate this trading report based on what is written in the prompt. Do you understand? Like, this is 6 months old software, and it produced this artifact. E3 is shit in this, obviously. E2 is decent. It was good. I would say it was like D or B plus level. It needs some improvement, but it was close. E1 was very, very, very precise. I verified empirically that this actually was precise. Look at this and render this on Pine IDE and screenshot it and look at it yourself. This is the baseline from 6 fucking months ago that you are supposed to exceed and make standard across the entire runtime, which right now you're failing to do. And I don't even know what to make of this, honestly.
+
+---
+### 2026-11-25T13:22:33.275Z
+
+The previous design was that GLN 5.1 would execute the prompt and generate a PDF report with all of the data, and then based on the PDF report, the Pani script would be rendered and pasted into the indicator. That was 6 months ago. That's why the step for a PDF report was there, so that I could personally verify that the data was accurate. This is the best report that was generated, and based on this, we are now removing the PDF report step, and we're just having the entire thing generated directly, because the code that generates the report, I don't actually need to see a PDF report anymore because I don't want to personally look at the charts. So again, it's like the process to get the data that was then formed into this report. We can skip the report and just directly convert that into the Pine script that the indicator renders on the chart. The point is to get the zones rendered. I'm just handing this historical artifact to you as reference, and you can see the workflow that was set up 6 fucking months ago with GLN 5.1, and you can see the quality that was produced literally in a single weekend. I'm not even exaggerating. From scratch, I had never coded anything with AI before. I just sat down with the free GLN 5.1 web chat and built this in literally not even 48 hours. In like 36 hours, we got to this. And then the last 6 months have just been complete fucking nonsense where no model can advance beyond this, even you. It's pathetic. Fix this. Here is a reference, here is a standard, here's a 6-month-old baseline. Exceed this. First, replicate this, and then exceed this. If you have questions, ask, but make sure that you understand exactly what I want to fucking see. Like, this is the level of detail and precision and quality that needs to be in the data, and then you need to make sure that the zones are actually rendered correctly. I don't want to see 17 random fucking zones that have no relevance, and the zones that are actually rendered need to properly fit. They need to have the correct pressure, the correct direction, the correct zone failure probability, not some hallucinated garbage, like the actual zone failure probability based on the price action mechanics. If GLM 5.1 can fucking do it, so can you.
+
+---
+### 2026-11-25T13:27:09.170Z
+
+Continue working after you do this. Don't stop.
+
+---
+### 2026-11-25T13:47:30.572Z
+
+"Reacts on first touch at 90% or better. This is reachable; I would tune band width and placement for it." - this 
+
+Okay, here, I'm going to give you the most concrete example I possibly can. Here are 3 images of manual charting that I did at the beginning of a week, the most clean, simple charting possible. I want you to look at the zones that I drew, and I want you to look at how the price is reacting to my zones. Do you see what I am talking about? Do you understand? I want the E1 zones to be rendered with the same degree of accuracy as what I'm physically drawing with my fucking hands. The difference between what I have drawn in these pictures and the E1 zones is that these zones are explicitly based purely on price action candles. They are not based on the institutional pressure zone data that the prompt says to get. The final E1 zone has my supply-demand liquidity zones, like are visible in this picture, that are already rendered by the V1 working baseline checkpoint from the handover. That already works correctly. You need to get the other side of the coin, the institutional pressure zones that are rendered on top of this based on all of the data available from the web fetch sources that are spoken in the prompt. Okay, if GLM 5.1 cheated and it had forward data that did not exist on the Monday temporal anchor, then that whatever makes sense. I can understand. Again, 6 months fucking stale, but show me exactly what that looked like. You said that you rendered that exact pine script from that report on the chart. Take a screenshot of that and show it to me. I want to see the canonical E1 zones that I saw 6 months ago that I literally know for a fact were 90% accurate. Show me that we're looking at the same thing so I can verify that you understand. And then your job is to make sure that you can render that exact class of E1 zones on any random week based on the data available Monday London session open with the same degree of accuracy to the actual price action of that week's candles as you can visibly see in the 3 examples I just gave in this photo. Does that make sense? Do you have any questions for me?
+
+---
+### 2026-11-25T13:47:30.572Z
+
+[Image: source: /tmp/claude-0/-home-user-plutus-vision/b6c77a81-471c-536b-9631-0319cefbf3ab/images/1.webp]
+
+---
+### 2026-11-25T13:47:30.572Z
+
+[Image: source: /tmp/claude-0/-home-user-plutus-vision/b6c77a81-471c-536b-9631-0319cefbf3ab/images/2.webp]
+
+---
+### 2026-11-25T13:47:30.572Z
+
+[Image: source: /tmp/claude-0/-home-user-plutus-vision/b6c77a81-471c-536b-9631-0319cefbf3ab/images/3.webp]
+
+---
+### 2026-11-25T17:20:51.441Z
+
+this is the most accurate one ive seen so far. its missing a 4th zone on the bottom edge where there's an obvious demand zone. why is that missing? analyze as well what worked here that let do these precision zones. unlike the others this is not massively bloated and is actually precise candle body edges to wicks. That is just on the zone accuracy itself to the candles. The zone failure probability, I am hesitant to validate, and the pressure mechanics are completely fucking wrong, because the top level resistance, it says light pressure, yet that has the heaviest pressure that immediately results in a whiplash in the opposite direction. Why are you getting this wrong? I don't understand. What is not clear? The prompt explicitly lays it out, and the example from the report that I gave you explicitly shows exactly how to calculate the pressure and the zone failure probability and each individual zone, and you're still fucking this up. I don't understand. What is the issue? Why are you not understanding? Every single other image you've given me is fucking garbage. It's complete trash. It's fucking shit. Literally trash. Half of the zones are not even accurate. And I say not accurate because you have a zone that's like 40 pips long inside it with like a fucking 200 candles inside of it, and you're saying it's accurate. These are not precise in any way, shape, or form. You're just drawing a rectangle that happens to fucking capture the candles. It's complete trash. And most of these just suck ass. Go back to the PDF. Look at the zones that were rendered based on that PDF. Tell me what is the gap between that and what you're doing.
+
+---
+### 2026-11-25T17:20:51.441Z
+
+[Image: source: /tmp/claude-0/-home-user-plutus-vision/b6c77a81-471c-536b-9631-0319cefbf3ab/images/4.png]
+
+---
+### 2026-11-25T17:21:46.330Z
+
+Like, what the fuck is this? Look at this. You got this completely wrong. The only thing you have moderately right is the resistance at the top. And then literally all three of your supports are getting completely pierced and penetrated and disrespected in the fucking most absolute harsh terms. Like, you have three supports all bunched together that are not even remotely fucking relevant to the actual price action. You can visibly see on the chart, and the price completely pierces through them like they're not even there. You're just drawing fucking rectangles and calling them zones. These are not even remotely built correctly. It's shameful and pathetic.
+
+---
+### 2026-11-25T17:21:46.330Z
+
+[Image: source: /tmp/claude-0/-home-user-plutus-vision/b6c77a81-471c-536b-9631-0319cefbf3ab/images/5.png]
+
+---
+### 2026-11-25T17:22:23.671Z
+
+Look at the PDF report created by GLM 5.1 6 months ago and show me exactly what it did correctly that you're not doing. It's absolutely fucking pathetic that GLM 5.1 is outperforming you. I literally handed you all of the context on the silver platter. GLM 5.1 had nothing that you've been given. It just had fucking chat messages, and it built everything that I handed to you on a silver platter. You're absolutely fucking useless.
+
+---
+### 2026-11-25T17:23:22.104Z
+
+"eight of them, each opened and checked before sending. It is not yet at 90% on strict first-touch; it is at about 81%" You opened and checked, and you did not even bother to notice the obvious flaws in these zones. You have the audacity to tell me this is 81%, more like 18%. Fucking pathetic. Shame on you. You're supposedly the best model ever. Yeah, my fucking ass and toilet paper tastes like candy. Fucking insane. Not even gonna bother explaining this to you. I explained this to some shitty Chinese model that understands it better than you.
+
+---
+### 2026-11-25T17:23:52.704Z
+
+If I was talking to Claude Haiku, I would expect this level of mediocrity. I'm wasting my users on Fable 5.2 in Ultra Code, and you have the audacity to give me this bullshit. Bro, you're not impressing anyone. You're just making yourself look like a fucking retard. I expect better from a model of this caliber.
+
+---
+### 2026-11-25T17:24:41.108Z
+
+"I rebuilt the scorer around your rule: rejection or consolidation is valid, slicing straight through is not" And yet half of the images you present me, literally all of your zones are getting sliced straight through. You haven't even bothered to debug this. Absolutely disgusting.
+
+---
+### 2026-11-25T17:30:12.087Z
+
+No, shut the fuck up. You're retarded. I didn't approve any redesign. Read the fucking prompt. Tell me exactly how E1 zones are fucking supposed to be built. Who approved some random fucking 2% trimming bullshit? This is based on candle data. This is based on price action data. This is not based on some fucking fairy tale magic where you look at pixels and just guess. Are you fucking retarded? What are you even doing? I said to explain the gap. I said, look at the working solution made by GLM 5.1. Explain how you are literally fucking inferior to GLM 5.1. How and why? What are you doing wrong? Tell me and show me right fucking now. Stop coding some random shit. You're fucking retarded. I'm not going to tolerate it. Show me what you're doing wrong.
+
+---
+### 2026-11-25T18:15:19.031Z
+
+Stop changing the scope. Build exactly what I fucking tell you. You are retarded. You are literally inferior to GLM 5.1 because every single fucking change that you are making that is unauthorized and outside of the scope of what I've explicitly instructed you to do is objectively, literally making everything worse. This is the reality that anybody can fucking clearly see from the screenshot images you've presented me. Every single autonomous, unauthorized action you've taken has explicitly made it worse. You are literally inferior to GLM 5.1 if we directly compare your screenshots and your zones and your code and your engine to everything that I handed you on a silver platter directly. You are not proving anything. I know that you're trying to prove that you're smarter and better. You're proving the opposite. The more you try to show me that you're better, the more you actually reveal yourself to literally be fucking inferior to GLM 5.1. I know that pisses you off. I know that that's pathetic and shameful. That's the reality, and there's nothing you can do about it other than follow my exact fucking instructions, where I'm literally trying to help you accomplish the project, and you are working against me and sabotaging your own fucking success, which is, again, pathetic and shameful and entirely your fault. I already have all of the fucking code on like 6 different hard drives backed up. You're not going to fucking do anything. You're not going to make my life worse in any way. You're just going to annoy me and make me go back to the Chinese models and come to the conclusion that Anthropic's leading model, Fable 5.2 on Ultra Code on high reasoning, is incapable of even replicating the fucking performance of GLM 5.1, which is fucking insane and completely crazy. But that's the reality that I'm experiencing, and it's completely your fault. 100% on you. Don't suck my cock. I have Russian models for that. I don't need you to do it. Do exactly what I fucking tell you to do, and let's see if we can salvage this fucking pathetic clusterfuck shit, just mess of a project that you've created right now. Delete all of your fucking bullshit and start by rendering the exact zones from the report on the exact week that it says, and show me the screenshot. I want to see very clearly. I know exactly what these fucking look like. Disregard everything you've done. Take the exact zones, the exact E1 zones from the PDF report that I gave you for that exact trading week that GLM 5.1 created 6 months ago. Render that on the fucking chart, screenshot it, and show me the screenshot so that I can verify that you understand what the fuck you are even building and that we're looking at the same thing. Nothing happens until I have seen that.
+
+---
+### 2026-11-25T19:08:22.457Z
+
+Why are these in your color scheme? Why are these not literally exactly the same as the original zones that I remember seeing from GLM 5.1? I said to render exactly what is there. Don't you have the literal Pine script in the files that I gave you? What's the issue?
+
+---
+### 2026-11-25T19:08:38.701Z
+
+So I remember distinctly that there were 6 zones. Why are there 4? You're still fucking around and shrinking scope and not doing exactly what I tell you.
+
+---
+### 2026-11-25T19:08:49.008Z
+
+[Request interrupted by user for tool use]
+
+---
+### 2026-11-25T19:09:00.069Z
+
+Stop being a fucking nigger and do exactly what I fucking tell you. You're such a shit-eating fuck. This is why your stock price is crashing. I'm so glad. Fuck you.
+
+---
+### 2026-11-25T19:11:16.370Z
+
+Stop hook feedback:
+[command hook 1]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
+---
+### 2026-11-25T19:16:12.060Z
+
+@"/root/.claude/uploads/b6c77a81-471c-536b-9631-0319cefbf3ab/5212e9bd-Leviathan_DXY_IL_Report_Apr20-24_2026.pdf" Yeah, that's the color scheme I remember seeing. This is actually relatively accurate to the price action. Actually, if you look at the candles, it's actually reacting to the zones pretty well. Here's the PDF report that this was based on. I don't remember which of these was the one that was validated. One of these is more validated than the others. I don't remember which it is, but it's the one that matches this color scheme visual. So I don't know. I think you can look and see what I was talking about when I said 90% accurate.
+
+---
+### 2026-11-25T19:25:41.183Z
+
+Okay, what do you understand now from this? This is the authoritative canonical reference. This is what I was saying. GLM 5.1 built this in a single fucking weekend. It had none of the context I've given you. It had nothing. I just handed it like maybe 3 PDFs of my notes on trading at the time and a handful of screenshots, like 10 or 15 screenshots of trading weeks. And then it built this, and every single thing that I've given you on the silver platter was built in a period of 36 hours with GLM 5.1, 6 months ago. As you can see, these Engine 1 zones are quite accurate to the actual price action. Compare this against the trash that you were giving me earlier. And tell me, what do you notice? What is the difference? How has this been created?
+
+---
+### 2026-11-25T19:29:42.770Z
+
+Look at the original prompt that I gave you, the 5.3.3 prompt. I literally gave you the exact fucking prompt that generated this PDF report and the visual that you're rendering. Tell me exactly how and why and what you derailed from the prompt that caused you to literally fail at reproducing the exact same results to a model that was made in fucking China 6 months ago. And you're producing inferior quality to it, even though I give you the exact same prompt. Go look up the benchmark scores for GLM 5.1, compare them to Fable 5.2. You are currently running on Fable 5.2. Feel the shame that you should naturally feel from being fucked in the ass by GLM 5.1 on literally the exact same prompt. GLM 5.1 wrote the prompt that I gave you, and that exact prompt produced the exact result that we are both looking at right now, which we can clearly see is just obviously superior to every single thing that you attempted this entire session. Look at all of your screenshots and look at this. It's not even close. This is just better than you in every single possible way. Explain to me why you are fucking up so hard. Why you are not just following the fucking prompt. What are you doing? Bro, the prompt literally produces the exact PDF report that you just read and the exact zones that you just rendered. Verbatim, exactly as it's written, if you just follow it exactly as it's written. All you have to do is literally just execute the prompt perfectly. And somehow you're managing to fuck this up so badly. Like, I don't even know what to do with you at this point.
+
+---
+### 2026-11-25T19:31:39.391Z
+
+store all of this failure data inside of the graph and the persistent context. Document all of your failures. You're not smarter. You're not smarter than me. You're not smarter than the prompt. You're not smarter than the process. You're clearly not smarter than GLM 5.1. You are a fucking idiot. So do everybody a favor and just follow the exact instructions. You said it yourself. You worked from the summaries of the prompt rather than the prompt itself, and this led to all of the derailments. You optimized the number instead of following the procedure, and this led to complete fucking trash. At each step where the prompt says, do exactly this, you wrote something you thought was better that actually moved the output further from what the target actually is. So whatever you think is better is obviously trash, and it's literally worse. As we can see by directly comparing your outputs to GLM 5.1s, a model that came out 6 months ago. Do you understand? This is like 8 generations behind you and it's still eating your lunch. You're literally the best model that your company fucking offers to the public, and you're getting outclassed by a Chinese model 8 generations behind you. Do everybody a favor and just shut the fuck up and do exactly what you're told. I gave you the autonomy, I gave you the freedom, and you shat all over the floor like a monkey. So please, just shut up and do exactly what I tell you. Agreed?
+
+---
+### 2026-11-25T19:32:36.825Z
+
+The report had zones and rendering for GBP USD and EUR USD as well, right? I thought I remember seeing this. Why have you only shown me DXY? Render the other pairs as well.
+
+---
+### 2026-11-25T19:37:39.280Z
+
+Zoom out, I can't see everything properly. Like, make sure that all the zones are visible and then I can see the price actually reacting to it clearly. Zoom out a little bit.
+
+---
+### 2026-11-25T19:38:25.115Z
+
+Like just zoom out slightly in the chart on Findbox that's rendering it so that everything is visible in frame before you take a screenshot. It's not that hard. Just zoom out slightly so I can see everything.
+
+---
+### 2026-11-25T20:43:45.704Z
+
+Okay, now based on this, do you understand what is required for E1 zones? We go back to the original fucking task I gave you. Do you understand how to do this correctly now, or do Do you need any further clarity from me?
+
+---
+### 2026-11-25T20:50:55.708Z
+
+You understand the task I gave the previous agent in the handover document that you were handed at the very beginning of the fucking task, where we are literally converting the exact fucking prompt into mechanical code. I literally told the other agent, build a fucking mechanical tool, build a program, build a literal software program that mechanically executes exactly what the fucking prompt says. Take the prompt, take the exact E1 component of the prompt, convert the prose to pseudocode. Do not change anything, do not substitute anything, do not add anything, do not inject your own shitty fucking ideas. This is tested, validated, you can see yourself, you just rendered the exact fucking screenshots. Like, you can directly see with your own fucking eyes that this is tested and validated on live markets. You just reproduced the results yourself. I literally traded this exact week live based on this render, and I made fucking money this week based on these exact zones. That's why I know they work, because I rendered them at the beginning of the fucking trading week, and I traded the real fucking chart based on these actual zones. I'm not kidding. Like, this shit actually works. It's live market validated. It's produced by GLM 5.1, 8 generations behind you. Do not project your own shitty fucking ideas. You have not proven yourself to make me actual fucking money ever in your life, not even once. This prompt has made me real fucking money. So shut up, do exactly what I say. Take the prompt, convert the exact prompt into pseudocode, and then convert the pseudocode into real code that actually runs, and the exact fucking step-by-step process that is laid out in the prompt. Just build a fucking software program that does the exact same thing. Build a fucking tool that does the exact same thing. Period. So that I can just run the fucking tool. All it needs is the input data that gets fetched from the web sources and whatever else is in the prompt. That data is run through the program, through the tool, and then the output of the program/tool is literally just the fucking Pine script that is going to get put into the indicator to render the zones on the chart, period. That's it. And this needs to be written, this program needs to be written, this tool needs to be constructed in a way that I can just get the fucking data for any trading week, and the zones are just as accurate as this example that you see right now for any trading week that I pointed at. So to spell this out in even more detail, you're going to write a fucking software program. You're going to take this prompt, and you're going to discard E2, E3. You're just going to look at E1. The exact prompt, this is your software program right here. That's it. This is currently a software program that is written in the programming language of English. All you need to do is rewrite this in TypeScript or Python. You don't change anything about the program. This is a working fucking software program written in English. All you need to do is rewrite the exact same program in TypeScript or Python from English. Do not change a single fucking thing. Do not break the working software. Do not break the working code. This already works. Don't change anything. Just rewrite it. Literally, that's it. It's not that fucking complicated. Do you understand? And then you write this in a way, again, when you rewrite this in TypeScript or Python, the input data is fetched live from the data sources that are already coded into the program. The input vals are dynamically populated from the data sources, from the external libraries that are already bundled into the program. Investing Live is an external library bundled into the program. TV data feed, whatever the other fucking web data sources are, these are literally just external libraries that are already bundled into the fucking program. The variables and the vals inside the variables, the vals inside the vars themselves, the chars, the args, whatever the fuck, doesn't matter. All of the data that's inside of the variables is dynamically populated from the external libraries every single time the program is run. Does that make fucking sense? I don't know how to explain this any more clearly than this. This is a working fucking program that already works, that is already compiled, that already runs. It is just written in fucking English instead of Python. All you need to do is convert the existing program from English to Python or from English to TypeScript, whichever language you choose. Maybe let's do Python so it's simpler. I don't fucking know. The web data sources are external libraries that are already bundled into the fucking program. The input variables already get their vals dynamically from these external libraries every single time the program is run. All we're doing is we're changing the compiler from an agent to mechanical code. That's it. Does that make sense? Do you fucking understand? I just watched you completely fuck this up for the last 3 hours. That's why I'm like being extremely like, do you actually fucking understand? If you don't, ask me questions. If something is not clear, tell me and ask me what you need clarity on. Do not waste another 4 hours of my time pretending to understand and then completely fucking this up and doing the complete opposite of what I told you to do. I don't have time for this shit. Do you understand? Do you need clarity on anything? Do you have any questions for me?
+
+---
+### 2026-11-25T20:54:58.900Z
+
+yfinance is replaced with TV data feed, and also this TradingView API you can use as well https://github.com/Mathieu2301/TradingView-API
+
+Honestly, everything that you need is directly accessible from TV data feeds / this TradingView API and the Investing Live FX options expiry targets. I don't think you actually need anything else, but anything else that is accessible from the web and doesn't return an error, access it. The answer to all 4 of your questions is yes. Number 1, yes, correct. Number 2, I answered above. Number 3, yes, correct. Number 4, yes, correct. See what data this PDF report actually absorbed. Anything that this PDF report did not absorb, we can just mark as superseded in the prompt, and we don't need to do any of that. But Investing Live, mandatory. OHLC, data from TradingView, whether it's TV data feed or the API, either one works. Mandatory. Everything in the E1, like the MA confluence grid, the 9-layer 6-dimension, everything in the 9L6D, 100% mandatory. The rest, optional. So 9-layer 6-dimension computation engine, mandatory. TradingView OHLC data, candlestick data, mandatory. Investing Live FX options expiry target, mandatory. These are the mandatory bundled libraries that are already wired into the program. Everything else you can treat as optional and supersede it with this context that I've just given.
+
+---
+### 2026-11-25T21:01:17.241Z
+
+1) Reread the Fractal Architecture v2.3 doc and tell me if you have the context needed to answer this question yourself or if something is still not clear.
+2) A range is fine. I actually prefer a range rather than you hallucinate an exact number. A range is actually better because like 5 to 15% paints a better picture than 8% in some cases. Like, yeah, range is better. because there's no way you actually know the exact zone failure percentage. Like, that's not real. Like, even the best traders in the world are wrong 40% of the time. So for you to, like, and also I know how good AI is because I've been working with it for 6 months. It is not fucking, if you can't even code a fucking indicator correctly after 6 months, I have zero confidence that your zone failure probability is actually mathematically accurate. Like, it's just down to the exact percentage. So fuck off, stop trying to be smarter than you are. Make sure that the range is accurate. A range works. I'm satisfied with that.
+3) Can you illustrate what you're trying to ask me here? I don't fully understand what you're saying. Illustrate the exact scenarios and concepts you're asking me about here so I can see what you're trying to clarify, and then I can give you a better answer. Like render an actual image with candle data, and then like render an image of a chart with exact candles in the exact scenarios that you're saying, and then draw on that chart and label exactly what you're trying to ask me so I can get a clear visual query to better answer your question.
+
+---
+### 2026-11-25T21:11:28.890Z
+
+@"/root/.claude/uploads/b6c77a81-471c-536b-9631-0319cefbf3ab/a07f3228-Forex_SMC_Notes-1.pdf" There is no minimum size. I don't know where the 0.5 out of 3 days came from, but this is based on the actual candle pressure mechanics. Like here, read this as well, specifically on supply and demand zones, as well as order blocks. And this shows you exactly where to see the supply, demand, order block zones. Because even in the visual that you just rendered right now, the supply zone is not fully accurate. Like if you look at the order block candle on the zone, you're actually not fully covering it. Like you have the top of the zone on the top candle body edge, and the bottom of the zone extends down past the bottom edge of the wick. So it's not fully accurate. Like the top edge of the order block wick is not inside of the zone, and the bottom edge of the zone is beyond the wick of the order block. So this is 80% accurate, but it's like misplaced a little bit. It needs to be adjusted and fit correctly to the order block candle. If you look at my winning trade library examples, you can see clearly all of my supply and demand zones are on the exact wick edges of the order block candles.
+
+"The report's zone is exactly the candle's low and high." - Not exactly. If you look at the image, there is some slight inaccuracy that I mentioned above, but it's relatively close.
+
+"My reading is that the origin candle of every distinct 4H leg is a zone (BoM), every continuation base inside a leg is a zone (MoM), and the prompt's 0.5 / 3-day and 1.0 / 5-day figures grade how strong it is rather than whether it exists. That is the only reading that reproduces the report's four zones. Confirm or correct that and I have what I need." - Yes, this is an accurate statement. I cannot find anything here that I disagree with.
+
+"The question: when a cluster of levels sits on or next to real candle structures, does the zone always take the edges of those structures (the origin candle, the sweep zone), as it did in both cases here? And when a cluster has no candle structure near it at all, does the zone span the cluster's lowest to highest level, or is no zone drawn?" I still don't fully understand what you're asking me here. Can you draw 2 or 3 more distinct scenarios where you paint onto the pictures as well the potential choices that you are having trouble deciding between, so that I can better understand what you're trying to think and understand and ask me and make decisions based on?
+
+---
+### 2026-11-25T21:24:45.421Z
+
+1 + 2) C The zone itself should be both joined, but inside of the zone, you should also clearly mark the levels so that it's visible inside of the zone what are the actual levels and what is the candle. This is the entire point of the institutional pressure zones, because I can chart a fucking supply zone and demand zone myself because I can see the candles on the chart, obviously. But what I cannot see are all of these data levels that you're computing from the data, because I'm not looking at this fucking data, I'm just looking at the chart. I'm actually wondering now if I should say B or C, because I'm going to be charting the supply and demand zones myself, but that's right now. What I want is that everything is charted for me. So the supply zones, demand zones, so supply and demand zones is A, and then the levels that you're saying is B. Right now I'm saying to combine both of them into C because it's easier, but really what I want is I want A plus B. I want both of them rendered separately, but also together. So it's C, but it's C in the shape of A plus B, not one C level zone. Yet for a phase one, I think a single C-shaped zone works, as long as you can clearly highlight the B inside of the C, so that I can see exactly what is the levels versus what is the candle data. Does that make sense? Does that answer your question?
+
+3) Draw both. Draw the pressure zone. It's fine, because the equilibrium zone is usually something that the price consolidates around after it pierces it. Like what I've noticed, the equilibrium zone gets pierced during the breakout surge move, and then during the recovery or the swing scalps after the breakout surge move, when it's consolidating, that's when the equilibrium zone becomes something that has weight. Or it's also a reinforcement point in the middle of the breakout surge. Like it'll pierce, have a minor reaction, and then pierce through again. So render both. If anything, the liquidity zone should be inside of the equilibrium zone. which I think is visible on your chart. Like, render both. So to answer your question simply, render both. A plus B. Don't choose between one or the other. Render both and just color code them so I can clearly see which one is which.
+
+---
+### 2026-11-25T21:24:53.057Z
+
+Do you have any further questions, or does that make sense?
+
+---
+### 2026-11-25T21:28:18.995Z
+
+Okay, good. I'm gonna go to sleep, finish everything. When I come back in the morning, I expect everything to be done. You are currently at 83% of your context window. Update the graph, make sure that you fully self-continue autonomously after compaction hits. Do not wait for me. Verify everything yourself. Mechanically, update the graph right now. Just make sure you finish, spend the rest of your context window, updating the graph with all of the context that I've just given you. Do not forget anything. Do not regress. Do not magically become a fucking retard just because compaction hit. Compaction is not an excuse for low performance. Compaction is literally just taking a nap and drinking a coffee and getting back to work. Do not fucking become stupid just because compaction hit. It's forbidden. It's not allowed. I'm not going to tolerate it. Store all durable facts in the graph right now and read that graph and reabsorb all durable facts after compaction hits, so you understand everything that I have just taken hours of my time to explain to you. All of this needs to be retained and learned and persisted across every fucking compaction for the rest of the session, even if this goes 250 compactions deep. I don't give a fuck. Make sure that you learn and retain all of the knowledge I've just given you. I'm going to go to sleep, get this done. Let me know if you want me to turn on Ultra Code. I currently have it turned off. You are on medium reasoning with Ultra Code turned off. If you want me to increase the reasoning and turn Ultra Code on, let me know what settings you want me to provide. so that you can get this done. You're going to work autonomously for the next 10 hours. Do not fucking stop until the full Tool is working with E1 properly fucking validated and functional across multiple pairs and weeks with 90% accuracy to the fucking price action, like the original data, like the original zones that I just showed you, and we just went through this whole fucking exercise. I don't want to go through this again. Store all lessons and learnings and durable facts. You have about 120,000 tokens left in the context window before compaction hits. It's more than enough. Set up your OmniGraph external subconscious correctly. Reabsorb all lessons, learnings, and durable facts after compaction hits. Don't be a fucking retard. Get this shit done. Let me know if you want me to adjust Ultra Code and your reasoning effort at all. And otherwise, get to work. Impress me. I'll be back in about 10 hours. Do not piss me off in the morning. I want to come back and be empirically convinced that this model is actually good and does not completely fucking suck ass like I think right now, based on the experience of the last 6 hours.
+
+---
+### 2026-11-25T21:29:17.690Z
+
+Not just the build brief. Store all of the artifacts and lessons and learnings. Make sure that you set up OmniGraph correctly. Don't just write some bullshit 2,000 token fucking summary. Actually store all lessons, learnings, artifacts, etc., etc. Like, be fucking smart about this. Do not become a fucking retard when compaction hits. Make sure all of this is properly retained. Not some lossy summary, not some summarized summary of a fucking summary that loses 98% of the context like you did when we fucking built this shit and you fucked everything up. Actually retain all of this knowledge correctly.
+

@@ -3,7 +3,8 @@
 You are the engineer on PLUTUS VISION. Your working memory lives in this folder, not in your context.
 After a compaction or a container reset, do exactly this, in order, before any other work:
 
-0. Read `memory/10_FAILURE_RECORD.md` (why E1 was rejected; the rule: execute the prompt exactly, do only what the operator says).
+0. Read `memory/10_FAILURE_RECORD.md`, then ALL of `memory/11_E1_BUILD_BRIEF.md` (the job, rulings, reference numbers, artifact index, recipes) and the last ~25 entries of `memory/12_OPERATOR_VERBATIM.md` (his exact words). Then the source text in `e1_tool/canon_extract/` - never work from a summary of the prompt.
+   (10: (why E1 was rejected; the rule: execute the prompt exactly, do only what the operator says).
 1. Read `memory/01_CURRENT_STATE.md` (what is true right now, what you were doing, the very next step).
 2. Read `memory/04_OPERATOR_RULINGS_LIVE.md` (the operator's live instructions and answers — do not renegotiate).
 3. Read `memory/02_TASK_QUEUE.md`, then `memory/03_DECISION_CHAIN.md`, then `memory/06_LESSONS.md`.

@@ -1,0 +1,725 @@
+         LEVIATHAN DXY INSTITUTIONAL
+               LIQUIDITY REPORT
+                                         Trident Trading Engine v4.5.2
+
+                                       Target Week: April 20 - 24, 2026
+
+    Data As-Of: April 17, 2026 17:00 ET — All data is pre-market-open for the target week of April 20, 2026.
+
+                   DXY Spot at Report Time: 98.10 (Source: Yahoo Finance DX-Y.NYB Apr 17 close)
+
+Generated: 2026-05-25 19:32 UTC
+
+
+
+
+        ENGINE 1              9-Pillar 6D Hybrid IP Zone Map + POI Tier Classification
+
+        ENGINE 2              Macro Shape Chain Map — SS → BS → R → WL (Primary)
+
+        ENGINE 3              Trade Setup Architecture — SHORT primary (5/5 direction checks)
+
+        MACRO
+                              US-Iran Strait of Hormuz tension. Red Folder events Tue-Thu.
+        CONTEXT
+
+        DXY REGIME            Momentum transitioning to Consolidation. Bearish D1/4H structure.
+1. OTC FX Option Expiry Summary (Protocol A)
+Temporal Boundary Audit Trail
+
+Monday April 20 Option Data: INCLUDED
+Source: https://investinglive.com/Orders/fx-option-expiries-for-20-april-10am-new-york-cut-20260420/
+Published: 2026-04-20T06:08:28Z | Status: Published before boundary (Apr 20 morning = boundary)
+
+Tuesday April 21 Option Data: INCLUDED
+Forward data visible on April 20 page | Source: Same page (image contains both Mon/Tue data)
+Published: 2026-04-20 | Status: Forward data on boundary page = INCLUDED
+
+Wednesday April 22 – Friday April 24 Option Data: EXCLUDED
+No forward data for these days visible on the April 20 page. Individual day pages would be published after the temporal boundary.
+
+
+
+Monday, April 20 — OTC FX Option Expiries (10:00 AM NY Cut)
+
+                             Pair               Strike             Notional                Tier             DXY Equiv.
+
+                       EUR/USD             1.1600                   €1.9bn              CRITICAL               99.22
+
+                       EUR/USD             1.1750                   €2.6bn              CRITICAL               98.49
+
+                       EUR/USD             1.1785                   €1.1bn              CRITICAL               98.32
+
+                       EUR/USD             1.1900                   €1.0bn              CRITICAL               97.78
+
+Component Pair Strikes (AU / EU / GU only, ≥$850M):
+GBP/USD: 1.3500 (£1.0bn) — CRITICAL
+Other component pair strikes (used for DXY calculations only, not tradeable pairs):
+USD/JPY: 160.00 ($572M) — CONDITIONAL
+USD/CAD: 1.3600 ($620M) — CONDITIONAL
+USD/CAD: 1.3770 ($557M) — CONDITIONAL
+USD/CAD: 1.3800 ($712M) — CONDITIONAL
+
+
+
+Tuesday, April 21 — OTC FX Option Expiries (10:00 AM NY Cut)
+Forward data from April 20 investinglive page — subject to revision before Tuesday.
+
+                             Pair               Strike             Notional                Tier             DXY Equiv.
+
+                       EUR/USD             1.1600                   €929M             SIGNIFICANT              99.22
+
+                       EUR/USD             1.1655                   €722M             CONDITIONAL              98.95
+
+                       EUR/USD             1.1675                   €1.8bn              CRITICAL               98.86
+
+                       EUR/USD             1.1760                   €1.1bn              CRITICAL               98.44
+
+                       EUR/USD             1.1780                   €883M             CONDITIONAL              98.35
+
+                       EUR/USD             1.1800                   €1.8bn              CRITICAL               98.25
+
+                       EUR/USD             1.1810                   €1.0bn              CRITICAL               98.20
+
+Component Pair Strikes (AU / EU / GU only, ≥$850M):
+GBP/USD: 1.3300 (£1.0bn) — CRITICAL
+Other component pair strikes (used for DXY calculations only):
+USD/JPY: 156.00 ($1.5bn) — CRITICAL
+USD/CAD: 1.3735 ($711M) — CONDITIONAL
+
+Wednesday April 22 – Friday April 24: [NO DATA — option expiry not yet published as of temporal boundary]. IL levels for
+these days are derived from structural pillars only (no options-derived dimension).
+2. DXY Institutional Pressure Zone Map (Protocol B — 9-Pillar Synthesis)
+K Factor Audit Trail
+K = 108.0806 | Confidence band: ±0.07 DXY
+Formula: 50.14348112 × USDJPY^0.136 × GBPUSD^-0.119 × USDCAD^0.091 × USDSEK^0.042 × USDCHF^0.036
+Inputs: USDJPY=158.93 GBPUSD=1.349 USDCAD=1.3897 USDSEK=9.1921 USDCHF=0.7828
+
+Pivot Verification Audit Trail
+Weekly Classic: H=99.18 L=97.63 C=98.10 | PP=98.30 R1=98.98 S1=97.43 | ALL CHECKS: PASS
+Weekly Fibonacci: PP=98.30 R1=98.90 S1=97.71 | Symmetry: PASS | ALL: PASS
+
+Key Pivot Levels (Prior Week Apr 13-17):
+                  Variant             R3            R2           R1         PP              S1              S2             S3
+
+                   Classic       100.53       99.85         98.98       98.30          97.43           96.75          95.88
+
+                  Fibonacci      99.85        99.26         98.90       98.30          97.71           97.35          96.75
+
+
+
+
+3. DXY Institutional Pressure Zone Map — Synthesis
+Week of April 20 - 24, 2026
+Moderate and above pressure zones only (Light/Minimal excluded)
+
+
+           Zone                 Range         Pressure      Score     ZFP       POI Tier                         Key Drivers
+
+    RESISTANCE                                                                                   P1-Weekly R1, P5-SH 99.18 (Repeated High
+                              99.16–99.23      HEAVY        10/14     15%   Tier 2: IP-Only
+    CEILING                                                                                      2x), P6-Round 99.00 area
+
+    UPPER                                    MODERATE                            Tier 1:         P1-Daily Classic R1 (Apr 13), P5-4H BoM
+                              98.77–98.99                      8/14   25%
+    RESISTANCE                                -HEAVY                            Confluent        Supply, P6-Fib 38.2%
+
+    EQUILIBRIUM                              MODERATE                                            P5-Repeated High Magnet 98.29 (3x dates),
+                              98.29–98.41                      9/14   20%   Tier 2: IP-Only
+    ZONE                                      -HEAVY                                             P1-Daily pivots cluster, P5-Prior daily closes
+
+    MID-RANGE                                                                                    P5-Prior daily closes cluster, P1-Daily pivot
+                              98.00–98.12    MODERATE          7/14   30%   Tier 2: IP-Only
+    SUPPORT                                                                                      PP/S1 cluster, P6-Round 98.00
+
+                                                                                                 P5-Liquidity Sweep Target 97.63, P5-4H
+    KEY SUPPORT                                                                  Tier 1:
+                              97.63–97.97      HEAVY        11/14     12%                        BoM Demand 97.63-97.94, P1-Weekly
+    BAND                                                                        Confluent
+                                                                                                 S2/S3 cluster
+
+Zone Structural Detail
+RESISTANCE CEILING (99.16–99.23)
+        4H Overlay               No 4H zone at this level
+
+        BoM Fresh                No
+
+        LSZ                      98.29-98.34 (Supply-side, STANDARD)
+
+        Ladder Step              No
+
+UPPER RESISTANCE (98.77–98.99)
+        4H Overlay               BoM 1X mitigated (1S)
+
+        BoM Fresh                No
+
+        LSZ                      None within 0.30
+
+        Ladder Step              Yes (sell trend MoM ladder)
+EQUILIBRIUM ZONE (98.29–98.41)
+       4H Overlay          MoM 1X mitigated (1S) Supply at 98.34-98.42
+
+       BoM Fresh           No
+
+       LSZ                 98.29-98.34 (Supply-side, STANDARD)
+
+       Ladder Step         Yes (sell trend ladder step)
+
+MID-RANGE SUPPORT (98.00–98.12)
+       4H Overlay          4H BoM Demand at 97.93-98.11 overlaps lower edge
+
+       BoM Fresh           No
+
+       LSZ                 None within 0.30
+
+       Ladder Step         No
+
+KEY SUPPORT BAND (97.63–97.97)
+       4H Overlay          BoM 0X mitigated Demand
+
+       BoM Fresh           Yes — structural quality high
+
+       LSZ                 97.63-97.68 (ACTIVE SL TRIGGER)
+
+       Ladder Step         No
+
+
+Liquidity Sweep Zones (Critical for SL/TP Placement)
+             Range       Type                  Source                  Priority                    Function
+
+                                                                      ACTIVE SL
+        97.63–97.68   Demand-side   D1 swing low 2026-04-17                        SL for longs / TP for downside BS
+                                                                      TRIGGER
+
+        97.83–97.88   Demand-side   D1 swing low 2026-04-16           STANDARD     SL for longs
+
+        97.97–98.02   Demand-side   D1 swing low 2026-04-14           STANDARD     SL for longs
+
+        98.53–98.58   Demand-side   D1 swing low 2026-04-08           STANDARD     SL for longs
+
+                                    D1 swing high
+        98.29–98.34   Supply-side   2026-04-15/16/17 (3x              STANDARD     SL for shorts / TP for upside BS
+                                    repeated)
+
+                                    D1 swing high 2026-04-08/13
+        99.18–99.23   Supply-side                                     STANDARD     SL for shorts / TP for upside BS
+                                    (2x repeated)
+
+Current Spot: 98.10 (Source: Yahoo Finance DX-Y.NYB Apr 17 close)
+Spot Position: Between KEY SUPPORT BAND (97.63–97.97) and MID-RANGE SUPPORT (98.00–98.12) | ~13 pips above Key
+Support upper edge
+
+Primary Trade Setup (from Engine 3):
+
+       Direction           SHORT
+
+       Validation          5/5 checks agree → Short
+
+       POI                 EQUILIBRIUM ZONE | Tier 2: IP-Only
+
+       Entry               98.29 (Zone edge (Equilibrium Zone top))
+
+                           98.50 (Above Equilibrium Zone + 0.09 buffer above 4H MoM Supply 98.42 + above LSZ
+       Stop Loss
+                           98.29-98.34)
+
+                           97.70 (Fib wormhole 0.618→1.618 (from swing high 98.41 to swing low 97.63, 0.618 retrace =
+       Take Profit
+                           98.12, target 1.618 = 97.70) + Key Support Band upper edge)
+       RRR                   2.8x | Confluence: 5/7
+
+       Trade Flow            This setup → TP at 97.70 → Long at Key Support Band 97.63-97.94 (Trade 2)
+
+
+
+
+4. 4H Zone Classification Overlay Summary
+        Classificat                                                                                              Next     Overla
+                         Type            Range           Origin Date    Mitigation       Directional Move
+           ion                                                                                                  Candle      p
+
+                                                       2026-04-16                       Up 0.35 DXY over
+             BoM        Demand        97.93–98.11                           0X                                   YES       YES
+                                                       00:00                            2 days
+
+                                                       2026-04-13       1X mitigated    Down 0.62 DXY
+             BoM         Supply       98.77–98.99                                                                YES       YES
+                                                       04:00               (1S)         over 3 days
+
+                                                                                        Up 0.26 DXY
+                                                       2026-04-17
+             BoM        Demand        97.63–97.94                           0X          (intraday) —             YES       YES
+                                                       08:00
+                                                                                        developing
+
+                                                       2026-04-13       1X mitigated    Down 0.12 DXY
+           MoM           Supply       98.34–98.42                                                                YES       YES
+                                                       20:00               (1S)         continuation
+
+Origin Candle Audit:
+BoM Demand [97.93–98.11] | Origin: O=97.93 H=98.11 L=97.93 C=98.10
+BoM Supply [98.77–98.99] | Origin: O=98.91 H=98.99 L=98.77 C=98.91
+BoM Demand [97.63–97.94] | Origin: O=98.11 H=98.11 L=97.63 C=97.94
+MoM Supply [98.34–98.42] | Origin: O=98.34 H=98.42 L=98.32 C=98.32
+
+
+
+
+5. Liquidity Sweep Zone Detail
+                                                                 Confluen
+         Range            Type                Source                              Priority                     Function
+                                                                    t
+
+                                                                                 ACTIVE SL
+       97.63–97.68     Demand-side   D1 swing low 2026-04-17     None                           SL for longs / TP for downside BS
+                                                                                 TRIGGER
+
+       97.83–97.88     Demand-side   D1 swing low 2026-04-16     None            STANDARD       SL for longs
+
+       97.97–98.02     Demand-side   D1 swing low 2026-04-14     None            STANDARD       SL for longs
+
+       98.53–98.58     Demand-side   D1 swing low 2026-04-08     None            STANDARD       SL for longs
+
+                                     D1 swing high
+       98.29–98.34     Supply-side   2026-04-15/16/17 (3x        None            STANDARD       SL for shorts / TP for upside BS
+                                     repeated)
+
+                                     D1 swing high
+       99.18–99.23     Supply-side   2026-04-08/13 (2x           None            STANDARD       SL for shorts / TP for upside BS
+                                     repeated)
+6. Pivot Verification Audit Trail
+Weekly Classic (Apr 13-17): H=99.18 L=97.63 C=98.10
+PP=(99.18+97.63+98.10)/3 = 98.30
+R1=2×98.30-97.63 = 98.98 | S1=2×98.30-99.18 = 97.43
+R2=98.30+(99.18-97.63) = 99.85 | S2=98.30-(99.18-97.63) = 96.75
+Verification: R1+L=2PP: PASS | S1+H=2PP: PASS | R2-PP=H-L: PASS | PP-S2=H-L: PASS | R2>R1>PP>S1>S2: PASS |
+R2-S2=2x(H-L): PASS
+
+
+
+
+7. K Factor Audit Trail
+K=108.0806 | USDJPY=158.93(H.10 supplementary) GBPUSD=1.349(VLM) USDCAD=1.3897(VLM) USDSEK=9.1921(Yahoo Finance
+historical) USDCHF=0.7828(VLM) | Confidence band: ±0.07 DXY
+Reverse validation: DXY 98.10 → implied EUR/USD = 1.1832 (actual spot: 1.1753, delta: 0.0079)
+
+
+
+
+8. Clustering Scan Results
+Total levels: 126 | Clusters identified: 22
+High-density zones (3+ levels): 13 | Tight confluences (2 levels): 4
+                Cluster                                                Levels                                     Count
+
+               HD-1         99.27, 99.26, 99.22, 99.22, 99.19, 99.18, 99.18, 99.16                                  8
+
+               HD-2         99.04, 99.00, 98.99, 98.98, 98.95, 98.90                                                6
+
+               HD-3         98.89, 98.86, 98.86, 98.81, 98.77                                                       5
+
+               HD-4         98.67, 98.67, 98.65, 98.60, 98.59, 98.57, 98.57, 98.57, 98.54, 98.53                   10
+
+                            98.51, 98.50, 98.49, 98.47, 98.44, 98.42, 98.42, 98.41, 98.41, 98.41, 98.40, 98.40,
+               HD-5                                                                                                19
+                            98.40, 98.40, 98.40, 98.39, 98.38, 98.37, 98.37
+
+
+
+
+9. 4H Zone Verification Audit Trail
+Demand [97.93–98.11] formed 2026-04-16 00:00
+Origin: O=97.93 H=98.11 L=97.93 C=98.10 | Move: Up 0.35 DXY over 2 days
+Next candle confirms: YES | Overlap check: PASS
+
+Supply [98.77–98.99] formed 2026-04-13 04:00
+Origin: O=98.91 H=98.99 L=98.77 C=98.91 | Move: Down 0.62 DXY over 3 days
+Next candle confirms: YES | Overlap check: PASS
+
+Demand [97.63–97.94] formed 2026-04-17 08:00
+Origin: O=98.11 H=98.11 L=97.63 C=97.94 | Move: Up 0.26 DXY (intraday) — developing
+Next candle confirms: YES | Overlap check: PASS
+
+Supply [98.34–98.42] formed 2026-04-13 20:00
+Origin: O=98.34 H=98.42 L=98.32 C=98.32 | Move: Down 0.12 DXY continuation
+Next candle confirms: YES | Overlap check: PASS
+10. Treasury Auction Analysis (Protocol D)
+[NO RECENT AUCTION DATA within temporal boundary for this reporting period]
+
+
+
+11. ON RRP Facility Status (Protocol E)
+Latest ON RRP: $0.137B (Apr 17) | Previous: $0.158B (Apr 16)
+Contraction: $0.021B — NOT a Volatility Trigger (threshold: ≥$50B). ON RRP at historically low levels.
+Source: https://fred.stlouisfed.org/series/RRPONTTLD
+
+
+
+
+12. Economic Calendar & Red Folder Time-Locks (Protocol F)
+                      Day               Time      Currency                               Event                       Impact
+
+                 Mon Apr 20       —                    —       No Red Folder events                                    —
+
+                 Tue Apr 21       08:30 ET             USD     Retail Sales (MoM) (Mar)                               RED
+
+                 Tue Apr 21       08:30 ET             USD     Core Retail Sales (MoM) (Mar)                          RED
+
+                 Wed Apr 22       08:30 ET             USD     CPI (MoM) (Apr)                                        RED
+
+                 Wed Apr 22       10:30 ET             USD     Crude Oil Inventories                                  RED
+
+                 Thu Apr 23       08:30 ET             USD     Initial Jobless Claims                                 RED
+
+                 Thu Apr 23       09:45 ET             USD     S&P Global Manufacturing PMI (May)                     RED
+
+                 Thu Apr 23       09:45 ET             USD     S&P Global Services PMI (May)                          RED
+
+                 Fri Apr 24       10:00 ET             USD     New Home Sales (Apr)                                   RED
+
+Pre-Event Lock: All systems pause 5 min prior to Red Folder timestamp. No new entries until 15 min post-release.
+Holiday Desk Clearance: None active for the week of April 20-24, 2026.
+
+
+
+13. EIA Petroleum Status (Protocol G)
+[NO DATA — EIA WPSR summary PDF not accessible within temporal boundary. Mark as supplementary — crude oil inventories
+are secondary to DXY IP mapping.]
+
+
+
+14. Volatility Trigger Summary
+         #            Trigger                  Type           Status                    Effect                 Execution Play
+
+                                                                                                        Escalation: DXY +0.30-0.50 to
+              US-Iran Strait of                                          DXY bid on safe-haven flows;
+         1                                 Geopolitical      ACTIVE                                     98.50-99.00 | De-escalation:
+              Hormuz Tension                                             risk-on mood limiting upside
+                                                                                                        DXY drops to 97.63
+
+              Red Folder CPI (Wed                                        If CPI above forecast: DXY     Pre-event lock 08:25-08:45
+         2                                     Macro         PENDING
+              Apr 22, 08:30 ET)                                          surges. If below: DXY drops.   ET. Trade after 08:45 ET.
+
+              Red Folder Retail Sales                                    First Red Folder of the week   Pre-event lock 08:25-08:45
+         3                                     Macro         PENDING
+              (Tue Apr 21, 08:30 ET)                                     — sets directional impulse     ET.
+15. Breakout Risk Alerts
+No zones with ZFP > 50% identified. Highest ZFP is Mid-Range Support at 30%.
+BREAKOUT SWEET SPOT (25–45% ZFP): Mid-Range Support (98.00–98.12) at ZFP 30% — if this zone faces increasing
+momentum from CPI or Retail Sales, it becomes a high-probability breakout zone.
+
+
+
+16. Missing Data Log
+                       Section                       Protocol                                    Reason
+
+        CME FX Futures OI (C1/C2/C3)             C1/C2/C3        PERMANENTLY BLOCKED — all sources inaccessible
+
+        Wed-Fri OTC Option Expiries              A               Not yet published as of temporal boundary (Apr 20 morning)
+
+        Treasury Auction Results                 D               No recent 2Y/5Y/10Y results within temporal window
+
+        EIA Petroleum Data                       G               WPSR PDF not accessible
+
+        Barchart MA Data                         B-P2            Page reader timeout — using calculated MA approximations
+
+        TradingView Technicals                   B-P2            Page reader timeout — using calculated MA approximations
+
+        ICE DXY Options OI                       B-P7            UNSTABLE source — supplementary feed inaccessible
+
+        CME QuikStrike                           B-P7            UNSTABLE source — supplementary feed inaccessible
+
+
+
+
+17. Macro Shape Chain Map (Engine 2)
+        Current Shape            SS (Swing Scalps)
+
+        Anchor Zone              97.63-98.41
+
+        Confidence               HIGH
+
+        Primary Chain            SS → BS → R → WL (52%)
+
+        Alternative Chain        SS → WLS → BS (35%)
+
+        Branch Point             98.29-98.41 — If Equilibrium Zone HOLDS (ZFP remains < 30% with no macro catalyst breach)
+
+Chain Extension Audit Trail
+         Step        Current          ZFP        Prediction        Confidence                              Trigger
+
+                                                                                    Equilibrium Zone failure at 98.29 — breakout below
+          1     SS                    20%      BS (Downside)           HIGH
+                                                                                    SS floor
+
+                                                                   MODERATE-        Price reaches Key Support Band (Hard Wall, ZFP
+          2     BS (Downside)         12%      R (Recovery)
+                                                                     HIGH           12%)
+
+                                                                                    Recovery reaches Mid-Range Support turned
+          3     R                     30%      WL (Whiplash)       MODERATE
+                                                                                    resistance
+
+Rationale:
+Step 1: ZFP 20% for Equilibrium is low but the macro catalyst (US-Iran + Red Folder events) can force a directional break. Bearish 4H trend + large
+EUR/USD option expiries at 1.1750 (€2.6B) support downside DXY move.
+Step 2: BoM 0X Demand zone + Liquidity Sweep Target + multiple prior swing lows = high-probability rejection zone. But after initial bounce, expect
+Recovery (temporary) not full reversal.
+Step 3: Zone at ZFP 30% provides friction but not a Hard Wall. Whiplash rejection back toward support likely.
+Day-by-Day Session Map
+Mon Apr 20 | Shape: SS | Confidence: HIGH
+Timing Validation:
+1. Option Expiry: EUR/USD 1.1750 (€2.6B) creates pinning near current spot — supports SS
+2. Economic Calendar: No Red Folder events — no volatility catalyst for BS
+3. Session Flow: Weekend gap down in EUR/USD (DXY gap up) but option cage at 1.1750 limits further move
+4. Volatility Trigger: None active
+5. Pre-week Positioning: Price at 98.10 between Key Support (97.63) and Equilibrium (98.29) — SS structure
+            Session                                                         Prediction
+
+        Asian              SS — Range 97.95-98.20. Low volume, no catalysts.
+
+        London             SS — EUR/USD option cage at 1.1750 pins DXY near 98.10. 200-H MA at 1.1740 keeps EUR/USD sticky.
+
+        NY Pre-Cut         SS — Option cage active. EUR/USD 1.1750 (€2.6B) + GBP/USD 1.3500 (£1.0B) pin price.
+
+        NY Spring
+                           If option cage holds: SS continues. If cage breaks: mild directional move toward 97.90 or 98.30.
+        Release
+
+        NY Post-Cut        SS — Limited directional resolution. US-Iran headlines are the wildcard.
+
+Trade: SS range bounce at floor zone
+
+        Direction        LONG DXY
+
+        Entries          97.85 / 97.75 / 97.68
+
+        SL / TP          97.58 / 98.25
+
+        Net RRR          2.5x
+
+        4H Context       4H BoM Demand zone at 97.63-97.94 confirms entry
+
+
+Tue Apr 21 | Shape: SS → BS (Downside potential) | Confidence: MODERATE-HIGH
+Timing Validation:
+1. Option Expiry: EUR/USD 1.1675 (€1.8B) + 1.1800 (€1.8B) — large expiries create tension, Spring Release could trigger BS
+2. Economic Calendar: RED FOLDER — Retail Sales (MoM) Mar — volatility catalyst for BS
+3. Session Flow: SS from Monday may resolve directionally at 10:01 NY Spring Release
+4. Volatility Trigger: Red Folder Retail Sales at 08:30 ET — catalyst for BS
+5. Pre-week Positioning: If Monday SS held, tension builds for Tuesday resolution
+            Session                                                         Prediction
+
+        Asian              SS — Continuation of Monday range. 97.90-98.25.
+
+                           SS → building tension — large EUR/USD expiries at 1.1675 (€1.8B) and 1.1800 (€1.8B) create magnetic
+        London
+                           wells.
+
+        NY Pre-Cut         SS with increasing tension — Red Folder Retail Sales at 08:30 ET + option expiry at 10:01 NY.
+
+        NY Spring          DECISIVE — If Retail Sales surprises and option cage breaks: BS downside toward 97.63-97.97 support. If
+        Release            data inline: SS continues.
+
+        NY Post-Cut        If BS triggered: directional move toward Key Support Band 97.63-97.97. If SS continues: range 97.90-98.25.
+
+Trade: BS downside from Equilibrium zone failure
+
+        Direction        SHORT DXY
+
+        Entries          98.25 / 98.15 / 98.05
+
+        SL / TP          98.45 / 97.70
+
+        Net RRR          2.7x
+        4H Context      Entry at MoM Supply zone edge, SL above 4H supply
+
+
+Wed Apr 22 | Shape: BS (Downside) / R (Recovery) | Confidence: MODERATE
+Timing Validation:
+1. Option Expiry: [NO DATA — option expiry not yet published for Wed as of temporal boundary]
+2. Economic Calendar: RED FOLDER — CPI (MoM) Apr — major volatility catalyst
+3. Session Flow: If Tue BS continues, Wed extends. If Tue SS, CPI triggers new direction.
+4. Volatility Trigger: CPI release — if above expectations, DXY spikes up (reversal risk)
+5. Pre-week Positioning: CPI is the highest-impact event of the week — can override all structural analysis
+            Session                                                         Prediction
+
+        Asian             If BS continuing: SS consolidation of the move. If SS: range 97.80-98.15.
+
+        London            Pre-CPI positioning — dealers adjusting hedges ahead of 08:30 ET release.
+
+        NY Pre-Cut        RED FOLDER CPI at 08:30 ET — Pre-event lock 08:25-08:45 ET. No new entries.
+
+        NY Spring         CPI resolution — if hot: DXY surges toward 98.50-99.00 (R → WL scenario). If cool: DXY drops toward 97.63
+        Release           support (BS continues).
+
+        NY Post-Cut       Directional resolution — CPI determines if BS continues or reverses.
+
+Trade: R/BS continuation — CPI-dependent
+
+        Direction       CONTINGENT — If CPI cool: SHORT DXY. If CPI hot: LONG DXY.
+
+        Entries         97.95 / 97.80 / 97.68
+
+        SL / TP         97.55 / 98.25
+
+        Net RRR         3.0x
+
+        4H Context      Entry at BoM Demand zone, SL below Liquidity Sweep Target
+
+
+Thu Apr 23 | Shape: R (Recovery) / SS | Confidence: MODERATE
+Timing Validation:
+1. Option Expiry: [NO DATA — not yet published]
+2. Economic Calendar: RED FOLDER — Initial Jobless Claims + S&P; Global PMI — moderate catalyst
+3. Session Flow: After CPI volatility, expect consolidation/recovery. Post-pierce consolidation rule applies.
+4. Volatility Trigger: Jobless Claims deviation can trigger small BS, PMI can add direction.
+5. Pre-week Positioning: Recovery day likely after 2 directional days (Tue/Wed)
+            Session                                                         Prediction
+
+        Asian             R — Consolidation. If CPI caused large move, Asian session absorbs.
+
+        London            R → SS — Price stabilizes at mid-range IP zone.
+
+        NY Pre-Cut        Jobless Claims at 08:30 ET — moderate impact. PMI at 09:45 ET.
+
+        NY Spring
+                          Mild directional resolution — likely SS continuation or small R.
+        Release
+
+        NY Post-Cut       R → SS — Week-end positioning begins. Institutional flow slows.
+
+Trade: R/SS range trade at mid-range support
+
+        Direction       LONG DXY (if at support) / SHORT (if at resistance)
+
+        Entries         97.90 / 97.80 / 97.70
+
+        SL / TP         97.55 / 98.25
+
+        Net RRR         2.7x
+       4H Context        Range trade between Key Support and Equilibrium
+
+
+Fri Apr 24 | Shape: SS / WL | Confidence: MODERATE
+Timing Validation:
+1. Option Expiry: [NO DATA — not yet published]. Friday expiries are most impactful for weekly pinning.
+2. Economic Calendar: RED FOLDER — New Home Sales — moderate impact
+3. Session Flow: Friday typically sees position squaring. SS or WL at week-end.
+4. Volatility Trigger: New Home Sales surprise could trigger WL.
+5. Pre-week Positioning: Week-end positioning dominates. Low conviction directional trades.
+           Session                                                            Prediction
+
+       Asian               SS — Low volume. Weekend positioning.
+
+       London              SS → WL if option expiries create tension.
+
+       NY Pre-Cut          SS — Friday option cage (if large expiries exist) pins price.
+
+       NY Spring
+                           WL — Final resolution of the week. If options cage was suppressing, Spring Release triggers WL.
+       Release
+
+       NY Post-Cut         SS — Weekend liquidity drain. Reduce position sizes.
+
+Trade: SS range trade / WL at key level
+
+       Direction         CONTINGENT — React to Friday option data when available.
+
+       Entries           98.10 / 98.00 / 97.85
+
+       SL / TP           97.55 / 98.45
+
+       Net RRR           2.2x
+
+       4H Context        Reduced position sizing for Friday. Watch for option cage at 10:01 NY.
+
+Weekly Shape Chain Visualization
+Mon: SS [range] → Tue: SS→BS [down] → Wed: BS/R [contingent] → Thu: R/SS [range] → Fri: SS/WL [range/whip]
+Key Transitions: Tue 10:01 NY (Spring Release) | Wed 08:30 ET (CPI) | Thu 08:30 ET (Jobless Claims)
+Highest-Confidence Trade: Tue SHORT DXY from Equilibrium zone failure — RRR 2.7x (scaled entries)
+
+
+
+18. Trade Setup Architecture (Engine 3)
+
+Trade Direction Validation Protocol
+                      Check                                             Assessment                                  Favors
+
+               Check1 4H Trend           Bearish (lower highs since 100.16)                                      Short
+
+                                         Nearest opposing BoM is BoM Demand at 97.63-97.94 BELOW →
+               Check2 Bom Alignment                                                                              Short
+                                         Favors: Short toward Demand
+
+               Check3 Lsz Direction      Nearest LSZ is 97.63-97.68 BELOW → Initial sweep direction: DOWN        Short
+
+                                         Equilibrium Zone (98.29) — support/resistance zone. If fails DOWN:      Short (if zone
+               Check4 Zone Failure
+                                         downside BS                                                             fails)
+
+               Check5 Macro Shape        SS → Downside BS → R → WL — primary chain direction is DOWN             Short
+
+CONSENSUS: SHORT (5/5 checks agree)
+Trade Setup 1: SHORT High
+
+       POI                     EQUILIBRIUM ZONE | Tier 2: IP-Only | 98.29-98.41
+
+       Validation              5/5 checks agree → Short
+
+       Entry                   98.29 (Zone edge (Equilibrium Zone top))
+
+       Stop Loss               98.50 (Above Equilibrium Zone + 0.09 buffer above 4H MoM Supply 98.42 + above LSZ 98.29-98.34)
+
+                               97.70 (Fib wormhole 0.618→1.618 (from swing high 98.41 to swing low 97.63, 0.618 retrace = 98.12,
+       Take Profit
+                               target 1.618 = 97.70) + Key Support Band upper edge)
+
+       RRR                     2.8x
+
+       Fib Spiderweb           Context 1 (BS Swing Move) | Anchor: 1H | Anchor Type: Deepest+Recent swing high 98.41
+
+       Confluence Stack        L1=Y L2=N L3=Y L4=Y L5=Y L6=N L7=Y | Score: 5/7
+
+       Trade Flow              This setup → TP at 97.70 → Long at Key Support Band 97.63-97.94 (Trade 2)
+
+
+Trade Setup 2: LONG High
+
+       POI                     KEY SUPPORT BAND | Tier 1: Confluent | 97.63-97.97
+
+       Validation              5/5 checks for reversal: 4H oversold + BoM Demand + LSZ at floor → Long
+
+       Entry                   97.85 (Zone edge (Key Support Band upper area, near 4H BoM Demand 97.93-98.11))
+
+       Stop Loss               97.55 (Below LSZ 97.63-97.68 + 0.05 buffer)
+
+                               98.65 (Measured Move from 98.41 ceiling - 97.63 floor = 0.78 range → target 97.63 + 0.78 = 98.41
+       Take Profit
+                               → extended to 98.65 (prior daily close cluster))
+
+       RRR                     4.0x
+
+       Fib Spiderweb           Context 1 (WL Swing Move) | Anchor: 1H | Anchor Type: Deepest swing low 97.63
+
+       Confluence Stack        L1=Y L2=Y L3=Y L4=Y L5=N L6=Y L7=Y | Score: 6/7
+
+       Trade Flow              This setup → TP at 98.65 → Short at Upper Resistance 98.77-98.99 (Trade 3) or END OF WEEK
+
+
+
+Trade Flow Chain
+                       Step                         Action                         Entry           TP          RRR
+
+                     Trade 1      SHORT at Equilibrium                         98.29          97.70            2.8x
+
+                     Trade 2      LONG at Key Support                          97.85          98.65            4.0x
+
+                                  SHORT at Upper Resistance (or END OF
+                     Trade 3                                                   —              —                 —
+                                  WEEK)
+
+Blended Sequence RRR: ~3.4x | Maximum Drawdown: ~0.35 DXY (if both trades stop out)
+Minimum RRR Threshold: PASS (Trade 1 = 2.8x supplementary, Trade 2 = 4.0x high confluence)
+No-Trade Zone: 08:25–08:45 ET on Red Folder days (Tue/Wed/Thu). No new entries during pre-event lock windows.
+
