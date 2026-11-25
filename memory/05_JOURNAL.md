@@ -206,3 +206,10 @@ HONEST VERDICT: the reference week reproduces (five zones on the report's struct
 ASSUMPTIONS TO TELL THE OPERATOR: A1 strong move = inefficiency gap (b[i+1] vs b[i-1]); A2 sweep zones from every graded D1 swing + last-10-day swings; A3 named zones = valid 4H candles + unswept sweep-level clusters (not every level cluster), names by position, Equilibrium = zone at the weekly PP;
  A4 demand candle below spot's reach (spot under it) / supply candle with spot over it = dropped; one-time use = keep <=1X; expiries = sidecar's as-of page (Friday forward rows when Monday's page is published after 06:00Z), K from Fed H.10 rates in the sidecar.
 NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order blocks, Step 0g 1H nested precision, Step 1 HWC/LWC (optional), Pillar 4/7 (optional -> NO DATA).
+
+## 2026-11-25 (container ~22:20 UTC) - Step 0d/0e attempt REVERTED (git checkout); memory/13 written; all-weeks facts
+- Tried Step 0d (D1 order blocks) as "daily candle before a close beyond it, move >=1.0 over >=5 days" + 0e (swing inside block = Confluent Floor/Ceiling, Structural 2 + bonus 2). Result: every candle of a trend became a block (20+ overlapping blocks),
+  nearly every swing became "confluent", scores inflated, the reference week went from 5 zones to 8. Wrong reading -> reverted. If redone: only the ORIGIN base of each D1 move (not continuation candles), and check the reference week stays at its five zones.
+- memory/13_E1_TOOL_STATUS.md = the morning report (what exists, reference comparison, honest per-week verdict, assumptions A1-A5, the open point: nothing mapped ahead of price in breakout / sell-off weeks).
+- Facts over 120 week/pair maps in e1_tool/out/OUTCOMES_all_weeks.txt + outcome_rows.json (breakdown script was in the scratchpad; numbers copied into memory/13).
+- Tool state at this entry = commit "memory: E1 tool status / morning report (13)..." on AGENT. e1_tool/e1 MONDAY PAIR is the entry point.
