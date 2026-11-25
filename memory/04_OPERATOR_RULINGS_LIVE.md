@@ -91,3 +91,6 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
 - L-33 Steps the v5.3.3 prompt leaves as "[unchanged from v4.5.2]" are taken from the v4.5.2 prompt in Original_Canon_Data. (confirmed)
 - L-34 First test: run the tool for Apr 20-24 2026 and match the report (Leviathan_DXY_IL_Report_Apr20-24_2026.pdf) zone by zone and audit trail by audit trail. Nothing else until that matches.
   He traded that week live on those zones and made money: it is market-validated. Any week must come out as accurate as that example.
+- L-35 (2026-11-25 night) ZFP is shown as the prompt's RANGE (e.g. "5-15%"), never a single invented number. "A range is fine. I actually prefer a range rather than you hallucinate an exact number."
+- L-36 For the 4H move-threshold question he told me to reread the Fractal Architecture v2.3 doc and answer it myself if the context is there (sections 2.1/2.2 Earth-Fire, 4.3, 4.4 timeframe density, 7 MoM as ladder steps).
+- Question 3 (zone edges) was illustrated for him: evidence/question_zone_edges_dxy_4h.png (probe indicator/probes/question_zone_edges.pine). Waiting for his answer.

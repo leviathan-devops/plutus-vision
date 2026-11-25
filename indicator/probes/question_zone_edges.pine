@@ -1,0 +1,28 @@
+//@version=6
+// ILLUSTRATION ONLY (probe): two cases from the Apr 20-24 report, drawn to ask the operator how a zone's edges are chosen.
+indicator("Question: zone edges", overlay = true, max_boxes_count = 50, max_labels_count = 50, max_lines_count = 50)
+int tA = timestamp("UTC", 2026, 4, 13, 4, 0)
+int tM = timestamp("UTC", 2026, 4, 13, 20, 0)
+int tE = timestamp("UTC", 2026, 4, 24, 20, 0)
+int tL = timestamp("UTC", 2026, 4, 16, 12, 0)
+f_lv(float p, color c) =>
+    line.new(tA, p, tE, p, xloc = xloc.bar_time, color = c, width = 1, style = line.style_dotted)
+if barstate.islast
+    // CASE A - Upper Resistance
+    box.new(tA, 98.99, tE, 98.77, xloc = xloc.bar_time, bgcolor = color.new(color.red, 82), border_color = color.red, border_width = 2)
+    f_lv(98.89, color.white)
+    f_lv(98.86, color.white)
+    f_lv(98.81, color.white)
+    f_lv(98.77, color.white)
+    label.new(timestamp("UTC", 2026, 4, 14, 12, 0), 99.22, "CASE A (Upper Resistance)\nRed box = 4H supply origin candle, 98.77-98.99\nWhite dotted = cluster levels 98.77 / 98.81 / 98.86 / 98.89\nReport zone = 98.77-98.99 = the candle's low and high", xloc = xloc.bar_time, style = label.style_label_left, color = color.new(color.black, 0), textcolor = color.white, size = size.normal, textalign = text.align_left)
+    // CASE B - Equilibrium
+    box.new(tM, 98.42, tE, 98.34, xloc = xloc.bar_time, bgcolor = color.new(color.red, 85), border_color = color.red, border_width = 1)
+    box.new(tA, 98.34, tE, 98.29, xloc = xloc.bar_time, bgcolor = color.new(color.green, 75), border_color = color.green, border_width = 1)
+    box.new(tA, 98.41, tE, 98.29, xloc = xloc.bar_time, bgcolor = color.new(color.orange, 100), border_color = color.orange, border_width = 3)
+    f_lv(98.37, color.yellow)
+    f_lv(98.40, color.yellow)
+    f_lv(98.42, color.yellow)
+    f_lv(98.44, color.yellow)
+    f_lv(98.47, color.yellow)
+    f_lv(98.51, color.yellow)
+    label.new(timestamp("UTC", 2026, 4, 18, 0, 0), 97.80, "CASE B (Equilibrium)\nYellow dotted = cluster of 19 levels, 98.37-98.51\nRed box = 4H MoM supply candle 98.34-98.42\nGreen box = liquidity sweep zone 98.29-98.34\nReport zone (orange outline) = 98.29-98.41,\nnot the cluster's own span 98.37-98.51", xloc = xloc.bar_time, style = label.style_label_left, color = color.new(color.black, 0), textcolor = color.white, size = size.normal, textalign = text.align_left)
