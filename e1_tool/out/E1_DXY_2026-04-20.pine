@@ -9,43 +9,63 @@ show_infill = input.bool(true, "Gap in-fill levels")
 show_options = input.bool(true, "Option Strikes")
 isPair = str.contains(syminfo.ticker, "DXY")
 if barstate.islast and isPair
-    // RESISTANCE CEILING 99.13-99.18 HEAVY 10.0/14 Soft Wall ZFP 30-50% Tier 2: IP-Only
+    // RESISTANCE CEILING 99.08-99.18 HEAVY 10.0/14 Soft Wall ZFP 30-50% Tier 2: IP-Only
     if show_zones
-        box.new(1775854800000, 99.18, 1777064400000, 99.13, bgcolor=color.new(color.rgb(180,40,30), 80), border_color=color.rgb(180,40,30), border_width=2, xloc=xloc.bar_time)
+        box.new(1775854800000, 99.18, 1777064400000, 99.08, bgcolor=color.new(color.rgb(180,40,30), 80), border_color=color.rgb(180,40,30), border_width=2, xloc=xloc.bar_time)
         label.new(1776718800000, 99.18, "Resistance Ceiling | HEAVY | 30-50% ZFP | Tier 2", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
+    if show_candles
+        box.new(1776034800000, 99.18, 1777064400000, 99.09, bgcolor=color.new(color.rgb(180,40,30), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776034800000, 99.18, "1H BoM Supply 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
     if show_levels
         line.new(1776459600000, 99.18, 1777064400000, 99.18, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
-    // UPPER RESISTANCE 98.82-99.08 MODERATE-HEAVY 8/14 Post-Expiry Ghost ZFP 20-40% Tier 1: Confluent
-    if show_zones
-        box.new(1775854800000, 99.08, 1777064400000, 98.82, bgcolor=color.new(color.rgb(180,40,30), 80), border_color=color.rgb(180,40,30), border_width=2, xloc=xloc.bar_time)
-        label.new(1776718800000, 99.08, "Upper Resistance | MODERATE-HEAVY | 20-40% ZFP | Tier 1", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
-    if show_candles
-        box.new(1775732400000, 99.05, 1777064400000, 98.84, bgcolor=color.new(color.rgb(180,40,30), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1775732400000, 99.05, "BoM Supply 1X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
-        box.new(1775790000000, 98.96, 1777064400000, 98.85, bgcolor=color.new(color.rgb(180,40,30), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1775790000000, 98.96, "BoM Supply 1X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
-        box.new(1776070800000, 99.04, 1777064400000, 98.88, bgcolor=color.new(color.rgb(180,40,30), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1776070800000, 99.04, "BoM Supply 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
-    if show_levels
+        line.new(1776459600000, 99.13, 1777064400000, 99.13, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 99.08, 1777064400000, 99.08, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
+    // UPPER RESISTANCE 98.87-99.06 MODERATE-HEAVY 8/14 Post-Expiry Ghost ZFP 20-40% Tier 1: Confluent
+    if show_zones
+        box.new(1775854800000, 99.06, 1777064400000, 98.87, bgcolor=color.new(color.rgb(180,40,30), 80), border_color=color.rgb(180,40,30), border_width=2, xloc=xloc.bar_time)
+        label.new(1776718800000, 99.06, "Upper Resistance | MODERATE-HEAVY | 20-40% ZFP | Tier 1", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
+    if show_candles
+        box.new(1776081600000, 99.04, 1777064400000, 98.90, bgcolor=color.new(color.rgb(180,40,30), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776081600000, 99.04, "1H BoM Supply 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+        box.new(1775808000000, 99.01, 1777064400000, 98.91, bgcolor=color.new(color.rgb(180,40,30), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1775808000000, 99.01, "1H BoM Supply 1X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+    if show_levels
         line.new(1776459600000, 99.06, 1777064400000, 99.06, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 99.00, 1777064400000, 99.00, xloc=xloc.bar_time, color=color.new(color.rgb(150,150,150), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.94, 1777064400000, 98.94, xloc=xloc.bar_time, color=color.new(color.rgb(190,120,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.94, 1777064400000, 98.94, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.87, 1777064400000, 98.87, xloc=xloc.bar_time, color=color.new(color.rgb(190,120,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.87, 1777064400000, 98.87, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
-        line.new(1776459600000, 98.86, 1777064400000, 98.86, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
+    // UPPER RESISTANCE 98.66-98.85 MODERATE-HEAVY 9.0/14 Soft Wall ZFP 30-50% Tier 2: IP-Only
+    if show_zones
+        box.new(1775854800000, 98.85, 1777064400000, 98.66, bgcolor=color.new(color.rgb(180,40,30), 80), border_color=color.rgb(180,40,30), border_width=2, xloc=xloc.bar_time)
+        label.new(1776718800000, 98.85, "Upper Resistance | MODERATE-HEAVY | 30-50% ZFP | Tier 2", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
+    if show_candles
+        box.new(1775840400000, 98.74, 1777064400000, 98.68, bgcolor=color.new(color.rgb(180,40,30), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1775840400000, 98.74, "1H MoM Supply 1X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+        box.new(1776092400000, 98.82, 1777064400000, 98.74, bgcolor=color.new(color.rgb(180,40,30), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776092400000, 98.82, "1H MoM Supply 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+    if show_levels
         line.new(1776459600000, 98.85, 1777064400000, 98.85, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.82, 1777064400000, 98.82, xloc=xloc.bar_time, color=color.new(color.rgb(150,150,150), 35), width=1, style=line.style_dotted)
-    // EQUILIBRIUM ZONE 98.17-98.44 HEAVY 11.0/14 Standard Wall ZFP 15-30% Tier 1: Confluent
+        line.new(1776459600000, 98.75, 1777064400000, 98.75, xloc=xloc.bar_time, color=color.new(color.rgb(190,120,255), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 98.75, 1777064400000, 98.75, xloc=xloc.bar_time, color=color.new(color.rgb(150,150,150), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 98.72, 1777064400000, 98.72, xloc=xloc.bar_time, color=color.new(color.rgb(190,120,255), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 98.71, 1777064400000, 98.71, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 98.66, 1777064400000, 98.66, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
+    // EQUILIBRIUM ZONE 98.17-98.47 HEAVY 11.0/14 Standard Wall ZFP 15-30% Tier 1: Confluent
     if show_zones
-        box.new(1775854800000, 98.44, 1777064400000, 98.17, bgcolor=color.new(color.rgb(255,152,0), 80), border_color=color.rgb(255,152,0), border_width=2, xloc=xloc.bar_time)
-        label.new(1776718800000, 98.44, "Equilibrium Zone | HEAVY | 15-30% ZFP | Tier 1", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
+        box.new(1775854800000, 98.47, 1777064400000, 98.17, bgcolor=color.new(color.rgb(255,152,0), 80), border_color=color.rgb(255,152,0), border_width=2, xloc=xloc.bar_time)
+        label.new(1776718800000, 98.47, "Equilibrium Zone | HEAVY | 15-30% ZFP | Tier 1", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
     if show_candles
-        box.new(1776394800000, 98.29, 1777064400000, 98.19, bgcolor=color.new(color.rgb(255,152,0), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1776394800000, 98.29, "BoM Supply 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
-        box.new(1776121200000, 98.41, 1777064400000, 98.33, bgcolor=color.new(color.rgb(255,152,0), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1776121200000, 98.41, "MoM Supply 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+        box.new(1776409200000, 98.27, 1777064400000, 98.19, bgcolor=color.new(color.rgb(255,152,0), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776409200000, 98.27, "1H BoM Supply 1X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+        box.new(1776142800000, 98.38, 1777064400000, 98.30, bgcolor=color.new(color.rgb(255,152,0), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776142800000, 98.38, "1H MoM Supply 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+        box.new(1776132000000, 98.41, 1777064400000, 98.37, bgcolor=color.new(color.rgb(255,152,0), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776132000000, 98.41, "1H MoM Supply 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+        box.new(1776114000000, 98.44, 1777064400000, 98.40, bgcolor=color.new(color.rgb(255,152,0), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776114000000, 98.44, "1H MoM Supply 1X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
     if show_levels
         line.new(1776459600000, 98.30, 1777064400000, 98.30, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.29, 1777064400000, 98.29, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
@@ -62,6 +82,8 @@ if barstate.islast and isPair
         line.new(1776459600000, 98.20, 1777064400000, 98.20, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.17, 1777064400000, 98.17, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.17, 1777064400000, 98.17, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 98.47, 1777064400000, 98.47, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 98.46, 1777064400000, 98.46, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.44, 1777064400000, 98.44, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.42, 1777064400000, 98.42, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.41, 1777064400000, 98.41, xloc=xloc.bar_time, color=color.new(color.rgb(150,150,150), 35), width=1, style=line.style_dotted)
@@ -72,19 +94,14 @@ if barstate.islast and isPair
         line.new(1776459600000, 98.36, 1777064400000, 98.36, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.35, 1777064400000, 98.35, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.33, 1777064400000, 98.33, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
-    // MID-RANGE SUPPORT 97.81-98.12 HEAVY 11.0/14 Standard Wall ZFP 15-30% Tier 1: Confluent
+    // MID-RANGE SUPPORT 97.93-98.06 HEAVY 11.0/14 Soft Wall ZFP 30-50% Tier 1: Confluent
     if show_zones
-        box.new(1775854800000, 98.12, 1777064400000, 97.81, bgcolor=color.new(color.rgb(0,150,150), 80), border_color=color.rgb(0,150,150), border_width=2, xloc=xloc.bar_time)
-        label.new(1776718800000, 98.12, "Mid-Range Support | HEAVY | 15-30% ZFP | Tier 1", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
+        box.new(1775854800000, 98.06, 1777064400000, 97.93, bgcolor=color.new(color.rgb(0,150,150), 80), border_color=color.rgb(0,150,150), border_width=2, xloc=xloc.bar_time)
+        label.new(1776718800000, 98.06, "Mid-Range Support | HEAVY | 30-50% ZFP | Tier 1", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
     if show_candles
-        box.new(1776308400000, 98.09, 1777064400000, 97.83, bgcolor=color.new(color.rgb(0,150,150), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1776308400000, 98.09, "BoM Demand 1X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+        box.new(1776445200000, 98.05, 1777064400000, 97.94, bgcolor=color.new(color.rgb(0,150,150), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776445200000, 98.05, "1H BoM Demand 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
     if show_levels
-        line.new(1776459600000, 98.12, 1777064400000, 98.12, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
-        line.new(1776459600000, 98.11, 1777064400000, 98.11, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
-        line.new(1776459600000, 98.10, 1777064400000, 98.10, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
-        line.new(1776459600000, 98.08, 1777064400000, 98.08, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
-        line.new(1776459600000, 98.08, 1777064400000, 98.08, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.06, 1777064400000, 98.06, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.05, 1777064400000, 98.05, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 98.04, 1777064400000, 98.04, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
@@ -99,12 +116,24 @@ if barstate.islast and isPair
         line.new(1776459600000, 97.95, 1777064400000, 97.95, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 97.94, 1777064400000, 97.94, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 97.93, 1777064400000, 97.93, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
-        line.new(1776459600000, 97.87, 1777064400000, 97.87, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
-        line.new(1776459600000, 97.86, 1777064400000, 97.86, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
+    // MID-RANGE SUPPORT 97.68-97.84 HEAVY 10.0/14 Standard Wall ZFP 15-30% Tier 2: IP-Only
+    if show_zones
+        box.new(1775854800000, 97.84, 1777064400000, 97.68, bgcolor=color.new(color.rgb(0,150,150), 80), border_color=color.rgb(0,150,150), border_width=2, xloc=xloc.bar_time)
+        label.new(1776718800000, 97.84, "Mid-Range Support | HEAVY | 15-30% ZFP | Tier 2", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
+    if show_candles
+        box.new(1776434400000, 97.83, 1777064400000, 97.69, bgcolor=color.new(color.rgb(0,150,150), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776434400000, 97.83, "1H BoM Demand 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
+    if show_levels
         line.new(1776459600000, 97.84, 1777064400000, 97.84, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 97.83, 1777064400000, 97.83, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 97.82, 1777064400000, 97.82, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1776459600000, 97.81, 1777064400000, 97.81, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 97.80, 1777064400000, 97.80, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 97.75, 1777064400000, 97.75, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 97.75, 1777064400000, 97.75, xloc=xloc.bar_time, color=color.new(color.rgb(150,150,150), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 97.75, 1777064400000, 97.75, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 97.74, 1777064400000, 97.74, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
+        line.new(1776459600000, 97.68, 1777064400000, 97.68, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
     // KEY SUPPORT BAND 97.63-97.68 HEAVY 10.0/14 Soft Wall ZFP 30-50% Tier 2: IP-Only
     if show_zones
         box.new(1775854800000, 97.68, 1777064400000, 97.63, bgcolor=color.new(color.rgb(0,150,150), 80), border_color=color.rgb(0,150,150), border_width=2, xloc=xloc.bar_time)

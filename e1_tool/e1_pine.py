@@ -34,7 +34,7 @@ def generate(pair, monday, r):
             o.append('    if show_candles')
             for s in z['structs']:
                 o.append(f"        box.new({s['origin_time']}, {g(s['top'])}, {tsR}, {g(s['bot'])}, bgcolor=color.new(color.rgb({c}), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
-                o.append(f"        label.new({s['origin_time']}, {g(s['top'])}, \"{s['kind']} {s['type']} {s['mit']}X\", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)")
+                o.append(f"        label.new({s['origin_time']}, {g(s['top'])}, \"{s['tf']} {s['kind']} {s['type']} {s['mit']}X\", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)")
         o.append('    if show_levels')
         seen = set()
         for x in z['levels']:

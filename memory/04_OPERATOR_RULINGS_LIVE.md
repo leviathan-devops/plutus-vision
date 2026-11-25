@@ -108,3 +108,8 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
   Phase one: a single joined zone is acceptable as long as the levels (B) are clearly highlighted inside it and distinguishable from the candle part (A).
   Case 3 (levels cluster with no order block): DRAW BOTH - the pressure zone across the levels AND the sweep zone, colour-coded so each is identifiable. Do not choose one.
   Context he gave: the equilibrium zone is pierced during a breakout surge, then carries weight in the recovery / swing-scalp consolidation, or acts as a reinforcement point mid-surge. The liquidity zone normally sits inside it.
+
+## 2026-11-26 - operator on timeframes (BINDING)
+- L-40 "4 hour is just to get an overview for supply and demand zones. You should be working everything on the 1 hour chart and going one trading week at a time." / "Multi-timeframe analysis ... 4 hour is just the higher time frame that you do initial analysis on, but then you're working on the 1 hour time frame."
+  He also said: "I don't really understand what questions you have for me. It seems like everything is clear and you're just stopping short of actually finishing the goal." -> do NOT stop to ask; finish.
+  Implementation: e1_zones.valid_sd(): 4H Step 0f = overview (class BoM/MoM, Tier 1 when a 1H candle sits in a 4H BoM 0X-1X); zones are the 1H candles (same candle rule, prior 2 weeks); a 4H zone with no 1H candle in it stays as the 4H candle.

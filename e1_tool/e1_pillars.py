@@ -30,9 +30,9 @@ def pillar1(pair, monday):
 # ── PILLAR 5 STEP 0f: 4H supply/demand = the candle BEFORE the strong move, wick high to wick low (P452:637-745; rulings L-37, L-38)
 # A "strong momentum move" is read from the candles the way the operator's notes define a valid order block: the move leaves an
 # inefficiency, i.e. a gap between the candle before it and the candle after it. No minimum size (L-37).
-def step0f(pair, monday):
-    b = D.closed(pair, '240', monday)
-    b = [x for x in b if x['time'] >= D.boundary_ms(monday) - 60 * 86400000]         # last 60 calendar days (P452:641)
+def step0f(pair, monday, tf='240', days=60):
+    b = D.closed(pair, tf, monday)
+    b = [x for x in b if x['time'] >= D.boundary_ms(monday) - days * 86400000]         # 4H: last 60 calendar days (P452:641); 1H: prior 1-2 weeks (Step 0g)
     zones, i, n = [], 1, len(b)
     while i < n - 1:
         down = b[i + 1]['high'] < b[i - 1]['low']        # gap below the "before" candle -> bearish move -> supply

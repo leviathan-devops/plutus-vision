@@ -6,24 +6,41 @@ import e1_data as D, e1_pillars as P, e1_synth as S
 
 
 def valid_sd(pair, monday, spot):
-    """Step 0f zones after the prompt's noise rejection (P452:741-745) + one-time use (operator notes) + A4 (closed through = broken)"""
-    b = D.closed(pair, '240', monday)
+    """Supply/demand candles. Operator ruling L-40: the 4H chart is the OVERVIEW; the zones are worked on the 1H chart.
+    4H: Step 0f over 60 days with the prompt's noise rejection (P452:741-745). 1H: the same candle rule on the prior two weeks (Step 0g window).
+    A 1H candle inside a kept 4H zone of its type carries that zone's BoM/MoM class (nested precision); a kept 4H zone with no 1H candle in it stays as its 4H candle."""
     b0 = D.boundary_ms(monday)
-    keep, drop = [], []
-    for z in P.step0f(pair, monday):
-        # A4: a demand candle the market now trades UNDER (or a supply candle it trades OVER) is no longer that zone
-        broken = (spot < z['bot']) if z['type'] == 'Demand' else (spot > z['top'])
-        why = ('wider than 0.40' if z['top'] - z['bot'] > P._u(pair, 40) else 'older than 3 weeks' if z['origin_time'] < b0 - 21 * 86400000
-               else 'price beyond it at the boundary (broken)' if broken else f"{z['mit']}X mitigated" if z['mit'] > 1 else None)
-        z['excluded'] = why
-        (drop if why else keep).append(z)
-    return keep, drop
+    def screen(zs, max_age_days):
+        keep, drop = [], []
+        for z in zs:
+            # A4: a demand candle the market now trades UNDER (or a supply candle it trades OVER) is no longer that zone
+            broken = (spot < z['bot']) if z['type'] == 'Demand' else (spot > z['top'])
+            why = ('wider than 0.40' if z['top'] - z['bot'] > P._u(pair, 40) else f'older than {max_age_days} days' if z['origin_time'] < b0 - max_age_days * 86400000
+                   else 'price beyond it at the boundary (broken)' if broken else f"{z['mit']}X mitigated" if z['mit'] > 1 else None)
+            z['excluded'] = why
+            (drop if why else keep).append(z)
+        return keep, drop
+    h4, h4_drop = screen(P.step0f(pair, monday, '240', 60), 21)
+    h1, h1_drop = screen(P.step0f(pair, monday, '60', 14), 14)
+    for z in h4:
+        z['tf'] = '4H'; z['h4bom'] = z['kind'] == 'BoM'
+    used = set()
+    for z in h1:
+        z['tf'] = '1H'
+        par = [p for p in h4 if p['type'] == z['type'] and z['bot'] <= p['top'] and z['top'] >= p['bot']]
+        z['h4bom'] = any(p['kind'] == 'BoM' for p in par)
+        if par:
+            z['kind'] = 'BoM' if z['h4bom'] else 'MoM'
+            z['parent'] = par[0]
+            used.update(id(p) for p in par)
+    keep = h1 + [p for p in h4 if id(p) not in used]
+    return keep, h4_drop + h1_drop, h4
 
 
 def build(pair, monday, expiries, K, spot):
     u = lambda pips: P._u(pair, pips)
     L, swings = S.collect(pair, monday, expiries, K)
-    sd, sd_drop = valid_sd(pair, monday, spot)
+    sd, sd_drop, h4 = valid_sd(pair, monday, spot)
     days = D.daily(pair, monday)
     # Step 0 / 0.45: ALL prior D1 swing extremes that passed the wick test (major, or minor per Step 0h) in the 90 daily bars,
     # plus every swing of the last 10 days (A2: the report lists each recent daily low / high as a sweep zone)
@@ -74,7 +91,7 @@ def build(pair, monday, expiries, K, spot):
                 best, bs = x, (tot, sc)
         walls = [x for x in inside if x['dim'] == 'opt' and x['tier'] <= 2]
         wall = min([w['tier'] for w in walls] + [9])
-        fresh_bom = [z for z in a['structs'] if z['kind'] == 'BoM' and z['mit'] <= 1]
+        fresh_bom = [z for z in a['structs'] if z.get('h4bom') and z['mit'] <= 1]      # Tier 1 = overlap with a 4H BoM 0X-1X (Step 9.7)
         pillars = len({x['pillar'] for x in band})
         ghost = bool(walls) and all(w.get('ghost') for w in walls)
         ztype = ('Post-Expiry Ghost' if ghost else 'Hard Wall' if wall == 1 and pillars >= 3 and bs[1]['bonus'] >= 2 else 'Standard Wall' if wall <= 2 and pillars >= 2
@@ -121,7 +138,7 @@ def build(pair, monday, expiries, K, spot):
     infill = gap_scan(pair, monday, L, shown, eq if shown else None)
     # sweep zones listed / drawn: every swing of the last 10 days (as the report lists them) + older ones still unswept
     lsz = [z for z in lsz if z['date'] >= days[-10]['date'] or not z['swept']]
-    return {'infill': infill, 'levels': L, 'zones': shown, 'all': zones, 'sd': sd, 'sd_drop': sd_drop, 'lsz': lsz, 'swings': swings, 'pp': pp, 'spot': spot, 'K': K}
+    return {'infill': infill, 'levels': L, 'zones': shown, 'all': zones, 'sd': sd, 'sd_drop': sd_drop, 'h4': h4, 'lsz': lsz, 'swings': swings, 'pp': pp, 'spot': spot, 'K': K}
 
 
 def gap_scan(pair, monday, L, shown, eq):
@@ -167,7 +184,7 @@ def show(r, pair):
     for z in r['zones']:
         print("  %-18s %s-%s %-14s %4.1f/14 ZFP %-6s %-13s %s | candle %s | sweep %s | walls %s | levels on it %d | top: %s" % (
             z['name'], g(z['bot']), g(z['top']), z['degree'], z['score'], z['zfp'], z['type'], z['tier'][:6],
-            [(s['kind'], s['type'], g(s['bot']), g(s['top']), D.ts(s['origin_time'])[5:16], f"{s['mit']}X") for s in z['structs']],
+            [(s['tf'], s['kind'], s['type'][:3], g(s['bot']), g(s['top']), D.ts(s['origin_time'])[5:16], f"{s['mit']}X") for s in z['structs']],
             [(g(s['bot']), g(s['top'])) for s in z['sweeps']], [g(w['p']) for w in z['walls']], len(z['levels']), z['best']['tag']))
 
 
