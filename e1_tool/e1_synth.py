@@ -90,20 +90,31 @@ def assemble(pair, monday, expiries, K, spot):
     b0 = D.boundary_ms(monday)
     sd = [z for z in sd_all if z['top'] - z['bot'] <= 40 * D.PIP[pair] and z['origin_time'] >= b0 - 21 * 86400000 and z['mit'] <= 1]
     lsz = P.step045_lsz(pair, monday, [s for s in swings if s['date'] >= D.daily(pair, monday)[-10]['date']], spot)
+    groups = [g for g in cluster(L, pair) if len(g) >= 3]
+    # a candle structure belongs to ONE zone: the cluster whose level span it overlaps most (no two zones share a structure)
+    def owner(z):
+        best, bo = None, 0.0
+        for gi, g in enumerate(groups):
+            ov = min(z['top'], g[0]['p']) - max(z['bot'], g[-1]['p'])
+            if ov >= 0 and (best is None or ov > bo):
+                best, bo = gi, ov
+        return best
+    own_sd, own_ls = {}, {}
+    for z in sd:
+        own_sd.setdefault(owner(z), []).append(z)
+    for z in lsz:
+        own_ls.setdefault(owner(z), []).append(z)
     zones = []
-    for g in cluster(L, pair):
-        if len(g) < 3:
-            continue
+    for gi, g in enumerate(groups):
         best, bs = None, None
         for x in g:
-            s = score_level(x, L, pair)
-            tot = s['tech'] + s['opt'] + s['ana'] + s['stru'] + s['psy'] + s['bonus']
+            sc = score_level(x, L, pair)
+            tot = sc['tech'] + sc['opt'] + sc['ana'] + sc['stru'] + sc['psy'] + sc['bonus']
             if bs is None or tot > bs[0]:
-                best, bs = x, (tot, s)
+                best, bs = x, (tot, sc)
         lo, hi = g[-1]['p'], g[0]['p']
-        over = [z for z in sd if z['bot'] <= hi and z['top'] >= lo]
+        over, sweeps = own_sd.get(gi, []), own_ls.get(gi, [])
         fresh_bom = [z for z in over if z['kind'] == 'BoM' and z['mit'] <= 1]
-        sweeps = [z for z in lsz if z['bot'] <= hi and z['top'] >= lo]
         pillars = len({x['pillar'] for x in g})
         wall = min([o['tier'] for o in bs[1]['opts']] + [9])
         ghost = bool(bs[1]['opts']) and all(o.get('ghost') for o in bs[1]['opts'])
@@ -115,18 +126,20 @@ def assemble(pair, monday, expiries, K, spot):
         zones.append({'levels': g, 'lv_lo': lo, 'lv_hi': hi, 'structs': over, 'sweeps': sweeps,
                       'bot': min([lo] + [z['bot'] for z in over] + [z['bot'] for z in sweeps]), 'top': max([hi] + [z['top'] for z in over] + [z['top'] for z in sweeps]),
                       'score': total, 'degree': degree(total), 'type': ztype, 'zfp': ZFP_RANGE[ztype], 'tier': 'Tier 1: Confluent' if fresh_bom else 'Tier 2: IP-Only',
-                      'dims': bs[1], 'best': best, 'n': len(g), 'pillars': pillars})
+                      'dims': bs[1], 'best': best, 'n': len(g), 'pillars': pillars, 'wall': wall})
     # S7 names (P452:1148-1153): five standard roles. Equilibrium = the MODERATE+ zone at / nearest spot; above it the two
     # highest-scoring zones (upper = RESISTANCE CEILING, lower = UPPER RESISTANCE); below it the two highest-scoring
     # (nearer = MID-RANGE SUPPORT, further = KEY SUPPORT BAND). Assumption A3.
-    cand = [z for z in zones if z['score'] >= 6]
+    # A3': a synthesis zone is MODERATE+ and holds a candle structure (4H supply/demand candle or sweep zone) or an option wall;
+    # on each side of the equilibrium the two NEAREST such zones take the names in order of position.
+    cand = [z for z in zones if z['score'] >= 6 and (z['structs'] or z['sweeps'] or z['wall'] <= 2)]
     dist = lambda z: 0 if z['bot'] <= spot <= z['top'] else min(abs(z['bot'] - spot), abs(z['top'] - spot))
     named = []
     if cand:
         eq = min(cand, key=dist)
         eq['name'] = 'EQUILIBRIUM ZONE'; named.append(eq)
-        up = sorted([z for z in cand if z is not eq and z['bot'] > eq['top']], key=lambda z: (-z['score'], dist(z)))[:2]
-        dn = sorted([z for z in cand if z is not eq and z['top'] < eq['bot']], key=lambda z: (-z['score'], dist(z)))[:2]
+        up = sorted([z for z in cand if z is not eq and z['bot'] >= eq['top']], key=dist)[:2]
+        dn = sorted([z for z in cand if z is not eq and z['top'] <= eq['bot']], key=dist)[:2]
         up.sort(key=lambda z: -z['top']); dn.sort(key=lambda z: -z['top'])
         for z, nm in zip(up, ['RESISTANCE CEILING', 'UPPER RESISTANCE'] if len(up) == 2 else ['RESISTANCE CEILING']):
             z['name'] = nm; named.append(z)

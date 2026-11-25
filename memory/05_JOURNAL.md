@@ -126,3 +126,12 @@ STILL TO FIX (re-read the prompt text for each before coding; do not tune):
      structure or a wall, rather than by raw score. Decide by the prompt's naming text (P452:1148-1153) and note it as assumption A3'.
  F3. Key Support Band should be the zone around the 97.63 sweep target (cluster 97.50-97.83 + sweep 97.63-97.68) - it lost to the duplicate above; F1 fixes this.
  F4. The report's "developing" BoM Demand at the Apr 17 low (97.63-97.94) has no gap yet at the boundary -> not produced by A1. Leave as is; list it in the morning report.
+
+## 2026-11-25 ~22:40 UTC - F1 done (one structure -> one zone); A3' (nearest two per side) tried and REJECTED by me: it bunches the five zones around spot (98.56-98.78 / 98.46-98.59 / 98.14-98.29 / 97.97-98.14 / 97.83-98.09)
+- That is the same bunching failure the operator trashed. The report's five zones are SPREAD: 99.16-99.23 / 98.77-98.99 / 98.29-98.41 / 98.00-98.12 / 97.63-97.97 (about 0.3-0.5 apart).
+- Why mine bunch: 186 levels over ~3 points -> 18 contiguous 0.15 clusters, nearly all scoring 10-12 (Technical 2 almost everywhere from ~60 pivot levels; Structural 1 from last-5-day anchors within 10 pips). The report: 126 levels, 22 clusters, 13 high-density, scores 7-11.
+- NEXT TRY (A3''), grounded in Step 9.5 (the prompt treats adjacent mapped zones as >= 0.20 apart - anything closer is the same area): rank MODERATE+ clusters by score, take them greedily, skipping any cluster whose span lies within 0.20 of one already taken
+  (tie -> the one holding a candle structure / wall, then nearer to spot); the zone at/nearest spot is the Equilibrium; name the two taken zones above it by position (ceiling, upper resistance) and the two below (mid-range support, key support band).
+  Then re-check the per-level scoring against the prompt's table so one dense pivot area cannot outscore a wall + structure zone: Technical is ONE dimension (max 2) - verify nothing else is inflated (e.g. Structural from mere proximity to daily highs/lows).
+- Expected after that for Apr 20-24: ceiling ~99.13-99.31 (wall 99.22), upper resistance = the cluster joined to BoM Supply 98.884-99.038, equilibrium ~98.29-98.44 (+ MoM Supply 98.33-98.41), mid-range support ~98.00-98.14 (+ BoM Demand 97.83-98.09), key support ~97.50-97.83 (+ sweep 97.63-97.68).
+- Code state: e1_tool/e1_synth.py has owner() (F1) and the A3' block (replace it with A3''). `python3 e1_synth.py 2026-04-20` prints named zones + the report line.
