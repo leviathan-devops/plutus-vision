@@ -1,3 +1,9 @@
+# >>> UPDATE 2026-11-26 (read this block first) <<<
+- Scope is the FULL indicator again (memory/14_GOAL_PROMPT.md). E1 zones are now worked on 1H candles with the 4H scan as overview (L-40). E2 = e1_tool/e2_shapes.py, E3 = e1_tool/e3_setups.py, all drawn by e1_tool/e1_pine.py (toggles show_e2 / show_e3).
+- Anchor week DXY Apr 20-24: all three engines PASS on the chart (evidence/e1tool_DXY_1H_2026-04-20_e23.png, ledger row 50). EURUSD same week: short 1.1786 -> 1.1714 hit, Friday long +3.1R open.
+- HONEST OVERALL STATE: across 40 weeks x 3 pairs the zones show no measurable edge beyond chance on first touch, E3 is break-even (about 1 TP per 3 SL at RRR >= 3), E2 day forecasts match about 29% of days, week direction is a coin flip. Aug 17 DXY is a pixel FAIL. See memory/05_JOURNAL.md entries of 2026-11-26.
+- The sections below describe the E1-only tool as of 2026-11-25 (4H-candle zones); zone rules there are superseded where the 2026-11-26 journal says so.
+
 # 13 — E1 TOOL STATUS / MORNING REPORT (written 2026-11-25 night, container clock ~22:10 UTC). Read after 10, 11, 12.
 
 ## What exists (all in e1_tool/, pushed to branch AGENT)
