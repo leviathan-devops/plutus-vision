@@ -1,28 +1,49 @@
 //@version=6
-// ILLUSTRATION ONLY (probe): two cases from the Apr 20-24 report, drawn to ask the operator how a zone's edges are chosen.
+// ILLUSTRATION ONLY (probe): three cases from the Apr 20-24 week, each with the choices drawn side by side, to ask the operator
+// how a pressure zone's top and bottom are chosen.
 indicator("Question: zone edges", overlay = true, max_boxes_count = 50, max_labels_count = 50, max_lines_count = 50)
-int tA = timestamp("UTC", 2026, 4, 13, 4, 0)
-int tM = timestamp("UTC", 2026, 4, 13, 20, 0)
-int tE = timestamp("UTC", 2026, 4, 24, 20, 0)
-int tL = timestamp("UTC", 2026, 4, 16, 12, 0)
-f_lv(float p, color c) =>
-    line.new(tA, p, tE, p, xloc = xloc.bar_time, color = c, width = 1, style = line.style_dotted)
+i_case = input.int(1, "case")
+int t0 = timestamp("UTC", 2026, 4, 12, 21, 0)
+int tA = timestamp("UTC", 2026, 4, 14, 9, 0)
+int tB = timestamp("UTC", 2026, 4, 17, 9, 0)
+int tC = timestamp("UTC", 2026, 4, 22, 1, 0)
+int tE = timestamp("UTC", 2026, 4, 24, 21, 0)
+f_lv(float p) =>
+    line.new(t0, p, tE, p, xloc = xloc.bar_time, color = color.white, width = 1, style = line.style_dotted)
+f_opt(int a, int b, float lo, float hi, color c, string txt) =>
+    box.new(a, hi, b, lo, xloc = xloc.bar_time, bgcolor = color.new(c, 70), border_color = c, border_width = 2)
+    label.new(a + (b - a) / 2, hi, txt, xloc = xloc.bar_time, style = label.style_label_down, color = color.new(color.black, 0), textcolor = c, size = size.normal)
+f_mark(int t, float lo, float hi, string txt) =>
+    box.new(t - 2 * 3600000, hi, t + 6 * 3600000, lo, xloc = xloc.bar_time, bgcolor = color.new(color.white, 100), border_color = color.white, border_width = 2)
+    label.new(t, lo, txt, xloc = xloc.bar_time, style = label.style_label_up, color = color.new(color.black, 0), textcolor = color.white, size = size.normal)
 if barstate.islast
-    // CASE A - Upper Resistance
-    box.new(tA, 98.99, tE, 98.77, xloc = xloc.bar_time, bgcolor = color.new(color.red, 82), border_color = color.red, border_width = 2)
-    f_lv(98.89, color.white)
-    f_lv(98.86, color.white)
-    f_lv(98.81, color.white)
-    f_lv(98.77, color.white)
-    label.new(timestamp("UTC", 2026, 4, 14, 12, 0), 99.22, "CASE A (Upper Resistance)\nRed box = 4H supply origin candle, 98.77-98.99\nWhite dotted = cluster levels 98.77 / 98.81 / 98.86 / 98.89\nReport zone = 98.77-98.99 = the candle's low and high", xloc = xloc.bar_time, style = label.style_label_left, color = color.new(color.black, 0), textcolor = color.white, size = size.normal, textalign = text.align_left)
-    // CASE B - Equilibrium
-    box.new(tM, 98.42, tE, 98.34, xloc = xloc.bar_time, bgcolor = color.new(color.red, 85), border_color = color.red, border_width = 1)
-    box.new(tA, 98.34, tE, 98.29, xloc = xloc.bar_time, bgcolor = color.new(color.green, 75), border_color = color.green, border_width = 1)
-    box.new(tA, 98.41, tE, 98.29, xloc = xloc.bar_time, bgcolor = color.new(color.orange, 100), border_color = color.orange, border_width = 3)
-    f_lv(98.37, color.yellow)
-    f_lv(98.40, color.yellow)
-    f_lv(98.42, color.yellow)
-    f_lv(98.44, color.yellow)
-    f_lv(98.47, color.yellow)
-    f_lv(98.51, color.yellow)
-    label.new(timestamp("UTC", 2026, 4, 18, 0, 0), 97.80, "CASE B (Equilibrium)\nYellow dotted = cluster of 19 levels, 98.37-98.51\nRed box = 4H MoM supply candle 98.34-98.42\nGreen box = liquidity sweep zone 98.29-98.34\nReport zone (orange outline) = 98.29-98.41,\nnot the cluster's own span 98.37-98.51", xloc = xloc.bar_time, style = label.style_label_left, color = color.new(color.black, 0), textcolor = color.white, size = size.normal, textalign = text.align_left)
+    if i_case == 1
+        f_lv(98.77)
+        f_lv(98.81)
+        f_lv(98.86)
+        f_lv(98.89)
+        f_mark(timestamp("UTC", 2026, 4, 13, 9, 0), 98.884, 99.038, "order block candle\n(candle before the drop)\nwicks 98.884-99.038")
+        f_opt(tA, tB, 98.884, 99.038, color.lime, "A: zone = the order block\ncandle's wicks only\n98.884-99.038")
+        f_opt(tB, tC, 98.77, 98.89, color.orange, "B: zone = the cluster of\nlevels only (dotted)\n98.77-98.89")
+        f_opt(tC, tE, 98.77, 99.038, color.aqua, "C: both joined\n98.77-99.038")
+    if i_case == 2
+        f_lv(98.37)
+        f_lv(98.40)
+        f_lv(98.44)
+        f_lv(98.47)
+        f_lv(98.51)
+        f_mark(timestamp("UTC", 2026, 4, 13, 21, 0), 98.37, 98.439, "continuation candle\n(MoM supply)\n98.37-98.439")
+        box.new(t0, 98.34, tE, 98.29, xloc = xloc.bar_time, bgcolor = color.new(color.green, 80), border_color = color.green, border_width = 1)
+        label.new(t0 + 20 * 3600000, 98.29, "green = liquidity sweep zone 98.29-98.34", xloc = xloc.bar_time, style = label.style_label_up, color = color.new(color.black, 0), textcolor = color.green, size = size.normal)
+        f_opt(tA, tB, 98.37, 98.51, color.orange, "A: zone = the cluster of\nlevels only (dotted)\n98.37-98.51")
+        f_opt(tB, tC, 98.29, 98.439, color.lime, "B: zone = the candle\nstructures only\n(sweep zone + candle)\n98.29-98.439")
+        f_opt(tC, tE, 98.29, 98.51, color.aqua, "C: both joined\n98.29-98.51")
+    if i_case == 3
+        f_lv(98.53)
+        f_lv(98.57)
+        f_lv(98.60)
+        f_lv(98.65)
+        f_lv(98.67)
+        f_opt(tA, tB, 98.53, 98.67, color.orange, "A: draw a pressure zone\nacross the cluster\n98.53-98.67")
+        f_opt(tB, tC, 98.53, 98.58, color.green, "B: no pressure zone here.\nOnly the sweep zone\n98.53-98.58 is drawn\n(what the report did)")
+        label.new(t0 + 20 * 3600000, 98.50, "10 levels cluster here (dotted, 98.53-98.67)\nbut there is NO order block candle at this price", xloc = xloc.bar_time, style = label.style_label_up, color = color.new(color.black, 0), textcolor = color.white, size = size.normal)

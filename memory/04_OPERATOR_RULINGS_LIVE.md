@@ -94,3 +94,10 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
 - L-35 (2026-11-25 night) ZFP is shown as the prompt's RANGE (e.g. "5-15%"), never a single invented number. "A range is fine. I actually prefer a range rather than you hallucinate an exact number."
 - L-36 For the 4H move-threshold question he told me to reread the Fractal Architecture v2.3 doc and answer it myself if the context is there (sections 2.1/2.2 Earth-Fire, 4.3, 4.4 timeframe density, 7 MoM as ladder steps).
 - Question 3 (zone edges) was illustrated for him: evidence/question_zone_edges_dxy_4h.png (probe indicator/probes/question_zone_edges.pine). Waiting for his answer.
+- L-37 (2026-11-25 night) NO MINIMUM MOVE SIZE for a supply/demand zone ("I don't know where the 0.5 / 3 days came from"). Confirmed reading: the origin candle of every distinct 4H leg is a zone (BoM),
+  every continuation base inside a leg is a zone (MoM); the prompt's 0.5/3-day and 1.0/5-day figures grade strength, not existence.
+- L-38 ZONE = THE ORDER BLOCK CANDLE'S WICKS, exactly: "all of my supply and demand zones are on the exact wick edges of the order block candles". His notes (upload a07f3228 Forex_SMC_Notes-1.pdf, pages 1-9 read):
+  find a strong momentum move (big candles / inefficiency), take the candle BEFORE the move, box its wick high to wick low; any size; valid order block needs a gap (inefficiency) between the before and after candles,
+  must create a break of structure, and is one-time use (unmitigated = price has not come back to it). Zone quality: more momentum = better; sharp reaction = valid, consolidating around it / more than halfway in / long time inside = likely to fail.
+  The report's Upper Resistance 98.77-98.99 was only ~80% fitted (it came from a different data source's candle). On TradingView 4H bars the candle before the Apr 13 drop is 04-13 09:00 UTC, wicks 98.884-99.038.
+- Zone-edge question re-illustrated with choices: evidence/question_case{1,2,3}_dxy_4h.png (probe indicator/probes/question_zone_edges.pine, input i_case). Waiting for his pick per case.
