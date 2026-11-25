@@ -1,3 +1,5 @@
+## STATE (NEWEST, 2026-11-26) - STANDING ORDER = memory/14_GOAL_PROMPT.md. Phase P1 (E1 on 1H per L-40) in progress: e1_zones.valid_sd now uses 1H candles with 4H overview; reference week re-rendered (evidence/e1tool_DXY_1H_2026-04-20.png, 7 zones, Monday low on the 1H BoM demand 97.94-98.05). Next: finish P1 checks on a few weeks, then P2 (E2) and P3 (E3) on the anchor week DXY Apr 20-24.
+
 ## STATE (NEWEST, container clock 2026-11-25 ~22:05 UTC) - E1 PYTHON TOOL RUNS END TO END (see journal entry of the same time for everything)
 - Run: `cd e1_tool && python3 e1_zones.py MONDAY PAIR` (zones) / `python3 e1_pine.py MONDAY PAIR > out/E1_PAIR_MONDAY.pine` (the Pine output) / `python3 e1_outcome.py MONDAY PAIR` (facts) ; render `tools/e1render PAIR MONDAY`.
 - Zone assembly lives in e1_tool/e1_zones.py build() + gap_scan(); e1_synth.assemble*/__main__ are superseded.

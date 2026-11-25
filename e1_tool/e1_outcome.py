@@ -8,6 +8,13 @@ def facts(pair, monday, r):
     b0 = D.boundary_ms(monday)
     bars = [x for x in D.bars(pair, '60') if b0 <= x['time'] < b0 + 7 * 86400000]
     pip = D.PIP[pair]
+    # a weekend-open bar whose open is >30 pips from Friday's close but which closes back near it is a bad opening tick in the feed, not trading
+    allb = D.bars(pair, '60')
+    prev = max((x for x in allb if x['time'] < b0), key=lambda x: x['time'])
+    if bars and abs(bars[0]['open'] - prev['close']) > 30 * pip and abs(bars[0]['close'] - prev['close']) < abs(bars[0]['open'] - bars[0]['close']):
+        f0 = dict(bars[0]); f0['open'] = prev['close']
+        f0['high'] = min(f0['high'], max(f0['open'], f0['close']) + 10 * pip); f0['low'] = max(f0['low'], min(f0['open'], f0['close']) - 10 * pip)
+        bars[0] = f0
     rows = []
     for z in r['zones'] + [dict(t, name='Gap in-fill', degree='MODERATE') for t in r['infill']]:
         lo, hi = z['bot'], z['top']

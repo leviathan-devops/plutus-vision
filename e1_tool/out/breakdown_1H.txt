@@ -1,0 +1,22 @@
+kind
+   candle               reached 316 | never closed through  96 | held >24h  65 | held 4-24h  87 | closed through <=3h  68
+   levels               reached  58 | never closed through  12 | held >24h   7 | held 4-24h  12 | closed through <=3h  27
+tier
+   Tier 1               reached 117 | never closed through  44 | held >24h  23 | held 4-24h  27 | closed through <=3h  23
+   Tier 2               reached 257 | never closed through  64 | held >24h  49 | held 4-24h  72 | closed through <=3h  72
+deg
+   EXTREME              reached  30 | never closed through   8 | held >24h   6 | held 4-24h  11 | closed through <=3h   5
+   HEAVY                reached 103 | never closed through  35 | held >24h  25 | held 4-24h  23 | closed through <=3h  20
+   MODERATE             reached  74 | never closed through  25 | held >24h   6 | held 4-24h  19 | closed through <=3h  24
+   MODERATE-HEAVY       reached 167 | never closed through  40 | held >24h  35 | held 4-24h  46 | closed through <=3h  46
+name
+   EQUILIBRIUM ZONE     reached  61 | never closed through  13 | held >24h  14 | held 4-24h  21 | closed through <=3h  13
+   KEY SUPPORT BAND     reached  44 | never closed through   7 | held >24h   8 | held 4-24h  12 | closed through <=3h  17
+   MID-RANGE SUPPORT    reached 109 | never closed through  37 | held >24h  17 | held 4-24h  24 | closed through <=3h  31
+   RESISTANCE CEILING   reached  41 | never closed through  12 | held >24h   9 | held 4-24h  11 | closed through <=3h   9
+   UPPER RESISTANCE     reached 119 | never closed through  39 | held >24h  24 | held 4-24h  31 | closed through <=3h  25
+type
+   Hard Wall            reached  14 | never closed through   3 | held >24h   5 | held 4-24h   3 | closed through <=3h   3
+   Post-Expiry Ghost    reached  38 | never closed through   9 | held >24h   5 | held 4-24h   9 | closed through <=3h  15
+   Soft Wall            reached 262 | never closed through  73 | held >24h  48 | held 4-24h  71 | closed through <=3h  70
+   Standard Wall        reached  60 | never closed through  23 | held >24h  14 | held 4-24h  16 | closed through <=3h   7

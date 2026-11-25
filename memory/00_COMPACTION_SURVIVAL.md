@@ -29,3 +29,5 @@ After a compaction or a container reset, do exactly this, in order, before any o
 - Only files under `/home/user/plutus-vision` and the scratchpad can be shown to the operator.
 
 - (added 2026-11-25 night) After 10/11/12 read `memory/13_E1_TOOL_STATUS.md`: the E1 Python tool exists and runs; it holds the current rules, assumptions A1-A5, the honest per-week verdict and the open point for the operator.
+
+- (2026-11-26) THE STANDING ORDER is `memory/14_GOAL_PROMPT.md` (full indicator E1+E2+E3, autonomous until verified). Read it right after 10. E2/E3 are IN scope again (M-53 supersedes L-30's 'E1 only'). L-40: 4H overview, work on 1H.
