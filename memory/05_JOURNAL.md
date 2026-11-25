@@ -54,3 +54,7 @@
 - tools/research/score.py + dump_levels.py committed. Current engine = 35.1% on DEV by the scorer (operator said 30-50% by eye: the scorer matches his eye). W14 hindsight bands = 75%.
 - Biggest losses of the current engine: FLOATING bands (493 of 1038: the reach band made this worse), week extremes not inside any band (59 of 144), BROKEN thin mid zones (157).
 - Operator asked to store all context before the 5-hour limit and to continue afterwards without stopping. Design workflow deliberately not launched before the reset.
+
+## 2026-11-25 ~15:25 UTC - what is and is not predictable (measured)
+- First-touch hold of a wide band is ~85-90% almost regardless of placement; clean-all-week is ~57% base, 70% best type. See 01 "MEASURED LIMITS". Told the operator.
+- Old confluence-density selection picks congestion (worse than no information). E1 v2 must not select by density.

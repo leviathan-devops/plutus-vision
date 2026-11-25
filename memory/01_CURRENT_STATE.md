@@ -24,6 +24,19 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## MEASURED LIMITS (15:25 UTC) - read before designing anything else (24 DEV weeks x 3 pairs, tools/research/score.py)
+- A band HOLDS ON FIRST TOUCH ~80-91% of the time wherever it is put within reach (structure-free bands at 0.2-0.5 x weekly range from spot, width 0.2-0.3 x weekly range).
+  Best level types (band +-0.125 x weekly range): fresh 4H supply (visited <= 1x) 93%, prior week high 91%, yesterday high 91%, D-2/D-3 lows 91%, MA100 90%, tier-1 option wall 88%, prior week low 87%.
+  Worst: MA9 72%, yesterday low 76%, RN 77%, MA20/MA50 78%, role-reversal clusters 79%.
+- A band stays UNTRADED-THROUGH ALL WEEK only ~57% of the time (base rate); the best level type reaches 70% (MA50 70, fresh 4H supply 69, tier-1 wall 68). Nothing reaches 90%.
+  => "no zone gets penetrated during the week, 90%" is not reachable forward with these features; "reacts on first touch >= 90%" is.
+- Touch rate falls with distance: band centre at 0.2 / 0.3 / 0.4 / 0.5 / 0.6 / 0.75 / 0.9 x weekly range from spot is touched 88-96 / 72-81 / 58-62 / 43-53 / 37-40 / 26-31 / 16-20 % of weeks. Bands beyond ~0.5 mostly float.
+- My old confluence-density selection was WORSE than structure-free geometry (hold 0.72-0.80 vs 0.85-0.88): dense confluence = congestion = traded through. Do not select by density.
+- Reference numbers: structure-free 4-band map (spot +-0.35/+-0.8, width 0.3) scores accuracy 0.52, hold-on-touch 0.875, week extremes inside a band 56%.
+  W14 hindsight bands 0.75. Current engine 0.35. Prototypes live in tools/research/proto.py (usage: python3 proto.py DEV|VALID).
+- Design direction for E1 v2: <= 4 wide bands; inner pair at ~0.2-0.45 x weekly range (labelled MoM / pivot, ZFP ~ measured), outer pair only where a strong anchor exists
+  (fresh 4H BoM supply/demand, tier-1 wall, prior week high/low); ZFP = measured failure frequency of that band role over the prior weeks on the chart itself (self-calibrating, no constants).
+
 ## RESUME HERE (written 15:00 UTC, just before a usage-limit reset) - exact state and next actions
 WHAT IS TRUE
 - Operator rejected E1 (04 L-14..L-18). E2/E3 are OFF by default and FORBIDDEN until E1 is approved. Target = W14 report format: <= 4 wide bands per pair.
