@@ -156,3 +156,14 @@ NEXT STEPS UNCHANGED after this: report printout, Pine generator (trident_v8 for
  (2) score ties (almost everything 10-11) - re-read the scoring table and tighten to the literal text; (3) TV spot 98.226 vs report 98.10 moves the equilibrium; (4) the candle structure should anchor the zone (report: supply candle = Upper Resistance,
  MoM supply = Equilibrium, BoM demand 04-16 = Mid-Range Support, sweep 97.63 + demand = Key Support) - try: build the named zones FROM the kept 4H structures and sweep targets / walls first, attach to each the levels within 0.15, score, then name by position.
  That last reading is the most literal match to both the report's key drivers and ruling L-39 ("C in the shape of A plus B") - implement it next, compare all five, then go on to the report printout and the Pine generator.
+
+## 2026-11-25 ~23:10 UTC - assemble_anchored() added to e1_tool/e1_synth.py (zones built FROM structures: kept 4H S/D candles + sweep zones + tier-1/2 walls; overlapping anchors merged; levels within 0.10 attached and scored)
+Result DXY Apr 20-24: CEILING 99.23-99.31 (wall at 99.29: sidecar K 108.155 puts the 1.1600 strike at 99.29, report K 108.0806 -> 99.22) · UPPER RESISTANCE 98.44-98.94 (TOO WIDE: two demand candles + sweep + walls chained into one anchor 98.53-98.84)
+ · EQUILIBRIUM 98.10-98.39 (anchor BoM Supply 98.19-98.29 + sweep; report 98.29-98.41) · KEY SUPPORT 97.63-97.75 (anchor sweep 97.63-97.68; report 97.63-97.97) · no Mid-Range Support taken.
+This reading is closer in KIND to the report (each zone sits on a structure) than the cluster-first one. To finish it:
+ a) do NOT chain-merge anchors: merge only anchors that overlap by more than half of the smaller one, otherwise keep them as separate candidate zones (bloat came from chaining);
+ b) the zone's own extent = the anchor span joined with the levels INSIDE or touching it (not everything within 0.10 beyond it) - the 0.10 band is for SCORING only;
+ c) the K factor: use each component pair's rate at the boundary (TV close for GBPUSD; H.10 for the rest) and print the audit; the report's wall levels are reproduced exactly when its K is used;
+ d) the expiry list must come from the Day-1 page + Day-2 forward rows (the sidecar file for 04-20 holds the Friday page rows: 1.1783 €1.409bn etc.); parse sidecar/raw/2026-04-20 Monday page or re-run the sidecar with the report's boundary rule;
+ e) then names by position with equilibrium at spot and 0.20 separation, and compare all five again.
+Call: `cd e1_tool && python3 -c "import json,e1_data as D,e1_pillars as P,e1_synth as S; m='2026-04-20'; sp=D.closed('DXY','60',m)[-1]['close']; sd=json.load(open('../sidecar/out/'+m+'.json')); r=S.assemble_anchored('DXY',m,sd['expiries']['EURUSD'],P.k_factor(sd['h10']['rates']),sp); print([(z['name'],round(z['bot'],2),round(z['top'],2)) for z in r['named']])"`

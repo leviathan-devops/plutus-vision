@@ -178,3 +178,66 @@ if __name__ == '__main__':
             z['name'], z['bot'], z['top'], z['degree'], z['score'], z['zfp'], z['type'], z['tier'], z['lv_lo'], z['lv_hi'], z['n'],
             [(s['kind'], s['type'], round(s['bot'], 2), round(s['top'], 2)) for s in z['structs']], [(round(s['bot'], 2), round(s['top'], 2)) for s in z['sweeps']], z['best']['tag']))
     print('REPORT: CEILING 99.16-99.23 HEAVY 10 · UPPER RES 98.77-98.99 MOD-HEAVY 8 T1 · EQ 98.29-98.41 MOD-HEAVY 9 · MID SUPPORT 98.00-98.12 MODERATE 7 · KEY SUPPORT 97.63-97.97 HEAVY 11 T1')
+
+
+def assemble_anchored(pair, monday, expiries, K, spot):
+    """Zones built FROM the structures (ruling L-39; report key drivers): every kept 4H supply/demand candle, sweep zone and option
+    wall is an anchor; anchors that overlap are one anchor; the levels within 0.10 of it (TIGHT CONFLUENCE band) join it and score it."""
+    u = lambda pips: pips * D.PIP[pair]
+    r = assemble(pair, monday, expiries, K, spot)
+    L = r['levels']
+    anchors = [{'bot': z['bot'], 'top': z['top'], 'structs': [z], 'sweeps': [], 'walls': []} for z in r['sd']]
+    anchors += [{'bot': z['bot'], 'top': z['top'], 'structs': [], 'sweeps': [z], 'walls': []} for z in r['lsz']]
+    anchors += [{'bot': x['p'], 'top': x['p'], 'structs': [], 'sweeps': [], 'walls': [x]} for x in L if x['dim'] == 'opt' and x['tier'] <= 2]
+    anchors.sort(key=lambda a: a['bot'])
+    merged = []
+    for a in anchors:
+        if merged and a['bot'] <= merged[-1]['top']:
+            m = merged[-1]
+            m['top'] = max(m['top'], a['top']); m['structs'] += a['structs']; m['sweeps'] += a['sweeps']; m['walls'] += a['walls']
+        else:
+            merged.append(a)
+    zones = []
+    for a in merged:
+        lv = [x for x in L if a['bot'] - u(10) <= x['p'] <= a['top'] + u(10)]
+        if not lv:
+            continue
+        best, bs = None, None
+        for x in lv:
+            sc = score_level(x, L, pair)
+            tot = sc['tech'] + sc['opt'] + sc['ana'] + sc['stru'] + sc['psy'] + sc['bonus']
+            if bs is None or tot > bs[0]:
+                best, bs = x, (tot, sc)
+        fresh_bom = [z for z in a['structs'] if z['kind'] == 'BoM' and z['mit'] <= 1]
+        pillars = len({x['pillar'] for x in lv})
+        wall = min([w['tier'] for w in a['walls']] + [9])
+        ghost = bool(a['walls']) and all(w.get('ghost') for w in a['walls'])
+        ztype = ('Post-Expiry Ghost' if ghost else 'Hard Wall' if wall == 1 and pillars >= 3 and bs[1]['bonus'] >= 2 else 'Standard Wall' if wall <= 2 and pillars >= 2
+                 else 'Soft Wall' if pillars >= 2 else 'One-Touch')
+        regime = 2 if ztype == 'Hard Wall' else 0 if ztype == 'One-Touch' else 1
+        total = min(14, bs[0] + regime + (2 if fresh_bom else 1))
+        zones.append({'bot': min(a['bot'], min(x['p'] for x in lv)), 'top': max(a['top'], max(x['p'] for x in lv)), 'a_bot': a['bot'], 'a_top': a['top'], 'levels': lv,
+                      'lv_lo': min(x['p'] for x in lv), 'lv_hi': max(x['p'] for x in lv), 'structs': a['structs'], 'sweeps': a['sweeps'], 'walls': a['walls'], 'wall': wall,
+                      'score': total, 'degree': degree(total), 'type': ztype, 'zfp': ZFP_RANGE[ztype], 'tier': 'Tier 1: Confluent' if fresh_bom else 'Tier 2: IP-Only',
+                      'dims': bs[1], 'best': best, 'n': len(lv), 'pillars': pillars})
+    gap = u(20)
+    dist = lambda z: 0 if z['a_bot'] <= spot <= z['a_top'] else min(abs(z['a_bot'] - spot), abs(z['a_top'] - spot))
+    cand = sorted([z for z in zones if z['score'] >= 6], key=lambda z: (-z['score'], dist(z)))
+    sep = lambda z, t: z['a_bot'] - t['a_top'] >= gap or t['a_bot'] - z['a_top'] >= gap
+    taken = [min(cand, key=lambda z: (dist(z), -z['score']))] if cand else []
+    for z in cand:
+        if z not in taken and all(sep(z, t) for t in taken):
+            taken.append(z)
+    named = []
+    if taken:
+        eq = taken[0]; eq['name'] = 'EQUILIBRIUM ZONE'; named.append(eq)
+        up = sorted([z for z in taken[1:] if z['a_bot'] >= eq['a_top']], key=dist)[:2]
+        dn = sorted([z for z in taken[1:] if z['a_top'] <= eq['a_bot']], key=dist)[:2]
+        up.sort(key=lambda z: -z['top']); dn.sort(key=lambda z: -z['top'])
+        for z, nm in zip(up, ['RESISTANCE CEILING', 'UPPER RESISTANCE'] if len(up) == 2 else ['RESISTANCE CEILING']):
+            z['name'] = nm; named.append(z)
+        for z, nm in zip(dn, ['MID-RANGE SUPPORT', 'KEY SUPPORT BAND'] if len(dn) == 2 else ['KEY SUPPORT BAND']):
+            z['name'] = nm; named.append(z)
+    named.sort(key=lambda z: -z['top'])
+    r['anchored'] = zones; r['named'] = named
+    return r
