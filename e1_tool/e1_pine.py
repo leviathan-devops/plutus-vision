@@ -22,7 +22,7 @@ def generate(pair, monday, r):
     o = ['//@version=6', f'indicator("TRIDENT E1 {pair} {monday}", overlay=true, max_boxes_count=500, max_labels_count=500, max_lines_count=500)',
          f'// Engine 1 map for the week of {monday} ({pair}); every number below was computed by e1_tool from data closed before the boundary {D.ts(b0)} UTC',
          'show_zones = input.bool(true, "IP Zones")', 'show_candles = input.bool(true, "Candle structures (A)")', 'show_levels = input.bool(true, "Computed levels (B)")',
-         'show_lsz = input.bool(true, "LSZ")', 'show_e2 = input.bool(true, "E2 shape chain")', 'show_infill = input.bool(true, "Gap in-fill levels")', 'show_options = input.bool(true, "Option Strikes")',
+         'show_lsz = input.bool(true, "LSZ")', 'show_e2 = input.bool(true, "E2 shape chain")', 'show_e3 = input.bool(true, "E3 trade setups")', 'show_infill = input.bool(true, "Gap in-fill levels")', 'show_options = input.bool(true, "Option Strikes")',
          f'isPair = str.contains(syminfo.ticker, "{D.SYM[pair].split("_")[-1]}")', 'if barstate.islast and isPair']
     for z in r['zones']:
         c = '%d,%d,%d' % CAT[z['cat']]
@@ -77,6 +77,16 @@ def generate(pair, monday, r):
             txt = d['day'] + ': ' + d['shape'] + ('' if d['dir'] == 'range' else ' ' + d['dir'])
             o.append(f"        label.new({(d['t0'] + d['t1']) // 2}, {g(top)}, \"{txt}\", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.rgb(40,60,120), 10), textcolor=color.white, size=size.normal)")
             o.append(f"        line.new({d['t0']}, {g(top)}, {d['t0']}, {g(min(p for _, p in d['path']))}, xloc=xloc.bar_time, color=color.new(color.white, 70), width=1, style=line.style_dotted, extend=extend.both)")
+    # ── ENGINE 3: trade setups (entry / SL / TP), each on its E2 day
+    if r.get('e3'):
+        o.append('    if show_e3')
+        for t in r['e3']:
+            tE = tsR
+            o.append(f"        box.new({t['t0']}, {g(max(t['entry'], t['tp']))}, {tE}, {g(min(t['entry'], t['tp']))}, bgcolor=color.new(color.rgb(60,200,90), 88), border_color=color.new(color.rgb(60,200,90), 30), border_width=1, xloc=xloc.bar_time)")
+            o.append(f"        box.new({t['t0']}, {g(max(t['entry'], t['sl']))}, {tE}, {g(min(t['entry'], t['sl']))}, bgcolor=color.new(color.rgb(230,60,60), 80), border_color=color.new(color.rgb(230,60,60), 30), border_width=1, xloc=xloc.bar_time)")
+            o.append(f"        line.new({t['t0']}, {g(t['entry'])}, {tE}, {g(t['entry'])}, xloc=xloc.bar_time, color=color.rgb(90,160,255), width=2)")
+            txt = f"#{t['n']} {t['day']} {t['session']} {t['dir']} {t['shape']} | E {g(t['entry'])} SL {g(t['sl'])} TP {g(t['tp'])} | RRR {t['rrr']:.1f}"
+            o.append(f"        label.new({t['t0']}, {g(t['entry'])}, \"{txt}\", xloc=xloc.bar_time, style=label.style_label_{'up' if t['dir'] == 'LONG' else 'down'}, color=color.new(color.rgb(20,40,90), 0), textcolor=color.white, size=size.small)")
     return '\n'.join(o) + '\n'
 
 
@@ -87,6 +97,8 @@ def run(pair, monday, K=None):
     exp = [dict(e, day=e.get('cut_date', '')[5:]) for e in side['expiries'].get('EURUSD' if pair == 'DXY' else pair, [])]
     r = Z.build(pair, monday, exp, K, spot)
     r['e2'] = E2.chain(pair, monday, r)
+    import e3_setups as E3
+    r['e3'] = E3.build(pair, monday, r)
     return r
 
 

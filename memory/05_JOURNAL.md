@@ -223,3 +223,12 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - Pine: E2 drawn as white dashed projected path + day labels (toggle show_e2). First frame (anchor week): path = Mon-Tue SS inside Equilibrium, Wed-Thu BS up into Upper Resistance, Fri R down - the candles did Mon dip/SS, Tue-Wed up, Thu high in Upper Resistance, Fri down. Direction and sequence match; timing ~1 day early at the start.
 - e2 text check on other weeks: Jul 27 DXY 4/5 days same shape as my day classifier; Apr 27 and Aug 17 poor (predicted SS / BS up; week sold off). To investigate after E3 exists on the anchor week.
 - E3 canon extract saved: e1_tool/canon_extract/P533_lines_2058-3210_ENGINE3_and_trade_structure.md; binding E3 spec = canon/Toolset/TRIDENT_v5.3.3_CORRECTED_E3_ENGINE.md (R-16).
+
+## 2026-11-26 - E3 v1 built (e1_tool/e3_setups.py), wired into the Pine (show_e3), first run on the anchor week
+- build(): per E2 day -> setup universe (SS/R-range: Consolidation LONG at nearest demand zone below + SHORT at nearest supply above; BS/PBS: HTF Swing with the move from the zone behind price; WL/RWL/R: Reversal at the zone reached).
+  Entry TS-1 = near edge of the internal band (1H candle / sweep rung) closest to approaching price (+1 pip lift for order-block shorts, F1-A); SL = 3 pips (EU 2, GU 3, DXY 3) outside that band's far edge (ladder rule a), max 36 pips;
+  TP = opposing-zone walk until RRR >= 3.0 (strong zone: near edge + 1 pip; else midpoint); freshness: no zone with a candle >2X; one setup per zone per direction; cap 11. Sessions: Consolidation = London, others = NY.
+- simulate(): fill from the setup's day to week end on 1H bars; SL counted first on an ambiguous bar. Description only.
+- Anchor week DXY Apr 20-24: #1 Mon LONG at Mid-Range Support E 98.05 SL 97.91 TP 98.75 RRR 5.1 -> TP hit; #2 Mon SHORT in Equilibrium E 98.25 -> SL; #3 Fri SHORT at Upper Resistance E 98.75 TP 98.07 -> filled, open +2.4R at week end.
+  Only 3 setups: the BS days produce none because the demand zone was already used by #1 (dedup). Jul 27: 2 setups (1 SL, 1 not filled). NEXT: more of the spec (reinforcements on BS days, re-entry rules, SS scalps inside the range on 30m/15m), then pixel check.
+- Entry point for everything is still `e1_tool/e1 MONDAY PAIR` / `tools/e1render PAIR MONDAY` (Pine now carries E1 + E2 + E3 with toggles).
