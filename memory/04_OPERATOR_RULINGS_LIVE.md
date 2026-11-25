@@ -101,3 +101,10 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
   must create a break of structure, and is one-time use (unmitigated = price has not come back to it). Zone quality: more momentum = better; sharp reaction = valid, consolidating around it / more than halfway in / long time inside = likely to fail.
   The report's Upper Resistance 98.77-98.99 was only ~80% fitted (it came from a different data source's candle). On TradingView 4H bars the candle before the Apr 13 drop is 04-13 09:00 UTC, wicks 98.884-99.038.
 - Zone-edge question re-illustrated with choices: evidence/question_case{1,2,3}_dxy_4h.png (probe indicator/probes/question_zone_edges.pine, input i_case). Waiting for his pick per case.
+- L-39 (2026-11-25 night) HOW A PRESSURE ZONE IS DRAWN (answers to the three illustrated cases):
+  Case 1 + 2 (levels cluster on / next to candle structures): the zone is BOTH JOINED (option C) - but INSIDE it the two parts stay visibly distinct and colour-coded:
+  (A) the candle structure (order block / supply-demand candle wicks, sweep zone) and (B) the computed levels (pivots, fibs, MAs, option strikes ...), each level marked.
+  "It's C in the shape of A plus B, not one C-level zone." The whole point of E1 for him is to SEE the data levels he cannot see on the chart; he can chart S/D himself.
+  Phase one: a single joined zone is acceptable as long as the levels (B) are clearly highlighted inside it and distinguishable from the candle part (A).
+  Case 3 (levels cluster with no order block): DRAW BOTH - the pressure zone across the levels AND the sweep zone, colour-coded so each is identifiable. Do not choose one.
+  Context he gave: the equilibrium zone is pierced during a breakout surge, then carries weight in the recovery / swing-scalp consolidation, or acts as a reinforcement point mid-surge. The liquidity zone normally sits inside it.

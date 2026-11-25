@@ -28,8 +28,11 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Done: read E1 first-hand in P533 (lines 802-1163, 1163-1340, 1341-1514) and P452 (637-1205). Pseudocode with line refs: `e1_tool/E1_PSEUDOCODE.md` (committed).
 - Reference to reproduce: Leviathan_DXY_IL_Report_Apr20-24_2026.pdf (upload 5212e9bd; pages 1-6 read: option tables, K factor, pivots, 5 IP zones, 4 4H zones with origin candle OHLC, 6 LSZ, clustering scan)
   and Original_Canon_Data/Pine Scripts/trident_v8.pine (output form). Frames of the original: evidence/trident_v8_original_*_allzones.png.
-- NOT started: the Python tool (e1_tool/). Waiting on the operator's answers to 3 points where the report's practice differs from the prompt's text
-  (4H move threshold: report kept zones with 0.35/2d, 0.26 intraday, 0.12 continuation vs prompt >= 0.5 / >= 3 days; how the point inside a ZFP range and a zone's edges are chosen: the prompt gives ranges / "cluster within 0.10-0.15", the LLM picked).
+- ALL OPEN POINTS ANSWERED (04 L-35..L-39): ZFP shown as the prompt's RANGE; no minimum move size (every 4H leg origin = BoM zone, continuation base = MoM, 0.5/3d and 1.0/5d grade strength);
+  S/D zone = the candle BEFORE the strong move, boxed wick high to wick low on TradingView candles; a pressure zone = candle structure + level cluster JOINED, with the levels and the candle part
+  drawn distinctly inside it; where levels cluster without an order block, draw the pressure zone AND the sweep zone, colour-coded.
+- NEXT: write the Python tool in e1_tool/ from E1_PSEUDOCODE.md, one function per prompt step, TradingView bars (Pinebox store / TV API) + investingLive expiries (sidecar raw data exists for 40 weeks);
+  output = report data + Pine in trident_v8.pine form. FIRST TEST = Apr 20-24 2026 vs the report, zone by zone. Nothing else.
 - Pinebox dies on every session restart: `pinebox down; pinebox up --session plutus-main --adapter xvfb` before rendering. Price-axis fit snippet is in the journal (setManualScale on resolveScaleHolder).
 - E1 v3 code still sits in indicator/plutus-vision-engines.pine (rejected). E2/E3 off. Do not build anything else.
 
