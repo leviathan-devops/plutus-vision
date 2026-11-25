@@ -15,14 +15,22 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
   K = DXY_spot * EURUSD_spot^0.576 = 101.025 * 1.1423^0.576 ~ 109.07; strike 1.1500 (EUR2.4bn) -> DXY 100.63 = the FLOOR and the week's low; 1.1400 (EUR2.2bn) -> 101.14 = his Monday short level;
   1.1450 (1.4bn) -> 100.89; 1.1300 -> 101.66. So option walls are what separate true IP zones from liquidity rungs. The web sidecar is REQUIRED for accuracy, not optional.
 
+## PROGRESS since the block above (12:55)
+- Option-wall dataset input is IN the Pine (`i_optData`, `i_anaData`; rows `YYYYMMDD|price:code,...;`, codes 1 live >=1.5bn, 2 live 850m+, 3 ghost >=1.5bn, 4 ghost 850m+). Walls (codes 1-3) seed zones first;
+  structure: HEAVY peaks need only non-overlap, MODERATE-HEAVY peaks need 0.15 clearance; one-pass gap in-fill; ZFP by zone type (Hard 5-15, Standard 15-30, Ghost 20-40, Soft 30-50, One-Touch 50-70).
+- Sidecar BUILT by an agent and still filling weeks in the background: `sidecar/run --week YYYY-MM-DD`, `sidecar/build-inputs` -> `sidecar/out/pine_inputs.{DXY,EURUSD,GBPUSD}.txt` (+ analyst). Done so far: 2026-04-20, 05-25, 06-29, 07-06, 11-02.
+  Jul 6 output matches the hand-verified control. (Agent id a544407069ad54702 - it reports when finished; check `ls sidecar/out`.)
+- FRAMES: golden week DXY with walls = PASS (evidence/bt_040); held-out Apr 20 DXY 4H with walls = PASS ~5.5/6 (evidence/ide_041).
+- Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
+
 ## NEXT STEP (in order)
-1. Web sidecar (T5): for each week, as of the Monday anchor: investinglive expiry posts (Mon post if published before the anchor, else Friday's forward row) -> strikes + notionals per pair (vision read, cross-checked),
-   Fed H.10 spots -> K; write `sidecar/out/<week>.json` and ONE dated dataset string per chart symbol for a Pine input (`i_optData`): rows `YYYYMMDD|price:tier,...;` in the chart's own price units
-   (EURUSD/GBPUSD: their own strikes >= $850M; DXY: EUR/USD strikes via K, tiers by notional >= 1.5bn = 1, 850m-1.499bn = 2). The Pine picks the row of the week being frozen. No values in the source.
-2. In the Pine: parse `i_optData` (and `i_anaData`), add src 5 / 6 levels (weight 3 / 2; Options dimension 2; Hard/Standard Wall ZFP), and make IP ZONE vs LSZ a two-tier output:
-   IP zone needs an option wall OR >= HEAVY structure OR the outermost ceiling/floor; other structural clusters become unlabeled thin LSZ rungs (toggle).
-3. Re-run golden week (Backtest tab, session gw2-dxy-jul06) and Apr 20 (IDE 4H `tools/pb ide indicator/plutus-vision-engines.pine DXY 4H i_back=28`), then EURUSD golden week, then 6+ held-out weeks.
-4. Then E2, E3.
+1. When the sidecar finishes: `sidecar/build-inputs`; validate E1 on >= 8 more held-out weeks across DXY / EURUSD / GBPUSD with each pair's own dataset
+   (IDE 4H: `DS="$(cat sidecar/out/pine_inputs.DXY.txt)"; tools/pb ide indicator/plutus-vision-engines.pine DXY 4H i_back=N "i_optData=\"$DS\""`; week N weeks before 2026-11-02).
+   Score each by reaction (L-07); log every frame in 07_EVIDENCE_LEDGER. Do NOT tune on held-out weeks; mechanism fixes only.
+2. EURUSD golden week vs the operator's screenshots (his demand 1.1400-1.1417, supply 1.1446-1.1456; walls 1.1400 2.2bn, 1.1450 1.4bn, 1.1500 2.4bn).
+3. Presentation: labels overlap at the left edge of each week; put the label inside the box / right-aligned; LSZ toggle.
+4. Build the single-file delivery `indicator/plutus-vision.pine` = sealed V1 bytes + engine layer (script `tools/build-indicator.sh`, sha-check the V1 region).
+5. E2 (context_management/spec/E2_ALGO.md): shape chain from E1 zones + ZFP; then E3 (E3_ALGO.md), <= 11 setups/week.
 
 ## How to render (measured recipes)
 - IDE tab, full history: `tools/pb ide FILE PAIR TF [i_back=N ...]` then `tools/pb goto FROM TO` then `tools/pb shot NAME chart`. (IDE default runs only 400 bars - LS-12.)

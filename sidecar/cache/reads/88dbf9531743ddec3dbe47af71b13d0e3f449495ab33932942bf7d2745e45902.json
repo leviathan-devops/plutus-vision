@@ -1,0 +1,11 @@
+{
+ "key": "88dbf9531743ddec3dbe47af71b13d0e3f449495ab33932942bf7d2745e45902",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "d1269a00195068ad204e03c2987597caf68d4b704407bc69e3720692e424a5e7",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.11135\",\"role\":\"support\",\"quote\":\"An initial decline took the price below the double bottom near 1.11135 , established on October 14 and revisited yesterday.\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.1152\",\"role\":\"resistance\",\"quote\":\"The rebound toward 1.1155 carried EURUSD into the swing area between 1.1152 and 1.11602 .\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.11602\",\"role\":\"resistance\",\"quote\":\"The rebound toward 1.1155 carried EURUSD into the swing area between 1.1152 and 1.11602 .\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.11616\",\"role\":\"resistance\",\"quote\":\"Just above that zone sits the falling 100-hour moving average at 1.11616 .\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.11845\",\"role\":\"resistance\",\"quote\":\"1.11845: The former floor from October 15 through October 26.\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.11913\",\"role\":\"resistance\",\"quote\":\"1.11913: The falling 200-hour moving average.\"}]}"
+}

@@ -1,0 +1,678 @@
+{
+ "week": "2026-07-13",
+ "anchor_utc": "2026-07-13T06:00:00Z",
+ "sources": [
+  {
+   "url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+   "published_at": "2026-07-10T05:54:49Z",
+   "kind": "expiry_post_prior"
+  },
+  {
+   "url": "https://investinglive.com/cms/media/images/7-10-2026-1-48-15-pm.jpg",
+   "published_at": "2026-07-10T05:54:49Z",
+   "kind": "expiry_image"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/the-usd-is-little-changed-what-are-the-technical-telling-traders-for-the-eurusd-usdjpy-gbpusd/",
+   "published_at": "2026-07-09T12:21:56Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/forex/angola-widens-fx-reserve-options-as-china-ties-deepen-adds-yuan-to-bank-reserve-currency-options-joining-dollar-euro/",
+   "published_at": "2026-07-13T00:11:58Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/forex/eur-usd-stays-rangebound-as-us-iran-tensions-ease-and-traders-await-the-us-cpi-report/",
+   "published_at": "2026-07-10T09:58:00Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+   "published_at": "2026-07-10T15:15:16Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://www.federalreserve.gov/releases/h10/20260706/",
+   "published_at": "2026-07-06T20:15:00Z",
+   "kind": "h10_release"
+  },
+  {
+   "url": "pinebox-bar-store:TVC_DXY/60/2026-07.json#time=1783918800000",
+   "published_at": "2026-07-13T06:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_EURUSD/60/2026-07.json#time=1783918800000",
+   "published_at": "2026-07-13T06:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_GBPUSD/60/2026-07.json#time=1783918800000",
+   "published_at": "2026-07-13T06:00:00Z",
+   "kind": "spot_bar"
+  }
+ ],
+ "expiries": {
+  "EURUSD": [
+   {
+    "strike": 1.1303,
+    "notional_m": 3155,
+    "ccy": "EUR",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.13,
+      "notional_m": 2200
+     },
+     {
+      "strike": 1.131,
+      "notional_m": 955
+     }
+    ],
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.135,
+    "notional_m": 851,
+    "ccy": "EUR",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.138,
+    "notional_m": 1000,
+    "ccy": "EUR",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.14024,
+    "notional_m": 3800,
+    "ccy": "EUR",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.14,
+      "notional_m": 2000
+     },
+     {
+      "strike": 1.1405,
+      "notional_m": 1800
+     }
+    ],
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.145,
+    "notional_m": 1400,
+    "ccy": "EUR",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.1475,
+    "notional_m": 612,
+    "ccy": "EUR",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.15,
+    "notional_m": 677,
+    "ccy": "EUR",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.14,
+    "notional_m": 866,
+    "ccy": "EUR",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.1475,
+    "notional_m": 650,
+    "ccy": "EUR",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.15,
+    "notional_m": 1100,
+    "ccy": "EUR",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.1525,
+    "notional_m": 598,
+    "ccy": "EUR",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.15527,
+    "notional_m": 2048,
+    "ccy": "EUR",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.155,
+      "notional_m": 1500
+     },
+     {
+      "strike": 1.156,
+      "notional_m": 548
+     }
+    ],
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   }
+  ],
+  "GBPUSD": [
+   {
+    "strike": 1.334,
+    "notional_m": 760,
+    "ccy": "GBP",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.34,
+    "notional_m": 765,
+    "ccy": "GBP",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 1.341,
+    "notional_m": 533,
+    "ccy": "GBP",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   }
+  ],
+  "USDJPY": [
+   {
+    "strike": 161,
+    "notional_m": 820,
+    "ccy": "USD",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 160,
+    "notional_m": 1800,
+    "ccy": "USD",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 160.5,
+    "notional_m": 4500,
+    "ccy": "USD",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 161,
+    "notional_m": 1000,
+    "ccy": "USD",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 161.5,
+    "notional_m": 544,
+    "ccy": "USD",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 162,
+    "notional_m": 1500,
+    "ccy": "USD",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   }
+  ],
+  "AUDUSD": [
+   {
+    "strike": 0.69,
+    "notional_m": 588,
+    "ccy": "AUD",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 0.6875,
+    "notional_m": 625,
+    "ccy": "AUD",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   },
+   {
+    "strike": 0.699,
+    "notional_m": 510,
+    "ccy": "AUD",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   }
+  ],
+  "USDCAD": [
+   {
+    "strike": 1.41,
+    "notional_m": 623,
+    "ccy": "USD",
+    "cut_date": "2026-07-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   }
+  ],
+  "USDCHF": [
+   {
+    "strike": 0.8,
+    "notional_m": 559,
+    "ccy": "USD",
+    "cut_date": "2026-07-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
+    "published_at": "2026-07-10T05:54:49Z"
+   }
+  ]
+ },
+ "spots": {
+  "from": "pinebox bar store, last 1H close before the anchor",
+  "bar_close_utc": "2026-07-13T06:00:00Z",
+  "DXY": 101.14,
+  "EURUSD": 1.13984,
+  "GBPUSD": 1.33794
+ },
+ "k_anchor": 109.059884,
+ "h10": {
+  "release_date": "2026-07-06",
+  "published_at": "2026-07-06T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260706/",
+  "rate_day": "Jul. 2",
+  "rates": {
+   "EURUSD": 1.1448,
+   "USDJPY": 160.9,
+   "GBPUSD": 1.3364,
+   "USDCAD": 1.4182,
+   "USDSEK": 9.6567,
+   "USDCHF": 0.8022
+  },
+  "k_h10": 108.904232,
+  "dxy_h10": 100.7434
+ },
+ "dxy_levels": [
+  {
+   "price": 101.6308,
+   "from_pair": "EURUSD",
+   "strike": 1.1303,
+   "notional_m": 3155,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-07-10"
+  },
+  {
+   "price": 101.3882,
+   "from_pair": "EURUSD",
+   "strike": 1.135,
+   "notional_m": 851,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-07-10"
+  },
+  {
+   "price": 101.2342,
+   "from_pair": "EURUSD",
+   "strike": 1.138,
+   "notional_m": 1000,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-07-10"
+  },
+  {
+   "price": 101.1196,
+   "from_pair": "EURUSD",
+   "strike": 1.14024,
+   "notional_m": 3800,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-07-10"
+  },
+  {
+   "price": 100.8772,
+   "from_pair": "EURUSD",
+   "strike": 1.145,
+   "notional_m": 1400,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-07-10"
+  },
+  {
+   "price": 101.1318,
+   "from_pair": "EURUSD",
+   "strike": 1.14,
+   "notional_m": 866,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-07-13"
+  },
+  {
+   "price": 100.6243,
+   "from_pair": "EURUSD",
+   "strike": 1.15,
+   "notional_m": 1100,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-07-13"
+  },
+  {
+   "price": 100.3597,
+   "from_pair": "EURUSD",
+   "strike": 1.15527,
+   "notional_m": 2048,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-07-13"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [
+   {
+    "price": 1.1,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/eur-usd-stays-rangebound-as-us-iran-tensions-ease-and-traders-await-the-us-cpi-report/",
+    "published_at": "2026-07-10T09:58:00Z",
+    "quote": "for a drop into the 1.10 handle next."
+   },
+   {
+    "price": 1.13238,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "and then the June cycle low at 1.13238"
+   },
+   {
+    "price": 1.1377,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "followed by 1.1377"
+   },
+   {
+    "price": 1.13908,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "support comes in at this week's low of 1.13908"
+   },
+   {
+    "price": 1.14,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/eur-usd-stays-rangebound-as-us-iran-tensions-ease-and-traders-await-the-us-cpi-report/",
+    "published_at": "2026-07-10T09:58:00Z",
+    "quote": "the key 1.14 support."
+   },
+   {
+    "price": 1.142,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "converged 100- and 200-hour moving averages, currently at 1.14257 and 1.14200"
+   },
+   {
+    "price": 1.14257,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "converged 100- and 200-hour moving averages, currently at 1.14257 and 1.14200"
+   },
+   {
+    "price": 1.14618,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "resistance remains at the 38.2% retracement of the June decline at 1.14618"
+   },
+   {
+    "price": 1.14715,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "followed by this week's high at 1.14715"
+   },
+   {
+    "price": 1.18,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/eur-usd-stays-rangebound-as-us-iran-tensions-ease-and-traders-await-the-us-cpi-report/",
+    "published_at": "2026-07-10T09:58:00Z",
+    "quote": "to open the door for a rally into the 1.18"
+   }
+  ],
+  "GBPUSD": [
+   {
+    "price": 1.33868,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "along with the rising 100-hour moving average at 1.33868"
+   },
+   {
+    "price": 1.3396,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "both its 100- and 200-day moving averages at 1.3399 and 1.3396"
+   },
+   {
+    "price": 1.3399,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "both its 100- and 200-day moving averages at 1.3399 and 1.3396"
+   },
+   {
+    "price": 1.3446,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "resistance remains between 1.3446 and 1.3465"
+   },
+   {
+    "price": 1.3465,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-moves-higher-as-traders-react-to-trump-comments/",
+    "published_at": "2026-07-10T15:15:16Z",
+    "quote": "resistance remains between 1.3446 and 1.3465"
+   }
+  ]
+ },
+ "read_stats": {
+  "entries_seen": 29,
+  "agreed_first_two_reads": 29,
+  "accepted": 29,
+  "dropped": 0
+ },
+ "model": {
+  "id": "muse-spark-1.3-contributor",
+  "effort": "high",
+  "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+  "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+ },
+ "dropped": [],
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-07-13T06:00:00Z",
+  "Monday expiry post https://investinglive.com/orders/fx-option-expiries-for-13-july-10am-new-york-cut/ published 2026-07-13T06:05:00+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W28, 2026-W29",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/: reads A/B agree on 29 of 29 entries; third read for columns []",
+  "accept: 29 strike/notional entries accepted (2+ reads identical), 0 dropped",
+  "emit: as-of gate passed for 10 sources and every datum"
+ ]
+}
