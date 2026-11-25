@@ -79,3 +79,15 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
   It shows the construction explicitly: (sec 4/9) four 4H zones, each = one origin candle's [Low, High] with its OHLC and timestamp (BoM Demand 97.93-98.11, BoM Supply 98.77-98.99, BoM Demand 97.63-97.94, MoM Supply 98.34-98.42);
   (sec 5) six LSZ = D1 swing low/high + 0.05; (sec 8) clustering scan of 126 levels into 22 clusters; (sec 3) five IP zones named by position with Pressure, Score x/14, ZFP, POI tier and drivers per pillar.
 - Do NOT build anything until he says what to build. Use the original script and this report as the visual and structural reference, not my own renders.
+
+## 2026-11-25 night - THE TASK, restated by the operator (BINDING; supersedes every E1 design of mine)
+- L-30 The v5.3.3 prompt's E1 part IS the program, written in English. Rewrite it in Python (pseudocode first, with prompt line numbers; then code, one function per prompt step, same order,
+  same thresholds and tables). Change nothing, add nothing, substitute nothing. E2 and E3 are out of scope. "All we're doing is changing the compiler from an agent to mechanical code."
+- L-31 The tool takes a trading week, fetches its inputs at run time, and OUTPUTS A PINE SCRIPT with that week's zones as data, same form / colours / labels as Original_Canon_Data/Pine Scripts/trident_v8.pine.
+  The generated Pine holds the week's numbers; "no hardcoded values" applies to the Python tool, not to its generated output. (confirmed)
+- L-32 MANDATORY inputs ("bundled libraries"): (a) investingLive FX option expiries; (b) TradingView OHLC candles - the TV data feed / bar store, or https://github.com/Mathieu2301/TradingView-API (yfinance is REPLACED by these);
+  (c) the whole 9-pillar / 6-dimension computation incl. the MA confluence grid. Everything else is OPTIONAL: fetch it if it is reachable and returns no error; otherwise record "NO DATA" exactly as the report does. (confirmed)
+  Anything the Apr 20-24 report did not actually absorb can be marked superseded.
+- L-33 Steps the v5.3.3 prompt leaves as "[unchanged from v4.5.2]" are taken from the v4.5.2 prompt in Original_Canon_Data. (confirmed)
+- L-34 First test: run the tool for Apr 20-24 2026 and match the report (Leviathan_DXY_IL_Report_Apr20-24_2026.pdf) zone by zone and audit trail by audit trail. Nothing else until that matches.
+  He traded that week live on those zones and made money: it is market-validated. Any week must come out as accurate as that example.
