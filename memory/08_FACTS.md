@@ -94,3 +94,16 @@
 - Install: `curl -fsSL https://raw.githubusercontent.com/ModernRelay/omnigraph/main/scripts/install.sh | VERSION=v0.16.0 bash`; then `tools/mem/mem rebuild`. Graph at /home/user/.plutus-mem (rebuilt from memory/*.md + memory/graph_log.jsonl; markdown is the source of truth).
 - Use: `tools/mem/mem q "<words>" [-n 5]`, `mem get <id>` (ids: T3, D-06, L-05, LS-02, J-YYYYMMDD-HHMM), `mem add <type> <id> <title> <body>`, `mem link <from> <edge> <to>`, `mem status`. Read verbs auto-sync.
 - More engine facts (probe2): timeframe.in_seconds(), time_close, timestamp(tz,...), year/month/dayofmonth/hour/dayofweek with tz, str.format_time, map, matrix, array.sort/median/max all work. DXY week opens Sunday 18:00 New York in the store.
+
+## E1 placeholders RESOLVED from v4.5.2 (context_management/spec/E1_V452_FILL.md; V452 = v4.5.2 prompt on handover branch)
+- P5 Step 1 price anchors: prior daily close (last 3-5 days), prior daily HIGH and LOW for EACH of the last 5 trading days, prior weekly close, prior weekly high/low. Step 2 HWC/LWC = highest / lowest WEEKLY CLOSE of a period (calendar year in the example).
+  Step 3 recapture of a major MA (50/100/200 within 3 sessions) = key anchor. Step 5: exact anchor match = Structural 2, proximity = 1; bonus LST/SCT +1, repeated 2 dates +1.5, 3+ / role reversal +2, confluent floor/ceiling +2, cap +2.
+- P5 Step 0h minor swings: D1 AND 4H, wick >= 0.08, close-position 40% (relaxed reading: low needs close_pos >= 0.40, high <= 0.60), Structural 0.5. Step 0g: 1H zones only nested inside a 4H/D1 zone or as gap-fill (gap >= 0.20).
+- P6 fibs: 0.236 / 0.382 / 0.500 / 0.618 measured DOWN from H of (i) prior week H/L and (ii) the most recent significant D1/4H swing high-low (2-4 months); fib within 5 pips + round number = 2 pts, fib only = 1 pt (Technical). Round grid .00 (+2) .50 (+1.5; Synthesis says 2) .25/.75 (+1).
+- P9: ZFP = base(zone type) + sum(modifiers), cap 95. Regime dimension: ZFP < 20 -> 2, 20-50 -> 1, > 50 -> 0. Measured move: Raw = Range_High + (Range_High - Range_Low), snap to structural extreme within 0.20. > 45 measured move, > 50 BREAKOUT RISK, 25-45 "sweet spot".
+  Modifiers computable from price: momentum toward zone +10-20, cascade (prior zone just broke) +20-30, EMA-200 cross +15-25, repeated-extreme magnet within breakout range +10-15.
+- Names (V452:1148-1155): RESISTANCE CEILING = top zone, max selling pressure; UPPER RESISTANCE = secondary selling zone; EQUILIBRIUM = pivot area; MID-RANGE SUPPORT = dip-buyer zone; KEY SUPPORT BAND = max buying pressure.
+- Clustering flags: HIGH-DENSITY (3+ within 0.15), TIGHT CONFLUENCE (pair within 0.10), ISOLATED LEVEL (none within 0.15; can still be a zone row). Gap scan: gaps >= 0.20 between zones -> GAP IN-FILL needs 2+ signals (Structural 1).
+- POI: Tier 1 (+2, capped at 14) IP zone overlaps 4H BoM 0X-1X; Tier 2 (+1) IP only or MoM overlap; Tier 3 4H BoM only.
+- 4H mitigation: soft = wick taps edge and is rejected (barely counts); hard = full bodies enter and consolidate (weakens). Counted over prior 2-3 weeks.
+- STILL UNDEFINED IN EVERY VERSION (my decisions needed; record each in 03_DECISION_CHAIN): swing bar-count; "large bodies"; point inside ZFP ranges; zone top/bottom rule; zone width limits; zone count; "strong reaction"; "consolidation"; what a pivot is matched against; pair-unit tolerances.
