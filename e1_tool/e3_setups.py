@@ -158,6 +158,32 @@ def build(pair, monday, r):
         for c in out[n_before:]:
             c['branch'] = branch
             c['trigger'] = (f"{e2['decision_zone']} gives way" if branch == 'PRIMARY' else f"{e2['decision_zone']} holds") if day['shape'] not in ('SS',) else 'range holds'
+    # SS -> BS transition (8.0.1 'Transition Entry'; Law 27: the range boundary break becomes the BS entry). One per side of the range:
+    # a stop entry just beyond the bounding zone, armed by a 1H close beyond it (6.2), stop on the other side of the broken zone,
+    # target = Pillar 9 Step 4 measured move (failing level -/+ range height), pulled to an unswept sweep extreme within 0.20, or the first firm zone on the way.
+    C, F = e2.get('C'), e2.get('F')
+    if C and F:
+        height = C['bot'] - F['top']
+        for B, direction in ((F, 'SHORT'), (C, 'LONG')):
+            dn = direction == 'SHORT'
+            entry = B['bot'] - 2 * pip if dn else B['top'] + 2 * pip
+            sl = B['top'] + BUF[pair] * pip if dn else B['bot'] - BUF[pair] * pip
+            risk = abs(entry - sl)
+            if risk > SL_MAX_PIPS * pip:
+                continue
+            raw = (B['bot'] - height) if dn else (B['top'] + height)
+            mags = [q['price'] for q in r['lsz'] if not q['swept'] and abs(q['price'] - raw) <= 20 * pip and ((q['price'] < entry) if dn else (q['price'] > entry))]
+            tp, tpn = (min(mags, key=lambda v: abs(v - raw)), 'measured move @ sweep extreme') if mags else (raw, 'measured move (unanchored)')
+            firm = [t for t in zs if ((t['top'] < entry and t['top'] > tp) if dn else (t['bot'] > entry and t['bot'] < tp)) and t['type'] in ('Hard Wall', 'Standard Wall')]
+            if firm:
+                t = max(firm, key=lambda t: t['top']) if dn else min(firm, key=lambda t: t['bot'])
+                tp, tpn = (t['top'] + pip if dn else t['bot'] - pip), t['name']
+            if abs(tp - entry) / risk < RRR_FLOOR:
+                continue
+            pri = (e2['bdir'] == 'down') == dn
+            out.append({'day': 'Mon', 'dayidx': 0, 'shape': 'SS->BS', 'category': 'Transition', 'dir': direction, 'zone': B['name'], 'zone_rng': (B['bot'], B['top']), 'entry': entry, 'sl': sl, 'tp': tp,
+                        'rrr': abs(tp - entry) / risk, 'tp_zone': tpn, 'session': 'NY', 't0': e2['days'][0]['t0'], 't1': e2['days'][-1]['t1'], 'tier': B['tier'][:6], 'score': B['score'],
+                        'arm': ('down' if dn else 'up', B['bot'] if dn else B['top']), 'stop_entry': True, 'branch': 'PRIMARY' if pri else 'ALT', 'trigger': f"{B['name']} gives way"})
     # primary-branch setups first, then the alternative branch, in day order; cap 11 per week per pair (CLAUDE.md hard constraint)
     out.sort(key=lambda c: (c['dayidx'], c['branch'] != 'PRIMARY'))
     out = out[:CAP]
@@ -182,7 +208,7 @@ def simulate(pair, monday, setups):
                     armed = True
                 continue
             if fill is None:
-                if x['low'] <= s['entry'] <= x['high']:
+                if x['low'] <= s['entry'] <= x['high'] or (s.get('stop_entry') and ((x['open'] < s['entry']) if s['dir'] == 'SHORT' else (x['open'] > s['entry']))):
                     fill = x['time']
                     if (x['low'] <= s['sl']) if long else (x['high'] >= s['sl']):
                         st = 'SL'; break

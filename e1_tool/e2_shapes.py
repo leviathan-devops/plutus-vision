@@ -142,7 +142,7 @@ def chain(pair, monday, r, force_dir=None):
     if not force_dir:
         res_alt = chain(pair, monday, r, force_dir=alt_dir)
         alt = f"DECISION ZONE: {dz['name'] if dz else 'none'} holds -> ALTERNATIVE: {res_alt['primary']}"
-    return {'alt_days': res_alt['days'] if res_alt else [], 'bdir': bdir, 'decision_zone': dz['name'] if dz else 'none', 'days': out, 'primary': primary, 'alternative': alt, 'audit': audit, 'current': (cur_shape, cur_dir), 'bias': bias, 'adr': adr}
+    return {'C': C, 'F': F, 'alt_days': res_alt['days'] if res_alt else [], 'bdir': bdir, 'decision_zone': dz['name'] if dz else 'none', 'days': out, 'primary': primary, 'alternative': alt, 'audit': audit, 'current': (cur_shape, cur_dir), 'bias': bias, 'adr': adr}
 
 
 def actual(pair, monday):

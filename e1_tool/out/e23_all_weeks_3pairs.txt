@@ -1,0 +1,123 @@
+DXY 2026-02-02 E2 R -> SS                            same-day 4/5 | E3 LMon:TP LTue:not LWed:not LThu:not LFri:not
+EURUSD 2026-02-02 E2 R -> BS down -> R up -> SS         same-day 1/5 | E3 SMon:TP LThu:not SThu:not SFri:not
+GBPUSD 2026-02-02 E2 R -> BS down -> R up -> SS         same-day 0/5 | E3 SMon:not LThu:SL SThu:not SFri:not
+DXY 2026-02-09 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:SL LTue:not SFri:not LFri:SL
+EURUSD 2026-02-09 E2 SS -> BS down -> R up              same-day 0/5 | E3 SMon:SL STue:not LFri:not SFri:SL
+GBPUSD 2026-02-09 E2 R -> BS down -> R up -> SS         same-day 1/5 | E3 SMon:SL LThu:not SThu:SL SFri:SL
+DXY 2026-02-16 E2 SS -> BS down -> R up              same-day 1/5 | E3 LMon:not LTue:not SWed:SL LFri:not
+EURUSD 2026-02-16 E2 SS -> BS up -> R down              same-day 2/5 | E3 SMon:not STue:not LWed:not SFri:not
+GBPUSD 2026-02-16 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:not STue:not LFri:SL SFri:not
+DXY 2026-02-23 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:TP LTue:not SFri:not LFri:not
+EURUSD 2026-02-23 E2 SS -> BS down -> R up              same-day 0/5 | E3 LFri:not SFri:not
+GBPUSD 2026-02-23 E2 SS -> BS down                      same-day 2/5 | E3 
+DXY 2026-03-02 E2 SS -> BS down -> R up              same-day 1/5 | E3 SMon:SL STue:not SWed:not LFri:not
+EURUSD 2026-03-02 E2 SS -> BS up -> R down              same-day 1/5 | E3 SFri:not
+GBPUSD 2026-03-02 E2 SS -> BS down -> R up              same-day 0/5 | E3 SMon:not STue:not LFri:not SFri:not
+DXY 2026-03-09 E2 SS -> BS down -> R up              same-day 0/5 | E3 SMon:SL LThu:TP SThu:TP SFri:not
+EURUSD 2026-03-09 E2 SS -> BS up -> R down              same-day 1/5 | E3 LMon:SL LTue:SL SFri:TP
+GBPUSD 2026-03-09 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:SL LTue:SL SFri:SL LFri:SL
+DXY 2026-03-16 E2 R -> BS down -> R up -> SS         same-day 1/5 | E3 
+EURUSD 2026-03-16 E2 R -> BS up -> R down -> SS         same-day 0/5 | E3 
+GBPUSD 2026-03-16 E2 R -> BS up -> R down -> SS         same-day 0/5 | E3 
+DXY 2026-03-23 E2 SS -> BS down -> R up              same-day 2/5 | E3 SWed:open LFri:not
+EURUSD 2026-03-23 E2 SS                                 same-day 5/5 | E3 LMon:SL LTue:TP LWed:SL LThu:SL LFri:not
+GBPUSD 2026-03-23 E2 R -> BS down -> R up -> SS         same-day 1/5 | E3 SMon:SL LThu:TP SThu:SL SFri:not
+DXY 2026-03-30 E2 SS -> BS up                        same-day 2/5 | E3 
+EURUSD 2026-03-30 E2 SS                                 same-day 3/5 | E3 LMon:TP SMon:TP LTue:TP STue:SL LWed:not SWed:SL LThu:not SThu:SL LFri:not SFri:open
+GBPUSD 2026-03-30 E2 SS -> BS down                      same-day 3/5 | E3 SMon:SL STue:SL SFri:not SFri:TP
+DXY 2026-04-06 E2 SS -> BS up                        same-day 2/5 | E3 LFri:not LFri:SL
+EURUSD 2026-04-06 E2 SS -> BS down -> R up              same-day 1/5 | E3 SMon:SL STue:SL LFri:not SFri:SL
+GBPUSD 2026-04-06 E2 SS -> BS down                      same-day 2/5 | E3 SMon:SL STue:SL SFri:not SFri:SL
+DXY 2026-04-13 E2 SS -> BS down                      same-day 0/5 | E3 
+EURUSD 2026-04-13 E2 SS -> BS up                        same-day 0/5 | E3 LMon:TP LTue:not LFri:not
+GBPUSD 2026-04-13 E2 SS -> BS up                        same-day 0/5 | E3 
+DXY 2026-04-20 E2 SS -> BS up -> R down              same-day 1/5 | E3 LMon:TP LTue:TP SFri:open LFri:not
+EURUSD 2026-04-20 E2 SS -> BS down -> R up              same-day 0/5 | E3 SMon:TP STue:TP SWed:not LFri:open
+GBPUSD 2026-04-20 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:TP STue:not LFri:not SFri:not
+DXY 2026-04-27 E2 R -> SS                            same-day 0/5 | E3 LMon:SL SMon:SL LTue:SL LWed:SL LThu:SL LFri:SL
+EURUSD 2026-04-27 E2 SS                                 same-day 1/5 | E3 LMon:TP SMon:SL LTue:SL STue:SL LWed:SL SWed:TP LThu:SL SThu:TP LFri:not SFri:SL
+GBPUSD 2026-04-27 E2 R -> BS up -> R down -> SS         same-day 0/5 | E3 LMon:SL SThu:TP LThu:not
+DXY 2026-05-04 E2 SS -> BS down -> R up              same-day 0/5 | E3 LFri:SL SFri:not
+EURUSD 2026-05-04 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:SL LTue:TP SFri:SL LFri:not
+GBPUSD 2026-05-04 E2 SS -> BS down -> R up              same-day 0/5 | E3 LMon:TP LThu:not SThu:not LFri:not
+DXY 2026-05-11 E2 SS -> BS down                      same-day 2/5 | E3 
+EURUSD 2026-05-11 E2 R -> BS down -> R up -> SS         same-day 1/5 | E3 LThu:SL LFri:not
+GBPUSD 2026-05-11 E2 R -> BS up -> SS                   same-day 0/5 | E3 LThu:SL
+DXY 2026-05-18 E2 R -> BS up -> SS                   same-day 1/5 | E3 LMon:SL LTue:SL
+EURUSD 2026-05-18 E2 R -> BS down -> SS                 same-day 1/5 | E3 SMon:SL STue:SL
+GBPUSD 2026-05-18 E2 R -> BS up -> R down -> SS         same-day 1/5 | E3 SMon:SL SThu:not SFri:not
+DXY 2026-05-25 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:TP STue:TP LFri:TP
+EURUSD 2026-05-25 E2 SS -> BS up -> R down              same-day 2/5 | E3 SMon:SL STue:SL SFri:TP
+GBPUSD 2026-05-25 E2 SS -> BS up -> R down              same-day 2/5 | E3 LMon:SL LTue:SL SFri:SL LFri:TP
+DXY 2026-06-01 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:SL STue:not SWed:not LFri:not
+EURUSD 2026-06-01 E2 SS -> BS up -> R down              same-day 1/5 | E3 LMon:SL LTue:SL SFri:not LFri:SL
+GBPUSD 2026-06-01 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:SL LTue:SL SFri:not LFri:SL
+DXY 2026-06-08 E2 R -> WL down -> SS                 same-day 2/5 | E3 LMon:not LTue:not LWed:not LThu:not LFri:not
+EURUSD 2026-06-08 E2 R -> WL up -> SS                   same-day 2/5 | E3 SMon:not STue:not SWed:not SThu:not SFri:not
+GBPUSD 2026-06-08 E2 R -> BS down -> SS                 same-day 2/5 | E3 
+DXY 2026-06-15 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:SL STue:SL LFri:SL SFri:SL
+EURUSD 2026-06-15 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:SL LTue:SL SFri:SL LFri:SL
+GBPUSD 2026-06-15 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:SL LTue:SL SFri:SL LFri:not
+DXY 2026-06-22 E2 SS -> BS up                        same-day 1/5 | E3 LFri:not
+EURUSD 2026-06-22 E2 SS -> BS down                      same-day 1/5 | E3 SMon:not STue:not SFri:not SFri:not
+GBPUSD 2026-06-22 E2 SS                                 same-day 2/5 | E3 SMon:not STue:not LTue:SL SWed:not SThu:not SFri:not
+DXY 2026-06-29 E2 SS                                 same-day 3/5 | E3 LMon:SL SMon:TP LTue:SL STue:TP LWed:SL SWed:TP LThu:SL SThu:not LFri:not SFri:not
+EURUSD 2026-06-29 E2 SS -> BS down                      same-day 4/5 | E3 LMon:not LTue:not SWed:SL
+GBPUSD 2026-06-29 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:not LTue:not SFri:SL LFri:not
+DXY 2026-07-06 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:not STue:SL LFri:not SFri:not
+EURUSD 2026-07-06 E2 SS -> BS up -> R down              same-day 2/5 | E3 LMon:SL LTue:SL LWed:SL SFri:SL
+GBPUSD 2026-07-06 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:not LTue:not SFri:SL LFri:not
+DXY 2026-07-13 E2 SS -> BS down                      same-day 4/5 | E3 SMon:SL STue:SL SFri:not
+EURUSD 2026-07-13 E2 SS -> BS down                      same-day 2/5 | E3 SMon:SL SThu:SL SFri:SL
+GBPUSD 2026-07-13 E2 SS -> BS up                        same-day 2/5 | E3 LFri:not
+DXY 2026-07-20 E2 SS -> WL down                      same-day 3/5 | E3 STue:not SThu:not SFri:not
+EURUSD 2026-07-20 E2 SS                                 same-day 5/5 | E3 LMon:SL SMon:not LTue:SL STue:not LWed:SL SWed:not SWed:not LThu:SL SThu:not LFri:not SFri:not
+GBPUSD 2026-07-20 E2 SS -> BS up -> R down              same-day 1/5 | E3 LMon:SL LTue:SL SFri:not LFri:SL
+DXY 2026-07-27 E2 SS -> BS down -> R up              same-day 4/5 | E3 LFri:TP
+EURUSD 2026-07-27 E2 SS -> WL up                        same-day 1/5 | E3 
+GBPUSD 2026-07-27 E2 SS -> BS down                      same-day 0/5 | E3 SMon:TP STue:SL SFri:SL
+DXY 2026-08-03 E2 SS -> BS down                      same-day 3/5 | E3 SMon:TP SThu:not SFri:not
+EURUSD 2026-08-03 E2 SS -> BS up                        same-day 1/5 | E3 LMon:SL LTue:SL LFri:TP LFri:not
+GBPUSD 2026-08-03 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:SL LTue:SL SFri:not
+DXY 2026-08-10 E2 SS -> BS down                      same-day 2/5 | E3 SMon:SL STue:SL SFri:open
+EURUSD 2026-08-10 E2 SS -> BS up                        same-day 2/5 | E3 LMon:SL LTue:SL LWed:SL LFri:TP
+GBPUSD 2026-08-10 E2 SS -> BS up                        same-day 3/5 | E3 LMon:not LTue:not LFri:not
+DXY 2026-08-17 E2 R -> BS up -> R down -> SS         same-day 0/5 | E3 SMon:not LTue:SL SFri:not
+EURUSD 2026-08-17 E2 R -> BS up -> SS                   same-day 1/5 | E3 LMon:not LThu:not LFri:not
+GBPUSD 2026-08-17 E2 SS -> BS up                        same-day 1/5 | E3 LMon:not LTue:not LFri:not
+DXY 2026-08-24 E2 SS -> BS down                      same-day 2/5 | E3 SMon:SL SFri:not
+EURUSD 2026-08-24 E2 SS -> BS down -> R up              same-day 2/5 | E3 SWed:not LFri:SL
+GBPUSD 2026-08-24 E2 SS -> BS up -> R down              same-day 2/5 | E3 LMon:SL LTue:SL SFri:not LFri:SL
+DXY 2026-08-31 E2 R -> BS up -> SS                   same-day 2/5 | E3 LThu:SL
+EURUSD 2026-08-31 E2 R -> BS down -> R up -> SS         same-day 1/5 | E3 LThu:not
+GBPUSD 2026-08-31 E2 R -> BS down -> SS                 same-day 4/5 | E3 SThu:not
+DXY 2026-09-07 E2 SS -> BS down                      same-day 0/5 | E3 SMon:not STue:not SWed:not SFri:not
+EURUSD 2026-09-07 E2 SS                                 same-day 4/5 | E3 LMon:SL LTue:SL LWed:SL LThu:SL LFri:SL
+GBPUSD 2026-09-07 E2 SS -> BS down -> R up              same-day 0/5 | E3 SMon:SL STue:SL LFri:not SFri:SL
+DXY 2026-09-14 E2 SS -> BS down -> R up              same-day 2/5 | E3 LMon:not LTue:not LFri:not SFri:SL
+EURUSD 2026-09-14 E2 SS -> BS up -> R down              same-day 0/5 | E3 SMon:not STue:not SFri:not
+GBPUSD 2026-09-14 E2 SS -> BS down -> R up              same-day 1/5 | E3 SMon:not STue:not LFri:SL
+DXY 2026-09-21 E2 SS -> BS up                        same-day 4/5 | E3 LFri:not
+EURUSD 2026-09-21 E2 SS -> BS up -> R down              same-day 2/5 | E3 SMon:not STue:not LWed:not SFri:not
+GBPUSD 2026-09-21 E2 SS -> BS down                      same-day 4/5 | E3 SMon:not STue:not SFri:not SFri:not
+DXY 2026-09-28 E2 SS -> BS up -> R down              same-day 2/5 | E3 LMon:not LTue:not SFri:SL LFri:not
+EURUSD 2026-09-28 E2 SS -> BS down -> R up              same-day 3/5 | E3 LFri:SL
+GBPUSD 2026-09-28 E2 SS -> BS down                      same-day 3/5 | E3 SFri:TP
+DXY 2026-10-05 E2 SS -> BS up                        same-day 2/5 | E3 LMon:not LTue:not LFri:not
+EURUSD 2026-10-05 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:TP STue:TP LFri:SL SFri:not
+GBPUSD 2026-10-05 E2 SS -> BS up -> R down              same-day 0/5 | E3 LMon:open LTue:open SFri:not
+DXY 2026-10-12 E2 SS -> BS up                        same-day 2/5 | E3 LFri:SL
+EURUSD 2026-10-12 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:SL STue:TP LFri:SL SFri:TP
+GBPUSD 2026-10-12 E2 SS -> BS down                      same-day 1/5 | E3 SMon:SL STue:SL SFri:not SFri:SL
+DXY 2026-10-19 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:SL STue:TP SWed:TP LFri:SL
+EURUSD 2026-10-19 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:TP STue:TP SWed:TP LFri:not
+GBPUSD 2026-10-19 E2 SS -> BS up                        same-day 2/5 | E3 LMon:TP LTue:TP LFri:not LFri:not
+DXY 2026-10-26 E2 SS -> BS up -> R down              same-day 1/5 | E3 LMon:TP LTue:TP SFri:SL
+EURUSD 2026-10-26 E2 SS -> BS down -> R up              same-day 0/5 | E3 SMon:not STue:not LFri:SL
+GBPUSD 2026-10-26 E2 SS -> BS down -> R up              same-day 2/5 | E3 SMon:SL STue:SL LFri:SL
+DXY 2026-11-02 E2 SS -> BS up                        same-day 0/5 | E3 LWed:SL
+EURUSD 2026-11-02 E2 SS                                 same-day 1/5 | E3 SWed:SL LThu:SL LFri:SL
+GBPUSD 2026-11-02 E2 SS -> BS up                        same-day 1/5 | E3 LMon:SL LTue:SL
+{'days': 600, 'shape+dir same': 173, 'directional days': 282, 'direction right': 141}
+{'TP': 51, 'not filled': 175, 'SL': 156, 'open-': 1, 'open+': 6}
+done
