@@ -1,16 +1,28 @@
 # PLUTUS VISION — read this first (auto-loaded)
 
-**Regain full context in one command (stdlib, no install):**
-```
-python3 context_management/graph/resume.py            # governance, mission, phase, canon spine, findings, open questions, decisions
-python3 context_management/graph/resume.py --node E3  # drill into any node; --type rule|law|finding ; --grep <word>
-```
-Canon sources (read only the section a node points to): `canon/Toolset/`. Repo handover: `context_management/*.md`. Learning log: `context_management/LEARNING_LOG_2026-10-11.md`.
+**After any compaction/reset, read `memory/00_COMPACTION_SURVIVAL.md` FIRST and follow its read order** (state, live operator rulings, task queue, decisions, lessons, facts, journal).
+Update `memory/01_CURRENT_STATE.md` + `memory/05_JOURNAL.md` every 3-5 turns and before any long run.
+Older graph (foundation phase, still valid for canon concepts): `python3 context_management/graph/resume.py` (`--node E3`, `--grep <word>`).
 
-## Non-negotiables (from the operator; details in the graph)
-- **Phase gate:** do NOT start indicator work until the operator explicitly gives permission + handover.
-- **E1 and E2 (original v5.3.3) are frozen** — never change/disagree. E3 = `canon/Toolset/TRIDENT_v5.3.3_CORRECTED_E3_ENGINE.md` (untested live).
-- **Solve obstacles yourself.** No theatre: write the expectation first, LOOK at the rendered frame yourself, name deltas; parity != correctness (FAILURE_LOG F-17).
-- Report outcomes faithfully (negative results included). No unasked advice. Trident -> Plutus rename later.
-- Keep the graph current: when you learn/decide something durable, edit `context_management/graph/build_graph.py`, rerun it, commit.
-- Do not touch ports 9430/9441/9444/9448 (another session). Rig needs: see graph node `A_RIG`.
+## The job (operator brief 2026-11-25, in force; build permission GRANTED, fully autonomous)
+Build the Plutus Vision Pine indicator: on top of the sealed V1 baseline (LuxAlgo S/D + liquidity — do not touch it),
+render **E1** institutional pressure zones, then **E2** shape chain, then **E3** trade setups (corrected E3 spec).
+Everything is computed dynamically from market data available at the **Monday London-open anchor** of the week under test.
+
+## Hard constraints
+- **No hardcoded values.** No price literals, no per-week constants. Any week, any of DXY/EURUSD/GBPUSD, same accuracy (target >=90%).
+- **Temporal anchor = Monday, start of the trading week.** Nothing after the anchor may feed a forecast. Enforced by `tools/anchor_guard.py` + git pre-commit hook.
+- **Pinebox is the only test environment.** Render the Pine in Pinebox, LOOK at the chart, judge whether candles react to the render. No headless/script tests as gates.
+- **<= 11 trade setups per week per pair.** Zones live on 4H / 1H (30m refinement; 15m precision only).
+- E1 = v5.3.3 prompt, every token (R-14). E2 = v5.3.3. E3 = `canon/Toolset/TRIDENT_v5.3.3_CORRECTED_E3_ENGINE.md` only (R-16). ZFP = strength only (R-17).
+- Render window = active week + one week left (R-36). No caps as a fix (R-37). Canon vocabulary only (R-05).
+- Report outcomes faithfully, negatives included. No theatre. No unasked advice.
+
+## Where things are
+- Pinebox (IDE + backtest): rebuild with `tools/pinebox-bootstrap.sh`; then `export PATH=$HOME/.local/bin:$PATH XDG_RUNTIME_DIR=/run/user/0`; session `plutus-main`.
+  Manual: `/home/user/inputs/pinebox/ship-approved-v2/src/manuals/OPERATOR_MANUAL_pinebox.md`. Bar store: TV bars DXY/EURUSD/GBPUSD x 15m/30m/1H/4H, 2025-02-02 -> 2026-11-06.
+- Uploaded packages (unzipped, outside the repo): `/home/user/inputs/{handover,pinebox,canon,trades}`; operator rulings R-01..R-39 are in
+  `/home/user/inputs/handover/PLUTUS_VISION_CONTEXT_HANDOVER/00_HANDOVER/PLUTUS_VISION_CONTEXT_HANDOVER.md` (Appendix A).
+- Original canon + weekly report oracles: git branch `origin/handover` (worktree `/home/user/handover-branch/Original_Canon_Data`).
+- Canon copy in this repo: `canon/Toolset/`. Spec digests + oracle data: `context_management/spec/`, `context_management/oracle/`.
+- The indicator: `indicator/` (V1 sealed baseline + engine layers). Evidence frames: `evidence/`.
