@@ -188,6 +188,7 @@ type SD
 type Zone
     float  top
     float  bot
+    float  p        // the seed price (confluence peak)
     float  score
     float  conf
     int    pillars
@@ -538,6 +539,45 @@ f_e1(float spot, SD[] sds) =>
             x.conf := cf
     L
 
+// one zone from one seed: the zone is the confluence itself (the structural evidence that coincides with the seed)
+f_mkZone(Lv s, Lv[] L, SD[] sds, Zone[] Z, float gapBonus) =>
+    float top = s.hi
+    float bot = s.lo
+    string drv = s.tag
+    for v in L
+        if v.src != 4 and math.abs(v.p - s.p) <= T_EXACT
+            if v.src == 3
+                top := math.max(top, v.hi)
+                bot := math.min(bot, v.lo)
+            if not str.contains(drv, v.tag) and str.length(drv) < 70
+                drv += "+" + v.tag
+    if top - bot > T_CLUSTER
+        top := math.min(top, s.p + T_CLUSTER / 2)
+        bot := math.max(bot, s.p - T_CLUSTER / 2)
+    if top - bot < T_LSZ
+        float mid = (top + bot) / 2
+        top := mid + T_LSZ / 2
+        bot := mid - T_LSZ / 2
+    // zones do not overlap: a later (weaker) zone yields to the stronger one already placed
+    for z in Z
+        if bot < z.top and top > z.bot
+            if s.p > z.p
+                bot := z.top
+            else
+                top := z.bot
+    // POI tier (SP:1510-1514): overlap with an origin-candle zone visited at most once = Tier 1
+    int tier = 2
+    for q in sds
+        if q.mit <= 1 and bot <= q.top and top >= q.bot
+            tier := 1
+    int pillars = (s.tech > 0 ? 1 : 0) + (s.stru > 0 ? 1 : 0) + (s.psy > 0 ? 1 : 0) + (s.opt > 0 ? 1 : 0) + (s.ana > 0 ? 1 : 0)
+    // zone type -> failure probability (Appendix B; strength only, R-17). Without an option wall: Soft Wall 30-50, One-Touch 50-70
+    float base = s.tech + math.max(s.stru, gapBonus) + s.psy + s.opt + s.ana + math.min(2.0, s.xb) + (tier == 1 ? 2.0 : 1.0)
+    int zfp = pillars <= 1 ? 60 : int(math.round(50 - 20 * math.min(1.0, math.max(0.0, (base - 5.0) / 6.0))))
+    float reg = zfp < 20 ? 2.0 : zfp <= 50 ? 1.0 : 0.0       // V452:1066-1071
+    float score = math.min(14.0, base + reg)
+    Zone.new(top, bot, s.p, score, s.conf, pillars, zfp, tier, "", f_degree(score), 0, gapBonus > 0 ? "gap in-fill: " + drv : drv)
+
 // zones = local maxima of confluence; the canon's 0.15 cluster band is the suppression radius
 f_zones(Lv[] L, SD[] sds, float spot) =>
     Zone[] Z = array.new<Zone>()
@@ -555,37 +595,58 @@ f_zones(Lv[] L, SD[] sds, float spot) =>
                     if s.p <= z.top + T_CLUSTER and s.p >= z.bot - T_CLUSTER
                         taken := true
                 if not taken
-                    // the zone is the confluence itself: the structural evidence that coincides with the seed
-                    float top = s.hi
-                    float bot = s.lo
-                    string drv = s.tag
-                    for v in L
-                        if v.src != 4 and math.abs(v.p - s.p) <= T_EXACT
-                            if v.src == 3
-                                top := math.max(top, v.hi)
-                                bot := math.min(bot, v.lo)
-                            if not str.contains(drv, v.tag) and str.length(drv) < 70
-                                drv += "+" + v.tag
-                    if top - bot > T_CLUSTER
-                        top := math.min(top, s.p + T_CLUSTER / 2)
-                        bot := math.max(bot, s.p - T_CLUSTER / 2)
-                    if top - bot < T_LSZ
-                        float mid = (top + bot) / 2
-                        top := mid + T_LSZ / 2
-                        bot := mid - T_LSZ / 2
-                    // POI tier (SP:1510-1514): overlap with an origin-candle zone visited at most once = Tier 1
-                    int tier = 2
-                    for q in sds
-                        if q.mit <= 1 and bot <= q.top and top >= q.bot
-                            tier := 1
-                    int pillars = (s.tech > 0 ? 1 : 0) + (s.stru > 0 ? 1 : 0) + (s.psy > 0 ? 1 : 0) + (s.opt > 0 ? 1 : 0) + (s.ana > 0 ? 1 : 0)
-                    // zone type -> failure probability (Appendix B; strength only, R-17). Without an option wall: Soft Wall 30-50, One-Touch 50-70
-                    float base = s.tech + s.stru + s.psy + s.opt + s.ana + math.min(2.0, s.xb) + (tier == 1 ? 2.0 : 1.0)
-                    int zfp = pillars <= 1 ? 60 : int(math.round(50 - 20 * math.min(1.0, math.max(0.0, (base - 5.0) / 6.0))))
-                    float reg = zfp < 20 ? 2.0 : zfp <= 50 ? 1.0 : 0.0       // V452:1066-1071
-                    float score = math.min(14.0, base + reg)
-                    if score >= 6          // MODERATE and above only (SP:1646)
-                        Z.push(Zone.new(top, bot, score, s.conf, pillars, zfp, tier, "", f_degree(score), 0, drv))
+                    Zone z = f_mkZone(s, L, sds, Z, 0.0)
+                    if z.score >= 6          // MODERATE and above only (SP:1646)
+                        Z.push(z)
+        // the weekly map: every zone that overlaps the prior week's range, plus the first zone beyond each end
+        // (the breakout extension on that side). Zones further out stay in the level set but are not this week's map.
+        if Z.size() > 0 and wH.size() > 0
+            float pwH = wH.last()
+            float pwL = wL.last()
+            float up = na
+            float dn = na
+            for z in Z
+                if z.bot > pwH
+                    up := na(up) ? z.bot : math.min(up, z.bot)
+                if z.top < pwL
+                    dn := na(dn) ? z.top : math.max(dn, z.top)
+            Zone[] K = array.new<Zone>()
+            for z in Z
+                bool inside = z.top >= pwL and z.bot <= pwH
+                bool firstUp = not na(up) and z.bot == up
+                bool firstDn = not na(dn) and z.top == dn
+                if inside or firstUp or firstDn
+                    K.push(z)
+            Z := K
+            // Step 9.5 gap scan (V452:1159-1184): a gap >= 0.20 between adjacent zones takes the strongest level inside it
+            // that has 2+ supporting pillars as a GAP IN-FILL LEVEL (Structural 1)
+            bool again = true
+            int guard = 0
+            while again and guard < 12
+                again := false
+                guard += 1
+                float[] tp = array.new_float()
+                for z in Z
+                    tp.push(z.top)
+                int[] o = tp.sort_indices(order.ascending)
+                int m0 = Z.size()
+                if m0 > 1
+                    for k = 0 to m0 - 2
+                        if not again
+                            Zone lo = Z.get(o.get(k))
+                            Zone hi = Z.get(o.get(k + 1))
+                            if hi.bot - lo.top >= 2 * T_TIGHT
+                                float bestC = 0.0
+                                int bestI = -1
+                                for i = 0 to n - 1
+                                    Lv v = L.get(i)
+                                    int pl = (v.tech > 0 ? 1 : 0) + (v.stru > 0 ? 1 : 0) + (v.psy > 0 ? 1 : 0) + (v.opt > 0 ? 1 : 0) + (v.ana > 0 ? 1 : 0)
+                                    if v.src != 4 and pl >= 2 and v.p >= lo.top + T_TIGHT and v.p <= hi.bot - T_TIGHT and v.conf > bestC
+                                        bestC := v.conf
+                                        bestI := i
+                                if bestI >= 0
+                                    Z.push(f_mkZone(L.get(bestI), L, sds, Z, 1.0))
+                                    again := true
         // names by position (V452:1148-1155)
         int m = Z.size()
         if m > 0

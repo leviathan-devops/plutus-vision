@@ -11,6 +11,7 @@ S=plutus-main; ROOT="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
 CDP_PORT="$(pinebox list --session $S | jq -r '.instances[0].ports.cdp')"
 CORE="$HOME/.omp/agent/extensions/computer-use-v2/core"
 ev() { node "$CORE/cdp.mjs" "$CDP_PORT" evaluate "$1" | jq -c 'select(has("value")) | .value'; }
+station_idle() { local p; p="$(ss -ltnp 2>/dev/null | grep ':9741 ' | grep -o 'pid=[0-9]*' | head -1 | cut -d= -f2)"; [ -n "$p" ] || return 0; [ "$(top -bn1 -p "$p" | tail -1 | awk '{print int($9)}')" -lt 25 ]; }
 case "${1:-}" in
   shot) n="$2"; sec="${3:-chart}"; mkdir -p "$ROOT/evidence"; if [ "$sec" = full ]; then secarg=(); else secarg=(--section "$sec"); fi; pinebox shot --session $S --out "$ROOT/evidence/$n.png" "${secarg[@]}" | jq -r '.path' ;;
   eval) ev "$2" ;;
@@ -26,6 +27,28 @@ case "${1:-}" in
       let v; try{ v=r.clampViewport(bs, rt); }catch(e){ return {err:String(e)}; }
       r.coords.setViewport(v); r.targetBarSpacing=v.barSpacing; if(r.applyViewport) r.applyViewport(v); else r.requestRender?.();
       const vr=P.chart.getVisibleRange(); return {n,i0,i1,want:{from:$f,to:$t},got:vr,fromISO:new Date(vr.from).toISOString(),toISO:new Date(vr.to).toISOString(),v};})()" ;;
+  export)   # pb export FILE [PAIR] [TF]: load in the IDE, press EXPORT TO BACKTEST, wait for the EXPORTED status
+    pinebox tab --session $S --to pine >/dev/null; sleep 2
+    pinebox load --session $S --pine "$2" --pair "${3:-DXY}" --tf "${4:-1H}" 2>&1 | grep -E "REFUSED|load  " | cut -c1-260
+    ev "(function(){const b=document.querySelector('[data-act=export]'); b.click(); return 'clicked';})()" >/dev/null
+    for i in $(seq 1 60); do
+      st="$(ev "(function(){return [...document.querySelectorAll('.pine-shell *')].filter(e=>e.children.length==0 && /EXPORTED|EXPORT_/.test(e.textContent)).map(e=>e.textContent.slice(0,140)).join(' | ')})()")"
+      case "$st" in *EXPORTED*|*EXPORT_*) echo "$st"; break ;; esac; sleep 2
+    done ;;
+  bt-apply) # pb bt-apply "Indicator Title": on the Backtest chart remove every on-chart script, then add the named one from My Scripts
+    pinebox tab --session $S --to backtest >/dev/null; sleep 1
+    ev "(async function(){const sl=ms=>new Promise(r=>setTimeout(r,ms)); const vis=e=>{const r=e.getBoundingClientRect(); return r.width>0&&r.height>0;};
+      const open=()=>[...document.querySelectorAll('.vela-dialog-title')].some(e=>e.textContent.trim()==='Indicators'&&vis(e));
+      if(!open()){ const b=[...document.querySelectorAll('button')].find(b=>/Indicators/.test(b.textContent)&&vis(b)&&b.getBoundingClientRect().y<140&&b.getBoundingClientRect().y>90); if(!b) return {err:'no Indicators button'}; b.click(); await sl(700); }
+      let removed=0; for(let k=0;k<6;k++){ const t=[...document.querySelectorAll('.vela-ip-trash')].find(vis); if(!t) break; t.click(); removed++; await sl(500); }
+      const inp=[...document.querySelectorAll('input')].find(i=>vis(i)&&/Search/.test(i.placeholder||'')); if(inp){ inp.focus(); inp.value=$(printf '%s' "$2" | jq -Rs .); inp.dispatchEvent(new Event('input',{bubbles:true})); await sl(700); }
+      const row=[...document.querySelectorAll('.vela-ip-name')].find(e=>vis(e)&&e.textContent.trim()===$(printf '%s' "$2" | jq -Rs .)); if(!row) return {err:'script not in list',removed};
+      (row.closest('button,[role=button],.vela-ip-row')||row.parentElement).click(); await sl(700);
+      const onchart=[...document.querySelectorAll('.vela-ip-trash')].filter(vis).length;
+      const c=[...document.querySelectorAll('.vela-dialog-close')].find(vis); if(c) c.click();
+      return {removed,onchart};})()" ;;
+  wait-engine) # pb wait-engine: block until the station engine has finished computing (bounded: 4 minutes)
+    for i in $(seq 1 80); do sleep 3; station_idle && { sleep 2; station_idle && { echo idle; exit 0; }; }; done; echo "still busy"; exit 1 ;;
   x) shift; v="$1"; shift; pinebox "$v" --session $S "$@" ;;
   *) sed -n 2,8p "$0" ;;
 esac
