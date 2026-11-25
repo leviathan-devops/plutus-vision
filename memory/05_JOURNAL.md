@@ -108,3 +108,21 @@
   Psychological 2 for .00/.50 within 3 pips, 1 for quarters; bonus = best extreme bonus within 3 pips (max 2); Regime 2 Hard Wall / 1 / 0 One-Touch; tier +2 (fresh BoM overlap) / +1; cap 14. Zone type -> ZFP range table per P452:964-972.
 - THEN: e1_report.py (print the report's sections 1-9 for the week), e1_pine.py (trident_v8 form; per L-39 draw inside each zone the candle part and every level line, LSZ green, strikes amber; labels inside the week),
   render DXY Apr 20-24 in Pinebox (recipe in 11 §6), OPEN the frame, compare with evidence/trident_v8_original_DXY_1h_apr20_allzones.png, then other weeks/pairs. Expiry loader must include the Monday page rows (Day 1) + Day-2 forward rows.
+
+## 2026-11-25 ~22:30 UTC - e1_synth.py with 4H noise rejection + five named roles: result for DXY Apr 20-24 and what is still off
+Output now (TV candles):  RESISTANCE CEILING 99.13-99.31 HEAVY 11 Hard Wall 5-15% (report 99.16-99.23 HEAVY 10)  = MATCH
+ UPPER RESISTANCE 98.46-98.78 EXTREME 12 (cluster 98.46-98.59 + BoM Demand 98.56-98.78 + sweep 98.53-98.58)   (report 98.77-98.99 = the supply candle)  = DIFFERENT ZONE
+ EQUILIBRIUM 98.19-98.44 MOD-HEAVY 8 (cluster 98.29-98.44 + MoM Supply 98.33-98.41 + BoM Supply 98.19-98.29 + sweep 98.24-98.29)  (report 98.29-98.41 MOD-HEAVY 9) = MATCH (wider by the joined 04-17 supply candle)
+ MID-RANGE SUPPORT 97.83-98.14 HEAVY 11 (cluster 98.00-98.14 + BoM Demand 97.83-98.09 + sweep 97.97-98.02)  (report 98.00-98.12 MODERATE 7) = MATCH in place, score higher
+ KEY SUPPORT BAND 97.83-98.09 (cluster 97.84-97.98 + the SAME BoM Demand)  (report 97.63-97.97 HEAVY 11 with sweep 97.63-97.68) = WRONG: overlaps Mid-Range Support.
+4H zones kept after the filter include BoM Supply 98.884-99.038 (04-13 09:00, 0X), MoM Supply 98.327-98.414, BoM Demand 97.832-98.092 (04-16), BoM Supply 98.194-98.291 (04-17), plus older 0X-1X zones above 99.3.
+Sweep zones (graded swings only, last 10 days): 98.53-98.58, 99.13-99.18, 97.97-98.02, 98.24-98.29, 97.63-97.68.
+STILL TO FIX (re-read the prompt text for each before coding; do not tune):
+ F1. A candle structure must belong to ONE zone only and named zones must not overlap: attach each S/D zone / sweep zone to the cluster it overlaps most (or whose levels sit inside it); then no two zones share a structure.
+ F2. The report's Upper Resistance is the BoM supply candle zone (cluster 98.80-98.94 here, score 8, joined with BoM Supply 98.884-99.038) - my role pick took the denser cluster 98.46-98.59 instead (score 12).
+     Check the scoring of 98.46-98.59 against the prompt: 19 levels there are mostly daily pivots + MAs (Technical only). Pressure degree = the group's HIGHEST-SCORING LEVEL on six dimensions - make sure Technical cannot exceed 2 and that
+     Options/Structural/Psychological are not being credited from levels 10 pips away. Also the +2 tier credit came from a 04-10 demand zone (98.56-98.78, 1X) that the report did not have.
+     Role order in the report follows position: ceiling (top) > upper resistance > equilibrium > mid-range support > key support (lowest) - consider taking, on each side, the zones in ORDER OF POSITION among those that are MODERATE+ AND hold a candle
+     structure or a wall, rather than by raw score. Decide by the prompt's naming text (P452:1148-1153) and note it as assumption A3'.
+ F3. Key Support Band should be the zone around the 97.63 sweep target (cluster 97.50-97.83 + sweep 97.63-97.68) - it lost to the duplicate above; F1 fixes this.
+ F4. The report's "developing" BoM Demand at the Apr 17 low (97.63-97.94) has no gap yet at the boundary -> not produced by A1. Leave as is; list it in the morning report.

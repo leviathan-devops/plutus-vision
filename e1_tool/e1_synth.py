@@ -84,7 +84,11 @@ def degree(score):
 
 def assemble(pair, monday, expiries, K, spot):
     L, swings = collect(pair, monday, expiries, K)
-    sd = P.step0f(pair, monday)
+    sd_all = P.step0f(pair, monday)
+    # 4H noise rejection (P452:741-745) + one-time use (operator notes; Tier 1 = BoM 0X-1X, P452:1201):
+    # keep zones no wider than 0.40, formed within the last 3 weeks, visited at most once since
+    b0 = D.boundary_ms(monday)
+    sd = [z for z in sd_all if z['top'] - z['bot'] <= 40 * D.PIP[pair] and z['origin_time'] >= b0 - 21 * 86400000 and z['mit'] <= 1]
     lsz = P.step045_lsz(pair, monday, [s for s in swings if s['date'] >= D.daily(pair, monday)[-10]['date']], spot)
     zones = []
     for g in cluster(L, pair):
@@ -112,7 +116,24 @@ def assemble(pair, monday, expiries, K, spot):
                       'bot': min([lo] + [z['bot'] for z in over] + [z['bot'] for z in sweeps]), 'top': max([hi] + [z['top'] for z in over] + [z['top'] for z in sweeps]),
                       'score': total, 'degree': degree(total), 'type': ztype, 'zfp': ZFP_RANGE[ztype], 'tier': 'Tier 1: Confluent' if fresh_bom else 'Tier 2: IP-Only',
                       'dims': bs[1], 'best': best, 'n': len(g), 'pillars': pillars})
-    return {'levels': L, 'zones': zones, 'sd': sd, 'lsz': lsz, 'swings': swings}
+    # S7 names (P452:1148-1153): five standard roles. Equilibrium = the MODERATE+ zone at / nearest spot; above it the two
+    # highest-scoring zones (upper = RESISTANCE CEILING, lower = UPPER RESISTANCE); below it the two highest-scoring
+    # (nearer = MID-RANGE SUPPORT, further = KEY SUPPORT BAND). Assumption A3.
+    cand = [z for z in zones if z['score'] >= 6]
+    dist = lambda z: 0 if z['bot'] <= spot <= z['top'] else min(abs(z['bot'] - spot), abs(z['top'] - spot))
+    named = []
+    if cand:
+        eq = min(cand, key=dist)
+        eq['name'] = 'EQUILIBRIUM ZONE'; named.append(eq)
+        up = sorted([z for z in cand if z is not eq and z['bot'] > eq['top']], key=lambda z: (-z['score'], dist(z)))[:2]
+        dn = sorted([z for z in cand if z is not eq and z['top'] < eq['bot']], key=lambda z: (-z['score'], dist(z)))[:2]
+        up.sort(key=lambda z: -z['top']); dn.sort(key=lambda z: -z['top'])
+        for z, nm in zip(up, ['RESISTANCE CEILING', 'UPPER RESISTANCE'] if len(up) == 2 else ['RESISTANCE CEILING']):
+            z['name'] = nm; named.append(z)
+        for z, nm in zip(dn, ['MID-RANGE SUPPORT', 'KEY SUPPORT BAND'] if len(dn) == 2 else ['KEY SUPPORT BAND']):
+            z['name'] = nm; named.append(z)
+    named.sort(key=lambda z: -z['top'])
+    return {'levels': L, 'zones': zones, 'named': named, 'sd': sd, 'sd_all': sd_all, 'lsz': lsz, 'swings': swings}
 
 
 if __name__ == '__main__':
@@ -125,9 +146,10 @@ if __name__ == '__main__':
     exp = [dict(e, day=e.get('cut_date', '')[5:]) for e in side['expiries'].get('EURUSD', [])]
     r = assemble(pair, monday, exp, K, spot)
     print(f"{pair} {monday} spot {spot} K {K:.4f} | levels {len(r['levels'])} | clusters(3+) {len(r['zones'])}")
-    for z in sorted(r['zones'], key=lambda z: -z['top']):
-        if z['score'] >= 6 and abs((z['top'] + z['bot']) / 2 - spot) <= 2.0:
-            print("  %.2f-%.2f %-14s %4.1f/14 %-17s ZFP %-7s %s | levels %.2f-%.2f (%d, %d pillars) | S/D %s | LSZ %s | best: %s" % (
-                z['bot'], z['top'], z['degree'], z['score'], z['type'], z['zfp'], z['tier'], z['lv_lo'], z['lv_hi'], z['n'], z['pillars'],
-                [(s['kind'], s['type'], round(s['bot'], 2), round(s['top'], 2), f"{s['mit']}X") for s in z['structs']], [(round(s['bot'], 2), round(s['top'], 2)) for s in z['sweeps']], z['best']['tag']))
+    print('4H zones kept:', [(z['kind'], z['type'], round(z['bot'], 3), round(z['top'], 3), D.ts(z['origin_time']), f"{z['mit']}X") for z in r['sd']])
+    print('sweep zones:', [(round(z['bot'], 2), round(z['top'], 2), z['source'][-10:], z['priority']) for z in r['lsz']])
+    for z in r['named']:
+        print("  %-18s %.2f-%.2f %-14s %4.1f/14 ZFP %-7s %-17s %s | levels %.2f-%.2f (%d) | S/D %s | LSZ %s | top level: %s" % (
+            z['name'], z['bot'], z['top'], z['degree'], z['score'], z['zfp'], z['type'], z['tier'], z['lv_lo'], z['lv_hi'], z['n'],
+            [(s['kind'], s['type'], round(s['bot'], 2), round(s['top'], 2)) for s in z['structs']], [(round(s['bot'], 2), round(s['top'], 2)) for s in z['sweeps']], z['best']['tag']))
     print('REPORT: CEILING 99.16-99.23 HEAVY 10 · UPPER RES 98.77-98.99 MOD-HEAVY 8 T1 · EQ 98.29-98.41 MOD-HEAVY 9 · MID SUPPORT 98.00-98.12 MODERATE 7 · KEY SUPPORT 97.63-97.97 HEAVY 11 T1')
