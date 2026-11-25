@@ -80,3 +80,16 @@
 - Data-source difference: TV prior week H 99.183 L 97.632 C 98.226; report (yfinance) C 98.10 -> pivots differ by ~0.05 (PP 98.35 vs 98.30). Logic identical (all four verification checks pass).
 - Sidecar 2026-04-20 has the Friday Apr 17 page's forward rows only; the report used the Monday Apr 20 page (06:08Z). Raw pages are under sidecar/raw/2026-04-20/ (incl. `_boundary_0608Z`).
 - NEXT: Pillar 2 (MA grid), Pillar 5 Step 0/0.45/0.5/0h + anchors, Pillar 6, Pillar 3/8 (K, strike->DXY), Pillar 9 type/range, synthesis (collect, score, cluster, zones per L-39, names, gap scan, 9.7 tiers), report printout, Pine generator, render.
+
+## 2026-11-25 ~22:00 UTC - e1_tool: Step 0 swings, 0.45 LSZ, 0.5 magnets, Pillar 2, Pillar 6, Pillar 3/8 conversion written (e1_tool/e1_pillars.py) and checked vs the Apr 20-24 report
+- strike_to_dxy(K=108.0806): 1.1600->99.22, 1.1750->98.49, 1.1785->98.32, 1.1900->97.78, 1.1675->98.86, 1.1760->98.44, 1.1800->98.25, 1.1810->98.20 = EXACT match with the report, all 8.
+- K from the sidecar's H.10 rates (Apr 10 rate day) = 108.1552; report K = 108.0806 used USDJPY 158.93 GBPUSD 1.349 USDCAD 1.3897 USDSEK 9.1921 USDCHF 0.7828 (mixed sources). Difference is input rates, not logic.
+  For K use the pairs' TradingView closes at the boundary where bars exist (GBPUSD) and H.10 for the rest; print the audit line with sources (P452:919).
+- Spot at boundary on TV = 98.226 (report 98.10 from yfinance DX-Y.NYB).
+- Daily swings found (TV): low 97.632 04-17 (wick 0.58, close pos 0.90 = major) · low 97.969 04-14 (wick 0.13) · low 98.525 04-08 (wick 0.51, close pos 0.44) · high 99.183 04-13 (minor) · high 98.292 04-16.
+  Report LSZ: lows 04-17 97.63, 04-16 97.83, 04-14 97.97, 04-08 98.53; highs 98.29-98.34 (04-15/16/17, 3x), 99.18-99.23 (04-08/13, 2x).
+  => the report listed EVERY recent daily low/high as a sweep zone, without enforcing the wick >= 0.15 / close-position test, and 04-16's low is not even a 3-bar swing low (04-17 went lower).
+  ASSUMPTION A2 (for the morning report): build LSZ from every D1 swing low/high of Step 0 AND the last 5 days' lows/highs (Step 1 anchors), each tagged major / minor / anchor, so the report's six are reproduced; the wick test only sets the grade.
+- Repeated magnets on TV: 97.98 (3 dates incl. 04-14), 98.51 (3 dates incl. 04-08), 98.26 (2, incl. 04-16), 98.87, 99.29 ... (role reversals). Report had repeated high 98.29 (3x) and 99.18 (2x).
+- MAs (daily, TV): SMA/EMA 9-10 98.58-98.72, SMA50 98.72, SMA100 98.51, SMA200 98.53, EMA200 99.23, SMA20 99.28, EMA20 98.94 (the bar store starts 2025-02-02, so 200-day values exist from ~Nov 2025).
+- NEXT: Pillar 9 type->range, synthesis (collect all levels with their dimension scores; clustering scan; zones = candle structure + cluster joined per L-39; names; gap scan; tiers; 4H noise rejection), report printout, Pine generator, render, compare.

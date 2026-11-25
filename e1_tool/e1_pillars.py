@@ -70,3 +70,106 @@ def step0f(pair, monday):
             inside = touch
         z['mit'] = soft + hard; z['soft'] = soft; z['hard'] = hard
     return zones
+
+
+def _u(pair, pips):
+    """the prompt writes thresholds in DXY points (0.15 = 15 pips); on a pair the same number of pips applies"""
+    return pips * D.PIP[pair]
+
+
+# ── PILLAR 5 STEP 0b / 0c: daily swing lows / highs with rejection wicks, 90 daily bars (P533:1217-1232); STEP 0h relaxed (P452:767-781)
+def step0_swings(pair, monday):
+    d = D.daily(pair, monday)[-90:]
+    out = []
+    for i in range(1, len(d)):
+        x = d[i]
+        rng = x['high'] - x['low']
+        if rng <= 0:
+            continue
+        nxt = d[i + 1] if i + 1 < len(d) else None
+        body_lo, body_hi = min(x['open'], x['close']), max(x['open'], x['close'])
+        pos = (x['close'] - x['low']) / rng
+        if x['low'] < d[i - 1]['low'] and (nxt is None or nxt['low'] > x['low']):
+            wick = body_lo - x['low']
+            grade = 'major' if wick >= _u(pair, 15) and pos >= 0.5 else 'minor' if wick >= _u(pair, 8) and pos >= 0.6 else None
+            out.append({'side': 'low', 'price': x['low'], 'date': x['date'], 'wick': wick, 'close_pos': pos, 'grade': grade})
+        if x['high'] > d[i - 1]['high'] and (nxt is None or nxt['high'] < x['high']):
+            wick = x['high'] - body_hi
+            grade = 'major' if wick >= _u(pair, 15) and pos <= 0.5 else 'minor' if wick >= _u(pair, 8) and pos <= 0.4 else None
+            out.append({'side': 'high', 'price': x['high'], 'date': x['date'], 'wick': wick, 'close_pos': pos, 'grade': grade})
+    return out
+
+
+# ── STEP 0.45: liquidity sweep zones (P533:1255-1272) and STEP 0.5: repeated extreme magnets (P533:1292-1308)
+def step045_lsz(pair, monday, swings, spot):
+    out = []
+    for s in swings:
+        lo, hi = (s['price'], s['price'] + _u(pair, 5)) if s['side'] == 'low' else (s['price'] - _u(pair, 5), s['price'])
+        near = min(abs(spot - lo), abs(spot - hi)) <= _u(pair, 30)
+        out.append({'bot': lo, 'top': hi, 'type': 'Demand-side' if s['side'] == 'low' else 'Supply-side', 'source': f"D1 swing {s['side']} {s['date']}",
+                    'priority': 'ACTIVE SL TRIGGER' if near else 'STANDARD', 'grade': s['grade'], 'date': s['date']})
+    return out
+
+
+def step05_magnets(pair, swings):
+    out, used = [], set()
+    for i, a in enumerate(swings):
+        if i in used:
+            continue
+        grp = [a]
+        for j in range(i + 1, len(swings)):
+            if j not in used and abs(swings[j]['price'] - a['price']) <= _u(pair, 5):
+                grp.append(swings[j]); used.add(j)
+        if len(grp) >= 2:
+            sides = {g['side'] for g in grp}
+            wsum = sum(max(g['wick'], D.PIP[pair]) for g in grp)
+            price = sum(g['price'] * max(g['wick'], D.PIP[pair]) for g in grp) / wsum
+            kind = 'Role Reversal Magnet' if len(sides) == 2 else 'Repeated Low Magnet' if 'low' in sides else 'Repeated High Magnet'
+            bonus = 2.0 if kind.startswith('Role') or len(grp) >= 3 else 1.5
+            out.append({'price': price, 'kind': kind, 'dates': [g['date'] for g in grp], 'n': len(grp), 'bonus': bonus})
+    return out
+
+
+# ── PILLAR 2: MA confluence grid on daily closes (P533:1065-1088)
+def pillar2(pair, monday):
+    c = [d['close'] for d in D.daily(pair, monday)]
+    out = []
+    for n, w in ((9, 0.5), (10, 0.5), (20, 1.0), (50, 1.5), (100, 2.0), (200, 3.0)):
+        if len(c) >= n:
+            out.append({'name': f'SMA{n}', 'p': sum(c[-n:]) / n, 'w': w})
+            k, e = 2 / (n + 1), c[0]
+            for v in c[1:]:
+                e += (v - e) * k
+            out.append({'name': f'EMA{n}', 'p': e, 'w': w})
+    for m in out:
+        m['cluster'] = sum(1 for o in out if abs(o['p'] - m['p']) <= _u(pair, 15))
+    return out
+
+
+# ── PILLAR 6: fib retracements of the prior week range + round numbers (P452:835-862)
+def pillar6(pair, monday, lo, hi):
+    w = D.weekly(pair, monday)[-1]
+    R = w['high'] - w['low']
+    fibs = [{'name': f'Wfib{int(r * 1000) / 10}', 'p': w['high'] - r * R} for r in (0.236, 0.382, 0.5, 0.618)]
+    step = _u(pair, 25)
+    rounds, k = [], int(lo / step)
+    while k * step <= hi:
+        p = k * step
+        if p >= lo:
+            kind = 'big' if k % 4 == 0 else 'half' if k % 2 == 0 else 'quarter'
+            rounds.append({'name': 'RN-' + kind, 'p': round(p, 6), 'kind': kind})
+        k += 1
+    return fibs, rounds
+
+
+# ── PILLAR 3 / 8: K factor and EUR/USD strike -> DXY (P533:928-952; P452:890-950; tiers P533:1443-1447)
+def k_factor(rates):
+    return 50.14348112 * rates['USDJPY'] ** 0.136 * rates['GBPUSD'] ** -0.119 * rates['USDCAD'] ** 0.091 * rates['USDSEK'] ** 0.042 * rates['USDCHF'] ** 0.036
+
+
+def strike_to_dxy(K, strike):
+    return K * strike ** -0.576
+
+
+def tier(notional_m):
+    return 1 if notional_m >= 1500 else 2 if notional_m >= 850 else 3
