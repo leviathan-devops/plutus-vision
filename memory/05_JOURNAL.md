@@ -93,3 +93,18 @@
 - Repeated magnets on TV: 97.98 (3 dates incl. 04-14), 98.51 (3 dates incl. 04-08), 98.26 (2, incl. 04-16), 98.87, 99.29 ... (role reversals). Report had repeated high 98.29 (3x) and 99.18 (2x).
 - MAs (daily, TV): SMA/EMA 9-10 98.58-98.72, SMA50 98.72, SMA100 98.51, SMA200 98.53, EMA200 99.23, SMA20 99.28, EMA20 98.94 (the bar store starts 2025-02-02, so 200-day values exist from ~Nov 2025).
 - NEXT: Pillar 9 type->range, synthesis (collect all levels with their dimension scores; clustering scan; zones = candle structure + cluster joined per L-39; names; gap scan; tiers; 4H noise rejection), report printout, Pine generator, render, compare.
+
+## 2026-11-25 ~22:15 UTC - e1_tool/e1_synth.py first run (collect -> score -> cluster -> zones with candle structures joined)
+- `cd e1_tool && python3 e1_synth.py 2026-04-20` prints the zones. 186 levels, 18 clusters of 3+ levels. It WORKS mechanically; three things are still not what the prompt says, fix them in this order:
+  1. 4H zone filter NOT applied yet. step0f returns 49 zones over 60 days, many 5-10X mitigated, and assemble() joins ALL overlapping ones -> zones bloat to 40-60 pips (e.g. 98.97-99.56).
+     Apply the prompt's noise rejection (P452:741-745: drop > 0.40 wide; MoM with 3X+ hard mitigations; older than 3 weeks with no recent interaction; no IP zone within 0.50 unless BoM 0X-1X)
+     and the order-block rule from his notes (one-time use: only UNMITIGATED / 0X-1X zones count; Tier 1 needs BoM 0X-1X, P452:1201). Join into a pressure zone only the surviving S/D zones.
+  2. Role naming: the synthesis has FIVE standard names (P452:1148-1153). ASSUMPTION A3: Equilibrium = the MODERATE+ zone at / nearest spot; above spot the two highest-scoring zones (upper one = RESISTANCE CEILING, lower = UPPER RESISTANCE);
+     below spot the two highest-scoring (nearer = MID-RANGE SUPPORT, the other = KEY SUPPORT BAND). All other clusters stay in the audit (clustering scan) but are not synthesis zones.
+  3. Sweep zones per A2 (every recent daily low/high) - currently only wick-graded swings of the last 10 days are passed in.
+- Already right vs the report: cluster 99.18-99.31 holds the 1.1600 €1.9bn wall (99.22) = Hard Wall, HEAVY 11 (report CEILING 99.16-99.23 HEAVY 10); cluster 98.29-98.44 holds MoM Supply 98.33-98.41 (0X) = the report's EQUILIBRIUM 98.29-98.41;
+  clusters 97.50-97.83 hold the sweep zone 97.63-97.68 = KEY SUPPORT BAND area; 98.00-98.14 with BoM Demand 97.83-98.09 (1X) = MID-RANGE SUPPORT 98.00-98.12.
+- Scoring as coded (score_level): Technical 2 if a pivot/MA/fib within 3 pips, 1 within 10; Options 2 if a tier-1 strike within ±0.07 or tier-2 within ±0.10; Structural 2 if an anchor AND an extreme within 3 pips, 1 if either within 10;
+  Psychological 2 for .00/.50 within 3 pips, 1 for quarters; bonus = best extreme bonus within 3 pips (max 2); Regime 2 Hard Wall / 1 / 0 One-Touch; tier +2 (fresh BoM overlap) / +1; cap 14. Zone type -> ZFP range table per P452:964-972.
+- THEN: e1_report.py (print the report's sections 1-9 for the week), e1_pine.py (trident_v8 form; per L-39 draw inside each zone the candle part and every level line, LSZ green, strikes amber; labels inside the week),
+  render DXY Apr 20-24 in Pinebox (recipe in 11 §6), OPEN the frame, compare with evidence/trident_v8_original_DXY_1h_apr20_allzones.png, then other weeks/pairs. Expiry loader must include the Monday page rows (Day 1) + Day-2 forward rows.

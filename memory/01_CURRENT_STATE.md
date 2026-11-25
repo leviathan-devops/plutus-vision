@@ -27,10 +27,11 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 ## BUILD STATUS (update this block as the tool grows) - job spec is memory/11_E1_BUILD_BRIEF.md
 - e1_tool/e1_data.py DONE (bars, boundary, daily, weekly). e1_tool/e1_pillars.py: pillar1 DONE + verified; step0f DONE, matches the report's 4H zones structurally (journal 21:45).
 - DONE + checked (journal 22:00): step0_swings (0b/0c/0h grades), step045_lsz, step05_magnets, pillar2 (MA grid), pillar6 (fibs, round numbers), k_factor / strike_to_dxy / tier (all 8 report strikes reproduce exactly).
-- TODO in order: Step 0d/0e D1 order blocks + confluent floor/ceiling · Step 1 anchors (daily closes/highs/lows last 5 days, PWH/PWL/PWC, HWC/LWC) · expiry loader from sidecar (Day-1 page + Day-2 forward rows) · Pillar 9 zone type -> ZFP range
-  · synthesis: collect levels, 6-dimension score + bonus, clustering scan, zones (candle structure + levels joined, L-39), names, gap scan 9.5, tier 9.7, 4H noise rejection · report printout (same sections as the report)
-  · Pine generator (trident_v8 form + levels inside zones) · render Apr 20-24 DXY in Pinebox, compare with evidence/trident_v8_original_DXY_1h_apr20_allzones.png · then other weeks / EURUSD / GBPUSD.
-- Assumptions made so far (list for the operator's morning report): A1 strong move = inefficiency gap (journal 21:45). A2 sweep zones from every D1 swing + last-5-day lows/highs, wick test = grade only (journal 22:00).
+- e1_tool/e1_synth.py WRITTEN, first run OK (journal 22:15): run `cd e1_tool && python3 e1_synth.py 2026-04-20`.
+- NEXT, in this order (details in journal 22:15): (1) 4H zone noise rejection + unmitigated-only joining; (2) five-role naming (A3); (3) sweep zones per A2; (4) Step 0d/0e D1 order blocks + Step 1 HWC/LWC;
+  (5) expiry loader with Day-1 page + Day-2 forward rows; (6) e1_report.py printout in the report's section order; (7) e1_pine.py (trident_v8 form + L-39 rendering); (8) render Apr 20-24 DXY in Pinebox, open the frame, compare with the original;
+  (9) other weeks and EURUSD / GBPUSD; (10) morning report for the operator: what matches, what differs and why, the assumptions A1-A3, frames.
+- Assumptions made so far (list for the operator's morning report): A1 strong move = inefficiency gap (journal 21:45). A2 sweep zones from every D1 swing + last-5-day lows/highs, wick test = grade only (journal 22:00). A3 five-role selection of synthesis zones (journal 22:15).
 
 ## STATE (NEWEST) - TASK = TRANSLATE THE PROMPT'S E1 INTO PYTHON (04 L-30..L-34). Read memory/10_FAILURE_RECORD.md first.
 - Done: read E1 first-hand in P533 (lines 802-1163, 1163-1340, 1341-1514) and P452 (637-1205). Pseudocode with line refs: `e1_tool/E1_PSEUDOCODE.md` (committed).
