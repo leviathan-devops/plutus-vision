@@ -1,0 +1,33 @@
+{
+  "url": "https://investinglive.com/forex/eurusd-remains-stuck-in-a-consolidation-awaiting-the-key-us-data-to-pick-a-direction-20260702/",
+  "fetched_at": "2026-11-25T11:17:44Z",
+  "http_status": "200",
+  "bytes": 599562,
+  "published_at": "2026-07-02T11:04:01.138336Z",
+  "published_at_source": "<meta property=\"article:published_time\"> in page HTML (also JSON-LD NewsArticle.datePublished)",
+  "modified_at": "2026-07-03T23:54:56.7679648Z",
+  "title": "EUR/USD remains stuck in a consolidation awaiting the key US data to pick a direction",
+  "author": "Giuseppe Dellamotta",
+  "how_found": "weekly sitemap https://investinglive.com/sitemaps/news/articles/2026-W27.xml (ISO week of 2026-06-29..07-05), entry with <lastmod> <= anchor; index of weekly sitemaps at https://investinglive.com/articles-sitemap-index.xml",
+  "images": [
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/EURUSD_id_e2f3fc15-a97b-46a6-953d-3b515258cd77_size900.jpeg",
+      "file": "investinglive_forex_eurusd-remains-stuck-in-a-consolidation-awaiting-the-key-us-data-to-pick-a-direction-20260702__EURUSD_id_e2f3fc15-a97b-46a6-953d-3b515258cd77_size900.jpeg",
+      "http_status": "200",
+      "bytes": 103831
+    },
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/EURUSD_id_65fa432c-d650-4852-9ea4-18dc102dbf4a_size900.jpeg",
+      "file": "investinglive_forex_eurusd-remains-stuck-in-a-consolidation-awaiting-the-key-us-data-to-pick-a-direction-20260702__EURUSD_id_65fa432c-d650-4852-9ea4-18dc102dbf4a_size900.jpeg",
+      "http_status": "200",
+      "bytes": 103657
+    },
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/EURUSD_id_baa30671-5cfa-44a1-8da3-76eac757121c_size900.jpeg",
+      "file": "investinglive_forex_eurusd-remains-stuck-in-a-consolidation-awaiting-the-key-us-data-to-pick-a-direction-20260702__EURUSD_id_baa30671-5cfa-44a1-8da3-76eac757121c_size900.jpeg",
+      "http_status": "200",
+      "bytes": 104560
+    }
+  ],
+  "fetch_method": "curl, desktop Chrome User-Agent, no cookies, 1 GET"
+}

@@ -1,0 +1,63 @@
+// PLUTUS VISION memory graph: typed ontology for tools/mem (OmniGraph .pg, binary 0.16.0).
+// The graph is a derived mirror of memory/*.md + memory/graph_log.jsonl (the repo is the truth).
+// Lint:  omnigraph lint --schema tools/mem/schema.pg --query tools/mem/queries.gq
+
+// Shared shape of every memory record. `title` and `body` carry a full-text index.
+// (0.16.0 grammar: a type annotation goes between the node name and `implements`.)
+interface Memory {
+  id: String @key
+  title: String @index
+  body: String @index
+  source: String? @description("Where it came from: memory/<file>.md#<heading>, or the --source of `mem add`")
+  date: Date? @description("Calendar day the record was made or measured, when known")
+  tags: [String]?
+}
+
+node Fact
+    @instruction("A durable fact: a canon constant, a measured number, an engine quirk, a state or journal line.")
+    implements Memory {}
+
+node Decision
+    @instruction("One decision: what, why, and the alternatives rejected.")
+    implements Memory {}
+
+node Lesson
+    @instruction("A mistake or measured surprise, and what to do differently.")
+    implements Memory {}
+
+node Ruling
+    @instruction("An operator instruction or answer. Binding; do not renegotiate.")
+    implements Memory {}
+
+node Task
+    @instruction("A unit of work, a next step or an open question, with its done-when.")
+    implements Memory {}
+
+node Evidence
+    @instruction("Something that was looked at: a frame, a measurement, a command output, with expectation and verdict.")
+    implements Memory {}
+
+node Artifact
+    @instruction("A file or deliverable: a memory file, a script, a digest, an indicator source.")
+    implements Memory {}
+
+// Index card: one per memory record, same id as the typed node. Edge endpoints must name
+// one node type (an interface endpoint is refused: "edge has an unresolved endpoint"), so
+// every edge joins two Entry cards and can therefore link any type to any type.
+// `text` = title + body + tags + source + id: one BM25 corpus across all seven types.
+node Entry
+    @instruction("Search and link card of a memory record. Read the typed node of `kind` for the full fields.")
+{
+  id: String @key
+  kind: enum(Fact, Decision, Lesson, Ruling, Task, Evidence, Artifact) @index
+  title: String
+  snippet: String @description("First 200 characters of the body")
+  text: String @index
+}
+
+// Keyed on the endpoint pair, so linking twice leaves one edge.
+edge Supports: Entry -> Entry { @key(@src, @dst) }    // from backs up / justifies to
+edge Supersedes: Entry -> Entry { @key(@src, @dst) }  // from replaces to
+edge About: Entry -> Entry { @key(@src, @dst) }       // from refers to / concerns to
+edge Blocks: Entry -> Entry { @key(@src, @dst) }      // to cannot proceed until from is resolved
+edge Evidences: Entry -> Entry { @key(@src, @dst) }   // from is the observation that proves to

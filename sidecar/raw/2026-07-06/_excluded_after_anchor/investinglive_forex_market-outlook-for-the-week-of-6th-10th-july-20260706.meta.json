@@ -1,0 +1,14 @@
+{
+  "url": "https://investinglive.com/forex/market-outlook-for-the-week-of-6th-10th-july-20260706/",
+  "fetched_at": "2026-11-25T11:18:19Z",
+  "http_status": "200",
+  "bytes": 590860,
+  "published_at": "2026-07-06T06:55:49.2730060Z",
+  "published_at_source": "<meta property=\"article:published_time\"> in page HTML (also JSON-LD NewsArticle.datePublished)",
+  "modified_at": "2026-07-08T11:25:52.1382998Z",
+  "title": "Market outlook for the week of 6th-10th July",
+  "author": "Gina Constantin",
+  "how_found": "weekly sitemap 2026-W28.xml; <lastmod> 2026-07-06T06:55Z is AFTER the 06:00Z anchor -> kept only as a boundary example, NOT admissible input",
+  "images": [],
+  "fetch_method": "curl, desktop Chrome User-Agent, no cookies, 1 GET"
+}

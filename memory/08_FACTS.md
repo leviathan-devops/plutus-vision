@@ -55,3 +55,37 @@
 - POI tier: IP zone overlapping a 4H BoM (0X-1X) = Tier 1; IP only = Tier 2; 4H only = Tier 3.
 - Pairs run their OWN full pipeline on their own price; DXY gives direction only (SP:101, 3313, 3639). Pip: DXY 0.01, pairs 0.0001.
 - PLACEHOLDERS in v5.3.3 ("unchanged from v4.5.2"): P5 steps 0g/0h/1-5, P6, P7, P8 core, P9 -> full text in the v4.5.2 prompt on the handover branch.
+
+## Pine engine facts (TESTED 2026-11-25 with indicator/probes/probe1.pine through the station /model route)
+- Engine: `@luxalgo/vela-pinets` PineEngine in the station (:9741). IDE page and Backtest room both call POST /model {source, instanceId, bars, market, inputs}. Client timeout 90 s (charts/station-engine.js TIMEOUT_MS). Max 20000 bars, 8 MB model.
+- WORKS: UDT (`type`), arrays of UDT, `for x in arr`, `var`, input.int/string/time (inputs are passed in the /model body), timeframe.change("W"/"D"), hour()/dayofweek() with "America/New_York",
+  box.new with xloc.bar_time + text, label.new, line.new extend, plot, str.format, syminfo.mintick (0.01 on DXY). 5000 1H bars = 42 weeks; probe ran in 1.4 s.
+- DOES NOT WORK: `request.security` returns NaN for "D", "W", "240" (no higher-timeframe or other-symbol data) -> ALL higher-timeframe bars (4H, D, W) must be aggregated in-script from chart bars. No cross-symbol data (a EURUSD chart cannot read DXY).
+- Tables do not paint (earlier session). `pinebox shot --section plot` refuses on the Backtest tab (use full).
+- Sealed V1 (`indicator/plutus-vision-v1.sealed.pine`, sha256 0d20e8314ce992fc...) execution time is ~quadratic in bars: 2500 bars 9.6 s, 5000 bars 37 s, 8750 bars 81 s (this container).
+  The Backtest room feeds ALL bars up to the replay cursor (8751 at Jul 6 2026) -> V1 alone sits at the 90 s timeout there and paints nothing (frame bt_004). Weeks before ~May 2026 fit; later weeks time out in the room on this machine.
+- V1 at the Jul 6 06:00 anchor (probe, 8750 bars): 65 boxes incl. demand 100.603-100.746 and supply 101.396-101.444, 101.658-101.746 (match the operator's hand-drawn 1H BoM demand ~100.65-100.74 and 4H BoM supply ~101.33-101.44).
+- Preflight tool: `tools/pine-probe.py FILE --pair DXY --tf 1H --limit N --until 2026-07-06T06:00` (never a success gate). Chart helper: `tools/pb goto FROM TO [bt]`, `tools/pb shot NAME [chart|plot|full]`, `tools/pb load FILE PAIR TF`, `tools/pb eval JS`.
+- TV 4H bars in the store start at 22:00 UTC Sunday in winter (17:00 New York) -> 4H buckets are New-York-17:00 aligned (17, 21, 01, 05, 09, 13 NY).
+
+## E1 ORACLES (from context_management/oracle/REPORT_ORACLES.md — ranked there; read sections 4.2, 4.9, 4.11)
+- BEST E1 oracle: week 2026-11-09 DXY, operator-approved SIX zones ("DO NOT ADD ANY MORE ZONES THESE 6 ARE CORRECT ... 3 4 AND 5 NEED REFINEMENT. 1 2 AND 6 ARE CORRECT"):
+  1) 102.437-102.535 CORRECT  2) 102.205-102.354 CORRECT (contains Fri close 102.279, prior wk high 102.358)  3) 101.700-101.840 REFINE (too wide; core "from where price traded")
+  4) 101.933-102.061 REFINE core 101.97-102.01  5) 101.453-101.601 REFINE core 101.49-101.53  6) 100.986-101.099 CORRECT (prior wk low 101.099 = its top).
+  Prior week H 102.358 L 101.099 C 102.279. NOTE (mine): all six sit on DXY quarter figures 102.50 / 102.25 / 102.00 / 101.75 / 101.50 / 101.00. Store has no bars after Nov 6 -> zone-match only, no reaction check.
+- GRADED report: week 2026-04-20 DXY (v4.5.2, zones graded A/A+ in the post-mortem). Prior week H 99.18 L 97.63 C 98.10. Zones:
+  RESISTANCE CEILING 99.16-99.23 HEAVY 10 (weekly R1 + repeated high 99.18 + round) A+ · UPPER RESISTANCE 98.77-98.99 MOD-HEAVY 8 (daily R1 + 4H BoM supply + fib 38.2) A ·
+  EQUILIBRIUM 98.29-98.41 MOD-HEAVY 9 (repeated high magnet 98.29 3x + daily pivots + prior closes) A+ · MID-RANGE SUPPORT 98.00-98.12 MODERATE 7 (prior closes + daily PP/S1 + round 98.00) A ·
+  KEY SUPPORT BAND 97.63-97.97 HEAVY 11 (LST 97.63 + 4H BoM demand + weekly S2/S3) B/B+ "far too wide ... should be 97.75-97.97 or split"; post-mortem asks cluster threshold 0.10 not 0.15.
+  LSZ: 97.63-97.68, 97.83-97.88, 97.97-98.02, 98.53-98.58 (demand); 98.29-98.34, 99.18-99.23 (supply). Actual week: BUY trend all week (report's SHORT call was wrong). Post-mortem real trades: L 98.02 SL 97.87 TP 98.77; L 98.29 SL 98.185 TP 98.77.
+- Other E1 reports (ungraded): 2026-05-25 DXY Leviathan v4.5.2 (6 zones, E1+E2), 2026-04-27 (12 zones), 2026-05-04 (6 zones), 2026-03-30 W14 (hindsight-contaminated), W22 v5.3.3 (mid-week, corrupt K).
+- GOLDEN WEEK 2026-07-06: no report E1/E2 exists. E3 oracle = operator's golden DXY trades (3-pip tolerance in the old validator):
+  Mon L 100.945 / SL 100.905 / TP 101.115 (SS long @1H LQZ) · Mon S 101.14 / 101.20 / 100.845 (BS short @1H LQZ) · Tue L 100.845 / 100.77 / 101.19 (SS long @1H MoM) ·
+  Wed S 101.19 / 101.25 / 100.975 (SS short @1H LQZ) · Wed L 100.975 / 100.905 / 101.24 (RWL long @1H LQZ) · Wed S 101.235 / 101.33 / 100.68 (BS short @4H BoM) · Thu ladder short (no levels) · Fri WL+RWL (no levels).
+  Shape tags on those trades: Mon SS+BS, Tue SS, Wed SS+RWL+BS, Thu Ladder, Fri WL+RWL. EURUSD: Wed L 1.1402, Wed L 1.13935 (entries only).
+  Prior week (Jun 29-Jul 3) DXY: H 101.595 L 100.558 C 100.878.
+
+## WHY THE PREVIOUS E1 TOOL FAILED (handover section 2.3 — mechanism, do not repeat)
+- It pooled 459 levels (88 pivots, 25 MAs, ...) and formed zones as "the 0.15-wide band holding the most levels". HIGH-DENSITY flagged 450 of 459 levels -> every price is dense -> 23 zones, 21 of them 0.115-0.150 wide (the rule fills the width). Then a render cap hid 17 (banned, R-37).
+- Zone 2 (approved) scored LIGHT because the prior-close / prior-high anchors (Pillar 5 Steps 1-5, the v4.5.2 placeholder) were not implemented and option walls were converted with week-old H.10 rates.
+- Lesson: zones must be seeded by STRUCTURAL ANCHORS scored across dimensions (a pivot/MA/round/option/analyst level scores a dimension when it coincides with the anchor within the canon pip tolerance), not by counting levels in a band. A level with one dimension stays MINIMAL and never becomes a zone. The zone's extent is the confluence itself.

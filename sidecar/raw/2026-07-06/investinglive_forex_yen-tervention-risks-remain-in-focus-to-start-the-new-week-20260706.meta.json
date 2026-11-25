@@ -1,0 +1,21 @@
+{
+  "url": "https://investinglive.com/forex/yen-tervention-risks-remain-in-focus-to-start-the-new-week-20260706/",
+  "fetched_at": "2026-11-25T11:17:28Z",
+  "http_status": "200",
+  "bytes": 587886,
+  "published_at": "2026-07-06T05:03:53.7615440Z",
+  "published_at_source": "<meta property=\"article:published_time\"> in page HTML (also JSON-LD NewsArticle.datePublished)",
+  "modified_at": "2026-07-08T11:25:50.9785103Z",
+  "title": "Yen-tervention risks remain in focus to start the new week",
+  "author": "Justin Low",
+  "how_found": "weekly sitemap https://investinglive.com/sitemaps/news/articles/2026-W28.xml (ISO week of 2026-07-06), entry with <lastmod> <= anchor; index of weekly sitemaps at https://investinglive.com/articles-sitemap-index.xml",
+  "images": [
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/USDJPY%20H1%2006-07_id_a4542412-d260-48aa-8531-cc10f101965b_size900.jpg",
+      "file": "investinglive_forex_yen-tervention-risks-remain-in-focus-to-start-the-new-week-20260706__USDJPY_H1_06-07_id_a4542412-d260-48aa-8531-cc10f101965b_size900.jpg",
+      "http_status": "200",
+      "bytes": 112564
+    }
+  ],
+  "fetch_method": "curl, desktop Chrome User-Agent, no cookies, 1 GET"
+}

@@ -1,0 +1,21 @@
+{
+  "url": "https://investinglive.com/forex/monday-open-fx-indicative-rates-06-july-2026-20260705/",
+  "fetched_at": "2026-11-25T11:18:33Z",
+  "http_status": "200",
+  "bytes": 581580,
+  "published_at": "2026-07-05T19:56:17.8454220Z",
+  "published_at_source": "<meta property=\"article:published_time\"> in page HTML (also JSON-LD NewsArticle.datePublished)",
+  "modified_at": "2026-07-08T11:25:47.2289033Z",
+  "title": "Monday open FX. Indicative rates 06 July 2026",
+  "author": "Eamonn Sheridan",
+  "how_found": "weekly sitemap https://investinglive.com/sitemaps/news/articles/2026-W27.xml (ISO week of 2026-06-29..07-05), entry with <lastmod> <= anchor; index of weekly sitemaps at https://investinglive.com/articles-sitemap-index.xml",
+  "images": [
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/monday%20open%20fx%2006%20July%202026_id_94ab3a64-f3f9-49a7-84dc-df9a573d545d_original.jpg",
+      "file": "investinglive_forex_monday-open-fx-indicative-rates-06-july-2026-20260705__monday_open_fx_06_July_2026_id_94ab3a64-f3f9-49a7-84dc-df9a573d545d_original.jpg",
+      "http_status": "200",
+      "bytes": 18079
+    }
+  ],
+  "fetch_method": "curl, desktop Chrome User-Agent, no cookies, 1 GET"
+}

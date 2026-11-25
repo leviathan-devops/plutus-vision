@@ -1,0 +1,39 @@
+{
+  "url": "https://investinglive.com/technical-analysis/usd-moves-lower-after-the-us-jobs-report-what-are-the-charts-telling-traders-now-20260702/",
+  "fetched_at": "2026-11-25T11:17:35Z",
+  "http_status": "200",
+  "bytes": 592491,
+  "published_at": "2026-07-02T13:14:45.184Z",
+  "published_at_source": "<meta property=\"article:published_time\"> in page HTML (also JSON-LD NewsArticle.datePublished)",
+  "modified_at": "2026-07-03T23:54:57.2870246Z",
+  "title": "USD moves lower after the US jobs report. What are the charts telling traders now?",
+  "author": "Greg Michalowski",
+  "how_found": "weekly sitemap https://investinglive.com/sitemaps/news/articles/2026-W27.xml (ISO week of 2026-06-29..07-05), entry with <lastmod> <= anchor; index of weekly sitemaps at https://investinglive.com/articles-sitemap-index.xml",
+  "images": [
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/USDCHF_id_757107c9-8397-4658-a598-63e027f5fbeb_original.jpg",
+      "file": "investinglive_technical-analysis_usd-moves-lower-after-the-us-jobs-report-what-are-the-charts-telling-traders-now-20260702__USDCHF_id_757107c9-8397-4658-a598-63e027f5fbeb_original.jpg",
+      "http_status": "200",
+      "bytes": 280831
+    },
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/USDCAD_id_b3671bbd-77bb-40fc-a64f-c566ca994c66_original.jpg",
+      "file": "investinglive_technical-analysis_usd-moves-lower-after-the-us-jobs-report-what-are-the-charts-telling-traders-now-20260702__USDCAD_id_b3671bbd-77bb-40fc-a64f-c566ca994c66_original.jpg",
+      "http_status": "200",
+      "bytes": 370794
+    },
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/USDJPY_id_4c67b27d-3130-4c25-8f9f-f946895f2970_original.jpg",
+      "file": "investinglive_technical-analysis_usd-moves-lower-after-the-us-jobs-report-what-are-the-charts-telling-traders-now-20260702__USDJPY_id_4c67b27d-3130-4c25-8f9f-f946895f2970_original.jpg",
+      "http_status": "200",
+      "bytes": 282549
+    },
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/EURUSD_id_3b529e8f-1926-43d8-b9cc-cc060760ac56_original.jpg",
+      "file": "investinglive_technical-analysis_usd-moves-lower-after-the-us-jobs-report-what-are-the-charts-telling-traders-now-20260702__EURUSD_id_3b529e8f-1926-43d8-b9cc-cc060760ac56_original.jpg",
+      "http_status": "200",
+      "bytes": 365919
+    }
+  ],
+  "fetch_method": "curl, desktop Chrome User-Agent, no cookies, 1 GET"
+}

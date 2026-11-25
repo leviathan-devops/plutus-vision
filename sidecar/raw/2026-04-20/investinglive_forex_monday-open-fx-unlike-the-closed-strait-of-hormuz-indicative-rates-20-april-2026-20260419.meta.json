@@ -1,0 +1,21 @@
+{
+  "url": "https://investinglive.com/forex/monday-open-fx-unlike-the-closed-strait-of-hormuz-indicative-rates-20-april-2026-20260419/",
+  "fetched_at": "2026-11-25T11:19:05Z",
+  "http_status": "200",
+  "bytes": 589076,
+  "published_at": "2026-04-19T19:59:43.66Z",
+  "published_at_source": "<meta property=\"article:published_time\"> in page HTML (also JSON-LD NewsArticle.datePublished)",
+  "modified_at": "2026-06-24T13:50:14.2177544Z",
+  "title": "Monday open FX (unlike the closed Strait of Hormuz). Indicative rates 20 April 2026.",
+  "author": "Eamonn Sheridan",
+  "how_found": "weekly sitemap https://investinglive.com/sitemaps/news/articles/2026-W16.xml (ISO week before the anchor week), entry with <lastmod> <= anchor",
+  "images": [
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/usd%20up%20open%20fx%2020%20April%202026_id_7ef411d1-cc80-4dc2-b384-6ff0b8d075e8_original.jpg",
+      "file": "investinglive_forex_monday-open-fx-unlike-the-closed-strait-of-hormuz-indicative-rates-20-april-2026-20260419__usd_up_open_fx_20_April_2026_id_7ef411d1-cc80-4dc2-b384-6ff0b8d075e8_original.jpg",
+      "http_status": "200",
+      "bytes": 15558
+    }
+  ],
+  "fetch_method": "curl, desktop Chrome User-Agent, no cookies, 1 GET"
+}

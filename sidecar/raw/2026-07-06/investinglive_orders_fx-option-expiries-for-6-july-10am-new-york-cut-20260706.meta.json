@@ -1,0 +1,21 @@
+{
+  "url": "https://investinglive.com/Orders/fx-option-expiries-for-6-july-10am-new-york-cut-20260706/",
+  "fetched_at": "2026-11-25T11:17:24Z",
+  "http_status": "200",
+  "bytes": 591607,
+  "published_at": "2026-07-06T05:47:01.4519700Z",
+  "published_at_source": "<meta property=\"article:published_time\"> in page HTML (also JSON-LD NewsArticle.datePublished)",
+  "modified_at": "2026-07-08T11:25:46.2504491Z",
+  "title": "FX option expiries for 6 July 10am New York cut",
+  "author": "Justin Low",
+  "how_found": "weekly sitemap https://investinglive.com/sitemaps/news/articles/2026-W28.xml (ISO week of 2026-07-06), entry with <lastmod> <= anchor; index of weekly sitemaps at https://investinglive.com/articles-sitemap-index.xml",
+  "images": [
+    {
+      "url": "https://investinglive.com/cms/media/migrated/images/FXO%2006-07_id_bf9081e7-3f40-4af4-a5f1-8bbe23206fd7_size900.jpg",
+      "file": "investinglive_orders_fx-option-expiries-for-6-july-10am-new-york-cut-20260706__FXO_06-07_id_bf9081e7-3f40-4af4-a5f1-8bbe23206fd7_size900.jpg",
+      "http_status": "200",
+      "bytes": 102419
+    }
+  ],
+  "fetch_method": "curl, desktop Chrome User-Agent, no cookies, 1 GET"
+}

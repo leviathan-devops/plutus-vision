@@ -1,0 +1,42 @@
+//@version=6
+indicator("probe1", overlay=true, max_boxes_count=500, max_lines_count=500, max_labels_count=500)
+type Zone
+    float top
+    float bot
+    int   t0
+    string name
+var Zone[] zs = array.new<Zone>()
+var float[] fa = array.new_float()
+i_n = input.int(3, "N")
+i_s = input.string("abc", "S")
+i_t = input.time(0, "T")
+// HTF security
+[dH, dL, dC] = request.security(syminfo.tickerid, "D", [high[1], low[1], close[1]], lookahead=barmerge.lookahead_on)
+wH = request.security(syminfo.tickerid, "W", high[1], lookahead=barmerge.lookahead_on)
+h4c = request.security(syminfo.tickerid, "240", close)
+newWeek = timeframe.change("W")
+newDay  = timeframe.change("D")
+nyHour = hour(time, "America/New_York")
+nyDow  = dayofweek(time, "America/New_York")
+isAnchor = nyDow == dayofweek.monday and nyHour == 2 and (nyHour[1] != 2)
+var int nAnch = 0
+var int nWeek = 0
+if newWeek
+    nWeek += 1
+if isAnchor
+    nAnch += 1
+    array.push(fa, close)
+    zs.push(Zone.new(high + syminfo.mintick * 50, high, time, "A" + str.tostring(nAnch)))
+    if zs.size() > 3
+        zs.shift()
+var box[] bx = array.new_box()
+var label[] lb = array.new_label()
+if barstate.islast
+    for b in bx
+        box.delete(b)
+    bx.clear()
+    for z in zs
+        bx.push(box.new(z.t0, z.top, z.t0 + 5 * 24 * 3600 * 1000, z.bot, xloc=xloc.bar_time, bgcolor=color.new(color.red, 70), border_color=color.red, text=z.name, text_color=color.white, text_size=size.small))
+    lb.push(label.new(bar_index, high, str.format("weeks={0} anch={1} dH={2,number,#.###} wH={3,number,#.###} h4c={4,number,#.###} nyH={5} dow={6} n={7} s={8} t={9} mt={10}", nWeek, nAnch, dH, wH, h4c, nyHour, nyDow, i_n, i_s, i_t, syminfo.mintick), style=label.style_label_left, color=color.gray, textcolor=color.white))
+    line.new(bar_index - 100, low, bar_index, low, color=color.yellow, width=2, extend=extend.right)
+plot(ta.ema(close, 50), "ema50", color=color.blue)

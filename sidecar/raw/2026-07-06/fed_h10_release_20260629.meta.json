@@ -1,0 +1,59 @@
+{
+  "url": "https://www.federalreserve.gov/releases/h10/20260629/",
+  "fetched_at": "2026-11-25T11:19:43Z",
+  "http_status": "200",
+  "published_at": "Release Date: June 29, 2026 (as shown on page); the H.10 pages state releases are made Mondays at 4:15 p.m. ET (next business day if Monday is a federal holiday)",
+  "how_found": "https://www.federalreserve.gov/releases/h10/releaseDates.json (the JSON the \"Release Dates\" page /releases/h10/default.htm loads) lists every release date; URL pattern /releases/h10/YYYYMMDD/. Chosen = max(release date) such that release date 16:15 ET < anchor 2026-07-06T06:00Z.",
+  "columns": [
+    "Jun. 22",
+    "Jun. 23",
+    "Jun. 24",
+    "Jun. 25",
+    "Jun. 26"
+  ],
+  "dxy_component_rates": {
+    "EURUSD (USD per EUR)": {
+      "Jun. 22": "1.1432",
+      "Jun. 23": "1.1383",
+      "Jun. 24": "1.1348",
+      "Jun. 25": "1.1385",
+      "Jun. 26": "1.1403"
+    },
+    "USDJPY": {
+      "Jun. 22": "161.5100",
+      "Jun. 23": "161.5500",
+      "Jun. 24": "161.7600",
+      "Jun. 25": "161.6700",
+      "Jun. 26": "161.6700"
+    },
+    "GBPUSD (USD per GBP)": {
+      "Jun. 22": "1.3249",
+      "Jun. 23": "1.3192",
+      "Jun. 24": "1.3160",
+      "Jun. 25": "1.3216",
+      "Jun. 26": "1.3223"
+    },
+    "USDCAD": {
+      "Jun. 22": "1.4167",
+      "Jun. 23": "1.4198",
+      "Jun. 24": "1.4237",
+      "Jun. 25": "1.4191",
+      "Jun. 26": "1.4182"
+    },
+    "USDSEK": {
+      "Jun. 22": "9.6149",
+      "Jun. 23": "9.7300",
+      "Jun. 24": "9.7678",
+      "Jun. 25": "9.7102",
+      "Jun. 26": "9.7112"
+    },
+    "USDCHF": {
+      "Jun. 22": "0.8091",
+      "Jun. 23": "0.8097",
+      "Jun. 24": "0.8126",
+      "Jun. 25": "0.8093",
+      "Jun. 26": "0.8082"
+    }
+  },
+  "fetch_method": "curl, desktop Chrome User-Agent, 1 GET"
+}

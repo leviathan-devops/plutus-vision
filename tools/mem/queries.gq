@@ -1,0 +1,80 @@
+// Read queries used by tools/mem/mem. They also run by hand:
+//   omnigraph query search --query tools/mem/queries.gq --params '{"q":"anchor"}' \
+//     --target /home/user/.plutus-mem/graph.omni --format table
+
+query search($q: String) {
+  match { $e: Entry }
+  return { $e.id as id, $e.kind as kind, $e.title as title, $e.snippet as snippet, bm25($e.text, $q) as score }
+  order { bm25($e.text, $q) }
+  limit 50
+}
+
+query search_kind($q: String, $kind: String) {
+  match {
+    $e: Entry
+    $e.kind = $kind
+  }
+  return { $e.id as id, $e.kind as kind, $e.title as title, $e.snippet as snippet, bm25($e.text, $q) as score }
+  order { bm25($e.text, $q) }
+  limit 50
+}
+
+// Exact, case-sensitive substring: the fallback when the token search finds nothing.
+query grep($q: String) {
+  match {
+    $e: Entry
+    $e.text contains $q
+  }
+  return { $e.id as id, $e.kind as kind, $e.title as title, $e.snippet as snippet }
+  order { $e.id asc }
+  limit 50
+}
+
+query entry($id: String) {
+  match { $e: Entry { id: $id } }
+  return { $e.id as id, $e.kind as kind, $e.title as title }
+}
+
+query get_fact($id: String) { match { $n: Fact { id: $id } } return { $n } }
+query get_decision($id: String) { match { $n: Decision { id: $id } } return { $n } }
+query get_lesson($id: String) { match { $n: Lesson { id: $id } } return { $n } }
+query get_ruling($id: String) { match { $n: Ruling { id: $id } } return { $n } }
+query get_task($id: String) { match { $n: Task { id: $id } } return { $n } }
+query get_evidence($id: String) { match { $n: Evidence { id: $id } } return { $n } }
+query get_artifact($id: String) { match { $n: Artifact { id: $id } } return { $n } }
+
+query edges_out($id: String) {
+  match {
+    $a: Entry { id: $id }
+    $a $w:(supports | supersedes | about | blocks | evidences) $b
+  }
+  return { $w.@type as edge, $b.id as id, $b.kind as kind, $b.title as title }
+}
+
+query edges_in($id: String) {
+  match {
+    $b: Entry { id: $id }
+    $a $w:(supports | supersedes | about | blocks | evidences) $b
+  }
+  return { $w.@type as edge, $a.id as id, $a.kind as kind, $a.title as title }
+}
+
+query list_all() {
+  match { $e: Entry }
+  return { $e.id as id, $e.kind as kind, $e.title as title }
+  order { $e.kind asc, $e.id asc }
+}
+
+query list_kind($kind: String) {
+  match {
+    $e: Entry
+    $e.kind = $kind
+  }
+  return { $e.id as id, $e.kind as kind, $e.title as title }
+  order { $e.id asc }
+}
+
+query counts() {
+  match { $e: Entry }
+  return { $e.kind as kind, count($e) as n }
+}

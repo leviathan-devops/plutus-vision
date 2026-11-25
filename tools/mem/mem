@@ -1,0 +1,729 @@
+#!/usr/bin/env python3
+"""mem - queryable memory graph for PLUTUS VISION (OmniGraph mirror of memory/*.md).
+
+The repo is the source of truth. The graph under /home/user/.plutus-mem is a pure
+function of   memory/*.md  +  memory/graph_log.jsonl  +  tools/mem/schema.pg
+and is rebuilt from them (fresh graph, then swapped in) on every sync, add and link.
+Read verbs (q, get, ls) re-sync by themselves when any of those files changed.
+
+  mem init                                  create /home/user/.plutus-mem + an empty graph
+  mem sync                                  memory/*.md + graph_log.jsonl -> graph
+  mem rebuild                               wipe + init + sync + replay graph_log.jsonl
+  mem add <type> <id> <title> <body> [--tags a,b] [--source s] [--date YYYY-MM-DD]
+  mem link <from> <edge> <to>               edge: supports supersedes about blocks evidences
+  mem q <text> [-n N] [--type T] [--json]   BM25 full-text search
+  mem get <id>... [--json]                  full record + edges in and out
+  mem ls [type]                             ids, types, titles
+  mem status                                backend, paths, counts, freshness
+
+Python stdlib only. Backend: the `omnigraph` CLI (see tools/mem/README.md to install).
+"""
+import argparse
+import datetime
+import fcntl
+import hashlib
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+REPO = Path(os.environ.get("PLUTUS_MEM_REPO", HERE.parent.parent))
+MEMORY = REPO / "memory"
+LOG = MEMORY / "graph_log.jsonl"
+SCHEMA = HERE / "schema.pg"
+QUERIES = HERE / "queries.gq"
+HOME = Path(os.environ.get("PLUTUS_MEM_HOME", "/home/user/.plutus-mem"))
+GRAPH = HOME / "graph.omni"
+STATE = HOME / "state.json"
+
+KINDS = ["Fact", "Decision", "Lesson", "Ruling", "Task", "Evidence", "Artifact"]
+EDGES = {"supports": "Supports", "supersedes": "Supersedes", "about": "About",
+         "blocks": "Blocks", "evidences": "Evidences"}
+NUM_PREFIX = {"Fact": "F", "Decision": "D", "Lesson": "LS", "Ruling": "L",
+              "Task": "T", "Evidence": "EV", "Artifact": "A"}
+TITLE_COLS = ("title", "task", "decision", "lesson", "ruling", "fact", "what it is",
+              "name", "summary", "what")
+
+INSTALL_HELP = """omnigraph binary not found (looked at $OMNIGRAPH_BIN, PATH, ~/.local/bin/omnigraph).
+Install it (release binary, Linux x86_64 / glibc >= 2.39), then run `tools/mem/mem rebuild`:
+  curl -fsSL https://raw.githubusercontent.com/ModernRelay/omnigraph/main/scripts/install.sh | VERSION=v0.16.0 bash
+  export PATH=$HOME/.local/bin:$PATH && omnigraph version"""
+
+
+def die(msg, code=1):
+    print(f"mem: {msg}", file=sys.stderr)
+    raise SystemExit(code)
+
+
+def note(msg):
+    print(f"mem: {msg}", file=sys.stderr)
+
+
+# ---------------------------------------------------------------- omnigraph CLI
+
+def og_bin():
+    for cand in (os.environ.get("OMNIGRAPH_BIN"), shutil.which("omnigraph"),
+                 str(Path.home() / ".local/bin/omnigraph")):
+        if cand and os.access(cand, os.X_OK):
+            return cand
+    die(INSTALL_HELP, 3)
+
+
+def og(*args):
+    proc = subprocess.run([og_bin(), *map(str, args)], capture_output=True, text=True,
+                          env=dict(os.environ, NO_COLOR="1"))
+    if proc.returncode != 0:
+        err = (proc.stderr or proc.stdout).split("BACKTRACE")[0]
+        keep = [ln for ln in err.splitlines()
+                if ln.strip() and not ln.startswith("target ") and "━" not in ln]
+        die(f"omnigraph {args[0]} failed:\n" + "\n".join(keep))
+    return proc.stdout
+
+
+def og_version():
+    return og("version").splitlines()[0].strip()
+
+
+def query(name, **params):
+    out = og("query", name, "--query", QUERIES, "--params", json.dumps(params),
+             "--target", GRAPH, "--json")
+    return json.loads(out)["rows"]
+
+
+class Lock:
+    """One writer at a time (sync, add, link, rebuild)."""
+
+    def __enter__(self):
+        HOME.mkdir(parents=True, exist_ok=True)
+        self.fh = open(HOME / ".lock", "w")
+        fcntl.flock(self.fh, fcntl.LOCK_EX)
+        return self
+
+    def __exit__(self, *exc):
+        fcntl.flock(self.fh, fcntl.LOCK_UN)
+        self.fh.close()
+
+
+# ---------------------------------------------------------------- markdown -> nodes
+
+ISO = re.compile(r"\b(20\d\d-\d\d-\d\d)\b")
+XID = re.compile(r"[A-Z]{1,3}-?\d+")            # explicit ids: T3, D-06, L-13, LS-02, EV-1
+ID_RANGE = re.compile(r"\b([A-Z]{1,3}-?)(\d+)\.\.(?:\1)?(\d+)\b")   # L-06..L-13
+
+
+def squash(s):
+    return " ".join(s.split())
+
+
+def short(s, n=110):
+    s = squash(s)
+    return s if len(s) <= n else s[:n].rsplit(" ", 1)[0] + " ..."
+
+
+def slug(s, words=3):
+    toks = re.findall(r"[a-z0-9]+", s.lower())
+    named = [t for t in toks if not t.isdigit()]
+    return "-".join((named or toks)[:words]) or "top"
+
+
+def valid_date(s):
+    try:
+        datetime.date.fromisoformat(s)
+        return s
+    except (TypeError, ValueError):
+        return None
+
+
+def kind_for_file(name):
+    for key, kind in (("decision", "Decision"), ("lesson", "Lesson"), ("ruling", "Ruling"),
+                      ("task", "Task"), ("evidence", "Evidence")):
+        if key in name:
+            return kind
+    return "Fact"
+
+
+def kind_for_heading(heading, default):
+    """A heading can retype its block: next steps and open questions are Tasks."""
+    h = (heading or "").lower()
+    if "next step" in h:
+        return "Task", ["next-step"]
+    if "open question" in h:
+        return "Task", ["open-question"]
+    if re.search(r"\bto-?do\b", h):
+        return "Task", ["todo"]
+    return default, []
+
+
+def split_row(line):
+    cells, cur, tick, i, s = [], [], False, 0, line.strip()
+    while i < len(s):
+        c = s[i]
+        if c == "\\" and s[i + 1:i + 2] == "|":
+            cur.append("|")
+            i += 2
+            continue
+        if c == "`":
+            tick = not tick
+        if c == "|" and not tick:
+            cells.append("".join(cur).strip())
+            cur = []
+        else:
+            cur.append(c)
+        i += 1
+    cells.append("".join(cur).strip())
+    if cells and cells[0] == "":
+        cells = cells[1:]
+    if cells and cells[-1] == "":
+        cells = cells[:-1]
+    return cells
+
+
+def parse_md(path):
+    """One node per table row, per top-level bullet (with its continuation lines) and
+    per heading block that has prose of its own; the file itself is an Artifact."""
+    rel = f"memory/{path.name}"
+    name = re.sub(r"^\d+[_-]*", "", path.stem).lower()
+    ftag = name.replace("_", "-")
+    default_kind = kind_for_file(name)
+    text = path.read_text(encoding="utf-8")
+    upd = re.search(r"Updated:\s*(20\d\d-\d\d-\d\d)", text)
+    file_date = valid_date(upd.group(1)) if upd else None
+
+    nodes, prose, order = [], {}, []
+    h1, heading, bullet, table, fence = None, None, None, None, False
+
+    def ctx(head):
+        kind, extra = kind_for_heading(head, default_kind)
+        m = ISO.search(head or "")
+        return kind, [ftag] + extra, (valid_date(m.group(1)) if m else None) or file_date, \
+            rel + (f"#{head}" if head else "")
+
+    def emit(kind, nid, title, body, source, date, tags):
+        nodes.append({"kind": kind, "id": nid, "title": title or nid, "body": body or title or nid,
+                      "source": source, "date": date, "tags": tags})
+
+    def flush_bullet():
+        nonlocal bullet
+        if not bullet:
+            return
+        b, bullet = bullet, None
+        kind, tags, date, source = ctx(b["heading"])
+        body = "\n".join(b["lines"])
+        first = b["lines"][0]
+        m = re.match(r"^\**([A-Z]{1,3}-\d+)\**[\s:.)\]-]*(.*)$", first)
+        t = re.match(r"^(\d{1,2}):(\d{2})\s+(.*)$", first)
+        if m:
+            nid, rest = m.group(1), m.group(2)
+        elif t and "journal" in name and date:
+            nid = f"J-{date.replace('-', '')}-{int(t.group(1)):02d}{t.group(2)}"
+            rest = t.group(3)
+        else:
+            digest = hashlib.sha1(squash(body).encode()).hexdigest()[:8]
+            nid, rest = f"{ftag}.{slug(b['heading'] or '')}.{digest}", first
+        d = re.match(r"^\((20\d\d-\d\d-\d\d)\)\s*(.*)$", rest)
+        if d and valid_date(d.group(1)):
+            date, rest = d.group(1), d.group(2)
+        emit(kind, nid, short(rest), body, source, date, tags)
+
+    def row_node(headers, cells, head):
+        kind, tags, date, source = ctx(head)
+        cols = list(zip([h.strip() for h in headers], cells))
+        low = [h.lower() for h, _ in cols]
+        idc = next((i for i, h in enumerate(low) if h in ("id", "#")), None)
+        rid = cols[idc][1].strip("`* ") if idc is not None else ""
+        tcol = next((i for want in TITLE_COLS for i, h in enumerate(low) if h == want), None)
+        if tcol is None:
+            tcol = next((i for i, h in enumerate(low) if i != idc and not
+                         re.search(r"date|time|status|verdict", h)), 0)
+        seq = [tcol] + [i for i in range(len(cols)) if i not in (tcol, idc)]
+        body = "\n".join(f"{cols[i][0]}: {cols[i][1]}" for i in seq if cols[i][1])
+        for i, h in enumerate(low):
+            if re.search(r"date|time", h):
+                m = ISO.search(cols[i][1])
+                date = (valid_date(m.group(1)) if m else None) or date
+            if h in ("status", "verdict"):
+                w = re.findall(r"[a-z0-9]+", cols[i][1].lower())
+                tags = tags + w[:1]
+        if re.fullmatch(r"[A-Za-z]{1,3}-?\d+", rid):
+            nid = rid
+        elif rid.isdigit():
+            nid = f"{NUM_PREFIX[kind]}-{rid}"
+        else:
+            nid = f"{ftag}.{slug(head or '')}.{hashlib.sha1(squash(body).encode()).hexdigest()[:8]}"
+        emit(kind, nid, short(cols[tcol][1]), body, source, date, tags)
+
+    for raw in text.splitlines():
+        line = raw.rstrip()
+        if line.lstrip().startswith("```"):
+            fence = not fence
+        if fence or line.lstrip().startswith("```"):
+            if bullet:
+                bullet["lines"].append(line.strip())
+            else:
+                prose.setdefault(heading, []).append(line.strip())
+            continue
+        m = re.match(r"^(#{1,6})\s+(.*)$", line)
+        if m:
+            flush_bullet()
+            table = None
+            if len(m.group(1)) == 1 and h1 is None:
+                h1 = m.group(2).strip()
+            else:
+                heading = m.group(2).strip()
+                order.append(heading)
+            continue
+        if line.startswith("|"):
+            flush_bullet()
+            cells = split_row(line)
+            if table is None:
+                table = cells
+            elif not all(re.fullmatch(r":?-{2,}:?", c) or c == "" for c in cells):
+                row_node(table, cells, heading)
+            continue
+        table = None
+        if not line.strip():
+            flush_bullet()
+            continue
+        m = re.match(r"^([-*+]|\d+[.)])\s+(.*)$", line)
+        if m:
+            flush_bullet()
+            bullet = {"lines": [m.group(2)], "heading": heading}
+        elif bullet and line[0] in " \t":
+            bullet["lines"].append(line.strip())
+        else:
+            flush_bullet()
+            prose.setdefault(heading, []).append(line.strip())
+    flush_bullet()
+
+    for head, lines in prose.items():
+        if head is None or not any(lines):
+            continue
+        kind, tags, date, source = ctx(head)
+        emit(kind, f"{ftag}.{slug(head, 4)}", short(head), "\n".join(lines), source, date, tags)
+
+    intro = "\n".join(prose.get(None, []))
+    sections = ("Sections: " + "; ".join(order)) if order else ""
+    emit("Artifact", rel, short(h1 or path.name),
+         "\n".join(x for x in (intro, sections) if x) or f"Memory file {rel}",
+         rel, file_date, ["memory-file", ftag])
+    return nodes
+
+
+# ---------------------------------------------------------------- repo -> graph state
+
+def read_log(warns):
+    if not LOG.exists():
+        return []
+    recs = []
+    for n, line in enumerate(LOG.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            rec = json.loads(line)
+            assert isinstance(rec, dict) and rec.get("op") in ("add", "link")
+        except (ValueError, AssertionError):
+            warns.append(f"graph_log.jsonl line {n}: not an add/link record, skipped")
+            continue
+        recs.append((n, rec))
+    return recs
+
+
+def mentions(text):
+    found = set(re.findall(r"\b" + XID.pattern + r"\b", text))
+    for m in ID_RANGE.finditer(text):
+        lo, hi, width = int(m.group(2)), int(m.group(3)), len(m.group(2))
+        if 0 < hi - lo <= 200:
+            found |= {f"{m.group(1)}{k:0{width}d}" for k in range(lo, hi + 1)}
+    return found
+
+
+def build_state():
+    """(nodes by id, sorted edge triples, warnings, ids owned by the markdown)."""
+    warns, nodes = [], {}
+    for path in sorted(MEMORY.glob("*.md")):
+        for node in parse_md(path):
+            nid, k = node["id"], 2
+            while nid in nodes:
+                nid, k = f"{node['id']}.{k}", k + 1
+            if nid != node["id"]:
+                warns.append(f"{path.name}: id {node['id']} already used, stored as {nid}")
+                node["id"] = nid
+            nodes[nid] = node
+    md_ids = set(nodes)
+
+    links = []
+    for n, rec in read_log(warns):
+        if rec["op"] == "link":
+            links.append((n, rec))
+            continue
+        kind = norm_kind(rec.get("type"), fatal=False)
+        nid = rec.get("id")
+        if not kind or not nid or not isinstance(nid, str):
+            warns.append(f"graph_log.jsonl line {n}: add needs a known type and an id, skipped")
+        elif nid in md_ids:
+            warns.append(f"graph_log.jsonl line {n}: id {nid} is owned by memory/*.md, skipped")
+        else:
+            title = str(rec.get("title") or nid)
+            nodes[nid] = {"kind": kind, "id": nid, "title": title,
+                          "body": str(rec.get("body") or title),
+                          "source": rec.get("source") or "mem add",
+                          "date": valid_date(rec.get("date")),
+                          "tags": [str(t) for t in rec.get("tags") or []]}
+
+    edges = set()
+    explicit = {i for i in nodes if XID.fullmatch(i)}
+    for node in nodes.values():       # a record that cites an explicit id is About it
+        for ref in mentions(node["title"] + "\n" + node["body"]) & explicit:
+            if ref != node["id"]:
+                edges.add(("About", node["id"], ref))
+    for n, rec in links:
+        edge = EDGES.get(str(rec.get("edge", "")).lower())
+        src, dst = rec.get("from"), rec.get("to")
+        if not edge:
+            warns.append(f"graph_log.jsonl line {n}: unknown edge {rec.get('edge')!r}, skipped")
+        elif src not in nodes or dst not in nodes:
+            missing = src if src not in nodes else dst
+            warns.append(f"graph_log.jsonl line {n}: link {src} {rec.get('edge')} {dst} skipped, "
+                         f"{missing} no longer exists")
+        else:
+            edges.add((edge, src, dst))
+    return nodes, sorted(edges), warns, md_ids
+
+
+def to_jsonl(nodes, edges):
+    node_lines, edge_lines = [], []
+    for n in nodes.values():
+        data = {"id": n["id"], "title": n["title"], "body": n["body"], "tags": n["tags"]}
+        if n["source"]:
+            data["source"] = n["source"]
+        if n["date"]:
+            data["date"] = n["date"]
+        text = "\n".join([n["title"], n["body"], " ".join(n["tags"]), n["source"] or "", n["id"]])
+        # the analyzer splits on hyphens: also index "hard-coded" as "hardcoded" so "hardcode" finds it
+        joined = {w.replace("-", "") for w in re.findall(r"\b[A-Za-z]+(?:-[A-Za-z]+)+\b", text)}
+        text += "\n" + " ".join(sorted(joined))
+        card = {"id": n["id"], "kind": n["kind"], "title": n["title"],
+                "snippet": squash(n["body"])[:200], "text": text}
+        node_lines.append(json.dumps({"type": n["kind"], "data": data}, ensure_ascii=False))
+        node_lines.append(json.dumps({"type": "Entry", "data": card}, ensure_ascii=False))
+    for edge, src, dst in edges:
+        edge_lines.append(json.dumps({"edge": edge, "from": src, "to": dst}, ensure_ascii=False))
+    return node_lines, edge_lines
+
+
+def fingerprint():
+    h = hashlib.sha256()          # this script is hashed too: a parser change forces a re-sync
+    for f in [Path(__file__).resolve(), SCHEMA, *sorted(MEMORY.glob("*.md")), LOG]:
+        h.update(f.name.encode() + b"\0")
+        h.update(f.read_bytes() if f.exists() else b"")
+        h.update(b"\0")
+    return h.hexdigest()
+
+
+def read_state():
+    try:
+        return json.loads(STATE.read_text())
+    except (OSError, ValueError):
+        return {}
+
+
+def do_sync():
+    """Build a fresh graph from the repo beside the live one, then swap it in.
+    Caller holds the lock. A failed load leaves the live graph untouched."""
+    nodes, edges, warns, _ = build_state()
+    node_lines, edge_lines = to_jsonl(nodes, edges)
+    HOME.mkdir(parents=True, exist_ok=True)
+    (HOME / "last_sync.jsonl").write_text("\n".join(node_lines + edge_lines) + "\n", encoding="utf-8")
+    new = HOME / f"graph.omni.new.{os.getpid()}"
+    old = HOME / f"graph.omni.old.{os.getpid()}"
+    part = HOME / f"load.{os.getpid()}.jsonl"
+    shutil.rmtree(new, ignore_errors=True)
+    try:
+        og("init", "--schema", SCHEMA, new)
+        for lines in (node_lines, edge_lines):          # nodes first: edges need their endpoints
+            for i in range(0, len(lines), 4000):        # one load stages <= 8192 rows per type
+                part.write_text("\n".join(lines[i:i + 4000]) + "\n", encoding="utf-8")
+                og("load", "--data", part, "--mode", "append", "--target", new)
+    except BaseException:
+        shutil.rmtree(new, ignore_errors=True)
+        raise
+    finally:
+        part.unlink(missing_ok=True)
+    if GRAPH.exists():
+        GRAPH.rename(old)
+    new.rename(GRAPH)
+    shutil.rmtree(old, ignore_errors=True)
+
+    kinds, etypes = {}, {}
+    for n in nodes.values():
+        kinds[n["kind"]] = kinds.get(n["kind"], 0) + 1
+    for e in edges:
+        etypes[e[0]] = etypes.get(e[0], 0) + 1
+    summary = {"fingerprint": fingerprint(), "synced_at": now_utc(), "nodes": len(nodes),
+               "edges": len(edges), "kinds": kinds, "edge_types": etypes, "warnings": warns,
+               "backend": og_version()}
+    STATE.write_text(json.dumps(summary, indent=1))
+    return summary
+
+
+def print_summary(s, verb="synced"):
+    kinds = ", ".join(f"{k} {s['kinds'][k]}" for k in KINDS if k in s["kinds"])
+    etypes = ", ".join(f"{k} {v}" for k, v in sorted(s["edge_types"].items())) or "none"
+    print(f"{verb} {s['nodes']} nodes ({kinds}) and {s['edges']} edges ({etypes})")
+    print(f"graph: {GRAPH}  [{s['backend']}]")
+    for w in s["warnings"]:
+        note(f"warning: {w}")
+
+
+def ensure_fresh():
+    """Read verbs call this: rebuild the graph when the repo side has changed."""
+    if os.environ.get("MEM_NOSYNC") and GRAPH.exists():
+        return
+    if GRAPH.exists() and read_state().get("fingerprint") == fingerprint():
+        return
+    with Lock():
+        if GRAPH.exists() and read_state().get("fingerprint") == fingerprint():
+            return
+        s = do_sync()
+        note(f"graph was stale or missing; re-synced {s['nodes']} nodes, {s['edges']} edges from the repo")
+        for w in s["warnings"]:
+            note(f"warning: {w}")
+
+
+def now_utc():
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def norm_kind(value, fatal=True):
+    for k in KINDS:
+        if isinstance(value, str) and value.lower() == k.lower():
+            return k
+    if fatal:
+        die(f"unknown type {value!r}; one of: {', '.join(k.lower() for k in KINDS)}", 2)
+    return None
+
+
+def append_and_sync(rec):
+    """Append one record to memory/graph_log.jsonl and rebuild; undo the append if the
+    rebuild fails, so the log never holds a line the graph refused."""
+    MEMORY.mkdir(parents=True, exist_ok=True)
+    size = LOG.stat().st_size if LOG.exists() else None
+    with open(LOG, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    try:
+        return do_sync()
+    except BaseException:
+        if size is None:
+            LOG.unlink(missing_ok=True)
+        else:
+            with open(LOG, "r+b") as fh:
+                fh.truncate(size)
+        note("write rolled back: memory/graph_log.jsonl is unchanged")
+        raise
+
+
+# ---------------------------------------------------------------- verbs
+
+def cmd_init(a):
+    version = og_version()
+    with Lock():
+        if GRAPH.exists() and not a.force:
+            print(f"already initialised: {GRAPH}  [{version}]")
+            return
+        shutil.rmtree(GRAPH, ignore_errors=True)
+        STATE.unlink(missing_ok=True)
+        og("init", "--schema", SCHEMA, GRAPH)
+    print(f"initialised empty graph: {GRAPH}  [{version}]")
+    print("next: tools/mem/mem sync")
+
+
+def cmd_sync(a):
+    with Lock():
+        print_summary(do_sync())
+
+
+def cmd_rebuild(a):
+    with Lock():
+        shutil.rmtree(GRAPH, ignore_errors=True)
+        STATE.unlink(missing_ok=True)
+        og("init", "--schema", SCHEMA, GRAPH)
+        print_summary(do_sync(), verb="rebuilt")
+
+
+def cmd_add(a):
+    kind = norm_kind(a.type)
+    if not re.fullmatch(r"[^\s\"\\]{1,120}", a.id):
+        die("id must be 1-120 characters without spaces, quotes or backslashes", 2)
+    if not a.title.strip():
+        die("title must not be empty", 2)
+    date = a.date or datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+    if not valid_date(date):
+        die(f"--date {date!r} is not a calendar date (YYYY-MM-DD)", 2)
+    tags = [t.strip() for t in (a.tags or "").split(",") if t.strip()]
+    rec = {"op": "add", "ts": now_utc(), "type": kind, "id": a.id, "title": a.title,
+           "body": a.body, "tags": tags, "source": a.source or "mem add", "date": date}
+    with Lock():
+        nodes, _, _, md_ids = build_state()
+        if a.id in md_ids:
+            die(f"id {a.id} comes from {nodes[a.id]['source']}; the markdown is the source of "
+                f"truth, so edit it there or pick another id", 2)
+        verb = "updated" if a.id in nodes else "added"
+        s = append_and_sync(rec)
+    print(f"{verb} {kind} {a.id}  (logged to memory/graph_log.jsonl; graph now {s['nodes']} nodes, "
+          f"{s['edges']} edges)")
+
+
+def cmd_link(a):
+    edge = a.edge.lower()
+    if edge not in EDGES:
+        die(f"unknown edge {a.edge!r}; one of: {', '.join(EDGES)}", 2)
+    with Lock():
+        nodes, edges, _, _ = build_state()
+        for nid in (a.src, a.dst):
+            if nid not in nodes:
+                die(f"no record with id {nid}; `mem ls` lists ids", 2)
+        if (EDGES[edge], a.src, a.dst) in edges:
+            print(f"already linked: {a.src} --{edge}--> {a.dst}  (nothing logged)")
+            return
+        rec = {"op": "link", "ts": now_utc(), "from": a.src, "edge": edge, "to": a.dst}
+        s = append_and_sync(rec)
+    print(f"linked {a.src} [{nodes[a.src]['kind']}] --{edge}--> {a.dst} [{nodes[a.dst]['kind']}]  "
+          f"(logged; graph now {s['edges']} edges)")
+
+
+def cmd_q(a):
+    text = " ".join(a.text).strip()
+    if not text:
+        die("empty query", 2)
+    ensure_fresh()
+    how = "bm25"
+    if a.type:
+        rows = query("search_kind", q=text, kind=norm_kind(a.type))
+    else:
+        rows = query("search", q=text)
+    if not rows:
+        how = "substring"
+        rows = [r for r in query("grep", q=text) if not a.type or r["kind"] == norm_kind(a.type)]
+    rows = rows[:a.n]
+    if a.json:
+        print(json.dumps(rows, indent=1, ensure_ascii=False))
+        return
+    if not rows:
+        print(f"no matches for {text!r}")
+        return
+    for i, r in enumerate(rows, 1):
+        score = f"  score {r['score']:.2f}" if "score" in r else f"  ({how})"
+        print(f"{i:>2}. {r['id']}  [{r['kind']}]{score}")
+        print(f"    {r['title']}")
+        print(f"    > {r['snippet']}")
+
+
+def fetch(nid):
+    card = query("entry", id=nid)
+    if not card:
+        return None
+    kind = card[0]["kind"]
+    rec = query(f"get_{kind.lower()}", id=nid)[0]["n"]
+    rec.pop("@id", None)
+    return {"id": nid, "type": kind, "title": rec.get("title"), "date": rec.get("date"),
+            "tags": rec.get("tags") or [], "source": rec.get("source"), "body": rec.get("body"),
+            "out": query("edges_out", id=nid), "in": query("edges_in", id=nid)}
+
+
+def cmd_get(a):
+    ensure_fresh()
+    found, missing = [], []
+    for nid in a.id:
+        rec = fetch(nid)
+        (found if rec else missing).append(rec or nid)
+    if a.json:
+        print(json.dumps(found, indent=1, ensure_ascii=False))
+    for n, r in enumerate([] if a.json else found):
+        if n:
+            print()
+        print(f"{r['id']}  [{r['type']}]  {r['date'] or 'undated'}  tags: {', '.join(r['tags']) or '-'}")
+        print(f"title:  {r['title']}")
+        print(f"source: {r['source'] or '-'}")
+        print(r["body"])
+        for e in sorted(r["out"], key=lambda e: (e["edge"], e["id"])):
+            print(f"  --{e['edge'].lower()}--> {e['id']} [{e['kind']}] {e['title']}")
+        for e in sorted(r["in"], key=lambda e: (e["edge"], e["id"])):
+            print(f"  <--{e['edge'].lower()}-- {e['id']} [{e['kind']}] {e['title']}")
+    for nid in missing:
+        note(f"no record with id {nid}")
+    if missing:
+        raise SystemExit(1)
+
+
+def cmd_ls(a):
+    ensure_fresh()
+    rows = query("list_kind", kind=norm_kind(a.type)) if a.type else query("list_all")
+    for r in rows:
+        print(f"{r['id']}  [{r['kind']}]  {r['title']}")
+    note(f"{len(rows)} records")
+
+
+def cmd_status(a):
+    print(f"backend: OmniGraph ({og_version()}) at {og_bin()}")
+    print(f"graph:   {GRAPH}  ({'present' if GRAPH.exists() else 'MISSING - run: tools/mem/mem rebuild'})")
+    print(f"sources: {len(list(MEMORY.glob('*.md')))} files in {MEMORY}, "
+          f"{len(read_log([]))} records in {LOG.name}")
+    s = read_state()
+    if GRAPH.exists() and s:
+        fresh = s.get("fingerprint") == fingerprint()
+        print(f"synced:  {s['synced_at']}  {s['nodes']} nodes, {s['edges']} edges  "
+              f"({'up to date' if fresh else 'STALE - the next read or `mem sync` refreshes it'})")
+        if fresh:
+            live = {r["kind"]: r["n"] for r in query("counts")}
+            print("live:    " + ", ".join(f"{k} {live[k]}" for k in KINDS if k in live))
+        for w in s.get("warnings", []):
+            print(f"warning: {w}")
+
+
+def main():
+    p = argparse.ArgumentParser(prog="mem", description=__doc__,
+                                formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = p.add_subparsers(dest="cmd", required=True)
+    s = sub.add_parser("init", help="create the local graph (outside the repo)")
+    s.add_argument("--force", action="store_true", help="replace an existing graph with an empty one")
+    s.set_defaults(fn=cmd_init)
+    sub.add_parser("sync", help="memory/*.md + graph_log.jsonl -> graph").set_defaults(fn=cmd_sync)
+    sub.add_parser("rebuild", help="wipe, init, sync, replay graph_log.jsonl").set_defaults(fn=cmd_rebuild)
+    s = sub.add_parser("add", help="add or update a record (also appended to memory/graph_log.jsonl)")
+    s.add_argument("type", help="fact decision lesson ruling task evidence artifact")
+    s.add_argument("id")
+    s.add_argument("title")
+    s.add_argument("body")
+    s.add_argument("--tags", help="comma separated")
+    s.add_argument("--source")
+    s.add_argument("--date", help="YYYY-MM-DD (default: today, UTC)")
+    s.set_defaults(fn=cmd_add)
+    s = sub.add_parser("link", help="add an edge (also appended to memory/graph_log.jsonl)")
+    s.add_argument("src", metavar="from")
+    s.add_argument("edge", help=" ".join(EDGES))
+    s.add_argument("dst", metavar="to")
+    s.set_defaults(fn=cmd_link)
+    s = sub.add_parser("q", help="full-text (BM25) search")
+    s.add_argument("text", nargs="+")
+    s.add_argument("-n", type=int, default=10, help="max results (default 10, cap 50)")
+    s.add_argument("--type", help="restrict to one type")
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(fn=cmd_q)
+    s = sub.add_parser("get", help="full record with its edges")
+    s.add_argument("id", nargs="+")
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(fn=cmd_get)
+    s = sub.add_parser("ls", help="list ids, types and titles")
+    s.add_argument("type", nargs="?")
+    s.set_defaults(fn=cmd_ls)
+    sub.add_parser("status", help="backend, paths, counts, freshness").set_defaults(fn=cmd_status)
+    a = p.parse_args()
+    a.fn(a)
+
+
+if __name__ == "__main__":
+    main()

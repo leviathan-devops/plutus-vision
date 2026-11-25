@@ -1,0 +1,59 @@
+{
+  "url": "https://www.federalreserve.gov/releases/h10/20260413/",
+  "fetched_at": "2026-11-25T11:19:43Z",
+  "http_status": "200",
+  "published_at": "Release Date: April 13, 2026 (as shown on page); the H.10 pages state releases are made Mondays at 4:15 p.m. ET (next business day if Monday is a federal holiday)",
+  "how_found": "https://www.federalreserve.gov/releases/h10/releaseDates.json (the JSON the \"Release Dates\" page /releases/h10/default.htm loads) lists every release date; URL pattern /releases/h10/YYYYMMDD/. Chosen = max(release date) such that release date 16:15 ET < anchor 2026-04-20T06:00Z.",
+  "columns": [
+    "Apr. 6",
+    "Apr. 7",
+    "Apr. 8",
+    "Apr. 9",
+    "Apr. 10"
+  ],
+  "dxy_component_rates": {
+    "EURUSD (USD per EUR)": {
+      "Apr. 6": "1.1545",
+      "Apr. 7": "1.1571",
+      "Apr. 8": "1.1686",
+      "Apr. 9": "1.1706",
+      "Apr. 10": "1.1723"
+    },
+    "USDJPY": {
+      "Apr. 6": "159.7100",
+      "Apr. 7": "159.9000",
+      "Apr. 8": "158.3900",
+      "Apr. 9": "158.8700",
+      "Apr. 10": "159.2200"
+    },
+    "GBPUSD (USD per GBP)": {
+      "Apr. 6": "1.3235",
+      "Apr. 7": "1.3240",
+      "Apr. 8": "1.3439",
+      "Apr. 9": "1.3443",
+      "Apr. 10": "1.3460"
+    },
+    "USDCAD": {
+      "Apr. 6": "1.3913",
+      "Apr. 7": "1.3905",
+      "Apr. 8": "1.3851",
+      "Apr. 9": "1.3807",
+      "Apr. 10": "1.3828"
+    },
+    "USDSEK": {
+      "Apr. 6": "9.4257",
+      "Apr. 7": "9.5237",
+      "Apr. 8": "9.3034",
+      "Apr. 9": "9.2789",
+      "Apr. 10": "9.2651"
+    },
+    "USDCHF": {
+      "Apr. 6": "0.7979",
+      "Apr. 7": "0.7997",
+      "Apr. 8": "0.7899",
+      "Apr. 9": "0.7889",
+      "Apr. 10": "0.7893"
+    }
+  },
+  "fetch_method": "curl, desktop Chrome User-Agent, 1 GET"
+}

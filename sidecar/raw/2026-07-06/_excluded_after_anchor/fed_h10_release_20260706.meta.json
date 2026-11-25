@@ -1,0 +1,59 @@
+{
+  "url": "https://www.federalreserve.gov/releases/h10/20260706/",
+  "fetched_at": "2026-11-25T11:19:43Z",
+  "http_status": "200",
+  "published_at": "Release Date: July 6, 2026 (as shown on page); the H.10 pages state releases are made Mondays at 4:15 p.m. ET (next business day if Monday is a federal holiday)",
+  "how_found": "https://www.federalreserve.gov/releases/h10/releaseDates.json (the JSON the \"Release Dates\" page /releases/h10/default.htm loads) lists every release date; URL pattern /releases/h10/YYYYMMDD/. Released 2026-07-06 16:15 ET = 20:15Z, AFTER the anchor -> NOT admissible; kept to show what the as-of filter must reject.",
+  "columns": [
+    "Jun. 29",
+    "Jun. 30",
+    "Jul. 1",
+    "Jul. 2",
+    "Jul. 3"
+  ],
+  "dxy_component_rates": {
+    "EURUSD (USD per EUR)": {
+      "Jun. 29": "1.1425",
+      "Jun. 30": "1.1417",
+      "Jul. 1": "1.1384",
+      "Jul. 2": "1.1448",
+      "Jul. 3": "ND"
+    },
+    "USDJPY": {
+      "Jun. 29": "161.9300",
+      "Jun. 30": "162.6100",
+      "Jul. 1": "162.4100",
+      "Jul. 2": "160.9000",
+      "Jul. 3": "ND"
+    },
+    "GBPUSD (USD per GBP)": {
+      "Jun. 29": "1.3255",
+      "Jun. 30": "1.3259",
+      "Jul. 1": "1.3280",
+      "Jul. 2": "1.3364",
+      "Jul. 3": "ND"
+    },
+    "USDCAD": {
+      "Jun. 29": "1.4210",
+      "Jun. 30": "1.4205",
+      "Jul. 1": "1.4205",
+      "Jul. 2": "1.4182",
+      "Jul. 3": "ND"
+    },
+    "USDSEK": {
+      "Jun. 29": "9.7198",
+      "Jun. 30": "9.7013",
+      "Jul. 1": "9.7215",
+      "Jul. 2": "9.6567",
+      "Jul. 3": "ND"
+    },
+    "USDCHF": {
+      "Jun. 29": "0.8081",
+      "Jun. 30": "0.8082",
+      "Jul. 1": "0.8086",
+      "Jul. 2": "0.8022",
+      "Jul. 3": "ND"
+    }
+  },
+  "fetch_method": "curl, desktop Chrome User-Agent, 1 GET"
+}
