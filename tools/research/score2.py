@@ -122,3 +122,79 @@ if __name__ == '__main__':
     show('W14 report bands', W14)
     cur = {(p, w['week']): [(z['bot'], z['top']) for z in w['cur_zones']] for p in S.SYM for w in S.levels(p) if w['week'] in S.DEV}
     show('rejected engine v1 (14 zones/wk) on DEV', cur)
+
+
+# ───────────────────────────── STRICT scoring (operator, 2026-11-25 evening) ─────────────────────────────
+# He rejected the lenient week verdict: a zone that is sliced by a displacement candle is WRONG even if it reacted once
+# before or was retested after, and a fat rectangle that merely contains candles is not a zone.
+#   PRECISE   : zone height <= 2 x M (M = mean 1H bar range before the anchor) - "candle body edge to wick", not a box of candles
+#   GOOD      : PRECISE, not bunched, and either never SLICED with at least one reaction, or a PIVOT (>= 2 reactions and
+#               at least twice as many reactions as slices - price keeps working it)
+#   BAD       : pierced and left (BAD_SLICED), not PRECISE (BAD_BLOATED), or another drawn zone within M of it (BAD_BUNCHED)
+#   IDLE      : never touched (reported; near = within one mean daily range of the week's extreme)
+#   turn recall: the week's high and low, and every 1H swing turn of at least one mean daily range, lies within M of a drawn zone
+def strict_week(pair, monday, zones):
+    M = bar_noise(pair, monday)
+    adr = daily_range(pair, monday)
+    px = S.post(pair, monday)
+    res = judge_week(pair, monday, zones)
+    zs = sorted(zones)
+    out = []
+    for r in res:
+        h = r['top'] - r['bot']
+        bunched = any((o != (r['bot'], r['top'])) and o[0] - r['top'] < M and r['bot'] - o[1] < M for o in zs)
+        touched = r['first'] in ('REJECT', 'CONSOLIDATE', 'SLICED', 'OPEN', 'PIVOT0')
+        if not touched:
+            v = 'IDLE_NEAR' if r['first'] == 'UNTOUCHED_NEAR' else 'IDLE_FAR'
+        elif h > 2 * M:
+            v = 'BAD_BLOATED'
+        elif bunched:
+            v = 'BAD_BUNCHED'
+        else:
+            nr = sum(x in ('REJECT', 'CONSOLIDATE') for x in r['visits'])
+            ns = r['visits'].count('SLICED')
+            if ns == 0:
+                v = 'GOOD' if nr >= 1 else 'NEUTRAL'
+            elif nr >= 2 and nr >= 2 * ns:
+                v = 'GOOD'            # a pivot: price keeps working it (his middle band, the Oct 5 mid zone)
+            else:
+                v = 'BAD_SLICED'      # pierced and left
+        out.append(dict(r, strict=v, height_in_M=round(h / M, 2)))
+    # swing turns of the week: zigzag on 1H with reversal threshold = mean daily range
+    turns, d, ext = [], 0, px[0]['close']
+    hi = lo = px[0]['close']
+    for b in px:
+        if d >= 0 and b['high'] > hi: hi = b['high']
+        if d <= 0 and b['low'] < lo: lo = b['low']
+        if d >= 0 and hi - b['low'] >= adr:
+            turns.append(hi); d = -1; lo = b['low']
+        elif d <= 0 and b['high'] - lo >= adr:
+            turns.append(lo); d = 1; hi = b['high']
+    turns += [max(b['high'] for b in px), min(b['low'] for b in px)]
+    turns = sorted(set(round(t, 6) for t in turns))
+    caught = sum(any(z[0] - M <= t <= z[1] + M for z in zones) for t in turns)
+    return {'zones': out, 'turns': len(turns), 'caught': caught, 'M': M}
+
+
+def strict_score(maps):
+    t = {k: 0 for k in ('GOOD', 'BAD_SLICED', 'BAD_BLOATED', 'BAD_BUNCHED', 'NEUTRAL', 'IDLE_NEAR', 'IDLE_FAR', 'zones', 'weeks', 'turns', 'caught', 'weeks_90')}
+    for (pair, monday), zones in maps.items():
+        w = strict_week(pair, monday, zones)
+        t['weeks'] += 1; t['turns'] += w['turns']; t['caught'] += w['caught']
+        g = b = 0
+        for z in w['zones']:
+            t[z['strict']] += 1; t['zones'] += 1
+            g += z['strict'] == 'GOOD'; b += z['strict'].startswith('BAD') or z['strict'] == 'IDLE_FAR'
+        t['weeks_90'] += (g + b > 0 and g / (g + b) >= 0.9)
+    bad = t['BAD_SLICED'] + t['BAD_BLOATED'] + t['BAD_BUNCHED']
+    t['accuracy_touched'] = round(t['GOOD'] / max(1, t['GOOD'] + bad), 3)                     # of the zones price came to
+    t['accuracy_drawn'] = round(t['GOOD'] / max(1, t['GOOD'] + bad + t['IDLE_FAR']), 3)       # far idle zones count against
+    t['turn_recall'] = round(t['caught'] / max(1, t['turns']), 3)
+    return t
+
+
+def strict_show(name, maps):
+    t = strict_score(maps)
+    print('%-38s STRICT accuracy %.3f (drawn %.3f) | turns at a zone %.3f | good %3d sliced %3d bloated %3d bunched %3d | idle near %3d far %3d | %.1f zones/wk | weeks>=90%% %d/%d' % (
+        name, t['accuracy_touched'], t['accuracy_drawn'], t['turn_recall'], t['GOOD'], t['BAD_SLICED'], t['BAD_BLOATED'], t['BAD_BUNCHED'], t['IDLE_NEAR'], t['IDLE_FAR'], t['zones'] / max(1, t['weeks']), t['weeks_90'], t['weeks']))
+    return t
