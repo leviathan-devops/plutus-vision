@@ -69,3 +69,14 @@
 - Tier-1 option walls are the one feature that separates zones on first touch (95% vs 75% without a wall).
 - Pinebox had died with the worker restart (pinebox list alive:false) -> pinebox down/up. A stale dump file fooled me for one step: always check the probe printed "/model/boxes" before reading its dump.
 - Sent him: golden week, 4 unseen DXY weeks, 2 EUR/USD, 1 GBP/USD - every frame opened first.
+
+## 2026-11-25 ~21:45 UTC - E1 TOOL build started (e1_tool/), operator asleep, autonomous
+- Written: e1_tool/e1_data.py (TV bar loader, Friday 17:00 NY boundary, daily/weekly aggregation), e1_tool/e1_pillars.py (pivots + checks = Pillar 1; step0f = 4H supply/demand).
+- step0f reading (assumption A1, to report to the operator): a "strong move" = a move that leaves an inefficiency gap between the candle before it and the candle after it (his notes' valid-order-block rule);
+  zone = the candle before it, wick low to wick high; consecutive gaps = one impulse; BoM = first zone after a direction change, MoM = same direction as the previous zone; mitigation = later separate returns (hard if a body enters, else soft).
+- CHECK vs the Apr 20-24 report (DXY, TV candles): BoM Supply 98.884-99.038 @04-13 09:00 (report 98.77-98.99 @04-13) · MoM Supply 98.327-98.414 @04-13 23:00 (report 98.34-98.42 @04-13 20:00)
+  · BoM Demand 97.832-98.092 @04-16 03:00 (report 97.93-98.11 @04-16 00:00). MATCHES the report's structure. Not reproduced yet: the report's "developing" BoM Demand 97.63-97.94 at the Apr 17 low
+  (no gap had formed by Friday's close); mine instead has BoM Supply 98.194-98.291 @04-17 03:00 before Friday's drop. 49 zones in 60 days: the prompt's noise-rejection rules (P452:741-745) still to apply.
+- Data-source difference: TV prior week H 99.183 L 97.632 C 98.226; report (yfinance) C 98.10 -> pivots differ by ~0.05 (PP 98.35 vs 98.30). Logic identical (all four verification checks pass).
+- Sidecar 2026-04-20 has the Friday Apr 17 page's forward rows only; the report used the Monday Apr 20 page (06:08Z). Raw pages are under sidecar/raw/2026-04-20/ (incl. `_boundary_0608Z`).
+- NEXT: Pillar 2 (MA grid), Pillar 5 Step 0/0.45/0.5/0h + anchors, Pillar 6, Pillar 3/8 (K, strike->DXY), Pillar 9 type/range, synthesis (collect, score, cluster, zones per L-39, names, gap scan, 9.7 tiers), report printout, Pine generator, render.

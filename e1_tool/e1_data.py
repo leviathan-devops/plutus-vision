@@ -1,0 +1,72 @@
+"""e1_data.py - the tool's "bundled libraries": TradingView candles (mandatory input, L-32) and the week boundary.
+No price literals. TV 4H bars are stamped 21:00/01:00/05:00/09:00/13:00/17:00 UTC (17:00 New York session start)."""
+import datetime as dt, glob, json, os
+from zoneinfo import ZoneInfo
+
+NY = ZoneInfo('America/New_York')
+SYM = {'DXY': 'TVC_DXY', 'EURUSD': 'FX_EURUSD', 'GBPUSD': 'FX_GBPUSD'}
+PIP = {'DXY': 0.01, 'EURUSD': 0.0001, 'GBPUSD': 0.0001}
+TFMS = {'15': 900000, '30': 1800000, '60': 3600000, '240': 14400000}
+_cache = {}
+
+
+def bars(pair, tf):
+    k = (pair, tf)
+    if k not in _cache:
+        b = []
+        for f in sorted(glob.glob(os.path.expanduser(f'~/.local/share/pinebox/data/tv-bars/{SYM[pair]}/{tf}/*.json'))):
+            b += json.load(open(f))
+        _cache[k] = b
+    return _cache[k]
+
+
+def boundary_ms(monday):
+    """Friday 17:00 New York before the target week = the price-data boundary (report header "Data As-Of"; P533:380)."""
+    d = dt.date.fromisoformat(monday) - dt.timedelta(days=3)
+    return int(dt.datetime(d.year, d.month, d.day, 17, 0, tzinfo=NY).timestamp() * 1000)
+
+
+def closed(pair, tf, monday):
+    """bars of timeframe tf that had closed by the boundary"""
+    b0 = boundary_ms(monday)
+    return [b for b in bars(pair, tf) if b['time'] + TFMS[tf] <= b0]
+
+
+def ts(ms):
+    return dt.datetime.fromtimestamp(ms / 1000, dt.timezone.utc).strftime('%Y-%m-%d %H:%M')
+
+
+def daily(pair, monday):
+    """trading days (17:00 NY to 17:00 NY) from closed 1H bars: list of {date, open, high, low, close}"""
+    out, key, cur = [], None, None
+    for b in closed(pair, '60', monday):
+        t = dt.datetime.fromtimestamp(b['time'] / 1000, NY) + dt.timedelta(hours=7)
+        k = t.date()
+        if k.weekday() >= 5:
+            continue
+        if k != key:
+            if cur:
+                out.append(cur)
+            key, cur = k, {'date': k.isoformat(), 'open': b['open'], 'high': b['high'], 'low': b['low'], 'close': b['close']}
+        else:
+            cur['high'] = max(cur['high'], b['high']); cur['low'] = min(cur['low'], b['low']); cur['close'] = b['close']
+    if cur:
+        out.append(cur)
+    return out
+
+
+def weekly(pair, monday):
+    """completed trading weeks from the daily bars: list of {monday, high, low, close}"""
+    out, key, cur = [], None, None
+    for d in daily(pair, monday):
+        dd = dt.date.fromisoformat(d['date'])
+        k = (dd - dt.timedelta(days=dd.weekday())).isoformat()
+        if k != key:
+            if cur:
+                out.append(cur)
+            key, cur = k, {'monday': k, 'high': d['high'], 'low': d['low'], 'close': d['close']}
+        else:
+            cur['high'] = max(cur['high'], d['high']); cur['low'] = min(cur['low'], d['low']); cur['close'] = d['close']
+    if cur:
+        out.append(cur)
+    return out

@@ -24,6 +24,13 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## BUILD STATUS (update this block as the tool grows) - job spec is memory/11_E1_BUILD_BRIEF.md
+- e1_tool/e1_data.py DONE (bars, boundary, daily, weekly). e1_tool/e1_pillars.py: pillar1 DONE + verified; step0f DONE, matches the report's 4H zones structurally (journal 21:45).
+- TODO in order: Pillar 2 MA grid · Pillar 5 Step 0b/0c/0d/0e, 0.45 LSZ, 0.5 magnets, 0h, anchors · Pillar 6 fib + round numbers · Pillar 3/8 K + strike->DXY from sidecar expiries · Pillar 9 zone type -> ZFP range
+  · synthesis: collect levels, 6-dimension score + bonus, clustering scan, zones (candle structure + levels joined, L-39), names, gap scan 9.5, tier 9.7, 4H noise rejection · report printout (same sections as the report)
+  · Pine generator (trident_v8 form + levels inside zones) · render Apr 20-24 DXY in Pinebox, compare with evidence/trident_v8_original_DXY_1h_apr20_allzones.png · then other weeks / EURUSD / GBPUSD.
+- Assumptions made so far (list for the operator's morning report): A1 strong move = inefficiency gap (see journal 21:45).
+
 ## STATE (NEWEST) - TASK = TRANSLATE THE PROMPT'S E1 INTO PYTHON (04 L-30..L-34). Read memory/10_FAILURE_RECORD.md first.
 - Done: read E1 first-hand in P533 (lines 802-1163, 1163-1340, 1341-1514) and P452 (637-1205). Pseudocode with line refs: `e1_tool/E1_PSEUDOCODE.md` (committed).
 - Reference to reproduce: Leviathan_DXY_IL_Report_Apr20-24_2026.pdf (upload 5212e9bd; pages 1-6 read: option tables, K factor, pivots, 5 IP zones, 4 4H zones with origin candle OHLC, 6 LSZ, clustering scan)
