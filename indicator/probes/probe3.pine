@@ -1,0 +1,24 @@
+//@version=6
+indicator("probe3", overlay=true, max_labels_count=500)
+string TZ = "America/New_York"
+int ts = time + 7 * 3600000
+int dKey = year(ts, TZ) * 10000 + month(ts, TZ) * 100 + dayofmonth(ts, TZ)
+int sDow = dayofweek(ts, TZ)
+bool newDay = dKey != nz(dKey[1], 0)
+bool newWeek = newDay and sDow < nz(sDow[1], 8)
+var int anchorTs = na
+var bool frozen = true
+var string log = ""
+var int nv = 0
+if newWeek
+    anchorTs := timestamp(TZ, year(ts, TZ), month(ts, TZ), dayofmonth(ts, TZ), 2, 0) - (sDow - 2) * 86400000
+    frozen := false
+if not frozen and not na(anchorTs) and time_close > anchorTs
+    frozen := true
+    int asof = nz(time_close[1], time)
+    if asof > anchorTs
+        nv += 1
+        if nv < 6
+            log += "\nV d=" + str.tostring(asof - anchorTs) + " tc-t=" + str.tostring(time_close - time) + " tc1-t1=" + str.tostring(time_close[1] - time[1]) + " " + str.format_time(time, "yyyy-MM-dd HH:mm", TZ) + " prev " + str.format_time(time[1], "yyyy-MM-dd HH:mm", TZ) + " tc1 " + str.format_time(time_close[1], "yyyy-MM-dd HH:mm", TZ) + " anc " + str.format_time(anchorTs, "yyyy-MM-dd HH:mm", TZ) + " sDow " + str.tostring(sDow)
+if barstate.islast
+    label.new(bar_index, high, "nv=" + str.tostring(nv) + log)

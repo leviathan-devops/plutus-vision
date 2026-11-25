@@ -1,0 +1,8 @@
+{
+  "url": "https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/",
+  "fetched_at": "2026-11-25T11:33:10.284Z",
+  "published_at": "JSON-LD NewsArticle.datePublished = 2026-11-24T02:13:00+00:00 ; visible byline = '24/11/2026' / '11/24/2026 2:13:00 PM' ; listing card (tags/us-dollar grid) = 'November 24, 2026 09:13 AM' -- the three do not agree",
+  "how_found": "first 8 server-rendered cards of https://www.forex.com/en-us/news-and-analysis/tags/us-dollar/ (data-initialresponse JSON on the filter-grid widget)",
+  "fetch_method": "headed Chromium via Playwright on Xvfb :7 (curl gets 403 Cloudflare challenge); first document response 403, page rendered after the interstitial cleared by itself",
+  "purpose": "NOT an input for the 2026-07-06 anchor. Probe only: shows how a forex.com article exposes its timestamp and that levels are text/video."
+}

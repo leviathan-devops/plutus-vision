@@ -7,3 +7,7 @@
 - LS-05 Pinebox on a root container: needs iproute2 (`ss`), x11-utils (`xdpyinfo`), Chromium `--no-sandbox` wrapper. `pinebox up` refuses by name; read the token, fix the cause.
 - LS-06 The ECC GateGuard hook denies the first write to a new directory's first file and the first Bash call; siblings pass afterwards. Present the facts once, retry.
 - LS-07 `update_environment` rejects the whole call if one host is unacceptable (web.archive.org / tradingview / bare apex duplicates were in the rejected set). Send a minimal exact list.
+- LS-08 (2026-11-25) Eight parallel high-effort reader agents hit the 5-hour usage limit and four died with nothing written. Run <= 2-3 agents at once, narrow scope, and have each write its file incrementally (partial file first) so a kill leaves something.
+- LS-09 vela-pinets: `x[1]` inside an `if`/function-local block returns x[0]. Read history ONLY at global scope into named series (close1 = close[1]) and use those. The anchor assert caught this; keep the assert forever.
+- LS-10 First Write to a brand-new file path costs a full resend when the gate denies it: first-touch new files with a one-line placeholder, then write the real content.
+- LS-11 Pine `for i = a to b` counts DOWN when a > b. Guard every loop whose bounds can cross.

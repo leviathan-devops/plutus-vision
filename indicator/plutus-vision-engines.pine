@@ -1,0 +1,699 @@
+//@version=6
+indicator("Plutus Vision Engines", "PV-E", overlay = true, max_boxes_count = 500, max_lines_count = 500, max_labels_count = 500)
+
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// PLUTUS VISION — ENGINE LAYER (E1 institutional pressure zones; E2 / E3 are added below E1)
+//
+// LAW OF THIS FILE (enforced by tools/anchor_guard.py and by f_assertAnchor at run time):
+//   1. A week's forecast is computed ONCE, on the first bar that closes after the Monday anchor
+//      (Monday i_anchorHour New York time), from state that holds only bars closed at or before
+//      the anchor. After that the forecast is frozen for the week.
+//   2. No price literal anywhere. Every level is derived from the chart's own bars (or from the
+//      dated weekly data inputs written by the sidecar). The only numbers are the canon's own
+//      tolerances, expressed in PIPS, each with its citation (SP = v5.3.3 prompt, V452 = v4.5.2).
+//   3. No request.security, no negative history offsets, nothing that reads the future.
+//   4. History (x[1]) is read only at global scope: inside a block this engine returns x[0].
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+
+string GRP_A = "Anchor"
+string GRP_V = "Visibility"
+int    i_anchorHour = input.int(2, "Monday anchor hour (New York)", minval = 0, maxval = 23, group = GRP_A)
+int    i_weeks      = input.int(2, "Weeks drawn (active week + N-1 to its left)", minval = 1, maxval = 60, group = GRP_V)
+bool   i_showE1     = input.bool(true, "E1 institutional pressure zones", group = GRP_V)
+bool   i_showSD     = input.bool(false, "E1 4H origin-candle supply/demand (canon Step 0f)", group = GRP_V)
+bool   i_showAudit  = input.bool(false, "E1 audit: text block per week", group = GRP_V)
+
+// ── instrument units: 1 pip = 0.01 on DXY, 0.0001 on a 1.x FX pair (SP:2610, SP:3874) ───────────
+bool   IS_INDEX = str.contains(syminfo.ticker, "DXY") or close > 20
+float  PIP      = IS_INDEX ? 0.01 : 0.0001
+
+// ── canon tolerances, in pips ───────────────────────────────────────────────────────────────
+float  T_EXACT   = 3  * PIP   // "Exact match within 3 pips = 2 pts"                         SP:1059, SP:1469
+float  T_ZONE    = 10 * PIP   // "Zone match within 10 pips = 1 pt"                          SP:1059, SP:1469
+float  T_FIB     = 5  * PIP   // "Fib match within 5 pips"                                   V452:862
+float  T_TIGHT   = 10 * PIP   // "pair of levels within 0.10 = TIGHT CONFLUENCE"             SP:1499
+float  T_CLUSTER = 15 * PIP   // "3+ levels within a 0.15 band = HIGH-DENSITY ZONE"          SP:1499
+float  T_REPEAT  = 5  * PIP   // "two swing lows within 0.05 = repeated level"               SP:1293
+float  T_LSZ     = 5  * PIP   // LSZ band width 0.05                                         SP:1257
+float  T_WICK    = 15 * PIP   // rejection wick >= 0.15 (Step 0b/0c)                         SP:1223
+float  T_WICKMIN = 8  * PIP   // minor swing wick >= 0.08 (Step 0h)                          V452:772
+float  T_H4MOVE  = 50 * PIP   // 4H strong move >= 0.5                                       SP:1352
+float  T_H1MOVE  = 30 * PIP   // 1H base preceding a move >= 0.3 (Step 0g)                   V452:753
+float  T_H4WIDE  = 40 * PIP   // a 4H S/D zone wider than 0.40 is rejected                   SP:1388
+float  T_ROUND   = 25 * PIP   // round grid: .00 .25 .50 .75                                 V452:853
+int    N_D1SCAN  = 90         // 90 D1 bars structural scan                                  SP:1217
+int    N_H4BARS  = 360        // 4H S/D scan: last 60 calendar days = 360 4H bars            SP:1345
+int    N_H4SWING = 126        // 4H swing scan: zones older than 3 weeks drop out (21 d x 6) SP:1390
+
+string TZ = "America/New_York"
+int    SHIFT = 7 * 3600000     // 17:00 New York + 7 h = midnight: the trading day/week roll
+
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// TIME KEYS + HISTORY (global scope only)
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+int ts    = time + SHIFT
+int dKey  = year(ts, TZ) * 10000 + month(ts, TZ) * 100 + dayofmonth(ts, TZ)
+int sDow  = dayofweek(ts, TZ)                       // 2 = Monday session (opens Sunday 17:00 NY)
+int h4Key = dKey * 10 + int(hour(ts, TZ) / 4)
+int   dKey1   = dKey[1]
+int   h4Key1  = h4Key[1]
+int   sDow1   = sDow[1]
+int   tClose1 = time_close[1]
+int   time1   = time[1]
+float close1  = close[1]
+bool newDay  = na(dKey1) or dKey != dKey1
+bool newH4   = na(h4Key1) or h4Key != h4Key1
+bool newWeek = newDay and (na(sDow1) or sDow < sDow1)
+
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// HIGHER-TIMEFRAME BARS, AGGREGATED HERE (request.security is not available in Pinebox)
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+var float[] dO = array.new_float()
+var float[] dH = array.new_float()
+var float[] dL = array.new_float()
+var float[] dC = array.new_float()
+var float[] hO = array.new_float()
+var float[] hH = array.new_float()
+var float[] hL = array.new_float()
+var float[] hC = array.new_float()
+var int[]   hD = array.new_int()      // trading-day key of the 4H bar
+var int[]   hT = array.new_int()
+var float[] wH = array.new_float()
+var float[] wL = array.new_float()
+var float[] wC = array.new_float()
+var int[]   wY = array.new_int()      // calendar year of the week's close (HWC / LWC period)
+
+var float cdO = na
+var float cdH = na
+var float cdL = na
+var float cdC = na
+var float chO = na
+var float chH = na
+var float chL = na
+var float chC = na
+var int   chD = na
+var int   chT = na
+var float cwH = na
+var float cwL = na
+var float cwC = na
+var int   anchorTs = na
+var bool  frozen = true
+
+var float e9 = na
+var float e10 = na
+var float e20 = na
+var float e50 = na
+var float e100 = na
+var float e200 = na
+f_ema(float prev, float c, int n) =>
+    na(prev) ? c : prev + (c - prev) * 2.0 / (n + 1)
+
+// 1) roll completed higher-timeframe bars (they hold data up to the PREVIOUS chart bar)
+if newH4 and not na(chO)
+    hO.push(chO)
+    hH.push(chH)
+    hL.push(chL)
+    hC.push(chC)
+    hD.push(chD)
+    hT.push(chT)
+    chO := na
+    if hO.size() > 400
+        hO.shift()
+        hH.shift()
+        hL.shift()
+        hC.shift()
+        hD.shift()
+        hT.shift()
+if newDay and not na(cdO)
+    dO.push(cdO)
+    dH.push(cdH)
+    dL.push(cdL)
+    dC.push(cdC)
+    e9 := f_ema(e9, cdC, 9)
+    e10 := f_ema(e10, cdC, 10)
+    e20 := f_ema(e20, cdC, 20)
+    e50 := f_ema(e50, cdC, 50)
+    e100 := f_ema(e100, cdC, 100)
+    e200 := f_ema(e200, cdC, 200)
+    cdO := na
+    if dO.size() > 260
+        dO.shift()
+        dH.shift()
+        dL.shift()
+        dC.shift()
+if newWeek
+    if not na(cwH)
+        wH.push(cwH)
+        wL.push(cwL)
+        wC.push(cwC)
+        wY.push(year(time1, TZ))
+        if wH.size() > 120
+            wH.shift()
+            wL.shift()
+            wC.shift()
+            wY.shift()
+    cwH := na
+    // Monday anchor of THIS trading week (the shifted date of a Sunday-evening bar is Monday's date)
+    anchorTs := timestamp(TZ, year(ts, TZ), month(ts, TZ), dayofmonth(ts, TZ), i_anchorHour, 0) - (sDow - 2) * 86400000
+    frozen := false
+
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// TYPES
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+type Lv
+    float  p
+    int    src      // 1 pivot/MA · 2 fib · 3 structural · 4 round number · 5 option · 6 analyst
+    float  w        // confluence weight of this piece of evidence
+    float  st       // structural dimension it carries when it IS the anchor (2, 1 or 0.5)
+    float  bonus    // structural-extreme bonus it carries (0 .. 2)
+    string tag
+    float  lo       // extent of the evidence (wick tip .. body edge for a reaction cluster)
+    float  hi
+    float  conf = 0.0
+    float  tech = 0.0
+    float  stru = 0.0
+    float  psy  = 0.0
+    float  opt  = 0.0
+    float  ana  = 0.0
+    float  xb   = 0.0
+
+type SD
+    float top
+    float bot
+    int   side     // 1 supply · -1 demand
+    int   mit      // separate later visits into the zone
+    int   t
+    int   scale    // 240 = 4H move (>= 0.5) · 60 = 1H-scale move (>= 0.3)
+
+type Zone
+    float  top
+    float  bot
+    float  score
+    float  conf
+    int    pillars
+    int    zfp
+    int    tier
+    string name
+    string degree
+    int    side     // 1 resistance · 0 equilibrium · -1 support
+    string drivers
+
+type WeekFc
+    int    anchor
+    int    asof         // close time of the newest bar that fed the forecast (must be <= anchor)
+    int    t0
+    int    t1
+    float  spot
+    Zone[] zones
+    Lv[]   levels
+    SD[]   sds
+
+var WeekFc[] fcs = array.new<WeekFc>()
+
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// E1 — LEVEL SOURCES (every function reads the completed-bar arrays only)
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+f_add(Lv[] a, float p, int src, float w, float st, float bonus, string tag) =>
+    if not na(p)
+        a.push(Lv.new(p, src, w, st, bonus, tag, p, p))
+
+// Pillar 1 — classic / fibonacci / camarilla pivots of one H-L-C set (SP:989-1008)
+f_pivots(Lv[] a, float H, float L, float C, float w, string t) =>
+    float R = H - L
+    float PP = (H + L + C) / 3
+    f_add(a, PP, 1, w, 0, 0, t + "PP")
+    f_add(a, 2 * PP - L, 1, w, 0, 0, t + "cR1")
+    f_add(a, 2 * PP - H, 1, w, 0, 0, t + "cS1")
+    f_add(a, PP + R, 1, w, 0, 0, t + "cR2")
+    f_add(a, PP - R, 1, w, 0, 0, t + "cS2")
+    f_add(a, H + 2 * (PP - L), 1, w, 0, 0, t + "cR3")
+    f_add(a, L - 2 * (H - PP), 1, w, 0, 0, t + "cS3")
+    f_add(a, PP + 0.382 * R, 1, w, 0, 0, t + "fR1")
+    f_add(a, PP - 0.382 * R, 1, w, 0, 0, t + "fS1")
+    f_add(a, PP + 0.618 * R, 1, w, 0, 0, t + "fR2")
+    f_add(a, PP - 0.618 * R, 1, w, 0, 0, t + "fS2")
+    f_add(a, C + R * 1.1 / 2, 1, w, 0, 0, t + "kR4")
+    f_add(a, C - R * 1.1 / 2, 1, w, 0, 0, t + "kS4")
+    f_add(a, C + R * 1.1 / 4, 1, w, 0, 0, t + "kR3")
+    f_add(a, C - R * 1.1 / 4, 1, w, 0, 0, t + "kS3")
+    f_add(a, C + R * 1.1 / 6, 1, w, 0, 0, t + "kR2")
+    f_add(a, C - R * 1.1 / 6, 1, w, 0, 0, t + "kS2")
+    f_add(a, C + R * 1.1 / 12, 1, w, 0, 0, t + "kR1")
+    f_add(a, C - R * 1.1 / 12, 1, w, 0, 0, t + "kS1")
+
+f_sma(int n) =>
+    float s = na
+    int m = dC.size()
+    if m >= n
+        s := 0.0
+        for i = m - n to m - 1
+            s += dC.get(i)
+        s /= n
+    s
+
+f_degree(float s) =>
+    s >= 12 ? "EXTREME" : s >= 10 ? "HEAVY" : s >= 8 ? "MODERATE-HEAVY" : s >= 6 ? "MODERATE" : s >= 4 ? "LIGHT" : "MINIMAL"   // SP:1487-1494
+
+// Pillar 5 Step 0f / 0g — origin-candle supply/demand: a zigzag of legs >= thr on the 4H bars; the origin candle is
+// the 4H bar that made the leg's starting extreme; zone = [low, high] of that bar (SP:1352-1355)
+f_sd(SD[] out, float thr, int scale) =>
+    int n = hC.size()
+    int from = math.max(0, n - N_H4BARS)
+    if n - from > 3
+        int dir = 0
+        float hiP = hH.get(from)
+        int   hiI = from
+        float loP = hL.get(from)
+        int   loI = from
+        for i = from + 1 to n - 1
+            float h = hH.get(i)
+            float l = hL.get(i)
+            int pivI = -1
+            int pivSide = 0
+            if dir >= 0 and h > hiP
+                hiP := h
+                hiI := i
+            if dir <= 0 and l < loP
+                loP := l
+                loI := i
+            if dir == 0
+                if hiP - l >= thr and hiI < i
+                    pivI := hiI
+                    pivSide := 1
+                    dir := -1
+                    loP := l
+                    loI := i
+                else if h - loP >= thr and loI < i
+                    pivI := loI
+                    pivSide := -1
+                    dir := 1
+                    hiP := h
+                    hiI := i
+            else if dir == 1
+                if hiP - l >= thr
+                    pivI := hiI
+                    pivSide := 1
+                    dir := -1
+                    loP := l
+                    loI := i
+            else
+                if h - loP >= thr
+                    pivI := loI
+                    pivSide := -1
+                    dir := 1
+                    hiP := h
+                    hiI := i
+            if pivI >= 0
+                float zt = hH.get(pivI)
+                float zb = hL.get(pivI)
+                if zt - zb <= T_H4WIDE
+                    bool dup = false
+                    for s in out
+                        if s.t == hT.get(pivI)
+                            dup := true
+                    if not dup
+                        // mitigation: separate later visits into the zone after price has left it
+                        int mit = 0
+                        bool inside = true
+                        if pivI + 1 <= n - 1
+                            for j = pivI + 1 to n - 1
+                                bool touch = hL.get(j) <= zt and hH.get(j) >= zb
+                                if touch and not inside
+                                    mit += 1
+                                inside := touch
+                        out.push(SD.new(zt, zb, pivSide, mit, hT.get(pivI), scale))
+
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// E1 — THE WEEKLY LEVEL SET
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+f_e1(float spot, SD[] sds) =>
+    Lv[] L = array.new<Lv>()
+    int nd = dC.size()
+    int nw = wC.size()
+    int nh = hC.size()
+    if nd >= 6 and nw >= 1
+        // ── Pillar 1: weekly pivots (prior week) + daily pivots for each of the last 3 trading days (SP:1011-1013)
+        f_pivots(L, wH.last(), wL.last(), wC.last(), 1.0, "W.")
+        for k = 1 to 3
+            f_pivots(L, dH.get(nd - k), dL.get(nd - k), dC.get(nd - k), 0.5, "D" + str.tostring(k) + ".")
+        // ── Pillar 2: daily MA grid, weighted as the canon weights them (SP:1073-1084)
+        if nd >= 10
+            f_add(L, e9, 1, 0.5, 0, 0, "EMA9")
+            f_add(L, f_sma(9), 1, 0.5, 0, 0, "SMA9")
+            f_add(L, e10, 1, 0.5, 0, 0, "EMA10")
+            f_add(L, f_sma(10), 1, 0.5, 0, 0, "SMA10")
+        if nd >= 20
+            f_add(L, e20, 1, 1.0, 0, 0, "EMA20")
+            f_add(L, f_sma(20), 1, 1.0, 0, 0, "SMA20")
+        if nd >= 50
+            f_add(L, e50, 1, 1.5, 0, 0, "EMA50")
+            f_add(L, f_sma(50), 1, 1.5, 0, 0, "SMA50")
+        if nd >= 100
+            f_add(L, e100, 1, 2.0, 0, 0, "EMA100")
+            f_add(L, f_sma(100), 1, 2.0, 0, 0, "SMA100")
+        if nd >= 200
+            f_add(L, e200, 1, 3.0, 0, 0, "EMA200")
+            f_add(L, f_sma(200), 1, 3.0, 0, 0, "SMA200")
+        // ── Pillar 6: fib retracements of the prior week range, measured down from H (V452:843-849)
+        float pwH = wH.last()
+        float pwL = wL.last()
+        f_add(L, pwH - 0.236 * (pwH - pwL), 2, 1.0, 0, 0, "Wfib23.6")
+        f_add(L, pwH - 0.382 * (pwH - pwL), 2, 1.0, 0, 0, "Wfib38.2")
+        f_add(L, pwH - 0.5 * (pwH - pwL), 2, 1.0, 0, 0, "Wfib50")
+        f_add(L, pwH - 0.618 * (pwH - pwL), 2, 1.0, 0, 0, "Wfib61.8")
+        // ── Pillar 5 Step 1: price anchors (V452:787-791)
+        f_add(L, pwH, 3, 2.0, 2, 0, "PWH")
+        f_add(L, pwL, 3, 2.0, 2, 0, "PWL")
+        f_add(L, wC.last(), 3, 2.0, 2, 0, "PWC")
+        for k = 1 to 5
+            f_add(L, dC.get(nd - k), 3, 1.0, 2, 0, "DC" + str.tostring(k))
+            f_add(L, dH.get(nd - k), 3, 1.0, 2, 0, "DH" + str.tostring(k))
+            f_add(L, dL.get(nd - k), 3, 1.0, 2, 0, "DL" + str.tostring(k))
+        // ── Pillar 5 Step 0 / 0h / 0.5: reaction events = swing extremes on D1 (90 bars) and 4H (3 weeks)
+        //    a swing = the extreme of its own bar and of the 2 bars on each side that exist at the anchor
+        float[] eTip  = array.new_float()
+        float[] eBody = array.new_float()
+        int[]   eDay  = array.new_int()
+        int[]   eSide = array.new_int()
+        float[] eSt   = array.new_float()     // 2 = full Step-0 swing with rejection wick · 0.5 = minor (Step 0h)
+        int i0 = math.max(0, nd - N_D1SCAN)
+        for i = i0 to nd - 1
+            float h = dH.get(i)
+            float l = dL.get(i)
+            float o = dO.get(i)
+            float c = dC.get(i)
+            float rng = h - l
+            if rng > 0
+                bool isLo = true
+                bool isHi = true
+                for j = math.max(0, i - 2) to math.min(nd - 1, i + 2)
+                    if j != i
+                        if dL.get(j) < l
+                            isLo := false
+                        if dH.get(j) > h
+                            isHi := false
+                float cp = (c - l) / rng
+                float lw = math.min(o, c) - l
+                float uw = h - math.max(o, c)
+                if isLo and lw >= T_WICKMIN and cp >= 0.4
+                    eTip.push(l)
+                    eBody.push(math.min(o, c))
+                    eDay.push(-(nd - i) * 10)
+                    eSide.push(-1)
+                    eSt.push(lw >= T_WICK and cp >= 0.5 ? 2.0 : 0.5)
+                if isHi and uw >= T_WICKMIN and cp <= 0.6
+                    eTip.push(h)
+                    eBody.push(math.max(o, c))
+                    eDay.push(-(nd - i) * 10)
+                    eSide.push(1)
+                    eSt.push(uw >= T_WICK and cp <= 0.5 ? 2.0 : 0.5)
+        int j0 = math.max(0, nh - N_H4SWING)
+        if nh - j0 > 5
+            for i = j0 to nh - 1
+                float h = hH.get(i)
+                float l = hL.get(i)
+                bool isLo = true
+                bool isHi = true
+                for j = math.max(j0, i - 2) to math.min(nh - 1, i + 2)
+                    if j != i
+                        if hL.get(j) < l
+                            isLo := false
+                        if hH.get(j) > h
+                            isHi := false
+                if isLo
+                    eTip.push(l)
+                    eBody.push(math.min(hO.get(i), hC.get(i)))
+                    eDay.push(hD.get(i))
+                    eSide.push(-1)
+                    eSt.push(0.5)
+                if isHi
+                    eTip.push(h)
+                    eBody.push(math.max(hO.get(i), hC.get(i)))
+                    eDay.push(hD.get(i))
+                    eSide.push(1)
+                    eSt.push(0.5)
+        // cluster the reaction events: tips within 0.05 of each other are one level (SP:1293)
+        int ne = eTip.size()
+        if ne > 0
+            int[] eo = eTip.sort_indices(order.ascending)
+            int a = 0
+            while a < ne
+                int b = a
+                while b + 1 < ne and eTip.get(eo.get(b + 1)) - eTip.get(eo.get(a)) <= T_REPEAT
+                    b += 1
+                float sum = 0.0
+                float cLo = na
+                float cHi = na
+                float st = 0.0
+                int nLoDays = 0
+                int nHiDays = 0
+                int[] seenLo = array.new_int()
+                int[] seenHi = array.new_int()
+                for k = a to b
+                    int e = eo.get(k)
+                    float tip = eTip.get(e)
+                    float body = eBody.get(e)
+                    sum += tip
+                    cLo := na(cLo) ? math.min(tip, body) : math.min(cLo, math.min(tip, body))
+                    cHi := na(cHi) ? math.max(tip, body) : math.max(cHi, math.max(tip, body))
+                    st := math.max(st, eSt.get(e))
+                    int dy = eDay.get(e) < 0 ? eDay.get(e) : eDay.get(e)
+                    if eSide.get(e) < 0
+                        if not seenLo.includes(dy)
+                            seenLo.push(dy)
+                    else
+                        if not seenHi.includes(dy)
+                            seenHi.push(dy)
+                nLoDays := seenLo.size()
+                nHiDays := seenHi.size()
+                int nDays = nLoDays + nHiDays
+                bool roleRev = nLoDays > 0 and nHiDays > 0
+                // bonus ladder: Step-0 swing +1 · repeated on 2 dates +1.5 · 3+ dates or role reversal +2 (SP:1477-1484)
+                float bonus = roleRev or nDays >= 3 ? 2.0 : nDays == 2 ? 1.5 : st >= 2 ? 1.0 : 0.0
+                float stc = nDays >= 2 or st >= 2 ? 2.0 : st
+                string tg = (roleRev ? "RoleRev" : nLoDays > 0 ? "SwLo" : "SwHi") + "x" + str.tostring(nDays)
+                float pc = sum / (b - a + 1)
+                // the reaction band: wick tips to candle bodies, held to the canon's tight-confluence width
+                float zlo = cLo
+                float zhi = cHi
+                if zhi - zlo > T_TIGHT
+                    if roleRev
+                        zlo := pc - T_TIGHT / 2
+                        zhi := pc + T_TIGHT / 2
+                    else if nLoDays > 0
+                        zhi := zlo + T_TIGHT
+                    else
+                        zlo := zhi - T_TIGHT
+                L.push(Lv.new(pc, 3, stc + bonus, stc, bonus, tg, zlo, zhi))
+                a := b + 1
+        // ── Pillar 5 Step 2: HWC / LWC = highest / lowest weekly close of the calendar year (V452:794-796)
+        int yr = wY.last()
+        float hwc = na
+        float lwc = na
+        for i = 0 to nw - 1
+            if wY.get(i) == yr
+                hwc := na(hwc) ? wC.get(i) : math.max(hwc, wC.get(i))
+                lwc := na(lwc) ? wC.get(i) : math.min(lwc, wC.get(i))
+        f_add(L, hwc, 3, 2.0, 2, 0, "HWC")
+        f_add(L, lwc, 3, 2.0, 2, 0, "LWC")
+        // ── Pillar 6 Step 3: round-number grid across the span of every level found (V452:853-860)
+        float lo = spot
+        float hi = spot
+        for v in L
+            lo := math.min(lo, v.p)
+            hi := math.max(hi, v.p)
+        float g = math.floor(lo / T_ROUND) * T_ROUND
+        while g <= hi + T_ROUND
+            float q = math.round(g / T_ROUND)
+            f_add(L, g, 4, q % 4 == 0 ? 2.0 : q % 2 == 0 ? 1.5 : 1.0, 0, 0, "RN")
+            g += T_ROUND
+        // ── CONFLUENCE + the six canon dimensions, by coincidence (SP:1467-1484)
+        int n = L.size()
+        for a = 0 to n - 1
+            Lv x = L.get(a)
+            float cf = 0.0
+            for b = 0 to n - 1
+                Lv y = L.get(b)
+                float d = math.abs(x.p - y.p)
+                if d <= T_ZONE
+                    bool ex = d <= T_EXACT
+                    cf += y.w * (ex ? 1.0 : 0.5)
+                    if y.src == 1
+                        x.tech := math.max(x.tech, ex ? 2.0 : 1.0)
+                    else if y.src == 2 and d <= T_FIB
+                        x.tech := math.max(x.tech, 1.0)
+                    else if y.src == 3
+                        x.stru := math.max(x.stru, ex ? y.st : math.min(1.0, y.st))
+                        if ex
+                            x.xb := math.max(x.xb, y.bonus)
+                    else if y.src == 4 and ex
+                        x.psy := math.max(x.psy, y.w >= 1.5 ? 2.0 : 1.0)     // .00 / .50 = 2, .25 / .75 = 1 (SP:1473)
+                    else if y.src == 5 and ex
+                        x.opt := math.max(x.opt, y.st)
+                    else if y.src == 6 and ex
+                        x.ana := math.max(x.ana, y.st)
+            for s in sds
+                if x.p <= s.top and x.p >= s.bot
+                    cf += s.mit <= 1 ? 2.0 : 1.0
+            x.conf := cf
+    L
+
+// zones = local maxima of confluence; the canon's 0.15 cluster band is the suppression radius
+f_zones(Lv[] L, SD[] sds, float spot) =>
+    Zone[] Z = array.new<Zone>()
+    int n = L.size()
+    if n > 0
+        float[] cf = array.new_float()
+        for v in L
+            cf.push(v.src == 4 ? 0.0 : v.conf)
+        int[] ord = cf.sort_indices(order.descending)
+        for k = 0 to n - 1
+            Lv s = L.get(ord.get(k))
+            if s.src != 4
+                bool taken = false
+                for z in Z
+                    if s.p <= z.top + T_CLUSTER and s.p >= z.bot - T_CLUSTER
+                        taken := true
+                if not taken
+                    // the zone is the confluence itself: the structural evidence that coincides with the seed
+                    float top = s.hi
+                    float bot = s.lo
+                    string drv = s.tag
+                    for v in L
+                        if v.src != 4 and math.abs(v.p - s.p) <= T_EXACT
+                            if v.src == 3
+                                top := math.max(top, v.hi)
+                                bot := math.min(bot, v.lo)
+                            if not str.contains(drv, v.tag) and str.length(drv) < 70
+                                drv += "+" + v.tag
+                    if top - bot > T_CLUSTER
+                        top := math.min(top, s.p + T_CLUSTER / 2)
+                        bot := math.max(bot, s.p - T_CLUSTER / 2)
+                    if top - bot < T_LSZ
+                        float mid = (top + bot) / 2
+                        top := mid + T_LSZ / 2
+                        bot := mid - T_LSZ / 2
+                    // POI tier (SP:1510-1514): overlap with an origin-candle zone visited at most once = Tier 1
+                    int tier = 2
+                    for q in sds
+                        if q.mit <= 1 and bot <= q.top and top >= q.bot
+                            tier := 1
+                    int pillars = (s.tech > 0 ? 1 : 0) + (s.stru > 0 ? 1 : 0) + (s.psy > 0 ? 1 : 0) + (s.opt > 0 ? 1 : 0) + (s.ana > 0 ? 1 : 0)
+                    // zone type -> failure probability (Appendix B; strength only, R-17). Without an option wall: Soft Wall 30-50, One-Touch 50-70
+                    float base = s.tech + s.stru + s.psy + s.opt + s.ana + math.min(2.0, s.xb) + (tier == 1 ? 2.0 : 1.0)
+                    int zfp = pillars <= 1 ? 60 : int(math.round(50 - 20 * math.min(1.0, math.max(0.0, (base - 5.0) / 6.0))))
+                    float reg = zfp < 20 ? 2.0 : zfp <= 50 ? 1.0 : 0.0       // V452:1066-1071
+                    float score = math.min(14.0, base + reg)
+                    if score >= 6          // MODERATE and above only (SP:1646)
+                        Z.push(Zone.new(top, bot, score, s.conf, pillars, zfp, tier, "", f_degree(score), 0, drv))
+        // names by position (V452:1148-1155)
+        int m = Z.size()
+        if m > 0
+            float[] tp = array.new_float()
+            for z in Z
+                tp.push(z.top)
+            int[] o2 = tp.sort_indices(order.descending)
+            int eq = -1
+            float best = na
+            for k = 0 to m - 1
+                Zone z = Z.get(o2.get(k))
+                float dist = spot > z.top ? spot - z.top : spot < z.bot ? z.bot - spot : 0.0
+                if na(best) or dist < best
+                    best := dist
+                    eq := k
+            for k = 0 to m - 1
+                Zone z = Z.get(o2.get(k))
+                if k == eq and best <= T_CLUSTER
+                    z.side := 0
+                    z.name := "Equilibrium Zone"
+                else if z.bot > spot
+                    z.side := 1
+                    z.name := k == 0 ? "IP Resistance Ceiling" : "Upper IP Resistance"
+                else
+                    z.side := -1
+                    z.name := k == m - 1 ? "Key IP Support" : "Mid-Range Support"
+    Z
+
+f_assertAnchor(int asof, int anchor) =>
+    if asof > anchor
+        runtime.error("ANCHOR VIOLATION: forecast read a bar that closed after the Monday anchor")
+
+// 2) freeze the week's forecast on the first bar that closes after the anchor, from state that excludes this bar
+if not frozen and not na(anchorTs) and time_close > anchorTs
+    frozen := true
+    int asof = na(tClose1) ? time : tClose1
+    f_assertAnchor(asof, anchorTs)
+    float spot = na(close1) ? open : close1
+    SD[] S = array.new<SD>()
+    f_sd(S, T_H4MOVE, 240)
+    f_sd(S, T_H1MOVE, 60)
+    Lv[] L = f_e1(spot, S)
+    Zone[] Z = f_zones(L, S, spot)
+    int wkEnd = anchorTs + (4 * 24 + 17 - i_anchorHour) * 3600000      // Friday 17:00 New York
+    fcs.push(WeekFc.new(anchorTs, asof, anchorTs, wkEnd, spot, Z, L, S))
+    if fcs.size() > i_weeks
+        fcs.shift()
+
+// 3) fold this chart bar into the bars being built
+if na(chO)
+    chO := open
+    chH := high
+    chL := low
+    chD := dKey
+    chT := time
+else
+    chH := math.max(chH, high)
+    chL := math.min(chL, low)
+chC := close
+if na(cdO)
+    cdO := open
+    cdH := high
+    cdL := low
+else
+    cdH := math.max(cdH, high)
+    cdL := math.min(cdL, low)
+cdC := close
+if na(cwH)
+    cwH := high
+    cwL := low
+else
+    cwH := math.max(cwH, high)
+    cwL := math.min(cwL, low)
+cwC := close
+
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// RENDER (reads frozen forecasts only)
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+color C_RES = color.rgb(200, 60, 35)
+color C_EQ  = color.rgb(255, 152, 0)
+color C_SUP = color.rgb(0, 150, 150)
+var box[]   bx = array.new_box()
+var label[] lb = array.new_label()
+
+if barstate.islast
+    for b in bx
+        box.delete(b)
+    bx.clear()
+    for l in lb
+        label.delete(l)
+    lb.clear()
+    for f in fcs
+        if i_showE1
+            for z in f.zones
+                color c = z.side > 0 ? C_RES : z.side < 0 ? C_SUP : C_EQ
+                bx.push(box.new(f.t0, z.top, f.t1, z.bot, xloc = xloc.bar_time, bgcolor = color.new(c, 72), border_color = c, border_width = 1))
+                lb.push(label.new(f.t0, z.top, z.name + " | " + z.degree + " | " + str.tostring(z.zfp) + "% ZFP", xloc = xloc.bar_time, style = label.style_label_lower_left, color = color.new(c, 100), textcolor = c, size = size.small))
+        if i_showSD
+            for s in f.sds
+                color c = s.side > 0 ? color.rgb(242, 54, 69) : color.rgb(49, 121, 245)
+                bx.push(box.new(s.t, s.top, f.t1, s.bot, xloc = xloc.bar_time, bgcolor = color.new(c, 85), border_color = color.new(c, 40), border_width = 1, text = (s.scale == 240 ? "4H " : "1H ") + (s.mit == 0 ? "(Unmitigated)" : str.tostring(s.mit) + "X") + " | BoM", text_color = color.new(c, 20), text_size = size.small))
+        if i_showAudit
+            string t = "asof " + str.format_time(f.asof, "yyyy-MM-dd HH:mm", TZ) + " NY | anchor " + str.format_time(f.anchor, "yyyy-MM-dd HH:mm", TZ) + " | spot " + str.tostring(f.spot) + " | levels " + str.tostring(f.levels.size())
+            for z in f.zones
+                t += "\nZ " + str.tostring(math.round(z.bot / PIP) * PIP) + "-" + str.tostring(math.round(z.top / PIP) * PIP) + " " + z.name + " " + z.degree + " " + str.tostring(z.score) + " cf" + str.tostring(z.conf) + " p" + str.tostring(z.pillars) + " T" + str.tostring(z.tier) + " [" + z.drivers + "]"
+            for s in f.sds
+                t += "\nSD " + (s.side > 0 ? "supply " : "demand ") + str.tostring(s.bot) + "-" + str.tostring(s.top) + " mit" + str.tostring(s.mit) + " " + str.tostring(s.scale) + " " + str.format_time(s.t, "MM-dd HH:mm", TZ)
+            for v in f.levels
+                if v.src == 3 and math.abs(v.p - f.spot) <= 200 * PIP
+                    t += "\nS " + str.tostring(math.round(v.p / PIP) * PIP) + " w" + str.tostring(v.w) + " cf" + str.tostring(v.conf) + " " + v.tag + " [" + str.tostring(math.round(v.lo / PIP) * PIP) + "," + str.tostring(math.round(v.hi / PIP) * PIP) + "]"
+            lb.push(label.new(f.t0, f.spot, t, xloc = xloc.bar_time, style = label.style_label_right, color = color.new(color.black, 30), textcolor = color.white, size = size.small, textalign = text.align_left))

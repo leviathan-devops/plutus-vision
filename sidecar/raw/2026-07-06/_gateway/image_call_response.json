@@ -1,0 +1,71 @@
+{
+ "id": "resp_6b06c686986749261aa54e37",
+ "object": "response",
+ "created_at": 1795606150,
+ "completed_at": 1795606150,
+ "status": "completed",
+ "parallel_tool_calls": true,
+ "temperature": 1,
+ "top_p": 1,
+ "max_output_tokens": 12000,
+ "background": false,
+ "truncation": "disabled",
+ "top_logprobs": 0,
+ "model": "muse-spark-1.3-contributor",
+ "error": null,
+ "incomplete_details": null,
+ "output": [
+  {
+   "id": "rs_6b06c686986749261aa54e37:rs_06e29544-d17b-469f-ba88-bba80cc6dd95",
+   "type": "reasoning",
+   "status": "completed",
+   "encrypted_content": "<43751 chars omitted>",
+   "summary": []
+  },
+  {
+   "id": "msg_696f03ff-d648-40dd-994b-be9cdd79a830",
+   "type": "message",
+   "status": "completed",
+   "role": "assistant",
+   "content": [
+    {
+     "type": "output_text",
+     "text": "{\"spot\":{\"EUR/USD\":\"1.1431\",\"USD/JPY\":\"161.92\",\"GBP/USD\":\"1.3340\",\"USD/CHF\":\"0.8042\",\"USD/CAD\":\"1.4204\",\"AUD/USD\":\"0.6934\",\"NZD/USD\":\"0.5687\",\"EUR/GBP\":\"0.8565\"},\"rows\":[{\"day\":\"Monday\",\"date\":\"06/07\",\"expiries\":{\"EUR/USD\":[{\"strike\":\"1.1300\",\"notional\":\"\u20ac830m\",\"bold\":false},{\"strike\":\"1.1400\",\"notional\":\"\u20ac2.2bn\",\"bold\":false},{\"strike\":\"1.1450\",\"notional\":\"\u20ac1.4bn\",\"bold\":false},{\"strike\":\"1.1500\",\"notional\":\"\u20ac2.4bn\",\"bold\":false},{\"strike\":\"1.1600\",\"notional\":\"\u20ac1.0bn\",\"bold\":false}],\"USD/JPY\":[{\"strike\":\"160.00\",\"notional\":\"$2.5bn\",\"bold\":false},{\"strike\":\"160.50\",\"notional\":\"$2.6bn\",\"bold\":false},{\"strike\":\"161.00\",\"notional\":\"$1.1bn\",\"bold\":false},{\"strike\":\"161.25\",\"notional\":\"$3.1bn\",\"bold\":false},{\"strike\":\"161.75\",\"notional\":\"$3.1bn\",\"bold\":true},{\"strike\":\"162.00\",\"notional\":\"$1.3bn\",\"bold\":true},{\"strike\":\"163.00\",\"notional\":\"$653m\",\"bold\":false}],\"GBP/USD\":[],\"USD/CHF\":[{\"strike\":\"0.8100\",\"notional\":\"$91m\",\"bold\":false}],\"USD/CAD\":[],\"AUD/USD\":[{\"strike\":\"0.6985\",\"notional\":\"A$718m\",\"bold\":false},{\"strike\":\"0.7000\",\"notional\":\"A$794m\",\"bold\":false},{\"strike\":\"0.7025\",\"notional\":\"A$599m\",\"bold\":false}],\"NZD/USD\":[],\"EUR/GBP\":[]}},{\"day\":\"Tuesday\",\"date\":\"07/07\",\"expiries\":{\"EUR/USD\":[{\"strike\":\"1.1300\",\"notional\":\"\u20ac701m\",\"bold\":false},{\"strike\":\"1.1350\",\"notional\":\"\u20ac1.3bn\",\"bold\":false},{\"strike\":\"1.1400\",\"notional\":\"\u20ac1.4bn\",\"bold\":false},{\"strike\":\"1.1425\",\"notional\":\"\u20ac600m\",\"bold\":false},{\"strike\":\"1.1440\",\"notional\":\"\u20ac525m\",\"bold\":false},{\"strike\":\"1.1500\",\"notional\":\"\u20ac2.6bn\",\"bold\":false},{\"strike\":\"1.1590\",\"notional\":\"\u20ac721m\",\"bold\":false},{\"strike\":\"1.1600\",\"notional\":\"\u20ac734m\",\"bold\":false}],\"USD/JPY\":[{\"strike\":\"160.00\",\"notional\":\"$951m\",\"bold\":false},{\"strike\":\"161.00\",\"notional\":\"$702m\",\"bold\":false},{\"strike\":\"161.50\",\"notional\":\"$718m\",\"bold\":false},{\"strike\":\"162.00\",\"notional\":\"$2.5bn\",\"bold\":false},{\"strike\":\"162.50\",\"notional\":\"$578m\",\"bold\":false},{\"strike\":\"163.00\",\"notional\":\"$741m\",\"bold\":false}],\"GBP/USD\":[],\"USD/CHF\":[{\"strike\":\"0.8115\",\"notional\":\"$601m\",\"bold\":false}],\"USD/CAD\":[{\"strike\":\"1.4100\",\"notional\":\"$739m\",\"bold\":false}],\"AUD/USD\":[{\"strike\":\"0.6930\",\"notional\":\"A$594m\",\"bold\":false}],\"NZD/USD\":[],\"EUR/GBP\":[]}}]}",
+     "annotations": [],
+     "logprobs": []
+    }
+   ]
+  }
+ ],
+ "usage": {
+  "input_tokens": 428,
+  "output_tokens": 6770,
+  "total_tokens": 7198,
+  "input_tokens_details": {
+   "cached_tokens": 0
+  },
+  "output_tokens_details": {
+   "reasoning_tokens": 5976
+  },
+  "cost": 0,
+  "opencode": {
+   "billing_source": "go",
+   "list_cost": 0.0013968,
+   "allowance": 0.0013968,
+   "tokens": {
+    "input": 428,
+    "output": 6770,
+    "reasoning": 5976,
+    "cache_read": 0,
+    "cache_write_5m": 0,
+    "cache_write_1h": 0
+   }
+  }
+ },
+ "instructions": null,
+ "tool_choice": "auto",
+ "tools": [],
+ "reasoning": {
+  "effort": "high"
+ }
+}

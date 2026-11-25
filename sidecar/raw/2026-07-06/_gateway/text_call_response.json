@@ -1,0 +1,71 @@
+{
+ "id": "resp_6b06c657fed8f96d67614e7e",
+ "object": "response",
+ "created_at": 1795606103,
+ "completed_at": 1795606103,
+ "status": "completed",
+ "parallel_tool_calls": true,
+ "temperature": 1,
+ "top_p": 1,
+ "max_output_tokens": 1500,
+ "background": false,
+ "truncation": "disabled",
+ "top_logprobs": 0,
+ "model": "muse-spark-1.3-contributor",
+ "error": null,
+ "incomplete_details": null,
+ "output": [
+  {
+   "id": "rs_6b06c657fed8f96d67614e7e:rs_03fdc37b-20b6-4ada-9228-8c59c09842ff",
+   "type": "reasoning",
+   "status": "completed",
+   "encrypted_content": "<2791 chars omitted>",
+   "summary": []
+  },
+  {
+   "id": "msg_1a3dd3fb-6bd4-40a4-a182-02ac1bf0c5a1",
+   "type": "message",
+   "status": "completed",
+   "role": "assistant",
+   "content": [
+    {
+     "type": "output_text",
+     "text": "gateway ok.\n4",
+     "annotations": [],
+     "logprobs": []
+    }
+   ]
+  }
+ ],
+ "usage": {
+  "input_tokens": 25,
+  "output_tokens": 211,
+  "total_tokens": 236,
+  "input_tokens_details": {
+   "cached_tokens": 0
+  },
+  "output_tokens_details": {
+   "reasoning_tokens": 198
+  },
+  "cost": 0,
+  "opencode": {
+   "billing_source": "go",
+   "list_cost": 4.47e-05,
+   "allowance": 4.47e-05,
+   "tokens": {
+    "input": 25,
+    "output": 211,
+    "reasoning": 198,
+    "cache_read": 0,
+    "cache_write_5m": 0,
+    "cache_write_1h": 0
+   }
+  }
+ },
+ "instructions": null,
+ "tool_choice": "auto",
+ "tools": [],
+ "reasoning": {
+  "effort": "minimal"
+ }
+}

@@ -107,3 +107,17 @@
 - POI: Tier 1 (+2, capped at 14) IP zone overlaps 4H BoM 0X-1X; Tier 2 (+1) IP only or MoM overlap; Tier 3 4H BoM only.
 - 4H mitigation: soft = wick taps edge and is rejected (barely counts); hard = full bodies enter and consolidate (weakens). Counted over prior 2-3 weeks.
 - STILL UNDEFINED IN EVERY VERSION (my decisions needed; record each in 03_DECISION_CHAIN): swing bar-count; "large bodies"; point inside ZFP ranges; zone top/bottom rule; zone width limits; zone count; "strong reaction"; "consolidation"; what a pivot is matched against; pair-unit tolerances.
+
+## Web sidecar scouting RESULT (context_management/spec/SIDECAR_SCOUT.md; raw pages in sidecar/raw/<week>/)
+- investinglive (plain curl works): weekly sitemap `https://investinglive.com/sitemaps/news/articles/<ISOYEAR>-W<WW>.xml`; `<lastmod>` == `article:published_time` (mechanical as-of filter).
+  Expiry post = "FX option expiries for <date> 10am New York cut"; the table is a 900px JPEG on `investinglive.com/cms/media/` (needs a vision read).
+- Fed H.10: `https://www.federalreserve.gov/releases/h10/<YYYYMMDD>/`, dates from `releaseDates.json`; last before the Jul 6 anchor = 2026-06-29.
+- Model gateway: model id `muse-spark-1.3-contributor` is listed ONLY at `https://opencode.ai/zen/go/v1/models`; Responses API at `https://opencode.ai/inference/go/openai/v1/responses`; needs header `x-opencode-session`; takes images; effort minimal..xhigh. (`muse-spark-1.3` without -contributor = 402.)
+  Its image read at effort high got 23 of 33 table entries right (bold flags missed) -> a single model read is NOT reliable enough; needs a cross-check (second read / crop zoom / my own read).
+- BLOCKED by the proxy or bot walls: forex.com (Cloudflare 403 by curl; headed browser gets current pages only), ING, FXStreet, archive.org, Yahoo, TradingView, FRED, CME; ICE has only a spec page. => Pillar 4 analyst levels are limited to investinglive posts here.
+- The Monday expiry post is published ~05:47Z (Jul 6) but 06:08Z on Apr 20 -> with a 06:00Z anchor some Mondays' own post is after the anchor; the Friday post's forward row for Monday is always available.
+- GOLDEN WEEK option data (scout's read on 4x crops; verify myself before use):
+  EUR/USD Mon Jul 6 cut (published 05:47:01Z): 1.1300 EUR830m, 1.1400 EUR2.2bn, 1.1450 EUR1.4bn, 1.1500 EUR2.4bn, 1.1600 EUR1.0bn.
+  EUR/USD Fri Jul 3 cut: 1.1300 985m, 1.1325 703m, 1.1350 790m, 1.1370 1.6bn, 1.1375 1.1bn, 1.1380 596m, 1.1400 1.0bn, 1.1430 837m, 1.1450 873m, 1.1500 2.0bn, 1.1600 2.0bn.
+  (Operator's hand-drawn EURUSD golden-week zones: demand ~1.1400-1.1417, supply ~1.1446-1.1456 -> they sit ON the 1.1400 (2.2bn) and 1.1450 (1.4bn) strikes.)
+- Analyst levels found before the anchor: EUR/USD 1.14 / 1.10 / 1.18 (Jul 2 post); USD/JPY 160.70, 161.84-92, 162.00, 162.80 (Jul 6 05:03Z). None for DXY or GBP/USD.

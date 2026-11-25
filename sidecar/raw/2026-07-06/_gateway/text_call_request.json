@@ -1,0 +1,8 @@
+{
+ "model": "muse-spark-1.3-contributor",
+ "input": "Reply with exactly: gateway ok. Then state 2+2 as a digit.",
+ "max_output_tokens": 1500,
+ "reasoning": {
+  "effort": "minimal"
+ }
+}

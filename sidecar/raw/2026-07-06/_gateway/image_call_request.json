@@ -1,0 +1,22 @@
+{
+ "model": "muse-spark-1.3-contributor",
+ "reasoning": {
+  "effort": "high"
+ },
+ "max_output_tokens": 12000,
+ "input": [
+  {
+   "role": "user",
+   "content": [
+    {
+     "type": "input_text",
+     "text": "OCR this FX option expiries table. Output JSON only: {\"spot\":{pair:value}, \"rows\":[{\"day\":..., \"date\":..., \"expiries\":{pair:[{\"strike\":..., \"notional\":...(exactly as written, e.g. \"\u20ac2.2bn\"), \"bold\":true|false}]}}]}. Include every pair column; use an empty list for a greyed-out cell. Do not guess: if a value is unclear write \"[UNCLEAR]\"."
+    },
+    {
+     "type": "input_image",
+     "image_url": "<data:image/jpeg;base64, 136583 chars omitted>"
+    }
+   ]
+  }
+ ]
+}

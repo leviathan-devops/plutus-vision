@@ -1,0 +1,58 @@
+{
+ "id": "resp_6b06c64acfcdb85b2b4744af",
+ "object": "response",
+ "created_at": 1795606090,
+ "status": "incomplete",
+ "parallel_tool_calls": true,
+ "temperature": 1,
+ "top_p": 1,
+ "max_output_tokens": 200,
+ "background": false,
+ "truncation": "disabled",
+ "top_logprobs": 0,
+ "model": "muse-spark-1.3-contributor",
+ "error": null,
+ "incomplete_details": {
+  "reason": "max_output_tokens"
+ },
+ "output": [
+  {
+   "id": "rs_6b06c64acfcdb85b2b4744af:rs_07c9bc86-2086-4a6e-ab21-1123e7f25e60",
+   "type": "reasoning",
+   "status": "incomplete",
+   "encrypted_content": "<2791 chars omitted>",
+   "summary": []
+  }
+ ],
+ "usage": {
+  "input_tokens": 25,
+  "output_tokens": 200,
+  "total_tokens": 225,
+  "input_tokens_details": {
+   "cached_tokens": 0
+  },
+  "output_tokens_details": {
+   "reasoning_tokens": 198
+  },
+  "cost": 0,
+  "opencode": {
+   "billing_source": "go",
+   "list_cost": 4.25e-05,
+   "allowance": 4.25e-05,
+   "tokens": {
+    "input": 25,
+    "output": 200,
+    "reasoning": 198,
+    "cache_read": 0,
+    "cache_write_5m": 0,
+    "cache_write_1h": 0
+   }
+  }
+ },
+ "instructions": null,
+ "tool_choice": "auto",
+ "tools": [],
+ "reasoning": {
+  "effort": "low"
+ }
+}

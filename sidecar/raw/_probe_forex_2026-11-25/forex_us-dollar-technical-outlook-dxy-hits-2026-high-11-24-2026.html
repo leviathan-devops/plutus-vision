@@ -1,0 +1,2044 @@
+<!DOCTYPE html><html class="js" lang="en-US"><head>
+    <meta http-equiv="content-language" content="en-US">
+    
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+
+
+
+<style>
+@media (min-width: 991px) {
+  #wrapper .header-with-megamenu.new-header .stx-logo {
+    height: 40px !important;
+  }
+}
+@media (max-width: 1024px) {
+    #wrapper .header-with-megamenu.new-header .stx-logo {
+        height: 30px !important;
+    }
+}
+@media (max-width: 1024px) {
+  body.professional .stx-logo img {
+    max-height: 100% !important;
+    margin-top: 0 !important;
+  }
+}
+
+@media (min-width: 1025px) {
+    body .stx-regional-switcher__list {
+        right: -130px !important;
+    }
+}
+
+.stx-umbrella.right {order: 2;}
+
+
+body.professional:not(.on-page-editor) a:not(.geo-ip-modal__link):not(.stx-megamenu__link):not(.inside-inner-title) {
+    color: #fff !important;
+}
+
+body.professional:not(.on-page-editor) .faq .field-linktext a {
+    color: #86b5f4 !important;
+}
+
+/* Cookie Banner Fix*/
+img.crpb { width:1px; }
+
+/* Megamenu break point adjustments */
+@media (min-width: 1281px) and (max-width: 1440px){#wrapper .header-with-megamenu.new-header .stx-megamenu .stx-megamenu__item--main label {font-size: 14px !important;}}
+@media (min-width: 1061px) and (max-width: 1280px){#wrapper .header-with-megamenu.new-header .stx-megamenu .stx-megamenu__item--main label {font-size: 12px !important;}}
+@media (min-width: 1025px) and (max-width: 1060px){#wrapper .header-with-megamenu.new-header .stx-megamenu .stx-megamenu__item--main label {font-size: 11px !important;}}
+@media (min-width: 1025px) and (max-width: 1150px){#wrapper .header-with-megamenu.new-header .stx-megamenu .stx-megamenu__item--main {padding: 0 8px !important;}}
+
+/* Hero compression */
+@media (max-width: 992px){.page-heading .field-pageheadingclarifyingtext {margin-top: 0 !important;}}
+@media (min-width: 991px){.page-heading h1.field-pageheadingtitle {font-size: 48px !important; line-height: 60px !important;}}
+@media (min-width: 768px){.page-heading .page-heading-content>div:not(.field-pageheadingtitle):first-child {margin-bottom: 40px !important;}}
+@media (min-width: 992px){.page-heading .icon-submenu {margin-bottom: 40px !important;}}
+@media (min-width: 992px){.page-heading .simple-submenu {margin-bottom: 20px !important;}}
+@media (min-width: 992px){.page-heading.component[data-has-videobg=False] .page-heading-content>div.media-col[data-position=center] {margin-bottom: 40px !important;}}
+
+@media (max-width: 991px) {.field-pageheadingforegroundimage {margin-top: -40px; margin-bottom: -150px;}}
+.author-socials a[href="https://twitter.com/FionaCityindex"] {display: none !important;}
+
+/* Mobile MM display issue */
+#mega-menu.component.container {height: 100%;}
+
+/* Chat Close - Email Address */
+.embeddedServiceSidebar.modalContainer .sidebarHeader .minimizeButton,.embeddedServiceSidebar.modalContainer .sidebarHeader .closeButton {display: flex; justify-content: center; align-items: center;}
+.embeddedServiceSidebar.modalContainer .sidebarHeader .minimizeButton svg, .embeddedServiceSidebar.modalContainer .sidebarHeader .closeButton svg {width: 20px;}.chasitor.chat-content[CLWCP-lwcchatpack_lwcchatpack] a {color: #fff;}
+
+/* ID for new Instrument pages - aligns left and right columns with 'new' ID added to right sidebar container */
+#new.instrument-details-rightbar {margin-top: 75px;}
+@media (max-width: 1439px) {#new.instrument-details-rightbar {margin-top: 71px;}}
+@media (max-width: 1024px) {#new.instrument-details-rightbar {margin-top: 61px;}}
+@media (max-width: 991px) {#new.instrument-details-rightbar {margin-top: 0;}}
+
+/* ID for Pricing Component - styles tables with forex gradient via 'forex-table' ID */
+@media (min-width: 768px){#forex-table .market-prices__content {box-shadow: 0 0 10px 0 rgb(0 0 0 / 14%); border-radius: 10px; padding: 0 30px 10px 30px;}}
+#forex-table .market-prices .pricing-tabs--market-tabs {overflow-x: auto; white-space: nowrap;}
+#forex-table .pricing-tabs-wrapper {background: linear-gradient(244.81deg, #1E95CB 16%, #11377C 84%); margin: 0 -30px; padding: 30px 30px 1px 30px; border-radius: 10px 10px 0px 0px;}
+@media (max-width: 767px){#forex-table .pricing-tabs-wrapper {border-radius: 0; margin: 0 -15px;}}
+#forex-table .pricing-tabs--market-tabs {border-bottom: none;}
+#forex-table .pricing-tabs__tab--selected {border-bottom: 3px solid #fff;}
+#forex-table .pricing-tabs__tab {color: #fff; padding: 15px 30px;}
+#forex-table .pricing-tabs-wrapper.gradient-right .pricing-tabs::after {background: linear-gradient(to right,transparent, white); width: 20px;}
+#forex-table .pricing-tabs-wrapper.gradient-left .pricing-tabs::before {background: linear-gradient(to right,transparent, white); width: 20px;}
+#forex-table .pricing-tabs::-webkit-scrollbar {display: none;}
+#forex-table .pricing-search-bar__input {min-width: 300px;}
+@media (max-width: 767px){#forex-table .pricing-tabs-wrapper {margin-top: 15px; margin-bottom: 15px}}
+
+/* Twitter - temporary fix to hide module */
+.component.twitter-feed {visibility: hidden;}
+.col-md-4 .component.twitter-feed {display: none;}
+
+/* Academy responsive images */
+.field-lessoncontent img {max-width: 100%; height: auto !important; display: block;}
+
+/* Academy responsive tables */
+@media (max-width:600px) {.field-lessoncontent table {overflow-x: auto; display: block; max-width: 270px; margin-left: auto; margin-right: auto;}}
+@media (max-width: 600px) {.field-lessoncontent table td h4 {font-size: 14px; line-height: 20px; font-weight: bold;}} 
+
+/* Article responsive tables */
+.article-detail .field-content table {display: block; overflow-x: auto; border-collapse: collapse; width: 100%;}
+.article-detail .field-content table tbody {display: table; width: 100%;}
+.article-detail .field-content table td {padding: 10px !important; border: 1px solid #b0b8ba !important;}
+.article-detail .field-content table thead {display: table; width: 100%;}
+.article-detail .field-content table th {padding: 10px !important; border: 1px solid #b0b8ba !important;}
+
+/* Article list styles */
+.article-detail ol {list-style: decimal;}
+.article-detail ul {list-style: disc;}
+
+.component-content .author .by {margin-right:5px;}
+.article-detail ol {margin-left:15px;}
+.article-detail ul {margin-left: 25px;}
+
+/* LP 01/06/23 no top nav including desktop header CTAs */
+body.is-landing #main-menu .nav {opacity:0; pointer-events: none;}
+
+/* no top nav including desktop header CTAs */
+body.is-landing-no-nav #main-menu .nav {opacity:0; pointer-events: none;}
+body.is-landing-no-nav #desktop-btns {opacity:0;}
+body.is-landing-no-nav #nav-trigger {display:none;}
+body.is-landing-no-nav #footer #sticky-cta{display:none;}
+
+/*  no site search for lps  */
+body.is-landing #desktop-search-trigger-main {display:none !important;}
+body.is-landing #mobile-search-wrapper {display:none;}
+
+/*  no site search and login CTAs for transparent lps  */
+body.is-landing-transparent #mobile-search-wrapper {display:none;}
+body.is-landing-transparent #desktop-search-trigger-white {display:none !important;}
+body.is-landing-transparent #main-menu .nav {opacity:0; pointer-events: none;}
+body.is-landing-transparent #desktop-search-trigger-main {display:none !important;}
+body.is-landing-transparent #existing-customers {display:none !important;}
+body.is-landing-transparent #main-menu>.component-content>.row .component.link.button.button-bordered-secondary {display:none;}
+@media (max-width: 1024px)
+{body.is-landing-transparent #mega-menu .mega-menu-column .link.button.button-bordered-secondary {display:none;}}
+
+/* Remove mobile sticky CTA */
+body#remove-sticky-footer #footer #sticky-cta{display:none;}
+
+/*  Inner page sub-nav */
+body.is-inner-page-no-breadcrumb #inner-page-heading .navigation.submenu {display:none;}
+
+/* Part of StoneX umbrella nav */
+#umbrella .icon-link-list.umbrella-menu li.active {border-bottom:none;}
+#umbrella .position-right>.row .umbrella-menu li {float: left;}
+#umbrella .icon-link-list li.active li a .field-linkicon {margin:auto;}
+
+/* Part of StoneX footer */
+#footer .centered-flex-content img {max-width: 220px;}
+.centered-flex-content>.component-content>.row>div.image {margin-bottom: 0;}
+@media (min-width: 992px) {#footer .icon-link-list.spacing-m-t-20 {margin-top: 20px !important;}}
+
+/* Manual Mobile Language Switcher Link */
+@media (max-width: 1024px) {#mega-menu .mega-menu-column #language-switcher-link .field-link {padding: 12px 0 !important;} #mega-menu .mega-menu-column #language-switcher-link a:hover, #mega-menu .mega-menu-column #language-switcher-link a {color: #000 !important;}}
+
+/* Securiti.ai */
+.cmp-tabs__title, .cmp-modal__sub-title a {color: var(--prefTextColor,#fff) !important;}
+.cc-theme-block .cc-btn {font-weight: normal;}
+.cc-color-override-46155149 .cc-link, .cc-color-override-46155149 .cc-link:active, .cc-color-override-46155149 .cc-link:visited {color: rgb(0, 0, 0) !important; font-weight: normal;}
+.cmp-tabs__desc a {color: inherit !important; text-decoration: underline;}
+
+
+.embeddedMessagingFrame{
+z-index:9999!important;
+}
+</style>
+
+
+
+
+<meta property="twitter:title" content="US Dollar Technical Outlook: DXY Hits 2026 High—Major Trend Resistance Puts Rally to the Test"><meta property="twitter:card" content="summary_large_image"><meta property="twitter:description" content="Despite the Dollar’s persistent strength, a pullback from key resistance raises the risk of near-term exhaustion as DXY approaches support."><meta property="twitter:image" content="https://micms.stonex.com/cdn-cgi/image/quality=80/sites/default/files/2025-11/us-1.jpg?w=1024&amp;h=512"><meta property="twitter:site" content="@FOREXcom"><meta property="twitter:creator" content="@MBForex">
+
+    <title>US Dollar Technical Outlook: DXY Hits 2026 High—Major Trend Resistance Puts Rally to the Test</title>
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.forex.com/en-us/-/media/project/gain-capital/forex/icons/favicon/forex-favicon-96px.png?h=96&amp;w=96&amp;extension=webp&amp;hash=73CEAEC46089146FADF17319C273A5A3">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://www.forex.com/en-us/-/media/project/gain-capital/forex/icons/favicon/forex-favicon-96px.png?h=96&amp;w=96&amp;extension=webp&amp;hash=73CEAEC46089146FADF17319C273A5A3">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.forex.com/en-us/-/media/project/gain-capital/forex/icons/favicon/forex-favicon-32px.png?h=32&amp;w=32&amp;extension=webp&amp;hash=9C8045AA28562A7DF6EEEF5F68CE8F9B">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.forex.com/en-us/-/media/project/gain-capital/forex/icons/favicon/forex-favicon-16px.png?h=16&amp;w=16&amp;extension=webp&amp;hash=D253770B30508C6AECC8D760260222D3">
+
+                <link rel="amphtml" href="https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/?amp=true">
+                <link rel="canonical" href="https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/">
+
+
+<meta name="robots" content="index,follow">
+
+
+<meta property="og:title" content="US Dollar Technical Outlook: DXY Hits 2026 High—Major T"><meta property="og:description" content="Despite the Dollar’s persistent strength, a pullback from key resistance raises the risk of near-term exhaustion as DXY approaches support."><meta property="og:image" content="https://micms.stonex.com/cdn-cgi/image/quality=80/sites/default/files/2025-11/us-1.jpg?w=1200&amp;h=630"><meta property="og:url" content="https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/"><meta property="og:locale" content="en_US"><meta property="og:type" content="article">
+
+
+<meta name="description" content="Despite the Dollar’s persistent strength, a pullback from key resistance raises the risk of near-term exhaustion as DXY approaches support.">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1 ">
+            <!-- Google Tag Manager -->
+            <script type="text/javascript" async="" src="//calendar.fxstreet.com/scripts/resources/?culture=en"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-54HXRWV"></script><script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+    {'gtm.start': new Date().getTime(),event:'gtm.js'}
+    );var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-54HXRWV');</script>
+            <!-- End Google Tag Manager -->
+
+
+
+
+    <script type="application/ld+json">
+    {
+
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "isAccessibleForFree": true,
+        "url": "https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/",
+        "headline": "US Dollar Technical Outlook: DXY Hits 2026 High—Major Trend Resistance Puts Rally to the Test",
+        "description": "Despite the Dollar’s persistent strength, a pullback from key resistance raises the risk of near-term exhaustion as DXY approaches support.",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://micms.stonex.com/cdn-cgi/image/quality=80/sites/default/files/2025-11/us-1.jpg"
+        },
+    "datePublished": "2026-11-24T02:13:00+00:00",
+    "author": {
+         "@type": "Person",
+         "name": "Michael Boutros",
+            "jobTitle": "Sr. Technical Strategist",
+            "knowsAbout": ["Multi-timeframe Technical Analysis"],
+            "url": "https://www.forex.com/en-us/news-and-analysis/forex-com-analysts/michael-boutros/",
+            "sameAs": ["https://twitter.com/MBForex"]
+     },
+    "publisher": {
+        "@type": "Organization",
+        "name": "FOREX.com",
+        "url": "https://www.forex.com/en-us/"
+        }
+    }
+    </script>
+
+
+<style>
+/* Moves Geo banner up */
+@media (max-width: 600px) {.modal-panel {top: 35% !important;}}
+@media (min-width: 601px) and (max-width: 991px) {.modal-panel {top: 45% !important;}}
+/* Cookie banner styling overrides */
+@media (max-width: 767px) {.cc-message-container {padding-right: 32px !important;} .cc-compliance.cc-highlight.cc-regular {padding-left: 32px !important;}}
+.cc-window.cc-banner.cc-bottom {padding: 0 !important;}
+.cc-message-container {background-color: rgb(239, 239, 239) !important; padding-left: 32px !important; z-index: 2;}
+.cc-compliance.cc-highlight.cc-regular {background-color: rgb(239, 239, 239) !important; padding-right: 32px !important; z-index: 2;}
+.cc-window.cc-banner.cc-bottom::after {content: ""; top: 0; left: 0; width: 100%; height: 100%; background-color: rgb(0, 0, 0, 0.4); position: fixed; z-index: 1;}
+/* Delays Geo banner */
+.geo-ip-modal.modal-panel {opacity: 0; animation: fadeIn 1s ease-in forwards; animation-delay: 2s;}
+@keyframes fadeIn {to {opacity: 1;}}
+</style>
+                <meta name="robots" content="max-image-preview:large, max-video-preview:-1">
+
+    
+<meta name="VIcurrentDateTime" content="639312031850536951">
+<script type="text/javascript" src="/layouts/system/VisitorIdentification.js"></script>
+
+
+    <link href="/-/media/themes/gain-capital/forex/forex/styles/main-split-pre-optimized-min.css?v=5.42.11" rel="stylesheet">
+<link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/geoipmodal/geoipmodal-pre-optimized-min.css?v=5.42.11" rel="stylesheet">
+<link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/headerwithmegamenu/headerwithmegamenu-pre-optimized-min.css?v=5.42.11" rel="stylesheet">
+<link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/pageheading/pageheading-pre-optimized-min.css?v=5.42.11" rel="stylesheet">
+<link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/warningbanner/warningbanner-pre-optimized-min.css?v=5.42.11" rel="stylesheet">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/articlepage/articlepage-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/articlepage/articlepage-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/breadcrumb/breadcrumb-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/breadcrumb/breadcrumb-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/cookiebanner/cookiebanner-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/cookiebanner/cookiebanner-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/ctabar/ctabar-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/ctabar/ctabar-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/datepicker/datepicker-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/datepicker/datepicker-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/economiccalendar/economiccalendar-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/economiccalendar/economiccalendar-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/forms/forms-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/forms/forms-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/formsradio/formsradio-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/formsradio/formsradio-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/iconlinklist/iconlinklist-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/iconlinklist/iconlinklist-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/image/image-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/image/image-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/latestarticles/latestarticles-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/latestarticles/latestarticles-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/linklist/linklist-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/linklist/linklist-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/livechat/livechat-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/livechat/livechat-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/relatedarticles/relatedarticles-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/relatedarticles/relatedarticles-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+<noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/socialsharelinks/socialsharelinks-pre-optimized-min.css?v=5.42.11" rel="stylesheet" /></noscript><link href="/-/media/themes/gain-capital/forex/forex/styles/components-split/socialsharelinks/socialsharelinks-pre-optimized-min.css?v=5.42.11" rel="stylesheet" as="style" onload="this.onload = null; this.rel = 'stylesheet'">
+
+
+                
+<style id="lightense-images-css">
+:root {
+  --lightense-z-index: 2147483646;
+  --lightense-backdrop: rgba(0,0,0, .75);
+  --lightense-backdrop-filter: blur(30px);
+  --lightense-duration: 300ms;
+  --lightense-timing-func: cubic-bezier(.2, 0, .1, 1);
+}
+
+.lightense-backdrop {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: calc(var(--lightense-z-index) - 1);
+  padding: 0;
+  margin: 0;
+  transition: opacity var(--lightense-duration) ease;
+  cursor: zoom-out;
+  opacity: 0;
+  background-color: var(--lightense-backdrop);
+  visibility: hidden;
+}
+
+@supports (-webkit-backdrop-filter: blur(30px)) {
+  .lightense-backdrop {
+    background-color: var(--lightense-backdrop);
+    -webkit-backdrop-filter: var(--lightense-backdrop-filter);
+  }
+}
+
+@supports (backdrop-filter: blur(30px)) {
+  .lightense-backdrop {
+    background-color: var(--lightense-backdrop);
+    backdrop-filter: var(--lightense-backdrop-filter);
+  }
+}
+
+.lightense-wrap {
+  position: relative;
+  transition: transform var(--lightense-duration) var(--lightense-timing-func);
+  z-index: var(--lightense-z-index);
+  pointer-events: none;
+}
+
+.lightense-target {
+  cursor: zoom-in;
+  transition: transform var(--lightense-duration) var(--lightense-timing-func);
+  pointer-events: auto;
+}
+
+.lightense-open {
+  cursor: zoom-out;
+}
+
+.lightense-transitioning {
+  pointer-events: none;
+}</style></head>
+<body class="default-device bodyclass" data-site-id="{753454D7-4EEA-4D0D-9A56-528127813A34}" data-stream-url="https://rates-live.efxnow.com" data-is-streaming-enabled="true" data-site-lang="en-us" data-browser-type="isChrome" data-tags-listener-attached="true">
+    
+            <!-- Google Tag Manager (noscript) -->
+            <noscript>
+                <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-54HXRWV" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            </noscript>
+            <!-- End Google Tag Manager (noscript) -->
+
+
+
+
+
+
+
+    
+<!-- #wrapper -->
+<div id="wrapper" style="padding-top: 90px;">
+
+    <!-- #header -->
+    <header>
+        <div id="header" class="container-fluid">
+            <div class="row">
+
+
+
+
+<div class="row">
+
+
+
+<div class="component container col-12 full-width">
+    <div class="component-content">
+<div class="row">
+</div>    </div>
+</div></div>
+
+
+
+
+<div class="component container col-12 full-width">
+    <div class="component-content">
+<div class="row">
+
+
+
+<div class="component header-with-megamenu new-header">
+
+    <nav class="stx-top-bar">
+
+
+  <div class="stx-umbrella ">
+<a gtmlinkname="Trading" href="/en-us/" class="stx-umbrella__link-icon  internal" gtmlinkcontext="header">Trading</a><a gtmlinkname="VIP" href="/en-us/active-trader/" class="stx-umbrella__link-icon  internal" gtmlinkcontext="header">VIP</a><a gtmlinkname="Institutional" href="https://www.stonex.com/en-us/business/stonex-pro/" rel="noopener noreferrer" class="stx-umbrella__link-icon  external" gtmlinkcontext="header" target="_blank">Institutional</a>  </div>
+
+<div class="stx-umbrella right">
+    <div class="iconLinks ">
+
+      <a href="/en-us/help-and-support/" class="stx-umbrella__link-icon internal">
+        <img src="/en-us/-/media/project/gain-capital/forex/icons/core/umbrella/support-black.svg?iar=0&amp;extension=webp&amp;hash=2ED7B7D86822BB7CA990FC2A92A9FDE2" class="stx-umbrella__link internal" alt="Support">
+        Support
+      </a>
+    </div>
+    <div class="iconLinks desktop-hidden">
+
+      <a href="/en-us/search-results/" class="stx-umbrella__link-icon internal">
+        <img src="/en-us/-/media/project/gain-capital/city-index/icons/mega-menu/search.svg?h=39&amp;iar=0&amp;w=51&amp;extension=webp&amp;hash=EAB222CF1B02B7FC04CB537D831B35B2" class="stx-umbrella__link internal" alt="Search" width="51" height="39">
+        Search
+      </a>
+    </div>
+</div>
+
+
+
+  <div class="stx-regional-switcher">
+    <button class="stx-regional-switcher__trigger" type="button">
+
+      
+      <label>English</label>
+    </button>
+
+    <div class="stx-regional-switcher__list">
+        <button class="stx-back-button stx-back-button--regional" type="button">Back</button>
+
+      <span class="stx-regional-switcher__label"></span>
+
+        <span class="stx-regional-switcher__title">Choose your language</span>
+
+        <span class="stx-regional-switcher__Description">Select your language to display the most appropriate content.</span>
+
+          <a gtmlinkname="English" href="/en-us/" class="stx-regional-switcher__link active" gtmlinkcontext="header">English</a>
+          <a gtmlinkname="Español" href="/es-us/" class="stx-regional-switcher__link" gtmlinkcontext="header">Español</a>
+          <a gtmlinkname="中文" href="/zh-us/" class="stx-regional-switcher__link" gtmlinkcontext="header">中文</a>
+    </div>
+  </div>
+
+    </nav>
+
+<div class="stx-main-bar">
+  
+
+
+<a href="https://www.forex.com/en-us/" title="Home" class="stx-logo">
+    <img src="/en-us/-/media/project/gain-capital/forex/icons/core/header/fx-by-sx-logo-dark.svg?h=62&amp;iar=0&amp;w=400&amp;extension=webp&amp;hash=1A14C7C1473F8E8FA15DACC5BCD5BF73" class="logo-desktop" alt="FX by SX logo-Dark-200" width="400" height="62">
+    
+</a>
+
+
+
+<div class="navTrigger stx-hamburger">
+    <i></i>
+    <i></i>
+    <i></i>
+    <span>Menu</span>
+</div>
+
+  <nav class="stx-navigation">
+      <div class="stx-megamenu__umbrella">
+        
+
+  <div class="stx-umbrella " tabindex="0">
+<a gtmlinkname="Trading" href="/en-us/" class="stx-umbrella__link-icon internal toggle-only" gtmlinkcontext="header">Trading</a>  <div><a gtmlinkname="VIP" href="/en-us/active-trader/" class="stx-umbrella__link-icon  internal" gtmlinkcontext="header">VIP</a><a gtmlinkname="Institutional" href="https://www.stonex.com/en-us/business/stonex-pro/" rel="noopener noreferrer" class="stx-umbrella__link-icon  external" gtmlinkcontext="header" target="_blank">Institutional</a></div></div>
+      </div>
+
+
+
+    <div class="stx-megamenu ">
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--main  level-0">
+
+
+      <label>Markets</label>
+
+    
+
+      <div class="stx-megamenu__inner stx-main--megamenu__inner">
+        <div class="stx-megamenu__container">
+
+
+
+
+    <div class="stx-main--megamenu__inner_iconlinks">
+
+<a gtmlinkname="Trade Markets" href="/en-us/markets-to-trade/" class="button-with-image-gradient" gtmlinkcontext="header">Trade Markets<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-markets-range-of-markets-barchart-wh.svg?iar=0&amp;extension=webp&amp;hash=3DAACA11196112124F6C80C3892BEC2D" alt="A white bar chart to represent trading menu options on FOREX.com"></a><a gtmlinkname="Trade Prices" href="/en-us/about-us/financial-transparency/trade-prices/" class="button-with-image-gradient" gtmlinkcontext="header">Trade Prices<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-markets-pricing-and-charges-wh.svg?iar=0&amp;extension=webp&amp;hash=6528A0FD77F83D80829ADD1AB861BAD6" alt="Icon of stacked coins in white"></a><a gtmlinkname="Our Account Types" href="/en-us/trading-accounts/" class="button-with-image-gradient" gtmlinkcontext="header">Our Account Types<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-markets-account-types-wh.svg?iar=0&amp;extension=webp&amp;hash=E6A287541ACFC6257EACB58F0B05F732" alt="Account Types"></a>
+    </div>
+
+          <button class="stx-back-button" type="button">Back</button>
+
+          <div class="stx-megamenu__submenu-container">
+            
+
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/markets-to-trade/" gtmlinkcontext="header" gtmlinkname="Trade Markets">Trade Markets</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Forex" href="/en-us/forex-trading/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Forex</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Futures and Futures Options" href="/en-us/futures-and-futures-options/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Futures and Futures Options</a>
+  </div>
+
+  
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+Investment Choices      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Bullion Forex" href="/en-us/bullionforex/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Physical Gold and Silver</a>
+  </div>
+
+  </div></div>
+  <div grp-tag="2" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+Popular Markets      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="EUR USD" href="/en-us/forex-trading/eur-usd/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">EUR/USD</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="USD CAD" href="/en-us/forex-trading/usd-cad/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">USD/CAD</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="GBP USD" href="/en-us/forex-trading/gbp-usd/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">GBP/USD</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="AUD USD" href="/en-us/forex-trading/aud-usd/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">AUD/USD</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="USD JPY" href="/en-us/forex-trading/usd-jpy/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">USD/JPY</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="NZD USD" href="/en-us/forex-trading/nzd-usd/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">NZD/USD</a>
+  </div>
+
+  </div>
+  <div grp-tag="3" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+Exotic Markets      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="USD THB" href="/en-us/forex-trading/usd-thb/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">USD/THB</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="USD TRY" href="/en-us/forex-trading/usd-try/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">USD/TRY</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="USD MXN" href="/en-us/forex-trading/usd-mxn/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">USD/MXN</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="USD SGD" href="/en-us/forex-trading/usd-sgd/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">USD/SGD</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="USD HKD" href="/en-us/forex-trading/usd-hkd/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">USD/HKD</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="USD ILS" href="/en-us/forex-trading/usd-ils/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">USD/ILS</a>
+  </div>
+
+  </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--main  level-0">
+
+
+      <label>Accounts</label>
+
+    
+
+      <div class="stx-megamenu__inner stx-main--megamenu__inner">
+        <div class="stx-megamenu__container">
+
+
+
+
+    <div class="stx-main--megamenu__inner_iconlinks">
+
+<a gtmlinkname="Our Accounts" href="/en-us/trading-accounts/" class="button-with-image-gradient" gtmlinkcontext="header">Our Accounts<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-markets-account-types-wh.svg?iar=0&amp;extension=webp&amp;hash=E6A287541ACFC6257EACB58F0B05F732" alt="Account Types"></a><a gtmlinkname="Compare Accounts" href="/en-us/trading-accounts/compare-trading-accounts/" class="button-with-image-gradient" gtmlinkcontext="header">Compare Accounts<img src="/en-us/-/media/project/gain-capital/forex/icons/accounts/account-types/icon-accounttypes-compareaccounts-white.svg?iar=0&amp;extension=webp&amp;hash=CF65D12AB741474A8B4C9CD1142E88C9" alt="Compare Accounts"></a><a gtmlinkname="Current Promotions" href="/en-us/promotions/" class="button-with-image-gradient" gtmlinkcontext="header">Current Promotions<img src="/en-us/-/media/project/gain-capital/forex/icons/about/icon-aboutus-priceimprovement-white.svg?iar=0&amp;extension=webp&amp;hash=3556035C1F0A1697B833FC95F3C70C88" alt="TIck"></a><a gtmlinkname="FOREXcom VIP" href="/en-us/active-trader/" class="button-with-image-gradient" gtmlinkcontext="header">FOREX.com VIP<img src="/en-us/-/media/project/gain-capital/forex/icons/professional/fxus-active-trader/fxus-active-trader-wh.svg?iar=0&amp;extension=webp&amp;hash=40EBAF520C333C7A4BF7F4369E35837A" alt="White Active Trader Icon"></a>
+    </div>
+
+          <button class="stx-back-button" type="button">Back</button>
+
+          <div class="stx-megamenu__submenu-container">
+            
+
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/trading-accounts/" gtmlinkcontext="header" gtmlinkname="Account Types">Account Types</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Spread-Only Account" href="/en-us/trading-accounts/spread-only-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Spread-Only Account</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="RAW Pricing Account" href="/en-us/trading-accounts/raw-pricing-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">RAW Pricing Account</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="MT5 Account" href="/en-us/trading-accounts/mt5-trading-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">MT5 Account</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Corporate Account" href="/en-us/trading-accounts/corporate-trading-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Corporate Account</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="IRA Account" href="/en-us/help-and-support/forex-ira-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">IRA Account</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Compare Accounts" href="/en-us/trading-accounts/compare-trading-accounts/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Compare Accounts</a>
+  </div>
+
+  </div>
+  <div grp-tag="2" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/about-us/financial-transparency/" gtmlinkcontext="header" gtmlinkname="Financial Transparency">Financial Transparency</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Execution" href="/en-us/about-us/financial-transparency/trading-execution/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Execution</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Margin Requirements" href="/en-us/about-us/financial-transparency/margin-requirements/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Margin Requirements</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Rollover Rates" href="/en-us/about-us/financial-transparency/rollover-rates/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Rollover Rates</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Trade Prices" href="/en-us/about-us/financial-transparency/trade-prices/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Trade Prices</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Trading Costs" href="/en-us/about-us/financial-transparency/trading-costs/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Trading Costs</a>
+  </div>
+
+  </div>
+  <div grp-tag="3" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/active-trader/" gtmlinkcontext="header" gtmlinkname="FOREX.com VIP">FOREX.com VIP</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Cash Rebates" href="/en-us/active-trader/cash-rebates/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Cash Rebates</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Relationship Managers" href="/en-us/active-trader/relationship-manager/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Relationship Manager</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Exclusive Events" href="/en-us/active-trader/events/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Exclusive Events</a>
+  </div>
+
+  
+  <div grp-tag="3" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+Get Started      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Free Demo Account" href="/en-us/demo-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Free Demo Account</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Demo Raw Pricing" href="/en-us/raw-pricing-demo-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Demo Raw Pricing</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Demo MT5 Account" href="/en-us/demo-mt5-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Demo MT5 Account</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Create Live Account" href="/en-us/trading-accounts/new-trading-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Create Live Account</a>
+  </div>
+
+  </div></div>
+          </div>
+<a href="/en-us/lp/interest-promotion/" gtmlinkname="Earn Interest" class="stx-megamenu__marketing-image-link" gtmlinkcontext="header"><img src="/en-us/-/media/project/gain-capital/forex/heroes/landing-pages/interest-promotion/main-nav-image-10pct-apy.jpg?h=307&amp;iar=0&amp;w=576&amp;extension=webp&amp;hash=D649162EA0E343C85E41257DE03F547A" alt="Main Nav Image-10pct-APY" width="576" height="307"></a>        </div>
+      </div>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--main  level-0">
+
+
+      <label>Platforms and Tools</label>
+
+    
+
+      <div class="stx-megamenu__inner stx-main--megamenu__inner">
+        <div class="stx-megamenu__container">
+
+
+
+
+    <div class="stx-main--megamenu__inner_iconlinks">
+
+<a gtmlinkname="Our Trading Platforms" href="/en-us/trading-platforms/" class="button-with-image-gradient" gtmlinkcontext="header">Our Trading Platforms<img src="/en-us/-/media/project/gain-capital/forex/icons/home/fxall-why-forex-platforms-wh.svg?iar=0&amp;extension=webp&amp;hash=78D2A90EDF9476AB0A2602EA5A3B0DE9" alt="White Icon of a computer screen with a mobile phone in the foreground"></a><a gtmlinkname="Platform Comparison" href="/en-us/trading-platforms/compare-trading-platforms/" class="button-with-image-gradient" gtmlinkcontext="header">Platform Comparison<img src="/en-us/-/media/project/gain-capital/forex/icons/platforms/icon-platforms-compare-white.svg?iar=0&amp;extension=webp&amp;hash=CD1B1D16098176E4DDB9613438A25485" alt="Icon of two stacked screens in white"></a><a gtmlinkname="Our Trading Tools" href="/en-us/trading-tools/" class="button-with-image-gradient" gtmlinkcontext="header">Our Trading Tools<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-platform-trading-tools-wh.svg?iar=0&amp;extension=webp&amp;hash=0BD62EB7DB5AD7874E4C5DADCDC0CBA0" alt="Spanner and pencil icon in white"></a><a gtmlinkname="Simulated Trading" href="/en-us/trading-platforms/simulated-forex-trading/" class="button-with-image-gradient" gtmlinkcontext="header">Simulated Trading<img src="/en-us/-/media/project/gain-capital/forex/icons/home/fxall-what-is-forex-pound-dollar-wh.svg?iar=0&amp;extension=webp&amp;hash=AF564BAE3A35A567E9A2BD722BE69076" alt="White icon of $ and £ symbols"></a>
+    </div>
+
+          <button class="stx-back-button" type="button">Back</button>
+
+          <div class="stx-megamenu__submenu-container">
+            
+
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/trading-platforms/" gtmlinkcontext="header" gtmlinkname="FOREX.com Platforms">FOREX.com Platforms</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Mobile App" href="/en-us/trading-platforms/mobile-trading/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Mobile App</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Web Trader" href="/en-us/trading-platforms/web-trader/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Web Trader</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Platform Comparison" href="/en-us/trading-platforms/compare-trading-platforms/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Platform Comparison</a>
+  </div>
+
+  
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+MetaTrader      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="MetaTrader 5" href="/en-us/trading-platforms/metatrader-5/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">MetaTrader 5</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Expert Advisors" href="/en-us/trading-platforms/expert-advisors/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Expert Advisors</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="MT5 VPS Hosting" href="/en-us/trading-platforms/mt5-vps-hosting/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">MT5 VPS Hosting</a>
+  </div>
+
+  </div></div>
+  <div grp-tag="2" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/trading-platforms/tradingview/" gtmlinkcontext="header" gtmlinkname="TradingView">TradingView</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Advanced Charts" href="/en-us/trading-tools/advanced-charts-trading/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Advanced Charts</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="How to Connect" href="/en-us/tradingview-login-instructions/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">How to Connect</a>
+  </div>
+
+  
+  <div grp-tag="2" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+Other ways to trade      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="NinjaTrader" href="/en-us/premium-trader-tools/ninjatrader/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">NinjaTrader</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="API Trading" href="/en-us/premium-trader-tools/api-trading/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">API Trading</a>
+  </div>
+
+  </div></div>
+  <div grp-tag="3" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/trading-tools/" gtmlinkcontext="header" gtmlinkname="Trading Tools">Trading Tools</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Performance Analytics" href="/en-us/performance-analytics-hub/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Performance Analytics</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Trader Sentiment" href="/en-us/trading-tools/client-sentiment/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Trader Sentiment</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Pivot Points" href="/en-us/trading-tools/pivot-points/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Pivot Points</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Currency Converter" href="/en-us/help-and-support/currency-converter/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Currency Converter</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Margin and Pip Calculator" href="/en-us/help-and-support/margin-pip-calculator/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Margin and Pip Calculator</a>
+  </div>
+
+  
+  <div grp-tag="3" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+Get Started      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Download Platforms" href="/en-us/trading-platforms/download-trading-platforms/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Download Platforms</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Platform Tutorials" href="/en-us/video-tutorials/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Video Tutorials</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Simulated Trading" href="/en-us/trading-platforms/simulated-forex-trading/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Simulated Trading</a>
+  </div>
+
+  </div></div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--main  level-0">
+
+
+      <label>News and Analysis</label>
+
+    
+
+      <div class="stx-megamenu__inner stx-main--megamenu__inner">
+        <div class="stx-megamenu__container">
+
+
+
+
+    <div class="stx-main--megamenu__inner_iconlinks">
+
+<a gtmlinkname="Latest Research" href="/en-us/news-and-analysis/" class="button-with-image-gradient" gtmlinkcontext="header">Latest Research<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-news-and-analysis-wh.svg?iar=0&amp;extension=webp&amp;hash=0F1C3D61707380BC3F8EB7D1167D435C" alt="Newspaper icon for main navigation - white transparent"></a><a gtmlinkname="Trade Ideas" href="/en-us/news-and-analysis/tags/trade-ideas/" class="button-with-image-gradient" gtmlinkcontext="header">Trade Ideas<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-news-and-analysis-trade-ideas-wh.svg?iar=0&amp;extension=webp&amp;hash=EE86FA8838BDC15CD80C38AA1725D4C1" alt="White icon of a lightblulb"></a><a gtmlinkname="Our Research Experts" href="/en-us/news-and-analysis/forex-com-analysts/" class="button-with-image-gradient" gtmlinkcontext="header">Our Research Experts<img src="/en-us/-/media/project/gain-capital/forex/icons/platforms/performance-analytics-hub-icons/fx-trading-plan-icon-white.svg?iar=0&amp;extension=webp&amp;hash=1BAD42BD1B26E49F5F55149EDDC94DE5" alt="FX Trading Plan Icon-White"></a><a gtmlinkname="Interactive Livestreams" href="/en-us/trading-academy/webinars/" class="button-with-image-gradient" gtmlinkcontext="header">Interactive Livestreams<img src="/en-us/-/media/project/gain-capital/forex/icons/education-and-trading-academy/icon-academy-webinars-white.svg?iar=0&amp;extension=webp&amp;hash=619689FCF72DAF964D7AC5ADD3AFF5ED" alt="Navigate to webinars"></a>
+    </div>
+
+          <button class="stx-back-button" type="button">Back</button>
+
+          <div class="stx-megamenu__submenu-container">
+            
+
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/news-and-analysis/" gtmlinkcontext="header" gtmlinkname="News &amp; Analysis">News &amp; Analysis</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Forex Market" href="/en-us/news-and-analysis/tags/forex/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Forex Market</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Our Research Experts" href="/en-us/news-and-analysis/forex-com-analysts/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Our Research Experts</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Economic Calendar" href="/en-us/trading-tools/economic-calendar/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Economic Calendar</a>
+  </div>
+
+  </div>
+  <div grp-tag="2" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/trading-academy/webinars/" gtmlinkcontext="header" gtmlinkname="Interactive Livestreams">Interactive Livestreams</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Forex Price Action" href="/en-us/trading-academy/webinars/series/price-action-webinar/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Forex Price Action</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Forex Technical Focus" href="/en-us/trading-academy/webinars/series/weekly-strategy-webinar/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Forex Technical Focus</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Daily Squawk" href="/en-us/lp/daily-squawk/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header" target="_blank">Daily Squawk</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Live NFP Coverage" href="/en-us/trading-academy/webinars/series/nfp-webinar/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Live NFP Coverage</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Daily Market Update" href="/en-us/trading-academy/webinars/series/daily-market-update/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Daily Market Update</a>
+  </div>
+
+  </div>
+  <div grp-tag="3" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+Popular Topics      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Middle East Conflict" href="/en-us/lp/me-volatility/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Middle East Conflict</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Trump Tariffs" href="/en-us/trump-trade-wars/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Trump Tariffs</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="China" href="/en-us/news-and-analysis/tags/china/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">China</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="FX x Metals" href="/en-us/lp/how-metals-volatility-affects-fx-markets/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">FX x Metals</a>
+  </div>
+
+  </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--main  level-0">
+
+
+      <label>Learn</label>
+
+    
+
+      <div class="stx-megamenu__inner stx-main--megamenu__inner">
+        <div class="stx-megamenu__container">
+
+
+
+
+    <div class="stx-main--megamenu__inner_iconlinks">
+
+<a gtmlinkname="Trading Academy" href="/en-us/trading-academy/" class="button-with-image-gradient" gtmlinkcontext="header">Trading Academy<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-academy-education-wh.svg?iar=0&amp;extension=webp&amp;hash=E4D59996773BBAE8C7FDED09CD085768" alt="Mortarboard icon in white"></a><a gtmlinkname="Interactive Livestreams" href="/en-us/trading-academy/webinars/" class="button-with-image-gradient" gtmlinkcontext="header">Interactive Livestreams<img src="/en-us/-/media/project/gain-capital/forex/icons/education-and-trading-academy/icon-academy-webinars-white.svg?iar=0&amp;extension=webp&amp;hash=619689FCF72DAF964D7AC5ADD3AFF5ED" alt="Navigate to webinars"></a><a gtmlinkname="Video Tutorials" href="/en-us/video-tutorials/" class="button-with-image-gradient" gtmlinkcontext="header">Video Tutorials<img src="/en-us/-/media/project/gain-capital/forex/icons/platforms/icon-academy-platformtutorials-white.svg?iar=0&amp;extension=webp&amp;hash=539E10B082FBAE9785EFB4B03619D097" alt="Navigate to platform tutorials"></a><a gtmlinkname="The Traders Course" href="/en-us/trading-academy/the-traders-course/" class="button-with-image-gradient" gtmlinkcontext="header">The Trader's Course<img src="/en-us/-/media/project/gain-capital/forex/icons/education-and-trading-academy/icon-academy-lessons-white.svg?iar=0&amp;extension=webp&amp;hash=70015534313069D1C48DEBC2B20DC325" alt="White icon of crypto-currency book"></a><a gtmlinkname="Glossary" href="/en-us/glossary/" class="button-with-image-gradient" gtmlinkcontext="header">Glossary<img src="/en-us/-/media/project/gain-capital/forex/icons/education-and-trading-academy/icon-academy-glossary-white.svg?iar=0&amp;extension=webp&amp;hash=8188F1FB47555E80E657B94AEED8EF2A" alt="Glossary icon"></a>
+    </div>
+
+          <button class="stx-back-button" type="button">Back</button>
+
+          <div class="stx-megamenu__submenu-container">
+            
+
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/trading-academy/" gtmlinkcontext="header" gtmlinkname="Academy">Academy</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Courses" href="/en-us/trading-academy/courses/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Courses</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Lessons" href="/en-us/trading-academy/lessons/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Lessons</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Self-Assessment Quiz" href="/en-us/trading-academy/self-assessment/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Self-Assessment Quiz</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="The Traders Course" href="/en-us/trading-academy/the-traders-course/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">The Trader's Course</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Glossary" href="/en-us/glossary/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Glossary</a>
+  </div>
+
+  
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/video-tutorials/" gtmlinkcontext="header" gtmlinkname="Tutorials">Tutorials</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="MetaTrader" href="/en-us/video-tutorials/#tutorials_sxatags=Metatrader&amp;tutorials_e=0" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">MetaTrader</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Mobile Apps" href="/en-us/video-tutorials/#tutorials_sxatags=Mobile%20Apps&amp;tutorials_e=0" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Mobile Apps</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Web Trader" href="/en-us/video-tutorials/#tutorials_sxatags=Web%20Trader&amp;tutorials_e=0" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Web Trader</a>
+  </div>
+
+  </div></div>
+  <div grp-tag="2" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/trading-guides/" gtmlinkcontext="header" gtmlinkname="Trading Guides (NEW)">Trading Guides (NEW)</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Market Sentiment in Forex" href="/en-us/news-and-analysis/how-to-use-market-sentiment-in-forex-trading/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Market Sentiment in Forex</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="11 Chart Patterns You Should Know" href="/en-us/learn-forex-trading/11-chart-patterns-you-should-know/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">11 Chart Patterns You Should Know</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Bullish and Bearish Flags" href="/en-us/learn-forex-trading/bullish-and-bearish-flags/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Bullish and Bearish Flags</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Doji Candles" href="/en-us/learn-forex-trading/doji-candle/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Doji Candles</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Hammer Candlesticks" href="/en-us/learn-forex-trading/hammer-candlesticks/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Hammer Candlesticks</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Liquidity and Volatility" href="/en-us/learn-forex-trading/liquidity-and-volatility-in-forex/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Liquidity and Volatility</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="What Is Options Trading" href="/en-us/trading-guides/what-is-options-trading/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">What Is Options Trading?</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Triangle Chart Patterns" href="/en-us/learn-forex-trading/triangle-chart-patterns/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header" target="_blank">Triangle Chart Patterns</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="What is a Pip" href="/en-us/learn-forex-trading/what-is-a-pip/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">What is a Pip?</a>
+  </div>
+
+  </div>
+  <div grp-tag="3" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+Other Guides      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="5-3-1 Trading Strategy" href="/en-us/learn-forex-trading/5-3-1-trading-strategy/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">5-3-1 Trading Strategy</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Forex Regulations" href="/en-us/learn-forex-trading/forex-regulations/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Forex Regulations</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Symmetrical Triangles" href="/en-us/learn-forex-trading/symmetrical-triangles/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Symmetrical Triangles</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Expert Advisor Installation Guide" href="/en-us/trading-platforms/expert-advisors/ea-installation-guide/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Expert Advisor Installation Guide</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Wide Ranging Bars" href="/en-us/learn-forex-trading/wide-ranging-bars/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Wide Ranging Bars</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Central Banks" href="/en-us/central-banks/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Central Banks</a>
+  </div>
+
+  
+  <div grp-tag="3" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/trading-academy/webinars/" gtmlinkcontext="header" gtmlinkname="Interactive Livestreams">Interactive Livestreams</a>      </span>
+
+
+  </div></div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--main  level-0">
+
+
+      <label>About Us</label>
+
+    
+
+      <div class="stx-megamenu__inner stx-main--megamenu__inner">
+        <div class="stx-megamenu__container">
+
+
+
+
+    <div class="stx-main--megamenu__inner_iconlinks">
+
+<a gtmlinkname="Why FOREXcom" href="/en-us/about-us/why-us/" class="button-with-image-gradient" gtmlinkcontext="header">Why FOREX.com?<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-about-forexcom-wh.svg?iar=0&amp;extension=webp&amp;hash=7E750F208F0757268058B9135B57856D" alt="About us icon of 3 towers in white"></a><a gtmlinkname="Help and Support" href="/en-us/help-and-support/" class="button-with-image-gradient" gtmlinkcontext="header">Help &amp; Support<img src="/en-us/-/media/project/gain-capital/forex/icons/nav/fxall-meganav-academy-support-wh.svg?iar=0&amp;extension=webp&amp;hash=67B8DACA0CA8380B61E8816F06125B4E" alt="White chat icon of 2 people and a speech bubble"></a><a gtmlinkname="StoneX Corp" href="https://www.stonex.com/en/" class="button-with-image-gradient" gtmlinkcontext="header">StoneX Group Inc.<img src="/en-us/-/media/project/gain-capital/forex/icons/about/icon-stonex-white.svg?iar=0&amp;extension=webp&amp;hash=0149F28E6AACC10FD612A1E69FA092FB" alt="StoneX"></a>
+    </div>
+
+          <button class="stx-back-button" type="button">Back</button>
+
+          <div class="stx-megamenu__submenu-container">
+            
+
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/about-us/" gtmlinkcontext="header" gtmlinkname="About FOREX.com">About FOREX.com</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Careers" href="/en-us/about-us/careers/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Careers</a>
+  </div>
+
+  
+  <div grp-tag="1" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+Get Started      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Demo Account" href="/en-us/demo-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Demo Account</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Live Account" href="/en-us/trading-accounts/new-trading-account/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Live Account</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Current Promotions" href="/en-us/promotions/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Current Promotions</a>
+  </div>
+
+  </div></div>
+  <div grp-tag="2" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/about-us/why-us/" gtmlinkcontext="header" gtmlinkname="Why Trade with Us?">Why Trade with Us?</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Costs and Charges" href="/en-us/about-us/financial-transparency/trading-costs/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Costs &amp; Charges</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Execution" href="/en-us/about-us/financial-transparency/trading-execution/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Execution</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Strength and Security" href="/en-us/about-us/strength-and-security/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Strength &amp; Security</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Regulation" href="/en-us/about-us/regulation/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Regulation</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Pricing" href="/en-us/about-us/financial-transparency/trade-prices/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Pricing</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Trading Support" href="/en-us/about-us/trading-support/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Trading Support</a>
+  </div>
+
+  </div>
+  <div grp-tag="3" class="stx-megamenu__submenu stx-megamenu__submenu--nested">
+      <span class="stx-megamenu__inner-title">
+<a href="/en-us/help-and-support/" gtmlinkcontext="header" gtmlinkname="Help &amp; Support">Help &amp; Support</a>      </span>
+
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="FAQs" href="/en-us/help-and-support/popular-faqs/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">FAQs</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Account Forms" href="/en-us/help-and-support/account-forms/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Account Forms</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Service Updates" href="/en-us/help-and-support/service-updates/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Service Updates</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Market Hours" href="/en-us/help-and-support/market-trading-hours/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Market Hours</a>
+  </div>
+  <div tabindex="0" class="stx-megamenu__item stx-megamenu__item--nested  level-1">
+    <a gtmlinkname="Security Fraud" href="/en-us/help-and-support/security-fraud/" class="stx-megamenu__link stx-nested--megamenu__link " gtmlinkcontext="header">Security Fraud</a>
+  </div>
+
+  </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+
+
+    </div>
+
+    <div class="stx-ctas">
+        <div class="stx-site-search">
+          <a href="/en-us/search-results/" title="search" class="stx-search-link">
+            <img src="/en-us/-/media/project/gain-capital/city-index/icons/mega-menu/search.svg?h=39&amp;iar=0&amp;w=51&amp;extension=webp&amp;hash=EAB222CF1B02B7FC04CB537D831B35B2" class="search-icon" alt="Search" width="51" height="39">
+          </a>
+        </div>
+
+        <div class="button button-bordered-primary">
+          <a gtmlinkcontext="header" href="/en-us/account-login/" gtmlinkname="Log In">Log In</a>
+        </div>
+
+        <div class="button button-solid button-primary">
+          <a gtmlinkcontext="header" href="/en-us/application/new-trading-account-us/" gtmlinkname="Open an account" target="_blank">Open an account</a>
+        </div>
+    </div>
+
+    <div class="stx-bottom-buttons">
+
+
+
+<div class="stx-umbrella right">
+    <div class="iconLinks ">
+
+      <a href="/en-us/help-and-support/" class="stx-umbrella__link-icon internal">
+        <img src="/en-us/-/media/project/gain-capital/forex/icons/core/umbrella/support-black.svg?iar=0&amp;extension=webp&amp;hash=2ED7B7D86822BB7CA990FC2A92A9FDE2" class="stx-umbrella__link internal" alt="Support">
+        Support
+      </a>
+    </div>
+    <div class="iconLinks desktop-hidden">
+
+      <a href="/en-us/search-results/" class="stx-umbrella__link-icon internal">
+        <img src="/en-us/-/media/project/gain-capital/city-index/icons/mega-menu/search.svg?h=39&amp;iar=0&amp;w=51&amp;extension=webp&amp;hash=EAB222CF1B02B7FC04CB537D831B35B2" class="stx-umbrella__link internal" alt="Search" width="51" height="39">
+        Search
+      </a>
+    </div>
+</div>
+
+
+
+  <div class="stx-regional-switcher">
+    <button class="stx-regional-switcher__trigger" type="button">
+
+      
+      <label>English</label>
+    </button>
+
+    <div class="stx-regional-switcher__list">
+        <button class="stx-back-button stx-back-button--regional" type="button">Back</button>
+
+      <span class="stx-regional-switcher__label"></span>
+
+        <span class="stx-regional-switcher__title">Choose your language</span>
+
+        <span class="stx-regional-switcher__Description">Select your language to display the most appropriate content.</span>
+
+          <a gtmlinkname="English" href="/en-us/" class="stx-regional-switcher__link active" gtmlinkcontext="header">English</a>
+          <a gtmlinkname="Español" href="/es-us/" class="stx-regional-switcher__link" gtmlinkcontext="header">Español</a>
+          <a gtmlinkname="中文" href="/zh-us/" class="stx-regional-switcher__link" gtmlinkcontext="header">中文</a>
+    </div>
+  </div>
+    </div>
+  </nav>
+</div>
+</div><div class="component plain-html">
+    <div class="component-content">
+<style>
+img.crpb
+{ width:1px; }
+</style>    </div>
+</div></div>    </div>
+</div></div>
+        </div>
+    </header>
+    <!-- /#header -->
+    <!-- #content -->
+    <main>
+        <div id="content" class="container-fluid">
+            <div class="row">
+
+
+
+<div class="component page-heading dark-theme col-12 article-content" data-has-videobg="False">
+
+
+    <div class="component-content">
+<div class="row"></div><div class="row">
+
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+                
+                    {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.forex.com/en-us/"
+                    },
+
+                
+                
+                    {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "News and Analysis",
+                    "item": "https://www.forex.com/en-us/news-and-analysis/"
+                    }
+
+                
+
+        ]
+        }
+    </script>
+
+
+
+
+
+<div class="component breadcrumb col-12">
+    <div class="component-content">
+        
+        <nav>
+            <ol>
+                    <li class="breadcrumb-item home">
+<div><a title="Home" href="https://www.forex.com/en-us/"><div></div></a></div>                            <span class="separator">/</span>
+                    </li>
+                    <li class="breadcrumb-item last">
+<div><div><div class="navigation-title field-navigationtitle"><a title="News and Analysis" href="https://www.forex.com/en-us/news-and-analysis/">News &amp; Analysis</a></div></div></div>                            <span class="separator">/</span>
+                    </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+</div><h1 class="field-pageheadingtitle">US Dollar Technical Outlook: DXY Hits 2026 High—Major Trend Resistance Puts Rally to the Test
+</h1><p class="field-pageheadingtitle field-articleteaser">Despite the Dollar’s persistent strength, a pullback from key resistance raises the risk of near-term exhaustion as DXY approaches support.</p>    </div>
+</div>
+
+
+
+<div class="component container article-content">
+    <div class="component-content">
+<div class="row">    <div class="component promo article-metadata d-none d-sm-none d-md-block">
+        <div class="component-content">
+<div class="row">    <div class="component promo author-heading">
+        <div class="component-content">
+<div class="author"><div class="image field-miauthorimageurl">
+
+    <img src="https://micms.stonex.com/sites/default/files/Michael%20Boutros.jpg" alt="Michael Boutros" layout="responsive">
+
+</div><span class="by">By : &nbsp;</span><div><a href="/en-us/news-and-analysis/forex-com-analysts/michael-boutros/" title="Michael Boutros">Michael Boutros</a></div><span class="title field-miauthortitle"><span>, &nbsp;</span>Sr. Technical Strategist</span></div>        </div>
+    </div>
+    <div class="component promo article-date">
+        <div class="component-content">
+<div class="date">24/11/2026</div><span class="date-timestamp-for-algolia-crawler hidden field-articledate">11/24/2026 2:13:00 PM</span>        </div>
+    </div>
+
+
+
+
+
+<div class="component social-share-links">
+        <div class="component-content">
+            <p class="share-caption">
+                Share this:
+            </p>
+
+            <div class="social-links-container">
+                    <div class="desktop-only">
+                        <a href="mailto:?subject=US Dollar Technical Outlook: DXY Hits 2026 High—Major Trend Resistance Puts Rally to the Test&amp;body=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Send via Email"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-mail.svg?iar=0&amp;extension=webp" alt="Share a FOREX.com article by email" item="Sitecore.Data.Items.Item" linktype="Email" linkcaption="Send via Email"></a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to Facebook"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-facebook.svg?iar=0&amp;extension=webp" alt="Share a FOREX.com article via Facebook" item="Sitecore.Data.Items.Item" linktype="Facebook" linkcaption="Share to Facebook"></a>
+<a href="https://twitter.com/intent/tweet?text=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to Twitter"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/x-logo-blue-forex.svg?iar=0&amp;extension=webp" alt="X logo Blue Forex" item="Sitecore.Data.Items.Item" linktype="Twitter" linkcaption="Share to Twitter"></a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to LinkedIn"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-linkedin.svg?iar=0&amp;extension=webp" alt="Share FOREX.com article to LinkedIn network" item="Sitecore.Data.Items.Item" linktype="LinkedIn" linkcaption="Share to LinkedIn"></a>
+
+                    </div>
+
+                    <div class="mobile-only">
+                        <a href="mailto:?subject=US Dollar Technical Outlook: DXY Hits 2026 High—Major Trend Resistance Puts Rally to the Test&amp;body=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Send via Email"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-mail.svg?iar=0&amp;extension=webp" alt="Share a FOREX.com article by email" item="Sitecore.Data.Items.Item" linktype="Email" linkcaption="Send via Email"></a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to Facebook"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-facebook.svg?iar=0&amp;extension=webp" alt="Share a FOREX.com article via Facebook" item="Sitecore.Data.Items.Item" linktype="Facebook" linkcaption="Share to Facebook"></a>
+<a href="https://twitter.com/intent/tweet?text=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to Twitter"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/x-logo-blue-forex.svg?iar=0&amp;extension=webp" alt="X logo Blue Forex" item="Sitecore.Data.Items.Item" linktype="Twitter" linkcaption="Share to Twitter"></a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to LinkedIn"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-linkedin.svg?iar=0&amp;extension=webp" alt="Share FOREX.com article to LinkedIn network" item="Sitecore.Data.Items.Item" linktype="LinkedIn" linkcaption="Share to LinkedIn"></a>
+
+                    </div>
+            </div>
+        </div>
+</div>
+</div>        </div>
+    </div>
+    <div class="component promo feature-image">
+        <div class="component-content">
+<div>
+    <img src="https://micms.stonex.com/cdn-cgi/image/quality=80/sites/default/files/2025-11/us-1.jpg" alt="feature image" layout="responsive"> 
+</div>        </div>
+    </div>
+
+
+<div class="row component column-splitter">
+        <div class="col-md-8 align-vertical-top">
+            <div class="row">    <div class="component promo feature-video">
+        <div class="component-content">
+        </div>
+    </div>
+    <div class="component promo article-detail col-12">
+        <div class="component-content">
+<div class="field-content" data-process-content="true"><h4 class="caption1"><strong>US Dollar Technical Outlook: DXY Multi-Timeframe Analysis</strong></h4>
+
+<p>The U.S. dollar index is flashing exhaustion signals after a five-week rally stalled just short of a major resistance confluence. Michael Boutros, StoneX Media Senior Market Analyst, walks through the weekly, daily and four-hour DXY charts and the support and resistance zones framing the yearly uptrend. A daily outside day reversal within the uptrend was followed by daily RSI momentum slipping back below 70. Core PCE, the Federal Reserve's preferred inflation gauge, arrives alongside personal spending, a Q3 GDP update and the Beige Book. Thinner liquidity in the Thanksgiving holiday-shortened week can exaggerate currency moves late in the week. Fed rate expectations heading into 2027 keep a bid under the dollar through the interest rate differential.</p>
+
+<p class="text-align-center"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="360" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/SdJR0KkNNmg?si=_BjUUkN0ZnI3uBzR" title="YouTube video player" width="640"></iframe></p>
+
+<p><i>This content was created by an affiliate of FOREX.com and represents the views and opinions of the author/speakers, not the views and opinions of Forex.com, StoneX Group Inc., or its subsidiaries. The content has not been independently reviewed by FOREX.com.</i></p>
+
+<a gtmlinkcontext="Whitepaper" gtmlinkname="Download EUR USD Whitepaper" href="/en-us/whitepapers/" id="whitepaper" target="_blank"><img alt="Whitepaper" class="prevent-zoom" data-entity-type="file" height="500" loading="lazy" src="https://www.forex.com/en-us/-/media/project/gain-capital/forex/banners/campaigns/whitepapers/2025/FX-White-Paper-EUR-USD-V2.jpg?extension=webp&amp;hash=02BA65E65BB9F508C5A91DBB3AFB588E" style="min-width: 100%; height: auto;" width="1420"></a>
+
+<h6 class="minor-heading"><strong>Key US Economic Data Releases</strong></h6>
+
+<p><img alt="image-20261124091825-1" data-entity-type="file" data-entity-uuid="9a282596-ec9a-4ffd-88d1-f4ca3887ecd1" height="1520" src="https://micms.stonex.com//sites/default/files/inline-images/image-20261124091825-1.png" width="729" loading="lazy" class="lightense-target"></p>
+
+<p><a href="/en-us/trading-tools/economic-calendar/"><b>Economic Calendar</b></a><b>&nbsp;-&nbsp;</b>latest economic developments and upcoming event risk.</p>
+
+<h6 class="minor-heading"><b>Active Short-term Technical Video Updates</b></h6>
+
+<ul><li><a href="/en-us/news-and-analysis/australian-dollar-technical-outlook-aud-usd-6pct-plunge-tests-make-or-break-support-at-yearly-low-11-19-2026/">Australian Dollar Technical Outlook: AUD/USD 6% Plunge Tests Make-or-Break Support at Yearly Low</a></li>
+<li><a href="/en-us/news-and-analysis/japanese-yen-technical-outlook-usd-jpy-rally-stalls-near-160-breakout-support-in-focus-11-18-2026/">Japanese Yen Technical Outlook: USD/JPY Rally Stalls Near 160—Breakout Support in Focus</a></li>
+<li><a href="/en-us/news-and-analysis/british-pound-technical-outlook-gbp-usd-tests-pivotal-support-breakdown-risk-rises-11-17-2026/">British Pound Technical Outlook: GBP/USD Tests Pivotal Support—Breakdown Risk Rises</a></li>
+<li><a href="/en-us/news-and-analysis/canadian-dollar-technical-outlook-usd-cad-2pct-rally-puts-yearly-highs-back-in-play-11-12-2026/">Canadian Dollar Technical Outlook: USD/CAD 2% Rally Puts Yearly Highs Back in Play</a></li>
+<li><a href="/en-us/news-and-analysis/swiss-franc-technical-outlook-usd-chf-sharp-rebound-breaks-october-downtrend-11-11-2026/">Swiss Franc Technical Outlook: USD/CHF Sharp Rebound Breaks October Downtrend</a></li>
+</ul><p>--- Written by <a href="/en-us/news-and-analysis/tags/michael-boutros/">Michael Boutros</a>, Senior Technical Strategist</p>
+
+<p>Follow Michael on X <a href="https://twitter.com/MBForex"><b>@MBForex</b></a></p>
+</div>        </div>
+    </div>
+    <div class="component promo article-related-tags col-12 d-none d-md-block">
+        <div class="component-content">
+<span>Related tags:  
+
+<a class="pill pill-primary" href="/en-us/news-and-analysis/tags/us-dollar">us dollar</a>
+
+<a class="pill pill-primary" href="/en-us/news-and-analysis/tags/dxy">dxy</a>
+
+<a class="pill pill-primary" href="/en-us/news-and-analysis/tags/technical-analysis">technical analysis</a>
+
+<a class="pill pill-primary" href="/en-us/news-and-analysis/tags/michael-boutros">michael boutros</a>
+
+<a class="pill pill-primary" href="/en-us/news-and-analysis/tags/forex">forex</a>
+
+<a class="pill pill-primary" href="/en-us/news-and-analysis/tags/video">video</a>
+</span>        </div>
+    </div>
+
+
+
+
+
+<div class="component social-share-links d-block d-md-none py-sm">
+        <div class="component-content">
+            <p class="share-caption">
+                Share this:
+            </p>
+
+            <div class="social-links-container">
+                    <div class="desktop-only">
+                        <a href="mailto:?subject=US Dollar Technical Outlook: DXY Hits 2026 High—Major Trend Resistance Puts Rally to the Test&amp;body=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Send via Email"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-mail.svg?iar=0&amp;extension=webp" alt="Share a FOREX.com article by email" item="Sitecore.Data.Items.Item" linktype="Email" linkcaption="Send via Email"></a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to Facebook"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-facebook.svg?iar=0&amp;extension=webp" alt="Share a FOREX.com article via Facebook" item="Sitecore.Data.Items.Item" linktype="Facebook" linkcaption="Share to Facebook"></a>
+<a href="https://twitter.com/intent/tweet?text=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to Twitter"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/x-logo-blue-forex.svg?iar=0&amp;extension=webp" alt="X logo Blue Forex" item="Sitecore.Data.Items.Item" linktype="Twitter" linkcaption="Share to Twitter"></a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to LinkedIn"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-linkedin.svg?iar=0&amp;extension=webp" alt="Share FOREX.com article to LinkedIn network" item="Sitecore.Data.Items.Item" linktype="LinkedIn" linkcaption="Share to LinkedIn"></a>
+
+                    </div>
+
+                    <div class="mobile-only">
+                        <a href="mailto:?subject=US Dollar Technical Outlook: DXY Hits 2026 High—Major Trend Resistance Puts Rally to the Test&amp;body=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Send via Email"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-mail.svg?iar=0&amp;extension=webp" alt="Share a FOREX.com article by email" item="Sitecore.Data.Items.Item" linktype="Email" linkcaption="Send via Email"></a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to Facebook"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-facebook.svg?iar=0&amp;extension=webp" alt="Share a FOREX.com article via Facebook" item="Sitecore.Data.Items.Item" linktype="Facebook" linkcaption="Share to Facebook"></a>
+<a href="https://twitter.com/intent/tweet?text=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to Twitter"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/x-logo-blue-forex.svg?iar=0&amp;extension=webp" alt="X logo Blue Forex" item="Sitecore.Data.Items.Item" linktype="Twitter" linkcaption="Share to Twitter"></a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.forex.com/en-us/news-and-analysis/us-dollar-technical-outlook-dxy-hits-2026-high-major-trend-resistance-puts-rally-to-the-test-11-24-2026/" rel="noopener nofollow" target="_blank" title="Share to LinkedIn"><img height="20" loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/social-share/share-linkedin.svg?iar=0&amp;extension=webp" alt="Share FOREX.com article to LinkedIn network" item="Sitecore.Data.Items.Item" linktype="LinkedIn" linkcaption="Share to LinkedIn"></a>
+
+                    </div>
+            </div>
+        </div>
+</div>
+</div>
+        </div>
+        <div class="col-md-4 align-vertical-top">
+            <div class="row">
+
+
+
+<div class="component sitecore-form col-12">
+    <div class="component-content">
+        <div class="row"></div>
+    </div>
+</div>
+
+
+    <div class="component latest-articles col-12 small-titles">
+        <div class="component-content">
+                <h2 class="latest-articles__title">
+                    Latest market news
+                </h2>
+                            <article class="latest-articles__article">
+                    <span class="latest-articles__article-title">
+                        <a href="/en-us/news-and-analysis/eur-usd-gold-forecast-two-trades-to-watch-2026-11-25/">EUR/USD, Gold Forecast: Two trades to Watch</a>
+                    </span>
+                    <span class="latest-articles__published-date">
+                        November 25, 2026 05:07 AM
+                    </span>
+                </article>
+                <article class="latest-articles__article">
+                    <span class="latest-articles__article-title">
+                        <a href="/en-us/news-and-analysis/aud-usd-outlook-hot-inflation-no-match-for-global-risk-aversion/">AUD/USD Outlook: Hot Inflation No Match for Global Risk Aversion</a>
+                    </span>
+                    <span class="latest-articles__published-date">
+                        November 24, 2026 11:17 PM
+                    </span>
+                </article>
+                <article class="latest-articles__article">
+                    <span class="latest-articles__article-title">
+                        <a href="/en-us/news-and-analysis/australian-inflation-accelerates-rba-cut-hopes-get-reality-check/">Australian Inflation Accelerates, RBA Cut Hopes Get Reality Check</a>
+                    </span>
+                    <span class="latest-articles__published-date">
+                        November 24, 2026 08:53 PM
+                    </span>
+                </article>
+                <article class="latest-articles__article">
+                    <span class="latest-articles__article-title">
+                        <a href="/en-us/news-and-analysis/nzd-usd-outlook-reversal-signals-emerge-as-ai-trade-falters/">NZD/USD Outlook: Reversal Signals Emerge as AI Trade Falters</a>
+                    </span>
+                    <span class="latest-articles__published-date">
+                        November 24, 2026 05:30 PM
+                    </span>
+                </article>
+                <article class="latest-articles__article">
+                    <span class="latest-articles__article-title">
+                        <a href="/en-us/news-and-analysis/aud-usd-bullish-signals-emerge-ahead-of-inflation-showdown/">AUD/USD: Bullish Signals Emerge Ahead of Inflation Showdown</a>
+                    </span>
+                    <span class="latest-articles__published-date">
+                        November 24, 2026 03:59 PM
+                    </span>
+                </article>
+                <article class="latest-articles__article">
+                    <span class="latest-articles__article-title">
+                        <a href="/en-us/news-and-analysis/us-dollar-price-action-setups-into-pce-eur-usd-gbp-usd-usd-jpy-usd-cad/">US Dollar Price Action Setups into PCE: EUR/USD, GBP/USD, USD/JPY, USD/CAD</a>
+                    </span>
+                    <span class="latest-articles__published-date">
+                        November 24, 2026 02:47 PM
+                    </span>
+                </article>
+            <div class="latest-articles__view-more-link">              
+                <a gtmlinkname="Latest Research" href="/en-us/news-and-analysis/latest-research/" gtmlinkcontext="main">Latest Research</a>
+            </div>
+        </div>
+    </div>
+    <div class="component cta-bar cta-bar-solid cta-bar-vertical with-icons col-12">
+        <div class="component-content">
+<div class="cta-bar-icon"></div><div class="cta-bar-content"><div>
+
+<h3 class="field-ctabartitle">
+  Open an account in minutes
+</h3>
+<p class="field-ctabarsubtitle"></p><p>Experience award-winning platforms with fast and secure execution.</p>
+
+<style>
+.cta-bar-solid {color:#fff;}
+
+</style><p></p></div><div class="button button-solid button-teritary">
+  <a gtmlinkname="Open account" href="https://www.forex.com/en-us/trading-accounts/new-trading-account/" gtmlinkcontext="main" target="_blank">Open account</a>
+</div></div>        </div>
+    </div>
+    <div class="component cta-bar cta-bar-solid cta-bar-vertical col-12">
+        <div class="component-content">
+<div>
+
+<h3 class="field-ctabartitle">
+  Web Trader platform
+</h3>
+<div class="field-ctabarsubtitle">Our sophisticated web-based platform is packed with features.</div></div><div class="button button-solid button-teritary">
+  <a gtmlinkname="Web Trader" href="/en-us/trading-platforms/web-trader/" gtmlinkcontext="main">Web Trader</a>
+</div>        </div>
+    </div>
+
+<div class="component economic-calendar economic-calendar--sidebar col-12" data-items-to-display="6" data-culture="en" data-link-in-details="" data-resources=""> 
+    <div class="component-content">
+<span class="economic-calendar__title field-title">Economic Calendar</span><div class="economic-calendar__grid"></div><div class="button button-bordered-primary economic-calendar__link field-bottomlink"><a gtmlinkname="Economic Calendar" href="/en-us/trading-tools/economic-calendar/" data-variantitemid="{0CC5C929-9464-49B5-BEA2-CC5DDD660C16}" class="button button-solid button-teritary" gtmlinkcontext="main" data-variantfieldname="BottomLink">Economic Calendar</a></div>    </div>
+</div>
+</div>
+        </div>
+</div>
+
+
+
+<div class="component container col-12 spacing-m-t-20 spacing-m-b-20">
+    <div class="component-content">
+<div class="row"></div>    </div>
+</div></div>    </div>
+</div>
+
+
+
+
+<div class="component container col-12 article-content full-width container-gray-background py-sm">
+    <div class="component-content">
+<div class="row">
+
+
+
+<div class="component container col-12">
+    <div class="component-content">
+<div class="row">
+    <div class="component container mi-related-articles">
+        <div class="component-content">
+            <h2>
+                Latest News &amp; Analysis
+            </h2>
+            <div class="mi-related-articles__tiles">
+                    <div class="mi-related-articles__tile">
+                        <div class="mi-related-article">
+                            <a class="mi-related-article__link" href="/en-us/news-and-analysis/aud-usd-outlook-hot-inflation-no-match-for-global-risk-aversion/" title="AUD/USD Outlook: Hot Inflation No Match for Global Risk Aversion">
+                                    <img class="mi-related-article__thumbnail" src="https://micms.stonex.com/cdn-cgi/image/width=500,quality=90/sites/default/files/2024-12/Trading_20floor_201v2_0.jpg" alt="AUD/USD Outlook: Hot Inflation No Match for Global Risk Aversion">
+                                <h4 class="mi-related-article__title">
+                                    AUD/USD Outlook: Hot Inflation No Match for Global Risk Aversion
+                                </h4>
+                            </a>
+
+                            <div class="mi-related-article__footer">
+                                <div class="mi-related-article__author">By <a href="/en-us/news-and-analysis/forex-com-analysts/david-scutt/">David Scutt</a></div>
+                                <div class="mi-related-article__date">November 24, 2026 11:17 PM</div>
+                            </div>
+                            <div class="mi-related-article__tags card-tags card-tags_with-hidden-list initialised">
+                                <ul class="default-tags">
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/aud-usd/" class="pill pill-primary">
+                                                AUD USD
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/rba/" class="pill pill-primary">
+                                                RBA
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/inflation-data/" class="pill pill-primary">
+                                                inflation data
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/bonds/" class="pill pill-primary">
+                                                Bonds
+                                            </a>
+                                        </li>
+                                        
+                                        
+                                        
+                                        
+                                <li class="pill pill-primary pill-trigger" data-listener-attached="true">+4</li><li class="hidden-tags-wrapper"><ul class="hidden-tags"><li>
+                                            <a href="/en-us/news-and-analysis/tags/trade-ideas/" class="pill pill-primary">
+                                                Trade Ideas
+                                            </a>
+                                        </li><li>
+                                            <a href="/en-us/news-and-analysis/tags/fundamental-analysis/" class="pill pill-primary">
+                                                Fundamental Analysis
+                                            </a>
+                                        </li><li>
+                                            <a href="/en-us/news-and-analysis/tags/technical-analysis/" class="pill pill-primary">
+                                                Technical Analysis
+                                            </a>
+                                        </li><li>
+                                            <a href="/en-us/news-and-analysis/tags/forex/" class="pill pill-primary">
+                                                Forex
+                                            </a>
+                                        </li></ul></li></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mi-related-articles__tile">
+                        <div class="mi-related-article">
+                            <a class="mi-related-article__link" href="/en-us/news-and-analysis/nzd-usd-outlook-reversal-signals-emerge-as-ai-trade-falters/" title="NZD/USD Outlook: Reversal Signals Emerge as AI Trade Falters">
+                                    <img class="mi-related-article__thumbnail" src="https://micms.stonex.com/cdn-cgi/image/width=500,quality=90/sites/default/files/2024-12/Downtrend5.jpg" alt="NZD/USD Outlook: Reversal Signals Emerge as AI Trade Falters">
+                                <h4 class="mi-related-article__title">
+                                    NZD/USD Outlook: Reversal Signals Emerge as AI Trade Falters
+                                </h4>
+                            </a>
+
+                            <div class="mi-related-article__footer">
+                                <div class="mi-related-article__author">By <a href="/en-us/news-and-analysis/forex-com-analysts/david-scutt/">David Scutt</a></div>
+                                <div class="mi-related-article__date">November 24, 2026 05:30 PM</div>
+                            </div>
+                            <div class="mi-related-article__tags card-tags card-tags_with-hidden-list initialised">
+                                <ul class="default-tags">
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/nzdusd/" class="pill pill-primary">
+                                                NZDUSD
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/forex/" class="pill pill-primary">
+                                                Forex
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/technical-analysis/" class="pill pill-primary">
+                                                Technical Analysis
+                                            </a>
+                                        </li>
+                                        
+                                        
+                                <li class="pill pill-primary pill-trigger" data-listener-attached="true">+2</li><li class="hidden-tags-wrapper"><ul class="hidden-tags"><li>
+                                            <a href="/en-us/news-and-analysis/tags/trade-ideas/" class="pill pill-primary">
+                                                Trade Ideas
+                                            </a>
+                                        </li><li>
+                                            <a href="/en-us/news-and-analysis/tags/fundamental-analysis/" class="pill pill-primary">
+                                                Fundamental Analysis
+                                            </a>
+                                        </li></ul></li></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mi-related-articles__tile">
+                        <div class="mi-related-article">
+                            <a class="mi-related-article__link" href="/en-us/news-and-analysis/us-dollar-price-action-setups-into-pce-eur-usd-gbp-usd-usd-jpy-usd-cad/" title="US Dollar Price Action Setups into PCE: EUR/USD, GBP/USD, USD/JPY, USD/CAD">
+                                    <img class="mi-related-article__thumbnail" src="https://micms.stonex.com/cdn-cgi/image/width=500,quality=90/sites/default/files/2024-12/FOREX6_20v2.jpg" alt="US Dollar Price Action Setups into PCE: EUR/USD, GBP/USD, USD/JPY, USD/CAD">
+                                <h4 class="mi-related-article__title">
+                                    US Dollar Price Action Setups into PCE: EUR/USD, GBP/USD, USD/JPY, USD/CAD
+                                </h4>
+                            </a>
+
+                            <div class="mi-related-article__footer">
+                                <div class="mi-related-article__author">By <a href="/en-us/news-and-analysis/forex-com-analysts/james-stanley/">James Stanley</a></div>
+                                <div class="mi-related-article__date">November 24, 2026 02:47 PM</div>
+                            </div>
+                            <div class="mi-related-article__tags card-tags card-tags_with-hidden-list initialised">
+                                <ul class="default-tags">
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/us-dollar/" class="pill pill-primary">
+                                                US Dollar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/eur-usd/" class="pill pill-primary">
+                                                EUR USD
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/usd-jpy/" class="pill pill-primary">
+                                                USD JPY
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/en-us/news-and-analysis/tags/james-stanley/" class="pill pill-primary">
+                                                James Stanley
+                                            </a>
+                                        </li>
+                                        
+                                <li class="pill pill-primary pill-trigger" data-listener-attached="true">+1</li><li class="hidden-tags-wrapper"><ul class="hidden-tags"><li>
+                                            <a href="/en-us/news-and-analysis/tags/price-action-webinar/" class="pill pill-primary">
+                                                Price Action Webinar
+                                            </a>
+                                        </li></ul></li></ul>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>    </div>
+</div></div>    </div>
+</div>
+
+
+
+
+<div class="component container col-12 full-width container-gray-background py-lg">
+    <div class="component-content">
+<div class="row">
+
+
+
+<div class="component container col-12">
+    <div class="component-content">
+<div class="row">
+
+    <div class="component rich-text col-12 footer-disclaimer">
+        <div class="component-content">
+<p class="p-sm">The information on this web site is not targeted at the general public of any particular country. It is not intended for distribution to residents in any country where such distribution or use would contravene any local law or regulatory requirement. The information and opinions in this report are for general information use only and are not intended as an offer or solicitation with respect to the purchase or sale of any currency or CFD contract. All opinions and information contained in this report are subject to change without notice. This report has been prepared without regard to the specific investment objectives, financial situation and needs of any particular recipient. Any references to historical price movements or levels is informational based on our analysis and we do not represent or warranty that any such movements or levels are likely to reoccur in the future. While the information contained herein was obtained from sources believed to be reliable, author does not guarantee its accuracy or completeness, nor does author assume any liability for any direct, indirect or consequential loss that may result from the reliance by any person upon any such information or opinions.</p>
+<p class="p-sm">Futures, Options on Futures, Foreign Exchange and other leveraged products involves significant risk of loss and is not suitable for all investors. Losses can exceed your deposits. Increasing leverage increases risk. Spot Gold and Silver contracts are not subject to regulation under the U.S. Commodity Exchange Act. Contracts for Difference (CFDs) are not available for US residents.&nbsp;Products and services available depend on your location and the entity holding your account. Before deciding to trade forex, commodity futures, or digital assets, you should carefully consider your financial objectives, level of experience and risk appetite. Any opinions, news, research, analyses, prices or other information contained herein is intended as general information about the subject matter covered and is provided with the understanding that we do not provide any investment, legal, or tax advice. You should consult with appropriate counsel or other advisors on all investment, legal, or tax matters. References to FOREX.com or GAIN Capital refer to StoneX Group Inc. and its subsidiaries. Please read <a rel="noopener noreferrer" style="text-decoration: underline;" href="https://www.theocc.com/Company-Information/Documents-and-Archives/Options-Disclosure-Document" target="_blank">Characteristics and Risks of Standardized Options</a>.</p>        </div>
+    </div>
+</div>    </div>
+</div></div>    </div>
+</div>
+<div class="row">
+
+
+
+<div class="component container col-12 full-width" id="forex-empty">
+    <div class="component-content">
+<div class="row"></div>    </div>
+</div></div></div>
+        </div>
+    </main>
+    <!-- /#content -->
+    <!-- #footer -->
+    <footer>
+        <div id="footer" class="container-fluid">
+            <div class="row">
+
+
+<div class="component link button button-solid button-primary col-12 show-on-scroll" id="sticky-cta">
+    <div class="component-content">
+
+<a gtmlinkname="Open an Account" href="/en-us/application/new-trading-account-us/" target="_blank" data-variantitemid="{37AD3897-C27E-4D65-94FB-A34A0FE01ECF}" gtmlinkcontext="footer" data-variantfieldname="Link">Open an Account</a>    </div>
+</div>
+
+
+
+<div class="component container container-dark-background full-width">
+    <div class="component-content">
+<div class="row">
+
+
+
+<div class="component container col-12 full-width py-sm">
+    <div class="component-content">
+<div class="row">
+
+<div class="row component column-splitter">
+        <div class="col-12 col-lg-6">
+            <div class="row">
+
+    <div class="component rich-text col-12">
+        <div class="component-content">
+<p class="custom" style="font-size:24px; margin-top: 0.3em; margin-bottom: 0.3em; line-height: 30px;">It's your world. Trade it.</p>        </div>
+    </div>
+</div>
+        </div>
+        <div class="col-12 col-lg-6 d-none d-lg-flex">
+            <div class="row">
+
+<div class="component link button button-bordered-secondary col-12">
+    <div class="component-content">
+
+<a gtmlinkname="Footer Bar Login Button" href="/en-us/account-login/" data-variantitemid="{E2BD0F66-513C-4451-A8DA-2A7C1654A051}" gtmlinkcontext="footer" data-variantfieldname="Link">Log in</a>    </div>
+</div>
+
+<div class="component link button button-solid button-primary col-12">
+    <div class="component-content">
+
+<a gtmlinkname="Footer Bar Open Account Button" href="/en-us/application/new-trading-account-us/" target="_blank" data-variantitemid="{205287E8-6D80-431F-9397-F9DD15F70141}" gtmlinkcontext="footer" data-variantfieldname="Link">Open an Account</a>    </div>
+</div></div>
+        </div>
+</div></div>    </div>
+</div></div>    </div>
+</div>
+
+
+
+<div class="component container spacing-m-t-10">
+    <div class="component-content">
+<div class="row">
+
+
+
+<div class="component container col-12 d-block d-sm-block d-md-block d-lg-none d-xl-none centered-flex-content">
+    <div class="component-content">
+<div class="row">
+<div class="component image file-type-icon-media-link col-12">
+    <div class="component-content">
+<img loading="lazy" src="/en-us/-/media/project/gain-capital/shared/logos/part-of-stonex-group-inc/partofstonex-dark---no-side-padding-new.svg?h=56&amp;iar=0&amp;w=263&amp;extension=webp" alt="PartofStoneX dark - No Side Padding new" width="263" height="56" data-variantitemid="{539584FA-45A3-4933-A048-20E9CE31CDFF}" data-variantfieldname="Image"><span class="image-caption field-imagecaption"></span>    </div>
+</div>
+</div>    </div>
+</div>
+
+<div class="row component column-splitter">
+        <div class="col-12 col-lg-3">
+            <div class="row">
+
+
+
+<div class="component link-list vertical col-12">
+    <div class="component-content">
+            <div data-as="h3">Tell me more about</div>
+                        <ul class="link-list-wrapper">
+                <li class="item0 odd first cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Range of Markets" href="/en-us/markets-to-trade/" data-variantitemid="{E86C4EA3-99FB-465A-80A5-CF8DFB620B56}" gtmlinkcontext="footer" data-variantfieldname="Link">Range of Markets</a></div>                                    </li>
+                <li class="item1 even cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Trading Platforms" href="/en-us/trading-platforms/" data-variantitemid="{D08E76CE-C430-402F-A70C-5EE5804025C2}" gtmlinkcontext="footer" data-variantfieldname="Link">Trading Platforms</a></div>                                    </li>
+                <li class="item2 odd cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Trading Costs" href="/en-us/about-us/financial-transparency/trading-costs/" data-variantitemid="{78935CA5-1436-418D-B87F-883A5030A248}" gtmlinkcontext="footer" data-variantfieldname="Link">Trading Costs</a></div>                                    </li>
+                <li class="item3 even last cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Margin Requirements" href="/en-us/about-us/financial-transparency/margin-requirements/" data-variantitemid="{F30B2E29-C506-47EA-9517-BAD9E5C48AB2}" gtmlinkcontext="footer" data-variantfieldname="Link">Margin Requirements</a></div>                                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+        </div>
+        <div class="col-12 col-lg-3">
+            <div class="row">
+
+
+
+<div class="component link-list vertical col-12">
+    <div class="component-content">
+            <div data-as="h3">I would like to</div>
+                        <ul class="link-list-wrapper">
+                <li class="item0 odd first cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Fund My Account" href="/en-us/help-and-support/funding-your-account/" data-variantitemid="{AF6E9A52-86B3-4D50-B63E-AE9CCC1EAF55}" gtmlinkcontext="footer" data-variantfieldname="Link">Fund My Account</a></div>                                    </li>
+                <li class="item1 even cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Withdraw Funds" href="/en-us/help-and-support/withdrawals/" data-variantitemid="{27A862E4-8F16-46C3-9F3D-284DEFA28729}" gtmlinkcontext="footer" data-variantfieldname="Link">Withdraw Funds</a></div>                                    </li>
+                <li class="item2 odd cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Download FOREX Platforms" href="/en-us/trading-platforms/download-trading-platforms/" data-variantitemid="{E67F98D6-BBA6-4397-84FF-7B60716FBF6E}" gtmlinkcontext="footer" data-variantfieldname="Link">Download FOREX.com Platforms</a></div>                                    </li>
+                <li class="item3 even cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Download TradingView" href="/en-us/trading-platforms/download-trading-platforms/#tradingview" data-variantitemid="{AEEF4593-CE7B-445D-BF12-85118C7E8F81}" gtmlinkcontext="footer" data-variantfieldname="Link">Download TradingView</a></div>                                    </li>
+                <li class="item4 odd last cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Download MT4" href="/en-us/trading-platforms/download-trading-platforms/#mt5" data-variantitemid="{351BBF63-C7F9-43ED-8AFD-45BFC9F36D3C}" gtmlinkcontext="footer" data-variantfieldname="Link">Download MT5</a></div>                                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+        </div>
+        <div class="col-12 col-lg-3">
+            <div class="row">
+
+
+
+<div class="component link-list vertical col-12">
+    <div class="component-content">
+            <div data-as="h3">I would like to learn about</div>
+                        <ul class="link-list-wrapper">
+                <li class="item0 odd first cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Trading Forex" href="/en-us/trading-academy/courses/introduction-to-financial-markets/forex-trading/" data-variantitemid="{42D0B194-4B15-4824-B51E-F398B2D37240}" gtmlinkcontext="footer" data-variantfieldname="Link">Trading Forex</a></div>                                    </li>
+                <li class="item1 even cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Managing Risk" href="/en-us/trading-academy/courses/managing-risk/risk-management/" data-variantitemid="{51BD6434-C5E6-4109-8517-7E8C4051CCE2}" gtmlinkcontext="footer" data-variantfieldname="Link">Managing Risk</a></div>                                    </li>
+                <li class="item2 odd cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Technical Analysis" href="/en-us/trading-academy/courses/technical-analysis/understanding-technical-analysis/" data-variantitemid="{A7A5370A-552D-4264-AE35-55328ED09A3A}" gtmlinkcontext="footer" data-variantfieldname="Link">Technical Analysis</a></div>                                    </li>
+                <li class="item3 even last cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Trading Volatility" href="/en-us/trading-academy/courses/successful-trading-techniques/volatility-trading-tips/" data-variantitemid="{4721ADB1-CA4D-40FE-8DE9-FC759C024143}" gtmlinkcontext="footer" data-variantfieldname="Link">Trading Volatility</a></div>                                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+        </div>
+        <div class="col-12 col-lg-3 spacing-m-t-25 spacing-m-b-25">
+            <div class="row">
+
+    <div class="component rich-text col-12 spacing-m-t-10">
+        <div class="component-content">
+<p class="p-lg" style="margin-bottom: -10px;">Need help? <a href="/en-us/help-and-support/">Contact us</a></p>        </div>
+    </div>
+
+
+    <div class="component rich-text col-12 d-block d-lg-none py-sm">
+        <div class="component-content">
+<p class="p-lg" style="margin-top: 20px; margin-bottom: 10px;">Or visit our social channels:</p>        </div>
+    </div>
+
+
+
+<div class="component icon-link-list col-12 spacing-m-t-20">
+    <div class="component-content">
+                <div data-as="h3">Connect</div>
+
+
+                <ul class="">
+                <li class="item0 odd first   cta-with-modal__trigger">
+<div class="field-linkicon"><a href="https://www.facebook.com/FOREXcom/" gtmlinkcontext="footer" rel="noopener noreferrer" gtmlinkname="Facebook" target="_blank"><img loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/footer-icons/social/icon-footer-facebook-white.svg?h=60&amp;iar=0&amp;w=60&amp;extension=webp" alt="White Facebook icon" width="60" height="60" data-variantitemid="{73EB6831-ACE6-474F-9F58-D96552C5EE92}" data-variantfieldname="LinkIcon"></a></div>                                    </li>
+                <li class="item1 even   cta-with-modal__trigger">
+<div class="field-linkicon"><a href="https://twitter.com/forexcom" gtmlinkcontext="footer" rel="noopener noreferrer" gtmlinkname="X" target="_blank"><img loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/footer-icons/social/icon-footer-x-white.svg?h=60&amp;iar=0&amp;w=60&amp;extension=webp" alt="Icon-Footer-X-White" width="60" height="60" data-variantitemid="{0E2EF217-CD30-4EB4-B59D-3D7C9EA4F939}" data-variantfieldname="LinkIcon"></a></div>                                    </li>
+                <li class="item2 odd   cta-with-modal__trigger">
+<div class="field-linkicon"><a href="https://www.instagram.com/forexcomglobal/" gtmlinkcontext="footer" rel="noopener noreferrer" gtmlinkname="Instagram" target="_blank"><img loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/footer-icons/social/icon-footer-instagram-white.svg?h=150&amp;iar=0&amp;w=150&amp;extension=webp" alt="Icon-Footer-Instagram-white" width="150" height="150" data-variantitemid="{2A25FA5A-DA1D-44B6-A05F-E5F445FEFB25}" data-variantfieldname="LinkIcon"></a></div>                                    </li>
+                <li class="item3 even last   cta-with-modal__trigger">
+<div class="field-linkicon"><a href="https://www.youtube.com/c/forexcom" gtmlinkcontext="footer" rel="noopener noreferrer" gtmlinkname="YouTube" target="_blank"><img loading="lazy" src="/en-us/-/media/project/gain-capital/forex/icons/core/footer-icons/social/icon-footer-youtube-white.svg?h=60&amp;iar=0&amp;w=60&amp;extension=webp" alt="White YouTube play button icon" width="60" height="60" data-variantitemid="{AC28F71C-1682-497E-9944-2D6138E35E5E}" data-variantfieldname="LinkIcon"></a></div>                                    </li>
+        </ul>
+    </div>
+</div>
+<div class="component image file-type-icon-media-link col-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
+    <div class="component-content">
+<img loading="lazy" src="/en-us/-/media/project/gain-capital/shared/logos/part-of-stonex-group-inc/partofstonex-dark---no-side-padding-new.svg?h=56&amp;iar=0&amp;w=263&amp;extension=webp" alt="PartofStoneX dark - No Side Padding new" width="263" height="56" data-variantitemid="{539584FA-45A3-4933-A048-20E9CE31CDFF}" data-variantfieldname="Image"><span class="image-caption field-imagecaption"></span>    </div>
+</div>
+</div>
+        </div>
+</div>
+<div class="component divider col-12">
+    <div class="component-content">
+        <hr>
+    </div>
+</div>
+
+
+
+
+<div class="component link-list horizontal col-12">
+    <div class="component-content">
+            <div data-as="h3"></div>
+                        <ul class="link-list-wrapper">
+                <li class="item0 odd first cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Disclosures and Risk Warning" href="/en-us/terms-and-policies/risk-disclosure/" data-variantitemid="{F7B5C0D7-FC13-4090-B5A9-14C00F6015BA}" gtmlinkcontext="footer" data-variantfieldname="Link">Disclosures and Risk Warning</a></div>                                    </li>
+                <li class="item1 even cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Customer Agreement" href="https://www.filesandimages.com/Brand/forex/pdf/us-customer-agreement-20260731.pdf " target="_blank" rel="noopener noreferrer" data-variantitemid="{BCD5952F-A60F-4C40-A4B0-B3B1DC2F1BE3}" gtmlinkcontext="footer" data-variantfieldname="Link">Customer Agreement</a></div>                                    </li>
+                <li class="item2 odd cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Partnerships" href="https://stonexpro.stonex.com/" target="_blank" rel="noopener noreferrer" data-variantitemid="{B9D7AAF4-0B55-4C66-9985-4D85217BAE00}" gtmlinkcontext="footer" data-variantfieldname="Link">Partnerships</a></div>                                    </li>
+                <li class="item3 even cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Investor Relations" href="https://ir.stonex.com/" target="_blank" rel="noopener noreferrer" data-variantitemid="{BD5228A4-5CFB-42F6-BD0A-2DE554A68537}" gtmlinkcontext="footer" data-variantfieldname="Link">Investor Relations</a></div>                                    </li>
+                <li class="item4 odd last cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Press Releases" href="https://www.stonex.com/media-room/" target="_blank" rel="noopener noreferrer" data-variantitemid="{443EBF63-CA82-4268-8312-2CD70A9F32A9}" gtmlinkcontext="footer" data-variantfieldname="Link">Press Releases</a></div>                                    </li>
+        </ul>
+    </div>
+</div>
+
+<div class="component divider col-12">
+    <div class="component-content">
+        <hr>
+    </div>
+</div>
+
+
+    <div class="component rich-text col-12 spacing-m-t-25 spacing-m-b-25">
+        <div class="component-content">
+<p>FOREX.com is a registered FCM and RFED with the CFTC and member of the National Futures Association (NFA # 0339826). Forex trading involves significant risk of loss and is not suitable for all investors. <a href="/en-us/terms-and-policies/risk-disclosure/">Full Disclosures and Risk Warning</a>. <strong>Increased leverage increases risk.</strong></p>
+<p>GAIN Capital Group LLC (dba FOREX.com) 30 Independence Blvd, Suite 300 (3rd floor), Warren, NJ 07059, USA. GAIN Capital Group LLC is a wholly-owned subsidiary of StoneX Group Inc.</p>        </div>
+    </div>
+
+
+<div class="row component column-splitter">
+        <div class="col-12 col-lg-6 order-last order-lg-first spacing-m-b-50">
+            <div class="row">
+
+    <div class="component rich-text col-12">
+        <div class="component-content">
+<p>© FOREX.COM 2026</p>        </div>
+    </div>
+</div>
+        </div>
+        <div class="col-12 col-lg-6 order-first order-lg-last">
+            <div class="row">
+
+
+
+<div class="component link-list default col-12">
+    <div class="component-content">
+            <div data-as="h3"></div>
+                        <ul class="link-list-wrapper">
+                <li class="item0 odd first cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Terms and Policies" href="/en-us/terms-and-policies/" data-variantitemid="{CEF7E63E-AA00-47F7-99D4-58D28263C9D0}" gtmlinkcontext="footer" data-variantfieldname="Link">Terms and Policies</a></div>                                    </li>
+                <li class="item1 even cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="Sitemap" href="/en-us/sitemap/" data-variantitemid="{F7D9A321-D683-4AD3-925F-53E62E69E8C4}" gtmlinkcontext="footer" data-variantfieldname="Link">Sitemap</a></div>                                    </li>
+                <li class="item2 odd last cta-with-modal__trigger">
+<div class="field-link"><a gtmlinkname="StoneX" href="https://www.stonex.com/en-us" target="_blank" rel="noopener noreferrer" data-variantitemid="{938E8B63-B7F5-4A7B-ADCB-54B2BE67A6B4}" gtmlinkcontext="footer" data-variantfieldname="Link">StoneX</a></div>                                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+        </div>
+</div></div>    </div>
+</div></div>
+        </div>
+    </footer>
+    <!-- /#footer -->
+</div>
+<!-- /#wrapper -->
+
+    
+
+
+
+<script type="text/javascript" defer="">
+    var initESW = function (gslbBaseURL) {
+        embedded_svc.settings.chatbotAvatarImgURL = 'https://www.filesandimages.com/Brand/TradeResource/Images/ChatBotImage-fx.jpg';
+        embedded_svc.settings.displayHelpButton = false;
+
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
+        embedded_svc.settings.autoOpenPostChat = true;
+        embedded_svc.settings.language = '';
+        embedded_svc.settings.extraPrechatFormDetails = [{
+            "label":"Language",
+            "value":"",
+            "transcriptFields":["Language__c"]
+        }];
+
+
+        embedded_svc.addEventHandler('afterDestroy', function () {
+            document.querySelector('.live-chat-button').classList.remove('chat-opened');
+            document.querySelector('.live-chat-button').classList.remove('chat-loading');
+        });
+
+        embedded_svc.addEventHandler('onQueueUpdate', function () {
+            document.querySelector('.live-chat-button').classList.remove('chat-loading');
+            document.querySelector('.live-chat-button').classList.add('chat-opened');
+        });
+
+        embedded_svc.init('https://gaincapital.my.salesforce.com',
+			'https://gaincapital.my.salesforce-sites.com/G2NMI',
+			gslbBaseURL,
+			'00D300000000CHg',
+			'Forex_com_US',
+			{
+				baseLiveAgentContentURL: 'https://c.la3-core1.sfdc-yfeipo.salesforceliveagent.com/content',
+				deploymentId: '5727V00000000fg',
+				buttonId: '5737V00000000r8',
+				baseLiveAgentURL: 'https://d.la3-core1.sfdc-yfeipo.salesforceliveagent.com/chat',
+				eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I7V000000CaTEUA0_179f07aea2c',
+				isOfflineSupportEnabled: false
+			});
+    };
+
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://gaincapital.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+        s.onload = function () {
+            initESW(null);
+        };
+        document.body.appendChild(s);
+    } else {
+        initESW('https://service.force.com');
+    };
+</script><script src="https://gaincapital.my.salesforce.com/embeddedservice/5.0/esw.min.js"></script>
+
+<script type="text/javascript">
+    function bootstrapChat() {
+        embedded_svc.bootstrapEmbeddedService();
+        document.querySelector('.live-chat-button').classList.add('chat-loading');
+    }
+</script>
+
+
+
+<button type="button" class="live-chat-button" onclick="bootstrapChat()">
+    LET US HELP
+</button>
+
+
+
+
+    <script fetchpriority="high" src="/zh-us/-/media/base-themes/global/scripts/pre-optimized-min.js?t=20230315T175800Z"></script>
+<script src="/zh-us/-/media/themes/gain-capital/forex/forex/scripts/main-pre-optimized-min.js?v=5.42.11"></script>
+
+    <!-- /#wrapper -->
+    <input type="hidden" id="DebugInfo" value="[5.42.11]-[16d4f14a4e0144dd9c1e6857fec0f8a8cca3b8d3ad08369455a1bbfee6885e95]-[US - 160/79/106/244/]">
+
+
+<div class="lightense-backdrop"></div></body></html>
