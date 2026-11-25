@@ -7,7 +7,7 @@ After a compaction or a container reset, do exactly this, in order, before any o
 2. Read `memory/04_OPERATOR_RULINGS_LIVE.md` (the operator's live instructions and answers — do not renegotiate).
 3. Read `memory/02_TASK_QUEUE.md`, then `memory/03_DECISION_CHAIN.md`, then `memory/06_LESSONS.md`.
 4. Read `memory/08_FACTS.md` (durable semantic facts: canon rules, oracle numbers, engine quirks).
-5. Skim the tail (last ~60 lines) of `memory/05_JOURNAL.md` and of `memory/07_EVIDENCE_LEDGER.md`.
+5. Read `memory/09_E2_E3_PLAN.md`; skim the tail (last ~60 lines) of `memory/05_JOURNAL.md` and of `memory/07_EVIDENCE_LEDGER.md`.
 6. Check the machine: `export PATH=$HOME/.local/bin:$PATH XDG_RUNTIME_DIR=/run/user/0; pinebox list --session plutus-main`.
    - empty list or command missing -> the container was reset: run `tools/pinebox-bootstrap.sh` (needs `/home/user/inputs/pinebox`; if `/home/user/inputs` is gone, re-unzip the uploads in `/root/.claude/uploads/*/` — see 08_FACTS "Inputs").
 7. Only then continue from "NEXT STEP" in 01_CURRENT_STATE.
