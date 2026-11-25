@@ -1,0 +1,162 @@
+ENGINE 1 - INSTITUTIONAL PRESSURE ZONE MAP - DXY - week of 2026-04-20
+Data as-of (temporal boundary): 2026-04-17 21:00 UTC | spot 98.23 (last 1H close before the boundary) | candles: TradingView bar store
+
+1. PROTOCOL A - FX OPTION EXPIRIES (investingLive, as-of gated by the sidecar)
+   source: https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/ published 2026-04-17T06:19:19Z
+   source: https://investinglive.com/cms/media/migrated/images/FXO%2017-04_id_139056c1-4f56-41a0-bef9-6a1e58647b5f_size900.jpg published 2026-04-17T06:19:19Z
+   source: https://investinglive.com/forex/usdcad-nears-pre-war-levels-but-the-loonie-is-still-in-limbo-20260415/ published 2026-04-15T19:34:06Z
+   source: https://www.federalreserve.gov/releases/h10/20260413/ published 2026-04-13T20:15:00Z
+   source: pinebox-bar-store:TVC_DXY/60/2026-04.json#time=1776661200000 published 2026-04-20T06:00:00Z
+   source: pinebox-bar-store:FX_EURUSD/60/2026-04.json#time=1776661200000 published 2026-04-20T06:00:00Z
+   2026-04-17 1.1650 968M EUR | Tier 2 (850M-1.499B) | ghost -> DXY 99.05 (band +-0.10)
+   2026-04-17 1.1750 916M EUR | Tier 2 (850M-1.499B) | ghost -> DXY 98.56 (band +-0.10)
+   2026-04-17 1.1800 524M EUR | below 850M - excluded from walls | ghost -> DXY 98.32 (band +-0.10)
+   2026-04-17 1.1815 834M EUR | below 850M - excluded from walls | ghost -> DXY 98.25 (band +-0.10)
+   2026-04-17 1.1850 606M EUR | below 850M - excluded from walls | ghost -> DXY 98.08 (band +-0.10)
+   2026-04-20 1.1600 1900M EUR | Tier 1 (>=1.5B) | live -> DXY 99.29 (band +-0.07)
+   2026-04-20 1.1700 771M EUR | below 850M - excluded from walls | live -> DXY 98.80 (band +-0.10)
+   2026-04-20 1.1750 1100M EUR | Tier 2 (850M-1.499B) | live -> DXY 98.56 (band +-0.10)
+   2026-04-20 1.1783 1409M EUR | Tier 2 (850M-1.499B) | live -> DXY 98.40 (band +-0.10)
+   2026-04-20 1.1900 1000M EUR | Tier 2 (850M-1.499B) | live -> DXY 97.84 (band +-0.10)
+
+2. PILLAR 3/8 - K FACTOR AUDIT
+   rates (Fed H.10 Apr. 10, released 2026-04-13): {'EURUSD': 1.1723, 'USDJPY': 159.22, 'GBPUSD': 1.346, 'USDCAD': 1.3828, 'USDSEK': 9.2651, 'USDCHF': 0.7893}
+   K = 50.14348112 x USDJPY^0.136 x GBPUSD^-0.119 x USDCAD^0.091 x USDSEK^0.042 x USDCHF^0.036 = 108.1552 ; DXY = K x EURUSD^-0.576
+
+3. PILLAR 1 - PIVOTS
+   prior week H 99.18 L 97.63 C 98.23
+   weekly classic: PP 98.35 R1 99.06 S1 97.51 R2 99.90 S2 96.80 R3 100.61 S3 95.96
+   weekly fib: PP 98.35 R1 98.94 S1 97.75 R2 99.31 S2 97.39 R3 99.90 S3 96.80
+   weekly camarilla: R4 99.08 S4 97.37 R3 98.65 S3 97.80 R2 98.51 S2 97.94 R1 98.37 S1 98.08
+   daily 2026-04-15 (H 98.28 L 98.00 C 98.08) classic: PP 98.12 R1 98.24 S1 97.96 R2 98.40 S2 97.84 R3 98.52 S3 97.68
+   daily 2026-04-16 (H 98.29 L 97.83 C 98.20) classic: PP 98.11 R1 98.39 S1 97.93 R2 98.57 S2 97.65 R3 98.85 S3 97.47
+   daily 2026-04-17 (H 98.29 L 97.63 C 98.23) classic: PP 98.05 R1 98.47 S1 97.81 R2 98.71 S2 97.39 R3 99.13 S3 97.15
+
+4. PILLAR 2 - MA CONFLUENCE GRID (daily closes)
+   SMA9   98.58  weight 0.5  MAs within 0.15: 7
+   EMA9   98.58  weight 0.5  MAs within 0.15: 7
+   SMA10  98.72  weight 0.5  MAs within 0.15: 6
+   EMA10  98.64  weight 0.5  MAs within 0.15: 8
+   SMA20  99.28  weight 1.0  MAs within 0.15: 2
+   EMA20  98.94  weight 1.0  MAs within 0.15: 2
+   SMA50  98.72  weight 1.5  MAs within 0.15: 6
+   EMA50  98.87  weight 1.5  MAs within 0.15: 3
+   SMA100 98.51  weight 2.0  MAs within 0.15: 5
+   EMA100 98.75  weight 2.0  MAs within 0.15: 5
+   SMA200 98.53  weight 3.0  MAs within 0.15: 5
+   EMA200 99.23  weight 3.0  MAs within 0.15: 2
+
+5. PILLAR 4 analyst consensus: NO DATA (optional input)   PILLAR 7 ICE/CME positioning: NO DATA (optional input)
+
+6. PILLAR 5 STEP 0f - 4H SUPPLY/DEMAND ZONES (origin candle = the candle before the move, wick low to wick high)
+   4H Zone Verification: BoM Supply 98.19-98.29 formed 2026-04-17 03:00 | 0X mitigated (0 soft, 0 hard) | KEPT
+      Origin Candle: O=98.25 H=98.29 L=98.19 C=98.27 | Next Candle: O=98.27 H=98.27 L=98.07 C=98.12 | Directional Move: down 56 pips (>=0.5: strong)
+   4H Zone Verification: BoM Demand 97.83-98.09 formed 2026-04-16 03:00 | 1X mitigated (1 soft, 0 hard) | KEPT
+      Origin Candle: O=97.90 H=98.09 L=97.83 C=98.00 | Next Candle: O=98.01 H=98.27 L=97.99 C=98.21 | Directional Move: up 20 pips
+   4H Zone Verification: MoM Supply 98.33-98.41 formed 2026-04-13 23:00 | 0X mitigated (0 soft, 0 hard) | KEPT
+      Origin Candle: O=98.37 H=98.41 L=98.33 C=98.37 | Next Candle: O=98.38 H=98.39 L=98.25 C=98.25 | Directional Move: down 36 pips
+   4H Zone Verification: BoM Supply 98.88-99.04 formed 2026-04-13 09:00 | 0X mitigated (0 soft, 0 hard) | KEPT
+      Origin Candle: O=98.98 H=99.04 L=98.88 C=98.91 | Next Candle: O=98.91 H=98.92 L=98.59 C=98.60 | Directional Move: down 52 pips (>=0.5: strong)
+   4H Zone Verification: BoM Demand 98.56-98.78 formed 2026-04-10 15:00 | 1X mitigated (0 soft, 1 hard) | EXCLUDED: price beyond it at the boundary (broken)
+      Origin Candle: O=98.66 H=98.78 L=98.56 C=98.65 | Next Candle: O=98.65 H=98.71 L=98.64 C=98.70 | Directional Move: up 41 pips
+   4H Zone Verification: BoM Supply 98.85-98.96 formed 2026-04-10 03:00 | 1X mitigated (1 soft, 0 hard) | KEPT
+      Origin Candle: O=98.89 H=98.96 L=98.85 C=98.95 | Next Candle: O=98.95 H=99.01 L=98.75 C=98.77 | Directional Move: down 31 pips
+   4H Zone Verification: BoM Demand 98.75-98.84 formed 2026-04-09 19:00 | 1X mitigated (0 soft, 1 hard) | EXCLUDED: price beyond it at the boundary (broken)
+      Origin Candle: O=98.82 H=98.84 L=98.75 C=98.80 | Next Candle: O=98.87 H=98.93 L=98.85 C=98.89 | Directional Move: up 12 pips
+   4H Zone Verification: BoM Supply 98.84-99.05 formed 2026-04-09 11:00 | 1X mitigated (0 soft, 1 hard) | KEPT
+      Origin Candle: O=99.04 H=99.05 L=98.84 C=98.95 | Next Candle: O=98.95 H=99.01 L=98.62 C=98.82 | Directional Move: down 22 pips
+   4H Zone Verification: BoM Demand 98.53-98.86 formed 2026-04-08 11:00 | 2X mitigated (1 soft, 1 hard) | EXCLUDED: price beyond it at the boundary (broken)
+      Origin Candle: O=98.83 H=98.86 L=98.53 C=98.77 | Next Candle: O=98.77 H=99.13 L=98.76 C=99.13 | Directional Move: up 32 pips
+   4H Zone Verification: MoM Supply 99.78-99.96 formed 2026-04-07 15:00 | 0X mitigated (0 soft, 0 hard) | KEPT
+      Origin Candle: O=99.90 H=99.96 L=99.78 C=99.86 | Next Candle: O=99.86 H=99.87 L=99.52 C=99.52 | Directional Move: down 110 pips (>=0.5: strong)
+   4H Zone Verification: BoM Supply 100.18-100.29 formed 2026-04-05 21:00 | 0X mitigated (0 soft, 0 hard) | KEPT
+      Origin Candle: O=100.18 H=100.29 L=100.18 C=100.24 | Next Candle: O=100.24 H=100.28 L=100.10 C=100.13 | Directional Move: down 39 pips
+   4H Zone Verification: MoM Demand 99.95-100.01 formed 2026-04-03 07:00 | 1X mitigated (0 soft, 1 hard) | EXCLUDED: price beyond it at the boundary (broken)
+      Origin Candle: O=100.01 H=100.01 L=99.95 C=99.98 | Next Candle: O=99.98 H=100.17 L=99.96 C=100.16 | Directional Move: up 21 pips
+   4H Zone Verification: MoM Demand 99.55-99.67 formed 2026-04-01 19:00 | 1X mitigated (0 soft, 1 hard) | EXCLUDED: price beyond it at the boundary (broken)
+      Origin Candle: O=99.65 H=99.67 L=99.55 C=99.55 | Next Candle: O=99.54 H=99.96 L=99.45 C=99.94 | Directional Move: up 57 pips (>=0.5: strong)
+   4H Zone Verification: BoM Demand 99.31-99.53 formed 2026-04-01 11:00 | 1X mitigated (0 soft, 1 hard) | EXCLUDED: price beyond it at the boundary (broken)
+      Origin Candle: O=99.49 H=99.53 L=99.31 C=99.33 | Next Candle: O=99.33 H=99.66 L=99.30 C=99.65 | Directional Move: up 14 pips
+   4H Zone Verification: BoM Supply 100.39-100.55 formed 2026-03-31 07:00 | 0X mitigated (0 soft, 0 hard) | KEPT
+      Origin Candle: O=100.45 H=100.55 L=100.39 C=100.54 | Next Candle: O=100.54 H=100.55 L=99.97 C=100.18 | Directional Move: down 52 pips (>=0.5: strong)
+   4H Zone Verification: MoM Demand 100.20-100.39 formed 2026-03-30 09:00 | 3X mitigated (1 soft, 2 hard) | EXCLUDED: price beyond it at the boundary (broken)
+      Origin Candle: O=100.27 H=100.39 L=100.20 C=100.32 | Next Candle: O=100.32 H=100.61 L=100.28 C=100.49 | Directional Move: up 22 pips
+
+7. PILLAR 5 STEP 0 / 0.45 / 0.5 - SWING EXTREMES, LIQUIDITY SWEEP ZONES, REPEATED MAGNETS
+   LIQUIDITY SWEEP ZONE: 100.59-100.64 | Type: Supply-side | Source: D1 swing high 2026-03-31 (minor) | Priority: STANDARD | unswept
+   LIQUIDITY SWEEP ZONE: 100.24-100.29 | Type: Supply-side | Source: D1 swing high 2026-04-06 (ungraded) | Priority: STANDARD | unswept
+   LIQUIDITY SWEEP ZONE: 99.13-99.18 | Type: Supply-side | Source: D1 swing high 2026-04-13 (minor) | Priority: STANDARD | unswept
+   LIQUIDITY SWEEP ZONE: 98.53-98.58 | Type: Demand-side | Source: D1 swing low 2026-04-08 (ungraded) | Priority: ACTIVE SL TRIGGER | swept since
+   LIQUIDITY SWEEP ZONE: 98.24-98.29 | Type: Supply-side | Source: D1 swing high 2026-04-16 (ungraded) | Priority: ACTIVE SL TRIGGER | unswept
+   LIQUIDITY SWEEP ZONE: 97.97-98.02 | Type: Demand-side | Source: D1 swing low 2026-04-14 (ungraded) | Priority: ACTIVE SL TRIGGER | swept since
+   LIQUIDITY SWEEP ZONE: 97.63-97.68 | Type: Demand-side | Source: D1 swing low 2026-04-17 (major) | Priority: STANDARD | unswept
+   LIQUIDITY SWEEP ZONE: 97.49-97.54 | Type: Demand-side | Source: D1 swing low 2026-02-26 (major) | Priority: STANDARD | unswept
+   LIQUIDITY SWEEP ZONE: 97.36-97.41 | Type: Demand-side | Source: D1 swing low 2026-02-23 (major) | Priority: STANDARD | unswept
+   LIQUIDITY SWEEP ZONE: 96.49-96.54 | Type: Demand-side | Source: D1 swing low 2026-02-11 (major) | Priority: STANDARD | unswept
+   Repeated Low Magnet 97.87 (2 dates: 2025-12-16, 2025-12-26) bonus +1.5
+   Role Reversal Magnet 98.66 (3 dates: 2025-12-17, 2026-01-12, 2026-03-05) bonus +2.0
+   Repeated Low Magnet 98.16 (3 dates: 2025-12-18, 2026-01-02, 2026-01-06) bonus +2.0
+   Role Reversal Magnet 97.74 (2 dates: 2025-12-24, 2026-02-02) bonus +2.0
+   Role Reversal Magnet 98.51 (3 dates: 2025-12-31, 2026-03-10, 2026-04-08) bonus +2.0
+   Role Reversal Magnet 98.87 (2 dates: 2026-01-05, 2026-03-23) bonus +2.0
+   Role Reversal Magnet 99.29 (2 dates: 2026-01-09, 2026-04-01) bonus +2.0
+   Role Reversal Magnet 98.26 (2 dates: 2026-01-20, 2026-04-16) bonus +2.0
+   Role Reversal Magnet 97.98 (3 dates: 2026-02-05, 2026-02-25, 2026-04-14) bonus +2.0
+   Repeated High Magnet 99.69 (2 dates: 2026-03-03, 2026-03-09) bonus +1.5
+   Repeated High Magnet 100.29 (2 dates: 2026-03-18, 2026-04-06) bonus +1.5
+
+8. CLUSTERING SCAN
+   Clustering Scan: 186 total levels | 18 HIGH-DENSITY ZONES | 166 TIGHT CONFLUENCES | 5 ISOLATED LEVELS
+   HD 100.61-100.75 (3 levels)
+   HD 100.15-100.29 (3 levels)
+   HD 99.90-100.00 (3 levels)
+   HD 99.69-99.75 (3 levels)
+   HD 99.18-99.31 (9 levels)
+   HD 99.00-99.13 (5 levels)
+   HD 98.80-98.94 (8 levels)
+   HD 98.64-98.75 (10 levels)
+   HD 98.46-98.59 (19 levels)
+   HD 98.29-98.44 (20 levels)
+   HD 98.14-98.29 (22 levels)
+   HD 98.00-98.14 (24 levels)
+   HD 97.84-97.98 (15 levels)
+   HD 97.68-97.83 (10 levels)
+   HD 97.50-97.65 (8 levels)
+   HD 97.36-97.49 (7 levels)
+   HD 97.15-97.25 (3 levels)
+   HD 96.75-96.80 (3 levels)
+
+9. INSTITUTIONAL PRESSURE ZONE MAP (MODERATE and above)
+   RESISTANCE CEILING 99.13-99.18 | HEAVY 10.0/14 | ZFP 30-50% (Soft Wall) | Tier 2: IP-Only
+      score: Technical 2 Options 2 Analyst 0 Structural 1 Psychological 1 + extreme bonus 2.0 + Regime + POI tier | best level: SMA20 99.28
+      sweep zone: 99.13-99.18 D1 swing high 2026-04-13
+      levels on it: 99.18 Prior week high, 99.18 Daily high 04-13, 99.18 Supply Ceiling Target 04-13 (minor)
+   UPPER RESISTANCE   98.82-99.08 | MODERATE-HEAVY 8/14 | ZFP 20-40% (Post-Expiry Ghost) | Tier 1: Confluent
+      score: Technical 2 Options 2 Analyst 0 Structural 1 Psychological 0 + extreme bonus 0 + Regime + POI tier | best level: Daily classic R3 (04-17) 99.13
+      candle: BoM Supply 98.84-99.05 2026-04-09 11:00 1X
+      candle: BoM Supply 98.85-98.96 2026-04-10 03:00 1X
+      candle: BoM Supply 98.88-99.04 2026-04-13 09:00 0X
+      levels on it: 99.08 Weekly camarilla R4, 99.06 Weekly classic R1, 99.05 1.165 968M 04-17, 99.00 RN-big, 98.94 EMA20, 98.94 Weekly fib R1, 98.87 EMA50, 98.87 Role Reversal Magnet (2x), 98.86 Supply Ceiling Target 01-05 (major), 98.85 Daily classic R3 (04-16), 98.82 Wfib23.6
+   EQUILIBRIUM ZONE   98.17-98.44 | HEAVY 11.0/14 | ZFP 15-30% (Standard Wall) | Tier 1: Confluent
+      score: Technical 2 Options 2 Analyst 0 Structural 1 Psychological 2 + extreme bonus 2.0 + Regime + POI tier | best level: SMA100 98.51
+      candle: BoM Supply 98.19-98.29 2026-04-17 03:00 0X
+      candle: MoM Supply 98.33-98.41 2026-04-13 23:00 0X
+      sweep zone: 98.24-98.29 D1 swing high 2026-04-16
+      levels on it: 98.32 1.18 524M 04-17, 98.30 Daily fib R1 (04-17), 98.30 Daily fib R2 (04-15), 98.29 Daily high 04-16, 98.29 Daily high 04-17, 98.29 Daily camarilla R2 (04-16), 98.29 Daily camarilla R1 (04-17), 98.28 Daily high 04-15, 98.28 Daily fib R1 (04-16), 98.26 Role Reversal Magnet (2x), 98.25 RN-quarter, 98.25 1.1815 834M 04-17, 98.25 Daily camarilla R1 (04-16), 98.24 Daily classic R1 (04-15), 98.24 Daily camarilla R4 (04-15), 98.23 Daily fib R1 (04-15), 98.23 Prior week close, 98.23 Daily close 04-17, 98.22 Wfib61.8, 98.20 Daily close 04-16, 98.17 Liquidity Sweep Target 12-18 (major), 98.17 Daily camarilla S1 (04-17), 98.44 Daily high 04-14, 98.42 Daily close 04-13, 98.41 Wfib50.0, 98.41 Daily camarilla R3 (04-17), 98.40 Daily classic R2 (04-15), 98.40 Daily fib R3 (04-15), 98.40 1.1783 1409M 04-20, 98.39 Daily fib R2 (04-16), 98.39 Daily classic R1 (04-16), 98.37 Weekly camarilla R1, 98.36 Daily low 04-13, 98.35 Weekly classic PP, 98.35 Weekly fib PP, 98.35 Daily camarilla R2 (04-17), 98.33 Daily camarilla R3 (04-16)
+   MID-RANGE SUPPORT  97.81-98.12 | HEAVY 11.0/14 | ZFP 15-30% (Standard Wall) | Tier 1: Confluent
+      score: Technical 2 Options 0 Analyst 0 Structural 2 Psychological 2 + extreme bonus 2.0 + Regime + POI tier | best level: Daily camarilla S3 (04-15) 98.01
+      candle: BoM Demand 97.83-98.09 2026-04-16 03:00 1X
+      levels on it: 98.12 Daily camarilla S2 (04-16), 98.11 Daily camarilla R1 (04-15), 98.11 Daily classic PP (04-16), 98.11 Daily fib PP (04-16), 98.11 Daily camarilla S2 (04-17), 98.10 Daily close 04-14, 98.08 Daily close 04-15, 98.08 Weekly camarilla S1, 98.08 1.185 606M 04-17, 98.08 Supply Ceiling Target 02-20 (major), 98.08 Daily camarilla S3 (04-16), 98.06 Daily camarilla S1 (04-15), 98.05 Daily classic PP (04-17), 98.05 Daily fib PP (04-17), 98.04 Daily camarilla S3 (04-17), 98.03 Daily camarilla S2 (04-15), 98.02 Daily fib S1 (04-15), 98.01 Daily camarilla S3 (04-15), 98.00 Daily low 04-15, 98.00 Supply Ceiling Target 02-25 (minor), 98.00 RN-big, 97.98 Role Reversal Magnet (3x), 97.97 Daily low 04-14, 97.96 Daily classic S1 (04-15), 97.95 Daily fib S2 (04-15), 97.95 Daily camarilla S4 (04-16), 97.94 Weekly camarilla S2, 97.93 Daily fib S1 (04-16), 97.93 Daily camarilla S4 (04-15), 97.93 Daily classic S1 (04-16), 97.87 Liquidity Sweep Target 12-16 (major), 97.87 Repeated Low Magnet (2x), 97.86 Daily camarilla S4 (04-17), 97.84 Daily classic S2 (04-15), 97.84 Daily fib S3 (04-15), 97.84 1.19 1000M 04-20, 97.83 Daily low 04-16, 97.82 Daily fib S2 (04-16), 97.81 Daily classic S1 (04-17)
+   MID-RANGE SUPPORT  97.36-97.68 | HEAVY 10.0/14 | ZFP 30-50% (Soft Wall) | Tier 2: IP-Only
+      score: Technical 2 Options 2 Analyst 0 Structural 1 Psychological 1 + extreme bonus 2.0 + Regime + POI tier | best level: Weekly fib S1 97.75
+      sweep zone: 97.36-97.41 D1 swing low 2026-02-23
+      sweep zone: 97.49-97.54 D1 swing low 2026-02-26
+      sweep zone: 97.63-97.68 D1 swing low 2026-04-17
+      levels on it: 97.39 Daily classic S2 (04-17), 97.39 Daily fib S3 (04-17), 97.39 Weekly fib S2, 97.37 Weekly camarilla S4, 97.36 Liquidity Sweep Target 02-23 (major), 97.51 Weekly classic S1, 97.50 RN-half, 97.49 Liquidity Sweep Target 02-26 (major), 97.47 Daily classic S3 (04-16), 97.65 Daily classic S2 (04-16), 97.65 Daily fib S3 (04-16), 97.64 Daily fib S2 (04-17), 97.63 Prior week low, 97.63 Daily low 04-17, 97.63 Liquidity Sweep Target 04-17 (major)
+   KEY SUPPORT BAND   96.49-96.54 | MODERATE 6.0/14 | ZFP 30-50% (Soft Wall) | Tier 2: IP-Only
+      score: Technical 0 Options 0 Analyst 0 Structural 1 Psychological 2 + extreme bonus 1.0 + Regime + POI tier | best level: RN-half 96.50
+      sweep zone: 96.49-96.54 D1 swing low 2026-02-11
+      levels on it: 96.50 RN-half, 96.49 Liquidity Sweep Target 02-11 (major)
+
+10. STEP 9.5 GAP SCAN
+   Gap In-fill: 97.15 supported by daily pivot + swing level (gap 96.54-97.36)

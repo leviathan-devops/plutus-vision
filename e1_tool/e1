@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# e1 MONDAY PAIR : Engine 1 for one week -> out/E1_PAIR_MONDAY.pine (paste into TradingView / Pinebox) + out/E1_REPORT_PAIR_MONDAY.txt (audit trail)
+set -eu; cd "$(dirname "$(readlink -f "$0")")"; m="$1"; p="${2:-DXY}"; mkdir -p out
+[ -f "../sidecar/out/$m.json" ] || { echo "no expiry harvest for $m - run: sidecar/run --week $m" >&2; exit 2; }
+python3 e1_pine.py "$m" "$p" > "out/E1_${p}_${m}.pine"
+python3 e1_report.py "$m" "$p" > "out/E1_REPORT_${p}_${m}.txt"
+echo "out/E1_${p}_${m}.pine"; echo "out/E1_REPORT_${p}_${m}.txt"; grep -A40 '^9\. ' "out/E1_REPORT_${p}_${m}.txt" | grep -E '^   [A-Z]' | cut -c1-120
