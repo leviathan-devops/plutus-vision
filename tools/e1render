@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# e1render PAIR MONDAY [TF] : run the E1 tool for that week, render its Pine in Pinebox, fit, save evidence/e1tool_PAIR_TF_MONDAY.png
+set -u; R="$(cd "$(dirname "$0")/.." && pwd)"; p="$1"; m="$2"; tf="${3:-1H}"
+( cd "$R/e1_tool" && python3 e1_pine.py "$m" "$p" > "out/E1_${p}_${m}.pine" ) || exit 1
+"$R/tools/pb" ide "$R/e1_tool/out/E1_${p}_${m}.pine" "$p" "$tf" | cut -c1-170
+"$R/tools/pb" goto "$(date -u -d "$m - 6 days" +%F)" "$(date -u -d "$m + 5 days" +%F)" >/dev/null
+"$R/tools/pbfit" >/dev/null; sleep 1
+"$R/tools/pb" shot "e1tool_${p}_${tf}_${m}" chart

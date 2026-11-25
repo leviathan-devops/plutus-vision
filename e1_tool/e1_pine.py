@@ -21,7 +21,7 @@ def generate(pair, monday, r):
     o = ['//@version=6', f'indicator("TRIDENT E1 {pair} {monday}", overlay=true, max_boxes_count=500, max_labels_count=500, max_lines_count=500)',
          f'// Engine 1 map for the week of {monday} ({pair}); every number below was computed by e1_tool from data closed before the boundary {D.ts(b0)} UTC',
          'show_zones = input.bool(true, "IP Zones")', 'show_candles = input.bool(true, "Candle structures (A)")', 'show_levels = input.bool(true, "Computed levels (B)")',
-         'show_lsz = input.bool(true, "LSZ")', 'show_options = input.bool(true, "Option Strikes")',
+         'show_lsz = input.bool(true, "LSZ")', 'show_infill = input.bool(true, "Gap in-fill levels")', 'show_options = input.bool(true, "Option Strikes")',
          f'isPair = str.contains(syminfo.ticker, "{D.SYM[pair].split("_")[-1]}")', 'if barstate.islast and isPair']
     for z in r['zones']:
         c = '%d,%d,%d' % CAT[z['cat']]
@@ -43,6 +43,12 @@ def generate(pair, monday, r):
                 continue
             seen.add(key)
             o.append(f"        line.new({b0}, {g(x['p'])}, {tsR}, {g(x['p'])}, xloc=xloc.bar_time, color=color.new(color.rgb({PIL[x['pillar']][0]}), 35), width=1, style=line.style_dotted)")
+    if r['infill']:
+        o.append('    if show_infill')
+        for t in r['infill']:
+            c = '%d,%d,%d' % CAT[t['cat']]
+            o.append(f"        box.new({b0}, {g(t['top'])}, {tsR}, {g(t['bot'])}, bgcolor=color.new(color.rgb({c}), 85), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
+            o.append(f"        label.new({b0 + 4 * 86400000}, {g(t['top'])}, \"Gap In-fill | MODERATE | {' + '.join(t['signals'])}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.white, 25), size=size.small)")
     o.append('    if show_lsz')
     for z in r['lsz']:
         act = z['priority'].startswith('ACTIVE')

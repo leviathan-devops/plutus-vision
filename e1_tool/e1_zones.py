@@ -25,7 +25,9 @@ def build(pair, monday, expiries, K, spot):
     L, swings = S.collect(pair, monday, expiries, K)
     sd, sd_drop = valid_sd(pair, monday, spot)
     days = D.daily(pair, monday)
-    recent = [s for s in swings if s['date'] >= days[-10]['date']]
+    # Step 0 / 0.45: ALL prior D1 swing extremes that passed the wick test (major, or minor per Step 0h) in the 90 daily bars,
+    # plus every swing of the last 10 days (A2: the report lists each recent daily low / high as a sweep zone)
+    recent = [s for s in swings if s['grade'] or s['date'] >= days[-10]['date']]
     lsz = P.step045_lsz(pair, monday, recent, spot)
     for z, s in zip(lsz, recent):
         later = [d for d in days if d['date'] > s['date']]
@@ -86,7 +88,9 @@ def build(pair, monday, expiries, K, spot):
     out = []
     for z in zones:
         m = out[-1] if out else None
-        if m and m['side'] == z['side'] and z['bot'] <= m['top']:
+        # level zones (no candle) of one side that sit within 0.10 of each other are one cluster (P452:1140), kept under the 0.40 width limit
+        tight = m and m['kind'] == 'levels' and z['kind'] == 'levels' and z['bot'] - m['top'] <= u(10) and z['top'] - m['bot'] <= u(40)
+        if m and m['side'] == z['side'] and (z['bot'] <= m['top'] or tight):
             m['top'] = max(m['top'], z['top']); m['structs'] += z['structs']; m['sweeps'] += z['sweeps']
             m['levels'] = m['levels'] + [x for x in z['levels'] if x not in m['levels']]; m['walls'] = m['walls'] + [x for x in z['walls'] if x not in m['walls']]
             if z['score'] > m['score']:
@@ -111,7 +115,50 @@ def build(pair, monday, expiries, K, spot):
             z['name'], z['cat'] = ('RESISTANCE CEILING' if i == 0 else 'UPPER RESISTANCE'), 'RES'
         for i, z in enumerate(dn):
             z['name'], z['cat'] = ('KEY SUPPORT BAND' if i == len(dn) - 1 else 'MID-RANGE SUPPORT'), 'SUP'
-    return {'levels': L, 'zones': shown, 'all': zones, 'sd': sd, 'sd_drop': sd_drop, 'lsz': lsz, 'swings': swings, 'pp': pp, 'spot': spot, 'K': K}
+    infill = gap_scan(pair, monday, L, shown, eq if shown else None)
+    # sweep zones listed / drawn: every swing of the last 10 days (as the report lists them) + older ones still unswept
+    lsz = [z for z in lsz if z['date'] >= days[-10]['date'] or not z['swept']]
+    return {'infill': infill, 'levels': L, 'zones': shown, 'all': zones, 'sd': sd, 'sd_drop': sd_drop, 'lsz': lsz, 'swings': swings, 'pp': pp, 'spot': spot, 'K': K}
+
+
+def gap_scan(pair, monday, L, shown, eq):
+    """STEP 9.5 (P452:1159-1184): gaps >= 0.20 between adjacent mapped zones; a gap-region level with 2+ supporting signals is a
+    GAP IN-FILL LEVEL (Confidence MODERATE, Structural = 1). A5: the weekly classic R3 / S3 close the map at its two ends."""
+    u = lambda pips: P._u(pair, pips)
+    wk = P.pillar1(pair, monday)['weekly']['classic']
+    edges = [(z['bot'], z['top']) for z in shown]
+    edges.append((max(wk['R3'], max(e[1] for e in edges)), ) * 2)
+    edges.append((min(wk['S3'], min(e[0] for e in edges)), ) * 2)
+    edges.sort()
+    kind = lambda x: ('round' if x['dim'] == 'psy' else 'option strike' if x['dim'] == 'opt' else 'weekly pivot' if x['tag'].startswith('Weekly') and x['pillar'] == 'P1'
+                      else 'daily pivot' if x['pillar'] == 'P1' else 'swing level' if x['dim'] == 'extreme' else 'daily close' if 'close' in x['tag'] else None)
+    out = []
+    for (lo_b, lo_t), (hi_b, hi_t) in zip(edges, edges[1:]):
+        if hi_b - lo_t < u(20):
+            continue
+        cands = []
+        for x in L:
+            if not (lo_t < x['p'] < hi_b) or kind(x) is None:
+                continue
+            sup = {}
+            for y in L:
+                if abs(y['p'] - x['p']) <= u(3) and kind(y):
+                    sup.setdefault(kind(y), y)
+            if len(sup) >= 2:
+                cands.append({'p': x['p'], 'signals': sorted(sup), 'levels': list(sup.values()), 'n': len(sup)})
+        # one in-fill level per 0.15 band: the one with the most supporting signals
+        cands.sort(key=lambda c: (-c['n'], -c['p']))
+        took = []
+        for c in cands:
+            if all(abs(c['p'] - t['p']) > u(15) for t in took):
+                took.append(c)
+        for t in took:
+            ps = [y['p'] for y in t['levels']]
+            t['bot'], t['top'] = min(ps), max(ps)
+            t['cat'] = 'RES' if eq and t['bot'] > eq['top'] else 'SUP' if eq and t['top'] < eq['bot'] else 'MID'
+            t['gap'] = (lo_t, hi_b)
+        out += took
+    return sorted(out, key=lambda t: -t['p'])
 
 
 def show(r, pair):
@@ -136,3 +183,5 @@ if __name__ == '__main__':
     r = build(pair, monday, exp, K, spot)
     print(f"{pair} {monday} spot {spot} weekly PP {r['pp']:.4f} K {K:.4f} | levels {len(r['levels'])} | 4H zones kept {len(r['sd'])} dropped {len(r['sd_drop'])}")
     show(r, pair)
+    for t in r['infill']:
+        print('  GAP IN-FILL %.4f (%.4f-%.4f) %s' % (t['p'], t['bot'], t['top'], ' + '.join(t['signals'])))
