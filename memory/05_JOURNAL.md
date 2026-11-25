@@ -49,3 +49,8 @@
 - E1 changes made today before the rejection: reach band (largest weekly range of 13 weeks either side of spot) + outer gap fill; reaction counter + reaction extremes (audit); analyst code 9 = one source.
 - NEXT: E1 v2 = W14 format (<= 4 wide bands per pair, Supply/Demand, BoM/MoM, reactions, mechanical ZFP), forward-only. Design search on DEV weeks with a shared first-passage scorer, validation on VALID weeks, my own visual check in Pinebox on TEST weeks never shown to the design agents.
   TEST (mine): 2026-02-23, 03-23, 04-27, 05-18, 06-15, 07-27, 08-31, 10-05. VALID: 02-16, 03-09, 04-13, 05-11, 06-22, 08-03, 09-14, 10-26. DEV: the other 24.
+
+## 2026-11-25 ~15:00 UTC - scorer built; baseline measured; persisting before a usage-limit reset
+- tools/research/score.py + dump_levels.py committed. Current engine = 35.1% on DEV by the scorer (operator said 30-50% by eye: the scorer matches his eye). W14 hindsight bands = 75%.
+- Biggest losses of the current engine: FLOATING bands (493 of 1038: the reach band made this worse), week extremes not inside any band (59 of 144), BROKEN thin mid zones (157).
+- Operator asked to store all context before the 5-hour limit and to continue afterwards without stopping. Design workflow deliberately not launched before the reset.

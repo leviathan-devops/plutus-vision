@@ -25,3 +25,5 @@ vision_frames/
 .DS_Store
 *.sqlite-shm
 *.sqlite-wal
+tools/research/levels.*.json
+tools/research/raw.*.json

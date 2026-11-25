@@ -24,6 +24,30 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## RESUME HERE (written 15:00 UTC, just before a usage-limit reset) - exact state and next actions
+WHAT IS TRUE
+- Operator rejected E1 (04 L-14..L-18). E2/E3 are OFF by default and FORBIDDEN until E1 is approved. Target = W14 report format: <= 4 wide bands per pair.
+- A research scorer now exists and AGREES WITH THE OPERATOR'S EYE: `tools/research/score.py` (run `python3 tools/research/score.py`).
+  It walks the week's 1H bars and gives each band HELD / BROKEN / CONTAINS / BOUNDING / FLOATING; D = 0.10 x mean weekly range (13 wk).
+  accuracy = good / (good + broken + floating + missed week extremes).
+  MEASURED 15:00: current engine maps on the 24 DEV weeks x 3 pairs = 35.1% (HELD 273, BOUNDING 110, BROKEN 157, FLOATING 493, missed extremes 59 of 144; 0 weeks >= 90%).
+  The W14 report's own bands (written with hindsight, LS-20) score 75% (DXY 4/4, EURUSD 2/4, GBPUSD 3/4).
+- Level dumps for research: `tools/research/levels.{DXY,EURUSD,GBPUSD}.json` (git-ignored; regenerate with `python3 tools/research/dump_levels.py`, needs Pinebox up).
+- Week split (never show TEST to a design loop; TEST is for my own Pinebox frames): TEST 2026-02-23, 03-23, 04-27, 05-18, 06-15, 07-27, 08-31, 10-05 ·
+  VALID 02-16, 03-09, 04-13, 05-11, 06-22, 08-03, 09-14, 10-26 · DEV = the other 24 weeks (list in score.py).
+- Frames of the W14 report bands: evidence/oracle_w14_report_zones_{DXY,EURUSD,GBPUSD}_1h.png (outer bands contain week high/low; middle bands crossed).
+- Scratch helper for memory writes (hook-friendly): overwrite and run scratchpad/mem_update_1435.py (LS-22).
+NEXT ACTIONS (in order)
+1. Prototype the E1 v2 band rule in Python against score.py on DEV weeks only (cheap loop): <= 4 bands per week, 2 above spot + 2 below (or one containing spot),
+   bands WIDE (DXY ~0.15-0.30, pairs scaled by weekly range), built from: prior-week high/low/close zones, 4H/D1 supply-demand origin bases (BoM/MoM),
+   repeated D1 swing extremes, round numbers, option walls (live + ghost). Pick the band nearest price on each side that is strong, then the next one out;
+   no band further than the week can reach. Compare against two reference maps: W14-style hindsight ceiling and a naive baseline (prior week high/low bands).
+2. Confirm on VALID weeks (no retuning there). If >= 85-90% on the scorer: port into `f_zones` in indicator/plutus-vision-engines.pine (labels: Supply/Demand, BoM/MoM, reactions, ZFP, x/14),
+   anchor guard must pass, render 4 TEST weeks x pairs with `tools/pb week`, LOOK, log frames in 07, show the operator.
+3. If a multi-agent design search is wanted (ultracode was on): 4 designers with different lenses on DEV + one validator each on VALID, all importing tools/research/score.py.
+   NOT launched before the usage reset on purpose (a reset kills running agents, see 06).
+4. ZFP must be mechanical (L-16): BoM vs MoM, reaction count over prior 3 weeks, option wall tier, confluence -> canon base range + modifiers; show its parts in the audit.
+
 ## STATE 14:35 UTC - READ THIS BLOCK FIRST (operator intervention; see 04 L-14..L-18, 06 LS-19..LS-22)
 - E1 is REJECTED by the operator (30-50% by his eye). E2/E3 are FORBIDDEN until E1 is approved; both are OFF by default in the file.
 - Target = W14 report format: <= 4 wide bands per pair (2 supply above, 2 demand below; one may contain spot), each with Type, BoM/MoM, Reactions, mechanical ZFP, Confl x/14, key level. No thin stacked zones, no far floating zones. Acceptance: >= 90% on 4 separate weeks, judged by eye in Pinebox.

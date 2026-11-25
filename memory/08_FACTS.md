@@ -121,3 +121,11 @@
   EUR/USD Fri Jul 3 cut: 1.1300 985m, 1.1325 703m, 1.1350 790m, 1.1370 1.6bn, 1.1375 1.1bn, 1.1380 596m, 1.1400 1.0bn, 1.1430 837m, 1.1450 873m, 1.1500 2.0bn, 1.1600 2.0bn.
   (Operator's hand-drawn EURUSD golden-week zones: demand ~1.1400-1.1417, supply ~1.1446-1.1456 -> they sit ON the 1.1400 (2.2bn) and 1.1450 (1.4bn) strikes.)
 - Analyst levels found before the anchor: EUR/USD 1.14 / 1.10 / 1.18 (Jul 2 post); USD/JPY 160.70, 161.84-92, 162.00, 162.80 (Jul 6 05:03Z). None for DXY or GBP/USD.
+
+## W14 baseline report (2026-11-25) and the research scorer
+- Report: Trident_Report_2026W14_Mar30-Apr3.pdf (14 pages; uploads dir, id d253d0fc). Page 1 option expiries (investingLive, strikes below $850M excluded), page 2 prior-week closes + TARGET WEEK OHLC + red-folder events,
+  page 3 E1 maps (4 bands per pair, see 04 L-17), page 4 E2 chain (EURUSD Mon BS down 85, Tue WL up 80, Wed BS up 70, Thu WL down 80, Fri SS 65), pages 5+ E3.
+- Toolset.zip (unzipped /home/user/inputs/toolset_glm/Toolset) = the same 6 files as canon/Toolset (v5.3.3 prompt, corrected E3 doc, fractal architecture, validator, report template, trident_engine3_v8.py).
+- Realized W14 (bar store): DXY week H 100.643 L 99.298 (prior week H 100.206 L 98.880 C 100.193); EURUSD H 1.16271 L 1.14430 (prior 1.16395 / 1.14844 / 1.15078); GBPUSD H 1.33462 L 1.31593 (prior 1.34792 / 1.32515 / 1.32515).
+- Scorer semantics (tools/research/score.py): band HELD = price entered and left by the side it came from by >= D before running D past the far edge; BROKEN = the reverse; CONTAINS = unresolved but week high/low inside;
+  BOUNDING = untouched nearest band within 2D beyond the week extreme; FLOATING = untouched otherwise; missed = week high/low not inside any band (+-3 pips).
