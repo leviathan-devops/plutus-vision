@@ -24,6 +24,19 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## STATE 15:45 UTC - E1 v2 IS IN THE PINE FILE; IT DOES NOT REACH 90%; operator has been told the measured limits
+- indicator/plutus-vision-engines.pine now draws the E1 v2 band map (f_bands / f_band / f_wscore; freeze block calls f_bands; old f_zones is unused code kept for comparison).
+  <= 2 bands above + 2 below the anchor price, width 0.3 x mean weekly range, taken at the nearest window (>= 0.15 away) whose extreme-type evidence >= 5
+  (fresh 4H origin zone 3/2, tier-1 wall 3, tier-2/ghost wall 2/1, prior-week high/low 2, repeated swing extremes 1-2, daily highs/lows 0.5).
+  Label: "R1 Supply | BoM|MoM | n rx | ZFP% | score/14". ZFP = measured: share of first tests of that band role traded through on the chart before the anchor (bTouch/bBreak, Laplace).
+  Bookkeeping of band tests runs bar by bar after each anchor and feeds only later weeks. Guard allow-list got 0.3/0.15/0.12/0.02/0.1 (band geometry fractions).
+- Scorer numbers for this rule (python prototype tools/research/proto2.py, k.30 thr 5): DEV first-touch hold 0.91, clean-all-week 0.63, week extremes inside a band 0.49, 2.9 bands/week;
+  VALID first-touch 0.78, clean 0.44, extremes 0.29. Frames on 4 unseen DXY weeks (07 rows 27-30): 1 PASS, 1 PARTIAL, 2 FAIL.
+- Bands fixed DAILY at London open and judged over one day are no better (first-touch 68-81%, clean 47-70%): the limit is scale-free, re-anchoring daily does not fix it.
+- OPEN DECISION put to the operator (he must answer): his bar "zones not penetrated, 90-95%" was set by the W14 report, which was written with its week's data. Forward, measured ceiling is ~60-70% clean.
+  Untested ideas that might add a few points (not 30): trend/regime conditioning of which side gets bands; multi-month weekly/monthly swing extremes as anchors; a multi-agent feature hunt (ultracode) after the usage reset.
+- E2/E3 stay OFF (L-14).
+
 ## MEASURED LIMITS (15:25 UTC) - read before designing anything else (24 DEV weeks x 3 pairs, tools/research/score.py)
 - A band HOLDS ON FIRST TOUCH ~80-91% of the time wherever it is put within reach (structure-free bands at 0.2-0.5 x weekly range from spot, width 0.2-0.3 x weekly range).
   Best level types (band +-0.125 x weekly range): fresh 4H supply (visited <= 1x) 93%, prior week high 91%, yesterday high 91%, D-2/D-3 lows 91%, MA100 90%, tier-1 option wall 88%, prior week low 87%.

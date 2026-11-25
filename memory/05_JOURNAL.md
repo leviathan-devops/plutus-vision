@@ -58,3 +58,8 @@
 ## 2026-11-25 ~15:25 UTC - what is and is not predictable (measured)
 - First-touch hold of a wide band is ~85-90% almost regardless of placement; clean-all-week is ~57% base, 70% best type. See 01 "MEASURED LIMITS". Told the operator.
 - Old confluence-density selection picks congestion (worse than no information). E1 v2 must not select by density.
+
+## 2026-11-25 ~15:45 UTC - E1 v2 ported and looked at; honest result
+- Ported the 4-band map into Pine, rendered 4 unseen DXY weeks: Apr 27 looks like the W14 report (both bands contain the turns); Jul 27 partial; Jun 15 and Oct 5 fail (breakout / pivot weeks).
+- Daily re-anchoring measured: no better. Heavier confluence thresholds: first-touch up to 0.92 on DEV, clean stays ~0.60, VALID worse. This is a property of the market at these scales, not of one rule.
+- Reported to the operator with the numbers and the W14 hindsight evidence; asked how he wants accuracy defined given that.
