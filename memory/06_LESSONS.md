@@ -36,3 +36,8 @@
   BoM/MoM and reaction counter for EVERY IP zone (1145-1161); levels grouped where they cluster within 0.10-0.15, degree from the group's highest-scoring level on 6 dimensions + structural-extreme bonus (1461-1505);
   POI Tier 1 = IP zone overlapping a 4H BoM 0X-1X, +2 (1509-1514); synthesis shows MODERATE and above only with columns Range / Pressure Degree / POI Tier / ZFP / BoM flag / sweep status / Engine 3 status (1632-1644).
 - LS-26 A research scorer is not the operator's eye. Never report a percentage from it as "accuracy" to him; show frames and say what each zone did.
+
+- LS-27 (2026-11-25 night) Both reference reports build their named zones on supply/demand STRUCTURES (W14 table: "R2 Supply BoM 1", "D2 Demand BoM 0-1"; Apr 20 key drivers: 4H BoM supply / MoM supply / BoM demand / sweep target). Turning every 0.15 level cluster into a zone gives 13-22 bunched zones - wrong reading.
+- LS-28 A rule that "fixes" one week must be checked against the reference week before keeping it: closed-through=broken deleted the reference's Mid-Range Support; clustering candle zones merged its Ceiling and Upper Resistance. Both reverted.
+- LS-29 Step 0f bar indices are relative to the 60-day slice, not the full bar list (bug cost one run: all 49 zones "broken"). step0f now returns end_time.
+- LS-30 Measured over 120 week/pair maps: candle-anchored zones are closed through within 3h far less often (24/150) than level-only zones (40/85). State facts like this as counts, never as "accuracy".
