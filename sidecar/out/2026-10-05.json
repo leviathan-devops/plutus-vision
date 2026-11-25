@@ -1,0 +1,589 @@
+{
+ "week": "2026-10-05",
+ "anchor_utc": "2026-10-05T06:00:00Z",
+ "sources": [
+  {
+   "url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+   "published_at": "2026-10-02T05:43:31Z",
+   "kind": "expiry_post_prior"
+  },
+  {
+   "url": "https://investinglive.com/cms/media/images/FXO%20021026.jpg",
+   "published_at": "2026-10-02T05:43:31Z",
+   "kind": "expiry_image"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/morning-kickstart-dollar-hits-three-month-high-as-eurusd-breaks-below-1-1300/",
+   "published_at": "2026-10-01T12:19:58Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+   "published_at": "2026-10-01T11:14:57Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/yields-move-lower-stock-futures-point-to-a-higher-open-the-usd-falls-after-jobs-report/",
+   "published_at": "2026-10-02T13:04:41Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/north-american-morning-kickstart-dollar-mixed-ahead-of-us-jobs-report-as-oil-falls-and-futures-rise/",
+   "published_at": "2026-10-02T12:14:31Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://www.federalreserve.gov/releases/h10/20260928/",
+   "published_at": "2026-09-28T20:15:00Z",
+   "kind": "h10_release"
+  },
+  {
+   "url": "pinebox-bar-store:TVC_DXY/60/2026-10.json#time=1791176400000",
+   "published_at": "2026-10-05T06:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_EURUSD/60/2026-10.json#time=1791176400000",
+   "published_at": "2026-10-05T06:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_GBPUSD/60/2026-10.json#time=1791176400000",
+   "published_at": "2026-10-05T06:00:00Z",
+   "kind": "spot_bar"
+  }
+ ],
+ "expiries": {
+  "EURUSD": [
+   {
+    "strike": 1.118,
+    "notional_m": 670,
+    "ccy": "EUR",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 1.1375,
+    "notional_m": 2100,
+    "ccy": "EUR",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 1.13942,
+    "notional_m": 1895,
+    "ccy": "EUR",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.139,
+      "notional_m": 1100
+     },
+     {
+      "strike": 1.14,
+      "notional_m": 795
+     }
+    ],
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 1.125,
+    "notional_m": 921,
+    "ccy": "EUR",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 1.13,
+    "notional_m": 1000,
+    "ccy": "EUR",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 1.1325,
+    "notional_m": 1100,
+    "ccy": "EUR",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 1.13754,
+    "notional_m": 2932,
+    "ccy": "EUR",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.137,
+      "notional_m": 656
+     },
+     {
+      "strike": 1.1375,
+      "notional_m": 1400
+     },
+     {
+      "strike": 1.138,
+      "notional_m": 876
+     }
+    ],
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 1.14,
+    "notional_m": 4100,
+    "ccy": "EUR",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   }
+  ],
+  "GBPUSD": [
+   {
+    "strike": 1.323,
+    "notional_m": 592,
+    "ccy": "GBP",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   }
+  ],
+  "USDJPY": [
+   {
+    "strike": 156,
+    "notional_m": 865,
+    "ccy": "USD",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 156.5,
+    "notional_m": 834,
+    "ccy": "USD",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 157,
+    "notional_m": 2400,
+    "ccy": "USD",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 157.55,
+    "notional_m": 530,
+    "ccy": "USD",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 158,
+    "notional_m": 2900,
+    "ccy": "USD",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 159,
+    "notional_m": 961,
+    "ccy": "USD",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 156,
+    "notional_m": 2000,
+    "ccy": "USD",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 157,
+    "notional_m": 542,
+    "ccy": "USD",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 157.5,
+    "notional_m": 639,
+    "ccy": "USD",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 158,
+    "notional_m": 807,
+    "ccy": "USD",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 158.3,
+    "notional_m": 570,
+    "ccy": "USD",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 159.25,
+    "notional_m": 559,
+    "ccy": "USD",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   }
+  ],
+  "USDCAD": [
+   {
+    "strike": 1.43,
+    "notional_m": 550,
+    "ccy": "USD",
+    "cut_date": "2026-10-02",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 1.4125,
+    "notional_m": 1200,
+    "ccy": "USD",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   },
+   {
+    "strike": 1.42,
+    "notional_m": 827,
+    "ccy": "USD",
+    "cut_date": "2026-10-05",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
+    "published_at": "2026-10-02T05:43:31Z"
+   }
+  ]
+ },
+ "spots": {
+  "from": "pinebox bar store, last 1H close before the anchor",
+  "bar_close_utc": "2026-10-05T06:00:00Z",
+  "DXY": 102.308,
+  "EURUSD": 1.1192,
+  "GBPUSD": 1.3209
+ },
+ "k_anchor": 109.164249,
+ "h10": {
+  "release_date": "2026-09-28",
+  "published_at": "2026-09-28T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260928/",
+  "rate_day": "Sep. 25",
+  "rates": {
+   "EURUSD": 1.14,
+   "USDJPY": 157.18,
+   "GBPUSD": 1.325,
+   "USDCAD": 1.414,
+   "USDSEK": 9.9047,
+   "USDCHF": 0.8282
+  },
+  "k_h10": 108.880454,
+  "dxy_h10": 100.9654
+ },
+ "dxy_levels": [
+  {
+   "price": 101.3567,
+   "from_pair": "EURUSD",
+   "strike": 1.1375,
+   "notional_m": 2100,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-10-02"
+  },
+  {
+   "price": 101.2583,
+   "from_pair": "EURUSD",
+   "strike": 1.13942,
+   "notional_m": 1895,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-10-02"
+  },
+  {
+   "price": 102.0039,
+   "from_pair": "EURUSD",
+   "strike": 1.125,
+   "notional_m": 921,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-10-05"
+  },
+  {
+   "price": 101.7436,
+   "from_pair": "EURUSD",
+   "strike": 1.13,
+   "notional_m": 1000,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-10-05"
+  },
+  {
+   "price": 101.6142,
+   "from_pair": "EURUSD",
+   "strike": 1.1325,
+   "notional_m": 1100,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-10-05"
+  },
+  {
+   "price": 101.3546,
+   "from_pair": "EURUSD",
+   "strike": 1.13754,
+   "notional_m": 2932,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-10-05"
+  },
+  {
+   "price": 101.2286,
+   "from_pair": "EURUSD",
+   "strike": 1.14,
+   "notional_m": 4100,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-10-05"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [
+   {
+    "price": 1.1,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+    "published_at": "2026-10-01T11:14:57Z",
+    "quote": "Below that, the 200-week moving average (blue line) around 1.1094 and the psychological mark at 1.1000 will be the next two key levels in view."
+   },
+   {
+    "price": 1.1094,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+    "published_at": "2026-10-01T11:14:57Z",
+    "quote": "Below that, the 200-week moving average (blue line) around 1.1094 and the psychological mark at 1.1000 will be the next two key levels in view."
+   },
+   {
+    "price": 1.12,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+    "published_at": "2026-10-01T11:14:57Z",
+    "quote": "From here, 1.1200 is the next obvious downside level to watch."
+   },
+   {
+    "price": 1.13,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+    "published_at": "2026-10-01T11:14:57Z",
+    "quote": "EUR/USD is evidence of that, with the currency pair now slipping below 1.1300 and breaking beneath an important support cluster on the weekly chart."
+   },
+   {
+    "price": 1.1325,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+    "published_at": "2026-10-01T11:14:57Z",
+    "quote": "But now, the drop below that area also threatens a firmer break below the June low of 1.1325."
+   },
+   {
+    "price": 1.135,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+    "published_at": "2026-10-01T11:14:57Z",
+    "quote": "The 1.1350 to 1.1400 region had been doing much of the work in keeping sellers at bay, with the 38.2 Fib retracement level at 1.1355 also doing its part before this."
+   },
+   {
+    "price": 1.1355,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+    "published_at": "2026-10-01T11:14:57Z",
+    "quote": "The 1.1350 to 1.1400 region had been doing much of the work in keeping sellers at bay, with the 38.2 Fib retracement level at 1.1355 also doing its part before this."
+   },
+   {
+    "price": 1.1358,
+    "role": "level",
+    "source_url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+    "published_at": "2026-10-01T11:14:57Z",
+    "quote": "And perhaps more importantly, the 100-week moving average (red line) at around 1.1358 also appears to be giving way."
+   },
+   {
+    "price": 1.14,
+    "role": "support",
+    "source_url": "https://investinglive.com/forex/us-dollar-hits-three-month-high-as-treasury-yields-surge-eur-usd-cracks-key-support/",
+    "published_at": "2026-10-01T11:14:57Z",
+    "quote": "The 1.1350 to 1.1400 region had been doing much of the work in keeping sellers at bay, with the 38.2 Fib retracement level at 1.1355 also doing its part before this."
+   }
+  ],
+  "GBPUSD": []
+ },
+ "read_stats": {
+  "entries_seen": 27,
+  "agreed_first_two_reads": 27,
+  "accepted": 27,
+  "dropped": 0
+ },
+ "model": {
+  "id": "muse-spark-1.3-contributor",
+  "effort": "high",
+  "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+  "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+ },
+ "dropped": [],
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-10-05T06:00:00Z",
+  "Monday expiry post https://investinglive.com/orders/fx-option-expiries-for-5-october-10am-new-york-cut/ published 2026-10-05T06:13:37+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W40, 2026-W41",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/: reads A/B agree on 27 of 27 entries; third read for columns []",
+  "accept: 27 strike/notional entries accepted (2+ reads identical), 0 dropped",
+  "emit: as-of gate passed for 10 sources and every datum"
+ ]
+}
