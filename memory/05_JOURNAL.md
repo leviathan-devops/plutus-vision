@@ -251,3 +251,11 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - E3 spec facts read first-hand this round: cap key is (pair, anchor, DAY) - one setup per anchor per day, the same zone may be used on several days (I dedup per week - wrong); spec says no weekly cap ("ALL valid setups should be mapped") but CLAUDE.md hard constraint says <= 11/week/pair - keep 11;
   8.25 entry timing: 0 retests = scalp only, 1 = scalp + confirmation, 2 = swing entry valid, 3+ = TP target only; Law 27 trade-flow chains: TP of one setup = entry of the next (BS->R, BS->WL, WL->RWL, SS->BS at the range boundary break).
 - NEXT: (a) E3: per-day anchor cap, direction validation with the 4H storyline (counter-storyline only at 4H BoM 0X-1X), entry timing by retest count; (b) re-measure; (c) E2 day shapes anchored to zone events; (d) EURUSD/GBPUSD runs; (e) frames for 4 weeks; (f) external review; (g) ship package + blind test.
+
+## 2026-11-26 - FACT: the week's net direction is not predictable from simple pre-week signals (120 week/pair cases: DXY, EURUSD, GBPUSD x 40 weeks)
+- Agreement of each signal with the week's net direction (Friday close vs boundary spot): 4H 20-bar slope 56/120, 4H 60-bar 62, prior-week direction 49, last-day direction 54, spot vs weekly PP 51, upper/lower half of prior week 51, above D1 SMA20 64, above D1 SMA50 63. All near a coin flip.
+- 52 of 120 weeks moved at least one average daily range net.
+- CONSEQUENCE for E2: a single-direction weekly chain cannot reach 80-90%. Canon already says so: Step 4 MANDATORY alternative chain with a DECISION ZONE; R3 law; SS scalps both directions. So E2 must be rendered and graded as a CONDITIONAL map:
+  primary path + alternative path, each tied to "zone X holds / fails", and E3 must carry setups for both branches (the setup is valid only when its branch's trigger happens). The day forecast is then judged by: did price follow one of the two mapped branches, and did the branch switch at the decision zone.
+- E3 current facts DXY 40 weeks: 18 TP / 38 SL / 65 not filled.
+- NEXT: implement the alternative chain as a second path (dashed grey) with its decision zone label; E3 setups per branch with the trigger written on the label; then pixel-check the anchor week + 3 more weeks.
