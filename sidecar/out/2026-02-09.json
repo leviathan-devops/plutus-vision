@@ -1,0 +1,731 @@
+{
+ "week": "2026-02-09",
+ "anchor_utc": "2026-02-09T07:00:00Z",
+ "sources": [
+  {
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+   "published_at": "2026-02-09T06:41:43Z",
+   "kind": "expiry_post_monday"
+  },
+  {
+   "url": "https://investinglive.com/cms/media/migrated/images/FX%2009-02_id_7b7bb55f-6714-4e51-a45a-1d0216987489_size900.jpg",
+   "published_at": "2026-02-09T06:41:43Z",
+   "kind": "expiry_image"
+  },
+  {
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+   "published_at": "2026-02-06T06:55:32Z",
+   "kind": "expiry_post_prior"
+  },
+  {
+   "url": "https://investinglive.com/cms/media/migrated/images/FXO%2006-02_id_a0b52f51-9fc7-4c88-b0d5-f3627945c39b_size900.jpg",
+   "published_at": "2026-02-06T06:55:32Z",
+   "kind": "expiry_image"
+  },
+  {
+   "url": "https://www.federalreserve.gov/releases/h10/20260202/",
+   "published_at": "2026-02-02T21:15:00Z",
+   "kind": "h10_release"
+  },
+  {
+   "url": "pinebox-bar-store:TVC_DXY/60/2026-02.json#time=1770616800000",
+   "published_at": "2026-02-09T07:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_EURUSD/60/2026-02.json#time=1770616800000",
+   "published_at": "2026-02-09T07:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_GBPUSD/60/2026-02.json#time=1770616800000",
+   "published_at": "2026-02-09T07:00:00Z",
+   "kind": "spot_bar"
+  }
+ ],
+ "expiries": {
+  "EURUSD": [
+   {
+    "strike": 1.18,
+    "notional_m": 2500,
+    "ccy": "EUR",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 1.1825,
+    "notional_m": 603,
+    "ccy": "EUR",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 1.185,
+    "notional_m": 963,
+    "ccy": "EUR",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 1.1875,
+    "notional_m": 794,
+    "ccy": "EUR",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 1.19,
+    "notional_m": 715,
+    "ccy": "EUR",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 1.165,
+    "notional_m": 680,
+    "ccy": "EUR",
+    "cut_date": "2026-02-09",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.18049,
+    "notional_m": 1238,
+    "ccy": "EUR",
+    "cut_date": "2026-02-09",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.18,
+      "notional_m": 632
+     },
+     {
+      "strike": 1.181,
+      "notional_m": 606
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.18907,
+    "notional_m": 1458,
+    "ccy": "EUR",
+    "cut_date": "2026-02-09",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.1885,
+      "notional_m": 626
+     },
+     {
+      "strike": 1.1895,
+      "notional_m": 832
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.19,
+    "notional_m": 3700,
+    "ccy": "EUR",
+    "cut_date": "2026-02-09",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.175,
+    "notional_m": 1300,
+    "ccy": "EUR",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.18023,
+    "notional_m": 1878,
+    "ccy": "EUR",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.18,
+      "notional_m": 1000
+     },
+     {
+      "strike": 1.1805,
+      "notional_m": 878
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.185,
+    "notional_m": 1700,
+    "ccy": "EUR",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.1875,
+    "notional_m": 747,
+    "ccy": "EUR",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.19062,
+    "notional_m": 1937,
+    "ccy": "EUR",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 1.19,
+      "notional_m": 737
+     },
+     {
+      "strike": 1.191,
+      "notional_m": 1200
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.1945,
+    "notional_m": 838,
+    "ccy": "EUR",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 1.2,
+    "notional_m": 2200,
+    "ccy": "EUR",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   }
+  ],
+  "GBPUSD": [],
+  "USDJPY": [
+   {
+    "strike": 154,
+    "notional_m": 500,
+    "ccy": "USD",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 156,
+    "notional_m": 694,
+    "ccy": "USD",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 157,
+    "notional_m": 851,
+    "ccy": "USD",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 159.9,
+    "notional_m": 1100,
+    "ccy": "USD",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 155,
+    "notional_m": 857,
+    "ccy": "USD",
+    "cut_date": "2026-02-09",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 157.1,
+    "notional_m": 873,
+    "ccy": "USD",
+    "cut_date": "2026-02-09",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 157,
+    "notional_m": 1100,
+    "ccy": "USD",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 159.9,
+    "notional_m": 1100,
+    "ccy": "USD",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   }
+  ],
+  "AUDUSD": [
+   {
+    "strike": 0.68787,
+    "notional_m": 1489,
+    "ccy": "AUD",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "cluster_of": [
+     {
+      "strike": 0.6875,
+      "notional_m": 932
+     },
+     {
+      "strike": 0.6885,
+      "notional_m": 557
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 0.689,
+    "notional_m": 626,
+    "ccy": "AUD",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 0.6975,
+    "notional_m": 636,
+    "ccy": "AUD",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   },
+   {
+    "strike": 0.686,
+    "notional_m": 2000,
+    "ccy": "AUD",
+    "cut_date": "2026-02-09",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 0.69,
+    "notional_m": 2000,
+    "ccy": "AUD",
+    "cut_date": "2026-02-09",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 0.694,
+    "notional_m": 549,
+    "ccy": "AUD",
+    "cut_date": "2026-02-09",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 0.686,
+    "notional_m": 702,
+    "ccy": "AUD",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 0.69,
+    "notional_m": 1400,
+    "ccy": "AUD",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 0.694,
+    "notional_m": 541,
+    "ccy": "AUD",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   },
+   {
+    "strike": 0.71,
+    "notional_m": 1100,
+    "ccy": "AUD",
+    "cut_date": "2026-02-10",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/",
+    "published_at": "2026-02-09T06:41:43Z"
+   }
+  ],
+  "USDCAD": [
+   {
+    "strike": 1.38,
+    "notional_m": 869,
+    "ccy": "USD",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   }
+  ],
+  "USDCHF": [
+   {
+    "strike": 0.758,
+    "notional_m": 750,
+    "ccy": "USD",
+    "cut_date": "2026-02-06",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/",
+    "published_at": "2026-02-06T06:55:32Z"
+   }
+  ]
+ },
+ "spots": {
+  "from": "pinebox bar store, last 1H close before the anchor",
+  "bar_close_utc": "2026-02-09T07:00:00Z",
+  "DXY": 97.397,
+  "EURUSD": 1.18518,
+  "GBPUSD": 1.36154
+ },
+ "k_anchor": 107.410155,
+ "h10": {
+  "release_date": "2026-02-02",
+  "published_at": "2026-02-02T21:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260202/",
+  "rate_day": "Jan. 30",
+  "rates": {
+   "EURUSD": 1.1885,
+   "USDJPY": 154.34,
+   "GBPUSD": 1.3729,
+   "USDCAD": 1.3557,
+   "USDSEK": 8.8656,
+   "USDCHF": 0.771
+  },
+  "k_h10": 106.962886,
+  "dxy_h10": 96.8353
+ },
+ "dxy_levels": [
+  {
+   "price": 97.643,
+   "from_pair": "EURUSD",
+   "strike": 1.18,
+   "notional_m": 2500,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-02-06"
+  },
+  {
+   "price": 97.4055,
+   "from_pair": "EURUSD",
+   "strike": 1.185,
+   "notional_m": 963,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-02-06"
+  },
+  {
+   "price": 97.6197,
+   "from_pair": "EURUSD",
+   "strike": 1.18049,
+   "notional_m": 1238,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-09"
+  },
+  {
+   "price": 97.2133,
+   "from_pair": "EURUSD",
+   "strike": 1.18907,
+   "notional_m": 1458,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-09"
+  },
+  {
+   "price": 97.1696,
+   "from_pair": "EURUSD",
+   "strike": 1.19,
+   "notional_m": 3700,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-02-09"
+  },
+  {
+   "price": 97.8822,
+   "from_pair": "EURUSD",
+   "strike": 1.175,
+   "notional_m": 1300,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-02-10"
+  },
+  {
+   "price": 97.6321,
+   "from_pair": "EURUSD",
+   "strike": 1.18023,
+   "notional_m": 1878,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-02-10"
+  },
+  {
+   "price": 97.4055,
+   "from_pair": "EURUSD",
+   "strike": 1.185,
+   "notional_m": 1700,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-02-10"
+  },
+  {
+   "price": 97.1404,
+   "from_pair": "EURUSD",
+   "strike": 1.19062,
+   "notional_m": 1937,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-02-10"
+  },
+  {
+   "price": 96.7023,
+   "from_pair": "EURUSD",
+   "strike": 1.2,
+   "notional_m": 2200,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-02-10"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [],
+  "GBPUSD": []
+ },
+ "read_stats": {
+  "entries_seen": 47,
+  "agreed_first_two_reads": 47,
+  "accepted": 47,
+  "dropped": 0
+ },
+ "model": {
+  "id": "muse-spark-1.3-contributor",
+  "effort": "high",
+  "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+  "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+ },
+ "dropped": [],
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-02-09T07:00:00Z",
+  "discover: 2 expiry post(s), 0 analyst candidate(s) from sitemaps 2026-W06, 2026-W07",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/Orders/fx-option-expiries-for-9-february-10am-new-york-cut-20260209/: reads A/B agree on 26 of 26 entries; third read for columns []",
+  "https://investinglive.com/Orders/fx-option-expiries-for-6-february-10am-new-york-cut-20260206/: reads A/B agree on 21 of 21 entries; third read for columns []",
+  "accept: 47 strike/notional entries accepted (2+ reads identical), 0 dropped",
+  "read_analyst: no candidate article with text",
+  "emit: as-of gate passed for 8 sources and every datum"
+ ]
+}

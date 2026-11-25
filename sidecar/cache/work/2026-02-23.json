@@ -1,0 +1,76 @@
+{
+ "week": "2026-02-23",
+ "anchor": 1771830000000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-02-23T07:00:00Z",
+  "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-23-february-10am-new-york-cut-20260223/ published 2026-02-23T07:01:13+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W08, 2026-W09",
+  "asof_gate: every fetched page was published at or before the anchor"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+   "lastmod": "2026-02-20T07:17:27+00:00",
+   "cut_date": "2026-02-20",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-02-23/investinglive_orders_fx-option-expiries-for-20-february-10am-new-york-cut-20260220.html",
+   "published_at": "2026-02-20T07:17:27Z",
+   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2020-02_id_f2a13b7b-5b63-41b6-8efa-b10b77380674_size900.jpg"
+  }
+ ],
+ "analyst": [
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+   "lastmod": "2026-02-20T13:24:43+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-02-23/investinglive_technical-analysis_eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220.html",
+   "published_at": "2026-02-20T13:24:43Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+   "lastmod": "2026-02-18T19:06:14+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-02-23/investinglive_technical-analysis_eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218.html",
+   "published_at": "2026-02-18T19:06:14Z"
+  },
+  {
+   "url": "https://investinglive.com/forex/eurusd-upside-remains-more-likely-amid-weaker-dollar-analysts-say-20260219/",
+   "lastmod": "2026-02-19T10:05:57+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-02-23/investinglive_forex_eurusd-upside-remains-more-likely-amid-weaker-dollar-analysts-say-20260219.html",
+   "published_at": "2026-02-19T10:05:57Z"
+  },
+  {
+   "url": "https://investinglive.com/forex/jp-morgan-raise-their-forecasts-for-aud-nzd-and-for-usdjpy-eurusd-unchanged-20260218/",
+   "lastmod": "2026-02-18T23:15:00+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-02-23/investinglive_forex_jp-morgan-raise-their-forecasts-for-aud-nzd-and-for-usdjpy-eurusd-unchanged-20260218.html",
+   "published_at": "2026-02-18T23:15:00Z"
+  }
+ ],
+ "h10": {
+  "release_date": "2026-02-17",
+  "published_at": "2026-02-17T21:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260217/",
+  "rate_day": "Feb. 13",
+  "rates": {
+   "EURUSD": 1.187,
+   "USDJPY": 152.77,
+   "GBPUSD": 1.3644,
+   "USDCAD": 1.3618,
+   "USDSEK": 8.9397,
+   "USDCHF": 0.7685
+  },
+  "k_h10": 106.961787,
+  "dxy_h10": 96.9047
+ },
+ "accepted": [],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [],
+  "GBPUSD": []
+ },
+ "stats": {},
+ "h10_src": {
+  "url": "https://www.federalreserve.gov/releases/h10/20260217/",
+  "published_at": "2026-02-17T21:15:00Z",
+  "kind": "h10_release"
+ }
+}

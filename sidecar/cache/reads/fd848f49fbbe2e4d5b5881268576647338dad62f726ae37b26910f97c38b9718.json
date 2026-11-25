@@ -1,0 +1,11 @@
+{
+ "key": "fd848f49fbbe2e4d5b5881268576647338dad62f726ae37b26910f97c38b9718",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "c39d3a86526a6b162fd0cab34c5e452d67b893a10b22138e20010eb5f62b2722",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[]}"
+}

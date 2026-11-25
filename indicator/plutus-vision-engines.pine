@@ -822,7 +822,7 @@ if barstate.islast
             for z in f.zones
                 color c = z.side > 0 ? C_RES : z.side < 0 ? C_SUP : C_EQ
                 bx.push(box.new(f.t0, z.top, f.t1, z.bot, xloc = xloc.bar_time, bgcolor = color.new(c, 72), border_color = c, border_width = 1))
-                lb.push(label.new(f.t0, z.top, z.name + " | " + z.degree + " | " + str.tostring(z.zfp) + "% ZFP", xloc = xloc.bar_time, style = label.style_label_lower_left, color = color.new(c, 100), textcolor = c, size = size.small))
+                lb.push(label.new(f.t0, (z.top + z.bot) / 2, z.name + " | " + z.degree + " | " + str.tostring(z.zfp) + "% ZFP", xloc = xloc.bar_time, style = label.style_label_left, color = color.new(c, 100), textcolor = color.new(color.white, 10), size = size.small))
         if i_showSD
             for s in f.sds
                 color c = s.side > 0 ? color.rgb(242, 54, 69) : color.rgb(49, 121, 245)

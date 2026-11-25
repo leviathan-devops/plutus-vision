@@ -1,0 +1,11 @@
+{
+ "key": "291ff7ab0f5e11639f4f2f73694e958028c4b2d8f33bf9f955abafba6bfc5e4b",
+ "kind": "expiry_read_A",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "eb731a7b12b96ef0b38f63bd495c865935212f9f89a26f28b69971c282e5101f",
+ "image": "cache/views/2184eab717c20105/A.png",
+ "image_sha256": "73e8ca8ab4e5e3756daa986be2e665ce3ab7c31332fa76f2a1f70b1291c33df9",
+ "text": "{\"pairs\":[\"EUR/USD\",\"USD/JPY\",\"GBP/USD\",\"USD/CHF\",\"USD/CAD\",\"AUD/USD\",\"NZD/USD\",\"EUR/GBP\"],\"spot\":{\"EUR/USD\":\"1.1861\",\"USD/JPY\":\"153.18\",\"GBP/USD\":\"1.3634\",\"USD/CHF\":\"0.7685\",\"USD/CAD\":\"1.3616\",\"AUD/USD\":\"0.7084\",\"NZD/USD\":\"0.6031\",\"EUR/GBP\":\"0.8696\"},\"rows\":[{\"label\":\"Monday\",\"date\":\"16/02\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1850\",\"notional\":\"€1.4bn\"},{\"strike\":\"1.1875\",\"notional\":\"€869m\"},{\"strike\":\"1.1900\",\"notional\":\"€781m\"},{\"strike\":\"1.1950\",\"notional\":\"€1.2bn\"}],\"USD/JPY\":[{\"strike\":\"153.90\",\"notional\":\"$565m\"},{\"strike\":\"154.25\",\"notional\":\"$560m\"},{\"strike\":\"154.40\",\"notional\":\"$599m\"}],\"GBP/USD\":[],\"USD/CHF\":[],\"USD/CAD\":[],\"AUD/USD\":[{\"strike\":\"0.7110\",\"notional\":\"A$515m\"}],\"NZD/USD\":[{\"strike\":\"0.6050\",\"notional\":\"NZ$542m\"}],\"EUR/GBP\":[]}},{\"label\":\"Tuesday\",\"date\":\"17/02\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1830\",\"notional\":\"€602m\"},{\"strike\":\"1.1900\",\"notional\":\"€1.3bn\"},{\"strike\":\"1.1920\",\"notional\":\"€511m\"},{\"strike\":\"1.2000\",\"notional\":\"€941m\"}],\"USD/JPY\":[{\"strike\":\"151.00\",\"notional\":\"$1.1bn\"},{\"strike\":\"152.50\",\"notional\":\"$701m\"},{\"strike\":\"154.60\",\"notional\":\"$525m\"},{\"strike\":\"156.00\",\"notional\":\"$2.0bn\"}],\"GBP/USD\":[{\"strike\":\"1.3560\",\"notional\":\"£766m\"}],\"USD/CHF\":[{\"strike\":\"0.7730\",\"notional\":\"$695m\"}],\"USD/CAD\":[{\"strike\":\"1.3500\",\"notional\":\"$973m\"},{\"strike\":\"1.3600\",\"notional\":\"$1.0bn\"},{\"strike\":\"1.3625\",\"notional\":\"$861m\"}],\"AUD/USD\":[],\"NZD/USD\":[],\"EUR/GBP\":[]}}]}"
+}
