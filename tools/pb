@@ -35,6 +35,15 @@ case "${1:-}" in
       st="$(ev "(function(){return [...document.querySelectorAll('.pine-shell *')].filter(e=>e.children.length==0 && /EXPORTED|EXPORT_/.test(e.textContent)).map(e=>e.textContent.slice(0,140)).join(' | ')})()")"
       case "$st" in *EXPORTED*|*EXPORT_*) echo "$st"; break ;; esac; sleep 2
     done ;;
+  bt-keep) # pb bt-keep "Indicator Title": Backtest chart - after an export the script is already on the chart; remove every OTHER on-chart script (V1 stalls the engine here)
+    pinebox tab --session $S --to backtest >/dev/null; sleep 1
+    ev "(async function(){ const sl=ms=>new Promise(r=>setTimeout(r,ms)); const vis=e=>{const r=e.getBoundingClientRect(); return r.width>0&&r.height>0;}; const N=$(printf '%s' "$2" | jq -Rs .);
+      const dlgOpen=()=>[...document.querySelectorAll('.vela-dialog-title')].some(e=>e.textContent.trim()==='Indicators'&&vis(e));
+      if(!dlgOpen()){ const b=[...document.querySelectorAll('button')].find(b=>/Indicators/.test(b.textContent)&&vis(b)&&b.getBoundingClientRect().y<140&&b.getBoundingClientRect().y>90); if(!b) return {err:'no Indicators button'}; b.click(); await sl(900); }
+      let removed=0, kept=0;
+      for(let k=0;k<10;k++){ const rows=[...document.querySelectorAll('.vela-ip-trash')].filter(vis).map(t=>({t, name:(t.parentElement.querySelector('.vela-ip-name')||t.parentElement.parentElement.querySelector('.vela-ip-name')||{}).textContent}));
+        const victim=rows.find((r,i)=>(r.name||'').trim()!==N || rows.findIndex(x=>(x.name||'').trim()===N)!==i); if(!victim) { kept=rows.length; break; } victim.t.click(); removed++; await sl(700); }
+      const c=[...document.querySelectorAll('.vela-dialog-close')].find(vis); if(c) c.click(); return {removed,kept}; })()" ;;
   bt-apply) # pb bt-apply "Indicator Title": on the Backtest chart remove every on-chart script, then add the named one from My Scripts (verified)
     pinebox tab --session $S --to backtest >/dev/null; sleep 1
     JS_COMMON="const sl=ms=>new Promise(r=>setTimeout(r,ms)); const vis=e=>{const r=e.getBoundingClientRect(); return r.width>0&&r.height>0;}; const dlgOpen=()=>[...document.querySelectorAll('.vela-dialog-title')].some(e=>e.textContent.trim()==='Indicators'&&vis(e)); const openDlg=async()=>{ if(dlgOpen()) return true; const b=[...document.querySelectorAll('button')].find(b=>/Indicators/.test(b.textContent)&&vis(b)&&b.getBoundingClientRect().y<140&&b.getBoundingClientRect().y>90); if(!b) return false; b.click(); await sl(800); return dlgOpen(); }; const closeDlg=async()=>{ const c=[...document.querySelectorAll('.vela-dialog-close')].find(vis); if(c){ c.click(); await sl(400);} };"

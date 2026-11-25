@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# sidecar/build-inputs   -> sidecar/out/pine_inputs.json + pine_inputs.<SYMBOL>.txt   (see README.md)
+set -euo pipefail
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec bun "$HERE/src/build-inputs.ts" "$@"

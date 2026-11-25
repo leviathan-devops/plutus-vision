@@ -1,0 +1,11 @@
+{
+ "key": "12facccb6304b01798b8c89516627cb6a30bafc316622dc73a9035d675d5a74a",
+ "kind": "expiry_read_B1",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "daa15fcc689d19dabe1528cc25e3b1af56cec655a8741134cbefb5b0cd6db3b7",
+ "image": "cache/views/5d3ef0c140d88c03/B1.png",
+ "image_sha256": "3e423b8318791a529966365517d439dcabcd01658773dfe9c0ea30e18d53e434",
+ "text": "{\"pairs\":[\"EUR/USD\",\"USD/JPY\",\"GBP/USD\",\"USD/CHF\"],\"spot\":{\"EUR/USD\":\"1.1436\",\"USD/JPY\":\"161.62\",\"GBP/USD\":\"1.3421\",\"USD/CHF\":\"0.8048\"},\"rows\":[{\"label\":\"Friday\",\"date\":\"10/07\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1300\",\"notional\":\"€2.2bn\"},{\"strike\":\"1.1310\",\"notional\":\"€955m\"},{\"strike\":\"1.1350\",\"notional\":\"€851m\"},{\"strike\":\"1.1380\",\"notional\":\"€1.0bn\"},{\"strike\":\"1.1400\",\"notional\":\"€2.0bn\"},{\"strike\":\"1.1405\",\"notional\":\"€1.8bn\"},{\"strike\":\"1.1450\",\"notional\":\"€1.4bn\"},{\"strike\":\"1.1475\",\"notional\":\"€612m\"},{\"strike\":\"1.1500\",\"notional\":\"€677m\"}],\"USD/JPY\":[{\"strike\":\"161.00\",\"notional\":\"$820m\"}],\"GBP/USD\":[{\"strike\":\"1.3340\",\"notional\":\"£760m\"},{\"strike\":\"1.3400\",\"notional\":\"£765m\"}],\"USD/CHF\":[{\"strike\":\"0.8000\",\"notional\":\"$559m\"}]}},{\"label\":\"Monday\",\"date\":\"13/07\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1400\",\"notional\":\"€866m\"},{\"strike\":\"1.1475\",\"notional\":\"€650m\"},{\"strike\":\"1.1500\",\"notional\":\"€1.1bn\"},{\"strike\":\"1.1525\",\"notional\":\"€598m\"},{\"strike\":\"1.1550\",\"notional\":\"€1.5bn\"},{\"strike\":\"1.1560\",\"notional\":\"€548m\"}],\"USD/JPY\":[{\"strike\":\"160.00\",\"notional\":\"$1.8bn\"},{\"strike\":\"160.50\",\"notional\":\"$4.5bn\"},{\"strike\":\"161.00\",\"notional\":\"$1.0bn\"},{\"strike\":\"161.50\",\"notional\":\"$544m\"},{\"strike\":\"162.00\",\"notional\":\"$1.5bn\"}],\"GBP/USD\":[{\"strike\":\"1.3410\",\"notional\":\"£533m\"}],\"USD/CHF\":[]}}]}"
+}

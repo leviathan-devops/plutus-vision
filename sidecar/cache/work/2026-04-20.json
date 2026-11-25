@@ -1,0 +1,67 @@
+{
+ "week": "2026-04-20",
+ "anchor": 1776664800000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-04-20T06:00:00Z",
+  "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-20-april-10am-new-york-cut-20260420/ published 2026-04-20T06:08:28+00:00 is AFTER the anchor: excluded, not fetched",
+  "--force-include https://investinglive.com/Orders/fx-option-expiries-for-20-april-10am-new-york-cut-20260420/",
+  "discover: 2 expiry post(s), 1 analyst candidate(s) from sitemaps 2026-W16, 2026-W17"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "lastmod": "2026-04-17T06:19:19+00:00",
+   "cut_date": "2026-04-17",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-04-20/investinglive_orders_fx-option-expiries-for-17-april-10am-new-york-cut-20260417.html",
+   "published_at": "2026-04-17T06:19:19Z",
+   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2017-04_id_139056c1-4f56-41a0-bef9-6a1e58647b5f_size900.jpg"
+  },
+  {
+   "role": "forced",
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-20-april-10am-new-york-cut-20260420/",
+   "lastmod": "2026-04-20T06:08:28+00:00",
+   "cut_date": "2026-04-20",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-04-20/investinglive_orders_fx-option-expiries-for-20-april-10am-new-york-cut-20260420.html",
+   "published_at": "2026-04-20T06:08:28Z",
+   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2020-04_id_44ea1a16-6126-4175-b8cd-e3cafd517d82_size900.jpg"
+  }
+ ],
+ "analyst": [
+  {
+   "url": "https://investinglive.com/forex/usdcad-nears-pre-war-levels-but-the-loonie-is-still-in-limbo-20260415/",
+   "lastmod": "2026-04-15T19:34:06+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-04-20/investinglive_forex_usdcad-nears-pre-war-levels-but-the-loonie-is-still-in-limbo-20260415.html",
+   "published_at": "2026-04-15T19:34:06Z"
+  }
+ ],
+ "h10": {
+  "release_date": "2026-04-13",
+  "published_at": "2026-04-13T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260413/",
+  "rate_day": "Apr. 10",
+  "rates": {
+   "EURUSD": 1.1723,
+   "USDJPY": 159.22,
+   "GBPUSD": 1.346,
+   "USDCAD": 1.3828,
+   "USDSEK": 9.2651,
+   "USDCHF": 0.7893
+  },
+  "k_h10": 108.155178,
+  "dxy_h10": 98.6918
+ },
+ "accepted": [],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [],
+  "GBPUSD": []
+ },
+ "stats": {},
+ "h10_src": {
+  "url": "https://www.federalreserve.gov/releases/h10/20260413/",
+  "published_at": "2026-04-13T20:15:00Z",
+  "kind": "h10_release"
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "key": "d990bb3ed2ec2c2a45d45796e8b0ddbe52336b9015101cced854de7440ad974d",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "8d8f43b407457bf9bd3ca30580be3535f21fbd912dfcc97732e5f1da026db56f",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.1411\",\"role\":\"level\",\"quote\":\"shifted attention to the next key target at 1.1411—the low from mid-March.\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.1383\",\"role\":\"support\",\"quote\":\"On the downside, the 100-hour moving average, now at 1.1383, remains a critical support level.\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.14\",\"role\":\"support\",\"quote\":\"zone around the 1.14 handle opening the door for a drop towards the 1.10 level\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.10\",\"role\":\"level\",\"quote\":\"opening the door for a drop towards the 1.10 level\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1525\",\"role\":\"level\",\"quote\":\"1.1525 level next, but the price will need to break above the resistance to\"},{\"article\":4,\"instrument\":\"EURUSD\",\"price\":\"1.1398\",\"role\":\"level\",\"quote\":\"The EURUSD has made a move above the falling 100 hour MA at 1.1398 and bumped up to 1.1412.\"},{\"article\":4,\"instrument\":\"EURUSD\",\"price\":\"1.14525\",\"role\":\"level\",\"quote\":\"The 200 hour MA ia at 1.14525.\"},{\"article\":4,\"instrument\":\"GBPUSD\",\"price\":\"1.3200\",\"role\":\"level\",\"quote\":\"The GBPUSD is also above the 100 hour MA at 1.3200.\"},{\"article\":4,\"instrument\":\"GBPUSD\",\"price\":\"1.3252\",\"role\":\"level\",\"quote\":\"Stay above and the 200 hour MA comes in at 1.3252.\"}]}"
+}

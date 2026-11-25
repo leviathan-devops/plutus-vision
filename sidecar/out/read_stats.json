@@ -1,0 +1,29 @@
+{
+ "weeks": 2,
+ "entries_seen": 83,
+ "agreed_first_two_reads": 83,
+ "accepted": 83,
+ "dropped": 0,
+ "first_two_reads_agreement": 1,
+ "per_week": {
+  "2026-04-20": {
+   "expiry_posts": [
+    "prior@2026-04-17T06:19:19Z"
+   ],
+   "entries_seen": 16,
+   "agreed_first_two_reads": 16,
+   "accepted": 16,
+   "dropped": 0
+  },
+  "2026-07-06": {
+   "expiry_posts": [
+    "monday@2026-07-06T05:47:01Z",
+    "prior@2026-07-03T05:49:18Z"
+   ],
+   "entries_seen": 67,
+   "agreed_first_two_reads": 67,
+   "accepted": 67,
+   "dropped": 0
+  }
+ }
+}

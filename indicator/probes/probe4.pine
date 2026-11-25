@@ -1,0 +1,16 @@
+//@version=6
+indicator("probe4", overlay=true)
+i_d = input.string("20260706|101.14:1,100.89:2;20260713|1.5:3;", "d")
+string out = ""
+if barstate.islast
+    string[] rows = str.split(i_d, ";")
+    for r in rows
+        if str.length(r) > 0
+            string[] p = str.split(r, "|")
+            float key = str.tonumber(p.get(0))
+            out += "\nkey=" + str.tostring(key) + " n=" + str.tostring(p.size())
+            string[] it = str.split(p.get(1), ",")
+            for x in it
+                string[] kv = str.split(x, ":")
+                out += " [" + str.tostring(str.tonumber(kv.get(0))) + "/" + str.tostring(int(str.tonumber(kv.get(1)))) + "]"
+    label.new(bar_index, high, out + " sw=" + str.tostring(str.startswith("abc", "ab")))

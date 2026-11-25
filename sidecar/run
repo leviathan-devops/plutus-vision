@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# sidecar/run --week YYYY-MM-DD   -> sidecar/out/<week>.json   (see README.md)
+set -euo pipefail
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec bun "$HERE/src/run.ts" "$@"

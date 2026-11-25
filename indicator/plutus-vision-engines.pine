@@ -25,6 +25,9 @@ i_back       = input.int(0, "Look back: shift the drawn window N weeks into the 
 i_showE1     = input.bool(true, "E1 institutional pressure zones", group = GRP_V)
 i_showSD     = input.bool(false, "E1 4H origin-candle supply/demand (canon Step 0f)", group = GRP_V)
 i_showAudit  = input.bool(false, "E1 audit: text block per week", group = GRP_V)
+string GRP_D = "Weekly data (written by the sidecar, dated, as of each Monday anchor)"
+i_optData    = input.string("", "Option walls: YYYYMMDD|price:code,...; (1 live >=1.5bn, 2 live 850m+, 3 ghost >=1.5bn, 4 ghost 850m+)", group = GRP_D)
+i_anaData    = input.string("", "Analyst levels: YYYYMMDD|price:code,...; (2 = two tier-1 sources agree, 1 = one source)", group = GRP_D)
 
 // ── instrument units: 1 pip = 0.01 on DXY, 0.0001 on a 1.x FX pair (SP:2610, SP:3874) ───────────
 bool   IS_INDEX = str.contains(syminfo.ticker, "DXY") or close > 20
@@ -172,6 +175,9 @@ type Lv
     string tag
     float  lo       // extent of the evidence (wick tip .. body edge for a reaction cluster)
     float  hi
+    float  tol = 0.0  // match tolerance of a dated option / analyst level (Pillar 8 confidence band)
+    int    code = 0   // dataset code of an option / analyst level
+    int    optc = 9   // strongest option code that coincides with this level (9 = none)
     float  conf = 0.0
     float  tech = 0.0
     float  stru = 0.0
@@ -255,6 +261,37 @@ f_sma(int n) =>
         s /= n
     s
 
+// one week's row of a dated dataset "YYYYMMDD|price:code,price:code;..." -> levels (the sidecar wrote it as of that Monday's anchor)
+f_weekRow(Lv[] a, string data, int key, int src) =>
+    if str.length(data) > 0
+        string[] rows = str.split(data, ";")
+        for r in rows
+            if str.length(r) > 9
+                string[] kp = str.split(r, "|")
+                if kp.size() == 2 and int(str.tonumber(kp.get(0))) == key
+                    string[] items = str.split(kp.get(1), ",")
+                    for it in items
+                        string[] kv = str.split(it, ":")
+                        if kv.size() == 2
+                            float pr = str.tonumber(kv.get(0))
+                            int cd = int(str.tonumber(kv.get(1)))
+                            if not na(pr) and cd > 0
+                                if src == 5
+                                    // weight: wall tier 1 "+3", tier 2 "+2" (SP:1138-1139); a ghost keeps structural memory (App. B) one step lower
+                                    float w = cd == 1 ? 3.0 : cd == 4 ? 1.0 : 2.0
+                                    float st = cd == 1 ? 2.0 : cd == 4 ? 0.5 : 1.0          // Options dimension (SP:1470)
+                                    // Pillar 8 confidence band on a converted index level: 0.07 tier 1, 0.10 tier 2 (SP:1445-1446); a pair's own strike is exact
+                                    float tl = IS_INDEX ? (cd == 1 or cd == 3 ? 7 * PIP : 10 * PIP) : T_EXACT
+                                    Lv v = Lv.new(pr, 5, w, st, 0, "OPT" + str.tostring(cd), pr - T_EXACT, pr + T_EXACT)
+                                    v.tol := tl
+                                    v.code := cd
+                                    a.push(v)
+                                else
+                                    Lv v = Lv.new(pr, 6, cd >= 2 ? 3.0 : 2.0, cd >= 2 ? 2.0 : 1.0, 0, "ANA" + str.tostring(cd), pr - T_EXACT, pr + T_EXACT)
+                                    v.tol := T_EXACT
+                                    v.code := cd
+                                    a.push(v)
+
 f_degree(float s) =>
     s >= 12 ? "EXTREME" : s >= 10 ? "HEAVY" : s >= 8 ? "MODERATE-HEAVY" : s >= 6 ? "MODERATE" : s >= 4 ? "LIGHT" : "MINIMAL"   // SP:1487-1494
 
@@ -330,7 +367,7 @@ f_sd(SD[] out, float thr, int scale) =>
 // ═════════════════════════════════════════════════════════════════════════════════════════════
 // E1 — THE WEEKLY LEVEL SET
 // ═════════════════════════════════════════════════════════════════════════════════════════════
-f_e1(float spot, SD[] sds) =>
+f_e1(float spot, SD[] sds, int weekKey) =>
     Lv[] L = array.new<Lv>()
     int nd = dC.size()
     int nw = wC.size()
@@ -500,6 +537,9 @@ f_e1(float spot, SD[] sds) =>
                 lwc := na(lwc) ? wC.get(i) : math.min(lwc, wC.get(i))
         f_add(L, hwc, 3, 2.0, 2, 0, "HWC")
         f_add(L, lwc, 3, 2.0, 2, 0, "LWC")
+        // ── Pillars 3 / 8 and 4: the week's dated option walls and analyst levels (from the sidecar; absent = score 0, SP:1470-1471)
+        f_weekRow(L, i_optData, weekKey, 5)
+        f_weekRow(L, i_anaData, weekKey, 6)
         // ── Pillar 6 Step 3: round-number grid across the span of every level found (V452:853-860)
         float lo = spot
         float hi = spot
@@ -519,7 +559,14 @@ f_e1(float spot, SD[] sds) =>
             for b = 0 to n - 1
                 Lv y = L.get(b)
                 float d = math.abs(x.p - y.p)
-                if d <= T_ZONE
+                if (y.src == 5 or y.src == 6) and d <= y.tol
+                    cf += y.w
+                    if y.src == 5
+                        x.opt := math.max(x.opt, y.st)
+                        x.optc := math.min(x.optc, y.code)
+                    else
+                        x.ana := math.max(x.ana, y.st)
+                else if y.src < 5 and d <= T_ZONE
                     bool ex = d <= T_EXACT
                     cf += y.w * (ex ? 1.0 : 0.5)
                     if y.src == 1
@@ -532,10 +579,6 @@ f_e1(float spot, SD[] sds) =>
                             x.xb := math.max(x.xb, y.bonus)
                     else if y.src == 4 and ex
                         x.psy := math.max(x.psy, y.w >= 1.5 ? 2.0 : 1.0)     // .00 / .50 = 2, .25 / .75 = 1 (SP:1473)
-                    else if y.src == 5 and ex
-                        x.opt := math.max(x.opt, y.st)
-                    else if y.src == 6 and ex
-                        x.ana := math.max(x.ana, y.st)
             for s in sds
                 if x.p <= s.top and x.p >= s.bot
                     cf += s.mit <= 1 ? 2.0 : 1.0
@@ -576,7 +619,24 @@ f_mkZone(Lv s, Lv[] L, SD[] sds, Zone[] Z, float gapBonus) =>
     int pillars = (s.tech > 0 ? 1 : 0) + (s.stru > 0 ? 1 : 0) + (s.psy > 0 ? 1 : 0) + (s.opt > 0 ? 1 : 0) + (s.ana > 0 ? 1 : 0)
     // zone type -> failure probability (Appendix B; strength only, R-17). Without an option wall: Soft Wall 30-50, One-Touch 50-70
     float base = s.tech + math.max(s.stru, gapBonus) + s.psy + s.opt + s.ana + math.min(2.0, s.xb) + (tier == 1 ? 2.0 : 1.0)
-    int zfp = pillars <= 1 ? 60 : int(math.round(50 - 20 * math.min(1.0, math.max(0.0, (base - 5.0) / 6.0))))
+    // Hard Wall 5-15: tier-1 wall + 3+ pillars + confluent floor/ceiling · Standard Wall 15-30: a live wall + 2+ pillars ·
+    // Post-Expiry Ghost 20-40 · Soft Wall 30-50 · One-Touch 50-70 (SP:4056-4063); the point inside the range follows the score
+    float q = math.min(1.0, math.max(0.0, (base - 5) / 6.0))
+    float zLo = 30
+    float zHi = 50
+    if s.optc == 1 and pillars >= 3 and s.xb >= 2
+        zLo := 5
+        zHi := 15
+    else if s.optc <= 2 and pillars >= 2
+        zLo := 15
+        zHi := 30
+    else if s.optc <= 4
+        zLo := 20
+        zHi := 40
+    else if pillars <= 1
+        zLo := 50
+        zHi := 70
+    int zfp = int(math.round(zHi - (zHi - zLo) * q))
     float reg = zfp < 20 ? 2.0 : zfp <= 50 ? 1.0 : 0.0       // V452:1066-1071
     float score = math.min(14.0, base + reg)
     Zone.new(top, bot, s.p, score, s.conf, pillars, zfp, tier, "", f_degree(score), 0, gapBonus > 0 ? "gap in-fill: " + drv : drv)
@@ -590,16 +650,33 @@ f_zones(Lv[] L, SD[] sds, float spot) =>
         for v in L
             cf.push(v.src == 4 ? 0.0 : v.conf)
         int[] ord = cf.sort_indices(order.descending)
+        // (1) every option wall of the week is an exact institutional level: it anchors its own zone (codes 1-3)
         for k = 0 to n - 1
             Lv s = L.get(ord.get(k))
-            if s.src != 4
+            if s.src == 5 and s.code <= 3
                 bool taken = false
                 for z in Z
-                    if s.p <= z.top + T_CLUSTER and s.p >= z.bot - T_CLUSTER
+                    if s.p <= z.top + T_EXACT and s.p >= z.bot - T_EXACT
                         taken := true
                 if not taken
                     Zone z = f_mkZone(s, L, sds, Z, 0.0)
                     if z.score >= 6          // MODERATE and above only (SP:1646)
+                        Z.push(z)
+        // (2) structure: confluence peaks, strongest first. A HEAVY peak (>= 10) only has to clear a placed zone;
+        //     a MODERATE-HEAVY peak (>= 8) must also stand 0.15 (the canon cluster band) away from every placed zone
+        for k = 0 to n - 1
+            Lv s = L.get(ord.get(k))
+            if s.src != 4 and s.src != 5
+                bool inside = false
+                bool near = false
+                for z in Z
+                    if s.p <= z.top + T_EXACT and s.p >= z.bot - T_EXACT
+                        inside := true
+                    if s.p <= z.top + T_CLUSTER and s.p >= z.bot - T_CLUSTER
+                        near := true
+                if not inside
+                    Zone z = f_mkZone(s, L, sds, Z, 0.0)
+                    if z.top - z.bot >= T_EXACT and (z.score >= 10 or (z.score >= 8 and not near))
                         Z.push(z)
         // the weekly map: every zone that overlaps the prior week's range, plus the first zone beyond each end
         // (the breakout extension on that side). Zones further out stay in the level set but are not this week's map.
@@ -623,33 +700,29 @@ f_zones(Lv[] L, SD[] sds, float spot) =>
             Z := K
             // Step 9.5 gap scan (V452:1159-1184): a gap >= 0.20 between adjacent zones takes the strongest level inside it
             // that has 2+ supporting pillars as a GAP IN-FILL LEVEL (Structural 1)
-            bool again = true
-            int guard = 0
-            while again and guard < 12
-                again := false
-                guard += 1
-                float[] tp = array.new_float()
-                for z in Z
-                    tp.push(z.top)
-                int[] o = tp.sort_indices(order.ascending)
-                int m0 = Z.size()
-                if m0 > 1
-                    for k = 0 to m0 - 2
-                        if not again
-                            Zone lo = Z.get(o.get(k))
-                            Zone hi = Z.get(o.get(k + 1))
-                            if hi.bot - lo.top >= 2 * T_TIGHT
-                                float bestC = 0.0
-                                int bestI = -1
-                                for i = 0 to n - 1
-                                    Lv v = L.get(i)
-                                    int pl = (v.tech > 0 ? 1 : 0) + (v.stru > 0 ? 1 : 0) + (v.psy > 0 ? 1 : 0) + (v.opt > 0 ? 1 : 0) + (v.ana > 0 ? 1 : 0)
-                                    if v.src != 4 and pl >= 2 and v.p >= lo.top + T_TIGHT and v.p <= hi.bot - T_TIGHT and v.conf > bestC
-                                        bestC := v.conf
-                                        bestI := i
-                                if bestI >= 0
-                                    Z.push(f_mkZone(L.get(bestI), L, sds, Z, 1.0))
-                                    again := true
+            float[] tp0 = array.new_float()
+            for z in Z
+                tp0.push(z.top)
+            int[] o = tp0.sort_indices(order.ascending)
+            int m0 = Z.size()
+            Zone[] infill = array.new<Zone>()
+            if m0 > 1
+                for k = 0 to m0 - 2
+                    Zone lo = Z.get(o.get(k))
+                    Zone hi = Z.get(o.get(k + 1))
+                    if hi.bot - lo.top >= 2 * T_TIGHT
+                        float bestC = 0.0
+                        int bestI = -1
+                        for i = 0 to n - 1
+                            Lv v = L.get(i)
+                            int pl = (v.tech > 0 ? 1 : 0) + (v.stru > 0 ? 1 : 0) + (v.psy > 0 ? 1 : 0) + (v.opt > 0 ? 1 : 0) + (v.ana > 0 ? 1 : 0)
+                            if v.src != 4 and pl >= 2 and v.p >= lo.top + T_TIGHT and v.p <= hi.bot - T_TIGHT and v.conf > bestC
+                                bestC := v.conf
+                                bestI := i
+                        if bestI >= 0
+                            infill.push(f_mkZone(L.get(bestI), L, sds, Z, 1.0))
+            for z in infill
+                Z.push(z)
         // names by position (V452:1148-1155)
         int m = Z.size()
         if m > 0
@@ -691,7 +764,8 @@ if not frozen and not na(anchorTs) and time_close > anchorTs
     SD[] S = array.new<SD>()
     f_sd(S, T_H4MOVE, 240)
     f_sd(S, T_H1MOVE, 60)
-    Lv[] L = f_e1(spot, S)
+    int weekKey = year(anchorTs, TZ) * 10000 + month(anchorTs, TZ) * 100 + dayofmonth(anchorTs, TZ)
+    Lv[] L = f_e1(spot, S, weekKey)
     Zone[] Z = f_zones(L, S, spot)
     int wkEnd = anchorTs + (4 * 24 + 17 - i_anchorHour) * 3600000      // Friday 17:00 New York
     fcs.push(WeekFc.new(anchorTs, asof, anchorTs, wkEnd, spot, Z, L, S))
@@ -760,6 +834,6 @@ if barstate.islast
             for s in f.sds
                 t += "\nSD " + (s.side > 0 ? "supply " : "demand ") + str.tostring(s.bot) + "-" + str.tostring(s.top) + " mit" + str.tostring(s.mit) + " " + str.tostring(s.scale) + " " + str.format_time(s.t, "MM-dd HH:mm", TZ)
             for v in f.levels
-                if v.src == 3 and math.abs(v.p - f.spot) <= 200 * PIP
+                if (v.src == 3 or v.src >= 5) and math.abs(v.p - f.spot) <= 200 * PIP
                     t += "\nS " + str.tostring(math.round(v.p / PIP) * PIP) + " w" + str.tostring(v.w) + " cf" + str.tostring(v.conf) + " " + v.tag + " [" + str.tostring(math.round(v.lo / PIP) * PIP) + "," + str.tostring(math.round(v.hi / PIP) * PIP) + "]"
             lb.push(label.new(f.t0, f.spot, t, xloc = xloc.bar_time, style = label.style_label_right, color = color.new(color.black, 30), textcolor = color.white, size = size.small, textalign = text.align_left))

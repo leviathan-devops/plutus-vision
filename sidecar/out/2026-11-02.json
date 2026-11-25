@@ -1,0 +1,84 @@
+{
+ "week": "2026-11-02",
+ "anchor_utc": "2026-11-02T07:00:00Z",
+ "sources": [
+  {
+   "url": "https://www.federalreserve.gov/releases/h10/20261026/",
+   "published_at": "2026-10-26T20:15:00Z",
+   "kind": "h10_release"
+  },
+  {
+   "url": "pinebox-bar-store:TVC_DXY/60/2026-11.json#time=1793599200000",
+   "published_at": "2026-11-02T07:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_EURUSD/60/2026-11.json#time=1793599200000",
+   "published_at": "2026-11-02T07:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_GBPUSD/60/2026-11.json#time=1793599200000",
+   "published_at": "2026-11-02T07:00:00Z",
+   "kind": "spot_bar"
+  }
+ ],
+ "expiries": {
+  "EURUSD": [],
+  "GBPUSD": [],
+  "USDJPY": []
+ },
+ "spots": {
+  "from": "pinebox bar store, last 1H close before the anchor",
+  "bar_close_utc": "2026-11-02T07:00:00Z",
+  "DXY": 101.822,
+  "EURUSD": 1.11851,
+  "GBPUSD": 1.34036
+ },
+ "k_anchor": 108.607093,
+ "h10": {
+  "release_date": "2026-10-26",
+  "published_at": "2026-10-26T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20261026/",
+  "rate_day": "Oct. 23",
+  "rates": {
+   "EURUSD": 1.1199,
+   "USDJPY": 156.87,
+   "GBPUSD": 1.3375,
+   "USDCAD": 1.3993,
+   "USDSEK": 9.9237,
+   "USDCHF": 0.8248
+  },
+  "k_h10": 108.618969,
+  "dxy_h10": 101.7603
+ },
+ "dxy_levels": [],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [],
+  "GBPUSD": []
+ },
+ "read_stats": {
+  "entries_seen": 0,
+  "agreed_first_two_reads": 0,
+  "accepted": 0,
+  "dropped": 0
+ },
+ "model": {
+  "id": "muse-spark-1.3-contributor",
+  "effort": "high",
+  "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+  "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+ },
+ "dropped": [],
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-11-02T07:00:00Z",
+  "no Monday expiry post in the sitemap for this date",
+  "no expiry post in the 4 days before the anchor Monday",
+  "discover: 0 expiry post(s), 0 analyst candidate(s) from sitemaps 2026-W44, 2026-W45",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "accept: 0 strike/notional entries accepted (2+ reads identical), 0 dropped",
+  "read_analyst: no candidate article with text",
+  "emit: as-of gate passed for 4 sources and every datum"
+ ]
+}
