@@ -126,16 +126,24 @@ def build(pair, monday, expiries, K, spot):
     # names by position (P452:1146-1153): Equilibrium = the pivot area (the zone holding / nearest the weekly pivot point);
     # above it the top zone is the Resistance Ceiling, the others Upper Resistance; below it the lowest is the Key Support Band, the others Mid-Range Support
     pp = P.pillar1(pair, monday)['weekly']['classic']['PP']
+    # Names (P452:1146-1153) by SIDE and position: supply-side zones are resistance (top one = Resistance Ceiling), demand-side zones are support
+    # (lowest = Key Support Band). Equilibrium = the pivot area: the zone price sits in at the boundary, else the neighbouring zone that holds the weekly pivot point.
+    eq = None
     if shown:
-        eq = min(shown, key=lambda z: 0 if z['bot'] <= pp <= z['top'] else min(abs(z['bot'] - pp), abs(z['top'] - pp)))
-        up = [z for z in shown if z['bot'] > eq['bot'] and z is not eq]
-        dn = [z for z in shown if z is not eq and z not in up]
-        eq['name'], eq['cat'] = 'EQUILIBRIUM ZONE', 'MID'
-        for i, z in enumerate(up):
+        eq = next((z for z in shown if z['bot'] <= spot <= z['top']), None)
+        if eq is None:
+            ab = [z for z in shown if z['bot'] > spot]; be = [z for z in shown if z['top'] < spot]
+            near = ([ab[-1]] if ab else []) + ([be[0]] if be else [])
+            eq = next((z for z in near if z['bot'] <= pp <= z['top']), None)
+        res = [z for z in shown if z is not eq and z['side'] == 'Supply']
+        sup = [z for z in shown if z is not eq and z['side'] == 'Demand']
+        if eq is not None:
+            eq['name'], eq['cat'] = 'EQUILIBRIUM ZONE', 'MID'
+        for i, z in enumerate(res):
             z['name'], z['cat'] = ('RESISTANCE CEILING' if i == 0 else 'UPPER RESISTANCE'), 'RES'
-        for i, z in enumerate(dn):
-            z['name'], z['cat'] = ('KEY SUPPORT BAND' if i == len(dn) - 1 else 'MID-RANGE SUPPORT'), 'SUP'
-    infill = gap_scan(pair, monday, L, shown, eq if shown else None)
+        for i, z in enumerate(sup):
+            z['name'], z['cat'] = ('KEY SUPPORT BAND' if i == len(sup) - 1 else 'MID-RANGE SUPPORT'), 'SUP'
+    infill = gap_scan(pair, monday, L, shown, eq)
     # sweep zones listed / drawn: every swing of the last 10 days (as the report lists them) + older ones still unswept
     lsz = [z for z in lsz if z['date'] >= days[-10]['date'] or not z['swept']]
     return {'infill': infill, 'levels': L, 'zones': shown, 'all': zones, 'sd': sd, 'sd_drop': sd_drop, 'h4': h4, 'lsz': lsz, 'swings': swings, 'pp': pp, 'spot': spot, 'K': K}
