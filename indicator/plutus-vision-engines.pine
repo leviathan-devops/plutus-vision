@@ -25,7 +25,7 @@ bool   i_showAudit  = input.bool(false, "E1 audit: text block per week", group =
 
 // ── instrument units: 1 pip = 0.01 on DXY, 0.0001 on a 1.x FX pair (SP:2610, SP:3874) ───────────
 bool   IS_INDEX = str.contains(syminfo.ticker, "DXY") or close > 20
-float  PIP      = IS_INDEX ? 0.01 : 0.0001
+float  PIP      = IS_INDEX ? 1.0 / 100 : 1.0 / 10000
 
 // ── canon tolerances, in pips ───────────────────────────────────────────────────────────────
 float  T_EXACT   = 3  * PIP   // "Exact match within 3 pips = 2 pts"                         SP:1059, SP:1469
@@ -63,7 +63,7 @@ int   time1   = time[1]
 float close1  = close[1]
 bool newDay  = na(dKey1) or dKey != dKey1
 bool newH4   = na(h4Key1) or h4Key != h4Key1
-bool newWeek = newDay and (na(sDow1) or sDow < sDow1)
+bool newWeek = newDay and not na(sDow1) and sDow < sDow1    // the data's first, partial week gets no forecast
 
 // ═════════════════════════════════════════════════════════════════════════════════════════════
 // HIGHER-TIMEFRAME BARS, AGGREGATED HERE (request.security is not available in Pinebox)

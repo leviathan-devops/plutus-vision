@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# PLUTUS VISION pre-commit: the anchor / no-hardcode guard on every staged engine .pine (tools/anchor_guard.py).
+# Installed by: git config core.hooksPath tools/git-hooks
+root="$(git rev-parse --show-toplevel)"
+files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^indicator/.*\.pine$' || true)
+[ -z "$files" ] && exit 0
+cd "$root" && python3 tools/anchor_guard.py $files
