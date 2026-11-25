@@ -20,7 +20,8 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
   structure: HEAVY peaks need only non-overlap, MODERATE-HEAVY peaks need 0.15 clearance; one-pass gap in-fill; ZFP by zone type (Hard 5-15, Standard 15-30, Ghost 20-40, Soft 30-50, One-Touch 50-70).
 - Sidecar BUILT by an agent and still filling weeks in the background: `sidecar/run --week YYYY-MM-DD`, `sidecar/build-inputs` -> `sidecar/out/pine_inputs.{DXY,EURUSD,GBPUSD}.txt` (+ analyst). Done so far: 2026-04-20, 05-25, 06-29, 07-06, 11-02.
   Jul 6 output matches the hand-verified control. (Agent id a544407069ad54702 - it reports when finished; check `ls sidecar/out`.)
-- FRAMES: golden week DXY with walls = PASS (evidence/bt_040); held-out Apr 20 DXY 4H with walls = PASS ~5.5/6 (evidence/ide_041).
+- FRAMES: golden week DXY with walls = PASS (evidence/bt_040, ide_043); golden week EURUSD = PASS (ide_042); held-out Apr 20 DXY 4H = PASS ~5.5/6 (ide_041); held-out Jul 13 DXY 1H = PASS 5/5 (ide_050).
+- Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
 ## NEXT STEP (in order)

@@ -1,0 +1,559 @@
+{
+ "week": "2026-03-02",
+ "anchor": 1772434800000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-03-02T07:00:00Z",
+  "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-2-march-10am-new-york-cut-20260302/ published 2026-03-02T07:27:54+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W09, 2026-W10",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/: reads A/B agree on 17 of 17 entries; third read for columns []",
+  "accept: 17 strike/notional entries accepted (2+ reads identical), 0 dropped"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "lastmod": "2026-02-27T06:41:04+00:00",
+   "cut_date": "2026-02-27",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-02/investinglive_orders_fx-option-expiries-for-27-february-10am-new-york-cut-20260227.html",
+   "published_at": "2026-02-27T06:41:04Z",
+   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2027-02_id_a8c4d8de-68f0-4e5a-b07f-518ccc1302ca_size900.jpg",
+   "image_file": "/home/user/plutus-vision/sidecar/raw/2026-03-02/investinglive_orders_fx-option-expiries-for-27-february-10am-new-york-cut-20260227__FXO_27-02_id_a8c4d8de-68f0-4e5a-b07f-518ccc1302ca_size900.jpg",
+   "views_dir": "/home/user/plutus-vision/sidecar/cache/views/967f5cc0bad374cf",
+   "views": {
+    "grid_ok": true,
+    "hlines": [
+     10,
+     24,
+     38,
+     158,
+     263
+    ],
+    "pair_columns": 8,
+    "size": [
+     900,
+     273
+    ],
+    "source": "investinglive_orders_fx-option-expiries-for-27-february-10am-new-york-cut-20260227__FXO_27-02_id_a8c4d8de-68f0-4e5a-b07f-518ccc1302ca_size900.jpg",
+    "views": {
+     "A": {
+      "box": [
+       0,
+       0,
+       900,
+       273
+      ],
+      "file": "A.png",
+      "scale": 2.2,
+      "size": [
+       1980,
+       601
+      ]
+     },
+     "B1": {
+      "box": [
+       135,
+       7,
+       513,
+       267
+      ],
+      "file": "B1.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "scale": 3.9053,
+      "size": [
+       1980,
+       1015
+      ]
+     },
+     "B2": {
+      "box": [
+       511,
+       7,
+       890,
+       267
+      ],
+      "file": "B2.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       4,
+       5,
+       6,
+       7
+      ],
+      "scale": 3.8976,
+      "size": [
+       1980,
+       1013
+      ]
+     },
+     "C0": {
+      "box": [
+       135,
+       7,
+       231,
+       267
+      ],
+      "file": "C0.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       0
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1560
+      ]
+     },
+     "C1": {
+      "box": [
+       229,
+       7,
+       325,
+       267
+      ],
+      "file": "C1.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       1
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1560
+      ]
+     },
+     "C2": {
+      "box": [
+       323,
+       7,
+       419,
+       267
+      ],
+      "file": "C2.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       2
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1560
+      ]
+     },
+     "C3": {
+      "box": [
+       417,
+       7,
+       513,
+       267
+      ],
+      "file": "C3.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       3
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1560
+      ]
+     },
+     "C4": {
+      "box": [
+       511,
+       7,
+       607,
+       267
+      ],
+      "file": "C4.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       4
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1560
+      ]
+     },
+     "C5": {
+      "box": [
+       605,
+       7,
+       701,
+       267
+      ],
+      "file": "C5.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       5
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1560
+      ]
+     },
+     "C6": {
+      "box": [
+       699,
+       7,
+       795,
+       267
+      ],
+      "file": "C6.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       6
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1560
+      ]
+     },
+     "C7": {
+      "box": [
+       793,
+       7,
+       889,
+       267
+      ],
+      "file": "C7.png",
+      "label_box": [
+       7,
+       7,
+       136,
+       267
+      ],
+      "pair_index": [
+       7
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1560
+      ]
+     }
+    },
+    "vlines": [
+     37,
+     135,
+     229,
+     323,
+     417,
+     511,
+     605,
+     699,
+     793,
+     887
+    ]
+   },
+   "reads": {
+    "A": "879b8ccdccf645516341c8fe6ac61f53e55a1e9739b55d4727bde9f3c7baf789",
+    "B1": "8174bd19bbb5c2f44fc07efe28eb7c35a6ac248a421e1c1b6a4e26720d3e2706",
+    "B2": "7661e3d331c069d5497c6851564b921d1ca7ca0253ac85236bfe310972e66f81"
+   },
+   "tiebreak": []
+  }
+ ],
+ "analyst": [
+  {
+   "url": "https://investinglive.com/technical-analysis/gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226/",
+   "lastmod": "2026-02-26T20:01:13+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-02/investinglive_technical-analysis_gbpusd-technicals-gbpusd-tumbles-but-finds-support-near-a-familiar-ma-level-20260226.html",
+   "published_at": "2026-02-26T20:01:13Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226/",
+   "lastmod": "2026-02-26T13:18:47+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-02/investinglive_technical-analysis_eurusd-gbpusd-and-usdjpy-technical-outlook-key-levels-as-the-usd-starts-mixed-20260226.html",
+   "published_at": "2026-02-26T13:18:47Z"
+  },
+  {
+   "url": "https://investinglive.com/forex/eurusd-stays-rangebound-as-focus-turns-to-us-iran-talks-and-the-nfp-report-20260226/",
+   "lastmod": "2026-02-26T08:15:50+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-02/investinglive_forex_eurusd-stays-rangebound-as-focus-turns-to-us-iran-talks-and-the-nfp-report-20260226.html",
+   "published_at": "2026-02-26T08:15:50Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/audusd-technicals-audusd-closing-with-a-more-bullish-bias-what-would-tarnish-the-bias-20260227/",
+   "lastmod": "2026-02-27T20:07:07+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-03-02/investinglive_technical-analysis_audusd-technicals-audusd-closing-with-a-more-bullish-bias-what-would-tarnish-the-bias-20260227.html",
+   "published_at": "2026-02-27T20:07:07Z"
+  }
+ ],
+ "h10": {
+  "release_date": "2026-02-23",
+  "published_at": "2026-02-23T21:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260223/",
+  "rate_day": "Feb. 20",
+  "rates": {
+   "EURUSD": 1.1781,
+   "USDJPY": 154.99,
+   "GBPUSD": 1.35,
+   "USDCAD": 1.3688,
+   "USDSEK": 9.0571,
+   "USDCHF": 0.7756
+  },
+  "k_h10": 107.451754,
+  "dxy_h10": 97.7716
+ },
+ "accepted": [
+  {
+   "pair": "EURUSD",
+   "date": "2026-02-27",
+   "strike": "1.1700",
+   "notional_m": 536,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-02-27",
+   "strike": "1.1750",
+   "notional_m": 2500,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-02-27",
+   "strike": "1.1800",
+   "notional_m": 1400,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-02-27",
+   "strike": "1.1850",
+   "notional_m": 1000,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-02-27",
+   "strike": "1.1860",
+   "notional_m": 706,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-02-27",
+   "strike": "1.1900",
+   "notional_m": 1600,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-02-27",
+   "strike": "1.1950",
+   "notional_m": 1000,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-02",
+   "strike": "1.1700",
+   "notional_m": 624,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-02",
+   "strike": "1.1750",
+   "notional_m": 1900,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-03-02",
+   "strike": "1.1800",
+   "notional_m": 2100,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-02-27",
+   "strike": "155.00",
+   "notional_m": 1800,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-02-27",
+   "strike": "156.50",
+   "notional_m": 549,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-02-27",
+   "strike": "157.00",
+   "notional_m": 939,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-03-02",
+   "strike": "157.00",
+   "notional_m": 565,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "USDCHF",
+   "date": "2026-03-02",
+   "strike": "0.7725",
+   "notional_m": 798,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-02-27",
+   "strike": "0.7080",
+   "notional_m": 589,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-02-27",
+   "strike": "0.7250",
+   "notional_m": 907,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-27-february-10am-new-york-cut-20260227/",
+   "published_at": "2026-02-27T06:41:04Z"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [],
+  "GBPUSD": []
+ },
+ "stats": {
+  "entries_seen": 17,
+  "agreed_first_two_reads": 17,
+  "accepted": 17,
+  "dropped": 0
+ },
+ "h10_src": {
+  "url": "https://www.federalreserve.gov/releases/h10/20260223/",
+  "published_at": "2026-02-23T21:15:00Z",
+  "kind": "h10_release"
+ }
+}

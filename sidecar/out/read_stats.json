@@ -1,11 +1,50 @@
 {
- "weeks": 2,
- "entries_seen": 83,
- "agreed_first_two_reads": 83,
- "accepted": 83,
- "dropped": 0,
- "first_two_reads_agreement": 1,
+ "weeks": 15,
+ "entries_seen": 645,
+ "agreed_first_two_reads": 643,
+ "accepted": 644,
+ "dropped": 1,
+ "first_two_reads_agreement": 0.9969,
  "per_week": {
+  "2026-02-02": {
+   "expiry_posts": [
+    "monday@2026-02-02T06:29:34Z",
+    "prior@2026-01-30T06:46:46Z"
+   ],
+   "entries_seen": 51,
+   "agreed_first_two_reads": 51,
+   "accepted": 51,
+   "dropped": 0
+  },
+  "2026-02-09": {
+   "expiry_posts": [
+    "monday@2026-02-09T06:41:43Z",
+    "prior@2026-02-06T06:55:32Z"
+   ],
+   "entries_seen": 47,
+   "agreed_first_two_reads": 47,
+   "accepted": 47,
+   "dropped": 0
+  },
+  "2026-02-16": {
+   "expiry_posts": [
+    "monday@2026-02-16T05:25:07Z",
+    "prior@2026-02-13T07:09:16Z"
+   ],
+   "entries_seen": 51,
+   "agreed_first_two_reads": 51,
+   "accepted": 51,
+   "dropped": 0
+  },
+  "2026-02-23": {
+   "expiry_posts": [
+    "prior@2026-02-20T07:17:27Z"
+   ],
+   "entries_seen": 13,
+   "agreed_first_two_reads": 13,
+   "accepted": 13,
+   "dropped": 0
+  },
   "2026-04-20": {
    "expiry_posts": [
     "prior@2026-04-17T06:19:19Z"
@@ -13,6 +52,25 @@
    "entries_seen": 16,
    "agreed_first_two_reads": 16,
    "accepted": 16,
+   "dropped": 0
+  },
+  "2026-05-25": {
+   "expiry_posts": [
+    "prior@2026-05-22T05:23:49Z"
+   ],
+   "entries_seen": 41,
+   "agreed_first_two_reads": 41,
+   "accepted": 41,
+   "dropped": 0
+  },
+  "2026-06-29": {
+   "expiry_posts": [
+    "monday@2026-06-29T05:57:13Z",
+    "prior@2026-06-26T06:07:15Z"
+   ],
+   "entries_seen": 46,
+   "agreed_first_two_reads": 46,
+   "accepted": 46,
    "dropped": 0
   },
   "2026-07-06": {
@@ -23,6 +81,74 @@
    "entries_seen": 67,
    "agreed_first_two_reads": 67,
    "accepted": 67,
+   "dropped": 0
+  },
+  "2026-07-13": {
+   "expiry_posts": [
+    "prior@2026-07-10T05:54:49Z"
+   ],
+   "entries_seen": 29,
+   "agreed_first_two_reads": 29,
+   "accepted": 29,
+   "dropped": 0
+  },
+  "2026-09-28": {
+   "expiry_posts": [
+    "monday@2026-09-28T05:46:35Z",
+    "prior@2026-09-25T05:21:52Z"
+   ],
+   "entries_seen": 61,
+   "agreed_first_two_reads": 59,
+   "accepted": 60,
+   "dropped": 1
+  },
+  "2026-10-05": {
+   "expiry_posts": [
+    "prior@2026-10-02T05:43:31Z"
+   ],
+   "entries_seen": 27,
+   "agreed_first_two_reads": 27,
+   "accepted": 27,
+   "dropped": 0
+  },
+  "2026-10-12": {
+   "expiry_posts": [
+    "monday@2026-10-12T04:20:04Z",
+    "prior@2026-10-09T05:41:32Z"
+   ],
+   "entries_seen": 35,
+   "agreed_first_two_reads": 35,
+   "accepted": 35,
+   "dropped": 0
+  },
+  "2026-10-19": {
+   "expiry_posts": [
+    "monday@2026-10-19T05:50:10Z",
+    "prior@2026-10-16T01:23:42Z"
+   ],
+   "entries_seen": 47,
+   "agreed_first_two_reads": 47,
+   "accepted": 47,
+   "dropped": 0
+  },
+  "2026-10-26": {
+   "expiry_posts": [
+    "monday@2026-10-26T05:41:34Z",
+    "prior@2026-10-23T05:27:53Z"
+   ],
+   "entries_seen": 61,
+   "agreed_first_two_reads": 61,
+   "accepted": 61,
+   "dropped": 0
+  },
+  "2026-11-02": {
+   "expiry_posts": [
+    "monday@2026-11-02T06:20:48Z",
+    "prior@2026-10-30T06:22:49Z"
+   ],
+   "entries_seen": 53,
+   "agreed_first_two_reads": 53,
+   "accepted": 53,
    "dropped": 0
   }
  }

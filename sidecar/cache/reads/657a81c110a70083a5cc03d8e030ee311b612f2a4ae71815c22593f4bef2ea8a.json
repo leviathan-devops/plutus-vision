@@ -1,0 +1,11 @@
+{
+ "key": "657a81c110a70083a5cc03d8e030ee311b612f2a4ae71815c22593f4bef2ea8a",
+ "kind": "expiry_read_B1",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "daa15fcc689d19dabe1528cc25e3b1af56cec655a8741134cbefb5b0cd6db3b7",
+ "image": "cache/views/59fc1b0557c2d0fb/B1.png",
+ "image_sha256": "8eeae592c9fd08154c5ff71dcf274f0b33ad9e6b22260b095804106a77d1ffc2",
+ "text": "{\"pairs\":[\"EUR/USD\",\"USD/JPY\",\"GBP/USD\",\"USD/CHF\"],\"spot\":{\"EUR/USD\":\"1.1480\",\"USD/JPY\":\"157.10\",\"GBP/USD\":\"1.3358\",\"USD/CHF\":\"0.8240\"},\"rows\":[{\"label\":\"Friday\",\"date\":\"18/09\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1400\",\"notional\":\"€5.2bn\"},{\"strike\":\"1.1445\",\"notional\":\"€722m\"},{\"strike\":\"1.1450\",\"notional\":\"€2.0bn\"},{\"strike\":\"1.1470\",\"notional\":\"€934m\"},{\"strike\":\"1.1475\",\"notional\":\"€717m\"},{\"strike\":\"1.1500\",\"notional\":\"€3.0bn\"},{\"strike\":\"1.1510\",\"notional\":\"€925m\"},{\"strike\":\"1.1515\",\"notional\":\"€1.0bn\"},{\"strike\":\"1.1525\",\"notional\":\"€625m\"},{\"strike\":\"1.1550\",\"notional\":\"€943m\"},{\"strike\":\"1.1600\",\"notional\":\"€2.0bn\"},{\"strike\":\"1.1630\",\"notional\":\"€536m\"}],\"USD/JPY\":[{\"strike\":\"155.00\",\"notional\":\"$5.5bn\"},{\"strike\":\"155.50\",\"notional\":\"$877m\"},{\"strike\":\"156.00\",\"notional\":\"$844m\"},{\"strike\":\"156.50\",\"notional\":\"$847m\"},{\"strike\":\"157.00\",\"notional\":\"$1.6bn\"},{\"strike\":\"159.00\",\"notional\":\"$1.0bn\"}],\"GBP/USD\":[{\"strike\":\"1.3300\",\"notional\":\"£597m\"},{\"strike\":\"1.3440\",\"notional\":\"£720m\"}],\"USD/CHF\":[{\"strike\":\"0.8125\",\"notional\":\"$689m\"},{\"strike\":\"0.8300\",\"notional\":\"$1.0bn\"}]}},{\"label\":\"Monday\",\"date\":\"21/09\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1350\",\"notional\":\"€882m\"}],\"USD/JPY\":[{\"strike\":\"155.50\",\"notional\":\"$901m\"},{\"strike\":\"156.00\",\"notional\":\"$720m\"},{\"strike\":\"157.00\",\"notional\":\"$1.9bn\"}],\"GBP/USD\":[],\"USD/CHF\":[{\"strike\":\"0.8300\",\"notional\":\"$543m\"}]}}]}"
+}

@@ -498,7 +498,99 @@
  ],
  "analyst_levels": {
   "DXY": [],
-  "EURUSD": [],
+  "EURUSD": [
+   {
+    "price": 1.1687,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+    "published_at": "2026-02-18T19:06:14Z",
+    "quote": "followed by the rising 100-day moving average at 1.1687 as the next downside objectives"
+   },
+   {
+    "price": 1.1687,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+    "published_at": "2026-02-20T13:24:43Z",
+    "quote": "followed by the 1.1700 level and the 100-day moving average at 1.1687"
+   },
+   {
+    "price": 1.17,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+    "published_at": "2026-02-20T13:24:43Z",
+    "quote": "targeting 1.1726 next, followed by the 1.1700 level and the 100-day moving average at 1.1687"
+   },
+   {
+    "price": 1.1726,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+    "published_at": "2026-02-18T19:06:14Z",
+    "quote": "traders would target 1.1726"
+   },
+   {
+    "price": 1.1726,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+    "published_at": "2026-02-20T13:24:43Z",
+    "quote": "would reinforce the bearish bias, targeting 1.1726 next, followed by the 1.1700 level"
+   },
+   {
+    "price": 1.1741,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+    "published_at": "2026-02-20T13:24:43Z",
+    "quote": "a break below the recent lows between 1.1741 and 1.1744 would reinforce the bearish bias"
+   },
+   {
+    "price": 1.1744,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+    "published_at": "2026-02-20T13:24:43Z",
+    "quote": "a break below the recent lows between 1.1741 and 1.1744 would reinforce the bearish bias"
+   },
+   {
+    "price": 1.1765,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+    "published_at": "2026-02-18T19:06:14Z",
+    "quote": "is now approaching the next key support zone between 1.1765 and 1.1778"
+   },
+   {
+    "price": 1.1765,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+    "published_at": "2026-02-20T13:24:43Z",
+    "quote": "sellers were able to push the price below a key swing area between 1.1765 and 1.1778 yesterday"
+   },
+   {
+    "price": 1.1778,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+    "published_at": "2026-02-18T19:06:14Z",
+    "quote": "is now approaching the next key support zone between 1.1765 and 1.1778"
+   },
+   {
+    "price": 1.1778,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+    "published_at": "2026-02-20T13:24:43Z",
+    "quote": "sellers were able to push the price below a key swing area between 1.1765 and 1.1778 yesterday"
+   },
+   {
+    "price": 1.18034,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+    "published_at": "2026-02-18T19:06:14Z",
+    "quote": "while price remains below the low from yesterday at 1.18034"
+   },
+   {
+    "price": 1.183,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+    "published_at": "2026-02-18T19:06:14Z",
+    "quote": "buyers could attempt a rebound toward the 50% midpoint of the 2026 trading range at 1.1830"
+   }
+  ],
   "GBPUSD": []
  },
  "stats": {
@@ -511,5 +603,401 @@
   "url": "https://www.federalreserve.gov/releases/h10/20260217/",
   "published_at": "2026-02-17T21:15:00Z",
   "kind": "h10_release"
+ },
+ "analyst_key": "31c664008f69bd4c3507f9f785ca267b6ba0f8d496f072b27c77f44142102f52",
+ "out": {
+  "week": "2026-02-23",
+  "anchor_utc": "2026-02-23T07:00:00Z",
+  "sources": [
+   {
+    "url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+    "published_at": "2026-02-20T07:17:27Z",
+    "kind": "expiry_post_prior"
+   },
+   {
+    "url": "https://investinglive.com/cms/media/migrated/images/FXO%2020-02_id_f2a13b7b-5b63-41b6-8efa-b10b77380674_size900.jpg",
+    "published_at": "2026-02-20T07:17:27Z",
+    "kind": "expiry_image"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+    "published_at": "2026-02-20T13:24:43Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+    "published_at": "2026-02-18T19:06:14Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/forex/eurusd-upside-remains-more-likely-amid-weaker-dollar-analysts-say-20260219/",
+    "published_at": "2026-02-19T10:05:57Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/forex/jp-morgan-raise-their-forecasts-for-aud-nzd-and-for-usdjpy-eurusd-unchanged-20260218/",
+    "published_at": "2026-02-18T23:15:00Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://www.federalreserve.gov/releases/h10/20260217/",
+    "published_at": "2026-02-17T21:15:00Z",
+    "kind": "h10_release"
+   },
+   {
+    "url": "pinebox-bar-store:TVC_DXY/60/2026-02.json#time=1771826400000",
+    "published_at": "2026-02-23T07:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_EURUSD/60/2026-02.json#time=1771826400000",
+    "published_at": "2026-02-23T07:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_GBPUSD/60/2026-02.json#time=1771826400000",
+    "published_at": "2026-02-23T07:00:00Z",
+    "kind": "spot_bar"
+   }
+  ],
+  "expiries": {
+   "EURUSD": [
+    {
+     "strike": 1.175,
+     "notional_m": 674,
+     "ccy": "EUR",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    },
+    {
+     "strike": 1.1775,
+     "notional_m": 747,
+     "ccy": "EUR",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    },
+    {
+     "strike": 1.18,
+     "notional_m": 749,
+     "ccy": "EUR",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    },
+    {
+     "strike": 1.1845,
+     "notional_m": 1100,
+     "ccy": "EUR",
+     "cut_date": "2026-02-23",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    }
+   ],
+   "GBPUSD": [],
+   "USDJPY": [
+    {
+     "strike": 154,
+     "notional_m": 1000,
+     "ccy": "USD",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    },
+    {
+     "strike": 154.35,
+     "notional_m": 669,
+     "ccy": "USD",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    },
+    {
+     "strike": 155,
+     "notional_m": 1100,
+     "ccy": "USD",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    },
+    {
+     "strike": 156.65,
+     "notional_m": 720,
+     "ccy": "USD",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    }
+   ],
+   "AUDUSD": [
+    {
+     "strike": 0.6865,
+     "notional_m": 574,
+     "ccy": "AUD",
+     "cut_date": "2026-02-23",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    }
+   ],
+   "EURGBP": [
+    {
+     "strike": 0.875,
+     "notional_m": 514,
+     "ccy": "EUR",
+     "cut_date": "2026-02-23",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    }
+   ],
+   "USDCAD": [
+    {
+     "strike": 1.374,
+     "notional_m": 503,
+     "ccy": "USD",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    },
+    {
+     "strike": 1.3775,
+     "notional_m": 580,
+     "ccy": "USD",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    }
+   ],
+   "USDCHF": [
+    {
+     "strike": 0.76,
+     "notional_m": 600,
+     "ccy": "USD",
+     "cut_date": "2026-02-20",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
+     "published_at": "2026-02-20T07:17:27Z"
+    }
+   ]
+  },
+  "spots": {
+   "from": "pinebox bar store, last 1H close before the anchor",
+   "bar_close_utc": "2026-02-23T07:00:00Z",
+   "DXY": 97.453,
+   "EURUSD": 1.18244,
+   "GBPUSD": 1.35293
+  },
+  "k_anchor": 107.328728,
+  "h10": {
+   "release_date": "2026-02-17",
+   "published_at": "2026-02-17T21:15:00Z",
+   "source_url": "https://www.federalreserve.gov/releases/h10/20260217/",
+   "rate_day": "Feb. 13",
+   "rates": {
+    "EURUSD": 1.187,
+    "USDJPY": 152.77,
+    "GBPUSD": 1.3644,
+    "USDCAD": 1.3618,
+    "USDSEK": 8.9397,
+    "USDCHF": 0.7685
+   },
+   "k_h10": 106.961787,
+   "dxy_h10": 96.9047
+  },
+  "dxy_levels": [
+   {
+    "price": 97.3553,
+    "from_pair": "EURUSD",
+    "strike": 1.1845,
+    "notional_m": 1100,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-02-23"
+   }
+  ],
+  "analyst_levels": {
+   "DXY": [],
+   "EURUSD": [
+    {
+     "price": 1.1687,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+     "published_at": "2026-02-18T19:06:14Z",
+     "quote": "followed by the rising 100-day moving average at 1.1687 as the next downside objectives"
+    },
+    {
+     "price": 1.1687,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+     "published_at": "2026-02-20T13:24:43Z",
+     "quote": "followed by the 1.1700 level and the 100-day moving average at 1.1687"
+    },
+    {
+     "price": 1.17,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+     "published_at": "2026-02-20T13:24:43Z",
+     "quote": "targeting 1.1726 next, followed by the 1.1700 level and the 100-day moving average at 1.1687"
+    },
+    {
+     "price": 1.1726,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+     "published_at": "2026-02-18T19:06:14Z",
+     "quote": "traders would target 1.1726"
+    },
+    {
+     "price": 1.1726,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+     "published_at": "2026-02-20T13:24:43Z",
+     "quote": "would reinforce the bearish bias, targeting 1.1726 next, followed by the 1.1700 level"
+    },
+    {
+     "price": 1.1741,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+     "published_at": "2026-02-20T13:24:43Z",
+     "quote": "a break below the recent lows between 1.1741 and 1.1744 would reinforce the bearish bias"
+    },
+    {
+     "price": 1.1744,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+     "published_at": "2026-02-20T13:24:43Z",
+     "quote": "a break below the recent lows between 1.1741 and 1.1744 would reinforce the bearish bias"
+    },
+    {
+     "price": 1.1765,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+     "published_at": "2026-02-18T19:06:14Z",
+     "quote": "is now approaching the next key support zone between 1.1765 and 1.1778"
+    },
+    {
+     "price": 1.1765,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+     "published_at": "2026-02-20T13:24:43Z",
+     "quote": "sellers were able to push the price below a key swing area between 1.1765 and 1.1778 yesterday"
+    },
+    {
+     "price": 1.1778,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+     "published_at": "2026-02-18T19:06:14Z",
+     "quote": "is now approaching the next key support zone between 1.1765 and 1.1778"
+    },
+    {
+     "price": 1.1778,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-leans-to-the-downside-ahead-of-gdp-20260220/",
+     "published_at": "2026-02-20T13:24:43Z",
+     "quote": "sellers were able to push the price below a key swing area between 1.1765 and 1.1778 yesterday"
+    },
+    {
+     "price": 1.18034,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+     "published_at": "2026-02-18T19:06:14Z",
+     "quote": "while price remains below the low from yesterday at 1.18034"
+    },
+    {
+     "price": 1.183,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-technicals-the-eurusd-is-running-to-a-new-low-as-the-usd-moves-higher-20260218/",
+     "published_at": "2026-02-18T19:06:14Z",
+     "quote": "buyers could attempt a rebound toward the 50% midpoint of the 2026 trading range at 1.1830"
+    }
+   ],
+   "GBPUSD": []
+  },
+  "read_stats": {
+   "entries_seen": 13,
+   "agreed_first_two_reads": 13,
+   "accepted": 13,
+   "dropped": 0
+  },
+  "model": {
+   "id": "muse-spark-1.3-contributor",
+   "effort": "high",
+   "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+   "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+  },
+  "dropped": [],
+  "log": [
+   "anchor = Monday 02:00 America/New_York = 2026-02-23T07:00:00Z",
+   "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-23-february-10am-new-york-cut-20260223/ published 2026-02-23T07:01:13+00:00 is AFTER the anchor: excluded, not fetched",
+   "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W08, 2026-W09",
+   "asof_gate: every fetched page was published at or before the anchor",
+   "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/: reads A/B agree on 13 of 13 entries; third read for columns []",
+   "accept: 13 strike/notional entries accepted (2+ reads identical), 0 dropped",
+   "emit: as-of gate passed for 10 sources and every datum"
+  ]
  }
 }
