@@ -12,3 +12,11 @@
 | T8 | TODO | E2 shape chain in Pine | Golden week chain matches realized path; held-out weeks scored |
 | T9 | TODO | E3 trade setups (corrected spec), <= 11 per week per pair | Backtest fills: entry hit, SL not hit, TP hit — counted per week |
 | T10 | TODO | Final report + publish evidence | Operator can open the indicator in Pinebox and reproduce |
+
+## 2026-11-25 15:55 UTC - queue after the operator's E1 rejection (E2/E3 frozen by L-14)
+1. [NEXT, after the usage reset] Multi-agent feature hunt (ultracode is on): can ANY forward rule lift "clean all week" above ~0.70 or week-extreme capture above ~0.55 on DEV and keep it on VALID?
+   4 designers, different lenses, each a python prototype importing tools/research/score.py, DEV only: (a) approach dynamics (momentum / day-of-week / how price arrives), (b) option-expiry structure by day (walls, pins, ghosts, prior-week walls),
+   (c) cross-pair agreement (DXY vs EURUSD vs GBPUSD bands), (d) higher-timeframe structure with other zone definitions (D1/W1 bases). Then one adversarial validator per design on VALID (lookahead audit + numbers). <= 8 agents.
+   Already ruled out by me (do not repeat): confluence density, heavier stacked-anchor thresholds, older weekly extremes, prior-week direction conditioning, daily re-anchoring, per-level-type selection.
+2. Whatever the hunt finds: port into f_bands, render the 8 TEST weeks x 3 pairs in Pinebox, look, ledger, show the operator.
+3. Waiting on the operator: how he wants accuracy defined given that the W14 baseline was written with hindsight (see 01 STATE 15:45).
