@@ -1,20 +1,20 @@
 """e1_zones.py - ZONE ASSEMBLY (P452:1116-1153, Step 9.7 P452:1186-1205) under the operator's rulings L-37/L-38/L-39.
 A pressure zone = a candle structure (A) joined with the computed levels on it (B). Where levels meet a structural extreme with no
 order block, the pressure zone is drawn across the levels and the sweep zone is drawn too.
-Assumptions (listed for the operator): A3 which areas become named zones; A4 a zone price has closed through is no longer a zone."""
+Assumptions (listed for the operator): A3 which areas become named zones; A4 a demand candle below which price trades / supply candle above which price trades is no longer a zone."""
 import e1_data as D, e1_pillars as P, e1_synth as S
 
 
-def valid_sd(pair, monday):
+def valid_sd(pair, monday, spot):
     """Step 0f zones after the prompt's noise rejection (P452:741-745) + one-time use (operator notes) + A4 (closed through = broken)"""
     b = D.closed(pair, '240', monday)
     b0 = D.boundary_ms(monday)
     keep, drop = [], []
     for z in P.step0f(pair, monday):
-        later = [x for x in b if x['time'] > z['end_time']]
-        broken = any((x['close'] < z['bot']) if z['type'] == 'Demand' else (x['close'] > z['top']) for x in later)
+        # A4: a demand candle the market now trades UNDER (or a supply candle it trades OVER) is no longer that zone
+        broken = (spot < z['bot']) if z['type'] == 'Demand' else (spot > z['top'])
         why = ('wider than 0.40' if z['top'] - z['bot'] > P._u(pair, 40) else 'older than 3 weeks' if z['origin_time'] < b0 - 21 * 86400000
-               else 'closed through (broken)' if broken else f"{z['mit']}X mitigated" if z['mit'] > 1 else None)
+               else 'price beyond it at the boundary (broken)' if broken else f"{z['mit']}X mitigated" if z['mit'] > 1 else None)
         z['excluded'] = why
         (drop if why else keep).append(z)
     return keep, drop
@@ -23,7 +23,7 @@ def valid_sd(pair, monday):
 def build(pair, monday, expiries, K, spot):
     u = lambda pips: P._u(pair, pips)
     L, swings = S.collect(pair, monday, expiries, K)
-    sd, sd_drop = valid_sd(pair, monday)
+    sd, sd_drop = valid_sd(pair, monday, spot)
     days = D.daily(pair, monday)
     recent = [s for s in swings if s['date'] >= days[-10]['date']]
     lsz = P.step045_lsz(pair, monday, recent, spot)

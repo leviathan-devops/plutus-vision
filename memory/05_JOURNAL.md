@@ -167,3 +167,18 @@ This reading is closer in KIND to the report (each zone sits on a structure) tha
  d) the expiry list must come from the Day-1 page + Day-2 forward rows (the sidecar file for 04-20 holds the Friday page rows: 1.1783 €1.409bn etc.); parse sidecar/raw/2026-04-20 Monday page or re-run the sidecar with the report's boundary rule;
  e) then names by position with equilibrium at spot and 0.20 separation, and compare all five again.
 Call: `cd e1_tool && python3 -c "import json,e1_data as D,e1_pillars as P,e1_synth as S; m='2026-04-20'; sp=D.closed('DXY','60',m)[-1]['close']; sd=json.load(open('../sidecar/out/'+m+'.json')); r=S.assemble_anchored('DXY',m,sd['expiries']['EURUSD'],P.k_factor(sd['h10']['rates']),sp); print([(z['name'],round(z['bot'],2),round(z['top'],2)) for z in r['named']])"`
+
+## 2026-11-25 (container clock 21:50 UTC) - e1_zones.py + e1_pine.py: FIRST TOOL RENDER of DXY Apr 20-24 in Pinebox (frame opened: evidence/e1tool_DXY_1h_2026-04-20_b.png)
+Tool chain now: `cd e1_tool && python3 e1_zones.py MONDAY PAIR [K]` (prints named zones) ; `python3 e1_pine.py MONDAY PAIR > out/E1_PAIR_MONDAY.pine` ; render: `tools/pb ide FILE PAIR 1H; tools/pb goto FROM TO; tools/pbfit; tools/pb shot NAME chart`.
+Zone rule in force (e1_zones.build) - assumptions A3/A4 to list for the operator:
+ - seeds = (i) every 4H supply/demand candle from Step 0f that survives noise rejection (<=0.40 wide, <=3 weeks old, <=1X mitigated) and A4 (demand candle with spot below it / supply candle with spot above it = broken, dropped);
+   overlapping same-side candles = one structure; (ii) every UNSWEPT D1 swing extreme of the last 10 days on its own side of spot that is not inside a candle (level zone = levels within 0.05 of the extreme).
+ - zone extent = candle + levels within 3 pips of it (L-39 A+B); same-side zones that overlap/touch = one zone; score = best level in the 0.10 band + regime + POI tier; MODERATE+ shown.
+ - names by position: Equilibrium = zone holding/nearest the weekly classic PP ("pivot area"); above: top = Resistance Ceiling, rest Upper Resistance; below: lowest = Key Support Band, rest Mid-Range Support.
+ - REJECTED variant of A4 ("any later 4H close through the candle = broken"): it deleted the 04-16 demand candle 97.83-98.09, which is exactly where the Monday Apr 20 low reacted.
+Result DXY Apr 20-24 (TV candles, sidecar K 108.155, sidecar expiries = Friday page forward rows) vs report:
+ CEILING 99.13-99.18 (report 99.16-99.23) · UPPER RES 98.82-99.08, 3 supply candles 04-09/04-10/04-13 (report 98.77-98.99) · EQUILIBRIUM 98.17-98.44, supply candles 04-17 03:00 + MoM 04-13 23:00 + repeated-high sweep (report 98.29-98.41)
+ · MID-RANGE SUPPORT 97.81-98.12, BoM demand 04-16 03:00 1X (report 98.00-98.12) · KEY SUPPORT 97.63-97.68, sweep low 04-17 (report 97.63-97.97). All five roles land on the report's structures.
+What the candles did that week (seen in the frame): Mon low ~98.0 inside Mid-Range Support then rally; Tue-Wed consolidation inside Equilibrium; Thu high ~98.93 inside Upper Resistance then reversal; Ceiling and Key Support not reached.
+Differences that are data-source, not logic: wall 1.1600 lands at 99.29 with sidecar K (99.22 with report K) so the ceiling zone has no wall inside; expiries differ (Friday page vs the report's Monday page); TV candle wicks vs yfinance.
+Visual to improve: level lines are dense (37-39 levels in two zones), labels sit on the zone's top edge.
