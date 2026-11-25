@@ -46,7 +46,7 @@ def step0f(pair, monday):
             zones.append({'type': 'Supply' if down else 'Demand', 'bot': o['low'], 'top': o['high'], 'origin_time': o['time'],
                           'origin': {k: o[k] for k in ('open', 'high', 'low', 'close')},
                           'next': {k: b[i][k] for k in ('open', 'high', 'low', 'close')},
-                          'move': abs((o['low'] if down else o['high']) - ext), 'i': i - 1, 'end': j})
+                          'move': abs((o['low'] if down else o['high']) - ext), 'i': i - 1, 'end': j, 'end_time': b[j]['time']})
             i = j + 1
         else:
             i += 1

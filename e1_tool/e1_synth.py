@@ -192,8 +192,11 @@ def assemble_anchored(pair, monday, expiries, K, spot):
     anchors.sort(key=lambda a: a['bot'])
     merged = []
     for a in anchors:
-        if merged and a['bot'] <= merged[-1]['top']:
-            m = merged[-1]
+        m = merged[-1] if merged else None
+        ov = (min(a['top'], m['top']) - a['bot']) if m else -1
+        small = min(a['top'] - a['bot'], (m['top'] - m['bot']) if m else 0)
+        # anchors are one anchor only when they share more than half of the smaller one (or a point anchor sits inside the other)
+        if m and ov >= 0 and ov >= small / 2:
             m['top'] = max(m['top'], a['top']); m['structs'] += a['structs']; m['sweeps'] += a['sweeps']; m['walls'] += a['walls']
         else:
             merged.append(a)
@@ -216,7 +219,8 @@ def assemble_anchored(pair, monday, expiries, K, spot):
                  else 'Soft Wall' if pillars >= 2 else 'One-Touch')
         regime = 2 if ztype == 'Hard Wall' else 0 if ztype == 'One-Touch' else 1
         total = min(14, bs[0] + regime + (2 if fresh_bom else 1))
-        zones.append({'bot': min(a['bot'], min(x['p'] for x in lv)), 'top': max(a['top'], max(x['p'] for x in lv)), 'a_bot': a['bot'], 'a_top': a['top'], 'levels': lv,
+        inside = [x['p'] for x in lv if a['bot'] - u(3) <= x['p'] <= a['top'] + u(3)]
+        zones.append({'bot': min([a['bot']] + inside), 'top': max([a['top']] + inside), 'a_bot': a['bot'], 'a_top': a['top'], 'levels': lv,
                       'lv_lo': min(x['p'] for x in lv), 'lv_hi': max(x['p'] for x in lv), 'structs': a['structs'], 'sweeps': a['sweeps'], 'walls': a['walls'], 'wall': wall,
                       'score': total, 'degree': degree(total), 'type': ztype, 'zfp': ZFP_RANGE[ztype], 'tier': 'Tier 1: Confluent' if fresh_bom else 'Tier 2: IP-Only',
                       'dims': bs[1], 'best': best, 'n': len(lv), 'pillars': pillars})
