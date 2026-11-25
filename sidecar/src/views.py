@@ -70,6 +70,17 @@ def main():
     img = Image.open(src).convert("RGB")
     w, h = img.size
     vl, hl = grid(img)
+    notes = []
+    # a pair-column separator that was not detected (gap = two column widths): insert its midpoint
+    if len(vl) >= 4:
+        gaps = sorted(b - a for a, b in zip(vl[1:], vl[2:]))
+        med = gaps[len(gaps) // 2]
+        fixed = vl[:2]
+        for x in vl[2:]:
+            if round((x - fixed[-1]) / med) == 2:
+                fixed.append((fixed[-1] + x) // 2); notes.append(f"inserted missing column line at x={fixed[-1]}")
+            fixed.append(x)
+        vl = fixed
     man = {"source": os.path.basename(src), "size": [w, h], "vlines": vl, "hlines": hl, "views": {}}
     man["views"]["A"] = save(img, (0, 0, w, h), 2.2, os.path.join(outdir, "A.png"))
     # vertical lines: [left edge of label col, label|pair1, pair1|pair2, ..., right edge]
@@ -79,6 +90,9 @@ def main():
         npairs = len(vl) - 2
         man["pair_columns"] = npairs
         top, bot = max(0, hl[0] - 3), min(h, hl[-1] + 4)
+        if h - hl[-1] > 0.12 * h:  # bottom border not detected: keep everything down to the image edge
+            bot = h; notes.append("bottom border not detected, crops extend to the image edge")
+        man["notes"] = notes
         label_box = (max(0, vl[0] - 30), top, vl[1] + 1, bot)  # keep the arrow margin
         half = (npairs + 1) // 2
         man["views"]["B1"] = compose(img, label_box, (vl[1], top, vl[1 + half] + 2, bot), 4.0, os.path.join(outdir, "B1.png"))

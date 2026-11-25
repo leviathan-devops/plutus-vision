@@ -1,10 +1,10 @@
 {
- "weeks": 29,
- "entries_seen": 1028,
- "agreed_first_two_reads": 1015,
- "accepted": 1016,
- "dropped": 12,
- "first_two_reads_agreement": 0.9874,
+ "weeks": 40,
+ "entries_seen": 1480,
+ "agreed_first_two_reads": 1476,
+ "accepted": 1478,
+ "dropped": 2,
+ "first_two_reads_agreement": 0.9973,
  "per_week": {
   "2026-02-02": {
    "expiry_posts": [
@@ -14,7 +14,8 @@
    "entries_seen": 51,
    "agreed_first_two_reads": 51,
    "accepted": 51,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-02-09": {
    "expiry_posts": [
@@ -24,7 +25,8 @@
    "entries_seen": 47,
    "agreed_first_two_reads": 47,
    "accepted": 47,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-02-16": {
    "expiry_posts": [
@@ -34,7 +36,8 @@
    "entries_seen": 51,
    "agreed_first_two_reads": 51,
    "accepted": 51,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-02-23": {
    "expiry_posts": [
@@ -43,7 +46,8 @@
    "entries_seen": 13,
    "agreed_first_two_reads": 13,
    "accepted": 13,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-03-02": {
    "expiry_posts": [
@@ -52,7 +56,8 @@
    "entries_seen": 17,
    "agreed_first_two_reads": 17,
    "accepted": 17,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-03-09": {
    "expiry_posts": [
@@ -61,7 +66,8 @@
    "entries_seen": 16,
    "agreed_first_two_reads": 16,
    "accepted": 16,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-03-16": {
    "expiry_posts": [
@@ -71,7 +77,8 @@
    "entries_seen": 27,
    "agreed_first_two_reads": 27,
    "accepted": 27,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 19
   },
   "2026-03-23": {
    "expiry_posts": [
@@ -79,9 +86,10 @@
     "prior@2026-03-20T05:34:03Z"
    ],
    "entries_seen": 43,
-   "agreed_first_two_reads": 32,
-   "accepted": 32,
-   "dropped": 11
+   "agreed_first_two_reads": 43,
+   "accepted": 43,
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-03-30": {
    "expiry_posts": [
@@ -91,7 +99,8 @@
    "entries_seen": 38,
    "agreed_first_two_reads": 38,
    "accepted": 38,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-04-06": {
    "expiry_posts": [
@@ -100,7 +109,19 @@
    "entries_seen": 21,
    "agreed_first_two_reads": 21,
    "accepted": 21,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-04-13": {
+   "expiry_posts": [
+    "monday@2026-04-13T05:26:41Z",
+    "prior@2026-04-10T05:19:08Z"
+   ],
+   "entries_seen": 47,
+   "agreed_first_two_reads": 47,
+   "accepted": 47,
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-04-20": {
    "expiry_posts": [
@@ -109,7 +130,51 @@
    "entries_seen": 16,
    "agreed_first_two_reads": 16,
    "accepted": 16,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-04-27": {
+   "expiry_posts": [
+    "monday@2026-04-27T05:34:25Z",
+    "prior@2026-04-24T05:50:57Z"
+   ],
+   "entries_seen": 53,
+   "agreed_first_two_reads": 53,
+   "accepted": 53,
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-05-04": {
+   "expiry_posts": [
+    "prior@2026-05-01T05:54:47Z"
+   ],
+   "entries_seen": 22,
+   "agreed_first_two_reads": 22,
+   "accepted": 22,
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-05-11": {
+   "expiry_posts": [
+    "monday@2026-05-11T05:29:29Z",
+    "prior@2026-05-08T05:36:45Z"
+   ],
+   "entries_seen": 73,
+   "agreed_first_two_reads": 73,
+   "accepted": 73,
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-05-18": {
+   "expiry_posts": [
+    "monday@2026-05-18T05:27:39Z",
+    "prior@2026-05-15T05:49:44Z"
+   ],
+   "entries_seen": 45,
+   "agreed_first_two_reads": 45,
+   "accepted": 45,
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-05-25": {
    "expiry_posts": [
@@ -118,7 +183,50 @@
    "entries_seen": 41,
    "agreed_first_two_reads": 41,
    "accepted": 41,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-06-01": {
+   "expiry_posts": [
+    "prior@2026-05-29T05:45:07Z"
+   ],
+   "entries_seen": 31,
+   "agreed_first_two_reads": 29,
+   "accepted": 30,
+   "dropped": 1,
+   "text_entries": 0
+  },
+  "2026-06-08": {
+   "expiry_posts": [
+    "monday@2026-06-08T05:50:30Z",
+    "prior@2026-06-05T06:32:39Z"
+   ],
+   "entries_seen": 66,
+   "agreed_first_two_reads": 66,
+   "accepted": 66,
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-06-15": {
+   "expiry_posts": [
+    "prior@2026-06-11T06:03:01Z"
+   ],
+   "entries_seen": 30,
+   "agreed_first_two_reads": 30,
+   "accepted": 30,
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-06-22": {
+   "expiry_posts": [
+    "monday@2026-06-22T05:59:40Z",
+    "prior@2026-06-19T05:14:27Z"
+   ],
+   "entries_seen": 24,
+   "agreed_first_two_reads": 24,
+   "accepted": 24,
+   "dropped": 0,
+   "text_entries": 10
   },
   "2026-06-29": {
    "expiry_posts": [
@@ -128,7 +236,8 @@
    "entries_seen": 46,
    "agreed_first_two_reads": 46,
    "accepted": 46,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-07-06": {
    "expiry_posts": [
@@ -138,7 +247,8 @@
    "entries_seen": 67,
    "agreed_first_two_reads": 67,
    "accepted": 67,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-07-13": {
    "expiry_posts": [
@@ -147,7 +257,28 @@
    "entries_seen": 29,
    "agreed_first_two_reads": 29,
    "accepted": 29,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-07-20": {
+   "expiry_posts": [
+    "prior@2026-07-17T05:32:12Z"
+   ],
+   "entries_seen": 27,
+   "agreed_first_two_reads": 27,
+   "accepted": 27,
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "2026-07-27": {
+   "expiry_posts": [
+    "prior@2026-07-24T06:45:59Z"
+   ],
+   "entries_seen": 34,
+   "agreed_first_two_reads": 34,
+   "accepted": 34,
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-08-03": {
    "expiry_posts": [
@@ -156,7 +287,8 @@
    "entries_seen": 26,
    "agreed_first_two_reads": 26,
    "accepted": 26,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-08-10": {
    "expiry_posts": [
@@ -166,7 +298,8 @@
    "entries_seen": 37,
    "agreed_first_two_reads": 37,
    "accepted": 37,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-08-17": {
    "expiry_posts": [
@@ -176,7 +309,8 @@
    "entries_seen": 41,
    "agreed_first_two_reads": 41,
    "accepted": 41,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-08-24": {
    "expiry_posts": [
@@ -186,7 +320,8 @@
    "entries_seen": 20,
    "agreed_first_two_reads": 20,
    "accepted": 20,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 12
   },
   "2026-08-31": {
    "expiry_posts": [
@@ -195,7 +330,8 @@
    "entries_seen": 22,
    "agreed_first_two_reads": 22,
    "accepted": 22,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-09-07": {
    "expiry_posts": [
@@ -205,7 +341,8 @@
    "entries_seen": 29,
    "agreed_first_two_reads": 29,
    "accepted": 29,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 16
   },
   "2026-09-14": {
    "expiry_posts": [
@@ -214,7 +351,8 @@
    "entries_seen": 0,
    "agreed_first_two_reads": 0,
    "accepted": 0,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 14
   },
   "2026-09-21": {
    "expiry_posts": [
@@ -224,7 +362,8 @@
    "entries_seen": 46,
    "agreed_first_two_reads": 46,
    "accepted": 46,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-09-28": {
    "expiry_posts": [
@@ -234,7 +373,8 @@
    "entries_seen": 61,
    "agreed_first_two_reads": 59,
    "accepted": 60,
-   "dropped": 1
+   "dropped": 1,
+   "text_entries": 0
   },
   "2026-10-05": {
    "expiry_posts": [
@@ -243,7 +383,8 @@
    "entries_seen": 27,
    "agreed_first_two_reads": 27,
    "accepted": 27,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-10-12": {
    "expiry_posts": [
@@ -253,7 +394,8 @@
    "entries_seen": 35,
    "agreed_first_two_reads": 35,
    "accepted": 35,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-10-19": {
    "expiry_posts": [
@@ -263,7 +405,8 @@
    "entries_seen": 47,
    "agreed_first_two_reads": 47,
    "accepted": 47,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-10-26": {
    "expiry_posts": [
@@ -273,7 +416,8 @@
    "entries_seen": 61,
    "agreed_first_two_reads": 61,
    "accepted": 61,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "2026-11-02": {
    "expiry_posts": [
@@ -283,7 +427,8 @@
    "entries_seen": 53,
    "agreed_first_two_reads": 53,
    "accepted": 53,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   }
  }
 }

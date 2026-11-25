@@ -23,7 +23,8 @@ i_anchorHour = input.int(2, "Monday anchor hour (New York)", minval = 0, maxval 
 i_weeks      = input.int(2, "Weeks drawn (active week + N-1 to its left)", minval = 1, maxval = 60, group = GRP_V)
 i_back       = input.int(0, "Look back: shift the drawn window N weeks into the past", minval = 0, maxval = 120, group = GRP_V)
 i_showE1     = input.bool(true, "E1 institutional pressure zones", group = GRP_V)
-i_showE2     = input.bool(true, "E2 shape chain (day boxes + path)", group = GRP_V)
+i_showE2     = input.bool(false, "E2 shape chain (day boxes + path)", group = GRP_V)
+i_showE3     = input.bool(false, "E3 trade setups (position boxes; fills and exits are tracked bar by bar after the anchor)", group = GRP_V)
 i_showSD     = input.bool(false, "E1 4H origin-candle supply/demand (canon Step 0f)", group = GRP_V)
 i_showAudit  = input.bool(false, "E1 audit: text block per week", group = GRP_V)
 string GRP_D = "Weekly data (written by the sidecar, dated, as of each Monday anchor)"
@@ -48,6 +49,7 @@ float  T_H4MOVE  = 50 * PIP   // 4H strong move >= 0.5                          
 float  T_H1MOVE  = 30 * PIP   // 1H base preceding a move >= 0.3 (Step 0g)                   V452:753
 float  T_H4WIDE  = 40 * PIP   // a 4H S/D zone wider than 0.40 is rejected                   SP:1388
 float  T_ROUND   = 25 * PIP   // round grid: .00 .25 .50 .75                                 V452:853
+float  SL_BUF    = (IS_INDEX ? 5 : str.contains(syminfo.ticker, "GBP") ? 3 : 2) * PIP   // Law 7 per-pair stop buffer      C:299-304
 int    N_D1SCAN  = 90         // 90 D1 bars structural scan                                  SP:1217
 int    N_H4BARS  = 360        // 4H S/D scan: last 60 calendar days = 360 4H bars            SP:1345
 int    N_H4SWING = 126        // 4H swing scan: zones older than 3 weeks drop out (21 d x 6) SP:1390
@@ -208,6 +210,10 @@ type Zone
     string degree
     int    side     // 1 resistance · 0 equilibrium · -1 support
     string drivers
+    int    rx       // Zone Reaction Counter (SP:1156-1161): tests in the prior 3 weeks that left on the side they came from
+    int    xs       // tests in the prior 3 weeks that left on the other side (the zone was crossed = hard mitigation)
+    float  xHi      // reaction extreme above: highest high of a test from below that was rejected (C:291-294, C:379)
+    float  xLo      // reaction extreme below: lowest low of a test from above that was rejected
 
 type DayFc
     int    t0
@@ -221,6 +227,18 @@ type DayFc
     float  conf     // cumulative chain confidence
     string key      // the IP zone that anchors the shape (Rule 1, SP:1919)
 
+type Setup
+    int    dir      // 1 long · -1 short
+    float  e        // limit entry = the zone's key level (C:178-181)
+    float  sl       // 3 pips outside the back edge of the entry zone (C:249-255)
+    float  tp       // ONE take-profit: near edge of the opposing zone (C:313-321)
+    float  rrr
+    string key      // the entry zone
+    int    st       // 0 resting · 1 open · 2 take-profit · 3 stop-loss · 4 closed at the Friday close
+    int    tIn
+    int    tOut
+    float  pOut
+
 type WeekFc
     int    anchor
     int    asof         // close time of the newest bar that fed the forecast (must be <= anchor)
@@ -232,6 +250,7 @@ type WeekFc
     SD[]   sds
     DayFc[] days
     string chain
+    Setup[] setups
 
 var WeekFc[] fcs = array.new<WeekFc>()
 
@@ -290,7 +309,8 @@ f_weekRow(Lv[] a, string data, int key, int src) =>
                         if kv.size() == 2
                             float pr = str.tonumber(kv.get(0))
                             int cd = int(str.tonumber(kv.get(1)))
-                            if not na(pr) and cd > 0
+                            // a row written for another symbol (a DXY level on a EUR/USD chart) is not this chart's data: skip it
+                            if not na(pr) and cd > 0 and pr < close * 2 and pr > close / 2
                                 if src == 5
                                     // weight: wall tier 1 "+3", tier 2 "+2" (SP:1138-1139); a ghost keeps structural memory (App. B) one step lower
                                     float w = cd == 1 ? 3.0 : cd == 4 ? 1.0 : 2.0
@@ -302,7 +322,7 @@ f_weekRow(Lv[] a, string data, int key, int src) =>
                                     v.code := cd
                                     a.push(v)
                                 else
-                                    Lv v = Lv.new(pr, 6, cd >= 2 ? 3.0 : 2.0, cd >= 2 ? 2.0 : 1.0, 0, "ANA" + str.tostring(cd), pr - T_EXACT, pr + T_EXACT)
+                                    Lv v = Lv.new(pr, 6, cd == 2 ? 3.0 : 2.0, cd == 2 ? 2.0 : 1.0, 0, "ANA" + str.tostring(cd), pr - T_EXACT, pr + T_EXACT)
                                     v.tol := T_EXACT
                                     v.code := cd
                                     a.push(v)
@@ -654,7 +674,20 @@ f_mkZone(Lv s, Lv[] L, SD[] sds, Zone[] Z, float gapBonus) =>
     int zfp = int(math.round(zHi - (zHi - zLo) * q))
     float reg = zfp < 20 ? 2.0 : zfp <= 50 ? 1.0 : 0.0       // V452:1066-1071
     float score = math.min(14.0, base + reg)
-    Zone.new(top, bot, s.p, score, s.conf, pillars, zfp, tier, "", f_degree(score), 0, gapBonus > 0 ? "gap in-fill: " + drv : drv)
+    Zone.new(top, bot, s.p, score, s.conf, pillars, zfp, tier, "", f_degree(score), 0, gapBonus > 0 ? "gap in-fill: " + drv : drv, 0, 0, na, na)
+
+// the strongest level with 2+ supporting pillars inside [lo, hi] (gap in-fill candidate, V452:1159-1184); -1 when none
+f_bestIn(Lv[] L, float lo, float hi) =>
+    float bestC = 0.0
+    int bestI = -1
+    if L.size() > 0
+        for i = 0 to L.size() - 1
+            Lv v = L.get(i)
+            int pl = (v.tech > 0 ? 1 : 0) + (v.stru > 0 ? 1 : 0) + (v.psy > 0 ? 1 : 0) + (v.opt > 0 ? 1 : 0) + (v.ana > 0 ? 1 : 0)
+            if v.src != 4 and pl >= 2 and v.p >= lo and v.p <= hi and v.conf > bestC
+                bestC := v.conf
+                bestI := i
+    bestI
 
 // zones = local maxima of confluence; the canon's 0.15 cluster band is the suppression radius
 f_zones(Lv[] L, SD[] sds, float spot) =>
@@ -693,51 +726,61 @@ f_zones(Lv[] L, SD[] sds, float spot) =>
                     Zone z = f_mkZone(s, L, sds, Z, 0.0)
                     if z.top - z.bot >= T_EXACT and (z.score >= 10 or (z.score >= 8 and not near))
                         Z.push(z)
-        // the weekly map: every zone that overlaps the prior week's range, plus the first zone beyond each end
-        // (the breakout extension on that side). Zones further out stay in the level set but are not this week's map.
+        // the weekly map: every zone that overlaps the band the week can reach - the prior week's range widened to the largest
+        // weekly range of the last quarter either side of the anchor price. Zones further out stay in the level set.
         if Z.size() > 0 and wH.size() > 0
-            float pwH = wH.last()
-            float pwL = wL.last()
-            float up = na
-            float dn = na
-            for z in Z
-                if z.bot > pwH
-                    up := na(up) ? z.bot : math.min(up, z.bot)
-                if z.top < pwL
-                    dn := na(dn) ? z.top : math.max(dn, z.top)
+            int nw = math.min(wH.size(), 13)
+            float awr = 0.0
+            for i = wH.size() - nw to wH.size() - 1
+                awr := math.max(awr, wH.get(i) - wL.get(i))
+            float bandH = math.max(wH.last(), spot + awr)
+            float bandL = math.min(wL.last(), spot - awr)
             Zone[] K = array.new<Zone>()
             for z in Z
-                bool inside = z.top >= pwL and z.bot <= pwH
-                bool firstUp = not na(up) and z.bot == up
-                bool firstDn = not na(dn) and z.top == dn
-                if inside or firstUp or firstDn
+                if z.top >= bandL and z.bot <= bandH
                     K.push(z)
             Z := K
             // Step 9.5 gap scan (V452:1159-1184): a gap >= 0.20 between adjacent zones takes the strongest level inside it
-            // that has 2+ supporting pillars as a GAP IN-FILL LEVEL (Structural 1)
+            // that has 2+ supporting pillars as a GAP IN-FILL LEVEL (Structural 1). Interior gaps: one pass. The two outer gaps
+            // (last zone .. band edge) are scanned until they close, so the map bounds the whole band the week can reach.
             float[] tp0 = array.new_float()
             for z in Z
                 tp0.push(z.top)
             int[] o = tp0.sort_indices(order.ascending)
             int m0 = Z.size()
             Zone[] infill = array.new<Zone>()
+            float[] gLo = array.new_float()
+            float[] gHi = array.new_float()
             if m0 > 1
                 for k = 0 to m0 - 2
-                    Zone lo = Z.get(o.get(k))
-                    Zone hi = Z.get(o.get(k + 1))
-                    if hi.bot - lo.top >= 2 * T_TIGHT
-                        float bestC = 0.0
-                        int bestI = -1
-                        for i = 0 to n - 1
-                            Lv v = L.get(i)
-                            int pl = (v.tech > 0 ? 1 : 0) + (v.stru > 0 ? 1 : 0) + (v.psy > 0 ? 1 : 0) + (v.opt > 0 ? 1 : 0) + (v.ana > 0 ? 1 : 0)
-                            if v.src != 4 and pl >= 2 and v.p >= lo.top + T_TIGHT and v.p <= hi.bot - T_TIGHT and v.conf > bestC
-                                bestC := v.conf
-                                bestI := i
-                        if bestI >= 0
-                            infill.push(f_mkZone(L.get(bestI), L, sds, Z, 1.0))
+                    gLo.push(Z.get(o.get(k)).top)
+                    gHi.push(Z.get(o.get(k + 1)).bot)
+            for g = 0 to math.max(0, gLo.size() - 1)
+                if gLo.size() > 0 and gHi.get(g) - gLo.get(g) >= 2 * T_TIGHT
+                    int bestI = f_bestIn(L, gLo.get(g) + T_TIGHT, gHi.get(g) - T_TIGHT)
+                    if bestI >= 0
+                        infill.push(f_mkZone(L.get(bestI), L, sds, Z, 1.0))
             for z in infill
                 Z.push(z)
+            float edgeH = m0 > 0 ? Z.get(o.get(m0 - 1)).top : spot
+            float edgeL = m0 > 0 ? Z.get(o.get(0)).bot : spot
+            bool more = true
+            while more
+                more := false
+                if bandH - edgeH >= 2 * T_TIGHT
+                    int bi = f_bestIn(L, edgeH + T_TIGHT, bandH)
+                    if bi >= 0
+                        Zone zn = f_mkZone(L.get(bi), L, sds, Z, 1.0)
+                        Z.push(zn)
+                        edgeH := zn.top
+                        more := true
+                if edgeL - bandL >= 2 * T_TIGHT
+                    int bi = f_bestIn(L, bandL, edgeL - T_TIGHT)
+                    if bi >= 0
+                        Zone zn = f_mkZone(L.get(bi), L, sds, Z, 1.0)
+                        Z.push(zn)
+                        edgeL := zn.bot
+                        more := true
         // names by position (V452:1148-1155)
         int m = Z.size()
         if m > 0
@@ -764,6 +807,43 @@ f_zones(Lv[] L, SD[] sds, float spot) =>
                 else
                     z.side := -1
                     z.name := k == m - 1 ? "Key IP Support" : "Mid-Range Support"
+            // Zone Reaction Counter (SP:1156-1161) on completed 4H bars of the prior 3 weeks (V452:715-722 "prior 2-3 weeks"):
+            // a test = a run of consecutive bars that touch the zone; it is a reaction when price leaves on the side it came from,
+            // a crossing when it leaves on the other side
+            int nb = hC.size()
+            int look = math.min(nb, 3 * 5 * 6)
+            for z in Z
+                int st = 0
+                int came = 0
+                bool inEp = false
+                float epH = na
+                float epL = na
+                if look > 0
+                    for i = nb - look to nb - 1
+                        float c = hC.get(i)
+                        bool touch = hH.get(i) >= z.bot and hL.get(i) <= z.top
+                        int sd = c > z.top ? 1 : c < z.bot ? -1 : 0
+                        if touch
+                            if not inEp
+                                inEp := true
+                                came := st
+                                epH := hH.get(i)
+                                epL := hL.get(i)
+                            epH := math.max(epH, hH.get(i))
+                            epL := math.min(epL, hL.get(i))
+                        else
+                            if inEp
+                                inEp := false
+                                if came != 0
+                                    if sd == came
+                                        z.rx += 1
+                                        if came < 0
+                                            z.xHi := na(z.xHi) ? epH : math.max(z.xHi, epH)
+                                        else
+                                            z.xLo := na(z.xLo) ? epL : math.min(z.xLo, epL)
+                                    else
+                                        z.xs += 1
+                            st := sd
     Z
 
 // ═════════════════════════════════════════════════════════════════════════════════════════════
@@ -917,6 +997,55 @@ f_e2(Zone[] Zin, float spot, int weekOpen) =>
             S := piercing >= 2 and (nxt == "BS" or nxt == "PBS") ? "SS" : nxt
     [D, chain]
 
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+// ENGINE 3 - trade setups (corrected E3 doc only, R-16). Implemented subset: zone-rejection setups on the frozen E1 map.
+//   which zones : every zone that is expected to hold - ZFP < 30 (FB:101-112) - and has a side (the Equilibrium Zone has none)
+//   entry       : resting limit at the zone's key level (C:178-181)
+//   stop-loss   : 3 pips outside the back edge of the entry zone (C:249-255), or behind the zone's reaction extreme of the
+//                 prior 3 weeks + the per-pair buffer when that is further (C:291-304, C:379); never beyond 36 pips (C:309)
+//   take-profit : ONE, 1 pip in front of the near edge of an opposing zone; the walk moves to the next zone, at most
+//                 3 attempts, until RRR >= 3 (C:313-321, C:356-383); above 15R the setup is dropped (C:362-365)
+//   count       : nearest to the anchor price first, never more than 11 per week (operator brief)
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+f_e3(Zone[] Z, float spot) =>
+    Setup[] out = array.new<Setup>()
+    int m = Z.size()
+    if m > 1
+        float[] ds = array.new_float()
+        for z in Z
+            ds.push(math.abs(z.p - spot))
+        int[] o = ds.sort_indices(order.ascending)
+        float[] tp = array.new_float()
+        for z in Z
+            tp.push(z.top)
+        int[] up = tp.sort_indices(order.ascending)
+        for k = 0 to m - 1
+            Zone z = Z.get(o.get(k))
+            if z.side != 0 and z.zfp < 30 and out.size() < 11
+                int dir = z.side > 0 ? -1 : 1
+                float e = math.min(z.top, math.max(z.bot, z.p))
+                float sl = dir < 0 ? z.top + T_EXACT : z.bot - T_EXACT
+                if dir < 0 and not na(z.xHi)
+                    sl := math.max(sl, z.xHi + SL_BUF)
+                if dir > 0 and not na(z.xLo)
+                    sl := math.min(sl, z.xLo - SL_BUF)
+                float risk = math.abs(e - sl)
+                bool slOk = risk <= 36 * PIP
+                int tries = 0
+                bool done = false
+                // opposing zones in order away from the entry
+                for j = 0 to m - 1
+                    Zone t = Z.get(up.get(dir < 0 ? m - 1 - j : j))
+                    bool beyond = dir < 0 ? t.top < z.bot : t.bot > z.top
+                    if beyond and not done and tries < 3 and slOk
+                        tries += 1
+                        float target = dir < 0 ? t.top + PIP : t.bot - PIP
+                        float r = math.abs(e - target) / risk
+                        if r >= 3 and r <= 15
+                            out.push(Setup.new(dir, e, sl, target, r, z.name, 0, 0, 0, na))
+                            done := true
+    out
+
 f_assertAnchor(int asof, int anchor) =>
     if asof > anchor
         runtime.error("ANCHOR VIOLATION: forecast read a bar that closed after the Monday anchor")
@@ -936,7 +1065,7 @@ if not frozen and not na(anchorTs) and time_close > anchorTs
     int wkEnd = anchorTs + (4 * 24 + 17 - i_anchorHour) * 3600000      // Friday 17:00 New York
     int weekOpen = anchorTs - (i_anchorHour + 7) * 3600000          // Sunday 17:00 New York
     [DY, chainTxt] = f_e2(Z, spot, weekOpen)
-    fcs.push(WeekFc.new(anchorTs, asof, anchorTs, wkEnd, spot, Z, L, S, DY, chainTxt))
+    fcs.push(WeekFc.new(anchorTs, asof, anchorTs, wkEnd, spot, Z, L, S, DY, chainTxt, f_e3(Z, spot)))
     if fcs.size() > i_weeks + i_back
         fcs.shift()
 
@@ -973,6 +1102,32 @@ cwC := close
 color C_RES = color.rgb(200, 60, 35)
 color C_EQ  = color.rgb(255, 152, 0)
 color C_SUP = color.rgb(0, 150, 150)
+// 3) E3 bookkeeping: the frozen setups of the current week meet the bars that follow the anchor (display of outcomes only -
+//    nothing here feeds a forecast). A stop on the fill bar counts; a target on the fill bar does not (bar order unknown).
+if fcs.size() > 0
+    WeekFc cw = fcs.last()
+    if time >= cw.anchor and time < cw.t1
+        for u in cw.setups
+            bool justIn = false
+            if u.st == 0
+                if (u.dir < 0 and high >= u.e) or (u.dir > 0 and low <= u.e)
+                    u.st := 1
+                    u.tIn := time
+                    justIn := true
+            if u.st == 1
+                if (u.dir < 0 and high >= u.sl) or (u.dir > 0 and low <= u.sl)
+                    u.st := 3
+                    u.tOut := time
+                    u.pOut := u.sl
+                else if not justIn and ((u.dir < 0 and low <= u.tp) or (u.dir > 0 and high >= u.tp))
+                    u.st := 2
+                    u.tOut := time
+                    u.pOut := u.tp
+                else if time_close >= cw.t1
+                    u.st := 4
+                    u.tOut := time
+                    u.pOut := close
+
 var box[]   bx = array.new_box()
 var label[] lb = array.new_label()
 var line[]  ln = array.new_line()
@@ -989,7 +1144,7 @@ if barstate.islast
     lb.clear()
     int nDraw = math.min(i_weeks, fcs.size())
     for fi = 0 to math.max(0, nDraw - 1)
-        WeekFc f = nDraw > 0 ? fcs.get(fi) : WeekFc.new(0, 0, 0, 0, 0.0, array.new<Zone>(), array.new<Lv>(), array.new<SD>(), array.new<DayFc>(), "")
+        WeekFc f = nDraw > 0 ? fcs.get(fi) : WeekFc.new(0, 0, 0, 0, 0.0, array.new<Zone>(), array.new<Lv>(), array.new<SD>(), array.new<DayFc>(), "", array.new<Setup>())
         if i_showE1
             for z in f.zones
                 color c = z.side > 0 ? C_RES : z.side < 0 ? C_SUP : C_EQ
@@ -1002,6 +1157,29 @@ if barstate.islast
                 bx.push(box.new(d.t0, d.hi, d.t1, d.lo, xloc = xloc.bar_time, bgcolor = color.new(c, 94), border_color = color.new(c, 30), border_width = 1, border_style = line.style_dashed))
                 lb.push(label.new(d.t0, d.hi, str.format_time(d.t0 + 43200000, "EEE", TZ) + ": " + d.shape + (d.dir > 0 ? " up" : d.dir < 0 ? " down" : " range") + " " + str.tostring(math.round(d.conf * 100)) + "%", xloc = xloc.bar_time, style = label.style_label_lower_left, color = color.new(c, 100), textcolor = c, size = size.small))
                 ln.push(line.new(d.t0, d.p0, d.t1, d.p1, xloc = xloc.bar_time, color = color.new(color.yellow, 20), width = 2))
+        if i_showE3
+            int nIn = 0
+            int nTp = 0
+            int nSl = 0
+            float sumR = 0.0
+            for u in f.setups
+                color cg = color.rgb(40, 190, 120)
+                color cr = color.rgb(235, 70, 80)
+                if u.st == 0
+                    ln.push(line.new(f.t0, u.e, f.t1, u.e, xloc = xloc.bar_time, color = color.new(u.dir > 0 ? cg : cr, 45), width = 1, style = line.style_dotted))
+                else
+                    nIn += 1
+                    int tEnd = u.st == 1 ? f.t1 : u.tOut
+                    float rr = u.st == 2 ? u.rrr : u.st == 3 ? -1.0 : na(u.pOut) ? 0.0 : (u.pOut - u.e) * u.dir / math.abs(u.e - u.sl)
+                    nTp += u.st == 2 ? 1 : 0
+                    nSl += u.st == 3 ? 1 : 0
+                    sumR += rr
+                    bx.push(box.new(u.tIn, u.e, tEnd, u.tp, xloc = xloc.bar_time, bgcolor = color.new(cg, 78), border_color = color.new(cg, 20), border_width = 1))
+                    bx.push(box.new(u.tIn, u.e, tEnd, u.sl, xloc = xloc.bar_time, bgcolor = color.new(cr, 78), border_color = color.new(cr, 20), border_width = 1))
+                    string res = u.st == 2 ? "TP +" + str.tostring(u.rrr, "#.0") + "R" : u.st == 3 ? "SL -1R" : u.st == 4 ? "Fri close " + str.tostring(rr, "#.0") + "R" : "open"
+                    lb.push(label.new(u.tIn, u.dir > 0 ? u.sl : u.sl, (u.dir > 0 ? "LONG " : "SHORT ") + str.tostring(u.e, format.mintick) + " | " + res, xloc = xloc.bar_time, style = u.dir > 0 ? label.style_label_upper_left : label.style_label_lower_left, color = color.new(color.black, 100), textcolor = u.st == 3 ? cr : cg, size = size.small))
+            if f.setups.size() > 0
+                lb.push(label.new(f.t1, f.spot, "E3 " + str.tostring(f.setups.size()) + " setups | " + str.tostring(nIn) + " filled | " + str.tostring(nTp) + " TP | " + str.tostring(nSl) + " SL | " + str.tostring(sumR, "#.0") + "R", xloc = xloc.bar_time, style = label.style_label_right, color = color.new(color.black, 40), textcolor = color.white, size = size.small))
         if i_showSD
             for s in f.sds
                 color c = s.side > 0 ? color.rgb(242, 54, 69) : color.rgb(49, 121, 245)
@@ -1009,10 +1187,9 @@ if barstate.islast
         if i_showAudit
             string t = "E2 " + f.chain + "\nasof " + str.format_time(f.asof, "yyyy-MM-dd HH:mm", TZ) + " NY | anchor " + str.format_time(f.anchor, "yyyy-MM-dd HH:mm", TZ) + " | spot " + str.tostring(f.spot) + " | levels " + str.tostring(f.levels.size())
             for z in f.zones
-                t += "\nZ " + str.tostring(math.round(z.bot / PIP) * PIP) + "-" + str.tostring(math.round(z.top / PIP) * PIP) + " " + z.name + " " + z.degree + " " + str.tostring(z.score) + " cf" + str.tostring(z.conf) + " p" + str.tostring(z.pillars) + " T" + str.tostring(z.tier) + " [" + z.drivers + "]"
+                t += "\nZ " + str.tostring(math.round(z.bot / PIP) * PIP) + "-" + str.tostring(math.round(z.top / PIP) * PIP) + " " + z.name + " " + z.degree + " " + str.tostring(z.score) + " cf" + str.tostring(z.conf) + " p" + str.tostring(z.pillars) + " T" + str.tostring(z.tier) + " zfp" + str.tostring(z.zfp) + " " + str.tostring(z.rx) + "R" + str.tostring(z.xs) + "X [" + z.drivers + "]"
             for s in f.sds
                 t += "\nSD " + (s.side > 0 ? "supply " : "demand ") + str.tostring(s.bot) + "-" + str.tostring(s.top) + " mit" + str.tostring(s.mit) + " " + str.tostring(s.scale) + " " + str.format_time(s.t, "MM-dd HH:mm", TZ)
             for v in f.levels
-                if (v.src == 3 or v.src >= 5) and math.abs(v.p - f.spot) <= 200 * PIP
-                    t += "\nS " + str.tostring(math.round(v.p / PIP) * PIP) + " w" + str.tostring(v.w) + " cf" + str.tostring(v.conf) + " " + v.tag + " [" + str.tostring(math.round(v.lo / PIP) * PIP) + "," + str.tostring(math.round(v.hi / PIP) * PIP) + "]"
+                t += "\nL " + str.tostring(v.p) + "|" + str.tostring(v.src) + "|" + v.tag + "|" + str.tostring(v.w) + "|" + str.tostring(v.st) + "|" + str.tostring(v.bonus) + "|" + str.tostring(v.lo) + "|" + str.tostring(v.hi) + "|" + str.tostring(v.conf) + "|" + str.tostring(v.tech) + "|" + str.tostring(v.stru) + "|" + str.tostring(v.psy) + "|" + str.tostring(v.opt) + "|" + str.tostring(v.ana) + "|" + str.tostring(v.xb) + "|" + str.tostring(v.code) + "|" + str.tostring(v.optc)
             lb.push(label.new(f.t0, f.spot, t, xloc = xloc.bar_time, style = label.style_label_right, color = color.new(color.black, 30), textcolor = color.white, size = size.small, textalign = text.align_left))

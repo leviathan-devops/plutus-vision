@@ -49,9 +49,218 @@
   }
  ],
  "expiries": {
-  "EURUSD": [],
-  "GBPUSD": [],
-  "USDJPY": []
+  "EURUSD": [
+   {
+    "strike": 1.15,
+    "notional_m": 1180,
+    "ccy": "EUR",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   },
+   {
+    "strike": 1.1575,
+    "notional_m": 1660,
+    "ccy": "EUR",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   }
+  ],
+  "GBPUSD": [
+   {
+    "strike": 1.35,
+    "notional_m": 653,
+    "ccy": "GBP",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   },
+   {
+    "strike": 1.363,
+    "notional_m": 585,
+    "ccy": "GBP",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   }
+  ],
+  "USDJPY": [
+   {
+    "strike": 153,
+    "notional_m": 2880,
+    "ccy": "USD",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   },
+   {
+    "strike": 154,
+    "notional_m": 3060,
+    "ccy": "USD",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   }
+  ],
+  "AUDUSD": [
+   {
+    "strike": 0.715,
+    "notional_m": 808,
+    "ccy": "AUD",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   },
+   {
+    "strike": 0.725,
+    "notional_m": 837,
+    "ccy": "AUD",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   }
+  ],
+  "EURGBP": [
+   {
+    "strike": 0.8625,
+    "notional_m": 260,
+    "ccy": "EUR",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   }
+  ],
+  "NZDUSD": [
+   {
+    "strike": 0.585,
+    "notional_m": 308,
+    "ccy": "NZD",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   }
+  ],
+  "USDCAD": [
+   {
+    "strike": 1.38,
+    "notional_m": 635,
+    "ccy": "USD",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   },
+   {
+    "strike": 1.39,
+    "notional_m": 789,
+    "ccy": "USD",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   }
+  ],
+  "USDCHF": [
+   {
+    "strike": 0.8065,
+    "notional_m": 518,
+    "ccy": "USD",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   },
+   {
+    "strike": 0.815,
+    "notional_m": 302,
+    "ccy": "USD",
+    "cut_date": "2026-09-11",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/",
+    "published_at": "2026-09-11T05:01:21Z"
+   }
+  ]
  },
  "spots": {
   "from": "pinebox bar store, last 1H close before the anchor",
@@ -77,7 +286,28 @@
   "k_h10": 108.054536,
   "dxy_h10": 99.1122
  },
- "dxy_levels": [],
+ "dxy_levels": [
+  {
+   "price": 99.6608,
+   "from_pair": "EURUSD",
+   "strike": 1.15,
+   "notional_m": 1180,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-09-11"
+  },
+  {
+   "price": 99.2883,
+   "from_pair": "EURUSD",
+   "strike": 1.1575,
+   "notional_m": 1660,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-09-11"
+  }
+ ],
  "analyst_levels": {
   "DXY": [],
   "EURUSD": [
@@ -172,7 +402,8 @@
   "entries_seen": 0,
   "agreed_first_two_reads": 0,
   "accepted": 0,
-  "dropped": 0
+  "dropped": 0,
+  "text_entries": 14
  },
  "model": {
   "id": "muse-spark-1.3-contributor",
@@ -187,6 +418,7 @@
   "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W37, 2026-W38",
   "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/: no table image in the article body",
   "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/orders/fx-option-expiries-for-11-september-10am-new-york-cut-0/: table is plain text in the article body -> 14 entries parsed mechanically (cut day 2026-09-11 only, no forward row)",
   "accept: 0 strike/notional entries accepted (2+ reads identical), 0 dropped",
   "emit: as-of gate passed for 9 sources and every datum"
  ]

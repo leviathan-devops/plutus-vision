@@ -7,6 +7,7 @@
   "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/: no table image in the article body",
   "asof_gate: every fetched page was published at or before the anchor",
   "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/: reads A/B agree on 20 of 20 entries; third read for columns []",
+  "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/: table is plain text in the article body -> 12 entries parsed mechanically (cut day 2026-08-24 only, no forward row)",
   "accept: 20 strike/notional entries accepted (2+ reads identical), 0 dropped"
  ],
  "dropped": [],
@@ -39,6 +40,7 @@
      288,
      463
     ],
+    "notes": [],
     "pair_columns": 8,
     "size": [
      1425,
@@ -363,12 +365,157 @@
  "accepted": [
   {
    "pair": "EURUSD",
+   "date": "2026-08-24",
+   "strike": "1.1680",
+   "notional_m": 1000,
+   "ccy": "EUR",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-08-24",
+   "strike": "1.1640",
+   "notional_m": 1330,
+   "ccy": "EUR",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-08-24",
+   "strike": "159.00",
+   "notional_m": 350,
+   "ccy": "USD",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "USDJPY",
+   "date": "2026-08-24",
+   "strike": "157.85",
+   "notional_m": 542,
+   "ccy": "USD",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "GBPUSD",
+   "date": "2026-08-24",
+   "strike": "1.3530",
+   "notional_m": 282,
+   "ccy": "GBP",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "USDCHF",
+   "date": "2026-08-24",
+   "strike": "0.8100",
+   "notional_m": 300,
+   "ccy": "USD",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "USDCHF",
+   "date": "2026-08-24",
+   "strike": "0.8000",
+   "notional_m": 350,
+   "ccy": "USD",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-08-24",
+   "strike": "1.3935",
+   "notional_m": 304,
+   "ccy": "USD",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-08-24",
+   "strike": "1.3855",
+   "notional_m": 270,
+   "ccy": "USD",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-08-24",
+   "strike": "1.3800",
+   "notional_m": 230,
+   "ccy": "USD",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-08-24",
+   "strike": "0.7120",
+   "notional_m": 604,
+   "ccy": "AUD",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "EURGBP",
+   "date": "2026-08-24",
+   "strike": "0.8570",
+   "notional_m": 100,
+   "ccy": "EUR",
+   "reads_agree": 0,
+   "reads_total": 0,
+   "method": "html_text",
+   "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+   "published_at": "2026-08-24T05:26:09Z"
+  },
+  {
+   "pair": "EURUSD",
    "date": "2026-08-21",
    "strike": "1.1500",
    "notional_m": 11000,
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -380,6 +527,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -391,6 +539,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -402,6 +551,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -413,6 +563,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -424,6 +575,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -435,6 +587,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -446,6 +599,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -457,6 +611,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -468,6 +623,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -479,6 +635,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -490,6 +647,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -501,6 +659,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -512,6 +671,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -523,6 +683,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -534,6 +695,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -545,6 +707,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -556,6 +719,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -567,6 +731,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   },
@@ -578,6 +743,7 @@
    "ccy": "AUD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
    "published_at": "2026-08-21T06:39:50Z"
   }
@@ -599,7 +765,8 @@
   "entries_seen": 20,
   "agreed_first_two_reads": 20,
   "accepted": 20,
-  "dropped": 0
+  "dropped": 0,
+  "text_entries": 12
  },
  "h10_src": {
   "url": "https://www.federalreserve.gov/releases/h10/20260817/",
@@ -679,6 +846,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
     },
@@ -692,6 +860,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "cluster_of": [
       {
        "strike": 1.155,
@@ -715,6 +884,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "cluster_of": [
       {
        "strike": 1.1595,
@@ -738,6 +908,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
     },
@@ -751,6 +922,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
     },
@@ -764,6 +936,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
     },
@@ -777,6 +950,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
     },
@@ -790,42 +964,45 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
     },
     {
      "strike": 1.16443,
-     "notional_m": 2300,
+     "notional_m": 2330,
      "ccy": "EUR",
      "cut_date": "2026-08-24",
      "state": "live",
      "tier": 1,
      "code": 1,
-     "reads_agree": 2,
+     "reads_agree": 0,
      "reads_total": 2,
+     "method": "html_text+image_reads",
      "cluster_of": [
       {
        "strike": 1.164,
-       "notional_m": 1300
+       "notional_m": 1330
       },
       {
        "strike": 1.165,
        "notional_m": 1000
       }
      ],
-     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
-     "published_at": "2026-08-21T06:39:50Z"
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
     },
     {
-     "strike": 1.16776,
-     "notional_m": 1279,
+     "strike": 1.16781,
+     "notional_m": 1620,
      "ccy": "EUR",
      "cut_date": "2026-08-24",
      "state": "live",
-     "tier": 2,
-     "code": 2,
-     "reads_agree": 2,
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 0,
      "reads_total": 2,
+     "method": "html_text+image_reads",
      "cluster_of": [
       {
        "strike": 1.1675,
@@ -833,11 +1010,11 @@
       },
       {
        "strike": 1.168,
-       "notional_m": 659
+       "notional_m": 1000
       }
      ],
-     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
-     "published_at": "2026-08-21T06:39:50Z"
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
     },
     {
      "strike": 1.17,
@@ -849,11 +1026,27 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
     }
    ],
-   "GBPUSD": [],
+   "GBPUSD": [
+    {
+     "strike": 1.353,
+     "notional_m": 282,
+     "ccy": "GBP",
+     "cut_date": "2026-08-24",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
+    }
+   ],
    "USDJPY": [
     {
      "strike": 158,
@@ -865,6 +1058,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
     },
@@ -878,6 +1072,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
     },
@@ -889,10 +1084,25 @@
      "state": "live",
      "tier": 3,
      "code": null,
-     "reads_agree": 2,
-     "reads_total": 2,
-     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
-     "published_at": "2026-08-21T06:39:50Z"
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
+    },
+    {
+     "strike": 159,
+     "notional_m": 350,
+     "ccy": "USD",
+     "cut_date": "2026-08-24",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
     }
    ],
    "AUDUSD": [
@@ -904,10 +1114,27 @@
      "state": "live",
      "tier": 3,
      "code": null,
-     "reads_agree": 2,
-     "reads_total": 2,
-     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
-     "published_at": "2026-08-21T06:39:50Z"
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
+    }
+   ],
+   "EURGBP": [
+    {
+     "strike": 0.857,
+     "notional_m": 100,
+     "ccy": "EUR",
+     "cut_date": "2026-08-24",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
     }
    ],
    "USDCAD": [
@@ -921,8 +1148,81 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/",
      "published_at": "2026-08-21T06:39:50Z"
+    },
+    {
+     "strike": 1.38,
+     "notional_m": 230,
+     "ccy": "USD",
+     "cut_date": "2026-08-24",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
+    },
+    {
+     "strike": 1.3855,
+     "notional_m": 270,
+     "ccy": "USD",
+     "cut_date": "2026-08-24",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
+    },
+    {
+     "strike": 1.3935,
+     "notional_m": 304,
+     "ccy": "USD",
+     "cut_date": "2026-08-24",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
+    }
+   ],
+   "USDCHF": [
+    {
+     "strike": 0.8,
+     "notional_m": 350,
+     "ccy": "USD",
+     "cut_date": "2026-08-24",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
+    },
+    {
+     "strike": 0.81,
+     "notional_m": 300,
+     "ccy": "USD",
+     "cut_date": "2026-08-24",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 0,
+     "reads_total": 0,
+     "method": "html_text",
+     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/",
+     "published_at": "2026-08-24T05:26:09Z"
     }
    ]
   },
@@ -1025,20 +1325,20 @@
     "price": 99.0084,
     "from_pair": "EURUSD",
     "strike": 1.16443,
-    "notional_m": 2300,
+    "notional_m": 2330,
     "tier": 1,
     "state": "live",
     "code": 1,
     "cut_date": "2026-08-24"
    },
    {
-    "price": 98.8456,
+    "price": 98.8432,
     "from_pair": "EURUSD",
-    "strike": 1.16776,
-    "notional_m": 1279,
-    "tier": 2,
+    "strike": 1.16781,
+    "notional_m": 1620,
+    "tier": 1,
     "state": "live",
-    "code": 2,
+    "code": 1,
     "cut_date": "2026-08-24"
    }
   ],
@@ -1059,7 +1359,8 @@
    "entries_seen": 20,
    "agreed_first_two_reads": 20,
    "accepted": 20,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 12
   },
   "model": {
    "id": "muse-spark-1.3-contributor",
@@ -1074,6 +1375,7 @@
    "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/: no table image in the article body",
    "asof_gate: every fetched page was published at or before the anchor",
    "https://investinglive.com/orders/fx-option-expiries-for-21-august-10am-new-york-cut/: reads A/B agree on 20 of 20 entries; third read for columns []",
+   "https://investinglive.com/orders/fx-option-expiries-for-24-august-10am-new-york-cut/: table is plain text in the article body -> 12 entries parsed mechanically (cut day 2026-08-24 only, no forward row)",
    "accept: 20 strike/notional entries accepted (2+ reads identical), 0 dropped",
    "emit: as-of gate passed for 11 sources and every datum"
   ]

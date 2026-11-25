@@ -24,7 +24,27 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## STATE 14:35 UTC - READ THIS BLOCK FIRST (operator intervention; see 04 L-14..L-18, 06 LS-19..LS-22)
+- E1 is REJECTED by the operator (30-50% by his eye). E2/E3 are FORBIDDEN until E1 is approved; both are OFF by default in the file.
+- Target = W14 report format: <= 4 wide bands per pair (2 supply above, 2 demand below; one may contain spot), each with Type, BoM/MoM, Reactions, mechanical ZFP, Confl x/14, key level. No thin stacked zones, no far floating zones. Acceptance: >= 90% on 4 separate weeks, judged by eye in Pinebox.
+- The W14 report itself was written with its week's data (LS-20): its format is the target, its numbers are not a forward score. Operator has been told.
+- In progress: design search for E1 v2 band selection (research files in scratchpad research/, scorer research/score.py). Then port the winning rule into f_zones (Pine), render TEST weeks, look, iterate.
+- Tools: tools/pb week PAIR TF MONDAY NAME [K=V] (IDE render of one week with the pair's dataset); oracle render probe indicator/probes/report_w14_oracle.pine.
+
+## UPDATE 14:05 UTC (supersedes the lines above where they differ)
+- E1 held-out strict reaction scores: DXY Feb 9 50, Mar 16 65, Apr 20 92, May 25 75, Jul 13 100, Aug 10 90, Sep 7 70, Sep 28 62, Oct 19 70 (mean ~75); EURUSD Apr 20 75, Sep 7 93. Golden week DXY + EURUSD PASS.
+- E1 scope is now the reach band (spot +- mean weekly range of 13 weeks, union prior week range) + outer gap in-fill. Reaction counter = audit only (does not discriminate). `tools/pb week PAIR TF MONDAY NAME [K=V]` renders one week with the pair's dataset.
+- E2 v0 is in the file (f_e2) but FAILED its first frame (Apr 20). E3 not started. Sidecar complete (28 weeks).
+
 ## NEXT STEP (in order)
+1. GBPUSD: 2 held-out weeks (structure only; dataset nearly empty). Then commit.
+2. E3 from the corrected doc (read context_management/spec/E3_ALGO.md phases + constants): zone-edge setups as position boxes, <= 11 per week; verify fills on golden week + 3 held-out weeks.
+3. E2: rework the walk per E2_ALGO 3.3 (ZFP-conditioned), verify 4 weeks, report measured day accuracy honestly.
+4. Single-file delivery `indicator/plutus-vision.pine` (sealed V1 bytes + engines) via tools/build-indicator.sh with sha check of the V1 region.
+5. Final report: scorecard table, what passes, what does not.
+
+## OLD NEXT STEP (done or superseded)
+
 1. When the sidecar finishes: `sidecar/build-inputs`; validate E1 on >= 8 more held-out weeks across DXY / EURUSD / GBPUSD with each pair's own dataset
    (IDE 4H: `DS="$(cat sidecar/out/pine_inputs.DXY.txt)"; tools/pb ide indicator/plutus-vision-engines.pine DXY 4H i_back=N "i_optData=\"$DS\""`; week N weeks before 2026-11-02).
    Score each by reaction (L-07); log every frame in 07_EVIDENCE_LEDGER. Do NOT tune on held-out weeks; mechanism fixes only.

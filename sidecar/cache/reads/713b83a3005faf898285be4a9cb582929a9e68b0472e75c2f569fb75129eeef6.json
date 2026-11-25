@@ -1,0 +1,11 @@
+{
+ "key": "713b83a3005faf898285be4a9cb582929a9e68b0472e75c2f569fb75129eeef6",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "c19bc6f088550471e87f32a84b9910930ab989d891a62b794c6fb2d0d81e22df",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1623\",\"role\":\"level\",\"quote\":\"The EURUSD moved back above both the 200-hour moving average at 1.1623 and the 100-hour moving average at 1.1629\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1629\",\"role\":\"level\",\"quote\":\"The EURUSD moved back above both the 200-hour moving average at 1.1623 and the 100-hour moving average at 1.1629\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1655\",\"role\":\"resistance\",\"quote\":\"push the pair back into a key swing area between 1.1655 and 1.1663 — a zone that previously acted as resistance.\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1663\",\"role\":\"resistance\",\"quote\":\"push the pair back into a key swing area between 1.1655 and 1.1663 — a zone that previously acted as resistance.\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1681\",\"role\":\"level\",\"quote\":\"If buyers can extend above 1.1663, the next upside target comes in at the 200-day moving average near 1.1681.\"},{\"article\":2,\"instrument\":\"GBPUSD\",\"price\":\"1.3420\",\"role\":\"level\",\"quote\":\"pushing the price back above the 200-day moving average at 1.3420 and the 200-hour moving average at 1.3433.\"},{\"article\":2,\"instrument\":\"GBPUSD\",\"price\":\"1.3433\",\"role\":\"level\",\"quote\":\"pushing the price back above the 200-day moving average at 1.3420 and the 200-hour moving average at 1.3433.\"},{\"article\":2,\"instrument\":\"GBPUSD\",\"price\":\"1.3453\",\"role\":\"level\",\"quote\":\"The momentum has now carried the pair up to the 100-hour moving average at 1.3453 — the next key technical hurdle.\"},{\"article\":2,\"instrument\":\"GBPUSD\",\"price\":\"1.3474\",\"role\":\"level\",\"quote\":\"have traders targeting the 100-day moving average at 1.3474.\"}]}"
+}

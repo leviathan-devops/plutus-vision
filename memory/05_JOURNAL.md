@@ -34,3 +34,18 @@
   Kernel: full weight within 3 pips, half within 10 pips. The canon 6D score/degree is still computed for the label and the MODERATE gate. Count emerges from range/spacing; no cap.
   Also adding canon 4H S/D (Step 0f) via a 0.5 zigzag on 4H bars (origin candle [low, high], reject > 0.40 wide, mitigation count), POI tier, regime dimension from ZFP.
 - ENGINE QUIRK (cost 20 min): `x[1]` inside an `if` block returns the CURRENT value in vela-pinets. `nz(close[1], open)` inside the freeze block would have read the anchor bar's own close = a lookahead. All history reads now live at global scope (tClose1, close1, ...). The run-time assert f_assertAnchor caught it.
+
+## 2026-11-25 ~14:05 UTC — E1 held-out scorecard grows; scope mechanism changed; reaction counter tested
+- E2 v0 first frame (Apr 20) = FAIL. Parked E2 to finish E1 validation first.
+- Rendered 6 more held-out DXY weeks + 2 EUR/USD weeks (tools/pb week PAIR TF MONDAY NAME). Strict reaction score: Feb 9 50, Mar 16 65, May 25 75, Aug 10 90, Sep 7 70, Sep 28 62 (DXY); EURUSD Apr 20 75, Sep 7 93. With earlier Apr 20 92, Jul 13 100, Oct 19 70: DXY held-out mean ~75%.
+- Pattern: range weeks ~90%+; weeks with an impulse day run through stacked mid zones (not knowable at the anchor); two weeks travelled beyond the old scope.
+- Mechanism changes (not tuned per week): (1) weekly map = zones inside the reach band [min(prior week low, spot - AWR), max(prior week high, spot + AWR)], AWR = mean weekly range of the last 13 weeks; outer gaps >= 0.20 filled repeatedly, interior gaps one pass; "first zone beyond" dropped. (2) Zone Reaction Counter (holds / crossings over prior 90 4H bars) computed per zone, audit only: checked against 10 scored weeks, 3+ reactions does NOT separate holding zones from pivots, so it gates nothing. (3) analyst code 9 (investinglive, not a canon tier-1 source) now weighted as one source, not two.
+- Sidecar finished: 28 weeks (2026-02-02 .. 2026-11-02), `sidecar/build-inputs` rebuilt. GBPUSD has 5 rows only.
+
+## 2026-11-25 ~14:35 UTC - operator rejects E1; W14 baseline handed over; redesign of E1 selection starts
+- E3 v1 (zone-rejection setups, bar-by-bar outcome tracking, position boxes) was built and rendered (ide_090: golden week short 101.14 TP +3.5R, long 100.89 SL, long 100.64 Fri close). Preflight over 30 DXY weeks: 52 filled, 13 TP, 36 SL, +27.9R. Operator: decent but RRR must be 4x+, and STOP: E1 first. E2/E3 default OFF now.
+- Rendered the W14 report zones as-is (indicator/probes/report_w14_oracle.pine; frames evidence/oracle_w14_report_zones_{DXY,EURUSD,GBPUSD}_1h.png). Outer bands contain week high/low on all three pairs; middle bands are crossed several times. The report was written with the week's own data (LS-20).
+- Research inputs in the scratchpad research/ (regenerable: tools/pine-probe.py with i_showAudit=true, i_weeks=60 on 4H per pair): levels.{DXY,EURUSD,GBPUSD}.json = per week every candidate level with its fields + S/D zones + current zones. The audit label prints all levels ("L p|src|tag|w|st|bonus|lo|hi|conf|tech|stru|psy|opt|ana|xb|code|optc").
+- E1 changes made today before the rejection: reach band (largest weekly range of 13 weeks either side of spot) + outer gap fill; reaction counter + reaction extremes (audit); analyst code 9 = one source.
+- NEXT: E1 v2 = W14 format (<= 4 wide bands per pair, Supply/Demand, BoM/MoM, reactions, mechanical ZFP), forward-only. Design search on DEV weeks with a shared first-passage scorer, validation on VALID weeks, my own visual check in Pinebox on TEST weeks never shown to the design agents.
+  TEST (mine): 2026-02-23, 03-23, 04-27, 05-18, 06-15, 07-27, 08-31, 10-05. VALID: 02-16, 03-09, 04-13, 05-11, 06-22, 08-03, 09-14, 10-26. DEV: the other 24.

@@ -30,6 +30,7 @@
      293,
      478
     ],
+    "notes": [],
     "pair_columns": 8,
     "size": [
      1421,
@@ -360,6 +361,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -371,6 +373,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -382,6 +385,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -393,6 +397,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -404,6 +409,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -415,6 +421,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -426,6 +433,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -437,6 +445,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -448,6 +457,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -459,6 +469,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -470,6 +481,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -481,6 +493,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -492,6 +505,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -503,6 +517,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -514,6 +529,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -525,6 +541,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -536,6 +553,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -547,6 +565,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -558,6 +577,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -569,6 +589,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -580,6 +601,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -591,6 +613,7 @@
    "ccy": "GBP",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -602,6 +625,7 @@
    "ccy": "GBP",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -613,6 +637,7 @@
    "ccy": "GBP",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -624,6 +649,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -635,6 +661,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -646,6 +673,7 @@
    "ccy": "AUD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -657,6 +685,7 @@
    "ccy": "AUD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   },
@@ -668,6 +697,7 @@
    "ccy": "AUD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
    "published_at": "2026-07-10T05:54:49Z"
   }
@@ -788,7 +818,8 @@
   "entries_seen": 29,
   "agreed_first_two_reads": 29,
   "accepted": 29,
-  "dropped": 0
+  "dropped": 0,
+  "text_entries": 0
  },
  "h10_src": {
   "url": "https://www.federalreserve.gov/releases/h10/20260706/",
@@ -863,6 +894,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "cluster_of": [
       {
        "strike": 1.13,
@@ -886,6 +918,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -899,6 +932,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -912,6 +946,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "cluster_of": [
       {
        "strike": 1.14,
@@ -935,6 +970,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -948,6 +984,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -961,6 +998,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -974,6 +1012,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -987,6 +1026,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1000,6 +1040,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1013,6 +1054,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1026,6 +1068,7 @@
      "code": 1,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "cluster_of": [
       {
        "strike": 1.155,
@@ -1051,6 +1094,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1064,6 +1108,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1077,6 +1122,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     }
@@ -1092,6 +1138,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1105,6 +1152,7 @@
      "code": 1,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1118,6 +1166,7 @@
      "code": 1,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1131,6 +1180,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1144,6 +1194,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1157,6 +1208,7 @@
      "code": 1,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     }
@@ -1172,6 +1224,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1185,6 +1238,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     },
@@ -1198,6 +1252,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     }
@@ -1213,6 +1268,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     }
@@ -1228,6 +1284,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/orders/fx-option-expiries-for-10-july-10am-new-york-cut/",
      "published_at": "2026-07-10T05:54:49Z"
     }
@@ -1455,7 +1512,8 @@
    "entries_seen": 29,
    "agreed_first_two_reads": 29,
    "accepted": 29,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "model": {
    "id": "muse-spark-1.3-contributor",

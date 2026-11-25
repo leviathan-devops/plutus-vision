@@ -226,9 +226,26 @@ export function parseRead(text: string, year: number): ParsedRead {
 }
 export const entryKey = (e: RawEntry) => `${e.pair}|${e.date}|${e.strike}|${e.notional_m}|${e.ccy}`;
 
-export type Accepted = RawEntry & { reads_agree: number; reads_total: number; source_url: string; published_at: string };
+/** method: "image_reads" = agreed model reads of the table image; "html_text" = the post printed the table as text (parsed mechanically, no model). */
+export type Accepted = RawEntry & { reads_agree: number; reads_total: number; source_url: string; published_at: string; method?: string };
+/** Some posts carry the cut-day table as plain text in the article body ("EUR/USD" line, then "1.1700 (EUR 2.89 bn)" lines). No model involved. */
+export function parseTextExpiries(text: string, date: string): RawEntry[] {
+  const out: RawEntry[] = []; let pair = "";
+  for (const raw of text.split("\n")) {
+    const line = raw.trim();
+    if (/^WHAT ARE/i.test(line)) break;
+    const h = /^([A-Z]{3})\/([A-Z]{3})$/.exec(line);
+    if (h) { pair = h[1] + h[2]; continue; }
+    const m = /^(\d+\.\d+) \((EUR|US\$|USD|GBP|AUD|NZD|CAD|CHF|JPY) (\d+(?:\.\d+)?) (bn|billion|mn|million|m)\)$/i.exec(line);
+    if (!m || !pair) continue;
+    let canon = Number(m[1]).toFixed(5);
+    while (canon.split(".")[1].length > decOf(pair) && canon.endsWith("0")) canon = canon.slice(0, -1);
+    out.push({ pair, date, strike: canon, notional_m: Math.round(Number(m[3]) * (/^b/i.test(m[4]) ? 1000 : 1)), ccy: m[2].toUpperCase().replace("US$", "USD") });
+  }
+  return out;
+}
 export type Level = { strike: number; notional_m: number; ccy: string; cut_date: string; state: "live" | "ghost"; tier: 1 | 2 | 3; code: number | null;
-  reads_agree: number; reads_total: number; members: { strike: number; notional_m: number }[]; source_url: string; published_at: string };
+  reads_agree: number; reads_total: number; method: string; members: { strike: number; notional_m: number }[]; source_url: string; published_at: string };
 /** Canon cluster rule (v4.5.2:938): strikes of one pair and one cut date within 10 pips aggregate. Greedy from the
  *  lowest strike; a cluster's span never exceeds 10 pips. Tier is taken on the aggregated face notional. */
 export function clusterAndTier(pair: string, acc: Accepted[], anchorDate: string): Level[] {
@@ -250,6 +267,7 @@ export function clusterAndTier(pair: string, acc: Accepted[], anchorDate: string
       out.push({ strike: Number(wk.toFixed(decOf(pair) + 1)), notional_m: tot, ccy: mem[0].ccy, cut_date: date, state, tier,
         code: tier === 3 ? null : state === "live" ? tier : tier + 2,
         reads_agree: Math.min(...mem.map((e) => e.reads_agree)), reads_total: Math.max(...mem.map((e) => e.reads_total)),
+        method: [...new Set(mem.map((e) => e.method ?? "image_reads"))].sort().join("+"),
         members: mem.map((e) => ({ strike: Number(e.strike), notional_m: e.notional_m })), source_url: lead.source_url, published_at: lead.published_at });
       i = j + 1;
     }

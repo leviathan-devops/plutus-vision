@@ -1,0 +1,11 @@
+{
+ "key": "648534a00a8d5e894a54ac49e80858dddfd8941c7fa7afc82f44ce9aad3be274",
+ "kind": "expiry_read_B1",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "daa15fcc689d19dabe1528cc25e3b1af56cec655a8741134cbefb5b0cd6db3b7",
+ "image": "cache/views/64f3ee5bd69dc684/B1.png",
+ "image_sha256": "f23c16504e8f45ded087f5f25abfc25d0ed3c5ec566c42c14a53c40ba449c235",
+ "text": "{\"pairs\":[\"EUR/USD\",\"USD/JPY\",\"GBP/USD\",\"USD/CHF\"],\"spot\":{\"EUR/USD\":\"1.1436\",\"USD/JPY\":\"162.41\",\"GBP/USD\":\"1.3457\",\"USD/CHF\":\"0.8090\"},\"rows\":[{\"label\":\"Friday\",\"date\":\"17/07\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1350\",\"notional\":\"€1.8bn\"},{\"strike\":\"1.1400\",\"notional\":\"€652m\"},{\"strike\":\"1.1425\",\"notional\":\"€946m\"},{\"strike\":\"1.1450\",\"notional\":\"€945m\"},{\"strike\":\"1.1500\",\"notional\":\"€1.5bn\"},{\"strike\":\"1.1600\",\"notional\":\"€647m\"}],\"USD/JPY\":[{\"strike\":\"162.00\",\"notional\":\"$571m\"}],\"GBP/USD\":[{\"strike\":\"1.3385\",\"notional\":\"£556m\"}],\"USD/CHF\":[{\"strike\":\"0.8100\",\"notional\":\"$574m\"}]}},{\"label\":\"Monday\",\"date\":\"20/07\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1325\",\"notional\":\"€850m\"},{\"strike\":\"1.1350\",\"notional\":\"€1.5bn\"},{\"strike\":\"1.1385\",\"notional\":\"€554m\"},{\"strike\":\"1.1390\",\"notional\":\"€1.5bn\"},{\"strike\":\"1.1400\",\"notional\":\"€1.2bn\"},{\"strike\":\"1.1425\",\"notional\":\"€1.4bn\"},{\"strike\":\"1.1450\",\"notional\":\"€738m\"},{\"strike\":\"1.1475\",\"notional\":\"€854m\"},{\"strike\":\"1.1485\",\"notional\":\"€1.3bn\"},{\"strike\":\"1.1500\",\"notional\":\"€907m\"},{\"strike\":\"1.1510\",\"notional\":\"€728m\"}],\"USD/JPY\":[{\"strike\":\"162.00\",\"notional\":\"$3.0bn\"},{\"strike\":\"163.00\",\"notional\":\"$699m\"}],\"GBP/USD\":[{\"strike\":\"1.3395\",\"notional\":\"£535m\"},{\"strike\":\"1.3520\",\"notional\":\"£568m\"}],\"USD/CHF\":[{\"strike\":\"0.8110\",\"notional\":\"$704m\"}]}}]}"
+}

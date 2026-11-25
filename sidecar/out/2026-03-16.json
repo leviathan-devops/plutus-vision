@@ -61,6 +61,62 @@
  "expiries": {
   "EURUSD": [
    {
+    "strike": 1.14,
+    "notional_m": 580,
+    "ccy": "EUR",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 1.15,
+    "notional_m": 866,
+    "ccy": "EUR",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 1.16,
+    "notional_m": 1000,
+    "ccy": "EUR",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 1.17,
+    "notional_m": 2890,
+    "ccy": "EUR",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
     "strike": 1.135,
     "notional_m": 571,
     "ccy": "EUR",
@@ -70,6 +126,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -83,6 +140,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -96,6 +154,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -109,6 +168,7 @@
     "code": 1,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -122,6 +182,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -135,6 +196,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -148,6 +210,7 @@
     "code": 1,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -161,6 +224,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -174,6 +238,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -187,6 +252,7 @@
     "code": 1,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -200,6 +266,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -213,11 +280,40 @@
     "code": 1,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    }
   ],
   "GBPUSD": [
+   {
+    "strike": 1.33,
+    "notional_m": 150,
+    "ccy": "GBP",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 1.345,
+    "notional_m": 300,
+    "ccy": "GBP",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
    {
     "strike": 1.3425,
     "notional_m": 1000,
@@ -228,11 +324,54 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    }
   ],
   "USDJPY": [
+   {
+    "strike": 158.5,
+    "notional_m": 407,
+    "ccy": "USD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 159,
+    "notional_m": 495,
+    "ccy": "USD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 160,
+    "notional_m": 465,
+    "ccy": "USD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
    {
     "strike": 160,
     "notional_m": 953,
@@ -243,6 +382,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -256,6 +396,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "cluster_of": [
      {
       "strike": 158.4,
@@ -272,6 +413,34 @@
   ],
   "AUDUSD": [
    {
+    "strike": 0.7,
+    "notional_m": 963,
+    "ccy": "AUD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 0.71,
+    "notional_m": 817,
+    "ccy": "AUD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
     "strike": 0.685,
     "notional_m": 775,
     "ccy": "AUD",
@@ -281,6 +450,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -294,6 +464,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -307,6 +478,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -320,6 +492,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "cluster_of": [
      {
       "strike": 0.6975,
@@ -343,6 +516,7 @@
     "code": 1,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -356,6 +530,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -369,11 +544,100 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    }
   ],
+  "EURGBP": [
+   {
+    "strike": 0.855,
+    "notional_m": 350,
+    "ccy": "EUR",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 0.865,
+    "notional_m": 214,
+    "ccy": "EUR",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   }
+  ],
+  "NZDUSD": [
+   {
+    "strike": 0.579,
+    "notional_m": 310,
+    "ccy": "NZD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   }
+  ],
   "USDCAD": [
+   {
+    "strike": 1.355,
+    "notional_m": 230,
+    "ccy": "USD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 1.37,
+    "notional_m": 292,
+    "ccy": "USD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 1.3835,
+    "notional_m": 471,
+    "ccy": "USD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
    {
     "strike": 1.363,
     "notional_m": 710,
@@ -384,6 +648,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -397,6 +662,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
    },
@@ -410,8 +676,39 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/",
     "published_at": "2026-03-16T05:36:29Z"
+   }
+  ],
+  "USDCHF": [
+   {
+    "strike": 0.77,
+    "notional_m": 534,
+    "ccy": "USD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
+   },
+   {
+    "strike": 0.778,
+    "notional_m": 299,
+    "ccy": "USD",
+    "cut_date": "2026-03-13",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 0,
+    "reads_total": 0,
+    "method": "html_text",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/",
+    "published_at": "2026-03-13T06:01:25Z"
    }
   ]
  },
@@ -440,6 +737,36 @@
   "dxy_h10": 98.9439
  },
  "dxy_levels": [
+  {
+   "price": 99.995,
+   "from_pair": "EURUSD",
+   "strike": 1.15,
+   "notional_m": 866,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-03-13"
+  },
+  {
+   "price": 99.4975,
+   "from_pair": "EURUSD",
+   "strike": 1.16,
+   "notional_m": 1000,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-03-13"
+  },
+  {
+   "price": 99.0068,
+   "from_pair": "EURUSD",
+   "strike": 1.17,
+   "notional_m": 2890,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-03-13"
+  },
   {
    "price": 99.995,
    "from_pair": "EURUSD",
@@ -645,7 +972,8 @@
   "entries_seen": 27,
   "agreed_first_two_reads": 27,
   "accepted": 27,
-  "dropped": 0
+  "dropped": 0,
+  "text_entries": 19
  },
  "model": {
   "id": "muse-spark-1.3-contributor",
@@ -660,6 +988,7 @@
   "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/: no table image in the article body",
   "asof_gate: every fetched page was published at or before the anchor",
   "https://investinglive.com/Orders/fx-option-expiries-for-16-march-10am-new-york-cut-20260316/: reads A/B agree on 27 of 27 entries; third read for columns []",
+  "https://investinglive.com/Orders/fx-option-expiries-for-13-march-10am-new-york-cut-20260313/: table is plain text in the article body -> 19 entries parsed mechanically (cut day 2026-03-13 only, no forward row)",
   "accept: 27 strike/notional entries accepted (2+ reads identical), 0 dropped",
   "emit: as-of gate passed for 11 sources and every datum"
  ]

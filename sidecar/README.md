@@ -83,6 +83,10 @@ routes through a local key-cycler on port 4097 that does not exist here. `src/mo
 
 Expiry entry: `{strike, notional_m, ccy, cut_date, state, tier, code, reads_agree, reads_total, cluster_of?, source_url, published_at}`.
 
+- **method.** `image_reads` = the table was a JPEG and the entry passed the 2-read rule (`reads_agree`/`reads_total` = 2/2, 2/3 or 3/3).
+  `html_text` = the post printed the table as plain text in the article body (5 of the 80 posts used for Feb–Nov 2026: 13 Mar, 19 Jun, 24 Aug, 4 Sep, 11 Sep);
+  those lines are parsed mechanically with no model (`reads_agree`/`reads_total` = 0/0). Text posts list the cut day only — no forward row.
+
 - **Which rows.** Monday post (if admissible): Monday row and the next-day forward row (Day 2, admissible because it is on the Day-1 page).
   Previous Friday's post: its forward row (Monday) and its own Friday row. Same pair + cut date + strike seen in two posts → the larger notional is kept.
 - **state.** `live` = cut date on/after the anchor Monday; `ghost` = cut date before it (canon zone type "Post-Expiry Ghost": the Friday rows that expired at Friday 10am New York).
@@ -129,3 +133,8 @@ not in the canon source-tier table, so no canon weight is asserted). `meta.lengt
   coding-agent traffic. investinglive's `robots.txt` disallows named AI crawlers; the sidecar fetches about 6–10 pages per week, under one request per second, once (cached).
 - **Pine string length.** `meta.lengths` — check against the Pine `input.string` size limit before pasting a long history.
 - A table whose grid is not detected gets a single view only, so nothing from it can be cross-checked or accepted (logged).
+- Grid quirks handled in `views.py` (recorded in `views.json` → `notes`): a missing column separator is re-inserted at the midpoint of a double-width gap; a missing bottom border extends the crops to the image edge.
+- The strike plausibility check (strike within 12% of the spot printed in the table) is skipped when the printed spot itself is far from the cell's strikes (one table prints AUD/USD spot as `7163`).
+- Durable resume was exercised once: a run killed during `read_expiries` (week 2026-06-29) continued on the next `run` ("resuming unfinished task"). Model answers already cached are not requested again; a read that was in flight when the process died may be requested twice.
+- Measured over the 40 weeks 2026-02-02 … 2026-11-02: 16 weeks have no admissible Monday post (published after the anchor, or none that day), 1476 of 1480 image entries agreed on the first two reads, 2 entries were dropped after a third read.
+- `cache/` is about 360 MB for 40 weeks (the sqlite transcripts hold the images as base64) and `raw/` about 150 MB.

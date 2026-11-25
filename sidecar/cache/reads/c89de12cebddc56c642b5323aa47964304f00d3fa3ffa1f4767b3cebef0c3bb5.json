@@ -1,0 +1,11 @@
+{
+ "key": "c89de12cebddc56c642b5323aa47964304f00d3fa3ffa1f4767b3cebef0c3bb5",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "72fa983a3ac6c792abd1f9cbf49a9ec440330913ce1d5c5427e8e6df17911195",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.14419\",\"role\":\"support\",\"quote\":\"moved back into a key swing area between 1.14419 and 1.14587 . The pair recently traded down to 1.1452 , placing the price squarely within that support zone.\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.14587\",\"role\":\"support\",\"quote\":\"moved back into a key swing area between 1.14419 and 1.14587 . The pair recently traded down to 1.1452 , placing the price squarely within that support zone.\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.14102\",\"role\":\"level\",\"quote\":\"If sellers can force a break below the swing area, the next target comes in at the 2026 low from March 16 at 1.14102 .\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.1400\",\"role\":\"support\",\"quote\":\"A move beneath that level would put the focus on the natural support at 1.1400 .\"},{\"article\":1,\"instrument\":\"EURUSD\",\"price\":\"1.1500\",\"role\":\"resistance\",\"quote\":\"On the topside, resistance does not become significant until the 1.1500 level.\"}]}"
+}

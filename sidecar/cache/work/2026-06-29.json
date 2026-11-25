@@ -30,7 +30,10 @@
      153,
      266
     ],
-    "pair_columns": 7,
+    "notes": [
+     "inserted missing column line at x=231"
+    ],
+    "pair_columns": 8,
     "size": [
      900,
      283
@@ -55,7 +58,7 @@
       "box": [
        138,
        9,
-       608,
+       515,
        270
       ],
       "file": "B1.png",
@@ -71,15 +74,15 @@
        2,
        3
       ],
-      "scale": 3.3,
+      "scale": 3.9053,
       "size": [
        1980,
-       861
+       1019
       ]
      },
      "B2": {
       "box": [
-       606,
+       513,
        9,
        890,
        270
@@ -94,19 +97,20 @@
       "pair_index": [
        4,
        5,
-       6
+       6,
+       7
       ],
-      "scale": 4,
+      "scale": 3.9053,
       "size": [
-       1656,
-       1044
+       1980,
+       1019
       ]
      },
      "C0": {
       "box": [
        138,
        9,
-       327,
+       233,
        270
       ],
       "file": "C0.png",
@@ -121,15 +125,15 @@
       ],
       "scale": 6,
       "size": [
-       1914,
+       1350,
        1566
       ]
      },
      "C1": {
       "box": [
-       325,
+       231,
        9,
-       421,
+       327,
        270
       ],
       "file": "C1.png",
@@ -150,9 +154,9 @@
      },
      "C2": {
       "box": [
-       419,
+       325,
        9,
-       515,
+       421,
        270
       ],
       "file": "C2.png",
@@ -173,9 +177,9 @@
      },
      "C3": {
       "box": [
-       513,
+       419,
        9,
-       608,
+       515,
        270
       ],
       "file": "C3.png",
@@ -190,15 +194,15 @@
       ],
       "scale": 6,
       "size": [
-       1350,
+       1356,
        1566
       ]
      },
      "C4": {
       "box": [
-       606,
+       513,
        9,
-       702,
+       608,
        270
       ],
       "file": "C4.png",
@@ -213,15 +217,15 @@
       ],
       "scale": 6,
       "size": [
-       1356,
+       1350,
        1566
       ]
      },
      "C5": {
       "box": [
-       700,
+       606,
        9,
-       795,
+       702,
        270
       ],
       "file": "C5.png",
@@ -236,15 +240,15 @@
       ],
       "scale": 6,
       "size": [
-       1350,
+       1356,
        1566
       ]
      },
      "C6": {
       "box": [
-       793,
+       700,
        9,
-       889,
+       795,
        270
       ],
       "file": "C6.png",
@@ -259,6 +263,29 @@
       ],
       "scale": 6,
       "size": [
+       1350,
+       1566
+      ]
+     },
+     "C7": {
+      "box": [
+       793,
+       9,
+       889,
+       270
+      ],
+      "file": "C7.png",
+      "label_box": [
+       9,
+       9,
+       139,
+       270
+      ],
+      "pair_index": [
+       7
+      ],
+      "scale": 6,
+      "size": [
        1356,
        1566
       ]
@@ -267,6 +294,7 @@
     "vlines": [
      39,
      138,
+     231,
      325,
      419,
      513,
@@ -278,8 +306,8 @@
    },
    "reads": {
     "A": "9749f42c0f7866a8bf6ccf4602543959526de496317637dd9fe4287dc7d851f6",
-    "B1": "53abe92041886015c135935422019d9196247b826922a2dd58d0caa20b86ed41",
-    "B2": "a91fa13776e5d895b632a8db8472c43b000e374b8c79862708c8593232a93462"
+    "B1": "bedbe476f893271f99570cc493c79b131b21bb26e3b427bbe8eb61d4b67019f3",
+    "B2": "88d32f77bedfe2a3cc68e80c8dc417380aae5d50baeb3125be73f17a2b86b981"
    },
    "tiebreak": []
   },
@@ -302,6 +330,7 @@
      182,
      299
     ],
+    "notes": [],
     "pair_columns": 8,
     "size": [
      900,
@@ -632,6 +661,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -643,6 +673,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -654,6 +685,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -665,6 +697,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -676,6 +709,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -687,6 +721,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -698,6 +733,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -709,6 +745,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -720,6 +757,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -731,6 +769,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -742,6 +781,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -753,6 +793,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -764,6 +805,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -775,6 +817,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -786,6 +829,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -797,6 +841,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -808,6 +853,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -819,6 +865,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -830,6 +877,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -841,6 +889,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
    "published_at": "2026-06-29T05:57:13Z"
   },
@@ -852,6 +901,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -863,6 +913,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -874,6 +925,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -885,6 +937,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -896,6 +949,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -907,6 +961,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -918,6 +973,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -929,6 +985,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -940,6 +997,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -951,6 +1009,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -962,6 +1021,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -973,6 +1033,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -984,6 +1045,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -995,6 +1057,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1006,6 +1069,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1017,6 +1081,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1028,6 +1093,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1039,6 +1105,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1050,6 +1117,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1061,6 +1129,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1072,6 +1141,7 @@
    "ccy": "GBP",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1083,6 +1153,7 @@
    "ccy": "USD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1094,6 +1165,7 @@
    "ccy": "AUD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1105,6 +1177,7 @@
    "ccy": "AUD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1116,6 +1189,7 @@
    "ccy": "NZD",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   },
@@ -1127,6 +1201,7 @@
    "ccy": "EUR",
    "reads_agree": 2,
    "reads_total": 2,
+   "method": "image_reads",
    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
    "published_at": "2026-06-26T06:07:15Z"
   }
@@ -1205,7 +1280,8 @@
   "entries_seen": 46,
   "agreed_first_two_reads": 46,
   "accepted": 46,
-  "dropped": 0
+  "dropped": 0,
+  "text_entries": 0
  },
  "h10_src": {
   "url": "https://www.federalreserve.gov/releases/h10/20260622/",
@@ -1290,6 +1366,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     },
@@ -1303,6 +1380,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     },
@@ -1316,6 +1394,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     },
@@ -1329,6 +1408,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "cluster_of": [
       {
        "strike": 1.1375,
@@ -1352,6 +1432,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "cluster_of": [
       {
        "strike": 1.14,
@@ -1375,6 +1456,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     },
@@ -1388,6 +1470,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     },
@@ -1401,6 +1484,7 @@
      "code": 3,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     },
@@ -1414,6 +1498,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1427,6 +1512,7 @@
      "code": 1,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1440,6 +1526,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1453,6 +1540,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1466,6 +1554,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1479,6 +1568,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1492,6 +1582,7 @@
      "code": 1,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1505,6 +1596,7 @@
      "code": 1,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1518,6 +1610,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1531,6 +1624,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     }
@@ -1546,6 +1640,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     }
@@ -1561,6 +1656,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     },
@@ -1574,6 +1670,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     },
@@ -1587,6 +1684,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1600,6 +1698,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1613,6 +1712,7 @@
      "code": 1,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1626,6 +1726,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1639,6 +1740,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1652,6 +1754,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1665,6 +1768,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     },
@@ -1678,6 +1782,7 @@
      "code": 1,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     }
@@ -1693,6 +1798,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     },
@@ -1706,6 +1812,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     }
@@ -1721,6 +1828,7 @@
      "code": 4,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     }
@@ -1736,6 +1844,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-26-june-10am-new-york-cut-20260626/",
      "published_at": "2026-06-26T06:07:15Z"
     }
@@ -1751,6 +1860,7 @@
      "code": null,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     }
@@ -1766,6 +1876,7 @@
      "code": 2,
      "reads_agree": 2,
      "reads_total": 2,
+     "method": "image_reads",
      "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-29-june-10am-new-york-cut-20260629/",
      "published_at": "2026-06-29T05:57:13Z"
     }
@@ -2011,7 +2122,8 @@
    "entries_seen": 46,
    "agreed_first_two_reads": 46,
    "accepted": 46,
-   "dropped": 0
+   "dropped": 0,
+   "text_entries": 0
   },
   "model": {
    "id": "muse-spark-1.3-contributor",

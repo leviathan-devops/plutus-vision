@@ -3,7 +3,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { SIDECAR, RAW, CACHE, OUT, SidecarError, anchorUtc, isoWeek, iso, ymd, net, fetchCached, loadSitemap, expirySlugDate, rawName,
-  parseArticle, h10ReleaseFor, parseH10, spotBefore, parseRead, entryKey, clusterAndTier, asofGate, decOf, readJson, writeJson, sha,
+  parseArticle, h10ReleaseFor, parseH10, spotBefore, parseRead, parseTextExpiries, entryKey, clusterAndTier, asofGate, decOf, readJson, writeJson, sha,
   type Accepted, type ParsedRead, type RawEntry } from "./lib.ts";
 import { openSidecarHarness, modelSteps, stats, MODEL, EFFORT, GATEWAY_BASE, AETHER_HOME } from "./model.ts";
 
@@ -58,7 +58,9 @@ function tally(p: Post, final: boolean) {
     if (!eq) res.disputes.push(i);
     const total = sets.filter(Boolean).length;
     const spots = readers.filter(Boolean).map((r) => Number(r!.spot[pair])).filter((x) => x > 0);
-    const spot = spots.length >= 2 && spots.every((x) => x === spots[0]) ? spots[0] : null;
+    const strikes = [...keys.values()].map((e) => Number(e.strike)).sort((a, b) => a - b), med = strikes[strikes.length >> 1];
+    // plausibility uses the printed spot only when the readers agree on it AND it is itself near the strikes (a misprinted spot row must not drop a cell)
+    const spot = spots.length >= 2 && spots.every((x) => x === spots[0]) && med && Math.abs(med / spots[0] - 1) <= 0.12 ? spots[0] : null;
     for (const [k, e] of keys) {
       const votes = sets.filter((s) => s?.has(k)).length;
       res.union++;
@@ -175,12 +177,18 @@ const STEP: Record<string, (w: Work, rt: any, ctx: any, input: Input) => Promise
     }
   },
   async accept(w) {
-    const s = { entries_seen: 0, agreed_first_two_reads: 0, accepted: 0, dropped: 0 };
+    const s = { entries_seen: 0, agreed_first_two_reads: 0, accepted: 0, dropped: 0, text_entries: 0 };
+    for (const p of w.posts) if (!p.reads && p.file && !p.image_url) { // table printed as text in the article body: mechanical parse, cut day only
+      const te = parseTextExpiries(parseArticle(p.url, p.file).text, p.cut_date);
+      for (const e of te) w.accepted.push({ ...e, reads_agree: 0, reads_total: 0, method: "html_text", source_url: p.url, published_at: p.published_at! });
+      s.text_entries += te.length;
+      w.log.push(`${p.url}: table is plain text in the article body -> ${te.length} entries parsed mechanically (cut day ${p.cut_date} only, no forward row)`);
+    }
     for (const p of w.posts) if (p.reads) {
       const t = tally(p, true);
       for (const n of t.notes) w.log.push(`${p.url}: ${n}`);
       s.entries_seen += t.union; s.agreed_first_two_reads += t.agreed2; s.accepted += t.accepted.length; s.dropped += t.dropped.length;
-      for (const e of t.accepted) w.accepted.push({ ...e, source_url: p.url, published_at: p.published_at! });
+      for (const e of t.accepted) w.accepted.push({ ...e, method: "image_reads", source_url: p.url, published_at: p.published_at! });
       w.dropped.push(...t.dropped);
     }
     w.stats = s;
@@ -216,7 +224,7 @@ const STEP: Record<string, (w: Work, rt: any, ctx: any, input: Input) => Promise
     const expiries: Record<string, any[]> = {};
     for (const pair of ["EURUSD", "GBPUSD", "USDJPY", ...pairs.filter((p) => !["EURUSD", "GBPUSD", "USDJPY"].includes(p))]) {
       expiries[pair] = clusterAndTier(pair, [...best.values()].filter((e) => e.pair === pair), w.week).map((l) => ({ strike: l.strike, notional_m: l.notional_m, ccy: l.ccy, cut_date: l.cut_date,
-        state: l.state, tier: l.tier, code: l.code, reads_agree: l.reads_agree, reads_total: l.reads_total, ...(l.members.length > 1 ? { cluster_of: l.members } : {}), source_url: l.source_url, published_at: l.published_at }));
+        state: l.state, tier: l.tier, code: l.code, reads_agree: l.reads_agree, reads_total: l.reads_total, method: l.method, ...(l.members.length > 1 ? { cluster_of: l.members } : {}), source_url: l.source_url, published_at: l.published_at }));
     }
     const dxy_levels = expiries.EURUSD.filter((l) => l.tier <= 2).map((l) => ({ price: Number((k * l.strike ** -0.576).toFixed(4)), from_pair: "EURUSD", strike: l.strike, notional_m: l.notional_m, tier: l.tier, state: l.state, code: l.code, cut_date: l.cut_date }));
     const bar = (s: keyof typeof sp, sym: string) => ({ url: `pinebox-bar-store:${sym}/60/${path.basename(sp[s].file)}#time=${sp[s].bar_time}`, published_at: iso(sp[s].bar_time + 3600000), kind: "spot_bar" });

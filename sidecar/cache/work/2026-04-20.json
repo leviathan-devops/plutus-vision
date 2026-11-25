@@ -4,8 +4,10 @@
  "log": [
   "anchor = Monday 02:00 America/New_York = 2026-04-20T06:00:00Z",
   "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-20-april-10am-new-york-cut-20260420/ published 2026-04-20T06:08:28+00:00 is AFTER the anchor: excluded, not fetched",
-  "--force-include https://investinglive.com/Orders/fx-option-expiries-for-20-april-10am-new-york-cut-20260420/",
-  "discover: 2 expiry post(s), 1 analyst candidate(s) from sitemaps 2026-W16, 2026-W17"
+  "discover: 1 expiry post(s), 1 analyst candidate(s) from sitemaps 2026-W16, 2026-W17",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/: reads A/B agree on 16 of 16 entries; third read for columns []",
+  "accept: 16 strike/notional entries accepted (2+ reads identical), 0 dropped"
  ],
  "dropped": [],
  "posts": [
@@ -16,16 +18,296 @@
    "cut_date": "2026-04-17",
    "file": "/home/user/plutus-vision/sidecar/raw/2026-04-20/investinglive_orders_fx-option-expiries-for-17-april-10am-new-york-cut-20260417.html",
    "published_at": "2026-04-17T06:19:19Z",
-   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2017-04_id_139056c1-4f56-41a0-bef9-6a1e58647b5f_size900.jpg"
-  },
-  {
-   "role": "forced",
-   "url": "https://investinglive.com/Orders/fx-option-expiries-for-20-april-10am-new-york-cut-20260420/",
-   "lastmod": "2026-04-20T06:08:28+00:00",
-   "cut_date": "2026-04-20",
-   "file": "/home/user/plutus-vision/sidecar/raw/2026-04-20/investinglive_orders_fx-option-expiries-for-20-april-10am-new-york-cut-20260420.html",
-   "published_at": "2026-04-20T06:08:28Z",
-   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2020-04_id_44ea1a16-6126-4175-b8cd-e3cafd517d82_size900.jpg"
+   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2017-04_id_139056c1-4f56-41a0-bef9-6a1e58647b5f_size900.jpg",
+   "image_file": "/home/user/plutus-vision/sidecar/raw/2026-04-20/investinglive_orders_fx-option-expiries-for-17-april-10am-new-york-cut-20260417__FXO_17-04_id_139056c1-4f56-41a0-bef9-6a1e58647b5f_size900.jpg",
+   "views_dir": "/home/user/plutus-vision/sidecar/cache/views/8079703078d2524a",
+   "views": {
+    "grid_ok": true,
+    "hlines": [
+     14,
+     27,
+     41,
+     149,
+     260
+    ],
+    "notes": [],
+    "pair_columns": 8,
+    "size": [
+     900,
+     273
+    ],
+    "source": "investinglive_orders_fx-option-expiries-for-17-april-10am-new-york-cut-20260417__FXO_17-04_id_139056c1-4f56-41a0-bef9-6a1e58647b5f_size900.jpg",
+    "views": {
+     "A": {
+      "box": [
+       0,
+       0,
+       900,
+       273
+      ],
+      "file": "A.png",
+      "scale": 2.2,
+      "size": [
+       1980,
+       601
+      ]
+     },
+     "B1": {
+      "box": [
+       136,
+       11,
+       512,
+       264
+      ],
+      "file": "B1.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "scale": 3.913,
+      "size": [
+       1980,
+       990
+      ]
+     },
+     "B2": {
+      "box": [
+       510,
+       11,
+       888,
+       264
+      ],
+      "file": "B2.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       4,
+       5,
+       6,
+       7
+      ],
+      "scale": 3.8976,
+      "size": [
+       1980,
+       986
+      ]
+     },
+     "C0": {
+      "box": [
+       136,
+       11,
+       231,
+       264
+      ],
+      "file": "C0.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       0
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1518
+      ]
+     },
+     "C1": {
+      "box": [
+       229,
+       11,
+       325,
+       264
+      ],
+      "file": "C1.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       1
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1518
+      ]
+     },
+     "C2": {
+      "box": [
+       323,
+       11,
+       419,
+       264
+      ],
+      "file": "C2.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       2
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1518
+      ]
+     },
+     "C3": {
+      "box": [
+       417,
+       11,
+       512,
+       264
+      ],
+      "file": "C3.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       3
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1518
+      ]
+     },
+     "C4": {
+      "box": [
+       510,
+       11,
+       606,
+       264
+      ],
+      "file": "C4.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       4
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1518
+      ]
+     },
+     "C5": {
+      "box": [
+       604,
+       11,
+       699,
+       264
+      ],
+      "file": "C5.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       5
+      ],
+      "scale": 6,
+      "size": [
+       1350,
+       1518
+      ]
+     },
+     "C6": {
+      "box": [
+       697,
+       11,
+       793,
+       264
+      ],
+      "file": "C6.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       6
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1518
+      ]
+     },
+     "C7": {
+      "box": [
+       791,
+       11,
+       887,
+       264
+      ],
+      "file": "C7.png",
+      "label_box": [
+       7,
+       11,
+       137,
+       264
+      ],
+      "pair_index": [
+       7
+      ],
+      "scale": 6,
+      "size": [
+       1356,
+       1518
+      ]
+     }
+    },
+    "vlines": [
+     37,
+     136,
+     229,
+     323,
+     417,
+     510,
+     604,
+     697,
+     791,
+     885
+    ]
+   },
+   "reads": {
+    "A": "63bd125742a0374ca67da9db055e20857733eaecec5bd1817b3526971ea8bff5",
+    "B1": "b786af6db855f76a8bbafe8e09d80021bada12f74cd9b0fc5f5794940db6c13a",
+    "B2": "7748d31887c9e9f70acecdcb192804a7f8705d7d9b4ba55f5cf80317ac8072de"
+   },
+   "tiebreak": []
   }
  ],
  "analyst": [
@@ -52,16 +334,600 @@
   "k_h10": 108.155178,
   "dxy_h10": 98.6918
  },
- "accepted": [],
+ "accepted": [
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-17",
+   "strike": "1.1650",
+   "notional_m": 968,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-17",
+   "strike": "1.1750",
+   "notional_m": 916,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-17",
+   "strike": "1.1800",
+   "notional_m": 524,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-17",
+   "strike": "1.1815",
+   "notional_m": 834,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-17",
+   "strike": "1.1850",
+   "notional_m": 606,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-20",
+   "strike": "1.1600",
+   "notional_m": 1900,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-20",
+   "strike": "1.1700",
+   "notional_m": 771,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-20",
+   "strike": "1.1750",
+   "notional_m": 1100,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-20",
+   "strike": "1.1780",
+   "notional_m": 570,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-20",
+   "strike": "1.1785",
+   "notional_m": 839,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-04-20",
+   "strike": "1.1900",
+   "notional_m": 1000,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "GBPUSD",
+   "date": "2026-04-20",
+   "strike": "1.3500",
+   "notional_m": 1000,
+   "ccy": "GBP",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-04-17",
+   "strike": "1.3570",
+   "notional_m": 640,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-04-20",
+   "strike": "1.3600",
+   "notional_m": 620,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-04-20",
+   "strike": "1.3770",
+   "notional_m": 557,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-04-20",
+   "strike": "1.3800",
+   "notional_m": 601,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+   "published_at": "2026-04-17T06:19:19Z"
+  }
+ ],
  "analyst_levels": {
   "DXY": [],
   "EURUSD": [],
   "GBPUSD": []
  },
- "stats": {},
+ "stats": {
+  "entries_seen": 16,
+  "agreed_first_two_reads": 16,
+  "accepted": 16,
+  "dropped": 0,
+  "text_entries": 0
+ },
  "h10_src": {
   "url": "https://www.federalreserve.gov/releases/h10/20260413/",
   "published_at": "2026-04-13T20:15:00Z",
   "kind": "h10_release"
+ },
+ "analyst_key": "115ff7d084993020d8deb1b4cc28f00431fd97d4853b4b23606b725ddb3ab7ec",
+ "out": {
+  "week": "2026-04-20",
+  "anchor_utc": "2026-04-20T06:00:00Z",
+  "sources": [
+   {
+    "url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+    "published_at": "2026-04-17T06:19:19Z",
+    "kind": "expiry_post_prior"
+   },
+   {
+    "url": "https://investinglive.com/cms/media/migrated/images/FXO%2017-04_id_139056c1-4f56-41a0-bef9-6a1e58647b5f_size900.jpg",
+    "published_at": "2026-04-17T06:19:19Z",
+    "kind": "expiry_image"
+   },
+   {
+    "url": "https://investinglive.com/forex/usdcad-nears-pre-war-levels-but-the-loonie-is-still-in-limbo-20260415/",
+    "published_at": "2026-04-15T19:34:06Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://www.federalreserve.gov/releases/h10/20260413/",
+    "published_at": "2026-04-13T20:15:00Z",
+    "kind": "h10_release"
+   },
+   {
+    "url": "pinebox-bar-store:TVC_DXY/60/2026-04.json#time=1776661200000",
+    "published_at": "2026-04-20T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_EURUSD/60/2026-04.json#time=1776661200000",
+    "published_at": "2026-04-20T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_GBPUSD/60/2026-04.json#time=1776661200000",
+    "published_at": "2026-04-20T06:00:00Z",
+    "kind": "spot_bar"
+   }
+  ],
+  "expiries": {
+   "EURUSD": [
+    {
+     "strike": 1.165,
+     "notional_m": 968,
+     "ccy": "EUR",
+     "cut_date": "2026-04-17",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.175,
+     "notional_m": 916,
+     "ccy": "EUR",
+     "cut_date": "2026-04-17",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.18,
+     "notional_m": 524,
+     "ccy": "EUR",
+     "cut_date": "2026-04-17",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.1815,
+     "notional_m": 834,
+     "ccy": "EUR",
+     "cut_date": "2026-04-17",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.185,
+     "notional_m": 606,
+     "ccy": "EUR",
+     "cut_date": "2026-04-17",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.16,
+     "notional_m": 1900,
+     "ccy": "EUR",
+     "cut_date": "2026-04-20",
+     "state": "live",
+     "tier": 1,
+     "code": 1,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.17,
+     "notional_m": 771,
+     "ccy": "EUR",
+     "cut_date": "2026-04-20",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.175,
+     "notional_m": 1100,
+     "ccy": "EUR",
+     "cut_date": "2026-04-20",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.1783,
+     "notional_m": 1409,
+     "ccy": "EUR",
+     "cut_date": "2026-04-20",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "cluster_of": [
+      {
+       "strike": 1.178,
+       "notional_m": 570
+      },
+      {
+       "strike": 1.1785,
+       "notional_m": 839
+      }
+     ],
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.19,
+     "notional_m": 1000,
+     "ccy": "EUR",
+     "cut_date": "2026-04-20",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    }
+   ],
+   "GBPUSD": [
+    {
+     "strike": 1.35,
+     "notional_m": 1000,
+     "ccy": "GBP",
+     "cut_date": "2026-04-20",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    }
+   ],
+   "USDJPY": [],
+   "USDCAD": [
+    {
+     "strike": 1.357,
+     "notional_m": 640,
+     "ccy": "USD",
+     "cut_date": "2026-04-17",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.36,
+     "notional_m": 620,
+     "ccy": "USD",
+     "cut_date": "2026-04-20",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.377,
+     "notional_m": 557,
+     "ccy": "USD",
+     "cut_date": "2026-04-20",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    },
+    {
+     "strike": 1.38,
+     "notional_m": 601,
+     "ccy": "USD",
+     "cut_date": "2026-04-20",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/",
+     "published_at": "2026-04-17T06:19:19Z"
+    }
+   ]
+  },
+  "spots": {
+   "from": "pinebox bar store, last 1H close before the anchor",
+   "bar_close_utc": "2026-04-20T06:00:00Z",
+   "DXY": 98.349,
+   "EURUSD": 1.17531,
+   "GBPUSD": 1.34915
+  },
+  "k_anchor": 107.938841,
+  "h10": {
+   "release_date": "2026-04-13",
+   "published_at": "2026-04-13T20:15:00Z",
+   "source_url": "https://www.federalreserve.gov/releases/h10/20260413/",
+   "rate_day": "Apr. 10",
+   "rates": {
+    "EURUSD": 1.1723,
+    "USDJPY": 159.22,
+    "GBPUSD": 1.346,
+    "USDCAD": 1.3828,
+    "USDSEK": 9.2651,
+    "USDCHF": 0.7893
+   },
+   "k_h10": 108.155178,
+   "dxy_h10": 98.6918
+  },
+  "dxy_levels": [
+   {
+    "price": 98.8494,
+    "from_pair": "EURUSD",
+    "strike": 1.165,
+    "notional_m": 968,
+    "tier": 2,
+    "state": "ghost",
+    "code": 4,
+    "cut_date": "2026-04-17"
+   },
+   {
+    "price": 98.3639,
+    "from_pair": "EURUSD",
+    "strike": 1.175,
+    "notional_m": 916,
+    "tier": 2,
+    "state": "ghost",
+    "code": 4,
+    "cut_date": "2026-04-17"
+   },
+   {
+    "price": 99.0946,
+    "from_pair": "EURUSD",
+    "strike": 1.16,
+    "notional_m": 1900,
+    "tier": 1,
+    "state": "live",
+    "code": 1,
+    "cut_date": "2026-04-20"
+   },
+   {
+    "price": 98.3639,
+    "from_pair": "EURUSD",
+    "strike": 1.175,
+    "notional_m": 1100,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-04-20"
+   },
+   {
+    "price": 98.2052,
+    "from_pair": "EURUSD",
+    "strike": 1.1783,
+    "notional_m": 1409,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-04-20"
+   },
+   {
+    "price": 97.6479,
+    "from_pair": "EURUSD",
+    "strike": 1.19,
+    "notional_m": 1000,
+    "tier": 2,
+    "state": "live",
+    "code": 2,
+    "cut_date": "2026-04-20"
+   }
+  ],
+  "analyst_levels": {
+   "DXY": [],
+   "EURUSD": [],
+   "GBPUSD": []
+  },
+  "read_stats": {
+   "entries_seen": 16,
+   "agreed_first_two_reads": 16,
+   "accepted": 16,
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "model": {
+   "id": "muse-spark-1.3-contributor",
+   "effort": "high",
+   "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+   "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+  },
+  "dropped": [],
+  "log": [
+   "anchor = Monday 02:00 America/New_York = 2026-04-20T06:00:00Z",
+   "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-20-april-10am-new-york-cut-20260420/ published 2026-04-20T06:08:28+00:00 is AFTER the anchor: excluded, not fetched",
+   "discover: 1 expiry post(s), 1 analyst candidate(s) from sitemaps 2026-W16, 2026-W17",
+   "asof_gate: every fetched page was published at or before the anchor",
+   "https://investinglive.com/Orders/fx-option-expiries-for-17-april-10am-new-york-cut-20260417/: reads A/B agree on 16 of 16 entries; third read for columns []",
+   "accept: 16 strike/notional entries accepted (2+ reads identical), 0 dropped",
+   "emit: as-of gate passed for 7 sources and every datum"
+  ]
  }
 }

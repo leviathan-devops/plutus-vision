@@ -1,0 +1,11 @@
+{
+ "key": "7d605c5f38230d2f1bf3facd89eb5eca94ce277099f10abf9f756d799aa6eadd",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "b14710b74aa961194ad34bb88f700aa5c3cdf8cf3a51ab5b9cbe99f9c0e5c3f9",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.3404\",\"role\":\"support\",\"quote\":\"finding support against the rising 200-hour moving average (currently at 1.3404 )\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.3400\",\"role\":\"level\",\"quote\":\"powering through a cluster of key moving averages near 1.3400 , including the 100-hour , 100-day\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.3446\",\"role\":\"support\",\"quote\":\"Bottom line: The 1.3446-1.3465 support zone is the line in the sand.\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.3465\",\"role\":\"support\",\"quote\":\"Bottom line: The 1.3446-1.3465 support zone is the line in the sand.\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.3446\",\"role\":\"resistance\",\"quote\":\"has returned to the former resistance zone between 1.3446 and 1.3465 .\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.3465\",\"role\":\"resistance\",\"quote\":\"has returned to the former resistance zone between 1.3446 and 1.3465 .\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.34598\",\"role\":\"level\",\"quote\":\"That zone also contained the 61.8% retracement of the decline from the May 1 high at 1.34598 , making the breakout\"},{\"article\":1,\"instrument\":\"GBPUSD\",\"price\":\"1.35526\",\"role\":\"level\",\"quote\":\"briefly exceeding the May 12 and May 13 swing highs at 1.35526 before backing off the boil into the close.\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.16\",\"role\":\"level\",\"quote\":\"the door for a rally into the 1.16 level next.\"}]}"
+}

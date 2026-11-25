@@ -65,6 +65,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -78,6 +79,7 @@
     "code": 3,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -91,6 +93,7 @@
     "code": 3,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "cluster_of": [
      {
       "strike": 1.139,
@@ -114,6 +117,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -127,6 +131,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -140,6 +145,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -153,6 +159,7 @@
     "code": 1,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "cluster_of": [
      {
       "strike": 1.137,
@@ -180,6 +187,7 @@
     "code": 1,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    }
@@ -195,6 +203,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    }
@@ -210,6 +219,7 @@
     "code": 4,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -223,6 +233,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -236,6 +247,7 @@
     "code": 3,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -249,6 +261,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -262,6 +275,7 @@
     "code": 3,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -275,6 +289,7 @@
     "code": 4,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -288,6 +303,7 @@
     "code": 1,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -301,6 +317,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -314,6 +331,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -327,6 +345,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -340,6 +359,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -353,6 +373,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    }
@@ -368,6 +389,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -381,6 +403,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    },
@@ -394,6 +417,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/orders/fx-option-expiries-for-2-october-10am-new-york-cut/",
     "published_at": "2026-10-02T05:43:31Z"
    }
@@ -568,7 +592,8 @@
   "entries_seen": 27,
   "agreed_first_two_reads": 27,
   "accepted": 27,
-  "dropped": 0
+  "dropped": 0,
+  "text_entries": 0
  },
  "model": {
   "id": "muse-spark-1.3-contributor",

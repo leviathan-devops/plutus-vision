@@ -16,6 +16,13 @@ case "${1:-}" in
   shot) n="$2"; sec="${3:-chart}"; mkdir -p "$ROOT/evidence"; if [ "$sec" = full ]; then secarg=(); else secarg=(--section "$sec"); fi; pinebox shot --session $S --out "$ROOT/evidence/$n.png" "${secarg[@]}" | jq -r '.path' ;;
   eval) ev "$2" ;;
   load) pinebox load --session $S --pine "$2" ${3:+--pair "$3"} ${4:+--tf "$4"} 2>&1 | tail -1 | jq -c '{ok, status:.load.status_row, counts:.load.result.counts, bars:.load.result.bars, err:(.error // null)}' 2>/dev/null || pinebox load --session $S --pine "$2" ${3:+--pair "$3"} ${4:+--tf "$4"} 2>&1 | tail -3 ;;
+  week) # pb week PAIR TF YYYY-MM-DD NAME [KEY=VALUE ...] : IDE tab - render the engines for the week starting on that Monday with the pair's own sidecar dataset, zoom to it, save evidence/NAME.png
+    pair="$2"; tf="$3"; wk="$4"; name="$5"; shift 5
+    last="$(date -u -d "${PB_LASTWEEK:-2026-11-02}" +%s)"; cur="$(date -u -d "$wk" +%s)"; back=$(( (last-cur)/604800 ))
+    DS="$(cat "$ROOT/sidecar/out/pine_inputs.$pair.txt" 2>/dev/null)"; AN="$(cat "$ROOT/sidecar/out/pine_inputs.analyst.$pair.txt" 2>/dev/null)"
+    "$0" ide "$ROOT/indicator/plutus-vision-engines.pine" "$pair" "$tf" "i_back=$back" "i_optData=\"$DS\"" "i_anaData=\"$AN\"" "$@"
+    "$0" goto "$(date -u -d "$wk - 4 days" +%F)" "$(date -u -d "$wk + 5 days" +%F)" >/dev/null
+    sleep 1; "$0" shot "$name" chart ;;
   goto)
     f="$(date -u -d "$2" +%s)000"; t="$(date -u -d "$3" +%s)000"
     CH="window.PlutusPineShell?.chart"; [ "${4:-ide}" = bt ] && CH="window.PlutusBacktestChart?.api?.chart"
@@ -62,10 +69,10 @@ case "${1:-}" in
     for kv in "$@"; do k="${kv%%=*}"; v="${kv#*=}"; sed -i -E "s/^($k[[:space:]]*=[[:space:]]*input\.[a-z]+\()[^,]+,/\1$v,/" "$tmp"; done
     pinebox tab --session $S --to pine >/dev/null; sleep 1
     ev "(async function(){const P=window.PlutusPineShell; if(!P) return {err:'no shell'}; const sl=ms=>new Promise(r=>setTimeout(r,ms));
-      P.editor.setSource($(jq -Rs . < "$tmp")); P.editor.flush(); await sl(2500);
+      await P.loadBars({pair:'$pair', timeframe:'$tf', limit:20000}); await sl(1500); P.editor.setSource($(jq -Rs . < "$tmp")); P.editor.flush(); await sl(2500);
       let rr=null;
-      for(let k=0;k<4;k++){ await P.loadBars({pair:'$pair', timeframe:'$tf', limit:20000}); await sl(2500); rr=await P.run({silent:false}); if(!rr.ok) return {err:'RUN_FAILED', code:rr.code, detail:String(rr.error||'').slice(0,300)}; await sl(2000); if(rr.run.bars>400) break; }
-      const d=P.chart.drawings.toJSON().drawings; const wk=[...new Set(d.filter(x=>x.type==='box').map(x=>x.anchors[0].time))].sort().map(t=>new Date(t).toISOString().slice(0,10));
+      for(let k=0;k<6;k++){ await P.loadBars({pair:'$pair', timeframe:'$tf', limit:20000}); await sl(2500); rr=await P.run({silent:false}); if(!rr){ await sl(4000); continue; } if(!rr.ok) return {err:'RUN_FAILED', code:rr.code, detail:String(rr.error||'').slice(0,300)}; await sl(2000); if(rr.run.bars>400) break; }
+      if(!rr) return {err:'RUN_NULL'}; const d=P.chart.drawings.toJSON().drawings; const wk=[...new Set(d.filter(x=>x.type==='box').map(x=>x.anchors[0].time))].sort().map(t=>new Date(t).toISOString().slice(0,10));
       return {title:rr.run.title, counts:rr.run.counts, runBars:rr.run.bars, onChart:d.length, weeks:wk};})()"
     rm -f "$tmp" ;;
   ide-input) # pb ide-input KEY VALUE [KEY VALUE ...] : Pine IDE tab - open the script's inputs panel (legend gear), set inputs by variable name, Apply

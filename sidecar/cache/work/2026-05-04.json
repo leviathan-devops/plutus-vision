@@ -1,0 +1,1507 @@
+{
+ "week": "2026-05-04",
+ "anchor": 1777874400000,
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-05-04T06:00:00Z",
+  "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-4-may-10am-new-york-cut-20260504/ published 2026-05-04T06:02:51+00:00 is AFTER the anchor: excluded, not fetched",
+  "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W18, 2026-W19",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/: reads A/B agree on 22 of 22 entries; third read for columns []",
+  "accept: 22 strike/notional entries accepted (2+ reads identical), 0 dropped"
+ ],
+ "dropped": [],
+ "posts": [
+  {
+   "role": "prior",
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "lastmod": "2026-05-01T05:54:47+00:00",
+   "cut_date": "2026-05-01",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-05-04/investinglive_orders_fx-option-expiries-for-1-may-10am-new-york-cut-20260501.html",
+   "published_at": "2026-05-01T05:54:47Z",
+   "image_url": "https://investinglive.com/cms/media/migrated/images/FXO%2001-05_id_0240b306-960a-4c21-a6e2-9f65d51dc734_size900.jpg",
+   "image_file": "/home/user/plutus-vision/sidecar/raw/2026-05-04/investinglive_orders_fx-option-expiries-for-1-may-10am-new-york-cut-20260501__FXO_01-05_id_0240b306-960a-4c21-a6e2-9f65d51dc734_size900.jpg",
+   "views_dir": "/home/user/plutus-vision/sidecar/cache/views/fd83d7a1b233d433",
+   "views": {
+    "grid_ok": true,
+    "hlines": [
+     11,
+     25,
+     38,
+     171,
+     281
+    ],
+    "notes": [],
+    "pair_columns": 8,
+    "size": [
+     900,
+     296
+    ],
+    "source": "investinglive_orders_fx-option-expiries-for-1-may-10am-new-york-cut-20260501__FXO_01-05_id_0240b306-960a-4c21-a6e2-9f65d51dc734_size900.jpg",
+    "views": {
+     "A": {
+      "box": [
+       0,
+       0,
+       900,
+       296
+      ],
+      "file": "A.png",
+      "scale": 2.2,
+      "size": [
+       1980,
+       651
+      ]
+     },
+     "B1": {
+      "box": [
+       144,
+       8,
+       516,
+       285
+      ],
+      "file": "B1.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "scale": 3.9521,
+      "size": [
+       1980,
+       1095
+      ]
+     },
+     "B2": {
+      "box": [
+       514,
+       8,
+       887,
+       285
+      ],
+      "file": "B2.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       4,
+       5,
+       6,
+       7
+      ],
+      "scale": 3.9442,
+      "size": [
+       1980,
+       1093
+      ]
+     },
+     "C0": {
+      "box": [
+       144,
+       8,
+       238,
+       285
+      ],
+      "file": "C0.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       0
+      ],
+      "scale": 6,
+      "size": [
+       1338,
+       1662
+      ]
+     },
+     "C1": {
+      "box": [
+       236,
+       8,
+       331,
+       285
+      ],
+      "file": "C1.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       1
+      ],
+      "scale": 6,
+      "size": [
+       1344,
+       1662
+      ]
+     },
+     "C2": {
+      "box": [
+       329,
+       8,
+       423,
+       285
+      ],
+      "file": "C2.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       2
+      ],
+      "scale": 6,
+      "size": [
+       1338,
+       1662
+      ]
+     },
+     "C3": {
+      "box": [
+       421,
+       8,
+       516,
+       285
+      ],
+      "file": "C3.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       3
+      ],
+      "scale": 6,
+      "size": [
+       1344,
+       1662
+      ]
+     },
+     "C4": {
+      "box": [
+       514,
+       8,
+       609,
+       285
+      ],
+      "file": "C4.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       4
+      ],
+      "scale": 6,
+      "size": [
+       1344,
+       1662
+      ]
+     },
+     "C5": {
+      "box": [
+       607,
+       8,
+       701,
+       285
+      ],
+      "file": "C5.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       5
+      ],
+      "scale": 6,
+      "size": [
+       1338,
+       1662
+      ]
+     },
+     "C6": {
+      "box": [
+       699,
+       8,
+       794,
+       285
+      ],
+      "file": "C6.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       6
+      ],
+      "scale": 6,
+      "size": [
+       1344,
+       1662
+      ]
+     },
+     "C7": {
+      "box": [
+       792,
+       8,
+       886,
+       285
+      ],
+      "file": "C7.png",
+      "label_box": [
+       16,
+       8,
+       145,
+       285
+      ],
+      "pair_index": [
+       7
+      ],
+      "scale": 6,
+      "size": [
+       1338,
+       1662
+      ]
+     }
+    },
+    "vlines": [
+     46,
+     144,
+     236,
+     329,
+     421,
+     514,
+     607,
+     699,
+     792,
+     884
+    ]
+   },
+   "reads": {
+    "A": "d4856ea624d9d03a467814f57025fd421f67ebf187e2d5a8e0f78dd4481dc597",
+    "B1": "44c293d37640255cad2de75c8aa19cf8ed4bf820dfb93aadcd7036b077a81ddb",
+    "B2": "bd9375766bde11078d45e9efbcb3c2aa28e6d3e1434d0b0c03110a9864cdd5c7"
+   },
+   "tiebreak": []
+  }
+ ],
+ "analyst": [
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+   "lastmod": "2026-04-30T19:13:29+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-05-04/investinglive_technical-analysis_eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430.html",
+   "published_at": "2026-04-30T19:13:29Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+   "lastmod": "2026-04-30T16:54:21+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-05-04/investinglive_technical-analysis_the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430.html",
+   "published_at": "2026-04-30T16:54:21Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-moves-below-the-200-day-ma-20260429/",
+   "lastmod": "2026-04-29T19:03:55+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-05-04/investinglive_technical-analysis_eurusd-moves-below-the-200-day-ma-20260429.html",
+   "published_at": "2026-04-29T19:03:55Z"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+   "lastmod": "2026-05-01T14:56:15+00:00",
+   "file": "/home/user/plutus-vision/sidecar/raw/2026-05-04/investinglive_technical-analysis_usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501.html",
+   "published_at": "2026-05-01T14:56:15Z"
+  }
+ ],
+ "h10": {
+  "release_date": "2026-04-27",
+  "published_at": "2026-04-27T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260427/",
+  "rate_day": "Apr. 24",
+  "rates": {
+   "EURUSD": 1.1718,
+   "USDJPY": 159.35,
+   "GBPUSD": 1.3518,
+   "USDCAD": 1.3675,
+   "USDSEK": 9.2226,
+   "USDCHF": 0.7848
+  },
+  "k_h10": 107.959368,
+  "dxy_h10": 98.5373
+ },
+ "accepted": [
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-01",
+   "strike": "1.1500",
+   "notional_m": 940,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-01",
+   "strike": "1.1600",
+   "notional_m": 790,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-01",
+   "strike": "1.1640",
+   "notional_m": 970,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-01",
+   "strike": "1.1645",
+   "notional_m": 605,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-01",
+   "strike": "1.1650",
+   "notional_m": 960,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-01",
+   "strike": "1.1750",
+   "notional_m": 784,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-01",
+   "strike": "1.1800",
+   "notional_m": 616,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-01",
+   "strike": "1.1850",
+   "notional_m": 964,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-01",
+   "strike": "1.1900",
+   "notional_m": 622,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-04",
+   "strike": "1.1680",
+   "notional_m": 502,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-04",
+   "strike": "1.1750",
+   "notional_m": 609,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "EURUSD",
+   "date": "2026-05-04",
+   "strike": "1.1900",
+   "notional_m": 812,
+   "ccy": "EUR",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-05-01",
+   "strike": "1.3525",
+   "notional_m": 587,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-05-01",
+   "strike": "1.3545",
+   "notional_m": 530,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-05-01",
+   "strike": "1.3600",
+   "notional_m": 780,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "USDCAD",
+   "date": "2026-05-01",
+   "strike": "1.3660",
+   "notional_m": 767,
+   "ccy": "USD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-05-01",
+   "strike": "0.7020",
+   "notional_m": 877,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-05-01",
+   "strike": "0.7250",
+   "notional_m": 707,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-05-04",
+   "strike": "0.7065",
+   "notional_m": 1400,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-05-04",
+   "strike": "0.7160",
+   "notional_m": 720,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-05-04",
+   "strike": "0.7200",
+   "notional_m": 625,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  },
+  {
+   "pair": "AUDUSD",
+   "date": "2026-05-04",
+   "strike": "0.7250",
+   "notional_m": 800,
+   "ccy": "AUD",
+   "reads_agree": 2,
+   "reads_total": 2,
+   "method": "image_reads",
+   "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+   "published_at": "2026-05-01T05:54:47Z"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [
+   {
+    "price": 1.1675,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-below-the-200-day-ma-20260429/",
+    "published_at": "2026-04-29T19:03:55Z",
+    "quote": "has broken below its 100-day moving average at 1.1675, shifting the bias more to the downside."
+   },
+   {
+    "price": 1.1681,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-below-the-200-day-ma-20260429/",
+    "published_at": "2026-04-29T19:03:55Z",
+    "quote": "The 38.2% retracement of the move up from the March low near 1.1681"
+   },
+   {
+    "price": 1.1708,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+    "published_at": "2026-04-30T19:13:29Z",
+    "quote": "followed by a break of the 100-hour and 100-day MAs near 1.1708 ."
+   },
+   {
+    "price": 1.1717,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+    "published_at": "2026-04-30T19:13:29Z",
+    "quote": "Stay above 1.1717 (200-hour MA): keeps buyers in control"
+   },
+   {
+    "price": 1.1754,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+    "published_at": "2026-04-30T19:13:29Z",
+    "quote": "keeps buyers in control and targets 1.1754 (weekly high), followed by 1.1790 ,"
+   },
+   {
+    "price": 1.1754,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "Bias: Bullish above 1.1754"
+   },
+   {
+    "price": 1.17544,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "broken and extended away from this week’s high at 1.17544 , signaling strong upside momentum"
+   },
+   {
+    "price": 1.179,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+    "published_at": "2026-04-30T19:13:29Z",
+    "quote": "keeps buyers in control and targets 1.1754 (weekly high), followed by 1.1790 ,"
+   },
+   {
+    "price": 1.179,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "is now targeting the April 21–22 highs near 1.1790 ."
+   },
+   {
+    "price": 1.1823,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+    "published_at": "2026-04-30T19:13:29Z",
+    "quote": "and then the swing area at 1.1823–1.1836 ."
+   },
+   {
+    "price": 1.1823,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "opens the door toward the next swing area at 1.1823–1.1836"
+   },
+   {
+    "price": 1.1836,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+    "published_at": "2026-04-30T19:13:29Z",
+    "quote": "and then the swing area at 1.1823–1.1836 ."
+   },
+   {
+    "price": 1.1836,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "opens the door toward the next swing area at 1.1823–1.1836"
+   },
+   {
+    "price": 1.1848,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+    "published_at": "2026-04-30T19:13:29Z",
+    "quote": "A move toward the April high at 1.1848 would be the next upside extension"
+   }
+  ],
+  "GBPUSD": [
+   {
+    "price": 1.3446,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "testing a key swing area between 1.3446 and 1.3465 ."
+   },
+   {
+    "price": 1.3465,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "dipped below the key 100-day moving average at 1.3465 , but sellers couldn’t sustain momentum."
+   },
+   {
+    "price": 1.351,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "hovered around the converged 100- and 200-hour moving averages near 1.3510 —a classic “three’s a crowd” setup"
+   },
+   {
+    "price": 1.3513,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "with a move back toward the 100/200 hour MAs near 1.3510–1.3513"
+   },
+   {
+    "price": 1.35345,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "A move above the European high at 1.35345 triggered momentum buying,"
+   },
+   {
+    "price": 1.3575,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "driving the pair toward a key swing area between 1.3575 and 1.35985 —defined by prior highs"
+   },
+   {
+    "price": 1.3575,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "Support: 1.3575–1.3598 (now risk-defining zone)"
+   },
+   {
+    "price": 1.3598,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "Support: 1.3575–1.3598 (now risk-defining zone)"
+   },
+   {
+    "price": 1.35985,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "driving the pair toward a key swing area between 1.3575 and 1.35985 —defined by prior highs"
+   },
+   {
+    "price": 1.36,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "Upside target: A break above 1.3600 opens the door toward 1.3725–1.37725 ,"
+   },
+   {
+    "price": 1.3725,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "opens the door toward 1.3725–1.37725 , with the 2026 high at 1.38688 further out"
+   },
+   {
+    "price": 1.3725,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "1.3725–1.3772 (next major swing area)"
+   },
+   {
+    "price": 1.3772,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "1.3725–1.3772 (next major swing area)"
+   },
+   {
+    "price": 1.37725,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "opens the door toward 1.3725–1.37725 , with the 2026 high at 1.38688 further out"
+   },
+   {
+    "price": 1.38688,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "quote": "with the 2026 high at 1.38688 further out"
+   },
+   {
+    "price": 1.3869,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "quote": "Year high: 1.3869"
+   }
+  ]
+ },
+ "stats": {
+  "entries_seen": 22,
+  "agreed_first_two_reads": 22,
+  "accepted": 22,
+  "dropped": 0,
+  "text_entries": 0
+ },
+ "h10_src": {
+  "url": "https://www.federalreserve.gov/releases/h10/20260427/",
+  "published_at": "2026-04-27T20:15:00Z",
+  "kind": "h10_release"
+ },
+ "analyst_key": "c942eb04487fb0b88776ec3ef6fe4172a19a05924a9034afcc813e600e40c684",
+ "out": {
+  "week": "2026-05-04",
+  "anchor_utc": "2026-05-04T06:00:00Z",
+  "sources": [
+   {
+    "url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+    "published_at": "2026-05-01T05:54:47Z",
+    "kind": "expiry_post_prior"
+   },
+   {
+    "url": "https://investinglive.com/cms/media/migrated/images/FXO%2001-05_id_0240b306-960a-4c21-a6e2-9f65d51dc734_size900.jpg",
+    "published_at": "2026-05-01T05:54:47Z",
+    "kind": "expiry_image"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+    "published_at": "2026-04-30T19:13:29Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+    "published_at": "2026-04-30T16:54:21Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/eurusd-moves-below-the-200-day-ma-20260429/",
+    "published_at": "2026-04-29T19:03:55Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+    "published_at": "2026-05-01T14:56:15Z",
+    "kind": "analyst_post"
+   },
+   {
+    "url": "https://www.federalreserve.gov/releases/h10/20260427/",
+    "published_at": "2026-04-27T20:15:00Z",
+    "kind": "h10_release"
+   },
+   {
+    "url": "pinebox-bar-store:TVC_DXY/60/2026-05.json#time=1777870800000",
+    "published_at": "2026-05-04T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_EURUSD/60/2026-05.json#time=1777870800000",
+    "published_at": "2026-05-04T06:00:00Z",
+    "kind": "spot_bar"
+   },
+   {
+    "url": "pinebox-bar-store:FX_GBPUSD/60/2026-05.json#time=1777870800000",
+    "published_at": "2026-05-04T06:00:00Z",
+    "kind": "spot_bar"
+   }
+  ],
+  "expiries": {
+   "EURUSD": [
+    {
+     "strike": 1.15,
+     "notional_m": 940,
+     "ccy": "EUR",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.16,
+     "notional_m": 790,
+     "ccy": "EUR",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.1645,
+     "notional_m": 2535,
+     "ccy": "EUR",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 1,
+     "code": 3,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "cluster_of": [
+      {
+       "strike": 1.164,
+       "notional_m": 970
+      },
+      {
+       "strike": 1.1645,
+       "notional_m": 605
+      },
+      {
+       "strike": 1.165,
+       "notional_m": 960
+      }
+     ],
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.175,
+     "notional_m": 784,
+     "ccy": "EUR",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.18,
+     "notional_m": 616,
+     "ccy": "EUR",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.185,
+     "notional_m": 964,
+     "ccy": "EUR",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.19,
+     "notional_m": 622,
+     "ccy": "EUR",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.168,
+     "notional_m": 502,
+     "ccy": "EUR",
+     "cut_date": "2026-05-04",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.175,
+     "notional_m": 609,
+     "ccy": "EUR",
+     "cut_date": "2026-05-04",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.19,
+     "notional_m": 812,
+     "ccy": "EUR",
+     "cut_date": "2026-05-04",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    }
+   ],
+   "GBPUSD": [],
+   "USDJPY": [],
+   "AUDUSD": [
+    {
+     "strike": 0.702,
+     "notional_m": 877,
+     "ccy": "AUD",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 2,
+     "code": 4,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 0.725,
+     "notional_m": 707,
+     "ccy": "AUD",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 0.7065,
+     "notional_m": 1400,
+     "ccy": "AUD",
+     "cut_date": "2026-05-04",
+     "state": "live",
+     "tier": 2,
+     "code": 2,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 0.716,
+     "notional_m": 720,
+     "ccy": "AUD",
+     "cut_date": "2026-05-04",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 0.72,
+     "notional_m": 625,
+     "ccy": "AUD",
+     "cut_date": "2026-05-04",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 0.725,
+     "notional_m": 800,
+     "ccy": "AUD",
+     "cut_date": "2026-05-04",
+     "state": "live",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    }
+   ],
+   "USDCAD": [
+    {
+     "strike": 1.3525,
+     "notional_m": 587,
+     "ccy": "USD",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.3545,
+     "notional_m": 530,
+     "ccy": "USD",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.36,
+     "notional_m": 780,
+     "ccy": "USD",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    },
+    {
+     "strike": 1.366,
+     "notional_m": 767,
+     "ccy": "USD",
+     "cut_date": "2026-05-01",
+     "state": "ghost",
+     "tier": 3,
+     "code": null,
+     "reads_agree": 2,
+     "reads_total": 2,
+     "method": "image_reads",
+     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/",
+     "published_at": "2026-05-01T05:54:47Z"
+    }
+   ]
+  },
+  "spots": {
+   "from": "pinebox bar store, last 1H close before the anchor",
+   "bar_close_utc": "2026-05-04T06:00:00Z",
+   "DXY": 98.115,
+   "EURUSD": 1.17306,
+   "GBPUSD": 1.35921
+  },
+  "k_anchor": 107.563236,
+  "h10": {
+   "release_date": "2026-04-27",
+   "published_at": "2026-04-27T20:15:00Z",
+   "source_url": "https://www.federalreserve.gov/releases/h10/20260427/",
+   "rate_day": "Apr. 24",
+   "rates": {
+    "EURUSD": 1.1718,
+    "USDJPY": 159.35,
+    "GBPUSD": 1.3518,
+    "USDCAD": 1.3675,
+    "USDSEK": 9.2226,
+    "USDCHF": 0.7848
+   },
+   "k_h10": 107.959368,
+   "dxy_h10": 98.5373
+  },
+  "dxy_levels": [
+   {
+    "price": 99.2435,
+    "from_pair": "EURUSD",
+    "strike": 1.15,
+    "notional_m": 940,
+    "tier": 2,
+    "state": "ghost",
+    "code": 4,
+    "cut_date": "2026-05-01"
+   },
+   {
+    "price": 98.5298,
+    "from_pair": "EURUSD",
+    "strike": 1.1645,
+    "notional_m": 2535,
+    "tier": 1,
+    "state": "ghost",
+    "code": 3,
+    "cut_date": "2026-05-01"
+   },
+   {
+    "price": 97.5443,
+    "from_pair": "EURUSD",
+    "strike": 1.185,
+    "notional_m": 964,
+    "tier": 2,
+    "state": "ghost",
+    "code": 4,
+    "cut_date": "2026-05-01"
+   }
+  ],
+  "analyst_levels": {
+   "DXY": [],
+   "EURUSD": [
+    {
+     "price": 1.1675,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-below-the-200-day-ma-20260429/",
+     "published_at": "2026-04-29T19:03:55Z",
+     "quote": "has broken below its 100-day moving average at 1.1675, shifting the bias more to the downside."
+    },
+    {
+     "price": 1.1681,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-below-the-200-day-ma-20260429/",
+     "published_at": "2026-04-29T19:03:55Z",
+     "quote": "The 38.2% retracement of the move up from the March low near 1.1681"
+    },
+    {
+     "price": 1.1708,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+     "published_at": "2026-04-30T19:13:29Z",
+     "quote": "followed by a break of the 100-hour and 100-day MAs near 1.1708 ."
+    },
+    {
+     "price": 1.1717,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+     "published_at": "2026-04-30T19:13:29Z",
+     "quote": "Stay above 1.1717 (200-hour MA): keeps buyers in control"
+    },
+    {
+     "price": 1.1754,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+     "published_at": "2026-04-30T19:13:29Z",
+     "quote": "keeps buyers in control and targets 1.1754 (weekly high), followed by 1.1790 ,"
+    },
+    {
+     "price": 1.1754,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "Bias: Bullish above 1.1754"
+    },
+    {
+     "price": 1.17544,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "broken and extended away from this week’s high at 1.17544 , signaling strong upside momentum"
+    },
+    {
+     "price": 1.179,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+     "published_at": "2026-04-30T19:13:29Z",
+     "quote": "keeps buyers in control and targets 1.1754 (weekly high), followed by 1.1790 ,"
+    },
+    {
+     "price": 1.179,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "is now targeting the April 21–22 highs near 1.1790 ."
+    },
+    {
+     "price": 1.1823,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+     "published_at": "2026-04-30T19:13:29Z",
+     "quote": "and then the swing area at 1.1823–1.1836 ."
+    },
+    {
+     "price": 1.1823,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "opens the door toward the next swing area at 1.1823–1.1836"
+    },
+    {
+     "price": 1.1836,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+     "published_at": "2026-04-30T19:13:29Z",
+     "quote": "and then the swing area at 1.1823–1.1836 ."
+    },
+    {
+     "price": 1.1836,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "opens the door toward the next swing area at 1.1823–1.1836"
+    },
+    {
+     "price": 1.1848,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/eurusd-shifts-the-short-term-bias-to-the-upside-above-the-200-hour-ma-20260430/",
+     "published_at": "2026-04-30T19:13:29Z",
+     "quote": "A move toward the April high at 1.1848 would be the next upside extension"
+    }
+   ],
+   "GBPUSD": [
+    {
+     "price": 1.3446,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "testing a key swing area between 1.3446 and 1.3465 ."
+    },
+    {
+     "price": 1.3465,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "dipped below the key 100-day moving average at 1.3465 , but sellers couldn’t sustain momentum."
+    },
+    {
+     "price": 1.351,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "hovered around the converged 100- and 200-hour moving averages near 1.3510 —a classic “three’s a crowd” setup"
+    },
+    {
+     "price": 1.3513,
+     "role": "level",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "with a move back toward the 100/200 hour MAs near 1.3510–1.3513"
+    },
+    {
+     "price": 1.35345,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "A move above the European high at 1.35345 triggered momentum buying,"
+    },
+    {
+     "price": 1.3575,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "driving the pair toward a key swing area between 1.3575 and 1.35985 —defined by prior highs"
+    },
+    {
+     "price": 1.3575,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "Support: 1.3575–1.3598 (now risk-defining zone)"
+    },
+    {
+     "price": 1.3598,
+     "role": "support",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "Support: 1.3575–1.3598 (now risk-defining zone)"
+    },
+    {
+     "price": 1.35985,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "driving the pair toward a key swing area between 1.3575 and 1.35985 —defined by prior highs"
+    },
+    {
+     "price": 1.36,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "Upside target: A break above 1.3600 opens the door toward 1.3725–1.37725 ,"
+    },
+    {
+     "price": 1.3725,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "opens the door toward 1.3725–1.37725 , with the 2026 high at 1.38688 further out"
+    },
+    {
+     "price": 1.3725,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "1.3725–1.3772 (next major swing area)"
+    },
+    {
+     "price": 1.3772,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "1.3725–1.3772 (next major swing area)"
+    },
+    {
+     "price": 1.37725,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "opens the door toward 1.3725–1.37725 , with the 2026 high at 1.38688 further out"
+    },
+    {
+     "price": 1.38688,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/the-gbpusd-races-higher-but-is-stalling-near-a-swing-area-ceiling-what-next-20260430/",
+     "published_at": "2026-04-30T16:54:21Z",
+     "quote": "with the 2026 high at 1.38688 further out"
+    },
+    {
+     "price": 1.3869,
+     "role": "resistance",
+     "source_url": "https://investinglive.com/technical-analysis/usd-is-moving-lower-helped-by-lower-oil-and-yields-what-are-the-charts-telling-traders-20260501/",
+     "published_at": "2026-05-01T14:56:15Z",
+     "quote": "Year high: 1.3869"
+    }
+   ]
+  },
+  "read_stats": {
+   "entries_seen": 22,
+   "agreed_first_two_reads": 22,
+   "accepted": 22,
+   "dropped": 0,
+   "text_entries": 0
+  },
+  "model": {
+   "id": "muse-spark-1.3-contributor",
+   "effort": "high",
+   "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+   "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+  },
+  "dropped": [],
+  "log": [
+   "anchor = Monday 02:00 America/New_York = 2026-05-04T06:00:00Z",
+   "Monday expiry post https://investinglive.com/Orders/fx-option-expiries-for-4-may-10am-new-york-cut-20260504/ published 2026-05-04T06:02:51+00:00 is AFTER the anchor: excluded, not fetched",
+   "discover: 1 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W18, 2026-W19",
+   "asof_gate: every fetched page was published at or before the anchor",
+   "https://investinglive.com/Orders/fx-option-expiries-for-1-may-10am-new-york-cut-20260501/: reads A/B agree on 22 of 22 entries; third read for columns []",
+   "accept: 22 strike/notional entries accepted (2+ reads identical), 0 dropped",
+   "emit: as-of gate passed for 10 sources and every datum"
+  ]
+ }
+}

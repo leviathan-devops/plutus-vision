@@ -65,6 +65,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    },
@@ -78,6 +79,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    },
@@ -91,6 +93,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    },
@@ -104,6 +107,7 @@
     "code": 2,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    }
@@ -120,6 +124,7 @@
     "code": 4,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    },
@@ -133,6 +138,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    },
@@ -146,6 +152,7 @@
     "code": 4,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    },
@@ -159,6 +166,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    }
@@ -174,6 +182,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    }
@@ -189,6 +198,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    }
@@ -204,6 +214,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    },
@@ -217,6 +228,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    }
@@ -232,6 +244,7 @@
     "code": null,
     "reads_agree": 2,
     "reads_total": 2,
+    "method": "image_reads",
     "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-20-february-10am-new-york-cut-20260220/",
     "published_at": "2026-02-20T07:17:27Z"
    }
@@ -374,7 +387,8 @@
   "entries_seen": 13,
   "agreed_first_two_reads": 13,
   "accepted": 13,
-  "dropped": 0
+  "dropped": 0,
+  "text_entries": 0
  },
  "model": {
   "id": "muse-spark-1.3-contributor",

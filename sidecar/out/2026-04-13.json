@@ -1,0 +1,970 @@
+{
+ "week": "2026-04-13",
+ "anchor_utc": "2026-04-13T06:00:00Z",
+ "sources": [
+  {
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+   "published_at": "2026-04-13T05:26:41Z",
+   "kind": "expiry_post_monday"
+  },
+  {
+   "url": "https://investinglive.com/cms/media/migrated/images/FXO%2013-04_id_7396042a-8cca-4ca9-9b23-0cf8bda8f75e_size900.jpg",
+   "published_at": "2026-04-13T05:26:41Z",
+   "kind": "expiry_image"
+  },
+  {
+   "url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+   "published_at": "2026-04-10T05:19:08Z",
+   "kind": "expiry_post_prior"
+  },
+  {
+   "url": "https://investinglive.com/cms/media/migrated/images/FXO%2010-04_id_49f5482a-613c-4a05-844b-5aeef8c744f5_size900.jpg",
+   "published_at": "2026-04-10T05:19:08Z",
+   "kind": "expiry_image"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/gbpusd-will-have-the-ceiling-to-define-the-bias-in-the-new-trading-week-20260410/",
+   "published_at": "2026-04-10T19:46:41Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-highs-after-consumer-sentiment-falls-to-record-low-level-20260410/",
+   "published_at": "2026-04-10T14:33:19Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/buyers-in-the-eurusd-push-the-price-to-new-session-highs-20260409/",
+   "published_at": "2026-04-09T15:45:47Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://investinglive.com/technical-analysis/gbpusd-price-moves-back-below-the-100200-day-mas-20260408/",
+   "published_at": "2026-04-08T18:36:29Z",
+   "kind": "analyst_post"
+  },
+  {
+   "url": "https://www.federalreserve.gov/releases/h10/20260406/",
+   "published_at": "2026-04-06T20:15:00Z",
+   "kind": "h10_release"
+  },
+  {
+   "url": "pinebox-bar-store:TVC_DXY/60/2026-04.json#time=1776056400000",
+   "published_at": "2026-04-13T06:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_EURUSD/60/2026-04.json#time=1776056400000",
+   "published_at": "2026-04-13T06:00:00Z",
+   "kind": "spot_bar"
+  },
+  {
+   "url": "pinebox-bar-store:FX_GBPUSD/60/2026-04.json#time=1776056400000",
+   "published_at": "2026-04-13T06:00:00Z",
+   "kind": "spot_bar"
+  }
+ ],
+ "expiries": {
+  "EURUSD": [
+   {
+    "strike": 1.1527,
+    "notional_m": 2732,
+    "ccy": "EUR",
+    "cut_date": "2026-04-10",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "cluster_of": [
+     {
+      "strike": 1.152,
+      "notional_m": 832
+     },
+     {
+      "strike": 1.153,
+      "notional_m": 1900
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+    "published_at": "2026-04-10T05:19:08Z"
+   },
+   {
+    "strike": 1.17,
+    "notional_m": 909,
+    "ccy": "EUR",
+    "cut_date": "2026-04-10",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+    "published_at": "2026-04-10T05:19:08Z"
+   },
+   {
+    "strike": 1.174,
+    "notional_m": 607,
+    "ccy": "EUR",
+    "cut_date": "2026-04-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+    "published_at": "2026-04-10T05:19:08Z"
+   },
+   {
+    "strike": 1.18,
+    "notional_m": 1300,
+    "ccy": "EUR",
+    "cut_date": "2026-04-10",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+    "published_at": "2026-04-10T05:19:08Z"
+   },
+   {
+    "strike": 1.145,
+    "notional_m": 2200,
+    "ccy": "EUR",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.15,
+    "notional_m": 675,
+    "ccy": "EUR",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.1595,
+    "notional_m": 549,
+    "ccy": "EUR",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.16462,
+    "notional_m": 2081,
+    "ccy": "EUR",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "cluster_of": [
+     {
+      "strike": 1.164,
+      "notional_m": 781
+     },
+     {
+      "strike": 1.165,
+      "notional_m": 1300
+     }
+    ],
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.17,
+    "notional_m": 1500,
+    "ccy": "EUR",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.172,
+    "notional_m": 789,
+    "ccy": "EUR",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.175,
+    "notional_m": 1100,
+    "ccy": "EUR",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.15,
+    "notional_m": 978,
+    "ccy": "EUR",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.155,
+    "notional_m": 652,
+    "ccy": "EUR",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.1575,
+    "notional_m": 648,
+    "ccy": "EUR",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.16,
+    "notional_m": 3200,
+    "ccy": "EUR",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.165,
+    "notional_m": 1300,
+    "ccy": "EUR",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.1675,
+    "notional_m": 803,
+    "ccy": "EUR",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.17,
+    "notional_m": 1700,
+    "ccy": "EUR",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 1,
+    "code": 1,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.175,
+    "notional_m": 507,
+    "ccy": "EUR",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   }
+  ],
+  "GBPUSD": [
+   {
+    "strike": 1.35,
+    "notional_m": 572,
+    "ccy": "GBP",
+    "cut_date": "2026-04-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+    "published_at": "2026-04-10T05:19:08Z"
+   },
+   {
+    "strike": 1.355,
+    "notional_m": 506,
+    "ccy": "GBP",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   }
+  ],
+  "USDJPY": [
+   {
+    "strike": 158,
+    "notional_m": 1900,
+    "ccy": "USD",
+    "cut_date": "2026-04-10",
+    "state": "ghost",
+    "tier": 1,
+    "code": 3,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+    "published_at": "2026-04-10T05:19:08Z"
+   },
+   {
+    "strike": 160,
+    "notional_m": 967,
+    "ccy": "USD",
+    "cut_date": "2026-04-10",
+    "state": "ghost",
+    "tier": 2,
+    "code": 4,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+    "published_at": "2026-04-10T05:19:08Z"
+   },
+   {
+    "strike": 157.5,
+    "notional_m": 744,
+    "ccy": "USD",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 159.5,
+    "notional_m": 848,
+    "ccy": "USD",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 160,
+    "notional_m": 761,
+    "ccy": "USD",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 161.45,
+    "notional_m": 768,
+    "ccy": "USD",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   }
+  ],
+  "AUDUSD": [
+   {
+    "strike": 0.705,
+    "notional_m": 850,
+    "ccy": "AUD",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 0.6965,
+    "notional_m": 1200,
+    "ccy": "AUD",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 0.71,
+    "notional_m": 575,
+    "ccy": "AUD",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   }
+  ],
+  "EURGBP": [
+   {
+    "strike": 0.87,
+    "notional_m": 600,
+    "ccy": "EUR",
+    "cut_date": "2026-04-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+    "published_at": "2026-04-10T05:19:08Z"
+   }
+  ],
+  "NZDUSD": [
+   {
+    "strike": 0.581,
+    "notional_m": 606,
+    "ccy": "NZD",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   }
+  ],
+  "USDCAD": [
+   {
+    "strike": 1.3815,
+    "notional_m": 511,
+    "ccy": "USD",
+    "cut_date": "2026-04-10",
+    "state": "ghost",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/",
+    "published_at": "2026-04-10T05:19:08Z"
+   },
+   {
+    "strike": 1.37,
+    "notional_m": 770,
+    "ccy": "USD",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.39,
+    "notional_m": 1000,
+    "ccy": "USD",
+    "cut_date": "2026-04-13",
+    "state": "live",
+    "tier": 2,
+    "code": 2,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   },
+   {
+    "strike": 1.385,
+    "notional_m": 526,
+    "ccy": "USD",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   }
+  ],
+  "USDCHF": [
+   {
+    "strike": 0.8,
+    "notional_m": 616,
+    "ccy": "USD",
+    "cut_date": "2026-04-14",
+    "state": "live",
+    "tier": 3,
+    "code": null,
+    "reads_agree": 2,
+    "reads_total": 2,
+    "method": "image_reads",
+    "source_url": "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/",
+    "published_at": "2026-04-13T05:26:41Z"
+   }
+  ]
+ },
+ "spots": {
+  "from": "pinebox bar store, last 1H close before the anchor",
+  "bar_close_utc": "2026-04-13T06:00:00Z",
+  "DXY": 99.012,
+  "EURUSD": 1.16879,
+  "GBPUSD": 1.34059
+ },
+ "k_anchor": 108.318852,
+ "h10": {
+  "release_date": "2026-04-06",
+  "published_at": "2026-04-06T20:15:00Z",
+  "source_url": "https://www.federalreserve.gov/releases/h10/20260406/",
+  "rate_day": "Apr. 3",
+  "rates": {
+   "EURUSD": 1.1523,
+   "USDJPY": 159.64,
+   "GBPUSD": 1.3202,
+   "USDCAD": 1.3942,
+   "USDSEK": 9.4747,
+   "USDCHF": 0.7999
+  },
+  "k_h10": 108.678652,
+  "dxy_h10": 100.1573
+ },
+ "dxy_levels": [
+  {
+   "price": 99.8057,
+   "from_pair": "EURUSD",
+   "strike": 1.1527,
+   "notional_m": 2732,
+   "tier": 1,
+   "state": "ghost",
+   "code": 3,
+   "cut_date": "2026-04-10"
+  },
+  {
+   "price": 98.953,
+   "from_pair": "EURUSD",
+   "strike": 1.17,
+   "notional_m": 909,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-04-10"
+  },
+  {
+   "price": 98.4691,
+   "from_pair": "EURUSD",
+   "strike": 1.18,
+   "notional_m": 1300,
+   "tier": 2,
+   "state": "ghost",
+   "code": 4,
+   "cut_date": "2026-04-10"
+  },
+  {
+   "price": 100.1918,
+   "from_pair": "EURUSD",
+   "strike": 1.145,
+   "notional_m": 2200,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-04-13"
+  },
+  {
+   "price": 99.216,
+   "from_pair": "EURUSD",
+   "strike": 1.16462,
+   "notional_m": 2081,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-04-13"
+  },
+  {
+   "price": 98.953,
+   "from_pair": "EURUSD",
+   "strike": 1.17,
+   "notional_m": 1500,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-04-13"
+  },
+  {
+   "price": 98.7102,
+   "from_pair": "EURUSD",
+   "strike": 1.175,
+   "notional_m": 1100,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-04-13"
+  },
+  {
+   "price": 99.9406,
+   "from_pair": "EURUSD",
+   "strike": 1.15,
+   "notional_m": 978,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-04-14"
+  },
+  {
+   "price": 99.4435,
+   "from_pair": "EURUSD",
+   "strike": 1.16,
+   "notional_m": 3200,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-04-14"
+  },
+  {
+   "price": 99.1974,
+   "from_pair": "EURUSD",
+   "strike": 1.165,
+   "notional_m": 1300,
+   "tier": 2,
+   "state": "live",
+   "code": 2,
+   "cut_date": "2026-04-14"
+  },
+  {
+   "price": 98.953,
+   "from_pair": "EURUSD",
+   "strike": 1.17,
+   "notional_m": 1700,
+   "tier": 1,
+   "state": "live",
+   "code": 1,
+   "cut_date": "2026-04-14"
+  }
+ ],
+ "analyst_levels": {
+  "DXY": [],
+  "EURUSD": [
+   {
+    "price": 1.1667,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/buyers-in-the-eurusd-push-the-price-to-new-session-highs-20260409/",
+    "published_at": "2026-04-09T15:45:47Z",
+    "quote": "50% midpoint of the move down from the February 10 high at 1.1667"
+   },
+   {
+    "price": 1.1671,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-highs-after-consumer-sentiment-falls-to-record-low-level-20260410/",
+    "published_at": "2026-04-10T14:33:19Z",
+    "quote": "200-day moving average at 1.1671"
+   },
+   {
+    "price": 1.16718,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/buyers-in-the-eurusd-push-the-price-to-new-session-highs-20260409/",
+    "published_at": "2026-04-09T15:45:47Z",
+    "quote": "200-day moving average at 1.16718"
+   },
+   {
+    "price": 1.16862,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/buyers-in-the-eurusd-push-the-price-to-new-session-highs-20260409/",
+    "published_at": "2026-04-09T15:45:47Z",
+    "quote": "100-day moving average at 1.16862"
+   },
+   {
+    "price": 1.1688,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-highs-after-consumer-sentiment-falls-to-record-low-level-20260410/",
+    "published_at": "2026-04-10T14:33:19Z",
+    "quote": "100-day moving average at 1.1688"
+   },
+   {
+    "price": 1.1726,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-highs-after-consumer-sentiment-falls-to-record-low-level-20260410/",
+    "published_at": "2026-04-10T14:33:19Z",
+    "quote": "swing area between 1.1726 and 1.1741"
+   },
+   {
+    "price": 1.17265,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/buyers-in-the-eurusd-push-the-price-to-new-session-highs-20260409/",
+    "published_at": "2026-04-09T15:45:47Z",
+    "quote": "the next target comes in between 1.17265 and 1.17414"
+   },
+   {
+    "price": 1.1741,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-highs-after-consumer-sentiment-falls-to-record-low-level-20260410/",
+    "published_at": "2026-04-10T14:33:19Z",
+    "quote": "swing area between 1.1726 and 1.1741"
+   },
+   {
+    "price": 1.17414,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/buyers-in-the-eurusd-push-the-price-to-new-session-highs-20260409/",
+    "published_at": "2026-04-09T15:45:47Z",
+    "quote": "the next target comes in between 1.17265 and 1.17414"
+   },
+   {
+    "price": 1.1744,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-highs-after-consumer-sentiment-falls-to-record-low-level-20260410/",
+    "published_at": "2026-04-10T14:33:19Z",
+    "quote": "with a break above 1.1744 opening the door for further gains."
+   },
+   {
+    "price": 1.17443,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-highs-after-consumer-sentiment-falls-to-record-low-level-20260410/",
+    "published_at": "2026-04-10T14:33:19Z",
+    "quote": "50% midpoint of the 2026 trading range comes in at 1.17443"
+   },
+   {
+    "price": 1.1765,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/buyers-in-the-eurusd-push-the-price-to-new-session-highs-20260409/",
+    "published_at": "2026-04-09T15:45:47Z",
+    "quote": "toward the next swing area between 1.1765 and 1.1778"
+   },
+   {
+    "price": 1.1765,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-highs-after-consumer-sentiment-falls-to-record-low-level-20260410/",
+    "published_at": "2026-04-10T14:33:19Z",
+    "quote": "next upside targets come into focus between 1.1765 and 1.1778"
+   },
+   {
+    "price": 1.1778,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/buyers-in-the-eurusd-push-the-price-to-new-session-highs-20260409/",
+    "published_at": "2026-04-09T15:45:47Z",
+    "quote": "toward the next swing area between 1.1765 and 1.1778"
+   },
+   {
+    "price": 1.1778,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/eurusd-moves-to-new-highs-after-consumer-sentiment-falls-to-record-low-level-20260410/",
+    "published_at": "2026-04-10T14:33:19Z",
+    "quote": "next upside targets come into focus between 1.1765 and 1.1778"
+   }
+  ],
+  "GBPUSD": [
+   {
+    "price": 1.33664,
+    "role": "level",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-price-moves-back-below-the-100200-day-mas-20260408/",
+    "published_at": "2026-04-08T18:36:29Z",
+    "quote": "50% midpoint of the move down from February 26 at 1.33664"
+   },
+   {
+    "price": 1.34,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-price-moves-back-below-the-100200-day-mas-20260408/",
+    "published_at": "2026-04-08T18:36:29Z",
+    "quote": "1.3400 is a natural support level"
+   },
+   {
+    "price": 1.3414,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-will-have-the-ceiling-to-define-the-bias-in-the-new-trading-week-20260410/",
+    "published_at": "2026-04-10T19:46:41Z",
+    "quote": "clustered between 1.3414 and 1.3424—serve as a critical support zone."
+   },
+   {
+    "price": 1.3415,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-price-moves-back-below-the-100200-day-mas-20260408/",
+    "published_at": "2026-04-08T18:36:29Z",
+    "quote": "staying below the 1.3415–1.3417 zone keeps sellers in control"
+   },
+   {
+    "price": 1.34154,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-price-moves-back-below-the-100200-day-mas-20260408/",
+    "published_at": "2026-04-08T18:36:29Z",
+    "quote": "61.8% retracement of the move down from the February 26 high at 1.34154"
+   },
+   {
+    "price": 1.3417,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-price-moves-back-below-the-100200-day-mas-20260408/",
+    "published_at": "2026-04-08T18:36:29Z",
+    "quote": "confluence of the 100- and 200-day moving averages near 1.3417"
+   },
+   {
+    "price": 1.3424,
+    "role": "support",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-will-have-the-ceiling-to-define-the-bias-in-the-new-trading-week-20260410/",
+    "published_at": "2026-04-10T19:46:41Z",
+    "quote": "clustered between 1.3414 and 1.3424—serve as a critical support zone."
+   },
+   {
+    "price": 1.347,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-price-moves-back-below-the-100200-day-mas-20260408/",
+    "published_at": "2026-04-08T18:36:29Z",
+    "quote": "rally stalled within a well-defined ceiling between 1.3470 and 1.3488"
+   },
+   {
+    "price": 1.34708,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-will-have-the-ceiling-to-define-the-bias-in-the-new-trading-week-20260410/",
+    "published_at": "2026-04-10T19:46:41Z",
+    "quote": "well-defined swing-area ceiling between 1.34708 and 1.3488"
+   },
+   {
+    "price": 1.3488,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-price-moves-back-below-the-100200-day-mas-20260408/",
+    "published_at": "2026-04-08T18:36:29Z",
+    "quote": "rally stalled within a well-defined ceiling between 1.3470 and 1.3488"
+   },
+   {
+    "price": 1.3488,
+    "role": "resistance",
+    "source_url": "https://investinglive.com/technical-analysis/gbpusd-will-have-the-ceiling-to-define-the-bias-in-the-new-trading-week-20260410/",
+    "published_at": "2026-04-10T19:46:41Z",
+    "quote": "well-defined swing-area ceiling between 1.34708 and 1.3488"
+   }
+  ]
+ },
+ "read_stats": {
+  "entries_seen": 47,
+  "agreed_first_two_reads": 47,
+  "accepted": 47,
+  "dropped": 0,
+  "text_entries": 0
+ },
+ "model": {
+  "id": "muse-spark-1.3-contributor",
+  "effort": "high",
+  "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+  "runtime": "aether_agent_backend_v2 / pi-durable task sidecar.week"
+ },
+ "dropped": [],
+ "log": [
+  "anchor = Monday 02:00 America/New_York = 2026-04-13T06:00:00Z",
+  "discover: 2 expiry post(s), 4 analyst candidate(s) from sitemaps 2026-W15, 2026-W16",
+  "asof_gate: every fetched page was published at or before the anchor",
+  "https://investinglive.com/Orders/fx-option-expiries-for-13-april-10am-new-york-cut-20260413/: reads A/B agree on 29 of 29 entries; third read for columns []",
+  "https://investinglive.com/Orders/fx-option-expiries-for-10-april-10am-new-york-cut-20260410/: reads A/B agree on 18 of 18 entries; third read for columns []",
+  "accept: 47 strike/notional entries accepted (2+ reads identical), 0 dropped",
+  "emit: as-of gate passed for 12 sources and every datum"
+ ]
+}

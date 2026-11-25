@@ -32,3 +32,14 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
 - L-12 Network: operator approved hosts investinglive.com, www.investinglive.com, www.forex.com, www.federalreserve.gov, www.ice.com, www.cmegroup.com, opencode.ai, api.cloudflare.com (measured 200 on investinglive, fed, opencode models).
 - L-13 Memory: set up OmniGraph (github.com/modernrelay/omnigraph) + 5-10 markdown files (decision chain, task queue, current state, compaction survival, journal, reasoning chain);
   persist durable facts every 3-5 turns; "This is going to take at least 10 to 15 compactions". He then left: "I'm going to leave you alone after this."
+
+## 2026-11-25 ~14:30 UTC - operator intervention after looking at my frames (BINDING, supersedes my E2/E3 plans)
+- L-14 E1 FIRST AND ONLY. "Don't even touch E2 or E3 until E1 is fixed." Order is zones -> shapes -> trades; forbidden to move forward until each works. E2/E3 code stays in the file but OFF by default.
+- L-15 His verdict on my frames: ~30% of zones right, the rest "completely penetrated", plus "random zones floating off in empty space"; best frame ~50%. "I do not want to see zones rendered on the chart that are not accurate." No "17 random zones".
+- L-16 Acceptance: "Verify across 4 separate weeks that the E1 zones are actually 90% accurate" (he wants 95%). Each rendered zone must fit: correct pressure, correct direction, correct ZFP "based on the price action mechanics", not invented.
+- L-17 Baseline to replicate then exceed: Trident_Report_2026W14_Mar30-Apr3.pdf (upload: /root/.claude/uploads/*/d253d0fc-Trident_Report_2026W14_Mar30-Apr3.pdf) made by GLM 5.1 with the Toolset (same files as canon/Toolset; unzipped copy /home/user/inputs/toolset_glm). The PDF step is gone: compute the same data and render it directly in Pine.
+  Its E1 format = FOUR wide bands per pair (R2, R1 supply; D1, D2 demand), columns Range | Type Supply/Demand | BoM/MoM | Reactions | ZFP% | Confl x/14 | option/key level | status.
+  W14 numbers: DXY R1 100.50-100.65 BoM 0 rx 10% 9/14 ; R2 100.00-100.25 MoM 2 rx 25% 6/14 ; D1 99.30-99.60 MoM 1 rx 30% 6/14 ; D2 98.80-99.10 BoM 0-1 rx 20% 7/14.
+  EURUSD R2 1.1600-1.1640 BoM 15% 9/14 ; R1 1.1545-1.1575 MoM 30% 7/14 ; D1 1.1495-1.1515 MoM 35% 8/14 ; D2 1.1430-1.1460 BoM 20% 8/14.
+  GBPUSD R2 1.3400-1.3480 BoM 12% ; R1 1.3300-1.3350 MoM 28% ; D2 1.3250-1.3280 MoM 32% ; D1 1.3150-1.3200 BoM 22%.
+- L-18 E3 remark (for later, not now): his setups need RRR 4x+.

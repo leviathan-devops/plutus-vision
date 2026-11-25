@@ -1,0 +1,27 @@
+//@version=6
+// ORACLE RENDER (probe, not the engine): the E1 zone maps printed on page 3 of Trident_Report_2026W14_Mar30-Apr3.pdf, drawn as-is
+// so they can be looked at against the candles of that week. Numbers are the report's, copied verbatim.
+indicator("W14 report zones (oracle render)", overlay = true, max_boxes_count = 100, max_labels_count = 100)
+string TZ = "America/New_York"
+int t0 = timestamp(TZ, 2026, 3, 30, 2, 0)
+int t1 = timestamp(TZ, 2026, 4, 3, 17, 0)
+f_z(float bot, float top, bool sup, string txt) =>
+    color c = sup ? color.rgb(242, 54, 69) : color.rgb(8, 153, 129)
+    box.new(t0, top, t1, bot, xloc = xloc.bar_time, bgcolor = color.new(c, 75), border_color = c, border_width = 1)
+    label.new(t0, (top + bot) / 2, txt, xloc = xloc.bar_time, style = label.style_label_left, color = color.new(c, 100), textcolor = color.white, size = size.small)
+if barstate.islast
+    if str.contains(syminfo.ticker, "DXY")
+        f_z(100.50, 100.65, true,  "R1 Supply BoM | 10% ZFP | 9/14 | '52-week high 100.64'")
+        f_z(100.00, 100.25, true,  "R2 Supply MoM | 25% | 6/14 | psychological 100.00")
+        f_z(99.30,  99.60,  false, "D1 Demand MoM | 30% | 6/14 | prior week mid-range")
+        f_z(98.80,  99.10,  false, "D2 Demand BoM | 20% | 7/14 | prior week BoM origin")
+    else if str.contains(syminfo.ticker, "EUR")
+        f_z(1.1600, 1.1640, true,  "R2 Supply BoM | 15% | 9/14 | 1.1600 Apr 1")
+        f_z(1.1545, 1.1575, true,  "R1 Supply MoM | 30% | 7/14 | 1.1550 Mar 30")
+        f_z(1.1495, 1.1515, false, "D1 Demand MoM | 35% | 8/14 | 1.1500 Mar 31 + Apr 2")
+        f_z(1.1430, 1.1460, false, "D2 Demand BoM | 20% | 8/14 | prior weekly support")
+    else if str.contains(syminfo.ticker, "GBP")
+        f_z(1.3400, 1.3480, true,  "R2 Supply BoM | 12% | 8/14")
+        f_z(1.3300, 1.3350, true,  "R1 Supply MoM | 28% | 6/14")
+        f_z(1.3250, 1.3280, false, "D2 Demand MoM | 32% | 5/14")
+        f_z(1.3150, 1.3200, false, "D1 Demand BoM | 22% | 7/14")

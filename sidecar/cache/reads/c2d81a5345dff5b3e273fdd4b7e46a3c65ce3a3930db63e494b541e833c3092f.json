@@ -1,0 +1,11 @@
+{
+ "key": "c2d81a5345dff5b3e273fdd4b7e46a3c65ce3a3930db63e494b541e833c3092f",
+ "kind": "expiry_read_A",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "eb731a7b12b96ef0b38f63bd495c865935212f9f89a26f28b69971c282e5101f",
+ "image": "cache/views/fecb7dd68702c360/A.png",
+ "image_sha256": "17ff8cd38adfb590c879ee7ee2c52af8cb21dc537caae42d834e8e6ba9e57cc9",
+ "text": "{\"pairs\":[\"EUR/USD\",\"USD/JPY\",\"GBP/USD\",\"USD/CHF\",\"USD/CAD\",\"AUD/USD\",\"NZD/USD\",\"EUR/GBP\"],\"spot\":{\"EUR/USD\":\"1.1681\",\"USD/JPY\":\"159.73\",\"GBP/USD\":\"1.3464\",\"USD/CHF\":\"0.7866\",\"USD/CAD\":\"1.3705\",\"AUD/USD\":\"0.7126\",\"NZD/USD\":\"0.5850\",\"EUR/GBP\":\"0.8674\"},\"rows\":[{\"label\":\"Friday\",\"date\":\"24/04\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1550\",\"notional\":\"€1.4bn\"},{\"strike\":\"1.1600\",\"notional\":\"€895m\"},{\"strike\":\"1.1650\",\"notional\":\"€1.7bn\"},{\"strike\":\"1.1750\",\"notional\":\"€883m\"}],\"USD/JPY\":[{\"strike\":\"157.00\",\"notional\":\"$2.8bn\"},{\"strike\":\"159.00\",\"notional\":\"$756m\"},{\"strike\":\"160.00\",\"notional\":\"$1.0bn\"},{\"strike\":\"161.00\",\"notional\":\"$2.4bn\"}],\"GBP/USD\":[],\"USD/CHF\":[],\"USD/CAD\":[],\"AUD/USD\":[{\"strike\":\"0.7200\",\"notional\":\"A$514m\"}],\"NZD/USD\":[],\"EUR/GBP\":[]}},{\"label\":\"Monday\",\"date\":\"27/04\",\"cells\":{\"EUR/USD\":[{\"strike\":\"1.1650\",\"notional\":\"€1.2bn\"},{\"strike\":\"1.1720\",\"notional\":\"€559m\"}],\"USD/JPY\":[{\"strike\":\"158.00\",\"notional\":\"$1.7bn\"},{\"strike\":\"158.50\",\"notional\":\"$818m\"},{\"strike\":\"159.00\",\"notional\":\"$963m\"},{\"strike\":\"159.50\",\"notional\":\"$508m\"},{\"strike\":\"160.00\",\"notional\":\"$856m\"},{\"strike\":\"161.00\",\"notional\":\"$1.1bn\"},{\"strike\":\"161.25\",\"notional\":\"$624m\"}],\"GBP/USD\":[],\"USD/CHF\":[],\"USD/CAD\":[],\"AUD/USD\":[{\"strike\":\"0.7130\",\"notional\":\"A$687m\"}],\"NZD/USD\":[],\"EUR/GBP\":[]}}]}"
+}

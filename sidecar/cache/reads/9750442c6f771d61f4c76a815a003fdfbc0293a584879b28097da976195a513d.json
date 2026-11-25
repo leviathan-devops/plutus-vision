@@ -1,0 +1,11 @@
+{
+ "key": "9750442c6f771d61f4c76a815a003fdfbc0293a584879b28097da976195a513d",
+ "kind": "analyst_levels",
+ "model": "muse-spark-1.3-contributor",
+ "effort": "high",
+ "gateway": "https://opencode.ai/inference/go/openai/v1/responses",
+ "prompt_sha256": "cc2301e6b38c9be8f600189d7560d0c5270e57440fff48ba6d8b8ffca93e3e43",
+ "image": null,
+ "image_sha256": null,
+ "text": "{\"levels\":[{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.13616\",\"role\":\"support\",\"quote\":\"sellers pushed the pair right to the edge of a key support level—but they did not go over the edge . The June 26 low at 1.13616 held\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.13238\",\"role\":\"level\",\"quote\":\"If sellers can break below and stay below 1.13616 , the focus shifts toward the June low at 1.13238 .\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.13775\",\"role\":\"level\",\"quote\":\"traders will look to get and stay above 1.13775 on its way back toward the middle\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1362\",\"role\":\"level\",\"quote\":\"middle of the 1.1362 to 1.1482 trading range.\"},{\"article\":2,\"instrument\":\"EURUSD\",\"price\":\"1.1482\",\"role\":\"level\",\"quote\":\"middle of the 1.1362 to 1.1482 trading range.\"},{\"article\":4,\"instrument\":\"EURUSD\",\"price\":\"1.1362\",\"role\":\"support\",\"quote\":\"support at 1.1362 sits just 48 pips lower.\"},{\"article\":4,\"instrument\":\"EURUSD\",\"price\":\"1.1323\",\"role\":\"level\",\"quote\":\"open the door toward the June low at 1.1323 .\"},{\"article\":4,\"instrument\":\"EURUSD\",\"price\":\"1.1423\",\"role\":\"level\",\"quote\":\"with both currently sitting near 1.1423 .\"},{\"article\":4,\"instrument\":\"EURUSD\",\"price\":\"1.1462\",\"role\":\"resistance\",\"quote\":\"would target the 38.2% retracement at 1.1462 , followed by last week's high at 1.1482 . Those resistance levels are only about 50 to 70 pips above\"},{\"article\":4,\"instrument\":\"EURUSD\",\"price\":\"1.1482\",\"role\":\"resistance\",\"quote\":\"would target the 38.2% retracement at 1.1462 , followed by last week's high at 1.1482 . Those resistance levels are only about 50 to 70 pips above\"}]}"
+}
