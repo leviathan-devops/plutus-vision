@@ -54,3 +54,13 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
   (Jul 1 candle at 101.24; Jul 3 low wick at 100.56-100.66). Week high 101.27 turned inside the top band, Friday low 100.60 bounced inside the bottom band, the middle band was a pivot crossed all week.
   HIS WORDS: those bands are "based purely on price action candles", already covered by the V1 baseline (S/D + liquidity). E1 = "the other side of the coin, the institutional pressure zones
   rendered on top of this based on all of the data available from the web fetch sources that are spoken in the prompt". Same degree of accuracy as his drawing, any random week, Monday London-open data only.
+
+## 2026-11-25 ~14:10 UTC (container clock) - operator's answers to my four questions (BINDING; they REPLACE my own scoring ideas)
+- L-22 ZONE WIDTH IS NEVER A CONSTANT. "there is not a fixed const this is the entire fucking point it needs to be based on THE DATA OF THE FUCKING MARKET not a hardcoded value."
+  => a zone's top/bottom come from the evidence it is drawn from (the wick tip .. body edge of its origin candle, the strike cluster, the S/D base), like his circled candles. My 0.3 x weekly-range band width is REJECTED.
+- L-23 WHAT A VALID REACTION IS: (a) sharp reactions - "whiplash type shapes with wicks OR solid candle bodies"; (b) "consolidations inside/around the zone". "Both are valid reactions with different meanings."
+  INVALID = "price piercing through the zone like it's not even there. that means your zone is shit and completely invalid." Zones mark where institutional pressure and liquidity sit; "it is FUNDAMENTALLY IMPOSSIBLE that these get pierced like paper."
+- L-24 PIVOT ZONES ARE VALID: "pivots are valid reaction points as price consolidates through/around these... 50% of the price action + E2 shapes are consolidation based. swing scalps is consolidation and is the most frequently recurring".
+  Do NOT restrict E1 to rejection zones. Apply the Fractal Architecture doc as authoritative context when reading his examples.
+- L-25 Draw only zones that qualify; fewer than four is fine.
+- L-26 He caught that the frame I sent as "my engine on the golden week" (ide_110) had NO zones on it: the render had failed and I had not looked at it. RULE: never send or cite a frame I have not opened.

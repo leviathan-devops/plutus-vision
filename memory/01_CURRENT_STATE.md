@@ -24,6 +24,13 @@ Updated: 2026-11-25 ~12:25 UTC (container clock)
 - Sidecar has 15 weeks compiled (`sidecar/build-inputs` -> DXY/EURUSD strings; GBPUSD nearly empty: few GBP strikes >= 850m). E2 plan written: memory/09_E2_E3_PLAN.md. E2 NOT started.
 - Backtest tab fixed (LS-15): V1 removed from this instance's room script store; engine no longer starves.
 
+## STATE 14:15 UTC (container clock; newest) - metric and width rules now come from the operator (04 L-22..L-26)
+- Failure = price SLICES THROUGH a zone with no reaction. Sharp rejection OR consolidation in/around the zone = valid. Pivot zones valid. Width = extent of the zone's own evidence, never a constant. Draw only what qualifies.
+- So: E1 v2's fixed-width bands (0.3 x weekly range) are rejected; go back to evidence-derived extents (v1 had them) but with far better selection, and score with REJECT / CONSOLIDATE / SLICED.
+- TODO now: (1) tools/research/score2 with the L-23 definition, sanity-check on his golden-week bands (101.19-101.29 reject, 100.94-100.985 pivot, 100.545-100.675 reject) and on the W14 bands;
+  (2) measure slice-through rate per evidence type with evidence-derived extents; (3) redesign selection; (4) Pine; (5) frames I have actually opened, on 4 unseen weeks, to the operator.
+- The blank frame: re-render the golden week and LOOK before sending anything.
+
 ## STATE 16:15 UTC - metric fixed by the operator: FIRST-TOUCH REACTION >= 90% (L-19). Width is the open trade-off.
 - His hand-drawn bands are ~10-13 pips wide on DXY. Current E1 v2 bands are 0.3 x weekly range (~36 pips): on the golden week mine are 101.25-101.61 / 100.49-100.85 / 99.90-100.26
   vs his 101.19-101.29 / 100.545-100.675 - right places, three times too wide (frame evidence/ide_110_e1v2_dxy_1h_golden.png).
