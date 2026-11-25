@@ -44,6 +44,8 @@ def build(pair, monday, expiries, K, spot):
     for z in lsz:
         if z['swept'] or (z['side'] == 'low') != (z['price'] < spot):
             continue
+        if z['date'] < days[-10]['date'] and not any(c['kind'] == 'candle' and c['bot'] - u(3) <= z['price'] <= c['top'] + u(3) for c in seeds):
+            continue          # an older unswept extreme stays a sweep zone (green box) only; level zones come from the last 10 days (as in the report)
         host = [s for s in seeds if s['kind'] == 'candle' and s['bot'] - u(3) <= z['price'] <= s['top'] + u(3)]
         if host:
             host[0]['sweeps'].append(z)                       # swing extreme inside the order block = confluent floor / ceiling (Step 0e)

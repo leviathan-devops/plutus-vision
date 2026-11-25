@@ -49,20 +49,21 @@ def generate(pair, monday, r):
             c = '%d,%d,%d' % CAT[t['cat']]
             o.append(f"        box.new({b0}, {g(t['top'])}, {tsR}, {g(t['bot'])}, bgcolor=color.new(color.rgb({c}), 85), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
             o.append(f"        label.new({b0 + 4 * 86400000}, {g(t['top'])}, \"Gap In-fill | MODERATE | {' + '.join(t['signals'])}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.white, 25), size=size.small)")
-    o.append('    if show_lsz')
+    if r['lsz']:
+        o.append('    if show_lsz')
     for z in r['lsz']:
         act = z['priority'].startswith('ACTIVE')
         col = '80,230,100' if act else '40,180,80'
         o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({col}), {60 if act else 70}), border_color=color.rgb({col}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
-    o.append('    if show_options')
+    opts = [x for x in r['levels'] if x['dim'] == 'opt' and x['tier'] <= 2 and not x.get('ghost')]
+    if opts:
+        o.append('    if show_options')
     n = 0
     for x in r['levels']:
         if x['dim'] == 'opt' and x['tier'] <= 2 and not x.get('ghost'):
             n += 1
             o.append(f"        line.new({tsL}, {g(x['p'])}, {tsR}, {g(x['p'])}, xloc=xloc.bar_time, color=color.rgb(255,200,60), width={2 if x['notional_m'] >= 1000 else 1})")
             o.append(f"        label.new({b0 + (5 + n % 2) * 86400000}, {g(x['p'])}, \"{vol(x['notional_m'])} Option Strike Target\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)")
-    if n == 0:
-        o.append('        na')
     return '\n'.join(o) + '\n'
 
 

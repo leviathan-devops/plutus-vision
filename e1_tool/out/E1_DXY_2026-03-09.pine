@@ -9,18 +9,13 @@ show_infill = input.bool(true, "Gap in-fill levels")
 show_options = input.bool(true, "Option Strikes")
 isPair = str.contains(syminfo.ticker, "DXY")
 if barstate.islast and isPair
-    // RESISTANCE CEILING 99.63-99.85 MODERATE 6/14 Soft Wall ZFP 30-50% Tier 2: IP-Only
+    // RESISTANCE CEILING 99.63-99.68 MODERATE 6/14 Soft Wall ZFP 30-50% Tier 2: IP-Only
     if show_zones
-        box.new(1772229600000, 99.85, 1773439200000, 99.63, bgcolor=color.new(color.rgb(180,40,30), 80), border_color=color.rgb(180,40,30), border_width=2, xloc=xloc.bar_time)
-        label.new(1773093600000, 99.85, "Resistance Ceiling | MODERATE | 30-50% ZFP | Tier 2", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
+        box.new(1772229600000, 99.68, 1773439200000, 99.63, bgcolor=color.new(color.rgb(180,40,30), 80), border_color=color.rgb(180,40,30), border_width=2, xloc=xloc.bar_time)
+        label.new(1773093600000, 99.68, "Resistance Ceiling | MODERATE | 30-50% ZFP | Tier 2", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
     if show_levels
         line.new(1772834400000, 99.68, 1773439200000, 99.68, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
         line.new(1772834400000, 99.64, 1773439200000, 99.64, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
-        line.new(1772834400000, 99.85, 1773439200000, 99.85, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
-        line.new(1772834400000, 99.82, 1773439200000, 99.82, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
-        line.new(1772834400000, 99.82, 1773439200000, 99.82, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
-        line.new(1772834400000, 99.79, 1773439200000, 99.79, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
-        line.new(1772834400000, 99.77, 1773439200000, 99.77, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
     // UPPER RESISTANCE 99.15-99.44 MODERATE-HEAVY 9.0/14 Soft Wall ZFP 30-50% Tier 1: Confluent
     if show_zones
         box.new(1772229600000, 99.44, 1773439200000, 99.15, bgcolor=color.new(color.rgb(180,40,30), 80), border_color=color.rgb(180,40,30), border_width=2, xloc=xloc.bar_time)
@@ -134,10 +129,10 @@ if barstate.islast and isPair
         line.new(1772834400000, 97.85, 1773439200000, 97.85, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1772834400000, 97.80, 1773439200000, 97.80, xloc=xloc.bar_time, color=color.new(color.rgb(100,150,255), 35), width=1, style=line.style_dotted)
         line.new(1772834400000, 97.77, 1773439200000, 97.77, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
-    // MID-RANGE SUPPORT 97.23-97.52 MODERATE-HEAVY 8.0/14 Soft Wall ZFP 30-50% Tier 1: Confluent
+    // KEY SUPPORT BAND 97.23-97.52 MODERATE-HEAVY 8.0/14 Soft Wall ZFP 30-50% Tier 1: Confluent
     if show_zones
         box.new(1772229600000, 97.52, 1773439200000, 97.23, bgcolor=color.new(color.rgb(0,150,150), 80), border_color=color.rgb(0,150,150), border_width=2, xloc=xloc.bar_time)
-        label.new(1773093600000, 97.52, "Mid-Range Support | MODERATE-HEAVY | 30-50% ZFP | Tier 1", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
+        label.new(1773093600000, 97.52, "Key Support Band | MODERATE-HEAVY | 30-50% ZFP | Tier 1", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
     if show_candles
         box.new(1771401600000, 97.33, 1773439200000, 97.23, bgcolor=color.new(color.rgb(0,150,150), 55), border_color=color.white, border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1771401600000, 97.33, "MoM Demand 0X", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.black, 30), textcolor=color.white, size=size.small)
@@ -148,13 +143,6 @@ if barstate.islast and isPair
         line.new(1772834400000, 97.25, 1773439200000, 97.25, xloc=xloc.bar_time, color=color.new(color.rgb(150,150,150), 35), width=1, style=line.style_dotted)
         line.new(1772834400000, 97.50, 1773439200000, 97.50, xloc=xloc.bar_time, color=color.new(color.rgb(150,150,150), 35), width=1, style=line.style_dotted)
         line.new(1772834400000, 97.49, 1773439200000, 97.49, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
-    // KEY SUPPORT BAND 96.49-96.54 MODERATE 6.0/14 Soft Wall ZFP 30-50% Tier 2: IP-Only
-    if show_zones
-        box.new(1772229600000, 96.54, 1773439200000, 96.49, bgcolor=color.new(color.rgb(0,150,150), 80), border_color=color.rgb(0,150,150), border_width=2, xloc=xloc.bar_time)
-        label.new(1773093600000, 96.54, "Key Support Band | MODERATE | 30-50% ZFP | Tier 2", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
-    if show_levels
-        line.new(1772834400000, 96.50, 1773439200000, 96.50, xloc=xloc.bar_time, color=color.new(color.rgb(150,150,150), 35), width=1, style=line.style_dotted)
-        line.new(1772834400000, 96.49, 1773439200000, 96.49, xloc=xloc.bar_time, color=color.new(color.rgb(235,235,235), 35), width=1, style=line.style_dotted)
     if show_lsz
         box.new(1772229600000, 99.82, 1773439200000, 99.77, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1772229600000, 96.54, 1773439200000, 96.49, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)

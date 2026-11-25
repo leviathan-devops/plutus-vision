@@ -91,5 +91,3 @@ if barstate.islast and isPair
         box.new(1788555600000, 1.1641, 1789765200000, 1.1636, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1788555600000, 1.1654, 1789765200000, 1.1649, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1788555600000, 1.1574, 1789765200000, 1.1569, bgcolor=color.new(color.rgb(80,230,100), 60), border_color=color.rgb(80,230,100), border_width=2, xloc=xloc.bar_time)
-    if show_options
-        na
