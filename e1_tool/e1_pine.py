@@ -4,6 +4,7 @@ inside each pressure zone the candle structure (A) and every computed level (B) 
 usage: python3 e1_pine.py MONDAY PAIR [K] > out.pine"""
 import sys, json, os
 import e1_data as D, e1_pillars as P, e1_zones as Z
+import e2_shapes as E2
 
 CAT = {'RES': (180, 40, 30), 'MID': (255, 152, 0), 'SUP': (0, 150, 150)}
 PIL = {'P1': ('100,150,255', 'pivot'), 'P2': ('190,120,255', 'MA'), 'P5': ('235,235,235', 'structure'), 'P6': ('150,150,150', 'fib/round'), 'P8': ('255,200,60', 'option')}
@@ -17,11 +18,11 @@ def generate(pair, monday, r):
     f = '%.2f' if pair == 'DXY' else '%.4f'
     g = lambda v: f % v
     b0 = D.boundary_ms(monday)
-    tsL, tsR, tsLab = b0 - 7 * 86400000, b0 + 7 * 86400000, b0 + 3 * 86400000
+    tsL, tsR, tsLab = b0 - 7 * 86400000, b0 + 7 * 86400000, b0 - 3 * 86400000      # zone labels sit left of the week so the week itself stays clear for E2 / E3
     o = ['//@version=6', f'indicator("TRIDENT E1 {pair} {monday}", overlay=true, max_boxes_count=500, max_labels_count=500, max_lines_count=500)',
          f'// Engine 1 map for the week of {monday} ({pair}); every number below was computed by e1_tool from data closed before the boundary {D.ts(b0)} UTC',
          'show_zones = input.bool(true, "IP Zones")', 'show_candles = input.bool(true, "Candle structures (A)")', 'show_levels = input.bool(true, "Computed levels (B)")',
-         'show_lsz = input.bool(true, "LSZ")', 'show_infill = input.bool(true, "Gap in-fill levels")', 'show_options = input.bool(true, "Option Strikes")',
+         'show_lsz = input.bool(true, "LSZ")', 'show_e2 = input.bool(true, "E2 shape chain")', 'show_infill = input.bool(true, "Gap in-fill levels")', 'show_options = input.bool(true, "Option Strikes")',
          f'isPair = str.contains(syminfo.ticker, "{D.SYM[pair].split("_")[-1]}")', 'if barstate.islast and isPair']
     for z in r['zones']:
         c = '%d,%d,%d' % CAT[z['cat']]
@@ -64,6 +65,18 @@ def generate(pair, monday, r):
             n += 1
             o.append(f"        line.new({tsL}, {g(x['p'])}, {tsR}, {g(x['p'])}, xloc=xloc.bar_time, color=color.rgb(255,200,60), width={2 if x['notional_m'] >= 1000 else 1})")
             o.append(f"        label.new({b0 + (5 + n % 2) * 86400000}, {g(x['p'])}, \"{vol(x['notional_m'])} Option Strike Target\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)")
+    # ── ENGINE 2: macro shape chain, day by day (P533 6.6 Step 5, 6.9): projected path + day labels
+    e2 = r.get('e2')
+    if e2:
+        o.append('    if show_e2')
+        o.append(f'        // PRIMARY: {e2["primary"]} | {e2["alternative"]}')
+        for d in e2['days']:
+            for (ta, pa), (tb, pb) in zip(d['path'], d['path'][1:]):
+                o.append(f"        line.new({ta}, {g(pa)}, {tb}, {g(pb)}, xloc=xloc.bar_time, color=color.new(color.white, 10), width=2, style=line.style_dashed)")
+            top = max(p for _, p in d['path'])
+            txt = d['day'] + ': ' + d['shape'] + ('' if d['dir'] == 'range' else ' ' + d['dir'])
+            o.append(f"        label.new({(d['t0'] + d['t1']) // 2}, {g(top)}, \"{txt}\", xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.rgb(40,60,120), 10), textcolor=color.white, size=size.normal)")
+            o.append(f"        line.new({d['t0']}, {g(top)}, {d['t0']}, {g(min(p for _, p in d['path']))}, xloc=xloc.bar_time, color=color.new(color.white, 70), width=1, style=line.style_dotted, extend=extend.both)")
     return '\n'.join(o) + '\n'
 
 
@@ -72,7 +85,9 @@ def run(pair, monday, K=None):
     K = K or P.k_factor(side['h10']['rates'])
     spot = D.closed(pair, '60', monday)[-1]['close']
     exp = [dict(e, day=e.get('cut_date', '')[5:]) for e in side['expiries'].get('EURUSD' if pair == 'DXY' else pair, [])]
-    return Z.build(pair, monday, exp, K, spot)
+    r = Z.build(pair, monday, exp, K, spot)
+    r['e2'] = E2.chain(pair, monday, r)
+    return r
 
 
 if __name__ == '__main__':

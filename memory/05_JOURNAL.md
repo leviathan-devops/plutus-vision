@@ -213,3 +213,13 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - memory/13_E1_TOOL_STATUS.md = the morning report (what exists, reference comparison, honest per-week verdict, assumptions A1-A5, the open point: nothing mapped ahead of price in breakout / sell-off weeks).
 - Facts over 120 week/pair maps in e1_tool/out/OUTCOMES_all_weeks.txt + outcome_rows.json (breakdown script was in the scratchpad; numbers copied into memory/13).
 - Tool state at this entry = commit "memory: E1 tool status / morning report (13)..." on AGENT. e1_tool/e1 MONDAY PAIR is the entry point.
+
+## 2026-11-26 - L-40 applied (1H zones, 4H overview); E2 v1 built and rendered on the anchor week
+- e1_zones.valid_sd: 4H Step 0f = overview; zones = 1H candles (prior 14 days, same candle rule, <=1X, not broken); 1H candle inside a kept 4H zone inherits BoM/MoM and Tier 1 if 4H BoM. Anchor week DXY Apr 20-24 now 7 zones:
+  Ceiling 99.08-99.18, Upper Res 98.87-99.06, Upper Res 98.66-98.85, Equilibrium 98.17-98.47, Mid Support 97.93-98.06 (1H BoM demand 04-17 17:00: Monday's low lands on it), Mid Support 97.68-97.84, Key Support 97.63-97.68.
+- e1_tool/e2_shapes.py = ENGINE 2 (canon extract: e1_tool/canon_extract/P533_lines_1725-2057_PART_VI_ENGINE2.md). chain(): current shape from the last 3 days (day_shape: BS = range>=0.8 ADR & body>=60%; WL = range>=0.8 ADR & wick>=50%; R after BS/WL; else SS - thresholds are MY assumption E2-A1),
+  SS 2 days (trading speed rule) unless last day was BS (then R 1 day) or a momentum WL; BS toward the WEAKER bounding zone (ZFP class of the zone type, then score, then tier; tie -> last shape direction / 4H bias); bound holds (Hard/Standard) -> WL at it;
+  bound fails (Soft/One-Touch/Ghost) -> BS over 2 days to the next zone; target zone class decides next (Hard -> RWL, One-Touch -> PBS, else R) per 6.4.1. Output: days[] with path waypoints, primary chain, alternative, audit.
+- Pine: E2 drawn as white dashed projected path + day labels (toggle show_e2). First frame (anchor week): path = Mon-Tue SS inside Equilibrium, Wed-Thu BS up into Upper Resistance, Fri R down - the candles did Mon dip/SS, Tue-Wed up, Thu high in Upper Resistance, Fri down. Direction and sequence match; timing ~1 day early at the start.
+- e2 text check on other weeks: Jul 27 DXY 4/5 days same shape as my day classifier; Apr 27 and Aug 17 poor (predicted SS / BS up; week sold off). To investigate after E3 exists on the anchor week.
+- E3 canon extract saved: e1_tool/canon_extract/P533_lines_2058-3210_ENGINE3_and_trade_structure.md; binding E3 spec = canon/Toolset/TRIDENT_v5.3.3_CORRECTED_E3_ENGINE.md (R-16).
