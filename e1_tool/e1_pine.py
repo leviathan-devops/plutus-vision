@@ -71,7 +71,7 @@ def generate(pair, monday, X, extra=(), rch=None):
     n0 = len(o)
     for z in X['v1']['240']['liquidity']:
         if lo_v <= z['bot'] and z['top'] <= hi_v and near(z['bot'], z['top']):
-            o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)")
+            o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 80), border_color=color.new(color.rgb(63,164,106), 30), border_width=1, xloc=xloc.bar_time)")
     if len(o) == n0:
         o.append('        na')
     o.append('    if show_ob')
@@ -92,7 +92,7 @@ def generate(pair, monday, X, extra=(), rch=None):
                 continue
             c = '41,98,255' if z['type'] == 'Demand' else '242,54,69'
             x0 = max(z['origin_time'], tsL)
-            o.append(f"        box.new({x0}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), {78 if z['tf'] in ('240', '60') else 86}), border_color=color.rgb({c}), border_width={2 if z['tf'] == '240' else 1}, xloc=xloc.bar_time)")
+            o.append(f"        box.new({x0}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), {84 if z['tf'] in ('240', '60') else 90}), border_color=color.rgb({c}), border_width={2 if z['tf'] == '240' else 1}, xloc=xloc.bar_time)")
             o.append(f"        label.new({x0 + int((tsR - x0) * 0.30)}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
         if len(o) == n0:
             o.append('        na')
@@ -108,7 +108,7 @@ def generate(pair, monday, X, extra=(), rch=None):
         zb, zt = (z['level'], z['level'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['level'] - 0.05 * U, z['level'])
         if near(zb, zt) == far:
             continue
-        o.append(f"        box.new({tsL}, {g(zt)}, {tsR}, {g(zb)}, bgcolor=color.new(color.rgb({c}), {60 if act else 70}), border_color=color.rgb({c}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
+        o.append(f"        box.new({tsL}, {g(zt)}, {tsR}, {g(zb)}, bgcolor=color.new(color.rgb({c}), {78 if act else 84}), border_color=color.rgb({c}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
         # Step 0.45a (P533 'LSZ BOTTOM EDGE EXTENSION'): 'Institutions often sweep 0.05-0.10 beyond the visible extreme before reversing' - the sweep reach beyond the extreme, dotted
         xb, xt = (z['level'] - 0.10 * U, z['level']) if z['side'] == 'Demand-side' else (z['level'], z['level'] + 0.10 * U)
         o.append(f"        box.new({tsL}, {g(xt)}, {tsR}, {g(xb)}, bgcolor=color.new(color.rgb({c}), 100), border_color=color.new(color.rgb({c}), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
