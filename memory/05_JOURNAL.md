@@ -470,3 +470,10 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   let a zone whose candle sits at the running extreme stand without the structure test until price has had the chance to break it; then re-render Oct 5 and the golden week (must not change) and judge.
 - The same defect explains May 18 and Jun 8 (no ceiling, no target, every setup rejected).
 - G2 outside audit of e1_sd / e2_chain / e3_trades against the canon text was launched (report: audit/G2_audit_engines.md when it finishes).
+
+## 2026-11-26 night (after compaction 8) - E1 top-of-map defect closed; E2 / E3 canon steps added; EURUSD + GBPUSD golden trades now come out; Oct 5 and May 18 judged on frames (ledger 66-67b)
+- Read first-hand this step: P533:1205-1312 (Step 0 / 0.45 / 0.5), P452 Steps 0g / 0h / 1-5 and Pillar 9 (954-1074), synthesis + 9.5 + 9.7 (1075-1216), P533 Part V (1568-1724), the whole E2 extract again, FA 2.1-2.2 and 7-10, GS Laws 1-7 + Parts 2-3,
+  SMC notes (order blocks, liquidity), E3C Phases 0, 1, 2, 3, 4.2, 4.3, 5, 6, 7, 10 and 8.18-8.19. Still unread: E3C Phases 8, 9, 11, 12, zero-tolerance list, Appendix F; Fibonacci Spiderwebs PDF; P533 Parts IV / IX / X.
+- What was built: see memory/01 top block and D-25..D-33. Tested and REVERTED: Step 0b / 0c with no neighbour test at all (matches the report's Apr 16 low, but more magnets raise ZFP numbers and move the EURUSD golden bounds and trades off his).
+- Findings to act on: (1) his stops are canon rule (b) on liquidity steps incl. the 4H bands (facts in 08); (2) weeks where price sits over the map now get a ceiling from the sweep zone of the pre-anchor high (Oct 5 102.485-102.535, May 18 99.359-99.409: both held all week);
+  (3) on both judged weeks the real floor was the wall / BoM zone 12-17 pips behind the MoM zone Engine 2 used; (4) sweep-zone shorts were stopped by the breach the canon announces for such zones; (5) default frames are squashed by far zones.

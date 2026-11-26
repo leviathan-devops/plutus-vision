@@ -243,18 +243,18 @@ if barstate.islast and isPair
         line.new(1791478800000, 101.926, 1791529200000, 101.668, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1791529200000, 101.668, 1791565200000, 102.206, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
     if show_e3
-        // DX1 Tue SS LONG E 101.926 SL 101.841 TP 102.475 RRR 6.43 | Swing Scalp / London | entry zone edge (TS-1); SL 1 pip outside the back edge of the next rung; TP bounding zone near edge + 1 pip (strong zone)
+        // DX1 Mon SS SHORT E 102.485 SL 102.548 TP 101.911 RRR 9.11 | Swing Scalp / London | entry sweep zone near edge (TS-1); SL outside the sweep extreme; TP LQZ inside the opposing zone: midpoint
+        box.new(1791180000000, 102.548, 1791219600000, 102.485, bgcolor=color.new(color.rgb(242,54,69), 70), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1791180000000, 102.485, 1791219600000, 101.911, bgcolor=color.new(color.rgb(8,153,129), 76), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791181800000, 101.911, "DX1 SS SHORT 9.11R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // DX2 Tue SS LONG E 101.926 SL 101.841 TP 102.475 RRR 6.43 | Swing Scalp / London | entry zone edge (TS-1); SL 1 pip outside the back edge of the next rung; TP bounding zone near edge + 1 pip (strong zone)
         box.new(1791234000000, 101.926, 1791306000000, 101.841, bgcolor=color.new(color.rgb(242,54,69), 70), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1791234000000, 102.475, 1791306000000, 101.926, bgcolor=color.new(color.rgb(8,153,129), 76), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791235800000, 102.475, "DX1 SS LONG 6.43R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // DX2 Wed SS SHORT E 102.510 SL 102.555 TP 102.183 RRR 7.27 | Swing Scalp / London | entry sweep zone mid; SL outside the sweep extreme; TP LQZ rung at the range middle: midpoint
-        box.new(1791320400000, 102.555, 1791345600000, 102.510, bgcolor=color.new(color.rgb(242,54,69), 70), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1791320400000, 102.510, 1791345600000, 102.183, bgcolor=color.new(color.rgb(8,153,129), 76), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791322200000, 102.183, "DX2 SS SHORT 7.27R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // DX3 Wed BS SHORT E 102.510 SL 102.555 TP 101.762 RRR 16.63 | HTF Swing / NY | entry sweep zone mid; SL outside the sweep extreme; TP LQZ inside the target zone: midpoint
-        box.new(1791370800000, 102.555, 1791529200000, 102.510, bgcolor=color.new(color.rgb(242,54,69), 70), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1791370800000, 102.510, 1791529200000, 101.762, bgcolor=color.new(color.rgb(8,153,129), 76), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791372600000, 101.762, "DX3 BS SHORT 16.63R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1791235800000, 102.475, "DX2 SS LONG 6.43R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // DX3 Wed SS SHORT E 102.485 SL 102.548 TP 102.183 RRR 4.8 | Swing Scalp / London | entry sweep zone near edge (TS-1); SL outside the sweep extreme; TP LQZ rung at the range middle: midpoint
+        box.new(1791320400000, 102.548, 1791345600000, 102.485, bgcolor=color.new(color.rgb(242,54,69), 70), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1791320400000, 102.485, 1791345600000, 102.183, bgcolor=color.new(color.rgb(8,153,129), 76), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791322200000, 102.183, "DX3 SS SHORT 4.8R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // DX4 Fri WL LONG E 101.693 SL 101.648 TP 102.091 RRR 8.84 | HTF Swing / NY | entry sweep zone mid; SL outside the sweep extreme; TP LQZ at the opposing sweep zone: midpoint
         box.new(1791493200000, 101.693, 1791565200000, 101.648, bgcolor=color.new(color.rgb(242,54,69), 70), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1791493200000, 102.091, 1791565200000, 101.693, bgcolor=color.new(color.rgb(8,153,129), 76), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
