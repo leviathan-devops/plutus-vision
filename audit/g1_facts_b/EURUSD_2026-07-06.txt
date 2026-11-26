@@ -1,0 +1,29 @@
+EURUSD 2026-07-06 spot 1.14235
+  E2 Current Shape: SS range (HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 15-30% | price between MID-RANGE SUPPORT and UPPER RESISTANCE, no breakout in the last two sessions | FA 9: 2 piercing sessions -> 'EXPEC
+  E2 Ceiling: UPPER RESISTANCE [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 1H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+  E2 Floor: MID-RANGE SUPPORT [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity sweep zone (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+  E2 Breakout direction: up | pair translation of the DXY chain (down inverted)
+  E2 chain: SS [HIGH, cum 0.8] -> RWL [MODERATE, cum 0.4] -> BS [MODERATE, cum 0.4] -> WL [HIGH, cum 0.32] -> RWL [HIGH, cum 0.32]
+  Mon forecast SS         range 1.14053-1.14444 | actual H 1.14449 L 1.14083 C 1.14413
+  Tue forecast SS         range 1.14053-1.14444 | actual H 1.14480 L 1.14080 C 1.14122
+  Wed forecast SS+RWL+BS  up    1.13902-1.14339 | actual H 1.14315 L 1.13911 C 1.14160
+  Thu forecast BS         up    1.13962-1.14248 | actual H 1.14494 L 1.14141 C 1.14299
+  Fri forecast BS+WL+RWL  up    1.14248-1.14635 | actual H 1.14608 L 1.14114 C 1.14147
+  IP RESISTANCE CEILING 1.15950-1.16046 Standard Wall 15-30% BoM
+  IP UPPER RESISTANCE   1.14967-1.15027 Standard Wall 15-30% BoM
+  IP UPPER RESISTANCE   1.14444-1.14533 Standard Wall 15-30% MoM
+  IP MID-RANGE SUPPORT  1.13977-1.14053 Standard Wall 15-30% MoM
+  IP KEY SUPPORT BAND   1.13721-1.13801 Post-Expiry Ghost 20-40% MoM
+  IP KEY SUPPORT BAND   1.13486-1.13546 Standard Wall 15-30% BoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP; a zone-edge order counts as met when price comes within the pair's forward spread of its entry: DXY 0.02, EURUSD 1 pip, GBPUSD 2 pips):
+  EU1      Mon SS     SHORT E 1.14442 SL 1.14508 TP 1.14063 5.74R | filled Mon 18:45 -> TP HIT Tue 21:15
+  EU2      Mon SS     SHORT E 1.14385 SL 1.14451 TP 1.14063 4.87R | filled Mon 17:30 -> STOPPED Mon 21:45
+  EU3      Mon SS     LONG  E 1.14018 SL 1.13960 TP 1.14434 7.23R | filled - -> not filled inside its bracket (order expires)
+  EU4      Mon SS     LONG  E 1.14095 SL 1.14037 TP 1.14434 5.89R | filled Mon 13:45 -> TP HIT Mon 18:45 || re-armed: filled Tue 19:15 -> STOPPED Tue 21:30
+  EU5      Wed RWL    SHORT E 1.14269 SL 1.14369 TP 1.13940 3.29R | filled Wed 07:15 -> TP HIT Wed 11:30
+  EU6      Wed BS     LONG  E 1.13940 SL 1.13872 TP 1.14555 9.11R | filled Wed 11:30 -> TP HIT Fri 02:00
+  EU7      Wed SS     LONG  E 1.14018 SL 1.13960 TP 1.14269 4.36R | filled Tue 21:30 -> TP HIT Wed 07:15
+  EU8      Thu Ladder LONG  E 1.14164 SL 1.14120 TP 1.14555 8.93R | filled Wed 21:00 -> TP HIT Fri 02:00
+  EU9      Fri RWL    SHORT E 1.14598 SL 1.14653 TP 1.14239 6.52R | filled Fri 02:15 -> TP HIT Fri 12:45
+  EU10     Fri Ladder LONG  E 1.14401 SL 1.14357 TP 1.14555 3.51R | filled Thu 06:15 -> STOPPED Thu 07:00

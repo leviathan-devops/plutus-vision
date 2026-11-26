@@ -1,0 +1,21 @@
+GBPUSD 2026-04-20 spot 1.34915
+  E2 Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: MID-RANGE SUPPORT | ZFP: 30-50% | 04-20 TKY: spike down through MID-RANGE SUPPORT (ZFP 45), every 1H close back at a sweep target [the row's ZFP conditi
+  E2 Ceiling: UPPER RESISTANCE [IP MoM Active ZFP 10] -> SLOW (active MoM (2 reactions), opposing liquidity 1H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+  E2 Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+  E2 Breakout direction: down | pair translation of the DXY chain (up inverted)
+  E2 chain: SS [MODERATE-HIGH, cum 0.65] -> RWL [MODERATE, cum 0.33] -> BS [MODERATE, cum 0.33] -> RWL [HIGH, cum 0.26]
+  Mon forecast SS         range 1.34660-1.34932 | actual H 1.35444 L 1.34818 C 1.35333
+  Tue forecast SS         range 1.34660-1.34946 | actual H 1.35396 L 1.34744 C 1.35068
+  Wed forecast SS+RWL+BS  down  1.34879-1.34973 | actual H 1.35353 L 1.34901 C 1.34998
+  Thu forecast BS         down  1.34429-1.34879 | actual H 1.35182 L 1.34476 C 1.34665
+  Fri forecast BS+RWL     down  1.34073-1.34660 | actual H 1.35370 L 1.34532 C 1.35222
+  IP RESISTANCE CEILING 1.35940-1.36008 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.35719-1.35805 Soft Wall 30-50% MoM
+  IP UPPER RESISTANCE   1.35241-1.35327 Soft Wall 30-50% MoM
+  IP UPPER RESISTANCE   1.34932-1.35019 Hard Wall 5-15% MoM
+  IP MID-RANGE SUPPORT  1.34768-1.34846 Soft Wall 30-50% MoM
+  IP KEY SUPPORT BAND   1.33998-1.34073 Soft Wall 30-50% BoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP; a zone-edge order counts as met when price comes within the pair's forward spread of its entry: DXY 0.02, EURUSD 1 pip, GBPUSD 2 pips):
+  GB1      Mon SS     LONG  E 1.34660 SL 1.34575 TP 1.34922 3.08R | filled - -> not filled inside its bracket (order expires)
+  GB2      Wed BS     SHORT E 1.34399 SL 1.34483 TP 1.34083 3.78R | filled - -> void: price already beyond the stop when the order starts

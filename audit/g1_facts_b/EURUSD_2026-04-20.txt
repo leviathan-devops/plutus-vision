@@ -1,0 +1,24 @@
+EURUSD 2026-04-20 spot 1.17531
+  E2 Current Shape: SS range (MODERATE) | Anchoring Zone: EQUILIBRIUM ZONE | ZFP: 15-30% | after 04-17 NY price stabilises at EQUILIBRIUM ZONE (ZFP 22) | FA 9: 3 piercing sessions -> 'EXPECT 1-2 FULL DAYS OF HTF CON
+  E2 Ceiling: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+  E2 Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+  E2 Breakout direction: down | pair translation of the DXY chain (up inverted)
+  E2 chain: SS [MODERATE-HIGH, cum 0.65] -> RWL [MODERATE, cum 0.33] -> BS [MODERATE, cum 0.33] -> RWL [HIGH, cum 0.26]
+  Mon forecast SS         range 1.17207-1.17847 | actual H 1.17902 L 1.17475 C 1.17881
+  Tue forecast SS         range 1.17207-1.17847 | actual H 1.17910 L 1.17187 C 1.17424
+  Wed forecast SS+RWL+BS  down  1.17497-1.17966 | actual H 1.17624 L 1.17030 C 1.17045
+  Thu forecast BS         down  1.17380-1.17865 | actual H 1.17165 L 1.16691 C 1.16832
+  Fri forecast BS+RWL     down  1.16996-1.17380 | actual H 1.17230 L 1.16729 C 1.17171
+  IP RESISTANCE CEILING 1.18446-1.18506 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.18213-1.18292 Soft Wall 30-50% MoM
+  IP UPPER RESISTANCE   1.17988-1.18067 Soft Wall 30-50% MoM
+  IP UPPER RESISTANCE   1.17706-1.17791 Soft Wall 30-50% MoM
+  IP EQUILIBRIUM ZONE   1.17497-1.17573 Standard Wall 15-30% MoM
+  IP KEY SUPPORT BAND   1.16570-1.16638 Soft Wall 30-50% BoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP; a zone-edge order counts as met when price comes within the pair's forward spread of its entry: DXY 0.02, EURUSD 1 pip, GBPUSD 2 pips):
+  EU1      Mon SS     SHORT E 1.17920 SL 1.17996 TP 1.17207 9.38R | filled - -> not filled inside its bracket (order expires)
+  EU2      Wed SS     SHORT E 1.17920 SL 1.17996 TP 1.17497 5.56R | filled - -> not filled inside its bracket (order expires)
+  EU3      Wed BS     SHORT E 1.17920 SL 1.17996 TP 1.17006 12.02R | filled - -> not filled
+  EU4      Thu Ladder SHORT E 1.17656 SL 1.17709 TP 1.17006 12.26R | parent EU3 not filled -> order never live
+  EU5      Fri Ladder SHORT E 1.17372 SL 1.17425 TP 1.17006 6.9R | parent EU3 not filled -> order never live

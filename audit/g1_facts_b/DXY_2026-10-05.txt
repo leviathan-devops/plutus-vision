@@ -1,0 +1,21 @@
+DXY 2026-10-05 spot 102.308
+  E2 Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: MID-RANGE SUPPORT | ZFP: 30-50% | 10-05 TKY: 1H close through MID-RANGE SUPPORT (ZFP 30), price still beyond [the row's ZFP condition is not met: best d
+  E2 Ceiling: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+  E2 Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+  E2 Breakout direction: none - both bounds hold | 
+  E2 chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range 101.926-102.485 | actual H 102.433 L 102.084 C 102.113
+  Tue forecast SS         range 101.926-102.485 | actual H 102.285 L 101.754 C 101.841
+  Wed forecast SS         range 101.926-102.485 | actual H 102.499 L 101.822 C 102.277
+  Thu forecast SS         range 101.926-102.485 | actual H 102.467 L 102.033 C 102.124
+  Fri forecast SS         range 101.926-102.485 | actual H 102.335 L 101.920 C 102.232
+  IP MID-RANGE SUPPORT  101.961-102.051 Soft Wall 30-50% MoM
+  IP KEY SUPPORT BAND   101.750-101.843 Soft Wall 30-50% MoM
+  IP KEY SUPPORT BAND   101.479-101.565 Standard Wall 15-30% MoM
+  IP KEY SUPPORT BAND   101.231-101.308 Soft Wall 30-50% BoM
+  IP KEY SUPPORT BAND   100.980-101.056 Post-Expiry Ghost 20-40% BoM
+  IP KEY SUPPORT BAND   100.470-100.530 Soft Wall 30-50% BoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP; a zone-edge order counts as met when price comes within the pair's forward spread of its entry: DXY 0.02, EURUSD 1 pip, GBPUSD 2 pips):
+  DX1      Mon SS     SHORT E 102.485 SL 102.565 TP 101.926 6.99R | filled Wed 12:15 -> TP HIT Fri 05:30
+  DX2      Mon SS     LONG  E 101.926 SL 101.776 TP 102.535 4.06R | filled Tue 11:00 -> STOPPED Tue 11:45

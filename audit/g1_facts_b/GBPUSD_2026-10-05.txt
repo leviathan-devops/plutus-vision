@@ -1,0 +1,20 @@
+GBPUSD 2026-10-05 spot 1.32090
+  E2 Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 30-50% | 10-02 LON: spike up through UPPER RESISTANCE (ZFP 30), every 1H close back at a sweep target [the row's ZFP condition i
+  E2 Ceiling: 1H (Unmitigated) | BoM [SD BoM Virgin] -> HOLD (BoM zone: always reacts if unmitigated (E2X:149))
+  E2 Floor: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+  E2 Breakout direction: none - both bounds hold | pair translation of the DXY chain (None inverted)
+  E2 chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range 1.31949-1.32319 | actual H 1.32390 L 1.31900 C 1.32211
+  Tue forecast SS         range 1.31949-1.32319 | actual H 1.32856 L 1.32013 C 1.32742
+  Wed forecast SS         range 1.31949-1.32319 | actual H 1.32761 L 1.31935 C 1.32126
+  Thu forecast SS         range 1.31949-1.32319 | actual H 1.32485 L 1.31843 C 1.32268
+  Fri forecast SS         range 1.31949-1.32319 | actual H 1.32503 L 1.32057 C 1.32242
+  IP RESISTANCE CEILING 1.34463-1.34523 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.33966-1.34030 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.33192-1.33252 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.32457-1.32535 Soft Wall 30-50% MoM
+  IP MID-RANGE SUPPORT  1.31991-1.32051 Soft Wall 30-50% MoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP; a zone-edge order counts as met when price comes within the pair's forward spread of its entry: DXY 0.02, EURUSD 1 pip, GBPUSD 2 pips):
+  GB1      Mon SS     SHORT E 1.32319 SL 1.32437 TP 1.31900 3.55R | filled Mon 07:45 -> STOPPED Tue 08:30
+  GB2      Mon SS     LONG  E 1.31949 SL 1.31814 TP 1.32309 2.67R | filled Mon 13:30 -> TP HIT Tue 01:30 || re-armed: filled Wed 12:15 -> TP HIT Thu 14:15 || re-armed: filled - -> not filled

@@ -1,0 +1,20 @@
+EURUSD 2026-10-05 spot 1.11920
+  E2 Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 15-30% | 10-05 TKY: 1H close through UPPER RESISTANCE (ZFP 22), price still beyond [the row's ZFP condition is not met: best des
+  E2 Ceiling: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+  E2 Floor: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+  E2 Breakout direction: none - both bounds hold | pair translation of the DXY chain (None inverted)
+  E2 chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range 1.11660-1.12491 | actual H 1.12249 L 1.11690 C 1.12218
+  Tue forecast SS         range 1.11660-1.12491 | actual H 1.12767 L 1.12028 C 1.12583
+  Wed forecast SS         range 1.11660-1.12491 | actual H 1.12629 L 1.11645 C 1.11953
+  Thu forecast SS         range 1.11660-1.12491 | actual H 1.12267 L 1.11719 C 1.12089
+  Fri forecast SS         range 1.11660-1.12491 | actual H 1.12427 L 1.11874 C 1.11973
+  IP RESISTANCE CEILING 1.14997-1.15057 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.13942-1.14022 Standard Wall 15-30% BoM
+  IP UPPER RESISTANCE   1.13708-1.13773 Standard Wall 15-30% BoM
+  IP UPPER RESISTANCE   1.13185-1.13253 Standard Wall 15-30% BoM
+  IP UPPER RESISTANCE   1.12942-1.13002 Standard Wall 15-30% BoM
+  IP UPPER RESISTANCE   1.12451-1.12530 Standard Wall 15-30% MoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP; a zone-edge order counts as met when price comes within the pair's forward spread of its entry: DXY 0.02, EURUSD 1 pip, GBPUSD 2 pips):
+  EU1      Mon SS     LONG  E 1.11660 SL 1.11580 TP 1.12491 10.39R | filled Wed 12:15 -> filled, still open at the week end
