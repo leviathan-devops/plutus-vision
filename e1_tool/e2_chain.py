@@ -502,7 +502,7 @@ def build(pair, monday, X, lead=None, force_dir=None):
     why = ''
     if lead is not None:
         bdir = inv[lead['bdir']]
-        why = f"pair translation of the DXY chain ({lead['bdir']} inverted)"
+        why = f"pair translation of the DXY chain ({lead['bdir']} inverted)" if lead['bdir'] else 'pair translation of the DXY chain: DXY ranges all week (Part IX: DXY gives direction and timing, the pair its levels)'
     elif mode == 'bs0':
         bdir, why = s0['dir'], 'breakout in progress at the anchor'
     elif force_dir is not None:
@@ -529,7 +529,7 @@ def build(pair, monday, X, lead=None, force_dir=None):
         kind = (bc if bdir == 'up' else bf)[0] if mode == 'ss' else None
         if lead is not None:
             kind = lead.get('kind')
-    audit.append(f"Breakout direction: {bdir or 'none - both bounds hold'} | {why}")
+    audit.append(f"Breakout direction: {bdir or ('none' if lead is not None else 'none - both bounds hold')} | {why}")
     # ---------------------------------------------------------------- Step 3: chain extension
     chain, cum = [], 1.0
 
@@ -762,7 +762,13 @@ def build(pair, monday, X, lead=None, force_dir=None):
         if shapes == ['SS']:
             # 6.1.1 'Price oscillates within a defined range bounded by IP zones above ... and below': the day's range runs INTO its bounding zones (to their far edges); a sweep-zone
             # bound is breached briefly, 0.05-0.10 beyond its extreme (P533 Step 0.45a) (D-64)
-            f_far = (floor.get('reach', floor['bot']) if floor else f_edge); c_far = (ceil.get('reach', ceil['top']) if ceil else c_edge)
+            # a DEPLETED bound (3 reactions) is pierced until the liquidity beyond it (P533:1159; 6.4.2 'pierce through zone until reaching BoM Liquidity'): the range runs to that liquidity (D-85)
+            def far_of(z, up):
+                if z.get('reach') is not None:
+                    return z['reach']
+                lb = liquidity_beyond(X, z, up) if (info(z) or {}).get('counter') == 'Depleted' else None
+                return (lb['top'] if up else lb['bot']) if lb is not None else (z['top'] if up else z['bot'])
+            f_far = far_of(floor, False) if floor else f_edge; c_far = far_of(ceil, True) if ceil else c_edge
             lo, hi = min(lo, f_edge, f_far), max(hi, c_edge, c_far)
         dirs = [st['dir'] for st in di if st['shape'] in ('BS', 'PBS')] or [st['dir'] for st in di if st['shape'] in ('RWL', 'WL')]
         key = next((z['name'] for st in reversed(di) for z in (st['to'], st['frm']) if z is not None and z.get('name')), '-')
