@@ -1,3 +1,13 @@
+## STATE (NEWEST, 2026-11-26, after compaction 9; model fable-5-2 since the operator's /model switch) - golden week re-verified on frames with the v2 engines (ledger 71-73); S3 loop next
+- Commits this step: fbf932c (D-44 pivot = nearest V1 4H band; D-45 TP at a liquidity-band target = near edge), 103245f (D-46 IP-zone anchors also offer the order blocks lying mostly inside them), 1fb68f9 (Pine labels).
+- Golden DXY: 8 setups, 7 TP, 1 unfilled, 0 SL; his #2 #3 #4 #5 #6 #8 + Thu ladder within 3 pips (his #1 Mon L 100.945 missing). Golden EURUSD: 7 setups, 5 TP, 1 SL (EU2 Mon S 1.14385), 1 unfilled; his #3 #4 #6 within 3 pips on entry and SL,
+  #5 entry 0.8 / SL 4.4, #8 TP 14 pips short; #1 Mon S 1.14322, #2 Mon L 1.14106, #7 Thu reinforcement 1.14233 missing. Facts about his Monday scalps and the Law-27 chain: journal entry '(after compaction 9)'.
+- Tried and reverted: Law-27 re-arm inside SS runs; one SS order per day (journal). Side effect kept: May 18 / Jul 13 each have one more stopped Monday long (D-46).
+- NEXT, in order: (1) E3 stop = the canon's own selection (E3C:247-275: mirrorConfidenceScore >= 0.6 -> rule (a), < 0.6 -> rule (b); relevant zone by fuel state ZR-1) - re-check all golden stops, then May 18 / Oct 5 / Jul 13 fills;
+  (2) deep-demand zone + Phase 9 staggered entries (E3C Phase 9, WorkingDayMap deepDemandZoneId); (3) scalp-stack (30m/15m) anchors for SS (E3C:96, Phase 4.1 layer 4) -> his Monday scalps; (4) EURUSD #8 TP, #7 reinforcement (Phase 9 at Fib 1.382/1.618);
+  (5) E2 open weeks: Jul 13 direction, Aug 17 (E1 Step 9.5 gap scan), Sep 14 timing; (6) GBPUSD golden frame; 15m entries frame via the Backtest tab; (7) audit/G2_response.md, S/D findings, fresh outside audit (opus); (8) S3 four weeks x three pairs counted by outside sub-agents; S5 ship package + blind test.
+- Tools: scratchpad snap.py / snap_base.py (old-vs-new setup diff over maps), scalp.py (30m/15m blocks near spot), tools/research/oracle_diff.py, fills.py.
+
 ## STATE (NEWEST, 2026-11-26 late, opus-5-5) - ENGINE 3 v2 IN PROGRESS (e1_tool/e3_trades.py rewritten: _cands / _stop / _confidence / _build / _reinforce; old file in git history before this commit)
 - E3 v2 = Phase 2 candidates from the E2 chain (SS steps -> BOTH directions at every standing 1H/4H S/D zone inside the range within 30 pips of the bound + the bound itself, LTF zones first;
   other E2 moves -> one candidate at the zone E2 starts them from; retest anchored at the pivot; post-spike RWL at the unswept sweep zone against the target), gates FRESHNESS / MOM_REVERSAL / SOURCE_INVALID /
