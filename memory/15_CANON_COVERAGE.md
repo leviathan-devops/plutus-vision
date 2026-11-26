@@ -147,3 +147,25 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 3. E1 rows in this order: E1-V1 -> E1-MTF -> E1-S0f/BM/RC (true BoM/MoM, reactions) -> E1-S06 -> E1-AS (+ L-39) -> remaining PB rows -> render, compare with his chart.
 4. E2 rows 61 -> 610 + TRV/ZOC/AIR, render boxes + line, compare with his day tags.
 5. E3 rows P0 -> P12, render position boxes, compare with his six trades.
+
+## 7. Changes of 2026-11-26 night (after compaction 8) - read with the rows above (states: B built, PB partial, NB not built)
+| id | what changed | state |
+|---|---|---|
+| E1-S0 | Step 0b / 0c scan the last days and the D1 bar in progress with the neighbours that exist (D-26); 0d order blocks + 0e confluent flags exist in e1_ip.levels | B |
+| E1-S045 | sweep zones also at the pre-anchor session high / low (D-25); 0.45e ACTIVE SL TRIGGER flag; 0.45c hidden gaps, 0.45d BoM confluence flag still missing | PB |
+| E1-S15 | anchors: + session high / low to the anchor; HWC / LWC still missing | PB |
+| E1-P9 | regime-change modifier only for zones standing against the new regime (P452:981-992); expiry-timing, macro, cross-pair, cascade modifiers and the measured move per zone still missing | PB |
+| E1-95 | Step 9.5 gap scan is NOT in e1_ip.build (the old gap_scan lived in e1_zones.py, superseded) | NB |
+| E1-V1 | V1 4H liquidity bands drawn (show_lq4) and used for the transition-day retest; 30m / 15m bands harvested, not yet used as steps | PB |
+| E1-X | Pine: default view = the week's reach (e1_pine.reach, GS Law 2 / 7), far zones behind show_far | B |
+| E2-64 / 641 / 642 | direction: failing bound (> 45) -> the MoM bound is the one pierced (6.4.2) -> 4H storyline; a breakout running at the anchor: BS -> 6.4.1 at the next zone -> SS -> second BS (6.3) | B |
+| E2-65 | SS bounds: wall / pressure zone under 30% within the scalp reach -> graded 1H / 4H supply-demand zone -> nearest unswept sweep zone beyond spot (D-27) -> measured move | B |
+| E2-66 | transition day: the retest reaches the opposing liquidity band (V1 1H rung / 4H band against the far bound, e2_chain._opposing_liquidity) | B |
+| E2-CP | consolidation phase detection / "ZFP trend on the bounding zone" (expiry roll-off) decides WHEN the range breaks: not built - the plan always breaks on day 3-4 | NB |
+| E3-P2 | first anchor: nearest 1H / 4H zone against the leg, else the E2 bound (R3 law) | B |
+| E3-P3 | TS-1 at a sweep-zone bound (near edge); WL keeps the zone middle | B |
+| E3-P42 | EUR/USD NO_SHIELD -> rule (a); the confidence switch ZR-6B (>= 0.6 tight / < 0.6 next rung) and rule (b) on 4H liquidity steps (facts in memory/08) not built | PB |
+| E3-P43 | RWL TP = opposing liquidity near edge + 1 pip; 4H BoM target -> near edge + 1 pip, 4H MoM with LQZ inside -> zone midpoint (rule 4) | PB |
+| E3-P6 | Law 27: BS entry = RWL TP (band = entry step); Phase 6.3 same-anchor-same-day dedup with log; opposite-direction conflict rule (needs Phase 5 confidence) not built | PB |
+| E3-P10 | mirror lane: collision retry on the next liquidity step (deep shield); the full DXY -> EU -> GU re-anchoring of every DXY setup is still approximated by running the pair's own chain on the inverted DXY shapes | PB |
+| E3-P5 / P7 / P8 / P9 (staggered entries, rockets) / P11 / P12 / OUT / ZT / F | not built; Phases 5-7 and 10 read first-hand this step, 8 / 9 / 11 / 12 / F still unread | NB |

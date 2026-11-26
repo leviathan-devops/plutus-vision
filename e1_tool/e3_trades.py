@@ -371,7 +371,8 @@ def pine(pair, monday, R):
         o.append(f"        // {s['id']} {s['day']} {s['shape']} {s['dir']} E {g(s['entry'])} SL {g(s['sl'])} TP {g(s['tp'])} RRR {s['rrr']} | {s['category']} / {s['session']} | {s['why']}")
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['sl']))}, {x1}, {g(min(s['entry'], s['sl']))}, bgcolor=color.new(color.rgb(242,54,69), {86 if s.get('alt') else 70}), border_color=color.rgb(242,54,69), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['tp']))}, {x1}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), {88 if s.get('alt') else 76}), border_color=color.rgb(8,153,129), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
-        o.append(f"        label.new({x0 + 1800000}, {g(s['tp'])}, \"{s['id']} {'ALT ' if s.get('alt') else ''}{s['shape']} {s['dir']} {s['rrr']}R\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
+        ly = s['entry'] + 0.18 * (s['tp'] - s['entry'])        # inside the green box, next to its own entry edge: setups sharing one TP no longer stack their labels (A13)
+        o.append(f"        label.new({x0 + 1800000}, {g(ly)}, \"{s['id']} {'ALT ' if s.get('alt') else ''}{s['shape']} {s['dir']} {s['rrr']}R\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
 
 
