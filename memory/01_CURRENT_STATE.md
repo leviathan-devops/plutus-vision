@@ -1,3 +1,8 @@
+## STATE (NEWEST, 2026-11-26) - ALL THREE ENGINES REBUILT; GOLDEN WEEK DXY MATCHES THE ORACLE ON E1, E2 AND E3 (ledger 53-58). One command: `cd e1_tool && python3 plutus.py MONDAY PAIR` ; render `tools/e1render PAIR MONDAY 1H [toggles]`.
+- Modules: e1_sd.py (supply/demand map) / e1_ip.py (IP zones) / e1_v1.py (V1 harvest) / e1_pine.py (Pine E1) / e2_chain.py (shape chain, legs) / e3_trades.py (trade chain) / plutus.py (all). Print: `python3 e3_trades.py MONDAY PAIR` (also shows distance to the oracle trades on the golden week).
+- OPEN, in order: EURUSD golden week (breakout target + deep-shield entry; frames) -> GBPUSD golden week (bounds without option data) -> Apr 20-24 + two more weeks x 3 pairs (frames opened, ledger rows) -> outside adversarial audit of the code vs canon ->
+  remaining coverage rows -> ship package + two blind sub-agents. Read the last three journal entries first.
+
 ## STATE (NEWEST, 2026-11-26 after compaction 6) - E1 on the golden week matches the oracle on DXY (zones, bands, rungs); S/D zones exact on EURUSD / GBPUSD too. NOW: E2, then E3, on the golden week (three pairs).
 - Run: `cd e1_tool && python3 e1_sd.py MONDAY PAIR` (supply/demand map) / `python3 e1_ip.py MONDAY PAIR` (IP zones) / `python3 e1_v1.py MONDAY PAIR` (V1 harvest) ; render `tools/e1render PAIR MONDAY 1H [input=value ...]` (E1TAG=_x suffix).
 - Oracle for all three engines and three pairs: context_management/oracle/golden_week.json (zones, rungs, Fib grids, 8 + 8 + 7 trades). Read the journal entry "(after compaction 6)" first.

@@ -80,7 +80,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E1-IX | P533:3257-3688 | multi-pair translation: each pair runs its own pipeline on its own prices; DXY = direction | e1_pine.run | PB (not yet read in full) |
 | E1-X | P533 Part X + Appendix E | Pine v6 code generation protocol (the form of trident_v8.pine) | e1_pine.generate | PB (not yet read) |
 
-## 3. Engine 2 (P533:1725-2057) — current e2_shapes.py is my own template: every row PB/NB until rebuilt from the text
+## 3. Engine 2 (P533:1725-2057) — REBUILT 2026-11-26 in e1_tool/e2_chain.py (current_shape, _bounds, _target, _after_bs, build, pine); golden week DXY pixel-checked (ledger 55-56). Rows below: 61 / 62 / 64 / 641 / 642 / 65 / 66 / 69 / 610 / R03 = B; 63 / 67 / 68 / CP / 1D / TFM / PR / TRV / ZOC / AIR = partly (see file docstrings), to be completed and audited
 | id | ref | requirement (short) | state |
 |---|---|---|---|
 | E2-61 | 1741-1769 | taxonomy SS / BS (PBS) / R (RS) / WL (RWL, PWL, PRWL) / WLS with IP-zone signatures | PB |
@@ -104,7 +104,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E2-AIR | FA:169-209, 289-303; Fibonacci_Spiderwebs.pdf | Fibonacci spiderweb anchored to Earth points maps the trajectory | NB (PDF not yet read) |
 | E2-R03 | R-03 | render: day BOXES first, then the LINE | NB (line only) |
 
-## 4. Engine 3 (E3C; R-16) — current e3_setups.py breaks Laws 3-6: every row NB/PB until rebuilt from the text
+## 4. Engine 3 (E3C; R-16) — REBUILT 2026-11-26 in e1_tool/e3_trades.py (chain along the E2 legs; TS-1 / F1-A / F1-C / F1-D entries, ladder-step stops, single TP, RRR floor with three attempts, BS reinforcement, position boxes); golden week DXY: his trades within 3 pips (ledger 57-58). Built: P0 (per shape), P2 (entry sources), P3, P42, P43, P44, P6 (chains), P9 (one reinforcement), R09. Not yet built: P1 confidence spill, P25, P41, P5, P7 (sessions as labels only), P8 labels, P10 (pairs run their own chain with the inverted DXY shapes), P11, P12, OUT, ZT, DIR, F
 | id | ref | requirement (short) | state |
 |---|---|---|---|
 | E3-P0 | E3C:88-107 | setup universe per shape (12 shapes) | PB |

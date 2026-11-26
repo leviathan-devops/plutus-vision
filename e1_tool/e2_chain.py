@@ -201,7 +201,7 @@ def build(pair, monday, X, lead=None):
     piv_far = ((pivot['bot'] if bdir == 'down' else pivot['top']) if pivot else mid)       # the pivot edge on the breakout side
 
     def leg(day, shape, a, b, t_end, frm, to):
-        legs.append({'day': day, 'shape': shape, 'dir': 'up' if b > a else 'down', 'from': a, 'to': b, 'from_zone': frm, 'to_zone': to})
+        legs.append({'day': day, 'shape': shape, 'dir': 'up' if b > a else 'down', 'from': a, 'to': b, 'from_zone': frm, 'to_zone': to, 't0': pts[-1][0], 't1': t_end})
         pts.append((t_end, b))
         return b
     for i, shapes in enumerate(plan[:5]):
