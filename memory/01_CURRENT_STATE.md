@@ -1,3 +1,13 @@
+## STATE (NEWEST, 2026-11-26 late, fable-5-2) - OPERATOR: "If the goal is not met, you're not allowed to stop." DO NOT END A TURN WHILE S1-S6 ARE OPEN (no blocker exists). Loop = take the next loser, find the bug in MY build, fix by canon line, re-check all maps.
+- Commits since the block below: 9ec23b1 (D-47 stop shields walked nearest first), D-48 (E2 supply/demand bound = first scalp TP), D-49 / D-50 (breakout target passes standalone MoM zones and weak MoM pressure zones, P452:2082),
+  Law-27 reversal at the breakout TP, D-51 Transition Entry (E3C:107 / 457), D-52 confidence terms (E3C:407-414), f723b0b. audit/G2_response.md = disposition of all 134 findings (37 FIXED, 13 ANSWERED, 28 PART, 56 OPEN) - update it when a finding closes.
+- Fills now (tools/research/fills.py, re-arms SS orders daily): golden DXY 7 TP / 0 SL; golden EURUSD 5 TP / 1 SL; golden GBPUSD 2 TP / 1 SL (his #1, #3 TP, #5 entry within ~1 pip); Apr 20 DXY 1 TP / 2 SL (BS long 97.984 unfilled: no retest dip that week);
+  May 18 DXY 2 TP / 1 SL; Oct 5 DXY 1 TP / 1 SL. Weak: Jul 13, Aug 17, Jun 8, Sep 14, every pair map outside the golden week (list with causes: journal entry of this date).
+- NEXT (in order): (1) frame + ledger for golden GBPUSD with this code; (2) RWL take-profit (E2X:216 'prior origin') against his three RWL TPs; (3) pairs: the pair's own bound analysis vs the DXY translation (EURUSD May 18 ceiling 'PIERCED' ignored);
+  (4) Mechanism A staggered entries (E3C:1056-1070: front = zone edge + spread, middle = key level, back = far edge; blended RRR) - his entries are 'front' entries; (5) E1 Step 9.5 gap scan (Aug 17), Jul 13 direction, Sep 14 freshness on the ceiling;
+  (6) outside G1 count on 4 weeks x 3 pairs (Jul 6, Apr 20, Oct 5, May 18) when the pair maps stop losing; (7) fresh outside audit; S5 ship package + blind test.
+- Tools (scratchpad, re-create if lost): snap.py TAG PAIR:MONDAY... (zones / chain / setups / log per map), wk.py PAIR MONDAY (forecast day map vs actual daily H/L), stops.py (his 23 golden stops vs structures), scalp.py; tools/research/oracle_diff.py, fills.py.
+
 ## STATE (NEWEST, 2026-11-26, after compaction 9; model fable-5-2 since the operator's /model switch) - golden week re-verified on frames with the v2 engines (ledger 71-73); S3 loop next
 - Commits this step: fbf932c (D-44 pivot = nearest V1 4H band; D-45 TP at a liquidity-band target = near edge), 103245f (D-46 IP-zone anchors also offer the order blocks lying mostly inside them), 1fb68f9 (Pine labels).
 - Golden DXY: 8 setups, 7 TP, 1 unfilled, 0 SL; his #2 #3 #4 #5 #6 #8 + Thu ladder within 3 pips (his #1 Mon L 100.945 missing). Golden EURUSD: 7 setups, 5 TP, 1 SL (EU2 Mon S 1.14385), 1 unfilled; his #3 #4 #6 within 3 pips on entry and SL,
