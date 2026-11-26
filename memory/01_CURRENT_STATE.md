@@ -1,3 +1,13 @@
+## STATE (NEWEST, 2026-11-26, model now claude-opus-5-5 after the operator's /model switch) - G2 AUDIT REPORT ARRIVED: audit/G2_audit_engines.md (134 findings: 53 HIGH). WORKING IT.
+- Disposition file to keep current: audit/G2_response.md (one row per finding: FIXED <commit> / ANSWERED <refuting canon line> / OPEN). Batch I DONE (commit 9e44b34): C-32 (V1 harvest with bars scaled to the
+  chart's real tick: DXY x10, FX x1000; cache dir e1_tool/cache/v1s), D-01 (tools/leak_check.py in the pre-commit hook), D-02/D-04 (superseded modules -> tools/research/superseded/), D-03 (tools/research/oracle_diff.py), D-05.
+- THE CENTRAL FINDING (B-08, B-03, B-04, B-05, A-09..A-11, C-07): Engine 2 is a FIXED WEEK TEMPLATE (SS x n -> SS+RWL+BS -> BS -> X; 5 day-maps over 40 weeks) = anti-pattern A2. NEXT = rebuild e2_chain forward mapping
+  as a real chain extension: Step 1 matrix 6.2 on 1H (B-01/B-02, with ZFP conditions), Step 2-3 transitions 6.4 / 6.4.1 / 6.4.2 (reaction counter picks the branch, A-03) shape by shape with durations 6.8 and the
+  consolidation phase / key rule (A-09/A-10), per-day ZFP with the Pillar 9 expiry-timing modifier (the canon mechanism that says WHEN a bound fails), 6-check direction (A-04), pressure reading (A-05),
+  4H validation (A-06), TF element matching (A-07), triggers per day (A-08), termination < 25% with undesignated days not drawn (B-07/C-16), alternative chain with ZFP threshold + confidence, drawn (A-13).
+  Then E3 phases (A-15..A-47, B-18..B-37, C-17..C-25), then the S/D findings (A-48..A-52, B-38..B-45, C-27..C-31), then a FRESH audit agent (model opus; the Fable auditor is rate-limited until Dec 2).
+- Golden week must still come out (S2): re-check DXY / EURUSD / GBPUSD + Apr 20 after every step with the snapshot tool (scratchpad snap.py) and tools/research/oracle_diff.py.
+
 ## STATE (NEWEST, 2026-11-26 night, after compaction 8) - S2 holds on DXY and now better on EURUSD / GBPUSD; S3 loop continues; G2 audit agent a2349814137719c02 still running (report: audit/G2_audit_engines.md)
 - This step (commits 50a6a23, be33e66, 9a9..): E1: pre-anchor session bar as D1 data (D-25), last days scanned in Step 0 (D-26). E2: sweep-zone bound on an empty side (D-27), "MoM bound is the one pierced" (D-28), plan for a breakout running at the anchor (D-29),
   transition-day retest at the opposing liquidity band (6.4.2; e2_chain._opposing_liquidity). E3: TS-1 at a sweep bound + E2 bound as first anchor (D-30), Phase 6.3 dedup + mirror-lane collision retry (D-31), EUR/USD NO_SHIELD stop (D-32), weak-4H-zone TP rule 4 (D-33), RWL TP at the opposing liquidity, BS entry by Law 27.
