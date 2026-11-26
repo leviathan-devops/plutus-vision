@@ -151,7 +151,7 @@ def _target(X, side, bound, U):
 def _opposing_liquidity(X, far, up):
     """6.4.2 'Consolidation ends in price retesting opposing liquidity': the liquidity the retest reaches = the next liquidity band (the sealed V1's 1H rung or 4H band, R-30 / GS Law 4
     '1H / 4H LSZ') wholly beyond the far bound's own entry rung, lying against that bound (within the canon cluster distance 0.15 of its far edge).
-    Operator's golden week: DXY 4H band 101.245-101.305 (RWL TP 101.24, BS short 101.235), EURUSD 1H rung 1.13902-1.1393 ('deep shield', RWL TP 1.1395, BS long 1.13953)."""
+    (Measured against the operator's golden-week trades: memory/08 'HIS GOLDEN TRADES vs THE SEALED V1's 4H LIQUIDITY BANDS'; no oracle number is used here.)"""
     if far is None or 'v1' not in X:
         return None
     U = X['U']

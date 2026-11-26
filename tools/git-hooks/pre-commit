@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
-# PLUTUS VISION pre-commit: the anchor / no-hardcode guard on every staged engine .pine (tools/anchor_guard.py).
+# PLUTUS VISION pre-commit: the temporal anchor / no-hardcode guard (L-05: "Put whatever git hooks ... so that you cannot violate this").
+#  - every staged engine .pine: tools/anchor_guard.py
+#  - any staged e1_tool/*.py (the Python tool that writes the Pine): tools/leak_check.py = static scan (bars only through e1_data.closed, no week literal)
+#    + runtime proof (the tool's output is identical when every bar after the anchor is removed) on the golden week, DXY and EURUSD (G2 audit D-01)
 # Installed by: git config core.hooksPath tools/git-hooks
-root="$(git rev-parse --show-toplevel)"
+root="$(git rev-parse --show-toplevel)"; cd "$root" || exit 1
 files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^indicator/.*\.pine$' || true)
-[ -z "$files" ] && exit 0
-cd "$root" && python3 tools/anchor_guard.py $files
+if [ -n "$files" ]; then python3 tools/anchor_guard.py $files || exit 1; fi
+py=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '^e1_tool/[^/]*\.py$' || true)
+if [ -n "$py" ]; then python3 tools/leak_check.py DXY:2026-07-06 EURUSD:2026-07-06 || { echo "pre-commit: leak_check failed - commit refused" >&2; exit 1; }; fi
+exit 0

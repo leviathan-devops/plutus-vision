@@ -49,7 +49,7 @@ def _inside(a, b):
 def _entries(anchor, direction, shape, env, pair):
     """E3C:177-203 entry candidates inside the anchor zone, in refinement order (E3C:372-386 '3 attempts on each anchor'):
     TS-1 the zone edge closest to approaching price -> F1-C the internal LQZ rung near edge -> F1-A (SHORT only) a nested lower-timeframe order block, 1 pip above its bottom.
-    (the spec's own Monday example: band bottom 101.027 gave RRR 1.79 -> rejected; the nested block entry 101.14 gave 4.92)"""
+    (the spec's own measured example: E3C:186-188)"""
     pip, rungs, blocks, sd = env
     typ = 'Supply' if direction == 'down' else 'Demand'
     inset = 0.2 * pip if shape in ('RWL', 'WL') else 0.0     # F1-D
@@ -280,7 +280,7 @@ def _build(pair, monday, X, E2, tag):
             ecands = [(lvl, pz if pz.get('liq') else {'bot': lvl, 'top': lvl}, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
         if pair != 'DXY':
             # E3C 10.4 (mirror lane): 'usedEuAnchors + alt-retry with excludedAnchorIds on collision' - an anchor already carrying a setup of that day and direction is excluded;
-            # the mirror then takes the next liquidity step on the deep side (F1-C '#6 EU Wed deep-demand E 1.13935 = deep shield')
+            # the mirror then takes the next liquidity step on the deep side (F1-C, E3C:190-193 'deep-demand ... deep shield')
             taken = {q['src'] for q in setups if q['day'] == leg['days'][0] and q['dir'] == ('SHORT' if direction == 'down' else 'LONG') and q.get('src')}
             free = [c for c in ecands if (round(c[1]['bot'], 6), round(c[1]['top'], 6)) not in taken]
             if ecands and not free:
@@ -377,7 +377,7 @@ def pine(pair, monday, R):
 
 
 if __name__ == '__main__':
-    import sys, json, os, e1_pine as EP, e2_chain as E2M
+    import sys, e1_pine as EP, e2_chain as E2M
     monday, pair = sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else 'DXY'
     X = EP.run(pair, monday)
     lead = E2M.build('DXY', monday, EP.run('DXY', monday)) if pair != 'DXY' else None
@@ -388,12 +388,3 @@ if __name__ == '__main__':
         print(f"{s['id']} {s['day']} {s['shape']:<6} {s['dir']:<5} E {f % s['entry']} SL {f % s['sl']} ({s['sl_pips']}p) TP {f % s['tp']} RRR {s['rrr']} | {s['category']} / {s['session']} | {s['why']}")
     for l in R['log']:
         print('  !', l)
-    op = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'context_management', 'oracle', 'golden_week.json')
-    if monday == '2026-07-06' and os.path.exists(op):        # bug locator only: distance of each setup to the operator's own trades (never a verdict)
-        O = json.load(open(op))[pair]
-        pip = D.PIP[pair]
-        print('--- nearest oracle trade per setup (pips off: entry / SL / TP)')
-        for s in R['setups']:
-            best = min((t for t in O['trades'] if t['dir'] == s['dir'] and t.get('tp')), key=lambda t: abs(t['entry'] - s['entry']) + abs(t['tp'] - s['tp']), default=None)
-            if best:
-                print(f"  {s['id']} {s['day']} {s['shape']:<6} vs #{best['n']} {best['day']}: {abs(best['entry'] - s['entry']) / pip:5.1f} / {abs(best['sl'] - s['sl']) / pip:5.1f} / {abs(best['tp'] - s['tp']) / pip:5.1f}")
