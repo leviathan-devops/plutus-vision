@@ -11,10 +11,10 @@ How I applied it:
 - Unit of E1 count = one line of the facts file "ENGINE 1 OBJECTS ON THE CHART" (pressure zones, gap in-fill, supply/demand, sweep zones, V1 liquidity bands). Amber option-strike lines are levels, not zones, and are not counted.
 - Forecast week = from the anchor (Mon 06:00 UTC = Mon 02:00 New York) to Friday's close; candles before the anchor are history and do not count for or against any engine.
 - Reached = a 1H wick of the forecast week entered the box (for a sweep zone: the box or its dotted reach).
-- REACTED = within the box (or within ~3 pips DXY / ~5 pips FX beyond its far edge; for a sweep zone, within its dotted reach) price turned by at least ~10 pips DXY / ~15 pips FX, or stalled there for 3+ 1H candles. PIERCED = price crossed the whole box (and a sweep zone's reach) without such a turn or stall. A zone that reacted once and was later crossed counts as REACTED (first verdict wins) but the later piercing is noted.
+- Verdict = what price did at its FIRST contact with the drawing after the anchor (strict; later visits are not used to rescue a zone that was crossed, and a zone that reacted first keeps REACTED even if crossed later). REACTED = before price got past the far edge (+ ~3 p DXY / ~5 p FX; for a sweep zone, past its dotted reach + that tolerance) it either turned >= 10 p DXY / >= 15 p FX from its extreme, or 3+ 1H candles traded in the box (consolidation); a single candle that wicked past the far edge by at most 10 p and CLOSED back inside counts as a sharp rejection (canon: sweeps 0.05-0.10 beyond the extreme). PIERCED = crossed beyond that without any of these. Times / highs / lows of first contact were read from the 1H bars (read-only `bars()`), with every case cross-checked on the frames; the table gives the hour so anyone can recount.
 - Obvious reaction points with no zone = the week's day highs/lows and every 1H swing that turned >= ~20 pips DXY / ~30 pips FX, with no Engine 1 box within ~3 pips DXY / ~5 pips FX. Each adds 1 to the denominator.
 - E1 % = reacted / (reached + unzoned reaction points). The second clause ("none bloated, bunched, floating or missing") is reported as a separate gate PASS / FAIL per map; it is not folded into the %.
-- E2: a day is RIGHT only if the forecast shape matches what the day's 1H candles did (canon definitions in the brief) AND the forecast direction is the day's direction (the main move; for a compound tag such as BS+WL+RWL the direction is that of the first leg, the later legs being the reversal the tag itself announces). The key zone counts as right when the day's turn or target is at it. A day box drawn away from where the day traded is listed as a presentation defect, not a WRONG day (G1 names shape + direction + key zone only).
+- E2: a day is RIGHT only if the forecast shape matches what the day's 1H candles did (canon definitions in the brief) AND the forecast direction is the day's direction (the main move; for a compound tag such as BS+WL+RWL the direction is that of the first leg, the later legs being the reversal the tag itself announces). For an SS (range) day the forecast bounds are part of the shape (canon: range bounded by the zones above and below): the day is RIGHT only if its 1H closes stay within ~10 p of the forecast bounds (wicks beyond = sweeps are allowed); 1H closes more than ~10 p outside the range box = the range did not hold = WRONG. The key zone counts as right when the day's turn or target is at it. A day box drawn away from where the day traded is listed as a presentation defect, not a WRONG day (G1 names shape + direction + key zone only).
 - E3 (2026-07-06): obvious trades = the operator's trades in golden_week.json whose entry was reachable after Mon 06:00 UTC (Mon 02:00 New York). Other weeks: every clean zone-to-zone move >= ~25 pips DXY / ~40 pips FX visible on the 1H `_zones` frame, written down BEFORE opening `_all`/`_week`. CAUGHT = a setup of the same direction at that turn (entry within ~3 pips DXY / ~5 pips FX of the turn's zone, or within the zone the move started from) that filled and hit TP before SL (from the facts file's 15m result). A stopped setup is a loss even if price later reached its TP.
 
 ---
@@ -37,34 +37,36 @@ Week action (1H, UTC): Mon 05:00 up from 100.95 to 101.145 (10:00), down to 100.
 Obvious trades in window: 7.
 
 ### Step 2 - E1
-| zone (facts) | verdict | delta |
+| zone (facts) | verdict at first contact | delta (UTC hour) |
 |---|---|---|
-| IP UPPER RESISTANCE 101.199-101.262 | REACTED | Wed high 101.275 (1.3 p beyond), sell-off to 100.946 |
-| IP EQUILIBRIUM 100.985-101.077 | REACTED | Mon 05-08 stall inside; Wed/Thu chop around it |
-| IP MID-RANGE SUPPORT 100.724-100.815 | REACTED | Tue low 100.803, Thu low 100.786 both bounced; Fri crossed it (flush) |
-| IP KEY SUPPORT BAND 100.470-100.530 | not reached | week low 100.598 |
-| GAP IN-FILL 100.599-100.659 | REACTED | Fri low 100.598 -> +40 p |
-| 4H BoM supply 101.316-101.430 | not reached | |
-| 1H MoM supply 101.314-101.360 | not reached | |
-| 1H MoM supply 101.027-101.153 | REACTED | Mon top 101.145 inside -> -30 p (crossed Tue 22:00) |
-| 1H Mitigated demand 100.825-100.851 | REACTED | Mon 16-22 stall at 100.838-100.85 |
-| 1H BoM demand 100.654-100.748 | REACTED | Fri wick 5.6 p below, Fri 02-07 held 100.696+ |
-| LSZ supply 101.382-101.432 / 101.380-101.430 / 101.344-101.394 (3) | not reached | |
-| LSZ demand 101.152-101.202 (reach 101.052) | REACTED (weak) | Tue 22 - Wed 03 stall inside; then fell 10 p beyond its reach |
-| LSZ demand 101.071-101.121 (reach 100.971) | REACTED | Wed 07:00 low 100.95 (2 p beyond reach) -> 101.275 |
-| LSZ demand 101.049-101.099 (reach 100.949) | REACTED | Wed low 100.95 = reach -> +32 p |
-| LSZ supply 100.978-101.028 (reach 101.128) | REACTED | Mon high 101.145 (1.7 p beyond reach) -> -30 p |
-| LSZ supply 100.942-100.992 (reach 101.092) | REACTED | Tue 10:00 101.0 and Thu 04:00 101.0 -> -15/-21 p |
-| LSZ demand 100.826-100.876 (reach 100.726) | REACTED | Tue 100.803 -> +39 p |
-| LSZ demand 100.603-100.653 (reach 100.503) | REACTED | Fri 100.598 |
-| LSZ demand 100.558-100.608 (reach 100.458) | REACTED | Fri 100.598 |
+| IP UPPER RESISTANCE 101.199-101.262 | REACTED | first contact Wed 01 from below; reacted turn Wed 02 |
+| IP EQUILIBRIUM ZONE 100.985-101.077 | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| IP MID-RANGE SUPPORT 100.724-100.815 | REACTED | first contact Tue 01 from above; reacted turn Tue 05 |
+| IP KEY SUPPORT BAND 100.47-100.53 | not reached | |
+| GAP 100.599-100.659 | REACTED | first contact Fri 02 from above; reacted turn Fri 03 |
+| 4H (Unmitigated) BoM supply 101.316-101.43 | not reached | |
+| 1H (Unmitigated) MoM supply 101.314-101.36 | not reached | |
+| 1H (Unmitigated) MoM supply 101.027-101.153 | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| 1H (Mitigated 2x) MoM demand 100.825-100.851 | REACTED | first contact Mon 18 from above; reacted stall Mon 22 |
+| 1H (Unmitigated) BoM demand 100.654-100.748 | PIERCED | first contact Fri 01 from above; pierced Fri 02 (5.6 p past far edge, close beyond) |
+| LSZ supply 101.382-101.432 (reach 101.532) | not reached | |
+| LSZ supply 101.38-101.43 (reach 101.53) | not reached | |
+| LSZ supply 101.344-101.394 (reach 101.494) | not reached | |
+| LSZ demand 101.152-101.202 (reach 101.052) | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| LSZ demand 101.071-101.121 (reach 100.971) | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| LSZ demand 101.049-101.099 (reach 100.949) | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| LSZ supply 100.978-101.028 (reach 101.128) | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| LSZ supply 100.942-100.992 (reach 101.092) | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| LSZ demand 100.826-100.876 (reach 100.726) | REACTED | first contact Mon 18 from above; reacted stall Mon 20 |
+| LSZ demand 100.603-100.653 (reach 100.503) | REACTED | first contact Fri 02 from above; reacted turn Fri 03 |
+| LSZ demand 100.558-100.608 (reach 100.458) | REACTED | first contact Fri 02 from above; reacted turn Fri 03 |
 | band 101.372-101.432 | not reached | |
-| band 101.245-101.305 | REACTED | Wed top 101.275 |
-| band 101.067-101.127 | REACTED | Mon 08-14 stall |
-| band 100.957-101.017 | REACTED | Wed 100.95 low / Thu chop |
+| band 101.245-101.305 | REACTED | first contact Wed 11 from below; reacted turn Wed 12 |
+| band 101.067-101.127 | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| band 100.957-101.017 | REACTED | first contact Mon 06 from above; reacted turn Mon 07 |
 | band 100.498-100.558 | not reached | |
-Reached 18, reacted 18, pierced 0. Obvious turning points with no zone: none (101.145, 100.803, 101.215, 100.95, 101.275, 100.786, 101.039, 100.598, 100.997 all have a box).
-**E1 = 18 / 18 = 100 %.** Gate (none bloated / bunched / floating): **FAIL - bunched/bloated.** 26 Engine 1 objects plus 3 strike lines cover every price from 100.47 to 101.53 without a gap (zones frame: the whole price axis is boxes); at 101.05-101.20 four boxes overlap (EQUILIBRIUM, 1H MoM supply, two LSZ demand, band). With that coverage a 100 % reaction rate is not evidence of selection. Three LSZ supply boxes 101.344-101.432 are within 4 p of each other.
+Reached 18, reacted 17, pierced 1. Obvious turning points with no zone: none (101.145, 100.803, 101.215, 100.95, 101.275, 100.786, 101.039, 100.598, 100.997 all have a box).
+**E1 = 17 / (18 + 0) = 94 %.** Gate: **FAIL - bunched/bloated.** 26 Engine 1 objects plus 3 strike lines cover every price from 100.47 to 101.53 without a gap (zones frame: the whole price axis is boxes); at 101.05-101.20 four boxes overlap (EQUILIBRIUM, 1H MoM supply, two LSZ demand, band). With that coverage a high reaction rate is not evidence of selection. Three LSZ supply boxes 101.344-101.432 are within 4 p of each other.
 
 ### Step 3 - E2
 | day | forecast | candles | verdict |
@@ -110,34 +112,35 @@ Week action (1H, UTC): Mon 1.1433 -> 1.14083 (Mon 09-15) -> 1.1448 (Mon 22 / Tue
 Obvious trades in window: 7.
 
 ### Step 2 - E1
-| zone (facts) | verdict | delta |
+| zone (facts) | verdict at first contact | delta (UTC hour) |
 |---|---|---|
-| IP UPPER RESISTANCE 1.14444-1.14533 | REACTED | Mon 22-Tue 01 top 1.1448 -> -48 p; Thu 1.14494 -> -29 p |
-| IP MID-RANGE SUPPORT 1.13977-1.14053 | REACTED | Tue 22 1.14001 / Wed 01 1.13983 -> +33 p; Wed 13:00 wick 6.6 p below |
+| IP UPPER RESISTANCE 1.14444-1.14533 | REACTED | first contact Mon 18 from below; reacted stall Mon 22 |
+| IP MID-RANGE SUPPORT 1.13977-1.14053 | REACTED | first contact Tue 21 from above; reacted stall Tue 23 |
 | GAP 1.14777-1.14837 | not reached | |
-| GAP 1.14593-1.14653 | REACTED | Fri 1.14608 -> -49 p |
-| GAP 1.14220-1.14280 | REACTED | Mon 05-08 stall, Thu 10 low 1.14209 bounce |
-| 1H BoM supply 1.14738-1.14807 | not reached | |
-| 1H Mit 4x supply 1.14601-1.14677 | REACTED | Fri 1.14608 |
-| 4H Mit 2x supply 1.14475-1.14635 | REACTED | Tue 1.1448, Thu 1.14494, Fri 1.14608 all turned |
-| 1H BoM supply 1.14375-1.14421 | REACTED | Mon 19-Tue 03 stall; Tue 10-13 highs 1.14421 / 1.14418 -> down |
-| 1H MoM demand 1.14004-1.14147 | REACTED | Mon 1.14083 -> +37 p |
-| 1H BoM demand 1.13815-1.13886 | not reached | Wed low 1.13911 turned 2.5 p above it |
-| 4H BoM demand 1.13721-1.13832 | not reached | |
-| LSZ supply 1.14678-1.14728 | not reached | |
-| LSZ supply 1.14573-1.14623 (reach 1.14723) | REACTED | Fri 1.14608 |
-| LSZ supply 1.14360-1.14410 (reach 1.1451) | REACTED | Mon/Tue tops 1.1448 within reach |
-| LSZ supply 1.14316-1.14366 (reach 1.14466) | REACTED | Tue 10-13 1.1442 -> down |
-| LSZ supply 1.14255-1.14305 (reach 1.14405) | REACTED | Wed 07 1.14315 -> -40 p |
-| LSZ supply 1.14178-1.14228 (reach 1.14328) | REACTED | Wed 07 1.14315 within reach |
-| LSZ demand 1.14206-1.14256 (reach 1.14106) | REACTED | Mon 1.14083 (2.3 p beyond reach) -> up |
-| LSZ demand 1.13826-1.13876 / 1.13790-1.13840 | not reached | |
+| GAP 1.14593-1.14653 | REACTED | first contact Fri 02 from below; reacted turn Fri 04 |
+| GAP 1.1422-1.1428 | REACTED | first contact Mon 06 from above; reacted wick-rejection Mon 07 (5.4 p wick past far edge, closed back) |
+| 1H (Unmitigated) BoM supply 1.14738-1.14807 | not reached | |
+| 1H (Mitigated 4x) MoM supply 1.14601-1.14677 | REACTED | first contact Fri 02 from below; reacted turn Fri 04 |
+| 4H (Mitigated 2x) MoM supply 1.14475-1.14635 | REACTED | first contact Mon 23 from below; reacted turn Tue 05 |
+| 1H (Unmitigated) BoM supply 1.14375-1.14421 | REACTED | first contact Mon 17 from below; reacted stall Mon 19 |
+| 1H (Unmitigated) MoM demand 1.14004-1.14147 | REACTED | first contact Mon 09 from above; reacted stall Mon 11 |
+| 1H (Unmitigated) BoM demand 1.13815-1.13886 | not reached | |
+| 4H (Unmitigated) BoM demand 1.13721-1.13832 | not reached | |
+| LSZ supply 1.14678-1.14728 (reach 1.14828) | not reached | |
+| LSZ supply 1.14573-1.14623 (reach 1.14723) | REACTED | first contact Fri 02 from below; reacted turn Fri 04 |
+| LSZ supply 1.1436-1.1441 (reach 1.1451) | REACTED | first contact Mon 17 from below; reacted stall Mon 19 |
+| LSZ supply 1.14316-1.14366 (reach 1.14466) | REACTED | first contact Mon 16 from below; reacted stall Mon 18 |
+| LSZ supply 1.14255-1.14305 (reach 1.14405) | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| LSZ supply 1.14178-1.14228 (reach 1.14328) | REACTED | first contact Mon 06 from above; reacted stall Mon 08 |
+| LSZ demand 1.14206-1.14256 (reach 1.14106) | REACTED | first contact Mon 06 from above; reacted stall Mon 08 |
+| LSZ demand 1.13826-1.13876 (reach 1.13726) | not reached | |
+| LSZ demand 1.1379-1.1384 (reach 1.1369) | not reached | |
 | band 1.14658-1.14728 | not reached | |
-| band 1.14269-1.14339 | REACTED | Wed 07 1.14315, Thu chop |
-| band 1.14108-1.14178 | REACTED | Wed 19 1.14141, Fri 1.14114 |
-| band 1.13810-1.13880 | not reached | |
+| band 1.14269-1.14339 | REACTED | first contact Mon 06 from below; reacted stall Mon 08 |
+| band 1.14108-1.14178 | REACTED | first contact Mon 07 from above; reacted stall Mon 09 |
+| band 1.1381-1.1388 | not reached | |
 Reached 16, reacted 16, pierced 0. Unzoned turning points: none (Wed low 1.13911 is 2.5 p above the 1H BoM demand).
-**E1 = 16 / 16 = 100 %.** Gate: **FAIL - bunched/bloated.** 25 objects cover 1.1369-1.1484 with no gap; between 1.1418 and 1.1445 eight boxes overlap (GAP 1.1422, 1H BoM supply, three LSZ supply, LSZ demand, band, upper edge of 1H MoM demand). Every turn of the week lands in some box by construction.
+**E1 = 16 / (16 + 0) = 100 %.** Gate: **FAIL - bunched/bloated.** 25 objects cover 1.1369-1.1484 with no gap; between 1.1418 and 1.1445 eight boxes overlap (GAP 1.1422, 1H BoM supply, three LSZ supply, LSZ demand, band, upper edge of 1H MoM demand). Every turn of the week lands in some box by construction.
 
 ### Step 3 - E2
 | day | forecast | candles | verdict |
@@ -183,41 +186,46 @@ Week action (1H, UTC): Mon chop 1.3329-1.3352 until 13:00, rally to 1.34013 (Mon
 Obvious trades in window: 7.
 
 ### Step 2 - E1
-| zone (facts) | verdict | delta |
+| zone (facts) | verdict at first contact | delta (UTC hour) |
 |---|---|---|
-| IP RESISTANCE CEILING 1.34484-1.34548 | REACTED | Fri 1.34517 -> -60 p |
-| IP UPPER RESISTANCE 1.33933-1.34005 | REACTED | Mon 22 / Tue 01 top 1.34015 -> -58 p; Fri low 1.33918 |
-| IP UPPER RESISTANCE 1.33643-1.33717 | REACTED | Tue 13-19 stall 1.3360-1.3376; Wed 06 1.33702 -> -48 p |
-| IP UPPER RESISTANCE 1.33435-1.33521 | REACTED | Mon 07-12 highs 1.33502 / 1.33516; Tue 22-Wed 01 lows 1.3343 |
-| IP MID-RANGE SUPPORT 1.33225-1.33285 | REACTED | Wed 08 1.33222 -> +88 p |
-| IP KEY SUPPORT BAND 1.32970-1.33046 / 1.32789-1.32877 | not reached | |
-| GAP 1.34234-1.34294 | REACTED | Thu 05 1.34308 -> -50 p |
-| GAP 1.34029-1.34089 | REACTED | Wed 17 1.34104 -> -30 p |
-| GAP 1.33744-1.33804 | REACTED | Tue 04-09 lows 1.3375; Thu 11 1.33807 -> +44 p |
-| 1H BoM supply 1.34502-1.34599 | REACTED | Fri 1.34517 |
-| 4H BoM supply 1.34264-1.34340 | REACTED | Thu 1.34308 |
-| 4H MoM supply 1.34035-1.34162 | REACTED | Wed 17 1.34104 |
-| 1H MoM supply 1.33941-1.34032 | REACTED | Mon/Tue 1.34015 |
-| 1H BoM supply 1.33623-1.33764 | REACTED | Wed 06 1.33702 |
-| 1H MoM supply 1.33544-1.33582 | REACTED | Mon 00 1.33566; Wed 01-10 1.33593 / 1.33568 |
-| 1H MoM demand 1.33082-1.33333 | REACTED | Mon 07 1.33286, Wed 08 1.33222 |
-| demand 1.32862-1.32928 / 4H 1.32639-1.32835 / 1H BoM 1.32744-1.32800 | not reached | |
-| LSZ supply 1.33796-1.33846 (reach 1.33946) | REACTED | Mon top 1.34013 (6.7 p beyond reach) then Mon 19-Tue 12 stall 1.3375-1.3401 |
-| LSZ supply 1.33760-1.33810 (reach 1.33910) | REACTED (weak) | crossed Mon 16-17 without a stop; only the Tue stall around it |
-| LSZ supply 1.33516-1.33566 (reach 1.33666) | REACTED | Wed 06 1.3366 -> down |
-| LSZ demand 1.33341-1.33391 / 1.33340-1.33390 (reach 1.3324) (2) | REACTED (2) | Mon 06 1.33301; Wed 1.33222 (1.8 p beyond reach) -> up |
-| LSZ supply 1.32871-1.32921 / 1.32717-1.32767 | not reached | |
-| band 1.34540-1.34630 | not reached | Fri high 1.34517 |
-| band 1.34386-1.34476 | REACTED | Fri reversal at 1.34517 (4 p above it) |
-| band 1.34145-1.34235 | REACTED | Thu 16-Fri 05 lows 1.3415-1.3422 |
-| band 1.33976-1.34066 | REACTED | Mon/Tue top, Fri low 1.33918 |
-| band 1.33715-1.33805 | REACTED | Tue lows, Thu 1.33807 |
-| band 1.33583-1.33673 | REACTED | Tue 13-19 stall |
-| band 1.33406-1.33496 | REACTED | Mon chop, Wed 01 low 1.33422 |
-| band 1.33155-1.33245 | REACTED | Wed 1.33222 |
+| IP RESISTANCE CEILING 1.34484-1.34548 | REACTED | first contact Fri 02 from below; reacted turn Fri 04 |
+| IP UPPER RESISTANCE 1.33933-1.34005 | REACTED | first contact Mon 18 from below; reacted turn Mon 21 |
+| IP UPPER RESISTANCE 1.33643-1.33717 | PIERCED | first contact Mon 15 from below; pierced Mon 17 (12.5 p past far edge, close beyond) |
+| IP UPPER RESISTANCE 1.33435-1.33521 | REACTED | first contact Mon 07 from below; reacted turn Mon 08 |
+| IP MID-RANGE SUPPORT 1.33225-1.33285 | REACTED | first contact Wed 09 from above; reacted turn Wed 09 |
+| IP KEY SUPPORT BAND 1.3297-1.33046 | not reached | |
+| IP KEY SUPPORT BAND 1.32789-1.32877 | not reached | |
+| GAP 1.34234-1.34294 | REACTED | first contact Thu 06 from below; reacted turn Thu 07 |
+| GAP 1.34029-1.34089 | REACTED | first contact Wed 17 from below; reacted turn Wed 17 |
+| GAP 1.33744-1.33804 | PIERCED | first contact Mon 16 from below; pierced Mon 18 (16.7 p past far edge, close beyond) |
+| 1H (Unmitigated) BoM supply 1.34502-1.34599 | REACTED | first contact Fri 02 from below; reacted turn Fri 04 |
+| 4H (Unmitigated) BoM supply 1.34264-1.3434 | REACTED | first contact Thu 06 from below; reacted turn Thu 07 |
+| 4H (Unmitigated) MoM supply 1.34035-1.34162 | REACTED | first contact Wed 17 from below; reacted turn Wed 17 |
+| 1H (Unmitigated) MoM supply 1.33941-1.34032 | REACTED | first contact Mon 18 from below; reacted turn Mon 21 |
+| 1H (Unmitigated) BoM supply 1.33623-1.33764 | PIERCED | first contact Mon 15 from below; pierced Mon 17 (7.8 p past far edge, close beyond) |
+| 1H (Unmitigated) MoM supply 1.33544-1.33582 | PIERCED | first contact Mon 13 from below; pierced Mon 15 (10.0 p past far edge, close beyond) |
+| 1H (Unmitigated) MoM demand 1.33082-1.33333 | REACTED | first contact Mon 06 from above; reacted turn Mon 07 |
+| 1H (Unmitigated) MoM demand 1.32862-1.32928 | not reached | |
+| 4H (Unmitigated) MoM demand 1.32639-1.32835 | not reached | |
+| 1H (Unmitigated) BoM demand 1.32744-1.328 | not reached | |
+| LSZ supply 1.33796-1.33846 (reach 1.33946) | REACTED | first contact Mon 17 from below; reacted stall Mon 19 |
+| LSZ supply 1.3376-1.3381 (reach 1.3391) | PIERCED | first contact Mon 16 from below; pierced Mon 18 (6.1 p past far edge, close beyond) |
+| LSZ supply 1.33516-1.33566 (reach 1.33666) | REACTED | first contact Mon 12 from below; reacted stall Mon 14 |
+| LSZ demand 1.33341-1.33391 (reach 1.33241) | REACTED | first contact Mon 06 from above; reacted turn Mon 07 |
+| LSZ demand 1.3334-1.3339 (reach 1.3324) | REACTED | first contact Mon 06 from above; reacted turn Mon 07 |
+| LSZ supply 1.32871-1.32921 (reach 1.33021) | not reached | |
+| LSZ supply 1.32717-1.32767 (reach 1.32867) | not reached | |
+| band 1.3454-1.3463 | not reached | |
+| band 1.34386-1.34476 | REACTED | first contact Fri 01 from below; reacted stall Fri 03 |
+| band 1.34145-1.34235 | PIERCED | first contact Thu 06 from below; pierced Thu 06 (7.3 p past far edge, close beyond) |
+| band 1.33976-1.34066 | REACTED | first contact Mon 23 from below; reacted stall Tue 02 |
+| band 1.33715-1.33805 | PIERCED | first contact Mon 16 from below; pierced Mon 18 (16.6 p past far edge, close beyond) |
+| band 1.33583-1.33673 | PIERCED | first contact Mon 14 from below; pierced Mon 16 (9.3 p past far edge, close beyond) |
+| band 1.33406-1.33496 | REACTED | first contact Mon 06 from below; reacted turn Mon 08 |
+| band 1.33155-1.33245 | REACTED | first contact Wed 09 from above; reacted turn Wed 09 |
 | band 1.32932-1.33022 | not reached | |
-Reached 27, reacted 27, pierced 0. Unzoned turning points: none.
-**E1 = 27 / 27 = 100 %.** Gate: **FAIL - bunched/bloated.** 36 objects (7 IP, 3 gap, 10 S/D, 7 LSZ, 9 bands) inside 1.326-1.346; the zones frame is boxes from top to bottom, with labels printed on top of each other (UPPER RESISTANCE / 1H MoM at 1.3400; GAP / 1H BoM / UPPER RESISTANCE at 1.3375; KEY SUPPORT / 1H BoM / 4H MoM at 1.3280). Two identical LSZ demand boxes (1.33341 and 1.33340).
+Reached 27, reacted 19, pierced 8. Unzoned turning points: none.
+**E1 = 19 / (27 + 0) = 70 %.** Gate: **FAIL - bunched/bloated.** 36 objects (7 IP, 3 gap, 10 S/D, 7 LSZ, 9 bands) inside 1.326-1.346; the zones frame is boxes from top to bottom, with labels printed on top of each other (UPPER RESISTANCE / 1H MoM at 1.3400; GAP / 1H BoM / UPPER RESISTANCE at 1.3375; KEY SUPPORT / 1H BoM / 4H MoM at 1.3280). Two identical LSZ demand boxes (1.33341 and 1.33340).
 
 ### Step 3 - E2
 | day | forecast | candles | verdict |
@@ -259,31 +267,46 @@ Per the brief (S3) the counted obvious trades of this map are the operator's two
 For information only (not in the %), the other clean zone-to-zone moves visible on the 1H frame: (c) Mon SHORT 98.395 (1H MoM supply 98.402) -> 98.006, -39 p; (d) Tue SHORT 98.567 (UPPER RESISTANCE 98.456-98.541) -> 98.211, -36 p; (e) Fri SHORT 98.915 (4H BoM supply 98.884) -> 98.489, -43 p.
 
 ### Step 2 - E1
-| zone (facts) | verdict | delta |
+| zone (facts) | verdict at first contact | delta (UTC hour) |
 |---|---|---|
-| IP UPPER RESISTANCE 98.939-99.005 | REACTED | Thu 17 high 98.939 = lower edge -> -18 p; Fri 98.915 -> -43 p |
-| IP UPPER RESISTANCE 98.456-98.541 | REACTED | Tue 17 98.567 (2.6 p beyond) -> -36 p; Fri 16-20 stall 98.49-98.52 |
-| IP MID-RANGE SUPPORT 98.058-98.145 | REACTED | Mon 16 - Tue 06 stall 98.01-98.16 |
+| IP UPPER RESISTANCE 98.939-99.005 | REACTED | first contact Thu 17 from below; reacted turn Thu 17 |
+| IP UPPER RESISTANCE 98.456-98.541 | REACTED | first contact Tue 17 from below; reacted turn Tue 17 |
+| IP MID-RANGE SUPPORT 98.058-98.145 | REACTED | first contact Mon 13 from above; reacted turn Mon 14 |
 | IP KEY SUPPORT BAND 97.725-97.799 | not reached | |
-| GAP 98.806-98.866 | REACTED | Thu 19 - Fri 06 stall 98.76-98.915 |
-| GAP 98.667-98.727 | REACTED | Wed 22 - Thu 10 stall |
-| GAP 98.220-98.280 | REACTED | Wed 05 98.211 -> +73 p |
-| GAP 97.988-98.048 | REACTED | Mon 15 98.006 -> stall, then +56 p |
-| 4H BoM supply 98.884-99.031 | REACTED | Thu 98.939, Fri 98.915 |
-| 1H MoM supply 98.675-98.845 | REACTED | Thu 10 98.803 -> 98.534 |
-| 1H MoM supply 98.402-98.439 | REACTED | Mon 04-06 98.395 (0.7 p below) -> -39 p |
-| 1H MoM demand 97.937-98.045 | REACTED | Mon 98.006 |
-| 1H BoM demand 97.632-97.828 / 4H BoM demand 97.576-97.728 | not reached | |
-| LSZ supply 98.389-98.439 / 98.345-98.395 (2) | REACTED (2) | Mon 98.395 |
-| LSZ demand 98.364-98.414 (reach 98.264) | REACTED | Tue 22 - Wed 03 stall 98.31-98.41 (then Wed wick 98.211, 5 p beyond reach) |
-| LSZ supply 98.242-98.292 / 98.241-98.291 / 98.235-98.285 (3) | REACTED (3) | Mon 01-06 chop, high 98.395 at the reach |
-| LSZ demand 98.261-98.311 (reach 98.161) | REACTED | Mon 07-12 stall 98.155-98.34 (crossed Mon 13 to 98.006); Wed 98.211 bounce |
-| LSZ demand 98.005-98.055 / 97.969-98.019 (2) | REACTED (2) | Mon 98.006 |
-| LSZ demand 97.832-97.882 / 97.632-97.682 | not reached | |
-| bands 98.903-98.967, 98.804-98.868, 98.689-98.753, 98.561-98.625, 98.461-98.525, 98.300-98.364, 98.182-98.246, 98.014-98.078 (8) | REACTED (8) | each at a turn or stall listed above |
-| bands 97.920-97.984, 97.768-97.832, 97.666-97.730 | not reached | |
+| GAP 98.806-98.866 | REACTED | first contact Thu 17 from below; reacted wick-rejection Thu 17 (7.3 p wick past far edge, closed back) |
+| GAP 98.667-98.727 | REACTED | first contact Thu 00 from below; reacted turn Thu 00 |
+| GAP 98.22-98.28 | REACTED | first contact Mon 06 from above; reacted turn Mon 07 |
+| GAP 97.988-98.048 | REACTED | first contact Mon 15 from above; reacted stall Mon 17 |
+| 4H (Unmitigated) BoM supply 98.884-99.031 | REACTED | first contact Thu 17 from below; reacted turn Thu 17 |
+| 1H (Unmitigated) MoM supply 98.675-98.845 | REACTED | first contact Thu 00 from below; reacted turn Thu 00 |
+| 1H (Unmitigated) MoM supply 98.402-98.439 | REACTED | first contact Tue 16 from below; reacted turn Tue 17 |
+| 1H (Unmitigated) MoM demand 97.937-98.045 | REACTED | first contact Mon 15 from above; reacted stall Mon 17 |
+| 1H (Unmitigated) BoM demand 97.632-97.828 | not reached | |
+| 4H (Unmitigated) BoM demand 97.576-97.728 | not reached | |
+| LSZ supply 98.389-98.439 (reach 98.539) | REACTED | first contact Mon 06 from below; reacted turn Mon 06 |
+| LSZ supply 98.345-98.395 (reach 98.495) | REACTED | first contact Mon 06 from below; reacted turn Mon 06 |
+| LSZ demand 98.364-98.414 (reach 98.264) | REACTED | first contact Mon 06 from below; reacted turn Mon 06 |
+| LSZ supply 98.242-98.292 (reach 98.392) | REACTED | first contact Mon 06 from below; reacted turn Mon 06 |
+| LSZ supply 98.241-98.291 (reach 98.391) | REACTED | first contact Mon 06 from below; reacted turn Mon 06 |
+| LSZ supply 98.235-98.285 (reach 98.385) | REACTED | first contact Mon 06 from below; reacted turn Mon 06 |
+| LSZ demand 98.261-98.311 (reach 98.161) | REACTED | first contact Mon 06 from above; reacted turn Mon 07 |
+| LSZ demand 98.005-98.055 (reach 97.905) | REACTED | first contact Mon 15 from above; reacted stall Mon 17 |
+| LSZ demand 97.969-98.019 (reach 97.869) | REACTED | first contact Mon 15 from above; reacted turn Mon 18 |
+| LSZ demand 97.832-97.882 (reach 97.732) | not reached | |
+| LSZ demand 97.632-97.682 (reach 97.532) | not reached | |
+| band 98.903-98.967 | REACTED | first contact Thu 17 from below; reacted turn Thu 17 |
+| band 98.804-98.868 | REACTED | first contact Thu 17 from below; reacted wick-rejection Thu 17 (7.1 p wick past far edge, closed back) |
+| band 98.689-98.753 | REACTED | first contact Thu 00 from below; reacted turn Thu 00 |
+| band 98.561-98.625 | REACTED | first contact Tue 17 from below; reacted turn Tue 17 |
+| band 98.461-98.525 | REACTED | first contact Tue 17 from below; reacted wick-rejection Tue 17 (4.2 p wick past far edge, closed back) |
+| band 98.3-98.364 | REACTED | first contact Mon 06 from below; reacted wick-rejection Mon 06 (3.1 p wick past far edge, closed back) |
+| band 98.182-98.246 | REACTED | first contact Mon 07 from above; reacted turn Mon 07 |
+| band 98.014-98.078 | REACTED | first contact Mon 15 from above; reacted stall Mon 17 |
+| band 97.92-97.984 | not reached | |
+| band 97.768-97.832 | not reached | |
+| band 97.666-97.73 | not reached | |
 Reached 28, reacted 28, pierced 0. Unzoned turning points: none.
-**E1 = 28 / 28 = 100 %.** Gate: **FAIL - bunched/bloated.** 36 objects between 97.53 and 99.03; between 98.18 and 98.44 there are 6 LSZ + 1 gap + 1H MoM supply + 2 bands stacked (three LSZ supply boxes 98.235 / 98.241 / 98.242 are within 0.7 p of each other and should be one box); the labels "LSZ supply-side | sweep to 98.539" and "LSZ demand-side | sweep to 98.264" print over each other at 98.40 in the history half.
+**E1 = 28 / (28 + 0) = 100 %.** Gate: **FAIL - bunched/bloated.** 36 objects between 97.53 and 99.03; between 98.18 and 98.44 there are 6 LSZ + 1 gap + 1H MoM supply + 2 bands stacked (three LSZ supply boxes 98.235 / 98.241 / 98.242 are within 0.7 p of each other and should be one box); the labels "LSZ supply-side | sweep to 98.539" and "LSZ demand-side | sweep to 98.264" print over each other at 98.40 in the history half.
 
 ### Step 3 - E2
 | day | forecast | candles | verdict |
@@ -322,36 +345,44 @@ Week action (1H, UTC): Mon 1.1747 (04-06) -> 1.1791 (Mon 13 - Tue 00 stall); Tue
 Obvious trades: 5.
 
 ### Step 2 - E1
-| zone (facts) | verdict | delta |
+| zone (facts) | verdict at first contact | delta (UTC hour) |
 |---|---|---|
-| IP UPPER RESISTANCE 1.18213-1.18292 / 1.17988-1.18067 | not reached | week high 1.1791 |
-| IP UPPER RESISTANCE 1.17706-1.17791 | REACTED | Mon 07-12 highs 1.17718 / 1.17755 stall; Tue 01-07 lows 1.1772-1.1773 stall |
-| IP EQUILIBRIUM 1.17497-1.17573 | REACTED | Mon 04 1.1747 -> +44 p; Wed 05 1.17624 (5 p above) -> -93 p |
-| IP MID-RANGE SUPPORT 1.16973-1.17033 | REACTED | Wed 19 - Thu 09 chop 1.1690-1.1713 |
-| IP KEY SUPPORT BAND 1.16570-1.16638 | not reached | week low 1.16691 |
-| GAP 1.17347-1.17407 | REACTED | Tue 22 - Wed 03 stall |
-| GAP 1.17203-1.17263 | REACTED | Tue 17-20 lows 1.17201 / 1.17187 -> +44 p; Fri top 1.1723 |
-| GAP 1.16744-1.16804 | REACTED | Thu 11 1.16789; Fri 01-07 stall 1.1673-1.1676 |
-| 1H BoM supply 1.18239-1.18491 | not reached | |
-| 1H MoM supply 1.17847-1.17988 | REACTED | Mon 13 - Tue 00 stall at 1.178-1.1791 -> -72 p |
-| 1H MoM demand 1.17004-1.17207 | REACTED | Tue 19 1.17187 -> +44 p (crossed Wed 21) |
-| 4H BoM demand 1.16809-1.16996 | REACTED | Wed 22 1.16921, Thu 11 1.16789 stall |
-| 1H BoM demand 1.16638-1.16754 | REACTED | Thu 17 1.16691 -> +54 p |
-| 4H MoM demand 1.16543-1.16748 | REACTED | Thu 17 1.16691 |
-| LSZ supply 1.18188-1.18238 / 1.18060-1.18110 / 1.18030-1.18080 | not reached | |
-| LSZ demand 1.17719-1.17769 (reach 1.17619) | REACTED | Tue 01-06 stall at its lower edge |
-| LSZ demand 1.17668-1.17718 (reach 1.17568) | REACTED | Tue 07 1.17565 = reach -> stall |
-| LSZ supply 1.17611-1.17661 (reach 1.17761) | REACTED | Mon 07-12 stall under 1.17755; Wed 1.17624 |
-| LSZ supply 1.17575-1.17625 (reach 1.17725) | REACTED | Wed 05 1.17624 -> down |
-| LSZ demand 1.17592-1.17642 (reach 1.17492) | REACTED | Tue 10-13 1.1754 stall |
-| LSZ demand 1.17527-1.17577 (reach 1.17427) | REACTED | Mon 04 1.1747 |
-| LSZ demand 1.17277-1.17327 (reach 1.17177) | REACTED | Tue 19 1.17187 |
-| LSZ demand 1.16638-1.16688 | not reached | Thu low 1.16691, 0.3 p above |
-| bands 1.18125-1.18216, 1.17958-1.18049 | not reached | |
-| bands 1.17710-1.17801, 1.17564-1.17655, 1.17327-1.17418, 1.17126-1.17217, 1.16876-1.16967 (5) | REACTED (5) | at the turns / stalls above |
+| IP UPPER RESISTANCE 1.18213-1.18292 | not reached | |
+| IP UPPER RESISTANCE 1.17988-1.18067 | not reached | |
+| IP UPPER RESISTANCE 1.17706-1.17791 | REACTED | first contact Mon 07 from below; reacted turn Mon 08 |
+| IP EQUILIBRIUM ZONE 1.17497-1.17573 | REACTED | first contact Mon 06 from above; reacted turn Mon 06 |
+| IP MID-RANGE SUPPORT 1.16973-1.17033 | REACTED | first contact Wed 20 from above; reacted wick-rejection Thu 00 (5.2 p wick past far edge, closed back) |
+| IP KEY SUPPORT BAND 1.1657-1.16638 | not reached | |
+| GAP 1.17347-1.17407 | REACTED | first contact Tue 16 from above; reacted turn Tue 17 |
+| GAP 1.17203-1.17263 | REACTED | first contact Tue 17 from above; reacted turn Tue 17 |
+| GAP 1.16744-1.16804 | REACTED | first contact Thu 10 from above; reacted turn Thu 11 |
+| 1H (Unmitigated) BoM supply 1.18239-1.18491 | not reached | |
+| 1H (Unmitigated) MoM supply 1.17847-1.17988 | REACTED | first contact Mon 15 from below; reacted stall Mon 17 |
+| 1H (Unmitigated) MoM demand 1.17004-1.17207 | REACTED | first contact Tue 17 from above; reacted turn Tue 17 |
+| 4H (Unmitigated) BoM demand 1.16809-1.16996 | REACTED | first contact Thu 00 from above; reacted turn Thu 00 |
+| 1H (Unmitigated) BoM demand 1.16638-1.16754 | REACTED | first contact Thu 17 from above; reacted turn Thu 17 |
+| 4H (Unmitigated) MoM demand 1.16543-1.16748 | REACTED | first contact Thu 17 from above; reacted turn Thu 17 |
+| LSZ supply 1.18188-1.18238 (reach 1.18338) | not reached | |
+| LSZ supply 1.1806-1.1811 (reach 1.1821) | not reached | |
+| LSZ supply 1.1803-1.1808 (reach 1.1818) | not reached | |
+| LSZ demand 1.17719-1.17769 (reach 1.17619) | REACTED | first contact Mon 06 from below; reacted turn Mon 08 |
+| LSZ demand 1.17668-1.17718 (reach 1.17568) | REACTED | first contact Mon 06 from below; reacted turn Mon 08 |
+| LSZ supply 1.17611-1.17661 (reach 1.17761) | REACTED | first contact Mon 06 from below; reacted turn Mon 08 |
+| LSZ supply 1.17575-1.17625 (reach 1.17725) | REACTED | first contact Mon 06 from below; reacted turn Mon 08 |
+| LSZ demand 1.17592-1.17642 (reach 1.17492) | REACTED | first contact Mon 06 from below; reacted wick-rejection Mon 07 (7.6 p wick past far edge, closed back) |
+| LSZ demand 1.17527-1.17577 (reach 1.17427) | REACTED | first contact Mon 06 from above; reacted turn Mon 06 |
+| LSZ demand 1.17277-1.17327 (reach 1.17177) | REACTED | first contact Tue 17 from above; reacted turn Tue 17 |
+| LSZ demand 1.16638-1.16688 (reach 1.16538) | not reached | |
+| band 1.18125-1.18216 | not reached | |
+| band 1.17958-1.18049 | not reached | |
+| band 1.1771-1.17801 | REACTED | first contact Mon 07 from below; reacted turn Mon 08 |
+| band 1.17564-1.17655 | REACTED | first contact Mon 06 from below; reacted wick-rejection Mon 07 (6.3 p wick past far edge, closed back) |
+| band 1.17327-1.17418 | REACTED | first contact Tue 15 from above; reacted turn Tue 17 |
+| band 1.17126-1.17217 | REACTED | first contact Tue 17 from above; reacted turn Tue 17 |
+| band 1.16876-1.16967 | REACTED | first contact Thu 00 from above; reacted turn Thu 00 |
 | band 1.16581-1.16672 | not reached | |
 Reached 23, reacted 23, pierced 0. Unzoned turning points: none.
-**E1 = 23 / 23 = 100 %.** Gate: **FAIL - bunched/bloated.** 34 objects in 1.1654-1.1849; 1.1750-1.1780 holds 2 IP + 6 LSZ + 2 bands; in the zones frame the two LSZ labels at 1.1760 are printed on top of each other and cannot be read ("LSZ supply-side | sweep to ..." over "LSZ demand-side ...").
+**E1 = 23 / (23 + 0) = 100 %.** Gate: **FAIL - bunched/bloated.** 34 objects in 1.1654-1.1849; 1.1750-1.1780 holds 2 IP + 6 LSZ + 2 bands; in the zones frame the two LSZ labels at 1.1760 are printed on top of each other and cannot be read ("LSZ supply-side | sweep to ..." over "LSZ demand-side ...").
 
 ### Step 3 - E2
 | day | forecast | candles | verdict |
@@ -396,28 +427,34 @@ Week action (1H, UTC): a 1.347-1.354 range with ~60 p swings: Mon 1.34818 (05) -
 Obvious trades: 8.
 
 ### Step 2 - E1
-| zone (facts) | verdict | delta |
+| zone (facts) | verdict at first contact | delta (UTC hour) |
 |---|---|---|
-| IP UPPER RESISTANCE 1.35241-1.35327 | REACTED | Mon 16 - Tue 06 stall 1.3515-1.3544 around it; Wed 1.35353, Fri 1.3537 just above |
-| IP UPPER RESISTANCE (HEAVY) 1.34932-1.35019 | REACTED | Wed 10-21 lows 1.3492-1.3493 |
-| IP MID-RANGE SUPPORT 1.34768-1.34846 | REACTED | Mon 1.34818, Tue 1.34823 / 1.34744, Wed 23 1.34789 -> each +55-60 p; crossed Thu 16 |
+| IP UPPER RESISTANCE 1.35241-1.35327 | REACTED | first contact Mon 11 from below; reacted turn Mon 12 |
+| IP UPPER RESISTANCE 1.34932-1.35019 | PIERCED | first contact Mon 06 from below; pierced Mon 07 (16.9 p past far edge, close beyond) |
+| IP MID-RANGE SUPPORT 1.34768-1.34846 | REACTED | first contact Mon 06 from above; reacted turn Mon 06 |
 | IP KEY SUPPORT BAND 1.33998-1.34073 | not reached | |
-| GAP 1.35047-1.35107 | REACTED | Mon 01-06 stall, Tue/Wed chop |
-| GAP 1.34640-1.34700 | REACTED | Thu 19 - Fri 06 stall 1.3457-1.3473 |
-| GAP 1.34423-1.34483 | REACTED | Thu 17 1.34476 -> +89 p |
+| GAP 1.35047-1.35107 | REACTED | first contact Mon 06 from below; reacted wick-rejection Mon 07 (8.1 p wick past far edge, closed back) |
+| GAP 1.3464-1.347 | PIERCED | first contact Thu 17 from above; pierced Thu 17 (16.4 p past far edge, close back inside/above) |
+| GAP 1.34423-1.34483 | REACTED | first contact Thu 17 from above; reacted turn Thu 17 |
 | GAP 1.34317-1.34377 | not reached | |
-| 1H MoM demand 1.34345-1.34660 | REACTED | Thu 1.34476 |
-| 4H BoM demand 1.34017-1.34073 / 1H BoM demand 1.33806-1.33960 | not reached | |
-| LSZ demand 1.35163-1.35213 (reach 1.35063) | REACTED | Tue 01-06 stall at 1.3515 (then Tue 07 fell 24 p beyond its reach) |
-| LSZ supply 1.35036-1.35086 (reach 1.35186) | REACTED | Mon 01-06 stall under 1.35086 (then crossed to 1.35444) |
-| LSZ demand 1.35044-1.35094 (reach 1.34944) | REACTED | Wed 11 1.34925 |
-| LSZ demand 1.34952-1.35002 (reach 1.34852) | REACTED | Wed/Thu lows 1.3479-1.3483 |
-| LSZ demand 1.34740-1.34790 (reach 1.34640) | REACTED | Tue 20 1.34744 |
-| LSZ demand 1.33805-1.33855 | not reached | |
-| bands 1.35220-1.35332, 1.34973-1.35085, 1.34691-1.34803, 1.34473-1.34585 (4) | REACTED (4) | |
-| bands 1.34227-1.34339, 1.33983-1.34095, 1.33821-1.33933 | not reached | |
-Reached 16, reacted 16, pierced 0. **Unzoned turning points: 2** - Mon 15:00 top 1.35444 (11 p above the highest box, 1.35332) and Tue 14:00 top 1.35396 (6.4 p above it). The facts header itself says the zones stop at 1.35327 while the week traded to 1.35444.
-**E1 = 16 / 18 = 89 %.** Gate: **FAIL - missing + floating + bunched.** Missing: no zone at the 1.3540-1.3545 ceiling that capped Mon and Tue. Floating: KEY SUPPORT BAND, 4H BoM demand, 1H BoM demand, LSZ 1.33805 and two bands sit 40-70 p under the week low. Bunched: 1.3474-1.3533 is covered wall to wall (IP, 3 gaps, 5 LSZ, 4 bands); in the zones frame "KEY SUPPORT BAND" and "4H (Unmitigated) | BoM" labels print over each other at 1.3405, and "LSZ demand-side" over "supply-side" at 1.3495.
+| 1H (Unmitigated) MoM demand 1.34345-1.3466 | REACTED | first contact Thu 17 from above; reacted turn Thu 17 |
+| 4H (Unmitigated) BoM demand 1.34017-1.34073 | not reached | |
+| 1H (Unmitigated) BoM demand 1.33806-1.3396 | not reached | |
+| LSZ demand 1.35163-1.35213 (reach 1.35063) | REACTED | first contact Mon 07 from below; reacted turn Mon 07 |
+| LSZ supply 1.35036-1.35086 (reach 1.35186) | REACTED | first contact Mon 06 from below; reacted turn Mon 07 |
+| LSZ demand 1.35044-1.35094 (reach 1.34944) | REACTED | first contact Mon 06 from below; reacted wick-rejection Mon 07 (9.4 p wick past far edge, closed back) |
+| LSZ demand 1.34952-1.35002 (reach 1.34852) | REACTED | first contact Mon 06 from above; reacted turn Mon 06 |
+| LSZ demand 1.3474-1.3479 (reach 1.3464) | REACTED | first contact Tue 17 from above; reacted turn Tue 17 |
+| LSZ demand 1.33805-1.33855 (reach 1.33705) | not reached | |
+| band 1.3522-1.35332 | REACTED | first contact Mon 11 from below; reacted turn Mon 12 |
+| band 1.34973-1.35085 | PIERCED | first contact Mon 06 from below; pierced Mon 07 (10.3 p past far edge, close back inside/below) |
+| band 1.34691-1.34803 | REACTED | first contact Tue 17 from above; reacted turn Tue 17 |
+| band 1.34473-1.34585 | REACTED | first contact Thu 17 from above; reacted turn Thu 17 |
+| band 1.34227-1.34339 | not reached | |
+| band 1.33983-1.34095 | not reached | |
+| band 1.33821-1.33933 | not reached | |
+Reached 16, reacted 13, pierced 3. **Unzoned turning points: 2** - Mon 15:00 top 1.35444 (11 p above the highest box, 1.35332) and Tue 14:00 top 1.35396 (6.4 p above it). The facts header itself says the zones stop at 1.35327 while the week traded to 1.35444.
+**E1 = 13 / (16 + 2) = 72 %.** Gate: **FAIL - missing + floating + bunched.** Missing: no zone at the 1.3540-1.3545 ceiling that capped Mon and Tue. Floating: KEY SUPPORT BAND, 4H BoM demand, 1H BoM demand, LSZ 1.33805 and two bands sit 40-70 p under the week low. Bunched: 1.3474-1.3533 is covered wall to wall (IP, 3 gaps, 5 LSZ, 4 bands); in the zones frame "KEY SUPPORT BAND" and "4H (Unmitigated) | BoM" labels print over each other at 1.3405, and "LSZ demand-side" over "supply-side" at 1.3495.
 
 ### Step 3 - E2
 | day | forecast | candles | verdict |
@@ -464,20 +501,20 @@ Not counted: Mon 102.433 -> 102.084 (starts at the anchor hour itself, no zone a
 Obvious trades: 6.
 
 ### Step 2 - E1
-| zone (facts) | verdict | delta |
+| zone (facts) | verdict at first contact | delta (UTC hour) |
 |---|---|---|
-| IP MID-RANGE SUPPORT 101.961-102.051 | REACTED | Wed 01-03 stall; Thu 14-17 lows 102.033 / 102.035 -> +33 p; Fri 101.978 |
-| IP KEY SUPPORT BAND 101.750-101.843 | REACTED | Tue 11 101.754 -> 12 h stall -> +75 p |
-| 1H MoM demand 101.855-101.926 | REACTED | Tue stall; Fri 05 101.92 -> +41 p |
-| 1H BoM demand 101.668-101.798 | REACTED | Tue 101.754 inside |
-| LSZ supply 102.485-102.535 (reach 102.635) | REACTED | Wed 11 102.499 -> -29 p; Thu 102.467 (1.8 p under) -> -43 p |
-| LSZ supply 102.157-102.207 (reach 102.307) | REACTED | Tue 05 102.285 -> -53 p |
-| LSZ supply 102.082-102.132 (reach 102.232) | REACTED | Mon 09 102.084, Thu 02 102.133 bounces |
-| LSZ demand 101.855-101.905 (reach 101.755) | REACTED | Tue 101.754 = reach |
-| LSZ demand 101.668-101.718 | not reached | |
-| band 101.916-101.996 | REACTED | Tue/Wed/Fri |
-Reached 9, reacted 9, pierced 0. **Unzoned turning points: 2** - Mon 06:00 top 102.433 (-35 p; 5 p under the nearest box) and Mon 14:00 top 102.372 (-27 p; nothing between 102.307 and 102.485).
-**E1 = 9 / 11 = 82 %.** Gate: **FAIL - missing** (no zone in 102.31-102.48 where Monday turned twice). Not bloated: 10 objects, readable.
+| IP MID-RANGE SUPPORT 101.961-102.051 | REACTED | first contact Tue 01 from above; reacted turn Tue 02 |
+| IP KEY SUPPORT BAND 101.75-101.843 | REACTED | first contact Tue 11 from above; reacted turn Tue 12 |
+| 1H (Unmitigated) MoM demand 101.855-101.926 | PIERCED | first contact Tue 11 from above; pierced Tue 11 (7.9 p past far edge, close beyond) |
+| 1H (Unmitigated) BoM demand 101.668-101.798 | REACTED | first contact Tue 11 from above; reacted turn Tue 12 |
+| LSZ supply 102.485-102.535 (reach 102.635) | REACTED | first contact Wed 12 from below; reacted turn Wed 13 |
+| LSZ supply 102.157-102.207 (reach 102.307) | PIERCED | first contact Mon 06 from above; pierced Mon 08 (5.2 p past far edge, close beyond) |
+| LSZ supply 102.082-102.132 (reach 102.232) | REACTED | first contact Mon 07 from above; reacted turn Mon 09 |
+| LSZ demand 101.855-101.905 (reach 101.755) | REACTED | first contact Tue 11 from above; reacted turn Tue 12 |
+| LSZ demand 101.668-101.718 (reach 101.568) | not reached | |
+| band 101.916-101.996 | REACTED | first contact Tue 08 from above; reacted stall Tue 10 |
+Reached 9, reacted 7, pierced 2. **Unzoned turning points: 2** - Mon 06:00 top 102.433 (-35 p; 5 p under the nearest box) and Mon 14:00 top 102.372 (-27 p; nothing between 102.307 and 102.485).
+**E1 = 7 / (9 + 2) = 64 %.** Gate: **FAIL - missing** (no zone in 102.31-102.48 where Monday turned twice). Not bloated: 10 objects, readable.
 
 ### Step 3 - E2
 | day | forecast | candles | verdict |
@@ -522,31 +559,31 @@ Week action (1H, UTC, from the anchor): Mon 06 1.1169 -> 1.12207 (09), chop 1.11
 Obvious trades: 7.
 
 ### Step 2 - E1
-| zone (facts) | verdict | delta |
+| zone (facts) | verdict at first contact | delta (UTC hour) |
 |---|---|---|
-| IP UPPER RESISTANCE 1.12451-1.12530 | REACTED | crossed Tue 07-10, then Tue 11-23 stall around it; Fri 05 1.12427 (2.4 p under) -> -55 p |
-| GAP 1.12806-1.12866 | not reached | week high 1.12767 |
-| GAP 1.12611-1.12671 | REACTED | Tue 11-22 chop 1.1254-1.1269 |
-| 1H BoM supply 1.12716-1.12853 | REACTED | Tue 11 1.12767 -> -112 p |
-| 1H MoM supply 1.12491-1.12612 | REACTED | Tue stall |
-| LSZ supply 1.12803-1.12853 | not reached | |
-| LSZ supply 1.12562-1.12612 (reach 1.12712) | REACTED | Tue stall inside (wick 5.5 p beyond reach) |
-| LSZ demand 1.12208-1.12258 (reach 1.12108) | REACTED | Mon 19 - Tue 03 stall 1.1213-1.1231 (then Tue 05 8 p beyond reach); Thu 14 1.12267 |
-| LSZ demand 1.12149-1.12199 (reach 1.12049) | REACTED | Tue 05 1.12028 -> +74 p |
-| LSZ demand 1.11610-1.11660 (reach 1.11510) | REACTED | Wed 12 1.11645 -> +48 p |
-| band 1.12039-1.12149 | REACTED | Tue 1.12028, Thu 02 1.12128 |
-Reached 9, reacted 9, pierced 0. **Unzoned turning points: 2** - Thu 11:00 low 1.11719 (+55 p after; 5.9 p above the nearest box) and Thu 16:00 low 1.11845 (+35 p after; 18 p from any box).
-**E1 = 9 / 11 = 82 %.** Gate: **FAIL - missing** (nothing between 1.1166 and 1.1204, where price spent Wed 09:00 - Thu 17:00). Not bloated (11 objects).
+| IP UPPER RESISTANCE 1.12451-1.1253 | REACTED | first contact Tue 08 from below; reacted stall Tue 10 |
+| GAP 1.12806-1.12866 | not reached | |
+| GAP 1.12611-1.12671 | REACTED | first contact Tue 11 from below; reacted turn Tue 12 |
+| 1H (Unmitigated) BoM supply 1.12716-1.12853 | REACTED | first contact Tue 11 from below; reacted turn Tue 12 |
+| 1H (Unmitigated) MoM supply 1.12491-1.12612 | PIERCED | first contact Tue 11 from below; pierced Tue 11 (10.5 p past far edge, close beyond) |
+| LSZ supply 1.12803-1.12853 (reach 1.12953) | not reached | |
+| LSZ supply 1.12562-1.12612 (reach 1.12712) | REACTED | first contact Tue 11 from below; reacted turn Tue 12 |
+| LSZ demand 1.12208-1.12258 (reach 1.12108) | REACTED | first contact Mon 08 from below; reacted turn Mon 10 |
+| LSZ demand 1.12149-1.12199 (reach 1.12049) | REACTED | first contact Mon 07 from below; reacted stall Mon 09 |
+| LSZ demand 1.1161-1.1166 (reach 1.1151) | REACTED | first contact Wed 12 from above; reacted turn Wed 13 |
+| band 1.12039-1.12149 | REACTED | first contact Mon 07 from below; reacted wick-rejection Mon 09 (5.8 p wick past far edge, closed back) |
+Reached 9, reacted 8, pierced 1. **Unzoned turning points: 2** - Thu 11:00 low 1.11719 (+55 p after; 5.9 p above the nearest box) and Thu 16:00 low 1.11845 (+35 p after; 18 p from any box).
+**E1 = 8 / (9 + 2) = 73 %.** Gate: **FAIL - missing** (nothing between 1.1166 and 1.1204, where price spent Wed 09:00 - Thu 17:00). Not bloated (11 objects).
 
 ### Step 3 - E2
 | day | forecast | candles | verdict |
 |---|---|---|---|
 | Mon | SS range 1.11510-1.12612, key 1H MoM | 1.1169 -> 1.12249, inside | RIGHT |
-| Tue | SS range | 1.12028 -> 1.12767 (15 p wick over the ceiling, 1H closes back at 1.1258-1.1262) | RIGHT (floor-to-ceiling swing with a sweep) |
+| Tue | SS range | 1.12028 -> 1.12767: breakout surge through the ceiling 1.12612, 1H closes 1.1273-1.1278 (12-17 p over it) for Tue 11:00-16:00 | WRONG - the ceiling did not hold (a BS, not a swing inside the range) |
 | Wed | SS range | 1.12629 -> 1.11645 (floor) | RIGHT |
 | Thu | SS range | 1.11719 -> 1.12267 -> 1.11845 -> 1.1209 | RIGHT |
 | Fri | SS range | 1.12427 -> 1.11874 | RIGHT |
-**E2 = 5 / 5 = 100 %.** (Same box and tag all five days; the yellow path is a fixed zig-zag between 1.1166 and 1.1249.)
+**E2 = 4 / 5 = 80 %.** (Same box and tag all five days; the yellow path is a fixed zig-zag between 1.1166 and 1.1249.)
 
 ### Step 4 - E3
 | obvious trade | setup | verdict |
@@ -582,25 +619,25 @@ Week action (1H, UTC, from the anchor): Mon 06 1.32052 -> 1.3239 (09) -> 1.319 (
 Obvious trades: 7 (Wed 1.3194 -> 1.3224 and Fri 1.3206 -> 1.3244 are under 40 p and not counted).
 
 ### Step 2 - E1
-| zone (facts) | verdict | delta |
+| zone (facts) | verdict at first contact | delta (UTC hour) |
 |---|---|---|
-| IP UPPER RESISTANCE 1.32457-1.32535 | PIERCED (first contact) | Tue 09-10 two candles at 1.32461 / 1.32485, then Tue 11:00 crossed to 1.32817 in one candle; later it did turn price (Wed 01-07 stall, Thu 14 1.32485 -> -45 p, Fri 05 1.32503 -> -45 p) |
-| IP MID-RANGE SUPPORT 1.31991-1.32051 | REACTED | Tue 05 1.32013 -> +84 p; Thu 16 1.32037; Fri 12 1.32057 |
-| GAP 1.32270-1.32330 | REACTED | Mon 07-12 chop |
-| GAP 1.32124-1.32184 | REACTED | Mon 15-Tue 03 chop |
-| 1H BoM supply 1.32319-1.32395 | REACTED | Mon 09 1.3239 -> -49 p |
-| LSZ supply 1.32530-1.32580 (reach 1.3268) | PIERCED | Tue 11:00 through to 1.32817, 14 p past the reach |
-| LSZ supply 1.32510-1.32560 (reach 1.3266) | PIERCED | same candle |
-| LSZ supply 1.32450-1.32500 (reach 1.3260) | PIERCED (first contact) | same; later Thu / Fri tops inside it |
-| LSZ demand 1.32226-1.32276 (reach 1.32126) | REACTED | Mon chop |
-| LSZ demand 1.32183-1.32233 (reach 1.32083) | REACTED | Mon / Wed 15 1.32242 |
-| LSZ demand 1.32021-1.32071 (reach 1.31921) | REACTED | Mon 13 1.319 (2 p beyond reach) -> +39 p |
-| LSZ demand 1.31899-1.31949 (reach 1.31799) | REACTED | Mon 1.319, Wed 1.31935, Thu 1.31843 |
-| band 1.32526-1.32636 | PIERCED | Tue 11:00 |
-| band 1.32121-1.32231 | REACTED | Mon / Wed chop |
-| band 1.31932-1.32042 | REACTED | Wed / Thu lows |
-Reached 15, reacted 10, **pierced 5**. **Unzoned turning points: 1** - Tue 15:00 top 1.32856 (-92 p after; 18 p above the highest reach, 1.3268).
-**E1 = 10 / 16 = 63 %.** Gate: **FAIL - missing + bunched.** Missing: the week high 1.3286 (the biggest turn) has no zone. Bunched: UPPER RESISTANCE, three LSZ supply boxes and a band all inside 1.3245-1.3264 (the LSZ boxes 1.32450 / 1.32510 / 1.32530 are within 8 p and should be one box).
+| IP UPPER RESISTANCE 1.32457-1.32535 | PIERCED | first contact Tue 09 from below; pierced Tue 11 (28.2 p past far edge, close beyond) |
+| IP MID-RANGE SUPPORT 1.31991-1.32051 | PIERCED | first contact Mon 13 from above; pierced Mon 13 (9.1 p past far edge, close beyond) |
+| GAP 1.3227-1.3233 | REACTED | first contact Mon 07 from below; reacted wick-rejection Mon 08 (5.1 p wick past far edge, closed back) |
+| GAP 1.32124-1.32184 | PIERCED | first contact Mon 06 from below; pierced Mon 07 (11.6 p past far edge, close beyond) |
+| 1H (Unmitigated) BoM supply 1.32319-1.32395 | REACTED | first contact Mon 08 from below; reacted turn Mon 09 |
+| LSZ supply 1.3253-1.3258 (reach 1.3268) | PIERCED | first contact Tue 11 from below; pierced Tue 11 (13.7 p past far edge, close beyond) |
+| LSZ supply 1.3251-1.3256 (reach 1.3266) | PIERCED | first contact Tue 11 from below; pierced Tue 11 (15.7 p past far edge, close beyond) |
+| LSZ supply 1.3245-1.325 (reach 1.326) | PIERCED | first contact Tue 09 from below; pierced Tue 11 (21.7 p past far edge, close beyond) |
+| LSZ demand 1.32226-1.32276 (reach 1.32126) | PIERCED | first contact Mon 06 from below; pierced Mon 08 (10.5 p past far edge, close beyond) |
+| LSZ demand 1.32183-1.32233 (reach 1.32083) | PIERCED | first contact Mon 06 from below; pierced Mon 07 (6.7 p past far edge, close beyond) |
+| LSZ demand 1.32021-1.32071 (reach 1.31921) | REACTED | first contact Mon 06 from above; reacted turn Mon 07 |
+| LSZ demand 1.31899-1.31949 (reach 1.31799) | REACTED | first contact Mon 13 from above; reacted turn Mon 14 |
+| band 1.32526-1.32636 | PIERCED | first contact Tue 11 from below; pierced Tue 11 (18.1 p past far edge, close beyond) |
+| band 1.32121-1.32231 | PIERCED | first contact Mon 06 from below; pierced Mon 07 (6.9 p past far edge, close beyond) |
+| band 1.31932-1.32042 | REACTED | first contact Mon 13 from above; reacted turn Mon 14 |
+Reached 15, reacted 5, pierced 10. **Unzoned turning points: 1** - Tue 15:00 top 1.32856 (-92 p after; 18 p above the highest reach, 1.3268).
+**E1 = 5 / (15 + 1) = 31 %.** Gate: **FAIL - missing + bunched.** Missing: the week high 1.3286 (the biggest turn) has no zone. Bunched: UPPER RESISTANCE, three LSZ supply boxes and a band all inside 1.3245-1.3264 (the LSZ boxes 1.32450 / 1.32510 / 1.32530 are within 8 p and should be one box).
 
 ### Step 3 - E2
 | day | forecast | candles | verdict |
@@ -628,3 +665,236 @@ Stopped-out setups: **GB1 re-armed** SHORT 1.32319 (Tue 01:30 -> stopped Tue 08:
 ### Step 5 - presentation
 - Week frames: the five identical day boxes stop at 1.32395 while Tuesday-Wednesday trade up to 1.3286 - the week's main swing is drawn with nothing on it; "1H (Unmitigated) | BoM" label prints over the "Mon SS 80%" tag; GB1 / GB2 labels over Monday's candles.
 - Zones frame: "LSZ supply-side | sweep to 1.32600" and "UPPER RESISTANCE" labels overlap at 1.3250; "LSZ demand-side | sweep to 1.31921" over "MID-RANGE SUPPORT" at 1.3202.
+
+## Map 10 - DXY 2026-05-18
+
+Week action (1H, UTC, from the anchor): Mon 06 99.307 -> 98.98 (12) -> 99.193 (18) -> 98.944 (22); Tue up to 99.434 (14), 99.25-99.33 into Wed; Wed 99.471 (08) -> 99.294 -> 99.472 (14) -> 98.966 (15) -> 99.05-99.20; Thu 99.064 (01) -> 99.356 (07) -> 99.078 (08) -> 99.515 (13) -> 99.092 (17); Fri chop 99.172-99.412.
+
+### Step 1 - obvious trades (written from the `_zones` frame before opening any setup)
+| # | move | from zone -> to zone |
+|---|---|---|
+| A | Mon SHORT 99.307 -> 98.98 (-33 p) | LSZ supply 99.270-99.320 -> MID-RANGE SUPPORT 98.963-99.037 |
+| B | Mon-Tue LONG 98.944 -> 99.434 (+49 p) | MID-RANGE SUPPORT / band 98.885-98.939 -> LSZ supply 99.359-99.409 |
+| C | Wed SHORT 99.472 -> 98.966 (-51 p) | band 99.449-99.503 / LSZ reach -> MID-RANGE SUPPORT |
+| D | Thu LONG 99.078 -> 99.515 (+44 p) | 1H Mitigated demand 99.001-99.097 -> band 99.449-99.503 / LSZ reach 99.509 |
+| E | Thu SHORT 99.515 -> 99.092 (-42 p) | band 99.449-99.503 -> 1H Mitigated demand |
+Not counted: Thu-Fri 99.092 -> 99.412 (+32 p, choppy, no clean leg). Obvious trades: 5.
+
+### Step 2 - E1
+| zone (facts) | verdict at first contact | delta (UTC hour) |
+|---|---|---|
+| IP MID-RANGE SUPPORT 98.963-99.037 | REACTED | first contact Mon 12 from above; reacted turn Mon 13 |
+| 1H (Unmitigated) MoM demand 99.251-99.298 | PIERCED | first contact Mon 06 from above; pierced Mon 06 (8.1 p past far edge, close beyond) |
+| 1H (Unmitigated) MoM demand 99.174-99.244 | REACTED | first contact Mon 06 from above; reacted wick-rejection Mon 07 (3.1 p wick past far edge, closed back) |
+| 1H (Mitigated 2x) MoM demand 99.001-99.097 | REACTED | first contact Mon 08 from above; reacted turn Mon 10 |
+| 1H (Unmitigated) MoM demand 98.844-98.889 | not reached | |
+| LSZ supply 99.359-99.409 (reach 99.509) | REACTED | first contact Tue 13 from below; reacted turn Tue 14 |
+| LSZ supply 99.27-99.32 (reach 99.42) | REACTED | first contact Mon 06 from below; reacted turn Mon 06 |
+| LSZ demand 99.251-99.301 (reach 99.151) | PIERCED | first contact Mon 06 from above; pierced Mon 08 (5.9 p past far edge, close beyond) |
+| LSZ supply 98.857-98.907 (reach 99.007) | REACTED | first contact Mon 12 from above; reacted turn Mon 13 |
+| LSZ demand 98.844-98.894 (reach 98.744) | not reached | |
+| band 99.449-99.503 | REACTED | first contact Wed 08 from below; reacted turn Wed 10 |
+| band 99.359-99.413 | REACTED | first contact Tue 13 from below; reacted turn Tue 14 |
+| band 99.244-99.298 | PIERCED | first contact Mon 06 from above; pierced Mon 06 (7.4 p past far edge, close beyond) |
+| band 99.125-99.179 | PIERCED | first contact Mon 06 from above; pierced Mon 08 (3.3 p past far edge, close beyond) |
+| band 98.996-99.05 | REACTED | first contact Mon 12 from above; reacted turn Mon 13 |
+| band 98.885-98.939 | not reached | |
+Reached 13, reacted 9, pierced 4. Unzoned turning points: none (98.98, 98.944, 99.434, 99.472, 98.966, 99.078, 99.515, 99.092, 99.172 all have a box within 2 p).
+**E1 = 9 / (13 + 0) = 69 %.** Gate: **FAIL - bunched.** 99.15-99.32 holds two 1H MoM demand boxes, an LSZ demand, an LSZ supply and two bands (six boxes in 17 p); in the zones frame "LSZ demand-side | sweep to 99.151" is printed under "1H (Unmitigated) | MoM" at 99.27 and is unreadable. The anchor price (99.301) sits inside four of them; three were crossed in the first two hours.
+
+### Step 3 - E2
+| day | forecast | candles (facts day) | verdict |
+|---|---|---|---|
+| Mon | SS range 98.963-99.509, key LSZ | 98.946-99.307, down-up-down inside | RIGHT |
+| Tue | SS range | 98.944 -> 99.434 | RIGHT |
+| Wed | SS range | 99.472 -> 98.966 -> 99.136 | RIGHT |
+| Thu | SS range | 99.064 -> 99.515 (0.6 p over the reach) -> 99.092 | RIGHT |
+| Fri | SS range | 99.172-99.412 | RIGHT |
+**E2 = 5 / 5 = 100 %.** (A whole-week range read with one identical box and tag per day.)
+
+### Step 4 - E3
+| obvious trade | setup | verdict |
+|---|---|---|
+| A Mon SHORT 99.307 | none (two Mon "SS up" variants rejected for RRR) | MISSED |
+| B Mon-Tue LONG 98.944 | DX2 LONG 99.050 / 98.971 / 99.409 filled Mon 11:30, **STOPPED Mon 16:15** (low 98.971) - the real low came at 98.944 Mon 22:00 | MISSED |
+| C Wed SHORT 99.472 | DX1 SHORT 99.359 / 99.459 / 99.047 filled Tue 13:15, **STOPPED Wed 08:15** (99.471) - one candle before the 51 p drop | MISSED |
+| D Thu LONG 99.078 | none | MISSED |
+| E Thu SHORT 99.515 | none | MISSED |
+Stopped-out setups: **DX2** LONG 99.050 (Mon 11:30 -> 16:15), **DX1** SHORT 99.359 (Tue 13:15 -> Wed 08:15). Both of the week's only two setups were stopped.
+**E3 = 0 / 5 = 0 %.**
+
+### Step 5 - presentation
+- History half: "LSZ demand-side | sweep to 99.151" overprinted by "1H (Unmitigated) | MoM"; "LSZ demand-side | sweep to 98.744" overprinted by "1H (Unmitigated) | MoM" at 98.85; "supply-side | sweep to 99.007" clipped at the left edge.
+- Week frames: the DX1 label sits on Monday's first candles, DX2's label is hidden behind candles ("DX2 SS L 4.5R" barely legible); five identical day boxes cover all candles.
+
+## Map 11 - EURUSD 2026-05-18
+
+Week action (1H, UTC, from the anchor): Mon 06 1.16219 -> 1.16572 (12) -> 1.16287 (18) -> 1.16617 (22); Tue down to 1.15921 (15); Wed 1.15836 (08) -> 1.15827 (14) -> spike 1.16448 (15) -> 1.1616-1.1636; Thu 1.16352 (01) -> 1.1594 (07) -> 1.16353 (08) -> 1.15762 (13) -> 1.163 (17); Fri chop 1.15882-1.1619.
+
+### Step 1 - obvious trades (written from the `_zones` frame before opening any setup)
+| # | move | from zone -> to zone |
+|---|---|---|
+| A | Mon-Tue SHORT 1.1662 -> 1.1592 (-70 p) | band 1.16604-1.16672 / UPPER RESISTANCE 1.16641 -> MID-RANGE SUPPORT 1.15970-1.16036 |
+| C | Wed LONG 1.1583 -> 1.1645 (+62 p) | band 1.15747-1.15815 -> 1H Mitigated supply 1.16456-1.16574 |
+| E | Thu SHORT 1.1635 -> 1.1576 (-59 p) | 1H MoM supply 1.16266-1.16356 -> band 1.15747-1.15815 |
+| F | Thu LONG 1.1576 -> 1.1630 (+54 p) | band 1.15747-1.15815 -> 1H MoM supply 1.16266-1.16356 |
+Not counted: Mon 1.16219 -> 1.16572 (+35 p), Thu 01-08 1.1635 -> 1.1594 -> 1.1635 (two 41 p spike candles, not clean legs). Obvious trades: 4.
+
+### Step 2 - E1
+| zone (facts) | verdict at first contact | delta (UTC hour) |
+|---|---|---|
+| IP UPPER RESISTANCE 1.16641-1.16726 | not reached | |
+| IP UPPER RESISTANCE 1.16493-1.16562 | REACTED | first contact Mon 11 from below; reacted stall Mon 13 |
+| IP EQUILIBRIUM ZONE 1.16219-1.16296 | PIERCED | first contact Mon 06 from below; pierced Mon 06 (6.9 p past far edge, close beyond) |
+| IP MID-RANGE SUPPORT 1.1597-1.16036 | REACTED | first contact Tue 13 from above; reacted turn Tue 14 |
+| 1H (Unmitigated) MoM supply 1.16655-1.16726 | not reached | |
+| 1H (Mitigated 2x) MoM supply 1.16456-1.16574 | REACTED | first contact Mon 11 from below; reacted stall Mon 13 |
+| 1H (Unmitigated) MoM supply 1.16266-1.16356 | PIERCED | first contact Mon 06 from below; pierced Mon 08 (9.5 p past far edge, close beyond) |
+| LSZ supply 1.16676-1.16726 (reach 1.16826) | not reached | |
+| LSZ demand 1.16657-1.16707 (reach 1.16557) | REACTED | first contact Mon 12 from below; reacted turn Mon 14 |
+| LSZ supply 1.16211-1.16261 (reach 1.16361) | PIERCED | first contact Mon 06 from below; pierced Mon 08 (9.0 p past far edge, close beyond) |
+| LSZ demand 1.16168-1.16218 (reach 1.16068) | REACTED | first contact Tue 09 from above; reacted stall Tue 11 |
+| LSZ demand 1.16083-1.16133 (reach 1.15983) | REACTED | first contact Tue 10 from above; reacted turn Tue 14 |
+| band 1.16705-1.16773 | not reached | |
+| band 1.16604-1.16672 | REACTED | first contact Mon 20 from below; reacted turn Tue 00 |
+| band 1.16477-1.16545 | REACTED | first contact Mon 11 from below; reacted stall Mon 13 |
+| band 1.16327-1.16395 | PIERCED | first contact Mon 06 from below; pierced Mon 08 (5.6 p past far edge, close beyond) |
+| band 1.16203-1.16271 | PIERCED | first contact Mon 06 from below; pierced Mon 06 (9.4 p past far edge, close beyond) |
+| band 1.16094-1.16162 | REACTED | first contact Tue 09 from above; reacted stall Tue 12 |
+| band 1.15747-1.15815 | REACTED | first contact Thu 13 from above; reacted turn Thu 13 |
+| band 1.15619-1.15687 | not reached | |
+| band 1.15503-1.15571 | not reached | |
+Reached 15, reacted 10, pierced 5. **Unzoned turning points: 1** - Fri 14:00 low 1.15882 (+31 p after; 6.7 p above the nearest box).
+**E1 = 10 / (15 + 1) = 63 %.** Gate: **FAIL - bunched.** 1.1620-1.1640 holds EQUILIBRIUM, 1H MoM supply, an LSZ supply, an LSZ demand and two bands (all five that sit at the anchor price were crossed in the first two hours); 1.1645-1.1673 holds two IP, two S/D, two LSZ and three bands. In the zones frame the labels at 1.1666 and 1.1650 print over each other ("UPPER RESISTANCE | HEAVY" over "1H (Mitigated 2x) | MoM", the 3.7bn / 1.5bn strike labels on top of each other).
+
+### Step 3 - E2
+| day | forecast | candles (facts day) | verdict |
+|---|---|---|---|
+| Mon | SS range 1.15970-1.16562, key UPPER RESISTANCE | 1.16219-1.16608, up-down-up inside (4.6 p over the ceiling) | RIGHT |
+| Tue | SS range | 1.16617 -> 1.15921 (ceiling to floor) | RIGHT |
+| Wed | SS range | 1.15827 (14 p under the floor, closes up to 9 p under for 6 h) -> 1.16448 | RIGHT (oscillation; floor undercut noted) |
+| Thu | SS range | 1.16353 -> 1.15762 (21 p under the floor) -> 1.163 | RIGHT (oscillation; floor undercut noted) |
+| Fri | SS range | 1.15882-1.16205 | RIGHT |
+**E2 = 5 / 5 = 100 %.**
+
+### Step 4 - E3
+| obvious trade | setup | verdict |
+|---|---|---|
+| A Mon-Tue SHORT 1.1662 | EU1 SHORT 1.16512 / 1.16575 / 1.15970 filled Mon 11:30, **STOPPED Mon 20:15** (1.16608) - 2 h before the top, then price went to the TP | MISSED |
+| C Wed LONG 1.1583 | none | MISSED |
+| E Thu SHORT 1.1635 | none | MISSED |
+| F Thu LONG 1.1576 | none | MISSED |
+Stopped-out setups: **EU2** SHORT 1.16297 (Mon 06:00 -> 07:15), **EU1** SHORT 1.16512 (Mon 11:30 -> 20:15). Both of the week's setups were stopped on Monday; nothing was offered Tue-Fri.
+**E3 = 0 / 4 = 0 %.**
+
+### Step 5 - presentation
+- Zones / all frames: labels at 1.1665 and 1.1650 overprint each other and are unreadable; "LSZ supply-side | sweep to 1.16361" and "LSZ demand-side | sweep to 1.16068" are stacked at 1.1622 over the May 16-18 candles.
+- Week frame: "EU1 SS S 8.6R" and "EU2 SS S 3.7R" labels over Monday's candles; two strike labels overlap at 1.1650; day tags "80%" barely visible.
+
+## Map 12 - GBPUSD 2026-05-18
+
+Week action (1H, UTC, from the anchor): Mon 06 1.33217 -> 1.34029 (12) -> 1.33801 (13) -> 1.34494 (16) -> 1.34004 (19) -> 1.34391 (20); Tue stair-step down to 1.33785 (14); Wed 1.3375 (08) -> 1.3463 (15), then 1.343-1.345; Thu 1.34548 (08) -> 1.33904 (13) -> 1.34492 (17); Fri 1.34132 (07) -> 1.34631 (13) -> 1.34177 -> 1.34535 -> 1.34195.
+
+### Step 1 - obvious trades (written from the `_zones` frame before opening any setup)
+| # | move | from zone -> to zone |
+|---|---|---|
+| A1 | Mon LONG 1.3322 -> 1.3403 (+81 p) | GAP 1.33240-1.33300 / LSZ 1.33203 -> UPPER RESISTANCE 1.33950-1.34037 |
+| A2 | Mon LONG 1.3380 -> 1.3449 (+69 p) | band 1.33816-1.33933 / LSZ reach 1.3385 -> UPPER RESISTANCE 1.34497-1.34557 |
+| C | Mon-Tue SHORT 1.3449 -> 1.3379 (-71 p) | UPPER RESISTANCE 1.34497 -> GAP 1.33720-1.33780 |
+| D | Wed LONG 1.3375 -> 1.3463 (+88 p) | GAP 1.33720-1.33780 -> UPPER RESISTANCE 1.34497 (7 p over it) |
+| E | Thu SHORT 1.3455 -> 1.3390 (-64 p) | UPPER RESISTANCE 1.34497 -> LSZ demand 1.33950 (reach 1.3385) |
+| F | Thu LONG 1.3390 -> 1.3449 (+59 p) | LSZ demand 1.33950 -> UPPER RESISTANCE 1.34497 |
+Not counted: Fri 1.3413 -> 1.3463 -> 1.3418 (spike candles out of a 5 h chop). Obvious trades: 6.
+
+### Step 2 - E1
+| zone (facts) | verdict at first contact | delta (UTC hour) |
+|---|---|---|
+| IP UPPER RESISTANCE 1.34497-1.34557 | REACTED | first contact Wed 15 from below; reacted wick-rejection Wed 15 (7.3 p wick past far edge, closed back) |
+| IP UPPER RESISTANCE 1.3395-1.34037 | REACTED | first contact Mon 12 from below; reacted turn Mon 13 |
+| IP MID-RANGE SUPPORT 1.32995-1.33055 | not reached | |
+| IP KEY SUPPORT BAND 1.32484-1.32544 | not reached | |
+| GAP 1.34239-1.34299 | PIERCED | first contact Mon 15 from below; pierced Mon 16 (19.5 p past far edge, close back inside/below) |
+| GAP 1.3372-1.3378 | REACTED | first contact Mon 08 from below; reacted wick-rejection Mon 08 (6.3 p wick past far edge, closed back) |
+| GAP 1.33492-1.33552 | REACTED | first contact Mon 06 from below; reacted turn Mon 07 |
+| GAP 1.3324-1.333 | PIERCED | first contact Mon 06 from below; pierced Mon 06 (28.3 p past far edge, close beyond) |
+| GAP 1.32668-1.32728 | not reached | |
+| 1H (Unmitigated) MoM supply 1.33941-1.34037 | REACTED | first contact Mon 12 from below; reacted turn Mon 13 |
+| LSZ supply 1.33987-1.34037 (reach 1.34137) | REACTED | first contact Mon 12 from below; reacted turn Mon 13 |
+| LSZ demand 1.3395-1.34 (reach 1.3385) | REACTED | first contact Mon 12 from below; reacted turn Mon 13 |
+| LSZ supply 1.33203-1.33253 (reach 1.33353) | PIERCED | first contact Mon 06 from below; pierced Mon 06 (23.0 p past far edge, close beyond) |
+| LSZ demand 1.33147-1.33197 (reach 1.33047) | not reached | |
+| LSZ demand 1.33022-1.33072 (reach 1.32922) | not reached | |
+| band 1.34423-1.3454 | REACTED | first contact Mon 16 from below; reacted turn Mon 16 |
+| band 1.34222-1.34339 | PIERCED | first contact Mon 15 from below; pierced Mon 16 (15.5 p past far edge, close back inside/below) |
+| band 1.33816-1.33933 | REACTED | first contact Mon 08 from below; reacted turn Mon 09 |
+| band 1.33527-1.33644 | REACTED | first contact Mon 06 from below; reacted turn Mon 07 |
+| band 1.33264-1.33381 | PIERCED | first contact Mon 06 from below; pierced Mon 06 (20.2 p past far edge, close beyond) |
+| band 1.33025-1.33142 | not reached | |
+| band 1.32856-1.32973 | not reached | |
+| band 1.32569-1.32686 | not reached | |
+| band 1.32394-1.32511 | not reached | |
+Reached 15, reacted 10, pierced 5. **Unzoned turning points: 3** - Wed 15:00 top 1.3463 (-42 p after; 7.3 p above UPPER RESISTANCE), Fri 13:00 top 1.34631 (-45 p; 7.4 p above it), Fri 07:00 low 1.34132 (+50 p; 9 p under the nearest band).
+**E1 = 10 / (15 + 3) = 56 %.** Gate: **FAIL - missing + floating + bunched.** Missing: the 1.3455-1.3465 ceiling that capped Wed, Thu and Fri has only the edge of one box under it, and nothing at the 1.3413 Friday low. Floating: MID-RANGE SUPPORT, KEY SUPPORT BAND, GAP 1.32668, two LSZ demand and five bands (11 objects) sit 15-75 p under the week low (1.33217) and were never reached. Bunched: at 1.3395-1.3414 UPPER RESISTANCE, 1H MoM supply, an LSZ supply and an LSZ demand overlap; their labels print over each other in the zones frame.
+
+### Step 3 - E2
+| day | forecast | candles (facts day) | verdict |
+|---|---|---|---|
+| Mon | SS range 1.33047-1.34037, key 1H MoM supply | breakout up 1.33217 -> 1.34494, 1H closes up to 1.3434 (30 p over the box) | WRONG |
+| Tue | SS range | 1.33785-1.34371, closes up to 1.3434 (30 p over the ceiling) | WRONG - range day, but around a level 30 p above the forecast bounds |
+| Wed | SS range | BS up 1.3375 -> 1.3463, closes 1.3441 (37 p over) | WRONG |
+| Thu | SS range | 1.33904-1.34548, closes 1.3405-1.3443 - above the box all day | WRONG |
+| Fri | SS range | 1.34132-1.34631, all closes 1.3419-1.3449 - above the box | WRONG |
+**E2 = 0 / 5 = 0 %.** The forecast range was correct only for Monday's first six hours; from Monday 12:00 the week traded above the box.
+
+### Step 4 - E3
+| obvious trade | setup | verdict |
+|---|---|---|
+| A1 Mon LONG 1.3322 | GB2 LONG 1.33197 / 1.33132 / 1.33941, filled Mon 06:00, TP Mon 12:30 | CAUGHT |
+| A2 Mon LONG 1.3380 | none (GB2 re-arm never filled) | MISSED |
+| C Mon-Tue SHORT 1.3449 | none at 1.3449; GB1 SHORT 1.33983 / 1.34067 filled Mon 12:30, **STOPPED Mon 15:30** | MISSED |
+| D Wed LONG 1.3375 | none | MISSED |
+| E Thu SHORT 1.3455 | none | MISSED |
+| F Thu LONG 1.3390 | none | MISSED |
+Stopped-out setups: **GB1** SHORT 1.33983 (Mon 12:30 -> 15:30).
+**E3 = 1 / 6 = 17 %.**
+
+### Step 5 - presentation
+- Week frames: the five day boxes (1.3305-1.3404) and the yellow zig-zag 1.3320 <-> 1.3395 sit under the candles from Monday 12:00 to Friday - the drawn forecast and the price do not overlap for four days.
+- Zones frame: "UPPER RESISTANCE | MODERATE" and "1H (Unmitigated) | MoM" print over each other at 1.3400; "LSZ demand-side | sweep to 1.32922" is hidden under "MID-RANGE SUPPORT" at 1.3302; GB1 label over Monday's candles.
+
+---
+
+## Summary table (all 12 maps)
+
+| map | E1 | E2 | E3 | E1 gate (none bloated / bunched / floating / missing) |
+|---|---|---|---|---|
+| DXY 2026-07-06 | 17/18 = 94 % | 5/5 = 100 % | 7/7 = 100 % | FAIL (bunched) |
+| EURUSD 2026-07-06 | 16/16 = 100 % | 5/5 = 100 % | 6/7 = 86 % | FAIL (bunched) |
+| GBPUSD 2026-07-06 | 19/27 = 70 % | 5/5 = 100 % | 4/7 = 57 % | FAIL (bunched) |
+| DXY 2026-04-20 | 28/28 = 100 % | 4/5 = 80 % | 2/2 = 100 % | FAIL (bunched) |
+| EURUSD 2026-04-20 | 23/23 = 100 % | 4/5 = 80 % | 1/5 = 20 % | FAIL (bunched) |
+| GBPUSD 2026-04-20 | 13/18 = 72 % | 2/5 = 40 % | 0/8 = 0 % | FAIL (missing, floating, bunched) |
+| DXY 2026-10-05 | 7/11 = 64 % | 5/5 = 100 % | 1/6 = 17 % | FAIL (missing) |
+| EURUSD 2026-10-05 | 8/11 = 73 % | 4/5 = 80 % | 0/7 = 0 % | FAIL (missing) |
+| GBPUSD 2026-10-05 | 5/16 = 31 % | 3/5 = 60 % | 2/7 = 29 % | FAIL (missing, bunched) |
+| DXY 2026-05-18 | 9/13 = 69 % | 5/5 = 100 % | 0/5 = 0 % | FAIL (bunched) |
+| EURUSD 2026-05-18 | 10/16 = 63 % | 5/5 = 100 % | 0/4 = 0 % | FAIL (bunched) |
+| GBPUSD 2026-05-18 | 10/18 = 56 % | 0/5 = 0 % | 1/6 = 17 % | FAIL (missing, floating, bunched) |
+| **All 12 - pooled counts** | **165/215 = 77 %** | **47/60 = 78 %** | **24/71 = 34 %** | 12 / 12 FAIL |
+| All 12 - mean of map % | 74 % | 78 % | 35 % | |
+| **9 maps outside 2026-07-06 - pooled counts** | **113/154 = 73 %** | **32/45 = 71 %** | **7/50 = 14 %** | 9 / 9 FAIL |
+| 9 maps outside 2026-07-06 - mean of map % | 70 % | 71 % | 20 % | |
+
+E1 denominators = zones reached + unzoned turning points. Against the >= 90 % target: E1 reaches it on 4 maps (DXY / EURUSD 07-06 and DXY / EURUSD 04-20 - exactly the maps where boxes cover every price), E2 on 6 maps, E3 on 2 maps (DXY 07-06, DXY 04-20). Outside the anchor week E3 catches 7 of 50 obvious trades.
+
+Stopped-out setups across the 12 maps: EU2 + EU4 re-arm (EURUSD 07-06); DX6 (DXY 04-20); GB2 (GBPUSD 04-20); DX2 (DXY 10-05); EU1 (EURUSD 10-05); GB1 re-arm + GB2 2nd re-arm (GBPUSD 10-05); DX1 + DX2 (DXY 05-18); EU1 + EU2 (EURUSD 05-18); GB1 (GBPUSD 05-18). That is 14 named stops; no stop on DXY 07-06, GBPUSD 07-06, EURUSD 04-20.
+
+## The five defects that cost the most
+
+1. **E3 offers almost nothing after Monday outside the anchor week (cost: 43 of 50 obvious trades missed).** Most non-anchor maps carry 2-6 setups, all built on Monday's range bounds, and none is re-issued after a stop or after price leaves the range. Examples: EURUSD 2026-05-18 - both setups stopped on Monday (EU2 1.16297 Mon 07:15, EU1 1.16512 Mon 20:15), then nothing while 1.1662 -> 1.1592 (Tue), 1.1583 -> 1.1645 (Wed 14-15), 1.1635 -> 1.1576 -> 1.1630 (Thu) ran; GBPUSD 2026-04-20 - 0 of 8 swings of 56-89 p between 1.3474 and 1.3544 (Mon-Fri) traded; EURUSD 2026-10-05 - 0 of 7.
+2. **Stops sit inside the sweep reach, so setups at the right zone are stopped minutes to hours before the turn.** DXY 2026-05-18 DX1 SHORT 99.359 / SL 99.459 stopped Wed 08:15 at 99.471, then 99.472 -> 98.966 (Wed 14-15); DX2 LONG 99.050 / SL 98.971 stopped Mon 16:15, true low 98.944 Mon 22:00, then +49 p. EURUSD 2026-05-18 EU1 SL 1.16575 stopped Mon 20:15 at 1.16608; top 1.16617 Mon 22:00, then -70 p to its own TP. DXY 2026-10-05 DX2 LONG 101.926 / SL 101.825 stopped Tue 11:30 at the 101.754 low, then +75 p. GBPUSD 2026-04-20 GB2 SHORT 1.35163 / SL 1.35243 stopped Mon 11:15 before the 1.35444 top. (Canon itself expects the sweep 0.05-0.10 beyond the extreme.)
+3. **E2 freezes Monday's range box for all five days and never registers a breakout.** GBPUSD 2026-05-18: box 1.33047-1.34037 every day while price traded above it from Mon 12:00 to Fri close (Mon 1.34494, Wed 1.3463, Fri 1.34631) - 0/5. GBPUSD 2026-10-05: Tue 1.32856 / Wed 1.32761 against a box top of 1.32395 (Tue, Wed WRONG). GBPUSD 2026-04-20 Mon close 1.35333 vs box top 1.35019. EURUSD 2026-10-05 Tue closes 1.1273-1.1278 vs ceiling 1.12612. The day path is a fixed zig-zag (DXY/EURUSD/GBPUSD 10-05 and 05-18) unrelated to the candles.
+4. **No zone at the week's biggest turning points (E1 missing).** GBPUSD 2026-10-05 Tue 15:00 top 1.32856 (-92 p after; nothing within 18 p); GBPUSD 2026-04-20 Mon 15:00 1.35444 and Tue 14:00 1.35396 (zones stop at 1.35327 although price traded above); GBPUSD 2026-05-18 Wed 15:00 1.3463 and Fri 13:00 1.34631 plus Fri 07:00 low 1.34132; DXY 2026-10-05 Mon 06:00 102.433 and Mon 14:00 102.372; EURUSD 2026-10-05 Thu 11:00 1.11719 and Thu 16:00 1.11845. At the same time 11 GBPUSD 2026-05-18 objects float 15-75 p under a week low that was never revisited.
+5. **E1 bloat / bunching at the anchor price, with unreadable labels.** 24-36 objects per map on 07-06 and 04-20 covering every price (GBPUSD 2026-07-06: 36 objects in 1.326-1.346), un-merged LSZ boxes less than 1 p apart (DXY 2026-04-20 98.235 / 98.241 / 98.242; GBPUSD 2026-07-06 1.33340 / 1.33341), and stacks sitting on the anchor price that were crossed in the first two hours (EURUSD 2026-05-18: EQUILIBRIUM, 1H MoM supply, LSZ supply and two bands at 1.1620-1.1640 pierced Mon 06-08; GBPUSD 2026-10-05: two gaps, two LSZ and a band at 1.3212-1.3233 pierced Mon 06-08; GBPUSD 2026-07-06: six boxes at 1.3354-1.3381 crossed Mon 13-18). Labels overprint each other at EURUSD 2026-04-20 1.1760, DXY 2026-04-20 98.40, GBPUSD 2026-07-06 1.3400 / 1.3375 / 1.3280, EURUSD 2026-05-18 1.1666 / 1.1650, DXY 2026-05-18 99.27.
+
+Also noted (smaller): E2 "RWL" forecast for Fridays that were one-way moves (DXY 2026-04-20 Fri, EURUSD 2026-04-20 Fri, GBPUSD 2026-04-20 Fri); the anchor week's E3 misses are reinforcement / late-week trades (EURUSD Thu 1.14233; GBPUSD Wed 1.33629, Thu 1.33829, Fri 1.34481); purple Thu/Fri day tags are drawn on top of the candles in every 07-06 and 04-20 frame.

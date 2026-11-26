@@ -795,10 +795,13 @@ def pine(pair, monday, E2):
     col = {'SS': '120,144,156', 'BS': '255,167,38', 'PBS': '255,112,67', 'WL': '171,71,188', 'PWL': '171,71,188', 'RWL': '171,71,188', 'R': '102,187,106', 'WLS': '255,112,67'}
     arrow = {'up': ' up', 'down': ' down', 'range': ''}
     o = ['    if show_e2']
+    # the five day tags stand in ONE row above the week's forecast envelope (clear of the candles: a tag inside a breakout day's box sat on that day's candles, A13)
+    y_tag = max((d['hi'] for d in E2['days']), default=0.0)
+    y_tag += 0.06 * (y_tag - min((d['lo'] for d in E2['days']), default=y_tag)) + 1e-9
     for d in E2['days']:
         c = col.get(d['shapes'][-1], '200,200,200')
         o.append(f"        box.new({d['t0']}, {g(d['hi'])}, {d['t1']}, {g(d['lo'])}, bgcolor=color.new(color.rgb({c}), 88), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
-        o.append(f"        label.new({(d['t0'] + d['t1']) // 2 if d['day'] != 'Fri' else d['t0'] + (d['t1'] - d['t0']) // 4}, {g(d['hi'])}, \"{d['day']} {'+'.join(d['shapes'])}\\n{arrow[d['dir']].strip()} {int(d['conf'] * 100)}%\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
+        o.append(f"        label.new({(d['t0'] + d['t1']) // 2 if d['day'] != 'Fri' else d['t0'] + (d['t1'] - d['t0']) // 4}, {g(y_tag)}, \"{d['day']} {'+'.join(d['shapes'])}\\n{arrow[d['dir']].strip()} {int(d['conf'] * 100)}%\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
     p = E2['path']
     for (t0, p0), (t1, p1) in zip(p, p[1:]):
         o.append(f"        line.new({t0}, {g(p0)}, {t1}, {g(p1)}, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)")
