@@ -1,3 +1,6 @@
+## STATE (NEWEST - supersedes the block below where they differ) 2026-11-26: steps 1-2 of the list below are DONE (e1_v1.py, anchor = Monday London open); step 3 e1_ip.py is WRITTEN and runs.
+Open deltas on the golden week D1 (upper band 9 pips low), D2 (prior-week-low floor scores LIGHT: swing rule excludes the last two days), D3 (green bands vs V1 4H liquidity) - see the last entry of memory/05_JOURNAL.md. Fix each by re-reading its canon lines, then continue with step 4.
+
 ## STATE (NEWEST, 2026-11-26, written just before a compaction) - STANDING ORDER = memory/14_GOAL_PROMPT.md v2.1. Tasks: S1 coverage matrix written (memory/15), S2a oracle written; NOW ON S2b = E1 on the golden week Jul 6-10 2026 (DXY, then EURUSD).
 READ BEFORE CODING: memory/14 (all), memory/08 sections "THE LIQUIDITY LADDER = THE SEALED V1's GREEN ZONES" and "THE APPROVED-RENDER E1 RECIPE", memory/15, context_management/oracle/golden_week.json.
 EXACT NEXT STEPS (in order; each cites its authority; verify each against the oracle with a diff, then on an opened Pinebox frame):
