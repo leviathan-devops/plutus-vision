@@ -722,7 +722,7 @@ def pine(pair, monday, E2):
     for d in E2['days']:
         c = col.get(d['shapes'][-1], '200,200,200')
         o.append(f"        box.new({d['t0']}, {g(d['hi'])}, {d['t1']}, {g(d['lo'])}, bgcolor=color.new(color.rgb({c}), 88), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
-        o.append(f"        label.new({d['t0'] + 3600000}, {g(d['hi'])}, \"{d['day']}: {' + '.join(d['shapes'])}{arrow[d['dir']]} {int(d['conf'] * 100)}%\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
+        o.append(f"        label.new({(d['t0'] + d['t1']) // 2}, {g(d['hi'])}, \"{d['day']} {'+'.join(d['shapes'])}\\n{arrow[d['dir']].strip()} {int(d['conf'] * 100)}%\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
     p = E2['path']
     for (t0, p0), (t1, p1) in zip(p, p[1:]):
         o.append(f"        line.new({t0}, {g(p0)}, {t1}, {g(p1)}, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)")

@@ -466,7 +466,7 @@ def pine(pair, monday, R):
     o = ['    if show_e3']
     if not R['setups']:
         o.append('        na')
-    seen_day = set()
+    seen_day, starts = set(), {}
     for s in R['setups']:
         day0 = D.week_start_ms(monday) + DAY_IDX[s['day']] * 86400000
         first = s['day'] not in seen_day; seen_day.add(s['day'])
@@ -476,7 +476,9 @@ def pine(pair, monday, R):
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['sl']))}, {x1}, {g(min(s['entry'], s['sl']))}, bgcolor=color.new(color.rgb(242,54,69), {86 if s.get('alt') else 70}), border_color=color.rgb(242,54,69), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['tp']))}, {x1}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), {88 if s.get('alt') else 76}), border_color=color.rgb(8,153,129), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
         ly = s['entry'] + 0.18 * (s['tp'] - s['entry'])        # inside the green box, next to its own entry edge: setups sharing one TP no longer stack their labels (A13)
-        o.append(f"        label.new({x0 + 1800000}, {g(ly)}, \"{s['id']} {'ALT ' if s.get('alt') else ''}{s['shape']} {s['dir']} {s['rrr']}R\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
+        k = starts.get(x0, 0); starts[x0] = k + 1             # setups resting from the same bar: labels staggered along the box so they do not print over each other (A13)
+        lx = min(x0 + 3 * 3600000 + k * 9 * 3600000, x1 - 3600000)
+        o.append(f"        label.new({lx}, {g(ly)}, \"{s['id']} {'ALT ' if s.get('alt') else ''}{s['shape']} {'S' if s['dir'] == 'SHORT' else 'L'} {s['rrr']:.1f}R\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
 
 
