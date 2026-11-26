@@ -188,10 +188,11 @@ def _stop(entry, direction, anchor, X, pair):
     if step_a is not None:
         cands.append(((step_a['top'] + 3 * pip) if dn else (step_a['bot'] - 3 * pip), "(a) 3 pips outside the far edge of the current step"))
     if pair not in NO_SHIELD:
-        sh = [s for s in ([th[1]] if len(th) >= 2 else []) + tk[:1]]
-        if sh:
-            s = min(sh, key=lambda s: s['bot'] if dn else -s['top'])
-            cands.insert(0, ((s['bot'] + pip) if dn else (s['top'] - pip), f"(b) 1 pip inside the close edge of the shield ({'4H band' if s['thick'] else 'second 1H rung'})"))
+        # every step that may shield a stop, nearest first: thick 4H bands, and the thin 1H rungs from the second on (FA 2.1); a shield closer than the golden minimum is the step the entry
+        # itself stands on - the next one is the 'NEXT STEP away' (E3C:255)
+        sh = sorted(th[1:] + tk, key=lambda s: s['bot'] if dn else -s['top'])
+        for k, s in enumerate(sh):
+            cands.insert(k, ((s['bot'] + pip) if dn else (s['top'] - pip), f"(b) 1 pip inside the close edge of the shield ({'4H band' if s['thick'] else '1H rung beyond the first'})"))
     for sl, why in cands:
         d = abs(sl - entry) / pip
         if GOLD_MIN <= d <= SL_CEIL and ((sl > entry) if dn else (sl < entry)):
