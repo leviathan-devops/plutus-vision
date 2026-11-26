@@ -332,6 +332,11 @@ def _build(pair, monday, X, E2, tag):
         if c['shape'] in ('BS', 'PBS') and prev is not None:
             lvl, pz = prev['tp'], prev['tp_zone']           # Law 27 (E3C:438-449): TP of the RWL = entry of the BS
             ecands = [(lvl, pz if pz.get('liq') else {'bot': lvl, 'top': lvl}, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
+        pbs = next((q for q in reversed(setups) if q['shape'] in ('BS', 'PBS') and q.get('parent') is None), None)
+        if c.get('role') in ('rwl', 'rwl0') and not a.get('sweep') and pbs is not None and a['bot'] - 3 * pip <= pbs['tp'] <= a['top'] + 3 * pip:
+            # Law 27 (E3C:443-449 'BS -> RWL: TP of BS becomes RWL entry zone'): the reversal rests at the breakout's TP from the moment the breakout starts
+            ecands = [(pbs['tp'], a, "the breakout's TP level (Law 27: TP of N = entry of N+1)")]
+            c = dict(c, rest_from=pbs['day'])
         if not ecands:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: SOURCE_INVALID - no ORDER_BLOCK / LQZ entry at {a.get('name', '')} (E3C:135)"); continue
         s, why_fail = None, 'TP_NULL'
@@ -354,7 +359,7 @@ def _build(pair, monday, X, E2, tag):
         if s is None:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: REJECT {why_fail} (entry {entry:.5f})"); continue
         s.update(day=c['days'][0], days=c['days'], shape=c['shape'], category=cat, session=SESSION_WINDOW[cat], sl_pips=round(abs(s['entry'] - s['sl']) / pip, 1),
-                 t0=c.get('t0'), t1=c.get('t1'), anchor=a, role=c.get('role'))
+                 t0=c.get('t0'), t1=c.get('t1'), anchor=a, role=c.get('role'), rest_from=c.get('rest_from'))
         ipz = a if a.get('ip') else _ip_at(a, X)
         if ipz is not None and ipz['zfp_num'] > 30 and not a.get('sweep'):
             log.append(f"{s['day']} {s['shape']} {s['dir']} {s['entry']:.5f}: NARRATIVE - anchor zone {ipz['name']} ZFP {ipz['zfp_num']}% > 30 (E3C:874-876 'suppress > 30 (WEAK)')"); continue
@@ -455,6 +460,8 @@ def build(pair, monday, X, E2):
     ss_days = [DAY_IDX[d['day']] for d in E2['days'] if d['shapes'] == ['SS'] and DAY_IDX[d['day']] < E2.get('n_real', 5)]
     for s in R['setups']:
         day0 = D.week_start_ms(monday) + DAY_IDX[s['day']] * 86400000
+        if s.get('rest_from'):
+            day0 = D.week_start_ms(monday) + DAY_IDX[s['rest_from']] * 86400000
         s['valid_from'] = max(day0, b0)
         s['valid_to'] = D.week_start_ms(monday) + (DAY_IDX[s['days'][-1]] + 1) * 86400000
         if s['shape'] == 'SS' and DAY_IDX[s['day']] in ss_days:
@@ -476,8 +483,8 @@ def pine(pair, monday, R):
     for s in R['setups']:
         day0 = D.week_start_ms(monday) + DAY_IDX[s['day']] * 86400000
         first = s['day'] not in seen_day; seen_day.add(s['day'])
-        x0 = max(day0 if first else s['t0'], b0)             # a setup is a resting order from the start of its day; later setups of the same day follow in leg order
-        x1 = min(max(s['t1'], x0 + 6 * 3600000), wk1)
+        x0 = max(day0 if first or s.get('t0') is None else s['t0'], b0)   # a setup is a resting order from the start of its day; later setups of the same day follow in leg order
+        x1 = min(max(s['t1'] if s.get('t1') is not None else s['valid_to'], x0 + 6 * 3600000), wk1)
         o.append(f"        // {s['id']} {s['day']} {s['shape']} {s['dir']} E {g(s['entry'])} SL {g(s['sl'])} TP {g(s['tp'])} RRR {s['rrr']} | {s['category']} / {s['session']} | {s['why']}")
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['sl']))}, {x1}, {g(min(s['entry'], s['sl']))}, bgcolor=color.new(color.rgb(242,54,69), {86 if s.get('alt') else 70}), border_color=color.rgb(242,54,69), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['tp']))}, {x1}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), {88 if s.get('alt') else 76}), border_color=color.rgb(8,153,129), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
