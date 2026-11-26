@@ -504,3 +504,127 @@ Stopped-out setups: **DX2** LONG 101.926 (Tue 11:00 -> 11:30).
 ### Step 5 - presentation
 - Zones frame: "LSZ demand-side | sweep to 101.755" is overprinted by "1H (Unmitigated) | MoM" at 101.87; "KEY SUPPORT BAND" label sits on the Oct 2-3 candles.
 - All/week frames: one identical grey box per day spanning 101.855-102.635 covers every candle of the week; DX1 / DX2 labels over Monday's candles.
+
+## Map 8 - EURUSD 2026-10-05
+
+Week action (1H, UTC, from the anchor): Mon 06 1.1169 -> 1.12207 (09), chop 1.1186-1.1231 to Tue 03; Tue 1.12028 (05) -> 1.12767 (11), stall 1.1245-1.1269 to Tue 23; Wed 1.12487 -> 1.11645 (12) -> 1.12037 (15); Thu 1.12128 (02) -> 1.11719 (11) -> 1.12267 (14) -> 1.11845 (16) -> 1.12196; Fri 1.12427 (05) -> 1.11874 (16).
+
+### Step 1 - obvious trades (written from the `_zones` frame before opening any setup)
+| # | move | from zone -> to zone |
+|---|---|---|
+| A | Mon LONG 1.1169 -> 1.1221 (+52 p) | LSZ demand 1.11610-1.11660 -> LSZ demand 1.12208-1.12258 |
+| B | Tue LONG 1.1203 -> 1.1277 (+74 p) | band 1.12039-1.12149 / LSZ reach 1.12049 -> 1H BoM supply 1.12716-1.12853 |
+| C | Tue-Wed SHORT 1.1277 -> 1.1165 (-112 p) | 1H BoM supply -> LSZ demand 1.11610-1.11660 |
+| D | Wed-Thu LONG 1.1165 -> 1.1213 (+48 p) | LSZ demand 1.1161 -> band 1.12039-1.12149 |
+| E | Thu SHORT 1.1213 -> 1.1172 (-41 p) | band -> LSZ demand area (6 p above the box) |
+| F | Thu-Fri LONG 1.1172 -> 1.1243 (+71 p) | LSZ demand area -> UPPER RESISTANCE 1.12451-1.12530 |
+| G | Fri SHORT 1.1243 -> 1.1187 (-55 p) | UPPER RESISTANCE -> (no zone at 1.1187) |
+Obvious trades: 7.
+
+### Step 2 - E1
+| zone (facts) | verdict | delta |
+|---|---|---|
+| IP UPPER RESISTANCE 1.12451-1.12530 | REACTED | crossed Tue 07-10, then Tue 11-23 stall around it; Fri 05 1.12427 (2.4 p under) -> -55 p |
+| GAP 1.12806-1.12866 | not reached | week high 1.12767 |
+| GAP 1.12611-1.12671 | REACTED | Tue 11-22 chop 1.1254-1.1269 |
+| 1H BoM supply 1.12716-1.12853 | REACTED | Tue 11 1.12767 -> -112 p |
+| 1H MoM supply 1.12491-1.12612 | REACTED | Tue stall |
+| LSZ supply 1.12803-1.12853 | not reached | |
+| LSZ supply 1.12562-1.12612 (reach 1.12712) | REACTED | Tue stall inside (wick 5.5 p beyond reach) |
+| LSZ demand 1.12208-1.12258 (reach 1.12108) | REACTED | Mon 19 - Tue 03 stall 1.1213-1.1231 (then Tue 05 8 p beyond reach); Thu 14 1.12267 |
+| LSZ demand 1.12149-1.12199 (reach 1.12049) | REACTED | Tue 05 1.12028 -> +74 p |
+| LSZ demand 1.11610-1.11660 (reach 1.11510) | REACTED | Wed 12 1.11645 -> +48 p |
+| band 1.12039-1.12149 | REACTED | Tue 1.12028, Thu 02 1.12128 |
+Reached 9, reacted 9, pierced 0. **Unzoned turning points: 2** - Thu 11:00 low 1.11719 (+55 p after; 5.9 p above the nearest box) and Thu 16:00 low 1.11845 (+35 p after; 18 p from any box).
+**E1 = 9 / 11 = 82 %.** Gate: **FAIL - missing** (nothing between 1.1166 and 1.1204, where price spent Wed 09:00 - Thu 17:00). Not bloated (11 objects).
+
+### Step 3 - E2
+| day | forecast | candles | verdict |
+|---|---|---|---|
+| Mon | SS range 1.11510-1.12612, key 1H MoM | 1.1169 -> 1.12249, inside | RIGHT |
+| Tue | SS range | 1.12028 -> 1.12767 (15 p wick over the ceiling, 1H closes back at 1.1258-1.1262) | RIGHT (floor-to-ceiling swing with a sweep) |
+| Wed | SS range | 1.12629 -> 1.11645 (floor) | RIGHT |
+| Thu | SS range | 1.11719 -> 1.12267 -> 1.11845 -> 1.1209 | RIGHT |
+| Fri | SS range | 1.12427 -> 1.11874 | RIGHT |
+**E2 = 5 / 5 = 100 %.** (Same box and tag all five days; the yellow path is a fixed zig-zag between 1.1166 and 1.1249.)
+
+### Step 4 - E3
+| obvious trade | setup | verdict |
+|---|---|---|
+| A Mon LONG 1.1169 | EU2 LONG 1.11660 not filled on Monday (low 1.1169) | MISSED |
+| B Tue LONG 1.1203 | none | MISSED |
+| C Tue-Wed SHORT 1.1277 | EU1 SHORT 1.12491 / 1.12642 filled Tue 09:45, **STOPPED Tue 11:15** (high 1.12767) | MISSED |
+| D Wed-Thu LONG 1.1165 | EU2 LONG 1.11660 / 1.11580 / 1.12491 filled Wed 12:15 - TP never hit (week high after fill 1.12427), open at week end | MISSED |
+| E Thu SHORT 1.1213 | none | MISSED |
+| F Thu-Fri LONG 1.1172 | none new (EU2 open, TP missed by 6.4 p) | MISSED |
+| G Fri SHORT 1.1243 | none | MISSED |
+Stopped-out setups: **EU1** SHORT 1.12491 (Tue 09:45 -> 11:15).
+**E3 = 0 / 7 = 0 %.**
+
+### Step 5 - presentation
+- History half: "LSZ supply-side | sweep to 1.12953" is overprinted by "GAP IN-FILL" at 1.1280; "GAP IN-FILL" and "1H (Unmitigated) | MoM" collide at 1.1258; labels sit on the Oct 2-3 candles.
+- Week frames: five identical day boxes 1.1151-1.1261 cover every candle; "Tue SS 80%" tag sits on Tuesday's high candles.
+
+## Map 9 - GBPUSD 2026-10-05
+
+Week action (1H, UTC, from the anchor): Mon 06 1.32052 -> 1.3239 (09) -> 1.319 (13) -> 1.3229; Tue 1.32013 (05) -> 1.32856 (15), stall 1.3258-1.3283 to Tue 23; Wed 1.32628 -> 1.31935 (11) -> 1.32242; Thu 1.31843 (10) -> 1.32485 (14) -> 1.32037 (16) -> 1.32377; Fri 1.32503 (05) -> 1.32057 (12) -> 1.32443 (18).
+
+### Step 1 - obvious trades (written from the `_zones` frame before opening any setup)
+| # | move | from zone -> to zone |
+|---|---|---|
+| A | Mon SHORT 1.3239 -> 1.3190 (-49 p) | 1H BoM supply 1.32319-1.32395 -> LSZ demand 1.31899-1.31949 |
+| B | Tue LONG 1.3201 -> 1.3286 (+84 p) | MID-RANGE SUPPORT 1.31991-1.32051 -> (no zone at 1.3286) |
+| C | Tue-Wed SHORT 1.3286 -> 1.3194 (-92 p) | (no zone) -> LSZ demand 1.31899-1.31949 |
+| E | Thu LONG 1.3184 -> 1.3249 (+64 p) | LSZ demand 1.31899 (reach 1.31799) -> UPPER RESISTANCE 1.32457-1.32535 |
+| F | Thu SHORT 1.3249 -> 1.3204 (-45 p) | UPPER RESISTANCE -> MID-RANGE SUPPORT |
+| G | Thu-Fri LONG 1.3204 -> 1.3250 (+47 p) | MID-RANGE SUPPORT -> UPPER RESISTANCE |
+| H | Fri SHORT 1.3250 -> 1.3206 (-45 p) | UPPER RESISTANCE -> MID-RANGE SUPPORT |
+Obvious trades: 7 (Wed 1.3194 -> 1.3224 and Fri 1.3206 -> 1.3244 are under 40 p and not counted).
+
+### Step 2 - E1
+| zone (facts) | verdict | delta |
+|---|---|---|
+| IP UPPER RESISTANCE 1.32457-1.32535 | PIERCED (first contact) | Tue 09-10 two candles at 1.32461 / 1.32485, then Tue 11:00 crossed to 1.32817 in one candle; later it did turn price (Wed 01-07 stall, Thu 14 1.32485 -> -45 p, Fri 05 1.32503 -> -45 p) |
+| IP MID-RANGE SUPPORT 1.31991-1.32051 | REACTED | Tue 05 1.32013 -> +84 p; Thu 16 1.32037; Fri 12 1.32057 |
+| GAP 1.32270-1.32330 | REACTED | Mon 07-12 chop |
+| GAP 1.32124-1.32184 | REACTED | Mon 15-Tue 03 chop |
+| 1H BoM supply 1.32319-1.32395 | REACTED | Mon 09 1.3239 -> -49 p |
+| LSZ supply 1.32530-1.32580 (reach 1.3268) | PIERCED | Tue 11:00 through to 1.32817, 14 p past the reach |
+| LSZ supply 1.32510-1.32560 (reach 1.3266) | PIERCED | same candle |
+| LSZ supply 1.32450-1.32500 (reach 1.3260) | PIERCED (first contact) | same; later Thu / Fri tops inside it |
+| LSZ demand 1.32226-1.32276 (reach 1.32126) | REACTED | Mon chop |
+| LSZ demand 1.32183-1.32233 (reach 1.32083) | REACTED | Mon / Wed 15 1.32242 |
+| LSZ demand 1.32021-1.32071 (reach 1.31921) | REACTED | Mon 13 1.319 (2 p beyond reach) -> +39 p |
+| LSZ demand 1.31899-1.31949 (reach 1.31799) | REACTED | Mon 1.319, Wed 1.31935, Thu 1.31843 |
+| band 1.32526-1.32636 | PIERCED | Tue 11:00 |
+| band 1.32121-1.32231 | REACTED | Mon / Wed chop |
+| band 1.31932-1.32042 | REACTED | Wed / Thu lows |
+Reached 15, reacted 10, **pierced 5**. **Unzoned turning points: 1** - Tue 15:00 top 1.32856 (-92 p after; 18 p above the highest reach, 1.3268).
+**E1 = 10 / 16 = 63 %.** Gate: **FAIL - missing + bunched.** Missing: the week high 1.3286 (the biggest turn) has no zone. Bunched: UPPER RESISTANCE, three LSZ supply boxes and a band all inside 1.3245-1.3264 (the LSZ boxes 1.32450 / 1.32510 / 1.32530 are within 8 p and should be one box).
+
+### Step 3 - E2
+| day | forecast | candles | verdict |
+|---|---|---|---|
+| Mon | SS range 1.31921-1.32395, key 1H BoM | 1.3239 -> 1.319 -> 1.3229, inside | RIGHT |
+| Tue | SS range | breakout: 1.32013 -> 1.32856, closed 1.32742 = 35 p above the box | WRONG |
+| Wed | SS range | one-way 82 p decline from above the box (1.32761) to the floor 1.31935 | WRONG - not an oscillation inside the bounds |
+| Thu | SS range | 1.31843 -> 1.32485 -> 1.32037 -> 1.3227, both bounds tested | RIGHT |
+| Fri | SS range | 1.32503 -> 1.32057 -> 1.32443 | RIGHT |
+**E2 = 3 / 5 = 60 %.**
+
+### Step 4 - E3
+| obvious trade | setup | verdict |
+|---|---|---|
+| A Mon SHORT 1.3239 | GB1 SHORT 1.32319 / 1.32425 / 1.31994, filled Mon 07:45, TP Mon 13:30 | CAUGHT |
+| B Tue LONG 1.3201 | GB2 (re-armed) LONG 1.32071 / 1.31991 / 1.32309, filled Tue 06:00, TP Tue 07:30 (24 of the 84 p) | CAUGHT |
+| C Tue-Wed SHORT 1.3286 | none | MISSED |
+| E Thu LONG 1.3184 | none (GB2 stopped Wed, not re-armed) | MISSED |
+| F Thu SHORT 1.3249 | none | MISSED |
+| G Thu-Fri LONG 1.3204 | none | MISSED |
+| H Fri SHORT 1.3250 | none | MISSED |
+Stopped-out setups: **GB1 re-armed** SHORT 1.32319 (Tue 01:30 -> stopped Tue 08:30, on the way to 1.3286); **GB2 re-armed (2nd)** LONG 1.32071 (Wed 11:15 -> stopped Wed 12:15).
+**E3 = 2 / 7 = 29 %.**
+
+### Step 5 - presentation
+- Week frames: the five identical day boxes stop at 1.32395 while Tuesday-Wednesday trade up to 1.3286 - the week's main swing is drawn with nothing on it; "1H (Unmitigated) | BoM" label prints over the "Mon SS 80%" tag; GB1 / GB2 labels over Monday's candles.
+- Zones frame: "LSZ supply-side | sweep to 1.32600" and "UPPER RESISTANCE" labels overlap at 1.3250; "LSZ demand-side | sweep to 1.31921" over "MID-RANGE SUPPORT" at 1.3202.
