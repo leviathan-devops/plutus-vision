@@ -100,6 +100,9 @@ def _stops(entry, step, direction, env, anchor):
     return out
 
 
+NO_SHIELD = ('EURUSD',)   # E3C 8.19 pair table: EUR/USD 'DIRECT_ZONE_TEST, NO_SHIELD'; FA 10: 'PA often directly touches the overlap point ... No Liquidity Shield'
+
+
 def _pick_stop(entry, cands, pip, category):
     """golden stops 4-9.5 pips (E3C:279-284). A swing scalp takes the tightest stop inside the envelope; a reversal / HTF swing stands behind the liquidity shield (next rung, GS Law 4:
     'For deep HTF swings: SL ... MUST be behind ... liquidity shield'), under the D17 ceiling of 36 pips"""
@@ -130,9 +133,11 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
     if leg['shape'] in ('BS', 'PBS') and tz is not None:
         boms = sorted([z for z in sd if z['tf'] in ('240', '60') and z['type'] == opp and _overlap(z, tz)], key=lambda z: -z['top'] if direction == 'down' else z['bot'])      # the first zone the move reaches
         for z in boms:
-            if z['tf'] == '240':                             # GS:477-481 a 4H zone reacts at once; E3C:320-327 strong zone -> close edge + 1-2 pip spread "so you dont miss the exit"
-                out.append((z['top'] + pip if direction == 'down' else z['bot'] - pip, z, '4H target zone near edge + 1 pip (strong zone)'))
             ins = [r for r in rungs if _inside(r, z)]
+            if z['tf'] == '240' and z['kind'] == 'BoM':      # GS:477-481 a 4H zone reacts at once; E3C:320-327 STRONG zone (BoM) -> close edge + 1-2 pip spread "so you dont miss the exit"
+                out.append((z['top'] + pip if direction == 'down' else z['bot'] - pip, z, '4H target zone near edge + 1 pip (strong zone)'))
+            elif z['tf'] == '240' and ins:                   # E3C:306-309 rule 4: S/D + LQZ overlap (Earth + Fire convergence) -> TP at the zone MIDPOINT
+                out.append(((z['bot'] + z['top']) / 2, z, '4H target zone midpoint (LQZ inside the zone, rule 4)'))
             for r in sorted(ins, key=lambda r: -r['top'] if direction == 'down' else r['bot']):
                 out.append(((r['bot'] + r['top']) / 2, z, 'LQZ inside the target zone: midpoint'))
             out.append((z['top'] + pip if direction == 'down' else z['bot'] - pip, z, 'target zone near edge + 1 pip'))
@@ -268,10 +273,26 @@ def _build(pair, monday, X, E2, tag):
         if a.get('rung'):                                    # the previous TP rung: entry on its near edge for the new direction
             ecands = [((a['bot'] if direction == 'down' else a['top'] - (0.2 * pip if leg['shape'] in ('RWL', 'WL') else 0.0)), a, 'LQZ rung (previous TP rung)')]
         if leg['shape'] in ('BS', 'PBS') and setups and setups[-1]['shape'] == 'RWL':
-            ecands = [(setups[-1]['tp'], a, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
+            lvl = setups[-1]['tp']
+            ecands = [(lvl, {'bot': lvl, 'top': lvl}, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
+        if pair != 'DXY':
+            # E3C 10.4 (mirror lane): 'usedEuAnchors + alt-retry with excludedAnchorIds on collision' - an anchor already carrying a setup of that day and direction is excluded;
+            # the mirror then takes the next liquidity step on the deep side (F1-C '#6 EU Wed deep-demand E 1.13935 = deep shield')
+            taken = {q['src'] for q in setups if q['day'] == leg['days'][0] and q['dir'] == ('SHORT' if direction == 'down' else 'LONG') and q.get('src')}
+            free = [c for c in ecands if (round(c[1]['bot'], 6), round(c[1]['top'], 6)) not in taken]
+            if ecands and not free:
+                edge = max(c[1]['top'] for c in ecands) if direction == 'down' else min(c[1]['bot'] for c in ecands)
+                deep = [r for r in rungs if 'fib' not in r and ((r['bot'] > edge) if direction == 'down' else (r['top'] < edge))]
+                deep.sort(key=lambda r: r['bot'] if direction == 'down' else -r['top'])
+                free = [(r['bot'] if direction == 'down' else r['top'], r, 'next liquidity step beyond the used anchor (deep shield, F1-C; E3C 10.4 alt-retry)') for r in deep[:1]]
+            ecands = free
         s, entry, stop, cands = None, None, None, []
         for entry, step, how in ecands[:3]:                  # E3C:372-386: up to three attempts per anchor - the entry, then the TP walk on it
-            stop, why_sl = _pick_stop(entry, _stops(entry, step, direction, env, a), pip, cat)
+            sc = _stops(entry, step, direction, env, a)
+            if pair in NO_SHIELD and not a.get('sweep'):
+                own = [c for c in sc if 'current step' in c[1] and GOLD_MIN <= abs(c[0] - entry) / pip <= SL_CEIL]
+                sc = own or sc                               # ladder-steps rule (a): 3 pips outside the far edge of the current step (E3C:252-256)
+            stop, why_sl = _pick_stop(entry, sc, pip, cat)
             cands = [c for c in _target(leg, entry, direction, E2, X, env, used, pair) if ((c[0] < entry) if direction == 'down' else (c[0] > entry))]
             if stop is None:
                 continue
@@ -279,7 +300,7 @@ def _build(pair, monday, X, E2, tag):
                 rrr = abs(tp - entry) / abs(entry - stop)
                 if rrr >= RRR_FLOOR:
                     s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
-                         'why': f"entry {how}; SL {why_sl}; TP {why_tp}"}
+                         'why': f"entry {how}; SL {why_sl}; TP {why_tp}", 'src': (round(step['bot'], 6), round(step['top'], 6))}
                     break
             if s is not None:
                 break
@@ -311,7 +332,22 @@ def _build(pair, monday, X, E2, tag):
                                        'shape': 'Ladder', 'category': 'Reinforcement', 'session': SESSION['Reinforcement'], 'sl_pips': round(abs(sl2 - e2) / pip, 1), 'parent': s['id'],
                                        'id': f"{pair[:2]}{tag}{len(setups) + 1}", 'tp_zone': s['tp_zone'], 'anchor': r,
                                        'why': 'reinforcement: stop-limit at the LQZ rung on the TP path; SL 1 pip outside the back edge of the next rung; parent TP'})
-    return {'setups': setups[:MAX_SETUPS], 'log': log}
+    # Phase 6.3 (E3C:452-463): 'If both setups reference the same anchorZoneId -> dedup by anchor bucket + day identity'; MAX_MIRRORS_PER_ANCHOR_PER_DAY = 1, 'FIRST kept, rest drop EMISSION_CAPPED with logged reasons'
+    kept, seen, dropped = [], set(), set()
+    for q in setups:
+        key = (q['day'], q['dir'], q.get('src'))
+        if q.get('parent') in dropped or (q.get('src') is not None and key in seen):
+            dropped.add(q['id'])
+            log.append(f"{q['id']} {q['day']} {q['shape']} {q['dir']}: EMISSION_CAPPED - same anchor, same day as an earlier setup (Phase 6.3)")
+            continue
+        seen.add(key); kept.append(q)
+    for i, q in enumerate(kept):                             # ids stay consecutive; a reinforcement keeps pointing at its parent
+        new_id = f"{pair[:2]}{tag}{i + 1}"
+        for c in kept:
+            if c.get('parent') == q['id']:
+                c['parent'] = new_id
+        q['id'] = new_id
+    return {'setups': kept[:MAX_SETUPS], 'log': log}
 
 
 def pine(pair, monday, R):

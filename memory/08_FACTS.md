@@ -181,3 +181,15 @@
 - 15m: demand OB 100.929-100.950 from Jul 6 04:15 (his Mon LONG entry 100.945; SL 100.905 = the 15m liquidity band 100.905-100.916 below it), 100.825-100.846, 100.779-100.814, 100.704-100.734, 100.654-100.723 (bottom 100.654 = the bottom of his 1H BoM demand box).
 => Law 3 / TS-1 confirmed on his own trades: entry = near edge of a lower-timeframe V1 order block (LONG top edge, SHORT bottom edge + 1 pip), SL = far side / adjacent liquidity band, TP = opposing band several steps away. E3 must be built on this harvest.
 - e1_data: the anchor is now Monday 02:00 New York (boundary_ms); daily()/weekly() return completed days/weeks only; week_start_ms / week_end_ms added. Spot at the golden anchor = 101.025 (Friday close was 100.878).
+
+## HIS GOLDEN TRADES vs THE SEALED V1's 4H LIQUIDITY BANDS (measured 2026-11-26 late; e1_v1.harvest_all '240'; the 4H bands are the "4H Liquidity Shields" of GS Law 4 and his hand-drawn green bands, L-21)
+- DXY 4H bands at the golden anchor: 100.254-100.314, 100.498-100.558, 100.957-101.017, 101.067-101.127, 101.245-101.305, 101.372-101.432. EURUSD: 1.13686-1.13756, 1.1381-1.1388, 1.14108-1.14178, 1.14269-1.14339, 1.14658-1.14728.
+  GBPUSD: 1.32932-1.33022, 1.33155-1.33245, 1.33406-1.33496, 1.33583-1.33673, 1.33715-1.33805, 1.33976-1.34066, 1.34145-1.34235, 1.34386-1.34476, 1.3454-1.3463.
+- Canon SL rule (b) "1-2 pips INSIDE the CLOSE edge of the NEXT STEP" (E3C:252-256) fits his stops LITERALLY when the steps are liquidity bands (1H rung or 4H band):
+  DXY #4 Wed S 101.19 SL 101.25 = 0.5 pip inside the close edge 101.245 of the 4H band; #8 Fri L SL 100.545 = 1.3 pips inside the close edge 100.558 of the 4H band; #1 Mon L SL 100.905 and #5 Wed L SL 100.905 = 1.1 pips inside the
+  close edge 100.916 of the 1H rung 100.893-100.916 (the nearer rung 100.929-100.952 is under 4 pips away: skipped); #6 Wed S 101.235 SL 101.33 = rule (a) "3 pips outside the far edge of the current step" on the 4H band (101.305 + 0.03);
+  EURUSD #6 Wed L 1.13953 SL 1.13868 = 1.2 pips inside the close edge 1.1388 of the 4H band; #3 Tue L 100.845 SL 100.77 = 1 pip outside the back edge of the 1H rung 100.780-100.803 (the exception).
+- TPs / entries on the 4H bands: DXY #5 Wed RWL L TP 101.24 = near edge 101.245 of the 4H band minus 0.5 pip; #6 Wed BS S entry 101.235 = 1 pip before that band (Law 27: TP of the RWL = entry of the BS); #8 Fri L TP 100.94 = 1.7 pips before the 4H band 100.957;
+  EURUSD #4 Wed SS L TP 1.14276 and #5 Wed RWL S entry 1.14277 = near edge 1.14269 of the 4H band (+0.7 pip); #1 Mon S TP 1.14103 / #2 Mon L entry 1.14106 = the bottom of the 4H band 1.14108-1.14178.
+- THE TRANSITION DAY (6.4.2 "consolidation ends in price retesting opposing liquidity"): the retest (RWL) ends at the liquidity band in front of the unmitigated BoM zone beyond the range bound, band timeframe = zone timeframe:
+  DXY: 4H BoM supply 101.316-101.43 -> 4H band 101.245-101.305 -> RWL TP 101.24, BS short 101.235. EURUSD: 1H BoM demand 1.13815-1.13886 -> 1H rung 1.13902-1.1393 ("deep shield") -> RWL TP 1.1395, BS long 1.13953 (spec F1-C: 1.13935).
