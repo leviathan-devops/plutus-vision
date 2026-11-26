@@ -741,7 +741,7 @@ def pine(pair, monday, R):
         first = s['day'] not in seen_day; seen_day.add(s['day'])
         x0 = max(day0 if first or s.get('t0') is None else s['t0'], b0)   # a setup is a resting order from the start of its day; later setups of the same day follow in leg order
         cond = s['category'] == 'Reinforcement'               # a rocket is a CONDITIONAL order (live only once its parent is filled, E3C:625): dashed outline, lighter fill, 'if <parent>' in its label
-        if cond:
+        if cond or s.get('rest_from'):                        # a resting order is drawn from the day it starts to rest (D-76), not from the day of its tag
             x0 = max(s.get('valid_from') or x0, b0)
         x1 = min(max(s['t1'] if s.get('t1') is not None else s['valid_to'], x0 + 6 * 3600000), wk1)
         o.append(f"        // {s['id']} {s['day']} {s['shape']} {s['dir']} E {g(s['entry'])} SL {g(s['sl'])} TP {g(s['tp'])} RRR {s['rrr']} | {s['category']} / {s['session']} | {s['why']}")

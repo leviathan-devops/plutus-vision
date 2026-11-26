@@ -21,7 +21,7 @@ def run(pair, monday):
     return X
 
 
-REACH_MM = False
+REACH_MM = True
 
 
 def reach(X, E2):
