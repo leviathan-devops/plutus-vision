@@ -1,3 +1,18 @@
+## STATE (NEWEST, 2026-11-26, written just before a compaction) - STANDING ORDER = memory/14_GOAL_PROMPT.md v2.1. Tasks: S1 coverage matrix written (memory/15), S2a oracle written; NOW ON S2b = E1 on the golden week Jul 6-10 2026 (DXY, then EURUSD).
+READ BEFORE CODING: memory/14 (all), memory/08 sections "THE LIQUIDITY LADDER = THE SEALED V1's GREEN ZONES" and "THE APPROVED-RENDER E1 RECIPE", memory/15, context_management/oracle/golden_week.json.
+EXACT NEXT STEPS (in order; each cites its authority; verify each against the oracle with a diff, then on an opened Pinebox frame):
+ 1. e1_tool/e1_v1.py (row E1-V1; R-30): for a pair + Monday, POST the sealed V1 source + the last 400 CLOSED bars before the anchor to http://127.0.0.1:9741/model (as tools/pine-probe.py does), for timeframes 240 / 60 / 30 / 15;
+    parse model.boxes: bgColor #3179f5.. = demand order block, #f77c80.. = supply order block, #2E8B57.. = liquidity band; cache JSON under e1_tool/cache/v1/. Pinebox must be up (recipe in memory/11 section 6).
+ 2. e1_data.boundary_ms -> the canonical anchor Monday 02:00 New York (sidecar 'anchor_utc'; CLAUDE.md hard constraint; the V1 oracle match used 2026-07-06T06:00Z); daily() / weekly() must return COMPLETED days / weeks only; spot = last 1H close before the anchor.
+    Re-check DXY Apr 20-24 afterwards (reference must stay reproduced).
+ 3. e1_tool/e1_ip.py (rows E1-P1..P9, E1-SY, E1-AS, E1-BM, E1-RC, E1-98): IP zones by the approved-render recipe (memory/08): seeds, score(p) across pillars (pivot 3/10 pips; MA cluster points on 1H/4H/D1/W1; options by tier with band; structural weights 2 / 1 / 0.5; round_psych; bonus),
+    best-first with centres >= 0.15 apart, members in the tight band (operator: narrower; canon TIGHT 0.10), zone mechanics on 4H bars of 90 days (visits, strong reactions >= 0.50, BoM if last excursion >= 1.00, Engine 3 status, ladder step), Pillar 9 type + ZFP range (L-35) + regime points,
+    MODERATE+ only, names by position vs spot, rank, six drawn; K anchored on the boundary spots (K = DXY / EURUSD^-0.576); pairs use their own strikes and pip scale (e1_pillars._u). Expected on the golden week: zones at ~101.19-101.29 and ~100.555-100.68 among the six.
+ 4. Supply/demand layer (rows E1-S0f, E1-S0g, E1-MTF, E1-S55; L-37, L-38): 4H Step 0f candles (BoM/MoM, mitigation) + 1H candles nested / precision + V1 order blocks per timeframe; core vs spike; join with IP zones per L-39.
+ 5. Step 0.6 intra-zone key levels; LSZ; option-strike targets; then e1_pine.py in trident_v8 form drawing: IP zones (name / degree / ZFP), S/D candles with TF + BoM/MoM + mitigation labels, V1 liquidity ladder, LSZ, strike lines. Render DXY Jul 6-10, open the frame, compare with g1 / g4, ledger row.
+ 6. E2 (boxes + line) vs his day tags; E3 (rung to rung, position boxes) vs his six trades; then EURUSD; then S3-S6.
+Existing e1_tool code state: e1_pillars.py / e1_data.py / e1_pine.py reusable; e1_synth.assemble*, e1_zones.build, e2_shapes.py, e3_setups.py = my deviating partial build (replace, do not extend).
+
 ## STATE (NEWEST, 2026-11-26 after M-54..M-56) - STANDING ORDER = memory/14_GOAL_PROMPT.md v2. RESTART OF THE BUILD UNDER IT.
 - What exists in e1_tool/ (E1 1H zones, e2_shapes.py, e3_setups.py, e1_pine.py) is a PARTIAL build that breaks the seven laws; keep what reproduces the Apr 20-24 E1 report, rebuild E2/E3 by the canon.
 - NEXT STEP (goal prompt section 9): build memory/15_CANON_COVERAGE.md by reading, in full and first-hand: TTE_GOLDEN_STANDARD_COMPLETE_REFERENCE.md (Part 7 onward still unread), the corrected E3 spec (all phases + Appendix F), the Fractal Architecture, the Fibonacci Spiderwebs PDF,

@@ -47,7 +47,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 ## 2. Engine 1 (P533 Part III-V; P452 where "unchanged")
 | id | ref | requirement (short) | function | state |
 |---|---|---|---|---|
-| E1-V1 | R-30, R-04 | supply/demand + liquidity zones = the sealed V1's output (LuxAlgo); the tool takes them as data without editing V1 | (run sealed V1 through the Pinebox engine at the boundary; read its boxes) | NB |
+| E1-V1 | R-30, R-04 | supply/demand + liquidity zones = the sealed V1's output; the tool takes them as data without editing V1 | e1_v1.py (to write): sealed V1 + last 400 closed bars -> station /model -> boxes by colour; MEASURED: 15/16 of his golden rungs, his 1H BoM demand | NB |
 | E1-MTF | GS LAW1, GS-REF, L-40 | per-timeframe zone sets 4H / 1H / 30m / 15m, nested + refined | | NB |
 | E1-A | P533:808-921 | Protocol A: investingLive expiries, temporal boundary, tiers >= 1.5B / 850M-1.499B / excluded | sidecar/, e1_pillars.tier | B |
 | E1-P1 | P533:967-1064 | pivots classic / fib / camarilla, weekly + last 3 days, verification checks | e1_pillars.pivots, pillar1 | B |
@@ -71,7 +71,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E1-P8 | P533:1436-1454, P452:890-950 | EUR/USD strike -> DXY primary conversion, K audit, bands | strike_to_dxy | B |
 | E1-P9 | P533:1455-1460, P452:954-1071 | zone types + ZFP = base + modifiers; regime dimension; measured move for ZFP > 45 | ZFP_RANGE | PB (modifiers, measured move missing) |
 | E1-SY | P533:1461-1495 | six dimensions 0-2 + structural-extreme bonus <= 2; degree table | score_level, degree | B |
-| E1-AS | P533:1496-1506, P452:1116-1157; L-39 | collect all -> score -> clustering scan -> group -> degree = best level -> ZFP -> names | e1_zones.build | PB (my seed / merge rules; redo literal + L-39 + multi-TF) |
+| E1-AS | P533:1496-1506, P452:1116-1157; L-39 | collect all -> score -> clustering scan -> group -> degree = best level -> ZFP -> names | e1_ip.py (to write) by the approved-render recipe (memory/08; handover e1_run.py :522-575, :742-874) | PB (e1_zones.build deviates: replace) |
 | E1-95 | P533:1507, P452:1159-1184 | gap scan >= 0.20, in-fill with 2+ signals | gap_scan | B |
 | E1-97 | P533:1509-1515, P452:1186-1215 | 4H overlay: POI Tier 1 / 2 / 3, hierarchy rule, ladder-step identification | in build | PB (Tier 3 "4H-only", ladder steps missing) |
 | E1-98 | P533:1516-1527 | synthesis re-verification (option strike >= 850M from R1 pair; score recompute; cross-reference) | | NB |

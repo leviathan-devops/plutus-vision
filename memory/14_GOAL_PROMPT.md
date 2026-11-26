@@ -1,4 +1,4 @@
-# PLUTUS VISION — GOAL PROMPT v2 (minted 2026-11-26; supersedes v1; PIN THIS; standing order until S1-S6 all hold)
+# PLUTUS VISION — GOAL PROMPT v2.1 (minted 2026-11-26; supersedes v1/v2; PIN THIS; standing order until S1-S6 all hold)
 
 ## 0. The goal in one sentence
 Translate the operator's existing, working trading process — exactly as written in his canon — into ONE Python program that, for a given trading week and pair,
@@ -19,14 +19,19 @@ ALWAYS one of: (a) a canon step I have not built, (b) a canon step I built diffe
 It is never the strategy. I do not evaluate the strategy. I evaluate only my fidelity to it.
 
 ## 3. The program to translate — sources of truth, in order of authority (read first-hand, in full, before coding the part they govern)
-1. Operator's rulings and exact words: memory/04_OPERATOR_RULINGS_LIVE.md, memory/12_OPERATOR_VERBATIM.md, handover Appendix A (R-01..R-39). Newest wins.
+1. Operator's rulings and exact words: memory/04_OPERATOR_RULINGS_LIVE.md, memory/12_OPERATOR_VERBATIM.md, and R-01..R-39 VERBATIM in
+   /home/user/inputs/handover/PLUTUS_VISION_CONTEXT_HANDOVER/01_BINDING_SPEC/M1_BINDING_SPEC_BUNDLE.md lines 23-205 (golden-week M1 contract with the 13 required E1 families: lines 6118-6432). Newest wins.
 2. E1 + E2: canon/Toolset/Trident_System_Prompt_v5.3.3_DOWNLOAD_ME.md Parts III-VI (+ v4.5.2 text where it says "[unchanged from v4.5.2]"; verbatim extracts in e1_tool/canon_extract/).
    E3: canon/Toolset/TRIDENT_v5.3.3_CORRECTED_E3_ENGINE.md ONLY — all 12 phases + Appendix F data model (R-16).
 3. The strategy itself: canon/Toolset/Trident_Fractal_Architecture_FirstPrinciples_v2.3.md (his exact strategy);
    /home/user/inputs/handover/PLUTUS_VISION_CONTEXT_HANDOVER/03_HOST_BIBLES/TTE_GOLDEN_STANDARD_COMPLETE_REFERENCE.md (the 7 universal laws + exact code changes from his 38 winning trades);
    /home/user/inputs/4d1ca379-Fibonacci_Spiderwebs.pdf; e1_tool/reference/Forex_SMC_Notes-1.txt.
 4. Oracles: /home/user/inputs/trades/WINNING_TRADE_LIBARARY/ (esp. Jul_6-10_DXY_Gold_Standard), weekly reports + trident_v8.pine (e1_tool/reference/, /home/user/handover-branch/Original_Canon_Data/), context_management/oracle/, memory/08_FACTS.md.
-5. Existing code to reuse before writing new: canon/Toolset/trident_engine3_v8.py, indicator/plutus-vision-v1.sealed.pine (READ-ONLY; its supply/demand + liquidity logic), e1_tool/, sidecar/.
+5. Existing code to reuse before writing new:
+   - handover 02_SUPERSEDED_READ_ONLY/e1_run.py = the Python E1 whose render the operator approved ("THESE 6 ARE CORRECT ... 3 4 AND 5 NEED REFINEMENT"): the IP-zone recipe (digest: memory/08 "THE APPROVED-RENDER E1 RECIPE");
+   - indicator/plutus-vision-v1.sealed.pine (READ-ONLY) = the supply/demand + liquidity layer of E1 (R-30): harvest its order blocks and liquidity bands as data by running it through the Pinebox engine
+     (tools/pine-probe.py; last 400 closed bars before the anchor = the Pine IDE's default window), per timeframe;
+   - canon/Toolset/trident_engine3_v8.py (reference only, R-16), e1_tool/ (pillars, data, Pine generator), sidecar/.
 6. Architecture questions only: handover 01_BINDING_SPEC, 03_HOST_BIBLES/DESIGN_BLUEPRINT_v5.x.
 My own judgement is not on this list.
 
@@ -40,6 +45,13 @@ My own judgement is not on this list.
 - Python holds no price literal and no per-week constant; the generated Pine holds the week's numbers. Nothing after the temporal boundary feeds the map (tools/anchor_guard.py).
   Oracle numbers are for comparison only and never appear in tool code.
 - Multi-timeframe (L-40, Law 1): 4H = higher-timeframe analysis (direction, structure, targets); the work is on 1H; 30m refinement; 15m precision. One trading week at a time.
+
+## 4b. What each engine is made of (operator: R-04, R-30, R-03, R-09)
+- E1 = (a) the sealed V1 underneath: order blocks (supply/demand) + the liquidity ladder (green rungs); (b) the prompt's E1 canon ON TOP: IP zones (9 pillars -> score -> zones), LSZ, canonical 4H/D1 supply/demand beyond V1 with 1H precision,
+  option-strike targets, POI tier, pressure degree, strength ZFP, BoM/MoM, mitigation + reaction counts, intra-zone precision levels, core/spike. "E1 correct -> E2 obvious -> E3 obvious."
+- E2 = the shape chain computed from E1 data; drawn as day BOXES first, then the LINE ("the chain leads and the shapes follow").
+- E3 = price engineering on E1 + E2: entry at a liquidity rung / lower-timeframe zone edge, SL at the adjacent ladder step behind a shield, ONE TP at an opposing rung / zone; drawn as POSITION BOXES (red = SL side, green = entry -> TP).
+  6-10 real trades per pair per week (<= 11), confidence >= 65, only GOD_TIER / HIGH (R-07).
 
 ## 5. The seven laws every output must show (from his 38 winning trades; checked on every setup)
 1. Zones from 15m + 30m + 1H + 4H, stacked. Widths: 15m 5-22 pips, 30m 10-35, 1H 10-50, 4H 20-120.
@@ -114,3 +126,18 @@ Persist every few steps: facts -> 08, rulings -> 04, decisions -> 03, lessons ->
 No message to the operator except: an answer to a direct question (<= 5 lines); one checkpoint line with its frame when a success condition flips; one line for a blocker only he can remove.
 No apologies, no explanations unless asked, no options, no advice, no numbers from my own scripts.
 Before ending any turn: are S1-S6 all met? If not, the turn does not end — continue the loop. Does the message contain a question, an option list, a statistic of mine or a judgement of the strategy? Delete it.
+
+## 12. Already established — do NOT rediscover (details and numbers in memory/08_FACTS.md; oracle in context_management/oracle/golden_week.json)
+1. R-15: acceptance starts on the golden week Jul 6-10 2026. "THERE IS NO FLAW IN THE STRATEGY ... THE ISSUE IS ALWAYS YOUR SHITTY CODE."
+2. The sealed V1 run on the 1H bars before the golden-week anchor (400-800 bars) puts liquidity bands within 3 pips of 15 of his 16 hand-drawn rungs; with too much history V1 emits only its 60 lowest bands (the IDE default is 400 bars).
+3. His six golden trades run rung to rung on that ladder: entry at a rung, SL at the adjacent rung, TP at an opposing rung several steps away — exactly the corrected E3 spec (internal-LQZ entry, ladder-steps SL, Law-14 opposing-rung walk).
+4. The existing 4H Step 0f scan already finds his "4H (Unmitigated) | BoM" supply (101.316-101.43, candle Jul 1 23:00 UTC); the 1H candle rule finds his "1H (Unmitigated) | MoM" (100.825-100.851, Jul 3 18:00);
+   V1's order block 100.603-100.746 is his "1H (Unmitigated) | BoM" demand with the sweep wick trimmed (his box 100.653-100.743 = core, Step 5.5).
+5. His two green IP bands are the canon's clusters: upper 101.19-101.29 around the EUR/USD 1.1400 (EUR 2.2bn) wall = DXY 101.232 (+ 101.25 quarter figure, pivots, MAs); lower 100.555-100.68 on the prior-week low 100.558
+   (role-reversal magnet, daily lows, weekly S1s). The white lines on his chart are option-strike targets (1.1400 -> 101.24; 1.1450 -> 100.975).
+6. The IP-zone assembly that produced zones he approved is e1_run.py's: every current level is a seed scored by coincidence across pillars; best-first, centres >= 0.15 apart; members = levels in the tight band; zone mechanics (visits, strong reactions, BoM/MoM, Engine 3 status);
+   Pillar 9 typing; MODERATE+; names by position vs spot; rank; at most six drawn. His requested refinements: narrower zones (the tight level cluster / where price traded), labels with name + degree + ZFP, and L-38 / L-39.
+   My e1_synth / e1_zones assembly deviates from this and is to be replaced by it.
+
+## 13. NEXT STEP
+memory/01_CURRENT_STATE.md (top block) holds the exact next steps. Coverage: memory/15_CANON_COVERAGE.md.
