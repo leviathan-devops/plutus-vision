@@ -26,19 +26,19 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 ## A — Engine 3 (canon steps with no code)
 | id | state | note |
 |---|---|---|
-| A-15 | OPEN | no WorkingDayMap object (supply / demand / deep-demand zone per day); < 65% spill not applied |
-| A-16 | PART | 'tested 3x or more' gate (FRESHNESS) on E1 S/D anchors; VIOLATED state and battle-time freshness OPEN |
+| A-15 | PART | no WorkingDayMap object; built: < 65% spill-over into the next day (D-70), deep-zone order through the consolidation (D-76), per-day swing-scalp setups (D-78); per-day supply / demand / deep ids from dayOpenSpot OPEN |
+| A-16 | PART | FRESHNESS gate on tested-3x anchors; battle-time freshness (1H close through = VIOLATED, 4th battle skipped) lives in the fill locator for the per-day orders (D-78), not in the tool's output |
 | A-17 | OPEN | Phase 2.5 / 1-2-3 retest timing |
 | A-18 | PART | MoM reversal gate (MOM_REVERSAL); E1 e3_status not read |
 | A-19 | OPEN | POI tier rule 1 |
 | A-20 | PART | layers 3 and 7 inside _confidence(); layers 1, 2, 4, 5, 6 OPEN |
 | A-21 | FIXED f723b0b | Phase 5 score with every E3C:392-414 term except the VLM bonus (no VLM: D-42), inclusion >= 65, HIGH / STANDARD (D-52) |
-| A-22 | OPEN | fuel state, mirrorConfidenceScore, ZR-6B switch (stop model in force: D-43) |
+| A-22 | FIXED | D-73: mirrorConfidenceScore + ZR-6B switch (RR-tight = tighter of the first shield stop and rule (a) on the entry zone; safety = shield walk); fuel = anchor visited 3+ times -> ABSORBED |
 | A-23 | PART | Law 7 table present (LAW7); used only as the rule (a) / (b) distances of D-43 |
 | A-24 | OPEN | computeGoldenSL fallback (only its 4-36 pip envelope is enforced) |
-| A-25 | OPEN | Refined Law 14 no-teleport test on the TP path |
+| A-25 | FIXED | D-66 / D-74: an unmitigated zone that holds (BoM, or MoM under a pressure zone below 30%) ends a swing-scalp TP walk |
 | A-26 | FIXED 9d7c72b | MAX_RRR 15 |
-| A-27 | PART | Mechanism A FRONT entry built as the first-contact band of zone-edge setups (D-59, E3C:1060-1066); middle / back entries and the blended RRR OPEN |
+| A-27 | PART | Mechanism A FRONT on every zone setup (D-62), on the entry structure; back entry + blended RRR recorded; middle / back fills and a blended-RRR gate OPEN |
 | A-28 | PART | RWL hair-miss repair built (E3C:196-197); F1-E recovery-shelf adjust OPEN |
 | A-29 | OPEN | Fibonacci Spiderweb anchoring (three contexts) |
 | A-30 | PART | internal LQZ rung (F1-C); E1 Step 0.6 key levels not passed to TS-1 |
@@ -52,7 +52,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | A-38 | PART | reason code on every discard; Phase 12 floor invariants as a final pass OPEN |
 | A-39 | OPEN | BoS + flip + retest requirement for reversals |
 | A-40 | PART | SS->BS Transition Entry built (D-51, f723b0b); scalp-stack / swing-stack compliance as a gate OPEN |
-| A-41 | PART | reinforcement orders pending from the first London premarket after the parent's fill and cancelled at the parent's exit (D-54, E3C:625); the 1-2-3 activation test OPEN |
+| A-41 | PART | rockets bracketed from the London premarket of their own day and the parent's fill (D-71), cancelled at the parent's exit, drawn as conditional orders; the 1-2-3 activation test OPEN |
 | A-42 | PART | sizing 50 / 30 / 20 noted; trip-wire, rocket type OPEN |
 | A-43 | PART | 8R.10 path mapping in _reinforce(); 8R.5, Phase 11 OPEN |
 | A-44 | OPEN | acceptance counts |
@@ -101,17 +101,17 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | B-23 | FIXED 9d7c72b | F1-A on the order block itself |
 | B-24 | OPEN | Law 3 (no 4H-edge entry) not enforced as a gate |
 | B-25 | FIXED 9d7c72b | rule (b) = inside the close edge of the next step (D-43) |
-| B-26 | OPEN | choice (a) / (b) by mirrorConfidenceScore; D-43 / D-47 use (b) first (shields walked nearest first). Checked 2026-11-26 against his 23 golden stops (memory/08): neither rule fits all; the fuel-state definition is in DESIGN_BLUEPRINT_v5.2 16.7 / BUILD_WORKFLOW P3.TURN-07 |
+| B-26 | FIXED | D-73 (see A-22); golden stops DXY #2-#8 within 2.5 pips, GBPUSD #1 #2 #5 within 1.3 |
 | B-27 | PART | 4-36 pip envelope; Law 4 bands per category OPEN |
 | B-28 | FIXED 9d7c72b | zone midpoint with an LQZ inside (D-33) |
 | B-29 | PART | strong = near edge + 1 pip, liquidity band = near edge (D-45); weak = far edge only where coded for sweep targets |
 | B-30 | PART | reversal after a breakout: TP = first liquidity rung 30+ pips along the way (D-56, GS Law 2), then the sweep-zone / pivot targets; WL targets not re-checked |
 | B-31 | FIXED 9d7c72b | TP_NULL discard; range-middle fallback removed |
-| B-32 | PART | three entry attempts x three TP attempts on the same anchor; SL re-anchor step OPEN |
+| B-32 | PART | three entry x three TP attempts; SL re-anchored outward when the RRR exceeds 15R (D-75); a tighter re-anchor was tried and dropped (adds stops) |
 | B-33 | PART | rockets: first liquidity step 20+ pips beyond the primary, ladder-step stop, pending from the first London premarket after the parent's fill, cancelled with the parent (D-54); Fib 1.382 / 1.618 placement and the trip-wire OPEN |
 | B-34 | PART | both directions at the bounds + inner 1H / 4H zones; scalp stack 30m / 15m (E3C:96) OPEN |
 | B-35 | OPEN | |
-| B-36 | PART | every capped setup is logged; cap key (pair, anchorBucket, day) OPEN |
+| B-36 | FIXED | D-78: one swing-scalp setup per anchor per day (cap key (pair, anchor, day)); 11-setup limit drops per-day repeats of the latest days first, logged |
 | B-37 | OPEN | |
 
 ## B — Supply / demand map
