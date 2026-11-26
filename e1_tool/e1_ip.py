@@ -197,6 +197,66 @@ def levels(pair, monday, side):
     return {'L': L, 't3': t3, 'spot': spot, 'K': K, 'U': U, 'daily': daily, 'weekly': weekly, 'b4': b4, 'lsz': lsz, 'z4': z4, 'sd': sd, 'obs': obs, 'magnets': magnets, 'lows': lows, 'highs': highs}
 
 
+GAP_SCAN = True
+
+
+def gap_scan(X, final, by, U):
+    """STEP 9.5 POST-ZONE-MAP GAP SCAN (MANDATORY) (P452:1159-1184; P533:769): 9.5a gaps >= 0.20 between adjacent mapped zones; 9.5b candidates in the gap: a 4H demand / supply zone,
+    a 1H zone (Condition B: filling the gap), a round number, a sub-threshold EUR/USD strike conversion (Tier 3 / 4), a daily pivot, a minor swing level, an extended daily close of 6-10 days ago;
+    9.5c 'If any gap-region level has 2+ supporting signals: flag as "GAP IN-FILL LEVEL" with Confidence: MODERATE; include in the zone map with Structural dimension score = 1'.
+    The mapped zones = the ones drawn (the six ranked first). An in-fill level splits its gap; what remains is scanned again while it is still >= 0.20."""
+    EX = 0.03 * U
+    drawn = sorted(sorted(final, key=lambda z: (-z['score'], -z['npill'], abs((z['top'] + z['bot']) / 2 - X['spot'])))[:MAX_DRAWN], key=lambda z: z['bot'])
+    sig = []
+    for z in X['z4']:
+        sig += [(z['top'], '4H zone'), (z['bot'], '4H zone')]
+    for z in X['sd']:
+        if z['tf'] == '60':
+            sig += [(z['top'], '1H zone'), (z['bot'], '1H zone')]
+    sig += [(l['p'], 'round number') for l in by.get(6, []) if l.get('round')]
+    sig += [(l['p'], 'option strike (Tier 3 / 4)') for l in X['t3']]
+    sig += [(l['p'], 'daily pivot') for l in by.get(1, []) if l['kind'].startswith('pivot daily')]
+    sig += [(l['p'], 'minor swing') for l in by.get(5, []) if l['kind'].startswith('Minor Swing Level')]
+    sig += [(d['close'], 'extended daily close') for d in X['daily'][-10:-5]]
+    out = []
+
+    def fill(lo, hi):
+        if hi - lo < 0.20 * U - 1e-12:
+            return
+        best = None
+        for p, k in sig:
+            if not (lo + EX < p < hi - EX):
+                continue
+            kinds = {}
+            for q, kq in sig:
+                if abs(q - p) <= EX + 1e-12 and lo < q < hi:
+                    kinds.setdefault(kq, q)
+            if len(kinds) >= 2:
+                key = (-len(kinds), abs(p - (lo + hi) / 2))
+                if best is None or key < best[0]:
+                    best = (key, p, kinds)
+        if best is None:
+            return
+        _, p, kinds = best
+        sc = score(p, by, U)
+        dims = {k: sc[k] for k in ('tech', 'opt', 'anal', 'struct', 'psych', 'bonus')}
+        dims['struct'] = 1.0                                 # 9.5c 'Structural dimension score = 1'
+        seed = {'p': p, 'base': round(sum(dims.values()), 1), 'dims': dims, 'tally': sc['tally'], 'pillars': sorted(sc['pillars'] | {5}), 'members': sc['members']}
+        lv = [l for l in X['L'] if abs(l['p'] - p) <= 0.05 * U + 1e-12]
+        z = {'bot': min(min(kinds.values()), p - EX), 'top': max(max(kinds.values()), p + EX), 'seed': seed, 'n': len(kinds), 'members_lv': lv,
+             'signals': sorted(kinds), 'gap': (lo, hi)}
+        ov = next((f for f in final if f not in drawn and f['bot'] <= z['top'] and f['top'] >= z['bot']), None)
+        if ov is not None:                                   # the in-fill falls on a MODERATE+ band the six-zone ranking left off the chart: that band itself fills the gap
+            ov['promoted'] = True; drawn.append(ov)
+            fill(lo, ov['bot']); fill(ov['top'], hi)
+            return
+        out.append(z)
+        fill(lo, z['bot']); fill(z['top'], hi)
+    for a, b in list(zip(drawn, drawn[1:])):
+        fill(a['top'], b['bot'])
+    return out
+
+
 def round_psych(p, U):
     f = (p / U) - math.floor(p / U)
     for target, pts in ((0.0, 2), (0.5, 2), (0.25, 1), (0.75, 1)):
@@ -362,7 +422,7 @@ def build(pair, monday, side):
     cross200 = bool(e200) and any(e200[i] is not None and e200[i - 1] is not None and (closes[i - 1] - e200[i - 1]) * (closes[i] - e200[i]) < 0 for i in range(len(closes) - 5, len(closes)))
     cross_up = cross200 and closes[-1] > e200[-1]                # the side the regime changed to
     mags = [m['p'] for m in X['magnets']]
-    for z in zones:
+    def typify(z):
         z['mech'] = mechanics(z, b4, trend, extremes, zones, spot, U)
         seed, npill = z['seed'], len(z['seed']['pillars'])
         opts = [l for l in z['members_lv'] if l['pillar'] == 8]
@@ -395,22 +455,38 @@ def build(pair, monday, side):
         reg = 0 if zfp > 50 else 1 if zfp >= 20 else 2
         z.update(type=ztype, zfp_num=zfp, zfp=ZFP_RANGE[ztype], regime=reg, npill=npill, wall=wall, mods=mods,
                  score=round(seed['base'] + reg + (1 if z['mech']['post_consolidation'] else 0), 1))
+    for z in zones:
+        typify(z)
     final = [z for z in zones if z['score'] >= 6]
+    gaps = gap_scan(X, final, by, U) if GAP_SCAN else []
+    for z in gaps:
+        typify(z)
+        z['score'] = min(7.0, max(6.0, z['score']))          # 9.5c 'flag as "GAP IN-FILL LEVEL" with Confidence: MODERATE' (degree table: MODERATE = 6-7)
+        z['gap_infill'] = True
+    final += gaps
     for z in final:
         z['degree'] = next(nm for th, nm in DEGREES if z['score'] >= th)
         z['tier'] = 'Tier 1' if any(q['kind'] == 'BoM' and q['mit'] <= 1 and q['bot'] <= z['top'] and q['top'] >= z['bot'] for q in X['z4']) else 'Tier 2'
         z['intra'] = intra_zone(z, X, U)
-    ab = [z for z in final if z['bot'] > spot]; be = sorted([z for z in final if z['top'] < spot], key=lambda z: -z['top'])
+    ab = [z for z in final if z['bot'] > spot and not z.get('gap_infill')]; be = sorted([z for z in final if z['top'] < spot and not z.get('gap_infill')], key=lambda z: -z['top'])
     for z in final:
-        if z['bot'] <= spot <= z['top']:
+        if z.get('gap_infill'):
+            z['name'], z['cat'] = 'GAP IN-FILL LEVEL', ('RES' if z['bot'] > spot else 'SUP' if z['top'] < spot else 'MID')
+        elif z['bot'] <= spot <= z['top']:
             z['name'], z['cat'] = 'EQUILIBRIUM ZONE', 'MID'
         elif z['bot'] > spot:
             z['name'], z['cat'] = ('RESISTANCE CEILING' if z is max(ab, key=lambda x: x['top']) else 'UPPER RESISTANCE'), 'RES'
         else:
             z['name'], z['cat'] = ('MID-RANGE SUPPORT' if be[0] is z else 'KEY SUPPORT BAND'), 'SUP'
-    for i, z in enumerate(sorted(final, key=lambda z: (-z['score'], -z['npill'], abs((z['top'] + z['bot']) / 2 - spot)))):
+    for i, z in enumerate(sorted([z for z in final if not z.get('gap_infill')], key=lambda z: (-z['score'], -z['npill'], abs((z['top'] + z['bot']) / 2 - spot)))):
         z['rank'], z['drawn'] = i + 1, i < MAX_DRAWN
-    X.update(zones=sorted(final, key=lambda z: -z['top']), all_bands=zones, trend=trend, scored=scored)
+    for z in gaps:                                               # an in-fill level belongs to the gap between two DRAWN zones (9.5a 'between adjacent mapped zones')
+        z['rank'], z['drawn'] = 99, True
+    for z in final:
+        if z.get('promoted'):
+            z['drawn'] = True
+    # the in-fill levels are part of the Engine 1 map (drawn, listed); Engines 2 and 3 still read the named zones only - their rules for an in-fill level (bound? target? anchor?) are not built yet
+    X.update(zones=sorted([z for z in final if not z.get('gap_infill')], key=lambda z: -z['top']), infill=sorted(gaps, key=lambda z: -z['top']), all_bands=zones, trend=trend, scored=scored)
     return X
 
 

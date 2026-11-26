@@ -15,6 +15,9 @@ print('ENGINE 1 OBJECTS ON THE CHART (all of these are Engine 1 zones):')
 for z in X['zones']:
     if z['drawn'] and near(z['bot'], z['top']):
         print(f"  pressure zone  {z['name']:<18} {f(z['bot'])}-{f(z['top'])} {z['degree']} | {z['zfp']} ZFP | {z['mech']['bom']}")
+for z in X.get('infill', []):
+    if near(z['bot'], z['top']):
+        print(f"  gap in-fill level (dashed box)    {f(z['bot'])}-{f(z['top'])} MODERATE | {z['zfp']} ZFP | signals: {', '.join(z['signals'])}")
 for z in sorted(X['sd'], key=lambda z: -z['top']):
     if z['tf'] in ('240', '60') and near(z['bot'], z['top']):
         print(f"  supply/demand  {z['label']:<28} {z['type']:<6} {f(z['bot'])}-{f(z['top'])}")

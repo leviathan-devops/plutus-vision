@@ -181,6 +181,9 @@ if barstate.islast and isPair
         // #4 KEY SUPPORT BAND 98.240-98.320 MODERATE 7.0/14 Standard Wall Tier 2 | BoM Depleted 4 reactions | ENTRY-SCALP-ONLY
         box.new(1778446800000, 98.320, 1779483600000, 98.240, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
         label.new(1778662800000, 98.280, "KEY SUPPORT BAND | MODERATE | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // #99 GAP IN-FILL LEVEL 98.100-98.160 MODERATE 6.0/14 Soft Wall Tier 2 | BoM Depleted 3 reactions | TP-TARGET
+        box.new(1778446800000, 98.160, 1779483600000, 98.100, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
+        label.new(1778662800000, 98.130, "GAP IN-FILL LEVEL | MODERATE | 30-50% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #5 KEY SUPPORT BAND 97.959-98.033 MODERATE 7.0/14 Standard Wall Tier 2 | BoM Depleted 4 reactions | ENTRY-SCALP-ONLY
         box.new(1778446800000, 98.033, 1779483600000, 97.959, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
         label.new(1778662800000, 97.996, "KEY SUPPORT BAND | MODERATE | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)

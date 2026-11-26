@@ -128,6 +128,17 @@ def generate(pair, monday, X, extra=(), rch=None):
         o.append(f"        label.new({tsL + 60 * H}, {g((z['top'] + z['bot']) / 2)}, \"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} {z['mech']['bom']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
       if len(o) == n0:
         o.append('        na')
+    # Step 9.5 gap in-fill levels (P452:1159-1184): MODERATE confidence, drawn thinner than the named zones
+    o.append('    if show_ip')
+    n0 = len(o)
+    for z in X.get('infill', []):
+        if not near(z['bot'], z['top']):
+            continue
+        c = SHADE[z['cat']]['MODERATE']
+        o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 82), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
+        o.append(f"        label.new({tsL + 96 * H}, {g((z['top'] + z['bot']) / 2)}, \"GAP IN-FILL | MODERATE | {z['zfp']} ZFP\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+    if len(o) == n0:
+        o.append('        na')
     o.append('    if show_ip and show_lv')
     n0 = len(o)
     for z in X['zones']:
