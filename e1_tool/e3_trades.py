@@ -14,6 +14,7 @@ No price literal: every level is an E1 zone edge, an LQZ band or a sweep-zone le
 import e1_data as D
 
 RRR_FLOOR, GOLD_MIN, GOLD_MAX, SL_CEIL, MAX_SETUPS = 3.0, 4.0, 9.5, 36.0, 11
+ALT_SETUPS = False       # the alternative chain's breakout setups need their Decision Zone trigger (6.6 Step 4) before they may rest as orders: not emitted until that trigger is built
 TF_RANK = {'15': 0, '30': 1, '60': 2, '240': 3}
 DAY_IDX = {'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4}
 SD_TF = {'240': '4H', '60': '1H', '30': '30m', '15': '15m'}
@@ -189,6 +190,33 @@ def _first_anchor(leg, X, env):
 
 
 def build(pair, monday, X, E2):
+    """primary chain + the conditional setups of the ALTERNATIVE chain (P533 6.6 Step 4: 'For every primary chain, construct at least one alternative chain that activates if the primary
+    fails at a specific Decision Zone'): only its breakout family (RWL / BS / WL) - the swing scalps are the same range for both readings"""
+    R = _build(pair, monday, X, E2, '')
+    alt = E2.get('alt_chain')
+    if ALT_SETUPS and alt is not None:
+        A = _build(pair, monday, X, alt, 'A')
+        keep = [s for s in A['setups'] if s['shape'] in ('RWL', 'BS', 'PBS', 'WL', 'Ladder')]
+        for s in keep:
+            s['alt'] = True
+            s['why'] = 'ALTERNATIVE chain (the other bound fails): ' + s['why']
+        R['setups'] = (R['setups'] + keep)[:MAX_SETUPS]
+        R['log'] += ['ALT ' + l for l in A['log']]
+    b0 = D.boundary_ms(monday)
+    ss_days = [DAY_IDX[d['day']] for d in E2['days'] if d['shapes'] == ['SS'] and DAY_IDX[d['day']] < E2.get('n_real', 5)]
+    for s in R['setups']:
+        day0 = D.week_start_ms(monday) + DAY_IDX[s['day']] * 86400000
+        s['valid_from'] = max(day0, b0)
+        s['valid_to'] = D.week_start_ms(monday) + (DAY_IDX[s['days'][-1]] + 1) * 86400000
+        if s['shape'] == 'SS' and DAY_IDX[s['day']] in ss_days:
+            # the swing scalps of a consolidation rest at both bounds for the whole consolidation (E3C Setup Universe: 'SS: Swing Scalps (both directions)'): which bound is met first is not designated
+            run = [d for d in ss_days if all(x in ss_days for x in range(min(d, DAY_IDX[s['day']]), max(d, DAY_IDX[s['day']]) + 1))]
+            s['valid_from'] = max(D.week_start_ms(monday) + min(run) * 86400000, b0)
+            s['valid_to'] = D.week_start_ms(monday) + (max(run) + 1) * 86400000
+    return R
+
+
+def _build(pair, monday, X, E2, tag):
     env = _env(X, pair)
     pip, rungs, blocks, sd = env
     U = X['U']
@@ -250,7 +278,7 @@ def build(pair, monday, X, E2):
             anchor = (cands[0][1] if cands else leg['to_zone'])
             continue
         s.update(day=leg['days'][0], days=leg['days'], shape=leg['shape'], category=cat, session=SESSION[cat], sl_pips=round(abs(entry - stop) / pip, 1), t0=leg['t0'], t1=leg['t1'],
-                 anchor=a, id=f"{pair[:2]}{len(setups) + 1}")
+                 anchor=a, id=f"{pair[:2]}{tag}{len(setups) + 1}")
         setups.append(s)
         used.add(id(anchor)); used.add(anchor.get('key'))
         anchor = s['tp_zone']                                # Law 27: the TP zone is the next entry zone
@@ -271,7 +299,7 @@ def build(pair, monday, X, E2):
                         setups.append({'dir': s['dir'], 'entry': e2, 'sl': sl2, 'tp': s['tp'], 'rrr': round(abs(s['tp'] - e2) / abs(e2 - sl2), 2), 'day': leg['days'][1], 'days': leg['days'][1:],
                                        't0': D.week_start_ms(monday) + DAY_IDX[leg['days'][1]] * 86400000, 't1': leg['t1'],
                                        'shape': 'Ladder', 'category': 'Reinforcement', 'session': SESSION['Reinforcement'], 'sl_pips': round(abs(sl2 - e2) / pip, 1), 'parent': s['id'],
-                                       'id': f"{pair[:2]}{len(setups) + 1}", 'tp_zone': s['tp_zone'], 'anchor': r,
+                                       'id': f"{pair[:2]}{tag}{len(setups) + 1}", 'tp_zone': s['tp_zone'], 'anchor': r,
                                        'why': 'reinforcement: stop-limit at the LQZ rung on the TP path; SL 1 pip outside the back edge of the next rung; parent TP'})
     return {'setups': setups[:MAX_SETUPS], 'log': log}
 
@@ -290,9 +318,9 @@ def pine(pair, monday, R):
         x0 = max(day0 if first else s['t0'], b0)             # a setup is a resting order from the start of its day; later setups of the same day follow in leg order
         x1 = min(max(s['t1'], x0 + 6 * 3600000), wk1)
         o.append(f"        // {s['id']} {s['day']} {s['shape']} {s['dir']} E {g(s['entry'])} SL {g(s['sl'])} TP {g(s['tp'])} RRR {s['rrr']} | {s['category']} / {s['session']} | {s['why']}")
-        o.append(f"        box.new({x0}, {g(max(s['entry'], s['sl']))}, {x1}, {g(min(s['entry'], s['sl']))}, bgcolor=color.new(color.rgb(242,54,69), 70), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)")
-        o.append(f"        box.new({x0}, {g(max(s['entry'], s['tp']))}, {x1}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), 76), border_color=color.rgb(8,153,129), border_width=1, xloc=xloc.bar_time)")
-        o.append(f"        label.new({x0 + 1800000}, {g(s['tp'])}, \"{s['id']} {s['shape']} {s['dir']} {s['rrr']}R\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+        o.append(f"        box.new({x0}, {g(max(s['entry'], s['sl']))}, {x1}, {g(min(s['entry'], s['sl']))}, bgcolor=color.new(color.rgb(242,54,69), {86 if s.get('alt') else 70}), border_color=color.rgb(242,54,69), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
+        o.append(f"        box.new({x0}, {g(max(s['entry'], s['tp']))}, {x1}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), {88 if s.get('alt') else 76}), border_color=color.rgb(8,153,129), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
+        o.append(f"        label.new({x0 + 1800000}, {g(s['tp'])}, \"{s['id']} {'ALT ' if s.get('alt') else ''}{s['shape']} {s['dir']} {s['rrr']}R\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
 
 

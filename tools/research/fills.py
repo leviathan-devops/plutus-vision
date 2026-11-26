@@ -11,18 +11,18 @@ ts = lambda t: dt.datetime.fromtimestamp(t / 1000, dt.UTC).strftime('%a %H:%M')
 print(pair, mon, '| day map:', ' | '.join(f"{d['day']} {'+'.join(d['shapes'])} {d['dir']}" for d in chain['days']))
 for s in R['setups']:
     long = s['dir'] == 'LONG'
-    day0 = D.week_start_ms(mon) + {'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4}[s['day']] * 86400000
-    t0, st, tf = max(day0, D.boundary_ms(mon)), 'not filled', None      # a resting order from the start of its day
+    t0, t_end, st, tf = s['valid_from'], s['valid_to'], 'not filled', None      # the order's bracket from Engine 3 (R3 law)
     stop_entry = s['category'] == 'Reinforcement'          # a stop-limit fires when price trades THROUGH the rung in the trade's direction
-    t_end = day0 + (1 + len(s.get('days', [1])) - 1) * 86400000     # the entry is valid inside its own day(s) only (R3 law: the order's bracket comes from the E2 day)
+    first = True
     for x in b:
         if x['time'] < t0:
             continue
         if tf is None and x['time'] >= t_end:
-            st = 'not filled in its day (order expires)'; break
-        if tf is None and x['time'] == next(y['time'] for y in b if y['time'] >= t0):
+            st = 'not filled inside its bracket (order expires)'; break
+        if tf is None and first:
+            first = False
             if (not stop_entry) and ((long and x['open'] <= s['sl']) or ((not long) and x['open'] >= s['sl'])):
-                st = 'void: price already beyond the stop at the start of its day'; break
+                st = 'void: price already beyond the stop when the order starts'; break
         if tf is None:
             hit = x['low'] <= s['entry'] <= x['high']
             if not stop_entry:
@@ -34,6 +34,6 @@ for s in R['setups']:
             st = 'STOPPED ' + ts(x['time']); break
         if (long and x['high'] >= s['tp']) or ((not long) and x['low'] <= s['tp']):
             st = 'TP HIT ' + ts(x['time']); break
-    print(f"  {s['id']} {s['day']} {s['shape']:<6} {s['dir']:<5} E {f % s['entry']} SL {f % s['sl']} TP {f % s['tp']} {s['rrr']}R | filled {ts(tf) if tf else '-'} -> {st}")
+    print(f"  {s['id']:<5}{'ALT ' if s.get('alt') else '    '}{s['day']} {s['shape']:<6} {s['dir']:<5} E {f % s['entry']} SL {f % s['sl']} TP {f % s['tp']} {s['rrr']}R | filled {ts(tf) if tf else '-'} -> {st}")
 for l in R['log']:
     print('  !', l)

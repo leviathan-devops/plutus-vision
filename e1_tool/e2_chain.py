@@ -142,7 +142,7 @@ def _after_bs(t):
     return 'R', 'MODERATE', f"target {t['name']} ZFP {t['zfp']}% (40-60): pause"
 
 
-def build(pair, monday, X, lead=None):
+def build(pair, monday, X, lead=None, force_dir=None):
     """lead = the DXY chain when translating to a pair: same shapes, inverted direction (P533:1899-1917), on the pair's own zones"""
     U, spot = X['U'], X['spot']
     ceil, floor, pivot, above, below = _bounds(X)
@@ -155,7 +155,9 @@ def build(pair, monday, X, lead=None):
         if z is not None and z['zfp_num'] > 45:
             failing = (side, z)
     # ── direction of the breakout that ends the consolidation
-    if lead is not None:
+    if force_dir is not None:
+        bdir, why = force_dir, 'ALTERNATIVE chain (6.6 Step 4): the breakout through the other bound'
+    elif lead is not None:
         bdir, why = inv[lead['bdir']], f"pair translation of the DXY chain ({lead['bdir']} inverted)"
     elif s0['shape'] in ('BS', 'PBS'):
         bdir, why = s0['dir'], 'breakout in progress'
@@ -273,7 +275,10 @@ def build(pair, monday, X, lead=None):
         alt = {'decision_zone': far['name'], 'dir': inv[bdir], 'target': a_t,
                'text': f"PRIMARY: SS -> BS {bdir} -> {nxt} | DECISION ZONE: {far['name']} fails (1H close beyond it) -> ALTERNATIVE: SS -> BS {inv[bdir]} -> {a_n} at {a_t['name'] if a_t else '-'}"}
         audit.append(alt['text'])
-    return {'pair': pair, 'monday': monday, 's0': s0, 'storyline': story, 'bdir': bdir, 'chain': chain, 'days': days, 'path': pts, 'alt': alt, 'audit': audit,
+    alt_chain = None
+    if force_dir is None and s0['shape'] not in ('BS', 'PBS'):
+        alt_chain = build(pair, monday, X, lead, force_dir=inv[bdir])      # the same map read with the other bound failing: its legs feed the conditional (ALT) setups of Engine 3
+    return {'alt_chain': alt_chain, 'pair': pair, 'monday': monday, 's0': s0, 'storyline': story, 'bdir': bdir, 'chain': chain, 'days': days, 'path': pts, 'alt': alt, 'audit': audit,
             'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'next': nxt, 'range': (f_edge, c_edge), 'mid': mid, 'far': far, 'near': near, 'legs': legs, 'n_real': n_real}
 
 
