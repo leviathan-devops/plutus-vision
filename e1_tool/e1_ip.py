@@ -83,7 +83,7 @@ def levels(pair, monday, side):
         t = 1 if e['notional_m'] >= 1500 else 2 if e['notional_m'] >= 850 else 3      # P533:1443-1447: thresholds are stated on the EUR/USD expiry notional (EUR), bands +-0.07 / 0.10 / 0.15
         p = K * e['strike'] ** W_EUR if pair == 'DXY' else e['strike']
         lv = {'p': p, 'pillar': 8, 'kind': f"{'EUR/USD ' if pair == 'DXY' else ''}{e['strike']:.4f} {e['notional_m']}M {e.get('cut_date', '')[5:]} (Tier {t})", 'tier': t, 'usd': usd,
-              'band': {1: 0.07, 2: 0.10, 3: 0.15}[t] * U, 'expired': e.get('state') == 'ghost', 'strike': e['strike'], 'notional_m': e['notional_m']}
+              'band': {1: 0.07, 2: 0.10, 3: 0.15}[t] * U, 'expired': e.get('state') == 'ghost', 'strike': e['strike'], 'notional_m': e['notional_m'], 'cut': e.get('cut_date', '')}
         (L if t < 3 else t3).append(lv)
     # ── Pillar 5 (P533:1205-1423; recipe :304-477)
     win = daily[-90:]
