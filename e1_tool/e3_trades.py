@@ -25,6 +25,14 @@ def _env(X, pair):
     rungs = sorted(X['v1']['60']['liquidity'], key=lambda z: z['bot'])                   # LQZ = the sealed V1's liquidity bands at the anchor (R-30)
     blocks = [{'bot': z['bot'], 'top': z['top'], 'tf': tf, 'type': z['side'], 'src': 'V1 order block'} for tf in ('240', '60', '30', '15') for z in X['v1'][tf]['order_blocks']]
     sd = [dict(z) for z in X['sd']]
+    # GS Law 5 / P533:1312-1340 (Step 0.6): a supply / demand zone holding no liquidity band carries its own Fibonacci levels (0.382 / 0.5 / 0.618 / 0.786 of the zone's range)
+    # as its internal steps - the operator's GBPUSD rungs inside the 1H demand zone sit on them
+    for z in sd:
+        if z['tf'] in ('240', '60') and not any(r['bot'] >= z['bot'] and r['top'] <= z['top'] for r in rungs):
+            for f in (0.382, 0.5, 0.618, 0.786):
+                p = z['bot'] + f * (z['top'] - z['bot'])
+                rungs.append({'bot': p, 'top': p, 'fib': f})
+    rungs.sort(key=lambda z: z['bot'])
     return pip, rungs, blocks, sd
 
 
@@ -49,12 +57,12 @@ def _entry(anchor, direction, shape, env, pair):
         b = max(nested, key=lambda b: TF_RANK[b['tf']])      # the highest timeframe block nested in the band
         e = b['bot'] + 1 * pip if direction == 'down' else b['top']        # F1-A: order-block SHORT only, 1 pip above the bottom edge
         return e, b, f"{'30m' if b['tf'] == '30' else '15m' if b['tf'] == '15' else '1H' if b['tf'] == '60' else '4H'} order block edge"
-    inner = [r for r in rungs if _inside(r, anchor)]
+    inner = [r for r in rungs if _inside(r, anchor) and 'fib' not in r]
     if inner:                                                # F1-C: internal rung near edge = the rung first met by approaching price
         r = min(inner, key=lambda r: r['bot']) if direction == 'down' else max(inner, key=lambda r: r['top'])
         e = r['bot'] if direction == 'down' else r['top'] - (0.2 * pip if shape in ('RWL', 'WL') else 0.0)        # F1-D inset on a bounce
         return e, r, 'internal LQZ rung'
-    edge = [r for r in rungs if _overlap(r, anchor)]
+    edge = [r for r in rungs if _overlap(r, anchor) and 'fib' not in r]
     if edge and anchor.get('ip'):
         r = min(edge, key=lambda r: abs(((r['bot'] + r['top']) / 2) - (anchor['bot'] if direction == 'down' else anchor['top'])))
         e = r['bot'] if direction == 'down' else r['top'] - (0.2 * pip if shape in ('RWL', 'WL') else 0.0)
@@ -67,7 +75,9 @@ def _stops(entry, step, direction, env, anchor):
     pip, rungs, blocks, sd = env
     out = []
     if anchor.get('sweep'):                                  # 1-2 pips outside the back edge of the stop-loss zone = beyond the swept extreme
-        return [(anchor['bot'] - 1.3 * pip if direction == 'up' else anchor['top'] + 1.3 * pip, 'outside the sweep extreme')]
+        ext = anchor.get('ext', anchor['bot'] if direction == 'up' else anchor['top'])
+        return [(ext - k * pip if direction == 'up' else ext + k * pip, 'outside the sweep extreme') for k in (1.3, 2.0)]      # "1-2 pips OUTSIDE THE BACK EDGE OF THE STOP-LOSS ZONE"
+
     far = step['top'] if direction == 'down' else step['bot']
     out.append((far + 3 * pip if direction == 'down' else far - 3 * pip, '3 pips outside the current step'))
     beyond = [r for r in rungs if (r['bot'] > entry if direction == 'down' else r['top'] < entry)]      # the shield: the first LQZ band lying wholly beyond the entry (GS Law 4)
@@ -105,12 +115,12 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
     out = []
     ahead = lambda p: (p < entry) if direction == 'down' else (p > entry)
     if leg['shape'] in ('BS', 'PBS') and tz is not None:
-        boms = [z for z in sd if z['tf'] in ('240', '60') and z['type'] == opp and z['kind'] == 'BoM' and _overlap(z, tz)]
+        boms = sorted([z for z in sd if z['tf'] in ('240', '60') and z['type'] == opp and _overlap(z, tz)], key=lambda z: -z['top'] if direction == 'down' else z['bot'])      # the first zone the move reaches
         for z in boms:
             ins = [r for r in rungs if _inside(r, z)]
             for r in sorted(ins, key=lambda r: -r['top'] if direction == 'down' else r['bot']):
-                out.append(((r['bot'] + r['top']) / 2, z, 'LQZ inside the target BoM zone: midpoint'))
-            out.append((z['top'] + pip if direction == 'down' else z['bot'] - pip, z, 'target BoM zone near edge + 1 pip'))
+                out.append(((r['bot'] + r['top']) / 2, z, 'LQZ inside the target zone: midpoint'))
+            out.append((z['top'] + pip if direction == 'down' else z['bot'] - pip, z, 'target zone near edge + 1 pip'))
         out.append((tz['top'] + pip if direction == 'down' else tz['bot'] - pip, tz, 'E2 target near edge + 1 pip'))
         return out
     if leg['shape'] == 'RWL' and tz is not None:
@@ -192,10 +202,17 @@ def build(pair, monday, X, E2):
         a = dict(anchor)
         if 'zfp_num' in a and 'tf' not in a:
             a['ip'] = True                                   # an IP zone is never an entry source (E3C:139-143): the LQZ rung at it is
-        if leg['shape'] == 'WL' and E2['target'] is not None:    # the whiplash is traded inside the sweep zones of the E2 target
-            lv = [z['level'] for z in X['lsz'] if not z['swept'] and E2['target']['bot'] - 1e-9 <= z['level'] <= E2['target']['top'] + 1e-9]
+        if leg['shape'] == 'WL' and E2['target'] is not None:    # the whiplash is traded in the sweep zones of the E2 target: the first one price reaches; the stop beyond the cluster's extreme
+            lv = sorted([z['level'] for z in X['lsz'] if not z['swept'] and E2['target']['bot'] - 1e-9 <= z['level'] <= E2['target']['top'] + 1e-9], reverse=(direction == 'up'))
             if lv:
-                a = {'bot': min(lv), 'top': max(lv) + 0.05 * U, 'sweep': True, 'name': 'sweep zone'} if direction == 'up' else {'bot': min(lv) - 0.05 * U, 'top': max(lv), 'sweep': True, 'name': 'sweep zone'}
+                cl = [lv[0]]
+                for p in lv[1:]:
+                    if abs(p - cl[-1]) <= 0.05 * U + 1e-12:  # the next sweep zone touches this one: one cluster
+                        cl.append(p)
+                if direction == 'up':
+                    a = {'bot': lv[0], 'top': lv[0] + 0.05 * U, 'ext': min(cl), 'sweep': True, 'name': 'sweep zone'}
+                else:
+                    a = {'bot': lv[0] - 0.05 * U, 'top': lv[0], 'ext': max(cl), 'sweep': True, 'name': 'sweep zone'}
         cat = CAT.get(leg['shape'], 'Swing Scalp')
         entry, step, how = _entry(a, direction, leg['shape'], env, pair)
         if a.get('rung'):                                    # the previous TP rung: entry on its near edge for the new direction
@@ -238,7 +255,7 @@ def build(pair, monday, X, E2):
                 nxt.sort(key=lambda q: q['bot'] if direction == 'down' else -q['top'])
                 if nxt:
                     sl2 = nxt[0]['top'] + pip if direction == 'down' else nxt[0]['bot'] - pip
-                    if GOLD_MIN <= abs(sl2 - e2) / pip <= SL_CEIL:
+                    if GOLD_MIN <= abs(sl2 - e2) / pip <= SL_CEIL and abs(s['tp'] - e2) / abs(e2 - sl2) >= RRR_FLOOR:      # the emission floor holds for every category (E3C:362-364)
                         setups.append({'dir': s['dir'], 'entry': e2, 'sl': sl2, 'tp': s['tp'], 'rrr': round(abs(s['tp'] - e2) / abs(e2 - sl2), 2), 'day': leg['days'][1], 'days': leg['days'][1:],
                                        't0': D.week_start_ms(monday) + DAY_IDX[leg['days'][1]] * 86400000, 't1': leg['t1'],
                                        'shape': 'Ladder', 'category': 'Reinforcement', 'session': SESSION['Reinforcement'], 'sl_pips': round(abs(sl2 - e2) / pip, 1), 'parent': s['id'],

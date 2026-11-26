@@ -82,39 +82,41 @@ def _bounds(X):
             q = sds[0]
             z = {'bot': q['bot'], 'top': q['top'], 'name': q['label'], 'zfp_num': 15 if q['kind'] == 'BoM' else 30, 'score': 6, 'sd': q}
         return z if z is not None else (ips[0] if ips else None)
-    sup = sorted([q for q in X['sd'] if q['tf'] in ('240', '60') and q['type'] == 'Supply' and q['bot'] > spot], key=lambda q: q['bot'])
-    dem = sorted([q for q in X['sd'] if q['tf'] in ('240', '60') and q['type'] == 'Demand' and q['top'] < spot], key=lambda q: -q['top'])
+    # P452:753 (Step 0g): a 1H zone counts when its base preceded a move of >= 0.3; the same grade picks the supply-demand bound (L-37: the figure grades strength)
+    strong = [q for q in X['sd'] if q['tf'] in ('240', '60') and q.get('excursion', 0.0) >= 0.30 * X['U']]
+    pool = strong if strong else [q for q in X['sd'] if q['tf'] in ('240', '60')]
+    sup = sorted([q for q in pool if q['type'] == 'Supply' and q['bot'] > spot], key=lambda q: q['bot'])
+    dem = sorted([q for q in pool if q['type'] == 'Demand' and q['top'] < spot], key=lambda q: -q['top'])
     return pick(above, sup), pick(below, dem), pivot, above, below
 
 
 def _target(X, side, bound, U):
-    """6.4.2 last branch: 'pierce through zone until reaching BoM Liquidity'; 6.5 BS target = next zone / structural extreme beyond the failing bound.
-    The first unmitigated 1H / 4H BoM zone at or beyond the bound, joined with the unswept sweep zones lying against it (P533:1271-1273 'CONFLUENT LIQUIDITY SWEEP + BoM ZONE')"""
-    lim = bound['top'] if side == 'down' else bound['bot']
-    if side == 'down':
-        bom = sorted([z for z in X['sd'] if z['tf'] in ('240', '60') and z['type'] == 'Demand' and z['kind'] == 'BoM' and z['top'] <= lim], key=lambda z: -z['top'])
-        lsz = sorted([z['level'] for z in X['lsz'] if z['side'] == 'Demand-side' and not z['swept'] and z['level'] < lim], reverse=True)
-    else:
-        bom = sorted([z for z in X['sd'] if z['tf'] in ('240', '60') and z['type'] == 'Supply' and z['kind'] == 'BoM' and z['bot'] >= lim], key=lambda z: z['bot'])
-        lsz = sorted([z['level'] for z in X['lsz'] if z['side'] == 'Supply-side' and not z['swept'] and z['level'] > lim])
-    ips = [z for z in X['zones'] if (z['top'] < bound['bot'] if side == 'down' else z['bot'] > bound['top'])]
-    ips.sort(key=lambda z: -z['top'] if side == 'down' else z['bot'])
-    if bom:
-        z = bom[0]
-        lo, hi = z['bot'], z['top']
-        for p in lsz:                                    # sweep zones lying against the block: within the canon cluster distance 0.15
-            if side == 'down' and lo - 0.15 * U <= p <= hi:
-                lo = min(lo, p)
-            if side == 'up' and lo <= p <= hi + 0.15 * U:
-                hi = max(hi, p)
-        return {'bot': lo, 'top': hi, 'name': f"{SD.TFNAME[z['tf']]} BoM {z['type']} + sweep zone", 'always_reacts': True, 'zfp': 10}
-    if lsz:
-        p = lsz[0]
-        return {'bot': p if side == 'down' else p - 0.05 * U, 'top': p + 0.05 * U if side == 'down' else p, 'name': 'Liquidity Sweep Target', 'always_reacts': True, 'zfp': 15}
-    if ips:
-        z = ips[0]
-        return {'bot': z['bot'], 'top': z['top'], 'name': z['name'], 'always_reacts': False, 'zfp': z['zfp_num']}
-    return None
+    """6.5 / 6.8: BS target = 'Next Support / Resistance or Structural Extreme' beyond the failing bound; 6.4.2 last branch: 'pierce through zone until reaching BoM Liquidity'.
+    The nearest of: a standing 1H / 4H supply-demand zone reaching beyond the bound, an unswept sweep zone, the next IP zone; joined with the unswept sweep zones lying against it
+    (P533:1271-1273 'CONFLUENT LIQUIDITY SWEEP + BoM ZONE')"""
+    dn = side == 'down'
+    cands = []
+    for z in X['sd']:
+        if z['tf'] in ('240', '60') and z['type'] == ('Demand' if dn else 'Supply'):
+            if (z['top'] <= bound['top'] and z['bot'] < bound['bot']) if dn else (z['bot'] >= bound['bot'] and z['top'] > bound['top']):
+                cands.append((z['top'] if dn else z['bot'], 0, {'bot': z['bot'], 'top': z['top'], 'name': f"{SD.TFNAME[z['tf']]} {z['kind']} {z['type']}", 'sd': z,
+                                                               'always_reacts': z['kind'] == 'BoM', 'zfp': 10 if z['kind'] == 'BoM' else (70 if z['mit'] >= 3 else 30)}))
+    lsz = sorted([z['level'] for z in X['lsz'] if z['side'] == ('Demand-side' if dn else 'Supply-side') and not z['swept']
+                  and ((z['level'] < bound['bot']) if dn else (z['level'] > bound['top']))], reverse=dn)
+    for p in lsz[:1]:
+        cands.append((p + 0.05 * U if dn else p - 0.05 * U, 1, {'bot': p if dn else p - 0.05 * U, 'top': p + 0.05 * U if dn else p, 'name': 'Liquidity Sweep Target', 'always_reacts': True, 'zfp': 15}))
+    for z in X['zones']:
+        if (z['top'] < bound['bot']) if dn else (z['bot'] > bound['top']):
+            cands.append((z['top'] if dn else z['bot'], 2, {'bot': z['bot'], 'top': z['top'], 'name': z['name'], 'always_reacts': False, 'zfp': z['zfp_num']}))
+    if not cands:
+        return None
+    t = sorted(cands, key=lambda c: (-c[0] if dn else c[0], c[1]))[0][2]
+    for p in lsz:                                            # sweep zones lying against / inside the target: within the canon cluster distance 0.15
+        if dn and t['bot'] - 0.15 * U <= p <= t['top']:
+            t['bot'] = min(t['bot'], p); t['always_reacts'] = True; t['zfp'] = min(t['zfp'], 15); t['name'] += ' + sweep zone' if 'sweep' not in t['name'].lower() else ''
+        if (not dn) and t['bot'] <= p <= t['top'] + 0.15 * U:
+            t['top'] = max(t['top'], p); t['always_reacts'] = True; t['zfp'] = min(t['zfp'], 15); t['name'] += ' + sweep zone' if 'sweep' not in t['name'].lower() else ''
+    return t
 
 
 def _after_bs(t):
