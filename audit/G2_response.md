@@ -58,7 +58,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | A-44 | OPEN | acceptance counts |
 | A-45 | OPEN | liquidity zone between entry and stop (tested 2026-11-26 with the E1 sweep zones: fails on his golden #1, #2 - needs the V1 band reading) |
 | A-46 | PART | reason codes present; ABORT macro text OPEN |
-| A-47 | OPEN | consolidation-week floor 2.5 |
+| A-47 | FIXED | RRR floor 2.5 in a week whose chain is SS throughout (E3C 8.20 'Consolidation week (relaxed) | 2.5') |
 
 ## A — Supply / demand map
 | id | state | note |

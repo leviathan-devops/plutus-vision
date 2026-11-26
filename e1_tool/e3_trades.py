@@ -328,6 +328,7 @@ def _build(pair, monday, X, E2, tag):
         z['key'] = (z['tf'], round(z['bot'], 6), round(z['top'], 6))
     cands, log = _cands(E2, monday, X)
     setups = []
+    floor_rrr = 2.5 if E2['chain'] and all(x['shape'] == 'SS' for x in E2['chain']) else RRR_FLOOR      # E3C:1106-1115 'Consolidation week (relaxed) | 2.5' (a week whose chain is SS throughout)
     for c in cands:
         direction = c['dir']
         a = c['from_zone']
@@ -374,11 +375,11 @@ def _build(pair, monday, X, E2, tag):
                 why_fail = 'TP_NULL: no opposing zone on the way (E3C:1016 honest absence)'; continue
             for tries, (tp, tz, why_tp) in enumerate(tps[:3], 1):
                 rrr = abs(tp - entry) / abs(entry - stop)
-                if RRR_FLOOR <= rrr <= MAX_RRR:
+                if floor_rrr <= rrr <= MAX_RRR:
                     s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
                          'why': f"entry {how}; SL {why_sl}; TP {why_tp}", 'src': (round(step['bot'], 6), round(step['top'], 6)) if 'bot' in step else None}
                     break
-                why_fail = f"RRR {rrr:.2f} outside [{RRR_FLOOR}, {MAX_RRR}]"
+                why_fail = f"RRR {rrr:.2f} outside [{floor_rrr}, {MAX_RRR}]"
             if s is not None:
                 break
         if s is None:
