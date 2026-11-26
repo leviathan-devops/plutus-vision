@@ -157,7 +157,7 @@ def bounds(X):
     return {'ceil': pick(above, True), 'floor': pick(below, False), 'pivot': pivot, 'above': above, 'below': below}
 
 
-def liquidity_beyond(X, z, up):
+def liquidity_beyond(X, z, up, lim=0.15):
     """the opposing liquidity a consolidation retests (6.4.2 'Consolidation ends in price retesting opposing liquidity'): the first liquidity band of the sealed V1 (1H rung or 4H band,
     R-30 / GS Law 4 '1H / 4H LSZ') or unswept sweep zone lying wholly beyond the bound's own entry rung, within the canon cluster distance 0.15 of its far edge"""
     if z is None or 'v1' not in X:
@@ -166,14 +166,15 @@ def liquidity_beyond(X, z, up):
     r1 = [r for r in X['v1']['60']['liquidity'] if r['bot'] <= z['top'] and r['top'] >= z['bot']]
     ref = (min(r1, key=lambda r: r['bot'])['top'] if up else max(r1, key=lambda r: r['top'])['bot']) if r1 else (z['bot'] if up else z['top'])
     bands = [dict(b, tf=tf) for tf in ('60', '240') for b in X['v1'][tf]['liquidity']]
-    bands += [{'bot': l['level'] - 0.05 * U, 'top': l['level'], 'tf': None, 'lsz': True} if l['side'] == 'Supply-side' else {'bot': l['level'], 'top': l['level'] + 0.05 * U, 'tf': None, 'lsz': True}
+    bands += [{'bot': l['level'] - 0.05 * U, 'top': l['level'], 'tf': None, 'lsz': True, 'reach': l['level'] + 0.10 * U} if l['side'] == 'Supply-side' else
+              {'bot': l['level'], 'top': l['level'] + 0.05 * U, 'tf': None, 'lsz': True, 'reach': l['level'] - 0.10 * U}
               for l in X['lsz'] if not l['swept']]
-    beyond = [b for b in bands if ((b['bot'] > ref and b['bot'] <= z['top'] + 0.15 * U) if up else (b['top'] < ref and b['top'] >= z['bot'] - 0.15 * U))]
+    beyond = [b for b in bands if ((b['bot'] > ref and (lim is None or b['bot'] <= z['top'] + lim * U)) if up else (b['top'] < ref and (lim is None or b['top'] >= z['bot'] - lim * U)))]
     if not beyond:
         return None
     b = min(beyond, key=lambda b: b['bot']) if up else max(beyond, key=lambda b: b['top'])
     nm = 'sweep zone' if b.get('lsz') else f"{SD.TFNAME[b['tf']]} liquidity"
-    return {'bot': b['bot'], 'top': b['top'], 'tf': b['tf'], 'liq': True, 'name': f'{nm} (opposing)'}
+    return dict({'bot': b['bot'], 'top': b['top'], 'tf': b['tf'], 'liq': True, 'name': f'{nm} (opposing)'}, **({'lsz': True, 'reach': b['reach']} if b.get('lsz') else {}))
 
 
 def branch(z, other, X, up):
@@ -766,8 +767,15 @@ def build(pair, monday, X, lead=None, force_dir=None):
             def far_of(z, up):
                 if z.get('reach') is not None:
                     return z['reach']
-                lb = liquidity_beyond(X, z, up) if (info(z) or {}).get('counter') == 'Depleted' else None
-                return (lb['top'] if up else lb['bot']) if lb is not None else (z['top'] if up else z['bot'])
+                lb = liquidity_beyond(X, z, up, lim=None) if (info(z) or {}).get('counter') == 'Depleted' else None
+                if lb is not None:
+                    return lb['top'] if up else lb['bot']
+                # a bound whose back edge is an unswept swing extreme (a sweep zone of its own side inside / at the edge of the zone): the stops resting there are swept 0.05-0.10
+                # beyond the extreme before the reversal (P533 Step 0.45a) - the same breach D-64 gives a sweep-zone bound (D-88)
+                lv = [l['level'] for l in X['lsz'] if not l['swept'] and l['side'] == ('Supply-side' if up else 'Demand-side') and z['bot'] - 1e-9 <= l['level'] <= z['top'] + 1e-9]
+                if lv:
+                    return (max(lv) + 0.10 * U) if up else (min(lv) - 0.10 * U)
+                return z['top'] if up else z['bot']
             f_far = far_of(floor, False) if floor else f_edge; c_far = far_of(ceil, True) if ceil else c_edge
             lo, hi = min(lo, f_edge, f_far), max(hi, c_edge, c_far)
         dirs = [st['dir'] for st in di if st['shape'] in ('BS', 'PBS')] or [st['dir'] for st in di if st['shape'] in ('RWL', 'WL')]

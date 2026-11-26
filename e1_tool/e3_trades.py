@@ -243,10 +243,12 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
     step_a = cur if cur is not None else anchor
     # P533 7.1 Rule 2.5 'LIQUIDITY SWEEP ZONE SL PLACEMENT ... If the LSZ has been extended per LSZ Bottom Edge Extension (sweep scan 0.05-0.10 ...), use the extended range for SL placement';
     # E3C:1027 'LSZ Zones (with bottom edge extension) | Phase 4 | SL ladder-steps model': a sweep zone carrying its extension ('reach', Step 0.45a) is ONE step up to the end of the reach -
-    # the stop stands 3 pips outside it, and a shield inside the reach is not a 'NEXT step away' (D-84)
-    ext = anchor.get('reach') if (anchor is not None and anchor.get('sweep') and SWEEP_EXT) else None
+    # the stop stands 1 pip outside it (the operator's own DXY long of 2026-04-20: entry 98.02 at the sweep zone, SL 97.87 = the end of the extension; P533 7.1 operator proof
+    # 'LONG SL ... = 97.87 - 0.01 = 97.86'; E3C:304 '1-2 pips OUTSIDE THE BACK EDGE OF THE STOP-LOSS ZONE'), and a shield inside the reach is not a 'NEXT step away'. The same holds
+    # for a breakout entry resting on an opposing SWEEP zone (e2_chain.liquidity_beyond, 'lsz') (D-84, D-87)
+    ext = anchor.get('reach') if (anchor is not None and (anchor.get('sweep') or anchor.get('lsz')) and SWEEP_EXT) else None
     if ext is not None:
-        cands.append(((ext + 3 * pip) if dn else (ext - 3 * pip), "(a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027)"))
+        cands.append(((ext + 1 * pip) if dn else (ext - 1 * pip), "(a) 1 pip outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027; E3C:304)"))
         th = [s_ for s_ in th if ((s_['bot'] > ext) if dn else (s_['top'] < ext))]
         tk = [s_ for s_ in tk if ((s_['bot'] > ext) if dn else (s_['top'] < ext))]
         step_a = None
@@ -362,7 +364,7 @@ def _cands(E2, monday, X):
                     # P533:1159 '3+ reactions (Depleted): Zone is likely to fail on next test. Use for TP targeting only - NOT for entries ... price will likely pierce through it';
                     # E3C:1052 ZONE_DEPLETED 'reactionCount >= 3 (TP-only)'; 6.4.2 'pierce through zone until reaching BoM Liquidity': the swing from this side starts at the liquidity
                     # beyond the depleted bound, and no structure standing on the depleted zone is an entry (D-85)
-                    lb = E2M.liquidity_beyond(X, a, d == 'down')
+                    lb = E2M.liquidity_beyond(X, a, d == 'down', lim=None)
                     inner = [q for q in inner if not _overlap(q, a)]
                     bound = [lb] if lb is not None else []
                     log.append(f"SS {d}: ZONE_DEPLETED - {a.get('name', '')} has 3+ reactions (TP only, P533:1159) -> " + (f"entry at {lb['name']} beyond it (6.4.2)" if lb is not None else 'no liquidity beyond it: no entry on this side'))
@@ -679,22 +681,31 @@ def build(pair, monday, X, E2):
         if s['shape'] == 'SS' and s.get('role') != 'last-swing' and DAY_IDX[s['day']] in ss_days:
             run = sorted(d for d in ss_days if all(x in ss_days for x in range(min(d, DAY_IDX[s['day']]), max(d, DAY_IDX[s['day']]) + 1)))
             for n, d in enumerate(run):
-                q = s if n == 0 else dict(s, clone=True)
+                q = s if n == 0 else dict(s, clone=True, origin=s)
                 q.update(day=DAYS[d], days=[DAYS[d]], valid_from=max(wk0 + d * 86400000, b0), valid_to=wk0 + (d + 1) * 86400000)
                 q['t0'], q['t1'] = q['valid_from'], q['valid_to']
                 out.append(q)
         else:
             out.append(s)
-    extra = len(out) - MAX_SETUPS
-    if extra > 0:                                            # L-04 '<= 11 setups per week per pair': the per-day repeats of the latest days go first, never a designated swing
-        for q in sorted([q for q in out if q.get('clone')], key=lambda q: (-DAY_IDX[q['day']], q.get('confidence', 0)))[:extra]:
-            out.remove(q)
+    # L-04 '<= 11 setups per week per pair': a per-day repeat is the SAME setup (same anchor, entry, SL, TP) placed again for its day (E3C:468 cap key '(pair, anchorBucket, day)') -
+    # it carries its setup's id with the day and is not a further setup (D-89)
+    uniq = [q for q in out if not q.get('clone')]
+    extra = len(uniq) - MAX_SETUPS
+    if extra > 0:
+        for q in sorted(uniq, key=lambda q: (-DAY_IDX[q['day']], q.get('confidence', 0)))[:extra]:
+            out = [x for x in out if x is not q and x.get('origin') is not q]
             R['log'].append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - more than {MAX_SETUPS} setups this week (L-04)")
     out.sort(key=lambda q: (DAY_IDX[q['day']], 0 if q.get('parent_ref') is None else 1))
     pfx = out[0]['id'][:2] if out else ''
-    for i, q in enumerate(out):
-        if not q.get('alt'):
-            q['id'] = f"{pfx}{i + 1}"
+    n = 0
+    for q in out:
+        if q.get('alt') or q.get('clone'):
+            continue
+        n += 1
+        q['id'] = f"{pfx}{n}"
+    for q in out:
+        if q.get('clone'):
+            q['id'] = f"{q['origin']['id']}.{q['day']}"
     for q in out:
         if q.get('parent_ref') is not None:
             q['parent'] = q['parent_ref']['id']
