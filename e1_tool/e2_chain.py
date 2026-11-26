@@ -168,6 +168,10 @@ def build(pair, monday, X, lead=None):
     audit.append(f"Breakout direction: {bdir} | {why}")
     near, far = (floor, ceil) if bdir == 'down' else (ceil, floor)          # near = the bound the breakout goes through; far = the opposing liquidity retested first (6.4.2)
     tgt = _target(X, bdir, near, U) if near is not None else None
+    if tgt is None and floor is not None and ceil is not None:
+        h = ceil['bot'] - floor['top']                       # the range the breakout leaves
+        p = ceil['top'] + h if bdir == 'up' else floor['bot'] - h
+        tgt = {'bot': min(p, p - 0.05 * U) if bdir == 'up' else p, 'top': p if bdir == 'up' else p + 0.05 * U, 'name': 'BREAKOUT EXTENSION TARGET (measured move)', 'always_reacts': False, 'zfp': 30}
     nxt, conf_t, why_t = _after_bs(tgt)
     # ── chain + timing: durations 6.8 (SS 2-5 sessions, BS 1-3, WL / RWL / R < 1), Trading Speed Rule 6.10 (+1 day)
     n_real = 5

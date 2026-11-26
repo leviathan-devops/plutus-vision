@@ -20,6 +20,9 @@ for s in R['setups']:
             continue
         if tf is None and x['time'] >= t_end:
             st = 'not filled in its day (order expires)'; break
+        if tf is None and x['time'] == next(y['time'] for y in b if y['time'] >= t0):
+            if (not stop_entry) and ((long and x['open'] <= s['sl']) or ((not long) and x['open'] >= s['sl'])):
+                st = 'void: price already beyond the stop at the start of its day'; break
         if tf is None:
             hit = x['low'] <= s['entry'] <= x['high']
             if not stop_entry:

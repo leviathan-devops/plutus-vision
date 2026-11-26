@@ -183,7 +183,7 @@ def _first_anchor(leg, X, env):
     pip, rungs, blocks, sd = env
     spot = X['spot']
     typ = 'Supply' if leg['dir'] == 'down' else 'Demand'
-    zs = [z for z in sd if z['tf'] in ('240', '60') and z['type'] == typ and ((z['top'] > spot) if typ == 'Supply' else (z['bot'] < spot))]
+    zs = [z for z in sd if z['tf'] in ('240', '60') and z['type'] == typ and ((z['bot'] >= spot) if typ == 'Supply' else (z['top'] <= spot))]      # price has to travel to it
     zs.sort(key=lambda z: z['bot'] if typ == 'Supply' else -z['top'])
     return zs[0] if zs else None
 
