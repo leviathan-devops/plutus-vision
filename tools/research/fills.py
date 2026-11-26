@@ -10,6 +10,7 @@ f = '%.3f' if pair == 'DXY' else '%.5f'
 ts = lambda t: dt.datetime.fromtimestamp(t / 1000, dt.UTC).strftime('%a %H:%M')
 print(pair, mon, '| day map:', ' | '.join(f"{d['day']} {'+'.join(d['shapes'])} {d['dir']}" for d in chain['days']))
 DAY = 86400000
+FILLS = {}
 for s in R['setups']:
     long = s['dir'] == 'LONG'
     t0, t_end = s['valid_from'], s['valid_to']             # the order's bracket from Engine 3 (R3 law)
@@ -18,8 +19,19 @@ for s in R['setups']:
     # trading day's start while its bracket lasts; a stop = the level closed through (VIOLATED, never an entry again); the 4th battle is skipped (E3C:150 'index i > 2 skipped')
     rearm = s['shape'] == 'SS' and s.get('role') != 'last-swing' and (t_end - t0) > DAY
     res, battles, start = [], 0, t0
+    if s.get('parent'):                                    # a reinforcement is live from its parent's fill to its parent's exit (E3C:625)
+        pf = FILLS.get(s['parent'])
+        if pf is None or pf[0] is None:
+            print(f"  {s['id']:<5}    {s['day']} {s['shape']:<6} {s['dir']:<5} E {f % s['entry']} SL {f % s['sl']} TP {f % s['tp']} {s['rrr']}R | parent {s['parent']} not filled -> order never live"); continue
+        # E3C:625 'Reinforcement ORDERS are placed in London premarket (pending stop-limit orders)': live from the parent's fill when that falls before London opens (Tokyo session),
+        # else from the next trading day's start; cancelled at the parent's exit
+        import e2_chain as E2M
+        S = E2M.week_sessions(mon)
+        ses = next((x for x in S if x['t0'] <= pf[0] < x['t1']), None)
+        start = pf[0] if (ses is None or ses['s'] == 'TKY') else next((x['t0'] for x in S if x['s'] == 'TKY' and x['t0'] > pf[0]), t_end)
+        t_end = pf[1] if pf[1] else t_end
     while True:
-        st, tf, first = 'not filled', None, True
+        st, tf, first, tx = 'not filled', None, True, None
         for x in b:
             if x['time'] < start:
                 continue
@@ -41,6 +53,8 @@ for s in R['setups']:
             if (long and x['high'] >= s['tp']) or ((not long) and x['low'] <= s['tp']):
                 st = 'TP HIT ' + ts(x['time']); tx = x['time']; break
         res.append(f"filled {ts(tf) if tf else '-'} -> {st}")
+        if battles == 0:
+            FILLS[s['id']] = (tf, tx if st.startswith(('TP HIT', 'STOPPED')) else None)
         battles += 1
         if not (rearm and st.startswith('TP HIT') and battles < 3):
             break

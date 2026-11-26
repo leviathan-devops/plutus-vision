@@ -342,7 +342,7 @@ def _build(pair, monday, X, E2, tag):
         if c['shape'] in ('BS', 'PBS') and prev is not None and c.get('role') != 'transition':
             lvl, pz = prev['tp'], prev['tp_zone']           # Law 27 (E3C:438-449): TP of the RWL = entry of the BS
             ecands = [(lvl, pz if pz.get('liq') else {'bot': lvl, 'top': lvl}, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
-        pbs = next((q for q in reversed(setups) if q['shape'] in ('BS', 'PBS') and q.get('parent') is None), None)
+        pbs = next((q for q in reversed(setups) if q['shape'] in ('BS', 'PBS') and q.get('parent_ref') is None), None)
         if c.get('role') in ('rwl', 'rwl0') and not a.get('sweep') and pbs is not None and a['bot'] - 3 * pip <= pbs['tp'] <= a['top'] + 3 * pip:
             # Law 27 (E3C:443-449 'BS -> RWL: TP of BS becomes RWL entry zone'): the reversal rests at the breakout's TP from the moment the breakout starts
             ecands = [(pbs['tp'], a, "the breakout's TP level (Law 27: TP of N = entry of N+1)")]
@@ -405,17 +405,18 @@ def _build(pair, monday, X, E2, tag):
     for q in kept:
         q.setdefault('chain', None)
     for i, q in enumerate(kept):
-        nxt = next((k for k in kept[i + 1:] if abs(k['entry'] - q['tp']) <= 3 * pip and DAY_IDX[k['day']] >= DAY_IDX[q['day']] and k.get('parent') is None), None)
+        nxt = next((k for k in kept[i + 1:] if abs(k['entry'] - q['tp']) <= 3 * pip and DAY_IDX[k['day']] >= DAY_IDX[q['day']] and k.get('parent_ref') is None), None)
         if nxt is not None and q.get('depth', 1) < 3:
             nxt['depth'] = q.get('depth', 1) + 1
             nxt['chain'] = q.get('chain') or f"CHAIN-{pair[:2]}{tag}{i + 1}"
             q['chain'] = nxt['chain']
+    # a reinforcement whose parent was discarded goes with it; ids last, then each reinforcement names its parent by the parent's final id
+    kept = [k for k in kept if k.get('parent_ref') is None or any(k['parent_ref'] is q for q in kept)]
     for i, q in enumerate(kept):
-        new_id = f"{pair[:2]}{tag}{i + 1}"
-        for k in kept:
-            if k.get('parent') == q.get('id'):
-                k['parent'] = new_id
-        q['id'] = new_id
+        q['id'] = f"{pair[:2]}{tag}{i + 1}"
+    for k in kept:
+        if k.get('parent_ref') is not None:
+            k['parent'] = k['parent_ref']['id']
     if len(kept) > MAX_SETUPS:
         for q in kept[MAX_SETUPS:]:
             log.append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - more than {MAX_SETUPS} setups this week (L-04)")
@@ -429,9 +430,9 @@ def _reinforce(s, X, E2, env, pair, log):
     pip, rungs, blocks, sd = env
     real = [r for r in rungs if 'fib' not in r]
     dn = s['dir'] == 'SHORT'
-    piv = E2.get('pivot')
-    ref = (piv['bot'] if dn else piv['top']) if piv else s['entry']
-    path = sorted([r for r in real if ((r['top'] <= min(ref, s['entry']) + 2 * pip and r['bot'] > s['tp']) if dn else (r['bot'] >= max(ref, s['entry']) - 2 * pip and r['top'] < s['tp']))],
+    # GS Law 6 'Primary -> R1: 20-30 pips | next MoM zone'; 8R.10 'map ALL liquidity zones between entry and TP': the first rocket is the first liquidity step at least 20 pips beyond the primary entry
+    ref = s['entry'] - 20 * pip if dn else s['entry'] + 20 * pip
+    path = sorted([r for r in real if (((r['bot'] + r['top']) / 2 <= ref and r['bot'] > s['tp']) if dn else ((r['bot'] + r['top']) / 2 >= ref and r['top'] < s['tp']))],
                   key=lambda r: -r['top'] if dn else r['bot'])
     out, last = [], None
     for r in path:
@@ -440,10 +441,9 @@ def _reinforce(s, X, E2, env, pair, log):
         e2 = (r['bot'] + r['top']) / 2
         if last is not None and abs(e2 - last) < 20 * pip:
             continue
-        nxt = sorted([q for q in real if (q['bot'] > r['top'] if dn else q['top'] < r['bot'])], key=lambda q: q['bot'] if dn else -q['top'])
-        if not nxt:
-            continue
-        sl2 = nxt[0]['top'] + pip if dn else nxt[0]['bot'] - pip
+        sl2, why2 = _stop(e2, 'down' if dn else 'up', r, X, pair)    # the same ladder-step stop as a primary (E3C:247-256; his Thursday rocket 100.975 / 101.09 = 1-2 pips inside the 4H band above)
+        if sl2 is None:
+            log.append(f"reinforcement at {e2:.5f}: REJECT {why2}"); continue
         d2 = abs(sl2 - e2) / pip
         rr = abs(s['tp'] - e2) / abs(e2 - sl2) if e2 != sl2 else 0
         if not (GOLD_MIN <= d2 <= SL_CEIL and RRR_FLOOR <= rr <= MAX_RRR):
@@ -451,10 +451,10 @@ def _reinforce(s, X, E2, env, pair, log):
         if sum(1 for q in out if (min(q['entry'], q['sl']) <= max(s['entry'], s['sl']) and max(q['entry'], q['sl']) >= min(s['entry'], s['sl']))) >= 2:
             log.append(f"reinforcement at {e2:.5f}: REJECT overlapping risk (8R.3)"); continue
         di = min(len(s['days']) - 1, len(out) + 1)
-        out.append({'dir': s['dir'], 'entry': e2, 'sl': sl2, 'tp': s['tp'], 'rrr': round(rr, 2), 'day': s['days'][di], 'days': s['days'][di:], 't0': None, 't1': s.get('t1'),
-                    'shape': 'Ladder', 'category': 'Reinforcement', 'session': SESSION_WINDOW['Reinforcement'], 'sl_pips': round(d2, 1), 'parent': s.get('id'), 'tp_zone': s['tp_zone'],
+        out.append({'dir': s['dir'], 'entry': e2, 'sl': sl2, 'tp': s['tp'], 'rrr': round(rr, 2), 'day': s['days'][di], 'days': s['days'][di:], 't0': None, 't1': s.get('t1'), 'rest_from': s['day'],   # E3C:625 pending from the parent's start, live once the parent is filled, cancelled at the parent's TP
+                    'shape': 'Ladder', 'category': 'Reinforcement', 'session': SESSION_WINDOW['Reinforcement'], 'sl_pips': round(d2, 1), 'parent': None, 'parent_ref': s, 'tp_zone': s['tp_zone'],
                     'anchor': r, 'size': (30, 20, 20)[len(out)], 'confidence': s['confidence'], 'quality': s['quality'],
-                    'why': f"reinforcement {len(out) + 1} (stop-limit at the LQZ rung on the TP path; own SL 1 pip outside the back edge of the next rung; parent TP)"})
+                    'why': f"reinforcement {len(out) + 1} (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP)"})
         last = e2
     return out
 
