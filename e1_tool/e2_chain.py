@@ -154,7 +154,14 @@ def bounds(X):
         # P452:2082), so the sweep zone stays the bound there (6.5 names the LSZ as a rejection anchor) (D-63)
         ipn = next((q for q in ips if q.get('mech', {}).get('bom') == 'BoM' and min(abs(q['bot'] - spot), abs(q['top'] - spot)) <= 0.30 * U), None)
         return ipn or _sweep_bound(X, up) or (ips[0] if ips else None)
-    return {'ceil': pick(above, True), 'floor': pick(below, False), 'pivot': pivot, 'above': above, 'below': below}
+    def edge(z, up):
+        # a bound whose back edge is an unswept swing extreme of its own side (a sweep zone inside / at the edge of the zone): the stops resting there are swept 0.05-0.10 beyond the
+        # extreme before the reversal (P533 Step 0.45a) - the bound carries that extension like a sweep-zone bound does (D-64, D-88)
+        if z is None or z.get('reach') is not None or (info(z) or {}).get('counter') == 'Depleted':
+            return z
+        lv = [l['level'] for l in X['lsz'] if not l['swept'] and l['side'] == ('Supply-side' if up else 'Demand-side') and z['bot'] - 1e-9 <= l['level'] <= z['top'] + 1e-9]
+        return dict(z, reach=(max(lv) + 0.10 * U) if up else (min(lv) - 0.10 * U), edge_sweep=True) if lv else z
+    return {'ceil': edge(pick(above, True), True), 'floor': edge(pick(below, False), False), 'pivot': pivot, 'above': above, 'below': below}
 
 
 def liquidity_beyond(X, z, up, lim=0.15):
@@ -770,12 +777,7 @@ def build(pair, monday, X, lead=None, force_dir=None):
                 lb = liquidity_beyond(X, z, up, lim=None) if (info(z) or {}).get('counter') == 'Depleted' else None
                 if lb is not None:
                     return lb['top'] if up else lb['bot']
-                # a bound whose back edge is an unswept swing extreme (a sweep zone of its own side inside / at the edge of the zone): the stops resting there are swept 0.05-0.10
-                # beyond the extreme before the reversal (P533 Step 0.45a) - the same breach D-64 gives a sweep-zone bound (D-88)
-                lv = [l['level'] for l in X['lsz'] if not l['swept'] and l['side'] == ('Supply-side' if up else 'Demand-side') and z['bot'] - 1e-9 <= l['level'] <= z['top'] + 1e-9]
-                if lv:
-                    return (max(lv) + 0.10 * U) if up else (min(lv) - 0.10 * U)
-                return z['top'] if up else z['bot']
+                return z['top'] if up else z['bot']             # (a swing extreme at the bound's back edge gives the bound its 'reach' in bounds(), D-88)
             f_far = far_of(floor, False) if floor else f_edge; c_far = far_of(ceil, True) if ceil else c_edge
             lo, hi = min(lo, f_edge, f_far), max(hi, c_edge, c_far)
         dirs = [st['dir'] for st in di if st['shape'] in ('BS', 'PBS')] or [st['dir'] for st in di if st['shape'] in ('RWL', 'WL')]

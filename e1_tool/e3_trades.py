@@ -246,7 +246,8 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
     # the stop stands 1 pip outside it (the operator's own DXY long of 2026-04-20: entry 98.02 at the sweep zone, SL 97.87 = the end of the extension; P533 7.1 operator proof
     # 'LONG SL ... = 97.87 - 0.01 = 97.86'; E3C:304 '1-2 pips OUTSIDE THE BACK EDGE OF THE STOP-LOSS ZONE'), and a shield inside the reach is not a 'NEXT step away'. The same holds
     # for a breakout entry resting on an opposing SWEEP zone (e2_chain.liquidity_beyond, 'lsz') (D-84, D-87)
-    ext = anchor.get('reach') if (anchor is not None and (anchor.get('sweep') or anchor.get('lsz')) and SWEEP_EXT) else None
+    zr = anchor if (anchor is not None and anchor.get('reach') is not None) else zone
+    ext = zr.get('reach') if (zr is not None and (zr.get('sweep') or zr.get('lsz') or zr.get('edge_sweep')) and SWEEP_EXT) else None
     if ext is not None:
         cands.append(((ext + 1 * pip) if dn else (ext - 1 * pip), "(a) 1 pip outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027; E3C:304)"))
         th = [s_ for s_ in th if ((s_['bot'] > ext) if dn else (s_['top'] < ext))]
