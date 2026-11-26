@@ -119,7 +119,9 @@ def _sweep_bound(X, up):
     for p in lv[1:]:
         if abs(p - cl[-1]) <= 0.05 * U + 1e-12:
             cl.append(p)
-    return {'bot': lv[0] - 0.05 * U if up else lv[0], 'top': lv[0] if up else lv[0] + 0.05 * U, 'ext': max(cl) if up else min(cl), 'sweep': True, 'name': 'Liquidity Sweep Zone'}
+    ext = max(cl) if up else min(cl)
+    # 'reach' = Step 0.45a (P533): 'Institutions often sweep 0.05-0.10 beyond the visible extreme before reversing' - how far the brief breach of this bound runs
+    return {'bot': lv[0] - 0.05 * U if up else lv[0], 'top': lv[0] if up else lv[0] + 0.05 * U, 'ext': ext, 'reach': ext + 0.10 * U if up else ext - 0.10 * U, 'sweep': True, 'name': 'Liquidity Sweep Zone'}
 
 
 def bounds(X):
@@ -145,7 +147,11 @@ def bounds(X):
         cands = sorted([q for q in pool if q['type'] == ('Supply' if up else 'Demand') and ((q['bot'] > spot) if up else (q['top'] < spot))], key=lambda q: q['bot'] if up else -q['top'])
         if cands:
             return dict(cands[0], name=cands[0]['label'])
-        return _sweep_bound(X, up) or (ips[0] if ips else None)
+        # 6.1.1 'bounded by IP zones above (resistance ceiling) and below (support floor)': a BoM pressure zone standing within the swing-scalp reach bounds the side before a sweep zone does
+        # (E2X:149 'BoM zones ... ALWAYS react'); a MoM zone of 30%+ does not - it is pierced toward the liquidity behind it (6.4.2 'pierce through zone until reaching BoM Liquidity';
+        # P452:2082), so the sweep zone stays the bound there (6.5 names the LSZ as a rejection anchor) (D-63)
+        ipn = next((q for q in ips if q.get('mech', {}).get('bom') == 'BoM' and min(abs(q['bot'] - spot), abs(q['top'] - spot)) <= 0.30 * U), None)
+        return ipn or _sweep_bound(X, up) or (ips[0] if ips else None)
     return {'ceil': pick(above, True), 'floor': pick(below, False), 'pivot': pivot, 'above': above, 'below': below}
 
 
@@ -703,6 +709,9 @@ def build(pair, monday, X, lead=None, force_dir=None):
                 pts.append((d_end, pos))
         else:
             d = st['dir']
+            k_st = chain.index(st)
+            if st['shape'] in ('WL', 'PWL') and k_st + 1 < len(chain) and chain[k_st + 1]['s0'] == a:
+                t1 = t0 + (t1 - t0) // 3                         # the spike and its rejection share one session (6.8 'WL ... < 1 session', 'RWL ... < 1 session'): the spike comes first
             if st['shape'] == 'RWL' and st['to'] is not None and st['to'] is near and st['frm'] is not far:
                 nxt = edge_out(st['to'], d)                      # back to the prior origin = the broken bound, its far side (6.8 'RWL ... Prior origin'; role reversal)
             elif st['shape'] == 'WL':
@@ -737,7 +746,10 @@ def build(pair, monday, X, lead=None, force_dir=None):
         pp = [p for t, p in pts if dt0 <= t <= dt1] + [at(dt0), at(min(dt1, pts[-1][0]))]
         lo, hi = (min(pp), max(pp)) if pp else (f_edge, c_edge)
         if shapes == ['SS']:
-            lo, hi = min(lo, f_edge), max(hi, c_edge)
+            # 6.1.1 'Price oscillates within a defined range bounded by IP zones above ... and below': the day's range runs INTO its bounding zones (to their far edges); a sweep-zone
+            # bound is breached briefly, 0.05-0.10 beyond its extreme (P533 Step 0.45a) (D-64)
+            f_far = (floor.get('reach', floor['bot']) if floor else f_edge); c_far = (ceil.get('reach', ceil['top']) if ceil else c_edge)
+            lo, hi = min(lo, f_edge, f_far), max(hi, c_edge, c_far)
         dirs = [st['dir'] for st in di if st['shape'] in ('BS', 'PBS')] or [st['dir'] for st in di if st['shape'] in ('RWL', 'WL')]
         key = next((z['name'] for st in reversed(di) for z in (st['to'], st['frm']) if z is not None and z.get('name')), '-')
         days.append({'day': DAYS[i], 'date': (dt.date.fromisoformat(monday) + dt.timedelta(days=i)).isoformat(), 'shapes': shapes, 'dir': dirs[-1] if dirs else 'range',

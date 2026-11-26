@@ -391,10 +391,21 @@ def _build(pair, monday, X, E2, tag):
                 break
         if s is None:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: REJECT {why_fail} (entry {entry:.5f})"); continue
-        if '(TS-1)' in how:
-            # E3C:1060-1066 Mechanism A: the FRONT entry of a zone-edge position = 'Zone edge nearest spot + forward spread | First contact' (E3C 8.19 spreads): the order is met when price
-            # comes within the pair's forward spread of the edge; entry / SL / TP / RRR stay those of the edge (TS-1)
-            s['front'] = entry - FWD[pair] if direction == 'down' else entry + FWD[pair]
+        if c.get('role') != 'transition' and 'Law 27' not in how:
+            # E3C:1060-1066 Mechanism A (intra-zone staggered): 'Front | Zone edge nearest spot + forward spread | 33% | First contact'; 'Middle | ... key level from LQZ pattern'; 'Back | Zone edge
+            # farthest from spot + forward spread'. The position is met at the FRONT: when price comes within the pair's forward spread (E3C 8.19) of the entry zone's near edge; the setup's
+            # entry (the edge itself, or the key level inside the zone: F1-A / F1-C) / SL / TP / RRR stay as resolved. The entry zone = the supply / demand or sweep zone; at a pressure zone
+            # (never an entry source, E3C:136) the order block / LQZ rung the entry stands on. Stop orders (transition, reinforcements) and Law-27 level entries have no zone to stagger in (D-62)
+            zm = step if (a.get('ip') and 'bot' in step) else a
+            edge = zm['bot'] if direction == 'down' else zm['top']
+            front = edge - FWD[pair] if direction == 'down' else edge + FWD[pair]
+            back = (zm['top'] - FWD[pair]) if direction == 'down' else (zm['bot'] + FWD[pair])
+            if (front <= s['entry']) if direction == 'down' else (front >= s['entry']):
+                s['front'] = front
+                if (back < s['sl']) if direction == 'down' else (back > s['sl']):
+                    s['back'] = back
+                    rr = [abs(s['tp'] - e) / abs(e - s['sl']) for e in (front, s['entry'], back)]
+                    s['rrr_blended'] = round(0.33 * rr[0] + 0.33 * rr[1] + 0.34 * rr[2], 2)        # E3C:357 'Blended RRR (3-entry staggered)'
         s.update(day=c['days'][0], days=c['days'], shape=c['shape'], category=cat, session=SESSION_WINDOW[cat], sl_pips=round(abs(s['entry'] - s['sl']) / pip, 1),
                  t0=c.get('t0'), t1=c.get('t1'), anchor=a, role=c.get('role'), rest_from=c.get('rest_from'))
         ipz = a if a.get('ip') else _ip_at(a, X)

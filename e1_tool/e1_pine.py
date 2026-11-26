@@ -109,6 +109,10 @@ def generate(pair, monday, X, extra=(), rch=None):
         if near(zb, zt) == far:
             continue
         o.append(f"        box.new({tsL}, {g(zt)}, {tsR}, {g(zb)}, bgcolor=color.new(color.rgb({c}), {60 if act else 70}), border_color=color.rgb({c}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
+        # Step 0.45a (P533 'LSZ BOTTOM EDGE EXTENSION'): 'Institutions often sweep 0.05-0.10 beyond the visible extreme before reversing' - the sweep reach beyond the extreme, dotted
+        xb, xt = (z['level'] - 0.10 * U, z['level']) if z['side'] == 'Demand-side' else (z['level'], z['level'] + 0.10 * U)
+        o.append(f"        box.new({tsL}, {g(xt)}, {tsR}, {g(xb)}, bgcolor=color.new(color.rgb({c}), 88), border_color=color.new(color.rgb({c}), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
+        o.append(f"        label.new({tsL + 24 * H}, {g((zt + zb) / 2)}, \"LSZ {'supply' if z['side'] == 'Supply-side' else 'demand'}-side | sweep to {g(xt if z['side'] == 'Supply-side' else xb)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
       if len(o) == n0:
         o.append('        na')
     # IP zones (the six ranked first), trident_v8 form

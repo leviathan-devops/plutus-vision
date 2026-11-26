@@ -58,7 +58,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E1-P4 | P533:1169-1204 | analyst commentary | | ND |
 | E1-S0 | P533:1213-1245 | 90-day scan: 0b/0c swing lows/highs (wick >= 0.15, close position), 0d D1 order blocks (base before >= 1.0 / >= 5 days), 0e confluent floor / ceiling | step0_swings | PB (0d, 0e missing) |
 | E1-S045 | P533:1246-1283 | LSZ at every swing extreme [low, low+0.05] / [high-0.05, high]; hidden liquidity in gaps >= 0.15 (4H swings / 4H BoM); confluent sweep + BoM flag; ACTIVE SL TRIGGER within 0.30 | step045_lsz | PB (0.45c, 0.45d missing) |
-| E1-S045a | P533:1284-1287 | LSZ extended 0.05-0.10 beyond the extreme | | NB |
+| E1-S045a | P533:1284-1287 | LSZ extended 0.05-0.10 beyond the extreme | e1_pine (dotted reach box + label), e2_chain._sweep_bound reach (D-64) | B |
 | E1-S05 | P533:1288-1311 | repeated extreme magnets within 0.05 on 2+ dates; role reversal; institutional magnet | step05_magnets | PB (0.5d missing) |
 | E1-S06 | P533:1312-1340 | intra-zone key levels for every MODERATE+ zone: 1H S/D of the prior 1-2 weeks inside it, fib .382/.618 of the zone's own range, prior daily closes inside, round numbers inside; tags precision floor (bottom 40%) / ceiling (top 40%) / mid-anchor; Structural 0.5 | e1_ip.intra_zone | B (not yet drawn) |
 | E1-S0f | P533:1341-1398, P452:637-745; L-37, L-38 | 4H S/D = the single candle before the strong move [low, high]; verification trail; BoM/MoM; mitigation soft/hard; noise rejection (4 rules) | e1_sd.scan (origin candle, base, mitigation soft/hard, broken, structure break, BoM/MoM over valid zones) | B |
@@ -72,7 +72,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E1-P9 | P533:1455-1460, P452:954-1071 | zone types + ZFP = base + modifiers; regime dimension; measured move for ZFP > 45 | ZFP_RANGE | PB (modifiers, measured move missing) |
 | E1-SY | P533:1461-1495 | six dimensions 0-2 + structural-extreme bonus <= 2; degree table | score_level, degree | B |
 | E1-AS | P533:1496-1506, P452:1116-1157; L-39 | collect all -> score -> clustering scan -> group -> degree = best level -> ZFP -> names | e1_ip.build (approved-render recipe: score, best-first assembly, mechanics, Pillar 9, names, rank) | PB (runs; golden-week deltas D1-D3 open, journal 2026-11-26) |
-| E1-95 | P533:1507, P452:1159-1184 | gap scan >= 0.20, in-fill with 2+ signals | gap_scan | B |
+| E1-95 | P533:1507, P452:1159-1184 | gap scan >= 0.20, in-fill with 2+ signals | - (the old e1_zones.gap_scan is not in e1_ip) | NB |
 | E1-97 | P533:1509-1515, P452:1186-1215 | 4H overlay: POI Tier 1 / 2 / 3, hierarchy rule, ladder-step identification | in build | PB (Tier 3 "4H-only", ladder steps missing) |
 | E1-98 | P533:1516-1527 | synthesis re-verification (option strike >= 850M from R1 pair; score recompute; cross-reference) | | NB |
 | E1-IV | P533:1540-1567 | Part IV: extraction / filtering, tactical calculations, volatility triggers, red-folder fences | | NB (not yet read) |
