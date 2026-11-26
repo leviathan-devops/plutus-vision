@@ -360,6 +360,7 @@ def build(pair, monday, side):
     mom3 = closes[-1] - closes[-4]
     reach = (max(d['high'] for d in daily[-5:]) - min(d['low'] for d in daily[-5:])) / 2
     cross200 = bool(e200) and any(e200[i] is not None and e200[i - 1] is not None and (closes[i - 1] - e200[i - 1]) * (closes[i] - e200[i]) < 0 for i in range(len(closes) - 5, len(closes)))
+    cross_up = cross200 and closes[-1] > e200[-1]                # the side the regime changed to
     mags = [m['p'] for m in X['magnets']]
     for z in zones:
         z['mech'] = mechanics(z, b4, trend, extremes, zones, spot, U)
@@ -384,7 +385,9 @@ def build(pair, monday, side):
         mods = []
         if near_spot and ((above and mom3 >= 0.3 * U) or (z['top'] < spot and mom3 <= -0.3 * U)):
             mods.append(('price approaching with momentum', 15))
-        if cross200:
+        # P452:981-992 Step 2 'Detect breakout pre-conditions that increase failure probability': a regime change is a pre-condition for the zones standing AGAINST the new regime
+        # (a cross above the EMA 200 threatens the resistances overhead, not the supports the cross left behind; Step 3 of Pillar 5: the recapture level becomes a KEY anchor)
+        if cross200 and ((above and cross_up) or (z['top'] < spot and not cross_up)):
             mods.append(('regime change, EMA200 cross', 15))
         if any(min(abs(m - z['top']), abs(m - z['bot'])) <= 0.20 * U for m in mags):
             mods.append(('structural extreme magnet within 0.20', 10))
