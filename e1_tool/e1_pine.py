@@ -43,12 +43,52 @@ def reach(X, E2):
     return lo, hi
 
 
+def sweep_boxes(X):
+    """sweep zones as drawn: those of one side within 0.05 of each other are ONE cluster of stops (P533 Step 0.5a 'within 0.05 DXY points of each other, they are a "repeated level"')"""
+    U = X['U']
+    merged = []
+    for z in sorted([z for z in X['lsz'] if not z['swept']], key=lambda z: (z['side'], z['level'])):
+        if merged and merged[-1]['side'] == z['side'] and z['level'] - merged[-1]['hi'] <= 0.05 * U + 1e-12:
+            merged[-1]['hi'] = z['level']; merged[-1]['n'] += 1
+            merged[-1]['priority'] = 'ACTIVE' if (merged[-1]['priority'].startswith('ACTIVE') or z['priority'].startswith('ACTIVE')) else z['priority']
+            merged[-1]['confluent_bom'] = merged[-1].get('confluent_bom') or z.get('confluent_bom')
+        else:
+            merged.append(dict(z, lo=z['level'], hi=z['level'], n=1))
+    for z in merged:
+        z['bot'], z['top'] = (z['lo'], z['hi'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['lo'] - 0.05 * U, z['hi'])
+    return merged
+
+
+def join_zones(X, near, sweeps):
+    """L-39 (operator): 'a pressure zone = candle structure + level cluster JOINED ... inside it the two parts stay visibly distinct'. Every Engine 1 object that overlaps a higher-ranking
+    one is drawn as a PART of it (light, dotted, unlabelled) and named in that zone's label; rank: pressure zone > 4H supply/demand > 1H supply/demand > gap in-fill > sweep zone > 4H liquidity
+    band. A part joins the leader it overlaps directly (no chains: a joined zone never grows beyond its leader and its own parts). Returns {id(obj): leader} and {id(leader): [part names]}"""
+    objs = [(0, z, 'IP') for z in X['zones'] if z['drawn'] and near(z['bot'], z['top'])]
+    objs += [(1 if z['tf'] == '240' else 2, z, ('4H ' if z['tf'] == '240' else '1H ') + z['type'].lower()) for z in X['sd'] if z['tf'] in ('240', '60') and near(z['bot'], z['top'])]
+    objs += [(3, z, 'in-fill') for z in X.get('infill', []) if near(z['bot'], z['top'])]
+    objs += [(4, z, 'sweep zone') for z in sweeps if near(z['bot'], z['top'])]
+    objs += [(5, z, '4H liquidity') for z in X['v1']['240']['liquidity'] if near(z['bot'], z['top'])]
+    leaders, joined, parts = [], {}, {}
+    for rank, z, nm in sorted(objs, key=lambda o: (o[0], o[1]['bot'])):
+        L = next((l for r, l in leaders if r < rank and l['bot'] <= z['top'] and l['top'] >= z['bot']), None)
+        if L is not None:
+            joined[id(z)] = L
+            if nm not in parts.setdefault(id(L), []):
+                parts[id(L)].append(nm)
+        else:
+            leaders.append((rank, z))
+    return joined, parts
+
+
 def generate(pair, monday, X, extra=(), rch=None):
     g = lambda v: ('%.3f' if pair == 'DXY' else '%.5f') % v
     near = (lambda b, t: True) if rch is None else (lambda b, t: b <= rch[1] and t >= rch[0])
     b0, tsR, wk0 = D.boundary_ms(monday), D.week_end_ms(monday), D.week_start_ms(monday)
     tsL, H = wk0 - 7 * 86400000, 3600000
     U = X['U']; pw = X['weekly'][-1]
+    sweeps = sweep_boxes(X)
+    joined, parts = join_zones(X, near, sweeps)
+    plus = lambda z: (' + ' + ', '.join(parts[id(z)])) if parts.get(id(z)) else ''
     adr = sum(d['high'] - d['low'] for d in X['daily'][-10:]) / 10
     lo_v, hi_v = pw['low'] - adr, pw['high'] + adr
     o = ['//@version=6', f'indicator("PLUTUS VISION {pair} {monday}", overlay=true, max_boxes_count=500, max_labels_count=500, max_lines_count=500)',
@@ -71,6 +111,9 @@ def generate(pair, monday, X, extra=(), rch=None):
     n0 = len(o)
     for z in X['v1']['240']['liquidity']:
         if lo_v <= z['bot'] and z['top'] <= hi_v and near(z['bot'], z['top']):
+            if id(z) in joined:
+                o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 94), border_color=color.new(color.rgb(63,164,106), 60), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
+                continue
             o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 80), border_color=color.new(color.rgb(63,164,106), 30), border_width=1, xloc=xloc.bar_time)")
     if len(o) == n0:
         o.append('        na')
@@ -93,37 +136,36 @@ def generate(pair, monday, X, extra=(), rch=None):
                 continue
             c = '41,98,255' if z['type'] == 'Demand' else '242,54,69'
             x0 = max(z['origin_time'], tsL)
+            if id(z) in joined:
+                o.append(f"        box.new({x0}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 93), border_color=color.new(color.rgb({c}), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
+                continue
             o.append(f"        box.new({x0}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), {84 if z['tf'] in ('240', '60') else 90}), border_color=color.rgb({c}), border_width={2 if z['tf'] == '240' else 1}, xloc=xloc.bar_time)")
             n_sd += 1                                    # labels of stacked zones alternate between three columns so they do not print on one spot (A13)
-            o.append(f"        label.new({max(x0, tsL + (30 + 34 * (n_sd % 3)) * H)}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+            o.append(f"        label.new({max(x0, tsL + (30 + 34 * (n_sd % 3)) * H)}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
         if len(o) == n0:
             o.append('        na')
     # liquidity sweep zones (P533:1246-1287): [low, low + 0.05] / [high - 0.05, high]; a swept extreme has no resting stops left
     for flag, far in (('show_lsz', False), ('show_lsz and show_far', True)):
       o.append(f'    if {flag}')
       n0 = len(o)
-      # sweep zones of one side standing within 0.05 of each other are ONE cluster of stops (P533 Step 0.5a 'If two swing lows are within 0.05 DXY points of each other, they are a
-      # "repeated level"'): drawn as one box from the nearest extreme's zone to the farthest extreme, one label, one sweep reach (A13: no sweep-zone pairs a pip apart)
-      merged = []
-      for z in sorted([z for z in X['lsz'] if not z['swept']], key=lambda z: (z['side'], z['level'])):
-          if merged and merged[-1]['side'] == z['side'] and z['level'] - merged[-1]['hi'] <= 0.05 * U + 1e-12:
-              merged[-1]['hi'] = z['level']; merged[-1]['n'] += 1
-              merged[-1]['priority'] = 'ACTIVE' if (merged[-1]['priority'].startswith('ACTIVE') or z['priority'].startswith('ACTIVE')) else z['priority']
-              merged[-1]['confluent_bom'] = merged[-1].get('confluent_bom') or z.get('confluent_bom')
-          else:
-              merged.append(dict(z, lo=z['level'], hi=z['level'], n=1))
-      for z in merged:
+      for z in sweeps:
         act = z['priority'].startswith('ACTIVE')
         c = '80,230,100' if act else '40,180,80'
         zb, zt = (z['lo'], z['hi'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['lo'] - 0.05 * U, z['hi'])
         if near(zb, zt) == far:
             continue
-        o.append(f"        box.new({tsL}, {g(zt)}, {tsR}, {g(zb)}, bgcolor=color.new(color.rgb({c}), {78 if act else 84}), border_color=color.rgb({c}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
+        part = id(z) in joined                               # a sweep zone lying on a higher-ranking zone is that zone's liquidity part (L-39): light, dotted, no label of its own
+        if part:
+            o.append(f"        box.new({tsL}, {g(zt)}, {tsR}, {g(zb)}, bgcolor=color.new(color.rgb({c}), 92), border_color=color.new(color.rgb({c}), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
+        else:
+            o.append(f"        box.new({tsL}, {g(zt)}, {tsR}, {g(zb)}, bgcolor=color.new(color.rgb({c}), {78 if act else 84}), border_color=color.rgb({c}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
         # Step 0.45a (P533 'LSZ BOTTOM EDGE EXTENSION'): 'Institutions often sweep 0.05-0.10 beyond the visible extreme before reversing' - the sweep reach beyond the extreme, dotted
         xb, xt = (z['lo'] - 0.10 * U, z['lo']) if z['side'] == 'Demand-side' else (z['hi'], z['hi'] + 0.10 * U)
         o.append(f"        box.new({tsL}, {g(xt)}, {tsR}, {g(xb)}, bgcolor=color.new(color.rgb({c}), 100), border_color=color.new(color.rgb({c}), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
+        if part:
+            continue
         n_lz += 1
-        o.append(f"        label.new({tsL + (8 + 40 * (n_lz % 3)) * H}, {g((zt + zb) / 2)}, \"LSZ {'supply' if z['side'] == 'Supply-side' else 'demand'}-side{' + 4H BoM (confluent)' if z.get('confluent_bom') else ''} | sweep to {g(xt if z['side'] == 'Supply-side' else xb)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
+        o.append(f"        label.new({tsL + (8 + 40 * (n_lz % 3)) * H}, {g((zt + zb) / 2)}, \"LSZ {'supply' if z['side'] == 'Supply-side' else 'demand'}-side{' + 4H BoM (confluent)' if z.get('confluent_bom') else ''} | sweep to {g(xt if z['side'] == 'Supply-side' else xb)}{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
       if len(o) == n0:
         o.append('        na')
     # IP zones (the six ranked first), trident_v8 form
@@ -136,7 +178,7 @@ def generate(pair, monday, X, extra=(), rch=None):
         c = SHADE[z['cat']][z['degree']]
         o.append(f"        // #{z['rank']} {z['name']} {g(z['bot'])}-{g(z['top'])} {z['degree']} {z['score']}/14 {z['type']} {z['tier']} | {z['mech']['bom']} {z['mech']['counter']} {z['mech']['reactions']} reactions | {z['mech']['e3_status']}")
         o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 70), border_color=color.rgb({c}), border_width=2, xloc=xloc.bar_time)")
-        o.append(f"        label.new({tsL + 60 * H}, {g((z['top'] + z['bot']) / 2)}, \"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} {z['mech']['bom']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+        o.append(f"        label.new({tsL + 60 * H}, {g((z['top'] + z['bot']) / 2)}, \"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} {z['mech']['bom']}{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
       if len(o) == n0:
         o.append('        na')
     # Step 9.5 gap in-fill levels (P452:1159-1184): MODERATE confidence, drawn thinner than the named zones
@@ -146,8 +188,11 @@ def generate(pair, monday, X, extra=(), rch=None):
         if not near(z['bot'], z['top']):
             continue
         c = SHADE[z['cat']]['MODERATE']
+        if id(z) in joined:
+            o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 93), border_color=color.new(color.rgb({c}), 50), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
+            continue
         o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 82), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
-        o.append(f"        label.new({tsL + 96 * H}, {g((z['top'] + z['bot']) / 2)}, \"GAP IN-FILL | MODERATE | {z['zfp']} ZFP\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+        o.append(f"        label.new({tsL + 96 * H}, {g((z['top'] + z['bot']) / 2)}, \"GAP IN-FILL | MODERATE | {z['zfp']} ZFP{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
     if len(o) == n0:
         o.append('        na')
     o.append('    if show_ip and show_lv')

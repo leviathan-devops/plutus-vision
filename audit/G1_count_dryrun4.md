@@ -9,7 +9,8 @@ Rule G1 verbatim: "One verdict per drawing with its specific delta - zone: react
 
 How I applied it:
 - Unit of E1 count = one line of the facts file "ENGINE 1 OBJECTS ON THE CHART" (pressure zones, gap in-fill, supply/demand, sweep zones, V1 liquidity bands). Amber option-strike lines are levels, not zones, and are not counted.
-- Reached = a 1H wick of the forecast week (Mon 00:00 - Fri 21:00 UTC) entered the box (for a sweep zone: the box or its dotted reach).
+- Forecast week = from the anchor (Mon 06:00 UTC = Mon 02:00 New York) to Friday's close; candles before the anchor are history and do not count for or against any engine.
+- Reached = a 1H wick of the forecast week entered the box (for a sweep zone: the box or its dotted reach).
 - REACTED = within the box (or within ~3 pips DXY / ~5 pips FX beyond its far edge; for a sweep zone, within its dotted reach) price turned by at least ~10 pips DXY / ~15 pips FX, or stalled there for 3+ 1H candles. PIERCED = price crossed the whole box (and a sweep zone's reach) without such a turn or stall. A zone that reacted once and was later crossed counts as REACTED (first verdict wins) but the later piercing is noted.
 - Obvious reaction points with no zone = the week's day highs/lows and every 1H swing that turned >= ~20 pips DXY / ~30 pips FX, with no Engine 1 box within ~3 pips DXY / ~5 pips FX. Each adds 1 to the denominator.
 - E1 % = reacted / (reached + unzoned reaction points). The second clause ("none bloated, bunched, floating or missing") is reported as a separate gate PASS / FAIL per map; it is not folded into the %.
@@ -376,3 +377,130 @@ Stopped-out setups: none. EU1, EU2, EU5, EU6 not filled.
 ### Step 5 - presentation
 - History half: the two LSZ labels at 1.1760 overprint each other; zone labels sit over the Apr 15-18 candles.
 - Week frame: "Tue SS+RWL+BS down 33%" is crossed by the yellow path; EU1 / EU3 labels on the Mon-Tue candles; "EU5 Ladder S 12.3R if EU4" over Wed candles; purple "Thu BS+RWL" / "Fri RWL" tags on top of the Thu-Fri candles.
+
+## Map 6 - GBPUSD 2026-04-20
+
+Week action (1H, UTC): a 1.347-1.354 range with ~60 p swings: Mon 1.34818 (05) -> 1.35444 (15); Tue 1.34823 (08) -> 1.35396 (14) -> 1.34744 (20); Wed 1.35353 (08) -> 1.34925 (11) -> 1.35243 -> 1.34789 (Wed 23); Thu 1.35182 (14) -> 1.34476 (17); Fri 1.34532 (02) -> 1.3537 (20).
+
+### Step 1 - obvious trades (written from the `_zones` frame before opening any setup)
+| # | move | from zone -> to zone |
+|---|---|---|
+| A | Mon LONG 1.3482 -> 1.3544 (+62 p) | MID-RANGE SUPPORT 1.34768-1.34846 -> above UPPER RESISTANCE 1.35241-1.35327 |
+| B | Mon-Tue SHORT 1.3544 -> 1.3482 (-62 p) | UPPER RESISTANCE -> MID-RANGE SUPPORT |
+| C | Tue LONG 1.3482 -> 1.3540 (+57 p) | MID-RANGE SUPPORT -> UPPER RESISTANCE |
+| D | Tue SHORT 1.3540 -> 1.3474 (-65 p) | UPPER RESISTANCE -> MID-RANGE SUPPORT / LSZ 1.3474 |
+| E | Tue-Wed LONG 1.3474 -> 1.3535 (+61 p) | MID-RANGE SUPPORT -> UPPER RESISTANCE |
+| F | Wed SHORT 1.3535 -> 1.3479 (-56 p) | UPPER RESISTANCE -> MID-RANGE SUPPORT |
+| G | Thu SHORT 1.3518 -> 1.3448 (-71 p) | LSZ 1.3516 / GAP 1.3505 -> GAP 1.34423-1.34483 / 1H MoM demand |
+| H | Thu-Fri LONG 1.3448 -> 1.3537 (+89 p) | GAP 1.3442 / 1H MoM demand -> UPPER RESISTANCE |
+Obvious trades: 8.
+
+### Step 2 - E1
+| zone (facts) | verdict | delta |
+|---|---|---|
+| IP UPPER RESISTANCE 1.35241-1.35327 | REACTED | Mon 16 - Tue 06 stall 1.3515-1.3544 around it; Wed 1.35353, Fri 1.3537 just above |
+| IP UPPER RESISTANCE (HEAVY) 1.34932-1.35019 | REACTED | Wed 10-21 lows 1.3492-1.3493 |
+| IP MID-RANGE SUPPORT 1.34768-1.34846 | REACTED | Mon 1.34818, Tue 1.34823 / 1.34744, Wed 23 1.34789 -> each +55-60 p; crossed Thu 16 |
+| IP KEY SUPPORT BAND 1.33998-1.34073 | not reached | |
+| GAP 1.35047-1.35107 | REACTED | Mon 01-06 stall, Tue/Wed chop |
+| GAP 1.34640-1.34700 | REACTED | Thu 19 - Fri 06 stall 1.3457-1.3473 |
+| GAP 1.34423-1.34483 | REACTED | Thu 17 1.34476 -> +89 p |
+| GAP 1.34317-1.34377 | not reached | |
+| 1H MoM demand 1.34345-1.34660 | REACTED | Thu 1.34476 |
+| 4H BoM demand 1.34017-1.34073 / 1H BoM demand 1.33806-1.33960 | not reached | |
+| LSZ demand 1.35163-1.35213 (reach 1.35063) | REACTED | Tue 01-06 stall at 1.3515 (then Tue 07 fell 24 p beyond its reach) |
+| LSZ supply 1.35036-1.35086 (reach 1.35186) | REACTED | Mon 01-06 stall under 1.35086 (then crossed to 1.35444) |
+| LSZ demand 1.35044-1.35094 (reach 1.34944) | REACTED | Wed 11 1.34925 |
+| LSZ demand 1.34952-1.35002 (reach 1.34852) | REACTED | Wed/Thu lows 1.3479-1.3483 |
+| LSZ demand 1.34740-1.34790 (reach 1.34640) | REACTED | Tue 20 1.34744 |
+| LSZ demand 1.33805-1.33855 | not reached | |
+| bands 1.35220-1.35332, 1.34973-1.35085, 1.34691-1.34803, 1.34473-1.34585 (4) | REACTED (4) | |
+| bands 1.34227-1.34339, 1.33983-1.34095, 1.33821-1.33933 | not reached | |
+Reached 16, reacted 16, pierced 0. **Unzoned turning points: 2** - Mon 15:00 top 1.35444 (11 p above the highest box, 1.35332) and Tue 14:00 top 1.35396 (6.4 p above it). The facts header itself says the zones stop at 1.35327 while the week traded to 1.35444.
+**E1 = 16 / 18 = 89 %.** Gate: **FAIL - missing + floating + bunched.** Missing: no zone at the 1.3540-1.3545 ceiling that capped Mon and Tue. Floating: KEY SUPPORT BAND, 4H BoM demand, 1H BoM demand, LSZ 1.33805 and two bands sit 40-70 p under the week low. Bunched: 1.3474-1.3533 is covered wall to wall (IP, 3 gaps, 5 LSZ, 4 bands); in the zones frame "KEY SUPPORT BAND" and "4H (Unmitigated) | BoM" labels print over each other at 1.3405, and "LSZ demand-side" over "supply-side" at 1.3495.
+
+### Step 3 - E2
+| day | forecast | candles | verdict |
+|---|---|---|---|
+| Mon | SS range 1.34345-1.35019, key UPPER RESISTANCE | broke out of the box upward: 1.34818 -> 1.35444, close 1.35333 (31 p above the box ceiling) | WRONG |
+| Tue | SS+RWL+BS down, box 1.34946-1.35213 | 1.3529 -> 1.34823 -> 1.35396 -> break to 1.34744 -> 1.351, close below open | RIGHT (two-way chop, break down to MID-RANGE SUPPORT, close down) |
+| Wed | BS down, box 1.34524-1.35094 | 1.351 -> 1.35353 -> 1.34925 -> 1.35243 -> 1.34789; no decisive break, close -10 p | WRONG - range day, no breakout surge |
+| Thu | BS+RWL down, box 1.34073-1.34524, key 1H MoM | chop, then 16:00 break through MID-RANGE SUPPORT to 1.34476 (1H MoM demand), bounce | RIGHT |
+| Fri | RWL up, box 1.34174-1.34660 | one-way rise 1.34532 -> 1.3537 (+84 p) | WRONG - no whiplash; also the box ends 70 p below the day's high |
+**E2 = 2 / 5 = 40 %.**
+
+### Step 4 - E3
+| obvious trade | setup | verdict |
+|---|---|---|
+| A Mon LONG 1.3482 | GB1 LONG 1.34660 not filled | MISSED |
+| B Mon-Tue SHORT 1.3544 | GB2 SHORT 1.35163 / 1.35243 filled Mon 07:15, **STOPPED Mon 11:15** (before the 1.3544 top) | MISSED |
+| C Tue LONG 1.3482 | none | MISSED |
+| D Tue SHORT 1.3540 | none | MISSED |
+| E Tue-Wed LONG 1.3474 | none | MISSED |
+| F Wed SHORT 1.3535 | none (GB3 SHORT 1.34818 not filled) | MISSED |
+| G Thu SHORT 1.3518 | GB4 SHORT 1.34557 not filled | MISSED |
+| H Thu-Fri LONG 1.3448 | GB5 LONG 1.34083 not filled (40 p under the low) | MISSED |
+Stopped-out setups: **GB2** SHORT 1.35163 (Mon 07:15 -> stopped Mon 11:15).
+**E3 = 0 / 8 = 0 %.**
+
+### Step 5 - presentation
+- Week frame: the yellow path dives to 1.3407 on Thursday (price low 1.34476) - the drawn path is 40 p away from the candles for two days; GB5's box sits 1.3399-1.3443, entirely below the candles.
+- Labels: "Tue SS+RWL+BS" over Tue candles; "Wed BS down" and the 1.0bn strike label overprint at 1.3500; purple Thu/Fri tags over candles.
+
+## Map 7 - DXY 2026-10-05
+
+Week action (1H, UTC, from the anchor; the Mon 01-05 spike to 102.535 is before the anchor): Mon 06 102.433 -> 102.084 (09) -> 102.372 (14) -> 102.101; Tue 102.285 (05) -> 101.754 (11), stall 101.77-101.89 to Tue 22; Wed 101.952 -> 102.499 (11) -> 102.21; Thu 102.133 (02) -> 102.467 (11) -> 102.033 (14-17); Fri 101.92 (05) -> 102.335 (13) -> 102.2.
+
+### Step 1 - obvious trades (written from the `_zones` frame before opening any setup)
+| # | move | from zone -> to zone |
+|---|---|---|
+| B | Tue SHORT 102.285 -> 101.754 (-53 p) | LSZ supply 102.157-102.207 (reach 102.307) -> KEY SUPPORT BAND 101.750-101.843 |
+| C | Tue-Wed LONG 101.754 -> 102.499 (+75 p) | KEY SUPPORT BAND -> LSZ supply 102.485-102.535 |
+| D | Wed SHORT 102.499 -> 102.21 (-29 p) | LSZ supply 102.485 -> LSZ supply 102.157-102.207 |
+| E | Thu LONG 102.133 -> 102.467 (+33 p) | LSZ supply 102.082-102.132 -> LSZ supply 102.485 |
+| F | Thu SHORT 102.467 -> 102.033 (-43 p) | LSZ supply 102.485 -> MID-RANGE SUPPORT 101.961-102.051 |
+| G | Fri LONG 101.92 -> 102.335 (+41 p) | 1H MoM demand 101.855-101.926 -> LSZ 102.157-102.207 reach |
+Not counted: Mon 102.433 -> 102.084 (starts at the anchor hour itself, no zone at the top) and Mon 102.084 -> 102.372 (choppy, no zone at the top).
+Obvious trades: 6.
+
+### Step 2 - E1
+| zone (facts) | verdict | delta |
+|---|---|---|
+| IP MID-RANGE SUPPORT 101.961-102.051 | REACTED | Wed 01-03 stall; Thu 14-17 lows 102.033 / 102.035 -> +33 p; Fri 101.978 |
+| IP KEY SUPPORT BAND 101.750-101.843 | REACTED | Tue 11 101.754 -> 12 h stall -> +75 p |
+| 1H MoM demand 101.855-101.926 | REACTED | Tue stall; Fri 05 101.92 -> +41 p |
+| 1H BoM demand 101.668-101.798 | REACTED | Tue 101.754 inside |
+| LSZ supply 102.485-102.535 (reach 102.635) | REACTED | Wed 11 102.499 -> -29 p; Thu 102.467 (1.8 p under) -> -43 p |
+| LSZ supply 102.157-102.207 (reach 102.307) | REACTED | Tue 05 102.285 -> -53 p |
+| LSZ supply 102.082-102.132 (reach 102.232) | REACTED | Mon 09 102.084, Thu 02 102.133 bounces |
+| LSZ demand 101.855-101.905 (reach 101.755) | REACTED | Tue 101.754 = reach |
+| LSZ demand 101.668-101.718 | not reached | |
+| band 101.916-101.996 | REACTED | Tue/Wed/Fri |
+Reached 9, reacted 9, pierced 0. **Unzoned turning points: 2** - Mon 06:00 top 102.433 (-35 p; 5 p under the nearest box) and Mon 14:00 top 102.372 (-27 p; nothing between 102.307 and 102.485).
+**E1 = 9 / 11 = 82 %.** Gate: **FAIL - missing** (no zone in 102.31-102.48 where Monday turned twice). Not bloated: 10 objects, readable.
+
+### Step 3 - E2
+| day | forecast | candles | verdict |
+|---|---|---|---|
+| Mon | SS range 101.855-102.635, key LSZ | 102.433 -> 102.084 -> 102.372 -> 102.10, inside | RIGHT |
+| Tue | SS range | 102.285 -> 101.754 (10 p sweep under the floor, inside canon's 0.05-0.10 sweep), stall | RIGHT |
+| Wed | SS range | 101.82 -> 102.499 (ceiling) -> 102.21 | RIGHT |
+| Thu | SS range | 102.133 -> 102.467 -> 102.033 | RIGHT |
+| Fri | SS range | 101.92 -> 102.335 | RIGHT |
+**E2 = 5 / 5 = 100 %.** (Note: the same box and tag five times; the yellow path is a fixed zig-zag 101.93 <-> 102.49 that only loosely follows the candles - e.g. it is at 102.49 on Tue 00:00 while price was 102.11.)
+
+### Step 4 - E3
+| obvious trade | setup | verdict |
+|---|---|---|
+| B Tue SHORT 102.285 | none | MISSED |
+| C Tue-Wed LONG 101.754 | DX2 LONG 101.926 / 101.825 filled Tue 11:00, **STOPPED Tue 11:30** (low 101.754) | MISSED |
+| D Wed SHORT 102.499 | DX1 SHORT 102.485 / 102.565 / 101.926, filled Wed 12:15, TP Fri 05:30 | CAUGHT |
+| E Thu LONG 102.133 | none | MISSED |
+| F Thu SHORT 102.467 | none new (DX1 already open from Wed) | MISSED |
+| G Fri LONG 101.92 | none (DX2 not re-armed after its stop) | MISSED |
+Stopped-out setups: **DX2** LONG 101.926 (Tue 11:00 -> 11:30).
+**E3 = 1 / 6 = 17 %.**
+
+### Step 5 - presentation
+- Zones frame: "LSZ demand-side | sweep to 101.755" is overprinted by "1H (Unmitigated) | MoM" at 101.87; "KEY SUPPORT BAND" label sits on the Oct 2-3 candles.
+- All/week frames: one identical grey box per day spanning 101.855-102.635 covers every candle of the week; DX1 / DX2 labels over Monday's candles.

@@ -11,30 +11,28 @@ U = X['U']
 lo, hi = e1_pine.reach(X, E2)
 near = lambda b, t: b <= hi and t >= lo
 print(pair, mon, 'anchor price', f(X['spot']), '| chart shows zones between', f(lo), 'and', f(hi), '(the week\'s reach; zones beyond it sit behind a toggle)')
-print('ENGINE 1 OBJECTS ON THE CHART (all of these are Engine 1 zones):')
-for z in X['zones']:
-    if z['drawn'] and near(z['bot'], z['top']):
-        print(f"  pressure zone  {z['name']:<18} {f(z['bot'])}-{f(z['top'])} {z['degree']} | {z['zfp']} ZFP | {z['mech']['bom']}")
-for z in X.get('infill', []):
-    if near(z['bot'], z['top']):
-        print(f"  gap in-fill level (dashed box)    {f(z['bot'])}-{f(z['top'])} MODERATE | {z['zfp']} ZFP | signals: {', '.join(z['signals'])}")
-for z in sorted(X['sd'], key=lambda z: -z['top']):
-    if z['tf'] in ('240', '60') and near(z['bot'], z['top']):
-        print(f"  supply/demand  {z['label']:<28} {z['type']:<6} {f(z['bot'])}-{f(z['top'])}")
-merged = []                                              # as drawn: sweep zones of one side within 0.05 of each other are one box
-for z in sorted([z for z in X['lsz'] if not z['swept']], key=lambda z: (z['side'], z['level'])):
-    if merged and merged[-1]['side'] == z['side'] and z['level'] - merged[-1]['hi'] <= 0.05 * U + 1e-12:
-        merged[-1]['hi'] = z['level']; merged[-1]['confluent_bom'] = merged[-1].get('confluent_bom') or z.get('confluent_bom')
-    else:
-        merged.append(dict(z, lo=z['level'], hi=z['level']))
-for z in sorted(merged, key=lambda z: -z['hi']):
-    zb, zt = (z['lo'], z['hi'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['lo'] - 0.05 * U, z['hi'])
-    if near(zb, zt):
+print('ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):')
+sweeps = e1_pine.sweep_boxes(X)
+joined, parts = e1_pine.join_zones(X, near, sweeps)
+def desc(z):
+    if z in sweeps:
         r = z['lo'] - 0.10 * U if z['side'] == 'Demand-side' else z['hi'] + 0.10 * U
-        print(f"  sweep zone     {z['side']:<11} {f(zb)}-{f(zt)} | sweep reach to {f(r)} (dotted box){' | confluent with a 4H BoM zone' if z.get('confluent_bom') else ''}")
-for z in sorted(X['v1']['240']['liquidity'], key=lambda z: -z['top']):
-    if near(z['bot'], z['top']):
-        print(f"  liquidity band (sealed V1, 4H) {f(z['bot'])}-{f(z['top'])}")
+        return f"sweep zone {z['side']:<11} {f(z['bot'])}-{f(z['top'])} | sweep reach to {f(r)} (dotted outline){' | confluent with a 4H BoM zone' if z.get('confluent_bom') else ''}"
+    if z.get('gap_infill'):
+        return f"gap in-fill level {f(z['bot'])}-{f(z['top'])} MODERATE | {z['zfp']} ZFP | signals: {', '.join(z['signals'])}"
+    if 'zfp_num' in z and 'tf' not in z:
+        return f"pressure zone {z['name']} {f(z['bot'])}-{f(z['top'])} {z['degree']} | {z['zfp']} ZFP | {z['mech']['bom']}"
+    if 'tf' in z and 'label' in z:
+        return f"supply/demand {z['label']} {z['type']} {f(z['bot'])}-{f(z['top'])}"
+    return f"liquidity band (sealed V1, 4H) {f(z['bot'])}-{f(z['top'])}"
+allz = [z for z in X['zones'] if z['drawn'] and near(z['bot'], z['top'])] + [z for z in X['sd'] if z['tf'] in ('240', '60') and near(z['bot'], z['top'])] + \
+       [z for z in X.get('infill', []) if near(z['bot'], z['top'])] + [z for z in sweeps if near(z['bot'], z['top'])] + [z for z in X['v1']['240']['liquidity'] if near(z['bot'], z['top'])]
+leaders = [z for z in allz if id(z) not in joined]
+for L in sorted(leaders, key=lambda z: -z['top']):
+    print('  ' + desc(L))
+    for z in sorted([z for z in allz if joined.get(id(z)) is L], key=lambda z: -z['top']):
+        print('      part: ' + desc(z))
+print(f"  ({len(leaders)} zones, {len(allz) - len(leaders)} parts)")
 print('ENGINE 2:')
 for a in E2['audit']:
     if a.startswith(('Ceiling', 'Floor', 'Breakout', 'chain', 'Current', 'PRIMARY')):
