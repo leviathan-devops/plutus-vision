@@ -32,7 +32,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | A-18 | PART | MoM reversal gate (MOM_REVERSAL); E1 e3_status not read |
 | A-19 | OPEN | POI tier rule 1 |
 | A-20 | PART | layers 3 and 7 inside _confidence(); layers 1, 2, 4, 5, 6 OPEN |
-| A-21 | FIXED 9d7c72b | Phase 5 score, inclusion >= 65, HIGH / STANDARD (base without a VLM: D-42) |
+| A-21 | FIXED f723b0b | Phase 5 score with every E3C:392-414 term except the VLM bonus (no VLM: D-42), inclusion >= 65, HIGH / STANDARD (D-52) |
 | A-22 | OPEN | fuel state, mirrorConfidenceScore, ZR-6B switch (stop model in force: D-43) |
 | A-23 | PART | Law 7 table present (LAW7); used only as the rule (a) / (b) distances of D-43 |
 | A-24 | OPEN | computeGoldenSL fallback (only its 4-36 pip envelope is enforced) |
@@ -51,7 +51,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | A-37 | OPEN | Phase 10 cascade mirror (pairs run their own chain translated from DXY in Engine 2) |
 | A-38 | PART | reason code on every discard; Phase 12 floor invariants as a final pass OPEN |
 | A-39 | OPEN | BoS + flip + retest requirement for reversals |
-| A-40 | OPEN | Setup Universe rows / stack compliance (E3C:96, Phase 4.1 layer 4) |
+| A-40 | PART | SS->BS Transition Entry built (D-51, f723b0b); scalp-stack / swing-stack compliance as a gate OPEN |
 | A-41 | OPEN | reinforcement timing inheritance |
 | A-42 | PART | sizing 50 / 30 / 20 noted; trip-wire, rocket type OPEN |
 | A-43 | PART | 8R.10 path mapping in _reinforce(); 8R.5, Phase 11 OPEN |
@@ -84,7 +84,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | B-10 | OPEN | not re-checked in v2 |
 | B-11 | FIXED 2717f06 | bounds carry source + class; no ZFP on non-IP bounds |
 | B-12 | FIXED 2717f06 | MoM bounds go through 6.4.2 |
-| B-13 | FIXED 2717f06 | target() = first zone beyond the failing bound; measured move for ZFP > 45 |
+| B-13 | ANSWERED | E2X:27 'next IP zone' read with P452:2082 'strong IP ... = it holds (valid TP). No IP + standalone MoM = it gets pierced' and E2X:140 'pierce through zone until reaching BoM Liquidity': weak (30%+) MoM zones are passed (D-49, D-50, f723b0b); measured move with structural-extreme cross-reference in measured_move() |
 | B-14 | OPEN | not re-checked in v2 |
 | B-15 | OPEN | Decision Zone trigger |
 | B-16 | FIXED 2717f06 | raw / adjusted day (D-41) |
@@ -101,7 +101,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | B-23 | FIXED 9d7c72b | F1-A on the order block itself |
 | B-24 | OPEN | Law 3 (no 4H-edge entry) not enforced as a gate |
 | B-25 | FIXED 9d7c72b | rule (b) = inside the close edge of the next step (D-43) |
-| B-26 | OPEN | choice (a) / (b) by mirrorConfidenceScore; D-43 uses (b) first because that fits his seven golden stops |
+| B-26 | OPEN | choice (a) / (b) by mirrorConfidenceScore; D-43 / D-47 use (b) first (shields walked nearest first). Checked 2026-11-26 against his 23 golden stops (memory/08): neither rule fits all; the fuel-state definition is in DESIGN_BLUEPRINT_v5.2 16.7 / BUILD_WORKFLOW P3.TURN-07 |
 | B-27 | PART | 4-36 pip envelope; Law 4 bands per category OPEN |
 | B-28 | FIXED 9d7c72b | zone midpoint with an LQZ inside (D-33) |
 | B-29 | PART | strong = near edge + 1 pip, liquidity band = near edge (D-45); weak = far edge only where coded for sweep targets |
@@ -180,4 +180,4 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | D-05 | FIXED 9e44b34 | |
 
 ## Count
-PART 28 · OPEN 56 · FIXED 37 · ANSWERED 13 (of 134). S1 / S4 need OPEN + PART = 0.
+ANSWERED 14 · FIXED 36 · OPEN 55 · PART 29 (of 134). S1 / S4 need OPEN + PART = 0.
