@@ -543,3 +543,4 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - FACT: his DXY #1 (Mon L 100.945 -> 101.115) and EURUSD #1 (Mon S 1.14322 -> 1.14103) were taken BEFORE the Monday London-open anchor (the 15m blocks they sit on formed Jul 6 04:15 UTC; after 06:00 UTC price first touches 100.95 at 16:45 on the way down):
   they are outside the forecast window by the temporal law (L-05), not misses of the build. In-window anchor-week trades of his: DXY #2-#8 (7), EURUSD #2-#8 (7), GBPUSD #1-#7 (7).
   Caught now (same zone and direction, filled, TP before SL): DXY 7 / 7; EURUSD 7 / 7 (#7 rocket 6.9 pips from his entry, #8 TP 14 pips short of his); GBPUSD 3 / 7 (#1, #3, #4-rocket; #5 entry right but stopped; #2 gated; #6, #7 absent).
+- S3 dry run launched: outside reviewer (fresh context) counts the 12 maps from evidence/s3 by audit/G1_brief.md -> audit/G1_count_dryrun.md. Do not touch evidence/s3 or audit/g1_facts while it runs.
