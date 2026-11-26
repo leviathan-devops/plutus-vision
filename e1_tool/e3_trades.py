@@ -567,6 +567,30 @@ def _reinforce(s, X, E2, env, pair, log):
     ref = s['entry'] - 20 * pip if dn else s['entry'] + 20 * pip
     path = sorted([r for r in real if (((r['bot'] + r['top']) / 2 <= ref and r['bot'] > s.get('tp_level', s['tp'])) if dn else ((r['bot'] + r['top']) / 2 >= ref and r['top'] < s.get('tp_level', s['tp'])))],
                   key=lambda r: -r['top'] if dn else r['bot'])
+    # Law 5 / Fibonacci Spiderwebs (operator's grids in golden_week.json: 0 = the retest extreme, 1 = the swing before it): on a breakout that follows a retest the FIRST rocket stands
+    # in the 0.786-1.0 band of that leg's grid (E3C:225 '0.786-1.0 | FINAL BLAST. Last chance before full extension') and its stop is the grid's 0.618 level - his three rockets:
+    # DXY 100.975 = 1.0 / SL 101.09 = 0.618; EURUSD 1.14233 = 0.786 / SL 1.14183 ~ 0.618; GBPUSD 1.33629 ~ 0.85 / SL 1.33522 = 0.618 (D-83)
+    grid = None
+    lg = E2.get('legs', [])
+    for i_, l_ in enumerate(lg):
+        if i_ > 0 and l_['shape'] in ('BS', 'PBS') and E2.get('far_liq') is not None and (l_['dir'] == 'down') == dn and lg[i_ - 1]['dir'] != l_['dir']:
+            g0, g1 = lg[i_ - 1]['to'], lg[i_ - 1]['from']
+            if abs(g1 - g0) > 5 * pip:
+                grid = (g0, g1)
+            break
+    if grid is not None:
+        g0, g1 = grid
+        lv = lambda f_: g0 + f_ * (g1 - g0)
+        b_lo, b_hi = min(lv(0.786), lv(1.0)) - pip, max(lv(0.786), lv(1.0)) + pip
+        band = [r for r in real if b_lo <= (r['bot'] + r['top']) / 2 <= b_hi and (((r['bot'] + r['top']) / 2 < s['entry']) if dn else ((r['bot'] + r['top']) / 2 > s['entry']))]
+        if band and path and not any(r is path[0] for r in band):
+            # the 20-pip step is not in the band: the first rocket is the band's first step on the way, stopped at the grid's 0.618 (EURUSD golden: 1.14239 / 1.14172 vs his 1.14233 / 1.14183);
+            # a 20-pip step already inside the band stays as it is with its ladder stop (DXY golden: 100.980 / 101.077 vs his 100.975 / 101.09)
+            r0 = max(band, key=lambda r: r['top']) if dn else min(band, key=lambda r: r['bot'])
+            path = [r0] + [r for r in path if r is not r0 and (((r['bot'] + r['top']) / 2 < (r0['bot'] + r0['top']) / 2) if dn else ((r['bot'] + r['top']) / 2 > (r0['bot'] + r0['top']) / 2))]
+            grid = (g0, g1, r0)
+        else:
+            grid = None
     out, last = [], None
     for r in path:
         if len(out) >= 3:
@@ -575,6 +599,8 @@ def _reinforce(s, X, E2, env, pair, log):
         if last is not None and abs(e2 - last) < 20 * pip:
             continue
         sl2, why2 = _stop(e2, 'down' if dn else 'up', r, X, pair)    # the same ladder-step stop as a primary (E3C:247-256; his Thursday rocket 100.975 / 101.09 = 1-2 pips inside the 4H band above)
+        if grid is not None and r is grid[2]:
+            sl2, why2 = grid[0] + 0.618 * (grid[1] - grid[0]), 'the 0.618 level of the retest-leg Fib grid'
         if sl2 is None:
             log.append(f"reinforcement at {e2:.5f}: REJECT {why2}"); continue
         d2 = abs(sl2 - e2) / pip
