@@ -21,6 +21,9 @@ def run(pair, monday):
     return X
 
 
+REACH_MM = False
+
+
 def reach(X, E2):
     """GS Law 2 / Law 7 ('for each day's predicted shape, determine the expected price travel range ... a zone 100 pips away is INVALID if the shape chain predicts consolidation near spot'),
     L-28 (no far floating zones): the week's reach = the envelope of the Engine 2 day map, extended to the first mapped zone beyond each end (what would stop the path next).
@@ -36,10 +39,22 @@ def reach(X, E2):
     # the alternative reading of every bound (6.6 Step 4: the chain that activates if the bound fails) has a target too: where a breakout through the ceiling / the floor would stop
     # (e2_chain.target) belongs to the week's reach, so the zone the week ends up trading at is on the chart when the primary chain is wrong (D-58)
     import e2_chain as E2M
-    for side, bound in (('up', E2.get('ceil')), ('down', E2.get('floor'))):
+    for side, bound, other in (('up', E2.get('ceil'), E2.get('floor')), ('down', E2.get('floor'), E2.get('ceil'))):
         t = E2M.target(X, side, bound) if bound is not None else None
         if t is not None:
             lo, hi = min(lo, t['bot']), max(hi, t['top'])
+        # ... and its magnitude: 6.5 'BS | Failing zone triggers BS; target zone determines magnitude | Target: Measured Move' (P452 Pillar 9 Step 4: the range height projected from the
+        # failing bound): the week's reach runs to the measured-move target of each bound and to the mapped zone standing at / first beyond it (D-87)
+        m = E2M.measured_move(X, bound, other, side) if (bound is not None and other is not None and REACH_MM) else None
+        if m is not None:
+            if side == 'up':
+                hi = max(hi, m['top'])
+                at = [z for z in zs if z['bot'] <= hi <= z['top']] or sorted([z for z in zs if z['bot'] > hi], key=lambda z: z['bot'])[:1]
+                hi = max([hi] + [z['top'] for z in at if z['bot'] - hi <= 0.30 * X['U']])
+            else:
+                lo = min(lo, m['bot'])
+                at = [z for z in zs if z['bot'] <= lo <= z['top']] or sorted([z for z in zs if z['top'] < lo], key=lambda z: -z['top'])[:1]
+                lo = min([lo] + [z['bot'] for z in at if lo - z['top'] <= 0.30 * X['U']])
     return lo, hi
 
 
