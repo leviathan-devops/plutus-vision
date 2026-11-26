@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# pbzoom LO HI - set the IDE chart's price axis to [LO, HI] (to look closely at one part of a rendered frame)
+"$(dirname "$0")/pb" eval "(function(){const P=window.PlutusPineShell; const r=P.chart.rendererControl.renderer; const res=r.resolveScaleHolder(r.coords.widthPx-20,200)||r.resolveScaleHolder(400,200); r.setManualScale(res.holder,{min:$1,max:$2,invert:false}); return {lo:$1,hi:$2};})()"

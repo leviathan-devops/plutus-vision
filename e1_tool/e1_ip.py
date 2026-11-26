@@ -87,14 +87,19 @@ def levels(pair, monday, side):
         (L if t < 3 else t3).append(lv)
     # ── Pillar 5 (P533:1205-1423; recipe :304-477)
     win = daily[-90:]
+    sess = D.forming(pair, monday)                               # the D1 bar in progress at the anchor (D-25): data available at Monday London open (L-05)
     lows, highs = [], []
-    for i in range(2, len(win) - 2):
-        d = win[i]; rng = d['high'] - d['low']
+    # Step 0b / 0c (P533:1217-1228): swing lows / highs with a rejection wick >= 0.15 and the close in the upper / lower 50% of the daily range.
+    # A swing = the extreme of its bar and of the two bars each side THAT EXIST at the anchor (D-13): the text gives no neighbour count, and the reference report (Apr 20-24, section 5)
+    # lists the low of Apr 17 - the last day before its boundary - as "D1 swing low ... Liquidity Sweep Target". The last days and the bar in progress are therefore scanned too.
+    d1 = win + ([sess] if sess else [])
+    for i in range(2, len(d1)):
+        d = d1[i]; rng = d['high'] - d['low']
         if rng <= 0:
             continue
         cpos = (d['close'] - d['low']) / rng
         blo, bhi = min(d['open'], d['close']), max(d['open'], d['close'])
-        nb = win[i - 2:i] + win[i + 1:i + 3]
+        nb = d1[i - 2:i] + d1[i + 1:i + 3]
         if d['low'] < min(x['low'] for x in nb) and blo - d['low'] >= 0.15 * U and cpos >= 0.5:
             lows.append({'p': d['low'], 'date': d['date'], 'wick': blo - d['low']})
         if d['high'] > max(x['high'] for x in nb) and d['high'] - bhi >= 0.15 * U and cpos <= 0.5:
@@ -122,7 +127,7 @@ def levels(pair, monday, side):
           [{'bot': x['p'] - 0.10 * U, 'top': x['p'], 'side': 'Supply-side', 'level': x['p'], 'source': 'D1 swing high ' + x['date']} for x in highs]
     # Step 0.45 "ALL prior swing lows / highs where stops would cluster": the reference report (Apr 20-24) lists the low / high of each recent day of the prior week as a sweep zone
     # (97.63 Apr 17, 97.83 Apr 16, 97.97 Apr 14 ...), so the daily extremes of the last 5 completed days are sweep-zone sources too; 0.45a: extended 0.05-0.10 beyond the 0.05 base.
-    for d in daily[-5:]:
+    for d in daily[-5:] + ([sess] if sess else []):
         if not any(abs(z['level'] - d['low']) < 1e-9 for z in lsz):
             lsz.append({'bot': d['low'], 'top': d['low'] + 0.10 * U, 'side': 'Demand-side', 'level': d['low'], 'source': 'daily low ' + d['date']})
         if not any(abs(z['level'] - d['high']) < 1e-9 for z in lsz):
@@ -171,6 +176,9 @@ def levels(pair, monday, side):
             L.append({'p': d[k], 'pillar': 5, 'kind': f"Prior daily {k} {d['date'][5:]}", 'struct': 2, 'anchor': True})
     for k in ('close', 'high', 'low'):
         L.append({'p': pw[k], 'pillar': 5, 'kind': f'Prior weekly {k}', 'struct': 2, 'anchor': True})
+    if sess:                                                     # "daily high / low" of the D1 bar in progress at the anchor (D-25); its close is spot, not a close
+        for k in ('high', 'low'):
+            L.append({'p': sess[k], 'pillar': 5, 'kind': f"Session {k} {sess['date'][5:]} (to the anchor)", 'struct': 2, 'anchor': True})
     # ── Pillar 6 (P452:835-862; recipe :485-510)
     for rr in (0.236, 0.382, 0.5, 0.618):
         L.append({'p': pw['high'] - rr * (pw['high'] - pw['low']), 'pillar': 6, 'kind': f'Fib {rr * 100:.1f}% of prior week'})

@@ -71,6 +71,16 @@ def daily(pair, monday):
     return [d for d in out if done(d)]
 
 
+def forming(pair, monday):
+    """the trading day in progress at the anchor (Sunday 17:00 New York .. Monday London open): {date, open, high, low, close = spot at the anchor}, or None.
+    L-05: the map is built from "the data that is available on Monday, London session open"; the D1 series as of that moment ends with this bar (D-25)."""
+    w0 = week_start_ms(monday)
+    b = [x for x in closed(pair, '60', monday) if x['time'] >= w0]
+    if not b:
+        return None
+    return {'date': monday, 'open': b[0]['open'], 'high': max(x['high'] for x in b), 'low': min(x['low'] for x in b), 'close': b[-1]['close'], 'forming': True}
+
+
 def weekly(pair, monday):
     """completed trading weeks from the daily bars: list of {monday, high, low, close}"""
     out, key, cur = [], None, None

@@ -79,18 +79,37 @@ def _bounds(X):
     below = sorted([z for z in X['zones'] if z['top'] < spot], key=lambda z: -z['top'])
     pivot = next((z for z in X['zones'] if z['bot'] <= spot <= z['top']), None)
 
-    def pick(ips, sds):
+    def pick(ips, sds, up):
         z = next((q for q in ips if q['zfp_num'] < 30 and q['score'] >= 6 and min(abs(q['bot'] - spot), abs(q['top'] - spot)) <= 0.30 * X['U']), None)      # GS Law 2: SS zones 0-30 pips from spot
         if z is None and sds:
             q = sds[0]
             z = {'bot': q['bot'], 'top': q['top'], 'name': q['label'], 'zfp_num': 15 if q['kind'] == 'BoM' else 30, 'score': 6, 'sd': q}
+        if z is None:
+            z = _sweep_bound(X, up)
         return z if z is not None else (ips[0] if ips else None)
     # P452:753 (Step 0g): a 1H zone counts when its base preceded a move of >= 0.3; the same grade picks the supply-demand bound (L-37: the figure grades strength)
     strong = [q for q in X['sd'] if q['tf'] in ('240', '60') and q.get('excursion', 0.0) >= 0.30 * X['U']]
     pool = strong if strong else [q for q in X['sd'] if q['tf'] in ('240', '60')]
     sup = sorted([q for q in pool if q['type'] == 'Supply' and q['bot'] > spot], key=lambda q: q['bot'])
     dem = sorted([q for q in pool if q['type'] == 'Demand' and q['top'] < spot], key=lambda q: -q['top'])
-    return pick(above, sup), pick(below, dem), pivot, above, below
+    return pick(above, sup, True), pick(below, dem, False), pivot, above, below
+
+
+def _sweep_bound(X, up):
+    """a side that holds no pressure zone under 30% and no standing 1H / 4H supply-demand zone is bounded by its nearest unswept sweep zone lying wholly beyond spot:
+    P533:1246-1262 the zone is '[exact high - 0.05, exact high]' / '[exact low, exact low + 0.05]'; P452:968 'Liquidity Sweep Zone ... high probability of brief breach then reversal';
+    6.5 names the LSZ as the rejection anchor; FA 2.1 'LSZs = standard Earth density', FA 8 'consolidation ends in price retesting opposing liquidity'.
+    Touching sweep zones are one cluster (its extreme = where the stops end)."""
+    U, spot = X['U'], X['spot']
+    side = 'Supply-side' if up else 'Demand-side'
+    lv = sorted([z['level'] for z in X['lsz'] if z['side'] == side and not z['swept'] and ((z['level'] - 0.05 * U > spot) if up else (z['level'] + 0.05 * U < spot))], reverse=not up)
+    if not lv:
+        return None
+    cl = [lv[0]]
+    for p in lv[1:]:
+        if abs(p - cl[-1]) <= 0.05 * U + 1e-12:
+            cl.append(p)
+    return {'bot': lv[0] - 0.05 * U if up else lv[0], 'top': lv[0] if up else lv[0] + 0.05 * U, 'ext': max(cl) if up else min(cl), 'sweep': True, 'name': 'Liquidity Sweep Zone', 'zfp_num': 15, 'score': 6}
 
 
 def _target(X, side, bound, U):
@@ -129,6 +148,11 @@ def _target(X, side, bound, U):
     return t
 
 
+def _mom(z):
+    """the bound is a Middle-of-Move supply / demand zone (P452:694-697)"""
+    return bool(z) and z.get('sd') is not None and z['sd']['kind'] == 'MoM'
+
+
 def _after_bs(t):
     """6.4.1: the TARGET zone's ZFP decides what follows a Breakout Surge"""
     if t is None:
@@ -163,6 +187,12 @@ def build(pair, monday, X, lead=None, force_dir=None):
         bdir, why = s0['dir'], 'breakout in progress'
     elif failing:
         bdir, why = failing[0], f"bounding zone {failing[1]['name']} ZFP {failing[1]['zfp_num']}% > 45: failing (6.4.1)"
+    elif _mom(ceil) != _mom(floor):
+        # 6.4.2 last branch: 'Consolidation ends in price retesting opposing liquidity -> Then pierce through zone until reaching BoM Liquidity' (the zone = the MoM zone under test);
+        # 4H MoM one-and-done: 'minor WL followed by BS / PBS through the zone'; FA 7: only BoM zones reverse a move, MoM zones in the path are consumed
+        bdir = 'up' if _mom(ceil) else 'down'
+        z = ceil if _mom(ceil) else floor
+        why = f"the {'ceiling' if _mom(ceil) else 'floor'} is a MoM zone ({z['name']}), the other bound is not: the consolidation ends piercing the MoM zone toward BoM liquidity (6.4.2)"
     else:
         bdir, why = story, (f"both bounding zones hold (ZFP < 30 / < 45): 4H storyline tiebreaker = {story} (last 4H origin zone {sz['type']} {sz['bot']:.5g}-{sz['top']:.5g})" if sz else 'no 4H origin zone')
     if bdir is None:
@@ -174,6 +204,17 @@ def build(pair, monday, X, lead=None, force_dir=None):
         h = ceil['bot'] - floor['top']                       # the range the breakout leaves
         p = ceil['top'] + h if bdir == 'up' else floor['bot'] - h
         tgt = {'bot': min(p, p - 0.05 * U) if bdir == 'up' else p, 'top': p if bdir == 'up' else p + 0.05 * U, 'name': 'BREAKOUT EXTENSION TARGET (measured move)', 'always_reacts': False, 'zfp': 30}
+    # a breakout already running at the anchor (6.3 'BS -> R -> RWL', 'BS -> RWL -> SS -> BS': "Week opens with BS"): its target is the NEXT support / resistance (6.8) = the near bound itself;
+    # what lies beyond that bound is the target of the cycle's second breakout
+    mode = lead.get('mode', 'ss') if lead is not None else ('bs0' if (s0['shape'] in ('BS', 'PBS') and force_dir is None) else 'ss')
+    tgt2 = None
+    if mode == 'bs0' and near is not None:
+        tgt2 = tgt
+        sdz = near.get('sd')
+        tgt = {'bot': near['bot'], 'top': near['top'], 'name': near['name'], 'zfp': near['zfp_num'],
+               'always_reacts': bool(near.get('sweep')) or (sdz is not None and sdz['kind'] == 'BoM' and sdz['mit'] <= 1)}
+        if sdz is not None:
+            tgt['sd'] = sdz
     nxt, conf_t, why_t = _after_bs(tgt)
     # ── chain + timing: durations 6.8 (SS 2-5 sessions, BS 1-3, WL / RWL / R < 1), Trading Speed Rule 6.10 (+1 day)
     n_real = 5
@@ -181,9 +222,10 @@ def build(pair, monday, X, lead=None, force_dir=None):
         plan = [list(d['shapes']) for d in lead['days']]
         n_real = lead.get('n_real', 5)
         audit.append('Day shapes = the DXY day shapes (same shapes, inverted direction)')
-    elif s0['shape'] in ('BS', 'PBS'):
-        plan = [['BS'], [nxt] if nxt != 'R' else ['R'], ['SS'], ['SS'], ['SS', 'BS']]
-        audit.append(f"BS in progress -> [Trigger: {tgt['name'] if tgt else 'none'}] -> {nxt} ({why_t}); then SS (RWL / R -> SS, 6.4)")
+    elif mode == 'bs0':
+        # 6.3 'BS -> RWL -> SS -> BS: complete false breakout cycle. Second BS often succeeds' / 'BS -> R -> PBS'; durations 6.8 (BS 1-3 sessions, WL / RWL / R < 1, SS 2-5)
+        plan = [['BS'], ['WL', 'RWL'] if nxt == 'WL+RWL' else [nxt], ['SS'], ['SS'], ['SS', 'BS']]
+        audit.append(f"BS {bdir} in progress -> [Trigger: {tgt['name'] if tgt else 'none'}] -> {nxt} ({why_t}) -> SS (RWL / R -> SS, 6.4) -> BS {bdir} (second breakout, 6.3) -> {tgt2['name'] if tgt2 else '-'}")
     else:
         n_ss = 1 if s0.get('phase') == 'late' else 2       # FA 9: 1-2 full days after two piercing moves; 6.4.2: slow consolidation 2-4 days; a late consolidation breaks sooner
         plan = [['SS'] for _ in range(n_ss)] + [['SS', 'RWL', 'BS']] + [['BS'] for _ in range(5)]
@@ -196,6 +238,8 @@ def build(pair, monday, X, lead=None, force_dir=None):
                      f"-> [Trigger: {tgt['name'] if tgt else 'none'}] -> {nxt} ({why_t})")
     # ── cumulative confidence (6.6 Step 3)
     steps = [('SS', 'HIGH' if not failing else 'MODERATE'), ('BS', 'MODERATE-HIGH' if not failing else 'HIGH'), (nxt, conf_t)]
+    if mode == 'bs0':
+        steps = [('BS', 'HIGH'), (nxt, conf_t), ('SS', 'HIGH'), ('BS', 'MODERATE-HIGH')]
     cum, chain = 1.0, []
     for sh, tier in steps:
         cum *= CONF[tier]
@@ -262,8 +306,14 @@ def build(pair, monday, X, lead=None, force_dir=None):
             pos = leg(DAYS[i], 'WL', pos, rec, d1 - 4 * 3600000, tgt, pivot)
             day.update(dir=inv[bdir], lo=min(t_out, rec, p0), hi=max(t_out, rec, p0), key=tgt['name'] if tgt else '-', conf=chain[-1]['cum'])
         elif shapes == ['PBS']:
-            pos = leg(DAYS[i], 'PBS', pos, t_out, d1 - 4 * 3600000, far, tgt)
-            day.update(dir=bdir, lo=min(p0, pos), hi=max(p0, pos), key=tgt['name'] if tgt else '-', conf=chain[-1]['cum'])
+            z2 = tgt2 if (mode == 'bs0' and tgt2 is not None) else tgt      # the cascade continues through the weak zone to the next one (6.4.1 'BS > 60% -> PBS')
+            pos = leg(DAYS[i], 'PBS', pos, ((z2['top'] if bdir == 'down' else z2['bot']) if z2 is not tgt else t_out) if z2 else t_out, d1 - 4 * 3600000, far, z2)
+            day.update(dir=bdir, lo=min(p0, pos), hi=max(p0, pos), key=z2['name'] if z2 else '-', conf=chain[min(1, len(chain) - 1)]['cum'])
+        elif shapes == ['SS', 'BS']:
+            # the second breakout of the cycle (6.3 'BS -> RWL -> SS -> BS ... Second BS often succeeds'): from the opposing liquidity through the bound to the next target
+            z2 = tgt2 if tgt2 is not None else tgt
+            pos = leg(DAYS[i], 'BS', pos, (z2['top'] if bdir == 'down' else z2['bot']) if z2 else near_far, d1 - 4 * 3600000, far, z2)
+            day.update(dir=bdir, lo=min(p0, pos), hi=max(p0, pos), key=z2['name'] if z2 else '-', conf=chain[-1]['cum'])
         else:                                                # R: stabilization at the target
             pos = leg(DAYS[i], 'R', pos, (t_in + t_out) / 2, d1 - 4 * 3600000, tgt, tgt)
             day.update(dir='range', lo=min(p0, t_in, t_out), hi=max(p0, t_in, t_out), key=tgt['name'] if tgt else '-', conf=chain[-1]['cum'])
@@ -272,14 +322,16 @@ def build(pair, monday, X, lead=None, force_dir=None):
     if far is not None:
         a_t = _target(X, inv[bdir], far, U)
         a_n, _, _ = _after_bs(a_t)
+        prim = f"BS {bdir} -> {nxt} -> SS -> BS {bdir}" if mode == 'bs0' else f"SS -> BS {bdir} -> {nxt}"
         alt = {'decision_zone': far['name'], 'dir': inv[bdir], 'target': a_t,
-               'text': f"PRIMARY: SS -> BS {bdir} -> {nxt} | DECISION ZONE: {far['name']} fails (1H close beyond it) -> ALTERNATIVE: SS -> BS {inv[bdir]} -> {a_n} at {a_t['name'] if a_t else '-'}"}
+               'text': f"PRIMARY: {prim} | DECISION ZONE: {far['name']} fails (1H close beyond it) -> ALTERNATIVE: SS -> BS {inv[bdir]} -> {a_n} at {a_t['name'] if a_t else '-'}"}
         audit.append(alt['text'])
     alt_chain = None
     if force_dir is None and s0['shape'] not in ('BS', 'PBS'):
         alt_chain = build(pair, monday, X, lead, force_dir=inv[bdir])      # the same map read with the other bound failing: its legs feed the conditional (ALT) setups of Engine 3
     return {'alt_chain': alt_chain, 'pair': pair, 'monday': monday, 's0': s0, 'storyline': story, 'bdir': bdir, 'chain': chain, 'days': days, 'path': pts, 'alt': alt, 'audit': audit,
-            'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'next': nxt, 'range': (f_edge, c_edge), 'mid': mid, 'far': far, 'near': near, 'legs': legs, 'n_real': n_real}
+            'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'target2': tgt2, 'mode': mode, 'next': nxt, 'range': (f_edge, c_edge), 'mid': mid, 'far': far, 'near': near,
+            'legs': legs, 'n_real': n_real}
 
 
 def pine(pair, monday, E2):

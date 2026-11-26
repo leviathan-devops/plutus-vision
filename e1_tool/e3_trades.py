@@ -53,8 +53,12 @@ def _entries(anchor, direction, shape, env, pair):
     pip, rungs, blocks, sd = env
     typ = 'Supply' if direction == 'down' else 'Demand'
     inset = 0.2 * pip if shape in ('RWL', 'WL') else 0.0     # F1-D
-    if anchor.get('sweep'):                                  # whiplash into a sweep zone: the middle of the zone the stops rest in (operator's golden Friday long)
-        return [((anchor['bot'] + anchor['top']) / 2, anchor, 'sweep zone mid')]
+    if anchor.get('sweep'):
+        mid = ((anchor['bot'] + anchor['top']) / 2, anchor, 'sweep zone mid')
+        if shape == 'WL':                                    # whiplash into a sweep zone: the middle of the zone the stops rest in (operator's golden Friday long; GS Law 3 'Whiplash: post-spike entry')
+            return [mid]
+        # every other shape meets the sweep zone as a bound: TS-1 'zone edge CLOSEST to approaching price' (E3C:177-181), then the middle
+        return [(anchor['bot'] if direction == 'down' else anchor['top'], anchor, 'sweep zone near edge (TS-1)'), mid]
     out = []
     real = [r for r in rungs if 'fib' not in r]
     if anchor.get('ip'):                                     # an IP zone is never an entry source: the LQZ rung at it is (E3C:139-143)
@@ -189,6 +193,12 @@ def _first_anchor(leg, X, env):
     return zs[0] if zs else None
 
 
+def _bound_anchor(leg, E2):
+    """no supply / demand zone on the waiting side: the Engine 2 bound of that side is the anchor (R3 law, E3C:72-73 'Every anchor traces to an E1 zone ID + an E2 shape day')"""
+    z = E2.get('ceil') if leg['dir'] == 'down' else E2.get('floor')
+    return dict(z) if z else None
+
+
 def build(pair, monday, X, E2):
     """primary chain + the conditional setups of the ALTERNATIVE chain (P533 6.6 Step 4: 'For every primary chain, construct at least one alternative chain that activates if the primary
     fails at a specific Decision Zone'): only its breakout family (RWL / BS / WL) - the swing scalps are the same range for both readings"""
@@ -236,7 +246,7 @@ def _build(pair, monday, X, E2, tag):
             continue                                         # no E2 designation for that day -> no setup (R3 law)
         direction = leg['dir']
         if anchor is None:
-            anchor = _first_anchor(leg, X, env)
+            anchor = _first_anchor(leg, X, env) or _bound_anchor(leg, E2)
             if anchor is None:
                 log.append(f"{leg['day']} {leg['shape']}: no entry source against the leg"); continue
         a = dict(anchor)
