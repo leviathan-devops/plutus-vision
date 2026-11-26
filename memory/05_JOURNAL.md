@@ -477,3 +477,14 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - What was built: see memory/01 top block and D-25..D-33. Tested and REVERTED: Step 0b / 0c with no neighbour test at all (matches the report's Apr 16 low, but more magnets raise ZFP numbers and move the EURUSD golden bounds and trades off his).
 - Findings to act on: (1) his stops are canon rule (b) on liquidity steps incl. the 4H bands (facts in 08); (2) weeks where price sits over the map now get a ceiling from the sweep zone of the pre-anchor high (Oct 5 102.485-102.535, May 18 99.359-99.409: both held all week);
   (3) on both judged weeks the real floor was the wall / BoM zone 12-17 pips behind the MoM zone Engine 2 used; (4) sweep-zone shorts were stopped by the breach the canon announces for such zones; (5) default frames are squashed by far zones.
+
+## 2026-11-26 night - facts on more weeks after this step (tools/research/fills.py; bug locator only) and what they point to
+- Still good: DXY golden 7/7 TP, DXY Apr 20 3 TP, EURUSD golden 4 TP 2 SL, GBPUSD golden 3 TP 2 SL. Weak: DXY May 18 (0 TP), Jun 8 (0 TP), Jul 13, Sep 14, Aug 17, EURUSD / GBPUSD Apr 20, EURUSD Oct 5 (1 TP).
+- Repeating pattern 1 (E2 bounds): the week's real floor / ceiling is an E1 zone the map holds, but e2_chain._bounds skips it: Soft Walls (30-50%) can never bound a range by 6.5 "ZFP < 30", so the range falls back to supply-demand zones far away
+  (Jun 8: range 99.354-100.124, 77 pips; the lows of the week turned on Key Support 99.733-99.811 and 99.481-99.571). On GBPUSD every pressure zone is a Soft Wall (no option data). To settle from canon: 6.2 matrix rows 3-5, 6.5 (R / WLS anchoring: zones 15-40%),
+  Consolidation Phase Detection, Pillar 9 "BREAKOUT SWEET SPOT 25-45%".
+- Pattern 2 (breach): sweep zones and soft zones react AFTER a breach of 2-10 pips (May 18 ceiling: 2.5 / 6 / 10 pips; Jun 8 ceiling: 4 and 14 pips; Oct 5: 0); a stop 1.3-2 pips past the extreme sits inside it. Canon: P452:968 "brief breach then reversal",
+  GS Law 4 "SL outside the nearest liquidity shield ... no LSZ between entry and SL -> widen to next LSZ or reject", E3C rule (b) on the next step; his own stops sit on the 4H bands (memory/08).
+- Pattern 3 (order life): setups rest for their whole E2 day(s); a long whose TP level already traded that morning was filled in the fall (May 18 DX3). Law 27 is a SEQUENCE.
+- Pattern 4 (timing): the right zone on the wrong day (Oct 5: the BoM-demand long designated Friday, the pierce came Tuesday).
+- Not yet built and relevant: staggered three entries (E3C Phase 9), confidence (Phase 5) and its SL switch (ZR-6B), consolidation phase / ZFP trend (E2-CP), WLS shape (6.1.5; strict "3+ zones within 0.30-0.50" did not match Jun 8: span 0.59).
