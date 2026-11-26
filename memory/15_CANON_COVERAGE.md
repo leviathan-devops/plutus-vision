@@ -169,3 +169,27 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E3-P6 | Law 27: BS entry = RWL TP (band = entry step); Phase 6.3 same-anchor-same-day dedup with log; opposite-direction conflict rule (needs Phase 5 confidence) not built | PB |
 | E3-P10 | mirror lane: collision retry on the next liquidity step (deep shield); the full DXY -> EU -> GU re-anchoring of every DXY setup is still approximated by running the pair's own chain on the inverted DXY shapes | PB |
 | E3-P5 / P7 / P8 / P9 (staggered entries, rockets) / P11 / P12 / OUT / ZT / F | not built; Phases 5-7 and 10 read first-hand this step, 8 / 9 / 11 / 12 / F still unread | NB |
+
+## 8. Changes of 2026-11-26 (Engine 2 v2, Engine 3 v2 and the fixes after them; decisions D-34..D-56) - states: B built, PB partial, NB not built
+| id | what changed | state |
+|---|---|---|
+| E2-62 | Step 1 on 1H sessions with the matrix rows in order and their ZFP conditions (D-40) | B |
+| E2-64 / 641 / 642 | chain extended step by step: per-bound branch by the Zone Reaction Counter, direction by the 6-check + pressure reading + 4H storyline, timing by the canon minima + 1 day (D-34..D-41) | B |
+| E2-TGT | breakout target = first BoM / strong object beyond the failing bound; weak (30%+) MoM pressure zones and standalone MoM candle zones are passed (D-49, D-50; P452:2082) | B |
+| E2-WL | the surge ends in a whiplash when unswept stops rest against the target (P452:968; 6.4) | B |
+| E2-ALT | alternative chain built and drawn dotted; its Engine 3 setups wait for the Decision Zone trigger | PB |
+| E2-CP | consolidation phase Early / Mid / Late -> valid setup types (E3C 8.23) | NB |
+| E2-PAIR | pairs = the DXY shapes inverted on the pair's own zones (P533 6.6 v5.0.0 addition) | B |
+| E3-P0 | setup universe: SS scalps both directions, BS swing + rockets, RWL reversal, SS->BS Transition Entry (D-51); scalp-stack / swing-stack compliance gate | PB |
+| E3-P1 / P7 | WorkingDayMap (one supply / demand / deep-demand zone per day) and the 12-step day assignment | NB |
+| E3-P2 | candidates per E2 step and zone incl. zones straddling a bound (D-55); FRESHNESS (3+ tests), MOM_REVERSAL, narrative gate on misaligned setups only (D-53); POI tier rule 1, 1-2-3 retest timing | PB |
+| E3-P3 | TS-1, F1-A, F1-C, F1-D + hair-miss repair; order blocks at a pressure zone as entry sources (D-46); F1-E shelf, Fibonacci contexts | PB |
+| E3-P42 | stop = ladder steps: rule (b) on shields walked nearest first (D-43, D-47), rule (a) fallback, EUR/USD NO_SHIELD rule (a); the ZR-6B confidence switch and the fuel-state relevant zone | PB |
+| E3-P43 | TP: E2 zone first (IP under 30%, candle-zone bound D-48, liquidity band D-45), 4H BoM near edge + 1, LQZ midpoint, reversal TP = first rung 30+ pips (D-56); Refined Law 14, TP timeframe law | PB |
+| E3-P44 | RRR 3.0-15.0, consolidation week 2.5 (A-47), three entry x three TP attempts | B |
+| E3-P5 | confidence with every E3C:392-414 term but the VLM bonus (D-42, D-52); inclusion >= 65 | B |
+| E3-P6 | duplicates 5 pips, conflicts 15 pips, chains depth 3 (Law 27), rule 11 (max 3 per category) not applied (journal) | PB |
+| E3-P9 | rockets: 20+ pips beyond the primary, ladder-step stop, premarket timing, cancelled with the parent (D-54); Mechanism A staggered entries, Fib 1.382 / 1.618 placement, trip-wire | PB |
+| E3-P10 | cascade mirror DXY -> EU -> GU as its own lane | NB |
+| E3-P12 | reason code on every discard; narrative gate; CS-1 day-native guard, floor invariants pass | PB |
+| OUT | one command -> one Pine (plutus.py); 1H frames via tools/e1render; 15m / 30m frames of past weeks via the Backtest tab (ledger 75b) | B |
