@@ -218,12 +218,20 @@ if barstate.islast and isPair
         // #3 UPPER RESISTANCE 1.13708-1.13773 MODERATE 7.5/14 Standard Wall Tier 2 | BoM Active 2 reactions | ENTRY-PRIMARY
         box.new(1790542800000, 1.13773, 1791579600000, 1.13708, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
         label.new(1790758800000, 1.13740, "UPPER RESISTANCE | MODERATE | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // #7 UPPER RESISTANCE 1.13439-1.13532 MODERATE 6.0/14 Soft Wall Tier 2 | BoM Active 1 reactions | ENTRY-SCALP-ONLY
+        box.new(1790542800000, 1.13532, 1791579600000, 1.13439, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
+        label.new(1790758800000, 1.13485, "UPPER RESISTANCE | MODERATE | 30-50% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #2 UPPER RESISTANCE 1.13185-1.13253 MODERATE-HEAVY 8.0/14 Standard Wall Tier 2 | BoM Active 1 reactions | ENTRY-SCALP-ONLY
         box.new(1790542800000, 1.13253, 1791579600000, 1.13185, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
         label.new(1790758800000, 1.13219, "UPPER RESISTANCE | MODERATE-HEAVY | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #6 UPPER RESISTANCE 1.12942-1.13002 MODERATE 6.0/14 Standard Wall Tier 2 | BoM Active 1 reactions | ENTRY-PRIMARY
         box.new(1790542800000, 1.13002, 1791579600000, 1.12942, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
         label.new(1790758800000, 1.12972, "UPPER RESISTANCE | MODERATE | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    if show_ip
+        box.new(1790542800000, 1.12866, 1791579600000, 1.12806, bgcolor=color.new(color.rgb(220,100,50), 82), border_color=color.new(color.rgb(220,100,50), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1790888400000, 1.12836, "GAP IN-FILL | MODERATE | 30-50% ZFP", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        box.new(1790542800000, 1.12671, 1791579600000, 1.12611, bgcolor=color.new(color.rgb(220,100,50), 82), border_color=color.new(color.rgb(220,100,50), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1790888400000, 1.12641, "GAP IN-FILL | MODERATE | 30-50% ZFP", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip and show_lv
         line.new(1791147600000, 1.12495, 1791579600000, 1.12495, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 09-30 classic S3
         line.new(1791147600000, 1.12530, 1791579600000, 1.12530, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 10-01 camarilla R1

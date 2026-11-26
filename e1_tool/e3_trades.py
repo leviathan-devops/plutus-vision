@@ -381,6 +381,23 @@ def _build(pair, monday, X, E2, tag):
             lvl = a['top'] if direction == 'up' else a['bot']
             ecands = [(lvl, {'bot': a['bot'], 'top': a['top']}, 'range boundary break (E3C:457): stop order at the far edge of the failing bound')]
             cat = 'Transition'
+        if not ecands and a.get('ip'):
+            # a pressure zone with no order block / liquidity rung on it: the liquidity resting directly in front of it is its entry source (E3C:258 'LQZ SHIELD_FUEL (the LQZ acting as shield
+            # in front of the S/D)'; E3C:80 'the entry at the anchor's internal-LQZ near/deep edge'): an unswept sweep zone of the trade's side within the canon cluster distance 0.15 of the
+            # zone's near edge (P533 zone assembly 'cluster within 0.10-0.15'), TS-1 nearest to approaching price first (D-69)
+            side = 'Supply-side' if direction == 'down' else 'Demand-side'
+            fr = []
+            for l in X['lsz']:
+                if l['swept'] or l['side'] != side:
+                    continue
+                q = {'bot': l['level'] - 0.05 * U, 'top': l['level'], 'sweep': True, 'name': 'Liquidity Sweep Zone'} if direction == 'down' else \
+                    {'bot': l['level'], 'top': l['level'] + 0.05 * U, 'sweep': True, 'name': 'Liquidity Sweep Zone'}
+                gap = (a['bot'] - q['top']) if direction == 'down' else (q['bot'] - a['top'])
+                if -1e-12 <= gap <= 0.15 * U:
+                    fr.append(q)
+            fr.sort(key=lambda q: q['bot'] if direction == 'down' else -q['top'])
+            for q in fr[:1]:
+                ecands = [(q['bot'] if direction == 'down' else q['top'], q, 'sweep zone in front of the pressure zone, near edge (TS-1)')]
         if not ecands:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: SOURCE_INVALID - no ORDER_BLOCK / LQZ entry at {a.get('name', '')} (E3C:135)"); continue
         s, why_fail = None, 'TP_NULL'

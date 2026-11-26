@@ -170,33 +170,17 @@ if barstate.islast and isPair
         // #4 RESISTANCE CEILING 1.18444-1.18504 MODERATE-HEAVY 8.0/14 Post-Expiry Ghost Tier 2 | BoM Active 2 reactions | ENTRY-PRIMARY
         box.new(1778446800000, 1.18504, 1779483600000, 1.18444, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
         label.new(1778662800000, 1.18474, "RESISTANCE CEILING | MODERATE-HEAVY | 20-40% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // #99 GAP IN-FILL LEVEL 1.18208-1.18268 MODERATE 6.0/14 Soft Wall Tier 2 | BoM Depleted 5 reactions | TP-TARGET
-        box.new(1778446800000, 1.18268, 1779483600000, 1.18208, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.18238, "GAP IN-FILL LEVEL | MODERATE | 30-50% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #10 UPPER RESISTANCE 1.17966-1.18030 MODERATE 6.0/14 Standard Wall Tier 2 | BoM Depleted 4 reactions | TP-TARGET
         box.new(1778446800000, 1.18030, 1779483600000, 1.17966, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
         label.new(1778662800000, 1.17998, "UPPER RESISTANCE | MODERATE | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #7 UPPER RESISTANCE 1.17800-1.17877 MODERATE 7.0/14 Soft Wall Tier 1 | BoM Depleted 6 reactions | TP-TARGET
         box.new(1778446800000, 1.17877, 1779483600000, 1.17800, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
         label.new(1778662800000, 1.17839, "UPPER RESISTANCE | MODERATE | 30-50% ZFP | Tier 1 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // #99 GAP IN-FILL LEVEL 1.17692-1.17752 MODERATE 6.0/14 Soft Wall Tier 1 | BoM Depleted 4 reactions | TP-TARGET
-        box.new(1778446800000, 1.17752, 1779483600000, 1.17692, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.17722, "GAP IN-FILL LEVEL | MODERATE | 30-50% ZFP | Tier 1 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // #99 GAP IN-FILL LEVEL 1.17570-1.17630 MODERATE 6.0/14 Soft Wall Tier 2 | BoM Depleted 4 reactions | TP-TARGET
-        box.new(1778446800000, 1.17630, 1779483600000, 1.17570, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.17600, "GAP IN-FILL LEVEL | MODERATE | 30-50% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // #99 GAP IN-FILL LEVEL 1.17365-1.17425 MODERATE 6.0/14 Soft Wall Tier 2 | BoM Depleted 6 reactions | ENTRY-SCALP-ONLY
-        box.new(1778446800000, 1.17425, 1779483600000, 1.17365, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.17395, "GAP IN-FILL LEVEL | MODERATE | 30-50% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // #99 GAP IN-FILL LEVEL 1.17211-1.17271 MODERATE 6.0/14 Soft Wall Tier 2 | BoM Depleted 6 reactions | ENTRY-SCALP-ONLY
-        box.new(1778446800000, 1.17271, 1779483600000, 1.17211, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.17241, "GAP IN-FILL LEVEL | MODERATE | 30-50% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #3 UPPER RESISTANCE 1.16939-1.17026 MODERATE-HEAVY 8.0/14 Standard Wall Tier 2 | MoM Depleted 3 reactions | REJECT
         box.new(1778446800000, 1.17026, 1779483600000, 1.16939, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
         label.new(1778662800000, 1.16982, "UPPER RESISTANCE | MODERATE-HEAVY | 15-30% ZFP | Tier 2 MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // #99 GAP IN-FILL LEVEL 1.16744-1.16804 MODERATE 6.0/14 Post-Expiry Ghost Tier 2 | MoM Active 2 reactions | TP-TARGET
-        box.new(1778446800000, 1.16804, 1779483600000, 1.16744, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.16774, "GAP IN-FILL LEVEL | MODERATE | 20-40% ZFP | Tier 2 MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    if show_ip
+        na
     if show_ip and show_lv
         line.new(1779051600000, 1.16719, 1779483600000, 1.16719, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot weekly camarilla R3
         line.new(1779051600000, 1.16689, 1779483600000, 1.16689, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-13 classic S2

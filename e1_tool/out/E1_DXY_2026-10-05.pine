@@ -202,6 +202,8 @@ if barstate.islast and isPair
         // #6 KEY SUPPORT BAND 100.470-100.530 MODERATE 6.0/14 Soft Wall Tier 2 | BoM Active 2 reactions | ENTRY-SCALP-ONLY
         box.new(1790542800000, 100.530, 1791579600000, 100.470, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
         label.new(1790758800000, 100.500, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    if show_ip
+        na
     if show_ip and show_lv
         line.new(1791147600000, 102.035, 1791579600000, 102.035, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot weekly camarilla R1
         line.new(1791147600000, 101.961, 1791579600000, 101.961, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 10-01 camarilla S1

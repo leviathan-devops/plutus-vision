@@ -175,11 +175,21 @@ if barstate.islast and isPair
         // #3 EQUILIBRIUM ZONE 1.17497-1.17573 MODERATE 7.0/14 Standard Wall Tier 2 | MoM Active 2 reactions | TP-TARGET
         box.new(1776027600000, 1.17573, 1777064400000, 1.17497, bgcolor=color.new(color.rgb(225,131,30), 70), border_color=color.rgb(225,131,30), border_width=2, xloc=xloc.bar_time)
         label.new(1776243600000, 1.17535, "EQUILIBRIUM ZONE | MODERATE | 15-30% ZFP | Tier 2 MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // #8 MID-RANGE SUPPORT 1.16973-1.17033 MODERATE 6.0/14 Soft Wall Tier 1 | BoM Depleted 3 reactions | TP-TARGET
+        box.new(1776027600000, 1.17033, 1777064400000, 1.16973, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
+        label.new(1776243600000, 1.17003, "MID-RANGE SUPPORT | MODERATE | 30-50% ZFP | Tier 1 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #4 KEY SUPPORT BAND 1.16570-1.16638 MODERATE 7.0/14 Soft Wall Tier 2 | BoM Depleted 4 reactions | TP-TARGET
         box.new(1776027600000, 1.16638, 1777064400000, 1.16570, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
         label.new(1776243600000, 1.16604, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip and show_far
         na
+    if show_ip
+        box.new(1776027600000, 1.17407, 1777064400000, 1.17347, bgcolor=color.new(color.rgb(40,190,180), 82), border_color=color.new(color.rgb(40,190,180), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776373200000, 1.17377, "GAP IN-FILL | MODERATE | 30-50% ZFP", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        box.new(1776027600000, 1.17263, 1777064400000, 1.17203, bgcolor=color.new(color.rgb(40,190,180), 82), border_color=color.new(color.rgb(40,190,180), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776373200000, 1.17233, "GAP IN-FILL | MODERATE | 30-50% ZFP", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        box.new(1776027600000, 1.16804, 1777064400000, 1.16744, bgcolor=color.new(color.rgb(40,190,180), 82), border_color=color.new(color.rgb(40,190,180), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1776373200000, 1.16774, "GAP IN-FILL | MODERATE | 30-50% ZFP", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip and show_lv
         line.new(1776632400000, 1.18500, 1777064400000, 1.18500, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 04-15 classic R3
         line.new(1776632400000, 1.18476, 1777064400000, 1.18476, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 04-16 classic R2
@@ -220,6 +230,11 @@ if barstate.islast and isPair
         line.new(1776632400000, 1.17527, 1777064400000, 1.17527, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Prior daily low 04-14
         line.new(1776632400000, 1.17564, 1777064400000, 1.17564, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Fib 50.0% of prior week
         line.new(1776632400000, 1.17500, 1777064400000, 1.17500, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Round number half figure
+        line.new(1776632400000, 1.17003, 1777064400000, 1.17003, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 04-16 classic S3
+        line.new(1776632400000, 1.16975, 1777064400000, 1.16975, xloc=xloc.bar_time, color=color.new(color.rgb(250,220,90), 35), width=1, style=line.style_dotted)   // MA DOUBLE [SMA20 W1, SMA100 D1]
+        line.new(1776632400000, 1.16996, 1777064400000, 1.16996, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // BoM 0X 4H Demand Zone (top edge)
+        line.new(1776632400000, 1.16984, 1777064400000, 1.16984, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Minor Swing Level (D1 high)
+        line.new(1776632400000, 1.17000, 1777064400000, 1.17000, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Round number big figure
         line.new(1776632400000, 1.16605, 1777064400000, 1.16605, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot weekly camarilla S4
         line.new(1776632400000, 1.16600, 1777064400000, 1.16600, xloc=xloc.bar_time, color=color.new(color.rgb(250,220,90), 35), width=1, style=line.style_dotted)   // MA TRIPLE+ [EMA9 W1, EMA10 W1, SMA10 W1, EMA200 4H, EMA20 W1
         line.new(1776632400000, 1.16590, 1777064400000, 1.16590, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Liquidity Sweep Target (D1 swing low 01-05) CONFLUENT
