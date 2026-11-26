@@ -183,6 +183,7 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
 
 LAW7 = {'DXY': 5, 'EURUSD': 2, 'GBPUSD': 3}       # E3C:299-304 per-pair SL buffers (pips; DXY in index points of 0.01)
 LAW14 = True
+TP_BUF = 1.5                                     # pips in front of every take-profit level (Fibonacci Spiderwebs: '1.5-2 pip buffer in front of the TP ... MANDATORY')
 MAX_RRR = 15.0                                   # E3C:365 'MAX_CHAIN_RRR ceiling: 15.0 (Law-13) - chains beyond 15R fill-and-stop'
 INCLUDE = 65                                     # E3C:1011 'confidence >= 65 required for inclusion'
 NO_SHIELD = ('EURUSD',)                          # E3C 8.19 pair table: EUR/USD 'DIRECT_ZONE_TEST, NO_SHIELD'; FA 10: 'PA often directly touches the overlap point ... No Liquidity Shield'
@@ -399,17 +400,17 @@ def _build(pair, monday, X, E2, tag):
         if c['shape'] in ('BS', 'PBS') and setups and setups[-1]['shape'] == 'RWL' and setups[-1]['dir'] == ('LONG' if direction == 'up' else 'SHORT') is False:
             pass
         if c.get('role') == 'retest':                        # Law 27 (E3C:438-449): the retest starts where the last swing's TP put price
-            ls = next((q for q in reversed(setups) if q.get('role') == 'last-swing' and a['bot'] - 3 * pip <= q['tp'] <= a['top'] + 3 * pip), None)
+            ls = next((q for q in reversed(setups) if q.get('role') == 'last-swing' and a['bot'] - 3 * pip <= q.get('tp_level', q['tp']) <= a['top'] + 3 * pip), None)
             if ls is not None:
-                ecands = [(ls['tp'], {'bot': ls['tp'], 'top': ls['tp']}, 'the last swing\'s TP level (Law 27: TP of N = entry of N+1)')]
+                ecands = [(ls.get('tp_level', ls['tp']), {'bot': ls.get('tp_level', ls['tp']), 'top': ls.get('tp_level', ls['tp'])}, 'the last swing\'s TP level (Law 27: TP of N = entry of N+1)')]
         prev = next((q for q in reversed(setups) if q['shape'] == 'RWL' and q['days'][-1] == c['days'][0]), None)
         if c['shape'] in ('BS', 'PBS') and prev is not None and c.get('role') != 'transition':
-            lvl, pz = prev['tp'], prev['tp_zone']           # Law 27 (E3C:438-449): TP of the RWL = entry of the BS
+            lvl, pz = prev.get('tp_level', prev['tp']), prev['tp_zone']           # Law 27 (E3C:438-449): TP of the RWL = entry of the BS
             ecands = [(lvl, pz if pz.get('liq') else {'bot': lvl, 'top': lvl}, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
         pbs = next((q for q in reversed(setups) if q['shape'] in ('BS', 'PBS') and q.get('parent_ref') is None), None)
-        if c.get('role') in ('rwl', 'rwl0') and not a.get('sweep') and pbs is not None and a['bot'] - 3 * pip <= pbs['tp'] <= a['top'] + 3 * pip:
+        if c.get('role') in ('rwl', 'rwl0') and not a.get('sweep') and pbs is not None and a['bot'] - 3 * pip <= pbs.get('tp_level', pbs['tp']) <= a['top'] + 3 * pip:
             # Law 27 (E3C:443-449 'BS -> RWL: TP of BS becomes RWL entry zone'): the reversal rests at the breakout's TP from the moment the breakout starts
-            ecands = [(pbs['tp'], a, "the breakout's TP level (Law 27: TP of N = entry of N+1)")]
+            ecands = [(pbs.get('tp_level', pbs['tp']), a, "the breakout's TP level (Law 27: TP of N = entry of N+1)")]
             c = dict(c, rest_from=pbs['day'])
         if c.get('role') == 'bs' and E2.get('far_liq') is not None and c.get('from_zone') is not None and c['from_zone'].get('liq') and c.get('role') != 'transition':
             # the breakout's entry stands at the opposing liquidity beyond the range (6.4.2) - during the consolidation that zone is the day's DEEP zone on that side (E3C:115 WorkingDayMap
@@ -468,7 +469,14 @@ def _build(pair, monday, X, E2, tag):
                             stop, why_sl, rrr = sl2, why2 + ' (re-anchored outward: RRR over the 15R ceiling, E3C:365)', r2
                             break
                 if floor_rrr <= rrr <= MAX_RRR:
-                    s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
+                    # Fibonacci Spiderwebs (operator): 'Make sure there is a 1.5-2 pip buffer in front of the TP or you will miss it. MANDATORY ... If you skip this you will miss 60% of TPs';
+                    # E3C:324 'add a 1-2 pip spread so you dont miss the exit'. The order's TP stands TP_BUF pips in front of the target level (a level that already carries the 1-pip
+                    # spread gets the rest); the level itself stays the Law-27 link to the next trade (D-82)
+                    lvl_tp = tp
+                    extra = (TP_BUF - (1.0 if '+ 1 pip' in why_tp else 0.0)) * pip
+                    tp = tp + extra if direction == 'down' else tp - extra
+                    rrr = abs(tp - entry) / abs(entry - stop)
+                    s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'tp_level': lvl_tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
                          'why': f"entry {how}; SL {why_sl}; TP {why_tp}", 'src': (round(step['bot'], 6), round(step['top'], 6)) if 'bot' in step else None}
                     break
                 why_fail = f"RRR {rrr:.2f} outside [{floor_rrr}, {MAX_RRR}]"
@@ -530,7 +538,7 @@ def _build(pair, monday, X, E2, tag):
     for q in kept:
         q.setdefault('chain', None)
     for i, q in enumerate(kept):
-        nxt = next((k for k in kept[i + 1:] if abs(k['entry'] - q['tp']) <= 3 * pip and DAY_IDX[k['day']] >= DAY_IDX[q['day']] and k.get('parent_ref') is None), None)
+        nxt = next((k for k in kept[i + 1:] if abs(k['entry'] - q.get('tp_level', q['tp'])) <= 3 * pip and DAY_IDX[k['day']] >= DAY_IDX[q['day']] and k.get('parent_ref') is None), None)
         if nxt is not None and q.get('depth', 1) < 3:
             nxt['depth'] = q.get('depth', 1) + 1
             nxt['chain'] = q.get('chain') or f"CHAIN-{pair[:2]}{tag}{i + 1}"
@@ -557,7 +565,7 @@ def _reinforce(s, X, E2, env, pair, log):
     dn = s['dir'] == 'SHORT'
     # GS Law 6 'Primary -> R1: 20-30 pips | next MoM zone'; 8R.10 'map ALL liquidity zones between entry and TP': the first rocket is the first liquidity step at least 20 pips beyond the primary entry
     ref = s['entry'] - 20 * pip if dn else s['entry'] + 20 * pip
-    path = sorted([r for r in real if (((r['bot'] + r['top']) / 2 <= ref and r['bot'] > s['tp']) if dn else ((r['bot'] + r['top']) / 2 >= ref and r['top'] < s['tp']))],
+    path = sorted([r for r in real if (((r['bot'] + r['top']) / 2 <= ref and r['bot'] > s.get('tp_level', s['tp'])) if dn else ((r['bot'] + r['top']) / 2 >= ref and r['top'] < s.get('tp_level', s['tp'])))],
                   key=lambda r: -r['top'] if dn else r['bot'])
     out, last = [], None
     for r in path:
@@ -570,7 +578,7 @@ def _reinforce(s, X, E2, env, pair, log):
         if sl2 is None:
             log.append(f"reinforcement at {e2:.5f}: REJECT {why2}"); continue
         d2 = abs(sl2 - e2) / pip
-        rr = abs(s['tp'] - e2) / abs(e2 - sl2) if e2 != sl2 else 0
+        rr = abs(s.get('tp_level', s['tp']) - e2) / abs(e2 - sl2) if e2 != sl2 else 0      # measured to the target level (the TP buffer is an execution detail of the shared TP order)
         if not (GOLD_MIN <= d2 <= SL_CEIL and RRR_FLOOR <= rr <= MAX_RRR):
             log.append(f"reinforcement at {e2:.5f}: REJECT RRR {rr:.2f} / SL {d2:.1f}p"); continue
         if sum(1 for q in out if (min(q['entry'], q['sl']) <= max(s['entry'], s['sl']) and max(q['entry'], q['sl']) >= min(s['entry'], s['sl']))) >= 2:
