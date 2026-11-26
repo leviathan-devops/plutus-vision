@@ -211,7 +211,7 @@ def _confidence(s, X, E2, pair):
         parts.append(('BoM', 5))
     elif cls == 'MoM':
         parts.append(('MoM (Phase 4.1 layer 3)', -10))
-    side = a.get('type') or ('Supply' if a['bot'] > X['spot'] else 'Demand')
+    side = a.get('type') if a.get('type') in ('Supply', 'Demand') else {'RES': 'Supply', 'SUP': 'Demand'}.get(a.get('cat'), 'Supply' if s['dir'] == 'SHORT' else 'Demand')   # IP: by role; the pivot serves both
     if (side == 'Supply' and s['dir'] == 'SHORT') or (side == 'Demand' and s['dir'] == 'LONG') or a.get('sweep') or a.get('liq'):
         parts.append(('zone-direction alignment', 8))
     story = E2.get('storyline')
@@ -249,6 +249,11 @@ def _cands(E2, monday, X):
                 lim = 0.30 * X['U']
                 inner = [q for q in X['sd'] if q['tf'] in ('240', '60') and q['type'] == ('Supply' if d == 'down' else 'Demand') and lo['top'] <= q['bot'] and q['top'] <= hi['bot']
                          and ((hi['bot'] - q['top'] <= lim) if d == 'down' else (q['bot'] - lo['top'] <= lim))]
+                tr = next((x for x in E2['chain'] if x.get('role') == 'retest'), None)
+                if tr is not None and E2.get('pivot') is not None and d == E2.get('bdir') and S[tr['s0']]['i'] in days:
+                    # 6.4.2: the slow consolidation ends retesting the opposing liquidity FROM the pivot: on the transition day the swing in the breakout direction ends at the pivot (its far side)
+                    out.append({'shape': 'SS', 'dir': d, 'from_zone': dict(a), 'to_zone': E2['pivot'], 'from': a['bot'] if d == 'down' else a['top'], 'days': [DAYS[S[tr['s0']]['i']]],
+                                'to': E2['pivot']['bot'] if d == 'down' else E2['pivot']['top'], 't0': S[tr['s0']]['t0'] - 86400000, 't1': S[tr['s0']]['t1'], 'role': 'last-swing'})
                 for anc in sorted(inner, key=lambda q: -q['top'] if d == 'down' else q['bot']) + [a]:      # GS Law 3: the LTF zone first, the HTF bound after (Phase 6.3 keeps the first)
                     out.append({'shape': 'SS', 'dir': d, 'from_zone': dict(anc, name=anc.get('name', anc.get('label'))), 'to_zone': t, 'from': anc['bot'] if d == 'down' else anc['top'],
                                 'to': t['top'] if d == 'down' else t['bot'], 'days': dn, 't0': max(S[st['s0']]['t0'], D.boundary_ms(monday)), 't1': S[st['s1'] - 1]['t1'], 'role': st.get('role')})
@@ -305,6 +310,10 @@ def _build(pair, monday, X, E2, tag):
         ecands = _entries(a, direction, c['shape'], env, pair)
         if c['shape'] in ('BS', 'PBS') and setups and setups[-1]['shape'] == 'RWL' and setups[-1]['dir'] == ('LONG' if direction == 'up' else 'SHORT') is False:
             pass
+        if c.get('role') == 'retest':                        # Law 27 (E3C:438-449): the retest starts where the last swing's TP put price
+            ls = next((q for q in reversed(setups) if q.get('role') == 'last-swing' and a['bot'] - 3 * pip <= q['tp'] <= a['top'] + 3 * pip), None)
+            if ls is not None:
+                ecands = [(ls['tp'], {'bot': ls['tp'], 'top': ls['tp']}, 'the last swing\'s TP level (Law 27: TP of N = entry of N+1)')]
         prev = next((q for q in reversed(setups) if q['shape'] == 'RWL' and q['days'][-1] == c['days'][0]), None)
         if c['shape'] in ('BS', 'PBS') and prev is not None:
             lvl, pz = prev['tp'], prev['tp_zone']           # Law 27 (E3C:438-449): TP of the RWL = entry of the BS
