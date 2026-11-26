@@ -6,6 +6,12 @@
 - UPDATE (later commit): golden DXY now has ALL his leveled forward trades within 3 pips from the canon phases: #2 0.2/1.3/2.0, #3 0.6/2.7/0.1, #4 1.3/0.5/0.5, #5 0.5/0.1/0.5, #6 0.0/0.5/0.5,
   #8 1.3/0.3/0.0 + Thu ladder 100.980/101.059 (his 100.975/101.09) + one extra Mon short 101.203. Fixes: IP-zone role for the zone-direction layer; transition-day last swing into the pivot ('last-swing');
   retest entry = that TP (Law 27); BS entry = the retest TP (Law 27). NEXT: fills check, EURUSD / GBPUSD / Apr 20 / other weeks, frames, ledger, audit/G2_response.md, S/D findings, fresh audit.
+- FILLS with E3 v2 (commit 38e6a0b): golden DXY 8 setups 7 TP 1 unfilled 0 SL. EURUSD golden 7 setups: 1 TP (EU5 BS long = his #6 1.3/0.4/1.1), 2 SL, 4 unfilled - the pair's SS candidates sit at
+  the wrong zones (his #1 S 1.14322, #2 L 1.14106, #4 L 1.14012, #5 S 1.14277 not produced; the pair needs the same 'last-swing' / retest logic: E2 pair translation gives no pivot role?) and the RWL is a SHORT
+  at 1.14484 (should mirror DXY's retest = a short from the pair's pivot?). GBPUSD golden: 1 setup only (check gates in the log). Apr 20 DXY: 2 setups (Mon S stopped, Mon L TP); Oct 5 / May 18: SS all week
+  -> only Monday's pair of scalps is generated (the SS step spans the week; candidates exist once per step - fine) but most later swings have no setup; May 18 short stopped by the breach (stop rule (b) at
+  99.459 < Thu high 99.515). NEXT: (1) pairs: mirror the DXY E3 roles (last-swing, retest, BS, rwl) on the pair map; (2) GBPUSD gates; (3) SS-all-week weeks: re-arm swing scalps after each TP (Law 27 chain:
+  TP of N = entry of N+1 inside the same SS step) so later days carry setups; (4) frames for golden DXY / EURUSD with E3 v2 + ledger; (5) audit/G2_response.md; (6) fresh audit.
 - (older) GOLDEN DXY NOW: DX2 Mon S 101.138/101.213/100.825 (his #2), DX3 Mon L 100.851/100.743/101.189 (his #3), DX4 Wed BS S 101.273/101.359/100.685 (his #6: entry 3.8 off), DX5 Thu ladder 100.980/101.059,
   DX6 Fri RWL L 100.628/100.548/100.940 (his #8); 5 TP, 1 unfilled (DX1 101.203). MISSING his #4 (Wed S 101.19/101.25/100.975) and #5 (Wed L 100.975/100.905/101.24).
 - NEXT (exact): (1) Wed RWL (retest) candidate rejected by CONFIDENCE 60.5 - print conf_parts, check each part against E3C:392-404; its entry must be the pivot's LOWER rung (Law 27: the TP of the last SS short
