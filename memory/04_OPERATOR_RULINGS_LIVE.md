@@ -114,3 +114,8 @@ Superseded today: R-12 (operator-driven turn by turn) -> now FULLY AUTONOMOUS. R
   He also said: "I don't really understand what questions you have for me. It seems like everything is clear and you're just stopping short of actually finishing the goal." -> do NOT stop to ask; finish.
   Implementation: e1_zones.valid_sd(): 4H Step 0f = overview (class BoM/MoM, Tier 1 when a 1H candle sits in a 4H BoM 0X-1X); zones are the 1H candles (same candle rule, prior 2 weeks); a 4H zone with no 1H candle in it stays as the 4H candle.
 - L-41 (M-53, 2026-11-26) Full goal reinstated: E1 + E2 + E3, one program, any week, 80-90% each, verified in Pinebox; sub-agents only for adversarial review and the final two-agent blind test (2 unseen weeks each, own Pinebox); self-grading forbidden; never stop until met. Goal prompt: memory/14_GOAL_PROMPT.md.
+
+## 2026-11-26 - after my "at chance / goal not met" report (BINDING)
+- L-42 (M-54) The strategy WORKS: the Fractal Architecture document is his exact trading strategy, ~80% win rate. I am the bottleneck. Bad output = my mistakes, never external circumstances. Never again say or imply the strategy / canon does not work.
+- L-43 (M-55) Do exactly what he told me to build; no ideas of my own; every deviation from his instructions has failed. "Everything is handed to you on a silver platter." Do not bother him.
+- L-44 (M-56) Goal prompt with EXPLICIT anti-patterns and success conditions; STOP CHANGING THE SCOPE; no own ideas. -> memory/14_GOAL_PROMPT.md v2 is that prompt and is the standing order.

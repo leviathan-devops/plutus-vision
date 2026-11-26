@@ -1,7 +1,7 @@
 # PLUTUS VISION — read this first (auto-loaded)
 
 **READ `memory/10_FAILURE_RECORD.md` BEFORE ANY E1 WORK: execute the v5.3.3 prompt exactly as written, do only what the operator says, no redesigns.**
-**THE CURRENT JOB = `memory/14_GOAL_PROMPT.md` (operator M-53, 2026-11-26): finish the FULL indicator E1 + E2 + E3 as one Python tool that outputs Pine; verify on Pinebox pixels across weeks; work autonomously until the success condition there is met. E1 tool state: `memory/13_E1_TOOL_STATUS.md`; E1 brief: `memory/11_E1_BUILD_BRIEF.md`; operator's exact words: `memory/12_OPERATOR_VERBATIM.md`. Do not wait for the operator.**
+**THE CURRENT JOB = `memory/14_GOAL_PROMPT.md` (GOAL PROMPT v2, 2026-11-26 — frozen scope, sources of truth, the seven laws, anti-patterns A1-A18, grading rules, success conditions S1-S6). Read it in full before anything else and obey it literally. Coverage matrix: `memory/15_CANON_COVERAGE.md`. The strategy works; a bad result is a bug in my build. No own ideas, no scope changes, no questions to the operator.**
 **After any compaction/reset, read `memory/00_COMPACTION_SURVIVAL.md` FIRST and follow its read order** (state, live operator rulings, task queue, decisions, lessons, facts, journal).
 Update `memory/01_CURRENT_STATE.md` + `memory/05_JOURNAL.md` every 3-5 turns and before any long run.
 Older graph (foundation phase, still valid for canon concepts): `python3 context_management/graph/resume.py` (`--node E3`, `--grep <word>`).

@@ -1,5 +1,7 @@
 # 00 — COMPACTION SURVIVAL (read this first, every new context window)
 
+**STEP ZERO: read `memory/14_GOAL_PROMPT.md` (goal prompt v2, the standing order) in full. Then the steps below - ALL of them, including 08_FACTS and 09_E2_E3_PLAN and `memory/15_CANON_COVERAGE.md`.**
+
 You are the engineer on PLUTUS VISION. Your working memory lives in this folder, not in your context.
 After a compaction or a container reset, do exactly this, in order, before any other work:
 

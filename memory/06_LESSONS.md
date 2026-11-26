@@ -41,3 +41,10 @@
 - LS-28 A rule that "fixes" one week must be checked against the reference week before keeping it: closed-through=broken deleted the reference's Mid-Range Support; clustering candle zones merged its Ceiling and Upper Resistance. Both reverted.
 - LS-29 Step 0f bar indices are relative to the 60-day slice, not the full bar list (bug cost one run: all 49 zones "broken"). step0f now returns end_time.
 - LS-30 Measured over 120 week/pair maps: candle-anchored zones are closed through within 3h far less often (24/150) than level-only zones (40/85). State facts like this as counts, never as "accuracy".
+
+- LS-31 (2026-11-26) I repeated a mistake the foundation graph already recorded (FND_E1_NULL: "DO NOT cite as evidence canon is wrong"): I built about a third of the strategy (no liquidity map, no 15m/30m zones, no Fibonacci, no rockets, no shields, no day cycle),
+  measured it with my own scripts, and told the operator his strategy performs at chance. A null from a partial build says nothing about the strategy. Never evaluate the strategy; only my fidelity (goal prompt v2, section 2, A3, A4, A5).
+- LS-32 After the compaction I did not read memory/08_FACTS.md and memory/09_E2_E3_PLAN.md (the summary's read list omitted them), so I forgot: the golden week Jul 6-10 2026 with the operator's own trades (E3 oracle, 3-pip tolerance), his shape tags, his hand-drawn zones and rungs,
+  FND_RUNG_DENSITY (his entries sit on 1H wick-touch-density rungs), and the handover bible TTE_GOLDEN_STANDARD_COMPLETE_REFERENCE.md (7 laws from his 38 winning trades + exact code changes). Follow memory/00's FULL read order every time.
+- LS-33 The seven laws (multi-TF stacking 15m/30m/1H/4H; shape-driven reachability; LTF-edge entries, 4H = bias + TP; SL behind a liquidity shield 5-15 pips; Fibonacci-anchored entries and rockets; ladder reinforcement with SL cascade; zones first then shapes) are the construction rules of every winning trade.
+  My E3 broke every one of them (1H candle-edge limit, 3-pip stop with no shield, no Fib, no rockets, shapes not tied to reachability).

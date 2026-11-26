@@ -1,3 +1,9 @@
+## STATE (NEWEST, 2026-11-26 after M-54..M-56) - STANDING ORDER = memory/14_GOAL_PROMPT.md v2. RESTART OF THE BUILD UNDER IT.
+- What exists in e1_tool/ (E1 1H zones, e2_shapes.py, e3_setups.py, e1_pine.py) is a PARTIAL build that breaks the seven laws; keep what reproduces the Apr 20-24 E1 report, rebuild E2/E3 by the canon.
+- NEXT STEP (goal prompt section 9): build memory/15_CANON_COVERAGE.md by reading, in full and first-hand: TTE_GOLDEN_STANDARD_COMPLETE_REFERENCE.md (Part 7 onward still unread), the corrected E3 spec (all phases + Appendix F), the Fractal Architecture, the Fibonacci Spiderwebs PDF,
+  prompt Parts III-VI; then fix the golden-week oracle from his screenshots into context_management/oracle/golden_week.json; then work the anchor week Jul 6-10 2026 (DXY + EURUSD) row by row until S2 holds.
+- Do not message the operator except per goal prompt section 11.
+
 ## STATE (NEWEST, 2026-11-26 end of this run) - pipeline complete E1+E2+E3, anchor week passes on pixels, but measured edge is at CHANCE level -> goal NOT met; reported to operator
 - Read memory/05_JOURNAL.md entries dated 2026-11-26 (KEY FINDING, split test) and the UPDATE block at the top of memory/13.
 - Latest commit on AGENT holds: 1H-worked zones with strict one-time use; E2 chain + alternative branch + pair translation; E3 scalps / reversals / transitions with arming and the 4H gate; Pine draws all three.
