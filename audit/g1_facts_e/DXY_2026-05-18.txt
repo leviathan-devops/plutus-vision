@@ -32,15 +32,15 @@ ENGINE 2:
 
 ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
  're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
-  DX1      Mon SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | filled - -> not filled inside its bracket (order expires)
+  DX1      Mon SS     SHORT E 99.409 SL 99.539 TP 99.052 2.75R | filled - -> not filled inside its bracket (order expires)
   DX2      Mon SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | filled Mon 11:30 -> STOPPED Mon 16:15
-  DX3      Tue SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | filled Tue 13:15 -> STOPPED Wed 08:15
+  DX3      Tue SS     SHORT E 99.409 SL 99.539 TP 99.052 2.75R | filled Tue 13:15 -> TP HIT Wed 15:15
   DX4      Tue SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
-  DX5      Wed SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | filled Wed 08:15 -> STOPPED Wed 14:00
+  DX5      Wed SS     SHORT E 99.409 SL 99.539 TP 99.052 2.75R | filled - -> not filled inside its bracket (order expires)
   DX6      Wed SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
-  DX7      Thu SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | void: the anchor zone was closed through on 1H Wed 07:00 (VIOLATED, E3C:150)
+  DX7      Thu SS     SHORT E 99.409 SL 99.539 TP 99.052 2.75R | filled Thu 07:15 -> filled, still open at the week end
   DX8      Thu SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
-  DX9      Fri SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | void: the anchor zone was closed through on 1H Wed 07:00 (VIOLATED, E3C:150)
+  DX9      Fri SS     SHORT E 99.409 SL 99.539 TP 99.052 2.75R | not placed: the earlier order at this anchor is still an open position
   DX10     Fri SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
   ! Mon SS up: REJECT RRR 2.20 outside [2.5, 15.0] (entry 99.24400)
   ! Mon SS up: REJECT RRR 1.44 outside [2.5, 15.0] (entry 99.29800)

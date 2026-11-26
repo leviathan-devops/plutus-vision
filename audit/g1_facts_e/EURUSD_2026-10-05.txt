@@ -27,12 +27,12 @@ ENGINE 2:
 ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
  're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
   EU1      Mon SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | filled - -> not filled inside its bracket (order expires)
-  EU2      Mon SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | filled - -> not filled inside its bracket (order expires)
+  EU2      Mon SS     LONG  E 1.11660 SL 1.11480 TP 1.12476 4.53R | filled - -> not filled inside its bracket (order expires)
   EU3      Tue SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | filled Tue 09:45 -> STOPPED Tue 11:15
-  EU4      Tue SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | filled - -> not filled inside its bracket (order expires)
+  EU4      Tue SS     LONG  E 1.11660 SL 1.11480 TP 1.12476 4.53R | filled - -> not filled inside its bracket (order expires)
   EU5      Wed SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
-  EU6      Wed SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | filled Wed 12:15 -> filled, still open at the week end
+  EU6      Wed SS     LONG  E 1.11660 SL 1.11480 TP 1.12476 4.53R | filled Wed 12:15 -> filled, still open at the week end
   EU7      Thu SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
-  EU8      Thu SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | not placed: the earlier order at this anchor is still an open position
+  EU8      Thu SS     LONG  E 1.11660 SL 1.11480 TP 1.12476 4.53R | not placed: the earlier order at this anchor is still an open position
   EU9      Fri SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
-  EU10     Fri SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | not placed: the earlier order at this anchor is still an open position
+  EU10     Fri SS     LONG  E 1.11660 SL 1.11480 TP 1.12476 4.53R | not placed: the earlier order at this anchor is still an open position

@@ -30,12 +30,12 @@ ENGINE 2:
 ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
  're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
   GB1      Mon SS     SHORT E 1.32319 SL 1.32425 TP 1.31915 3.82R | filled Mon 07:45 -> TP HIT Mon 13:45
-  GB2      Mon SS     LONG  E 1.31949 SL 1.31869 TP 1.32304 4.44R | filled Mon 13:30 -> TP HIT Tue 01:30
+  GB2      Mon SS     LONG  E 1.31924 SL 1.31769 TP 1.32333 2.64R | filled Mon 13:30 -> TP HIT Tue 07:30
   GB3      Tue SS     SHORT E 1.32319 SL 1.32425 TP 1.31915 3.82R | filled Tue 01:30 -> STOPPED Tue 08:30
-  GB4      Tue SS     LONG  E 1.31949 SL 1.31869 TP 1.32304 4.44R | filled - -> not filled inside its bracket (order expires)
+  GB4      Tue SS     LONG  E 1.31924 SL 1.31769 TP 1.32333 2.64R | filled - -> not filled inside its bracket (order expires)
   GB5      Wed SS     SHORT E 1.32319 SL 1.32425 TP 1.31915 3.82R | void: the anchor zone was closed through on 1H Tue 08:00 (VIOLATED, E3C:150)
-  GB6      Wed SS     LONG  E 1.31949 SL 1.31869 TP 1.32304 4.44R | filled Wed 12:15 -> STOPPED Thu 09:00
+  GB6      Wed SS     LONG  E 1.31924 SL 1.31769 TP 1.32333 2.64R | filled Wed 12:15 -> TP HIT Thu 14:15
   GB7      Thu SS     SHORT E 1.32319 SL 1.32425 TP 1.31915 3.82R | void: the anchor zone was closed through on 1H Tue 08:00 (VIOLATED, E3C:150)
-  GB8      Thu SS     LONG  E 1.31949 SL 1.31869 TP 1.32304 4.44R | filled Thu 09:00 -> STOPPED Thu 09:15
+  GB8      Thu SS     LONG  E 1.31924 SL 1.31769 TP 1.32333 2.64R | filled - -> not filled inside its bracket (order expires)
   GB9      Fri SS     SHORT E 1.32319 SL 1.32425 TP 1.31915 3.82R | void: the anchor zone was closed through on 1H Tue 08:00 (VIOLATED, E3C:150)
-  GB10     Fri SS     LONG  E 1.31949 SL 1.31869 TP 1.32304 4.44R | skipped: 4th battle at this anchor (E3C:150 'index i > 2 skipped')
+  GB10     Fri SS     LONG  E 1.31924 SL 1.31769 TP 1.32333 2.64R | filled - -> not filled

@@ -243,3 +243,10 @@ CORRECTION (same night, after fitting all 23 trades): the per-trade ranges above
 (b) the buffers of the PDF show in his numbers: stops 1-3 pips beyond the Fib level, TPs 0-2.5 pips in front of it.
 (c) SL / R ratios of the 23 trades lie between 0.12 and 0.39 (RRR 2.5-8).
 So the build is: the Fib grid on the E2-forecast retest leg (0 = the retest extreme = opposing liquidity, 1 = the swing before it) for the breakout family - entry 0.236 (and the deep entry near 0), rocket 0.786 with SL 0.618, TP 1.618 (the BoM zone 'sits at the 1.382-1.618 extension'), reversal at 1.618 / 2.618 with SL one level on + 2-3 pips and TP one range back; plus the PDF's buffers everywhere.
+
+## VIRGIN 1H MoM ZONES AND HIS OWN ENTRIES (checked 2026-11-26 night, golden_week.json zone labels vs his trades) - why no 'virgin MoM = reject' gate stands on swing scalps
+His own chart labels (the sealed V1's): GBPUSD demand '1H (Unmitigated) | MoM' 1.33081-1.3334 -> his #1 long 1.3333 stands on it (rung 1.33335); EURUSD demand '1H (Unmitigated) | MoM' 1.13999-1.14144 -> his #2 long ~1.1410 (rung 1.1411);
+DXY demand '1H (Unmitigated) | MoM' 100.822-100.85 -> his #3 long 100.845 (rung 100.845). So he DOES take swing scalps at unmitigated 1H MoM zones - at the liquidity rung in them (F1-C).
+Canon lines that say otherwise for ENTRY zones in general: P533:1157 / 2218 ('MoM (virgin) | ENTRY-REJECT'), E3C 8.14 rule 6 ('no entry at MoM unless ALL 4 exceptions'), E3C:1053 VIRGIN_MOM_DEATH_ZONE ('on counter-trend').
+Measured on the 16 locator maps: setups on virgin 1H MoM zones = 6 TP / 6 stops; 'counter-trend = against the E2 storyline' would delete GBPUSD golden #2 and keep 5 of the 6 losers. NOT BUILT as a gate; the open question is what separates
+his MoM entries (a rung inside the zone, range day) from the losers (zone edge / 30m block, no rung: DXY Oct 5 101.926, EURUSD Oct 5 1.12491 - both pierced to the BoM zone right behind them, P533:1161 priority rule).

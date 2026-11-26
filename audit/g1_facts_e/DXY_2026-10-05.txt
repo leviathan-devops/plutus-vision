@@ -26,13 +26,13 @@ ENGINE 2:
 
 ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
  're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
-  DX1      Mon SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | filled - -> not filled inside its bracket (order expires)
+  DX1      Mon SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | filled - -> not filled inside its bracket (order expires)
   DX2      Mon SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | filled - -> not filled inside its bracket (order expires)
-  DX3      Tue SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | filled - -> not filled inside its bracket (order expires)
+  DX3      Tue SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | filled - -> not filled inside its bracket (order expires)
   DX4      Tue SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | filled Tue 11:00 -> STOPPED Tue 11:30
-  DX5      Wed SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | filled Wed 12:15 -> TP HIT Fri 05:30
+  DX5      Wed SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | filled Wed 12:15 -> TP HIT Fri 05:30
   DX6      Wed SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
-  DX7      Thu SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | not placed: the earlier order at this anchor is still an open position
+  DX7      Thu SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | not placed: the earlier order at this anchor is still an open position
   DX8      Thu SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
-  DX9      Fri SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | filled - -> not filled
+  DX9      Fri SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | filled - -> not filled
   DX10     Fri SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)

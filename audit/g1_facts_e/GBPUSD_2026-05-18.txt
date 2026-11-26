@@ -40,12 +40,12 @@ ENGINE 2:
 ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
  're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
   GB1      Mon SS     SHORT E 1.33983 SL 1.34067 TP 1.33136 10.08R | filled Mon 12:30 -> STOPPED Mon 15:30
-  GB2      Mon SS     LONG  E 1.33197 SL 1.33132 TP 1.33926 11.22R | filled Mon 06:00 -> TP HIT Mon 12:30
+  GB2      Mon SS     LONG  E 1.33197 SL 1.33017 TP 1.33926 4.05R | filled Mon 06:00 -> TP HIT Mon 12:30
   GB3      Tue SS     SHORT E 1.33983 SL 1.34067 TP 1.33136 10.08R | void: the anchor zone was closed through on 1H Mon 15:00 (VIOLATED, E3C:150)
-  GB4      Tue SS     LONG  E 1.33197 SL 1.33132 TP 1.33926 11.22R | filled - -> not filled inside its bracket (order expires)
+  GB4      Tue SS     LONG  E 1.33197 SL 1.33017 TP 1.33926 4.05R | filled - -> not filled inside its bracket (order expires)
   GB5      Wed SS     SHORT E 1.33983 SL 1.34067 TP 1.33136 10.08R | void: the anchor zone was closed through on 1H Mon 15:00 (VIOLATED, E3C:150)
-  GB6      Wed SS     LONG  E 1.33197 SL 1.33132 TP 1.33926 11.22R | filled - -> not filled inside its bracket (order expires)
+  GB6      Wed SS     LONG  E 1.33197 SL 1.33017 TP 1.33926 4.05R | filled - -> not filled inside its bracket (order expires)
   GB7      Thu SS     SHORT E 1.33983 SL 1.34067 TP 1.33136 10.08R | void: the anchor zone was closed through on 1H Mon 15:00 (VIOLATED, E3C:150)
-  GB8      Thu SS     LONG  E 1.33197 SL 1.33132 TP 1.33926 11.22R | filled - -> not filled inside its bracket (order expires)
+  GB8      Thu SS     LONG  E 1.33197 SL 1.33017 TP 1.33926 4.05R | filled - -> not filled inside its bracket (order expires)
   GB9      Fri SS     SHORT E 1.33983 SL 1.34067 TP 1.33136 10.08R | void: the anchor zone was closed through on 1H Mon 15:00 (VIOLATED, E3C:150)
-  GB10     Fri SS     LONG  E 1.33197 SL 1.33132 TP 1.33926 11.22R | filled - -> not filled
+  GB10     Fri SS     LONG  E 1.33197 SL 1.33017 TP 1.33926 4.05R | filled - -> not filled
