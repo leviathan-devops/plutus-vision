@@ -221,13 +221,21 @@ def score(p, by, U):
     for l in by.get(2, []):
         if near(l, ZN):
             pillars.add(2); tech = max(tech, l['pts']); tally += 2.0 if l.get('recapture') else 0.0; members.append(l)
+    # Options-Derived (P533:1470): 2 = the level is a Critical Option Wall (>= 1.5B), 1 = a Significant Magnet; "is" = inside the strike's own confidence band (+-0.07 / +-0.10, P533:1443-1447)
     for l in by.get(8, []):
-        if near(l, max(ZN, l.get('band', 0))):
+        if near(l, l['band']):
             pillars.add(8); opt = max(opt, 2 if l['tier'] == 1 else 1); tally = max(tally, {1: 3.0, 2: 2.0, 3: 1.0}[l['tier']]); members.append(l)
+    # Structural (P533:1472): 2 = exact price anchor + structural extreme (both within 3 pips); 1 = proximity (10 pips) to an anchor or a structural extreme; 4H zone edge 1, minor swing 0.5 (U-10)
+    anc_ex = ext_ex = False
     for l in by.get(5, []):
         if near(l, ZN):
-            pillars.add(5); base = l['struct']
-            struct = max(struct, base if near(l, EX) else (1.0 if base >= 2 else base)); bonus = max(bonus, l.get('bonus', 0.0)); members.append(l)
+            pillars.add(5); members.append(l)
+            anc_ex = anc_ex or (l.get('anchor') and near(l, EX)); ext_ex = ext_ex or (l.get('extreme') and near(l, EX))
+            struct = max(struct, 1.0 if (l.get('anchor') or l.get('extreme')) else l['struct'])
+            if l.get('extreme') and near(l, EX):
+                bonus = max(bonus, l.get('bonus', 0.0))          # the bonus belongs to levels WITH verified structural-extreme status (P533:1476-1484)
+    if anc_ex and ext_ex:
+        struct = 2.0
     ps = round_psych(p, U)
     for l in by.get(6, []):
         if near(l, ZN):

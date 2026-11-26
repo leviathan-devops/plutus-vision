@@ -345,3 +345,15 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   (b) "group into zones where levels cluster within 0.10-0.15; pressure degree = the group's highest-scoring level" - the zone is the CLUSTER, so around a Critical Option Wall the tight cluster containing the wall level (101.232, 101.248 MA triple, 101.25 quarter + 4H supply top) is the zone and the wall line is drawn inside it (L-39);
   (c) whether a seed that IS the wall / anchor outranks seeds that merely lie near one.
 - Then: e1_pine wiring (IP zones from e1_ip, sweep zones, V1 order blocks + liquidity ladder per timeframe, 4H/1H candle zones, strike lines), render Jul 6-10 DXY, open the frame, compare with g1 / g4.
+
+## 2026-11-26 - D1 RESOLVED by the literal canon table (P533:1467-1475), no tuning
+- e1_ip.score(): Options-Derived = 2 only INSIDE a Tier-1 strike's own confidence band (+-0.07), 1 inside a Tier-2 band (+-0.10) [was: anything within 10+ pips]; Structural = 2 only for an exact price anchor AND a structural extreme (both within 3 pips), 1 for proximity (10 pips) to either,
+  4H zone edge 1, minor swing 0.5; the structural-extreme bonus only for a level within 3 pips of a Step 0 / 0.5 extreme.
+- Golden week DXY now (spot 101.025 at the anchor; 12 bands, 10 MODERATE+, six drawn):
+  UPPER RESISTANCE 101.430-101.503 (8, Standard Wall, Tier 1: 4H BoM supply edges) · UPPER RESISTANCE 101.180-101.252 (8, Standard Wall: the EUR/USD 1.1400 EUR 2.2bn wall 101.232 inside; HIS UPPER BAND 101.19-101.29, line 101.24 -> centre 2.4 pips off, bottom 1 pip off)
+  · EQUILIBRIUM 100.985-101.077 (9; 101.00 big figure, contains spot) · MID-RANGE SUPPORT 100.724-100.815 (7; the 1.1500 wall 100.724) · KEY SUPPORT 100.248-100.316 (8, Tier 1) · KEY SUPPORT 99.492-99.559 (7.5).
+  Not drawn (rank 7-10): 101.750-101.830, 99.973-100.042, 100.470-100.530, 99.220-99.298.
+- E1 FAMILIES NOW PRESENT AS DATA for the golden week: IP zones (e1_ip.build -> zones), sweep zones incl. 100.558-100.658 = his lower green band (X['lsz']), 4H candle zones incl. his 4H BoM supply 101.316-101.43 (X['z4']),
+  V1 order blocks + liquidity ladder on 4H / 1H / 30m / 15m (e1_v1.harvest_all), option strikes (level kind 'EUR/USD ...'), zone mechanics (BoM/MoM, reactions, Engine 3 status), intra-zone levels.
+- NEXT: (1) e1_pine.py: draw these families in trident_v8 form (IP zones red / orange / teal with name + degree + ZFP range; sweep zones green; strike lines amber; candle zones with "4H|1H ... BoM/MoM NX" labels; V1 ladder as thin green bands; V1 order blocks blue / red),
+  two-week window ending Friday 17:00 NY; (2) render DXY Jul 6-10 in Pinebox, OPEN the frame, compare with g1 / g4 family by family (ledger rows); (3) re-run Apr 20-24 with the new anchor and e1_ip; (4) Step 0.6 key levels, core/spike, reaction counter display; then E2, E3.
