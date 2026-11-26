@@ -384,3 +384,15 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - e1_pine.py rewritten: layers show_ip / show_lv (member levels as dotted lines, L-39) / show_lsz / show_opt / show_sd (4H + 1H) / show_ltf (30m + 15m) / show_lq / show_ob / show_e2 / show_e3; generate(..., extra=[]) takes the E2 / E3 lines.
 - Frames opened: evidence/e1tool_DXY_1H_2026-07-06_gw2_sd.png and _gw2_ip.png (ledger 53-54): readable; every zone the week reached reacted except Mid-Range Support, which Friday's flush crossed before the sweep-zone reversal.
 - NEXT: E2 from canon 6.1-6.10 on the golden week (day boxes + line) against his tags; E3 from the corrected spec on the V1 ladder + e1_sd zones against the 8 + 8 + 7 trades; then EURUSD / GBPUSD frames; then S3-S6.
+
+## 2026-11-26 - ENGINE 2 REBUILT FROM THE CANON TEXT (e1_tool/e2_chain.py); golden week DXY follows the candles (ledger 55-56); one-command entry e1_tool/plutus.py
+- e2_chain.build(pair, monday, X, lead): Step 1 current_shape() = matrix 6.2 on the last completed sessions against this week's IP zones (BS = a session body crossed a zone, PBS two or more; WL = pierced a zone and closed back);
+  two piercing sessions or a WL -> SS (conservation of energy, FA 9); R lasting a session -> SS (6.4.1); else late consolidation. Breakout direction = a failing bound (ZFP > 45) else the 4H storyline (last structure-valid 4H origin zone).
+  Bounds (6.5) = nearest IP zones with ZFP < 30 and score >= 6 each side; fallback nearest standing 1H/4H supply/demand zone. Target (6.4.2 last branch "pierce through zone until reaching BoM Liquidity") = first unmitigated 1H/4H BoM zone
+  beyond the bound joined with the unswept sweep zones within 0.15; what follows the BS = 6.4.1 on the target (BoM / < 20% -> WL+RWL; 20-40 -> R; > 60 -> PBS). Timing: SS two sessions (one when the consolidation is already old),
+  then the transition day SS+RWL+BS (the consolidation ends retesting the opposing liquidity, 6.4.2), BS continuation (6.10: a continuation day only reaches the bound), then the target day. Pairs: DXY day shapes, inverted direction, own zones.
+  Output: audit trail, chain with cumulative confidence, day map (shapes, dir, key zone, lo, hi, conf), path points, alternative chain + decision zone. pine(): day boxes + yellow line (R-03).
+- Golden week DXY: Mon SS 100.815-101.199 | Tue SS | Wed SS+RWL+BS down 101.031-101.262 | Thu BS down | Fri WL+RWL up 100.558-100.985. EURUSD: SS 1.14053-1.14444 (his Monday trades turn at 1.14103 / 1.14442), Wed retest 1.13977, BS up, Fri WL+RWL down from the supply.
+  GBPUSD (no option data: every IP zone a Soft Wall): SS bounds fall back to 1H zones 1.33333-1.33544; Monday's real rally went to 1.3398 - levels too tight there, day shapes Wed-Fri right. Open.
+- plutus.py MONDAY PAIR [out] = E1 + E2 (+ E3 when e3_trades.py exists) -> one Pine; tools/e1render now calls it.
+- NEXT: e3_trades.py from the corrected spec (re-read phases 0-4, 8R, cascade mirror first): entries at zone edges / rungs per the day map, ladder-step SL, one TP at the opposing zone, position boxes; compare with the 8 + 8 + 7 trades.
