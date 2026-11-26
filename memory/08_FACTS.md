@@ -202,3 +202,14 @@
 - STOP MODEL REFINED (hand-checked on all 7 of his golden DXY stops, 2026-11-26): current step = the SMALLEST liquidity step containing the entry (V1 1H rung or V1 4H band; none if the entry sits between rungs);
   the shield = the first THICK step (a V1 4H band) or the SECOND thin 1H rung beyond the current step, whichever is nearer (FA 2.1 'Thin liquidity zones are NEVER allowed as entry or SL zones ... each thin zone counts
   as 2 thin zones' inside a 4H pool); SL = 1 pip INSIDE the shield's close edge (E3C:255 rule (b)). Distances to his stops: #2 1.3, #3 2.7, #4 0.5, #5 0.1, #6 2.9 (rule (a) on the 4H band 0.5), #7 1.3, #8 0.3 pips.
+
+## HIS 23 GOLDEN STOPS ON THREE PAIRS vs E1 STRUCTURES (measured 2026-11-26 with scratchpad stops.py = for each trade: structures holding the entry, structure edges within 2.5 pips of the SL; bug locator)
+- Stop distances: DXY 4.0 / 6.0 / 7.5 / 6.0 / 7.0 / 9.5 / 11.5 / 7.0 pips; EURUSD 8.6 / 6.7 / 6.4 / 4.8 / 4.8 / 8.5 / 5.0 / 7.1; GBPUSD 10.7 / 14.1 / 13.1 / 10.7 / 11.4 / 7.9 / 10.6. (E3C:279-293 golden SL 4-9.5 pips fits DXY + EURUSD; GBPUSD runs 8-14.)
+- DXY + EURUSD stops sit on an edge of a liquidity band of SOME timeframe (15m / 30m / 1H / 4H) or of the order block above / below the entry:
+  DXY #1 = 15m band 100.905-100.916 bottom (0.0); #2 = top of the 30m supply OB he entered (101.205, -0.5) = 1H rung bottom 101.203 (-0.3); #3 = bottom of the 15m demand OB 100.779-100.814 (-0.9); #4 = 4H band bottom 101.245 (+0.5);
+  #5 = same 15m band as #1; #6 = 1H rung top (-0.5); #8 = bottom of the 15m BoM demand 100.546-100.663 (-0.1) = 4H band top 100.558 (-1.3).
+  EURUSD #1 = top of the 30m / 15m supply OB 1.1441 (-0.2); #3 = bottom of the next 15m supply OB 1.14505 (0.0); #4 = inside the 15m band (bot +0.7); #5 = bottom of the 30m supply OB above (-0.2) = 4H band top -1.4;
+  #6 = 4H band top 1.1388 (-1.2); #7 = 4H band top 1.14178 (+0.5) = 1H rung top (+0.5); #8 = 4H band bottom 1.14658 (-0.9).
+- GBPUSD stops match almost no structure edge within 2.5 pips (#1 = bottom of an IP zone -0.1; #2 = 4H band top +0.9; #4 = 15m band bottom 0.0; #3, #5 none): on GBPUSD the tool's ladder is too sparse / different from what he used.
+  Tool vs his GBPUSD Monday long: entry 1.33333 identical, tool stop 25 pips (rule (b) on the 4H band) vs his 10.7 -> RRR 2.39 -> rejected. E2 range 1.33333-1.33941 = his Monday pair L 1.33331 -> 1.33941, S 1.33934 -> 1.33347 to the pip.
+- Entries: every DXY / EURUSD entry lies inside a 15m / 30m / 1H band or a 15m / 30m order block (scalp-stack structure); GBPUSD #1 / #3 = top edge of the 1H MoM demand 1.33082-1.33333 (TS-1), #2 = bottom edge of the IP / supply 1.33933, #5 inside the V1 4H supply OB.
