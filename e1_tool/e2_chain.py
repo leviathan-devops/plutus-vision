@@ -57,9 +57,12 @@ def current_shape(X):
     n_pierce = sum(1 for s in hist[-2:] if s['shape'] in PIERCING)
     if last['shape'] in ('BS', 'PBS') and before['shape'] not in PIERCING:
         s0 = {'shape': last['shape'], 'dir': last['dir'], 'why': f"the last session ({last['date']}) broke {', '.join(last['zones'])}"}
-    elif n_pierce >= 2 or last['shape'] in ('WL', 'RWL'):
+    elif n_pierce >= 2:
         s0 = {'shape': 'SS', 'dir': 'range', 'phase': 'post-energy',
               'why': f"two piercing sessions ({before['date']} {before['shape']} {before['dir']}, {last['date']} {last['shape']} {last['dir']}): conservation of energy, 1-2 full days of consolidation (FA 9)"}
+    elif last['shape'] in ('WL', 'RWL'):
+        s0 = {'shape': 'SS', 'dir': 'range', 'phase': 'late',
+              'why': f"a whiplash ({last['date']} {last['dir']}) at the end of a consolidation: the range is old, the breakout is near (6.4 WL -> RWL / SS -> BS)"}
     elif last['shape'] == 'R':
         s0 = {'shape': 'SS', 'dir': 'range', 'phase': 'recovery', 'why': f"recovery after {before['shape']} {before['dir']} has lasted a full session: reclassified SS (6.4.1)"}
     else:
@@ -77,7 +80,7 @@ def _bounds(X):
     pivot = next((z for z in X['zones'] if z['bot'] <= spot <= z['top']), None)
 
     def pick(ips, sds):
-        z = next((q for q in ips if q['zfp_num'] < 30 and q['score'] >= 6), None)
+        z = next((q for q in ips if q['zfp_num'] < 30 and q['score'] >= 6 and min(abs(q['bot'] - spot), abs(q['top'] - spot)) <= 0.30 * X['U']), None)      # GS Law 2: SS zones 0-30 pips from spot
         if z is None and sds:
             q = sds[0]
             z = {'bot': q['bot'], 'top': q['top'], 'name': q['label'], 'zfp_num': 15 if q['kind'] == 'BoM' else 30, 'score': 6, 'sd': q}
@@ -97,7 +100,7 @@ def _target(X, side, bound, U):
     dn = side == 'down'
     cands = []
     for z in X['sd']:
-        if z['tf'] in ('240', '60') and z['type'] == ('Demand' if dn else 'Supply'):
+        if z['tf'] in ('240', '60') and z['type'] == ('Demand' if dn else 'Supply') and z['kind'] == 'BoM':
             if (z['top'] <= bound['top'] and z['bot'] < bound['bot']) if dn else (z['bot'] >= bound['bot'] and z['top'] > bound['top']):
                 cands.append((z['top'] if dn else z['bot'], 0, {'bot': z['bot'], 'top': z['top'], 'name': f"{SD.TFNAME[z['tf']]} {z['kind']} {z['type']}", 'sd': z,
                                                                'always_reacts': z['kind'] == 'BoM', 'zfp': 10 if z['kind'] == 'BoM' else (70 if z['mit'] >= 3 else 30)}))
@@ -106,8 +109,15 @@ def _target(X, side, bound, U):
     for p in lsz[:1]:
         cands.append((p + 0.05 * U if dn else p - 0.05 * U, 1, {'bot': p if dn else p - 0.05 * U, 'top': p + 0.05 * U if dn else p, 'name': 'Liquidity Sweep Target', 'always_reacts': True, 'zfp': 15}))
     for z in X['zones']:
-        if (z['top'] < bound['bot']) if dn else (z['bot'] > bound['top']):
+        if ((z['top'] < bound['bot']) if dn else (z['bot'] > bound['top'])) and z['zfp_num'] < 30:
             cands.append((z['top'] if dn else z['bot'], 2, {'bot': z['bot'], 'top': z['top'], 'name': z['name'], 'always_reacts': False, 'zfp': z['zfp_num']}))
+    if not cands:                                            # nothing that holds is mapped beyond the bound: the next zone of any class
+        for z in X['sd']:
+            if z['tf'] in ('240', '60') and z['type'] == ('Demand' if dn else 'Supply') and ((z['top'] <= bound['top'] and z['bot'] < bound['bot']) if dn else (z['bot'] >= bound['bot'] and z['top'] > bound['top'])):
+                cands.append((z['top'] if dn else z['bot'], 3, {'bot': z['bot'], 'top': z['top'], 'name': f"{SD.TFNAME[z['tf']]} {z['kind']} {z['type']}", 'sd': z, 'always_reacts': False, 'zfp': 70 if z['mit'] >= 3 else 30}))
+        for z in X['zones']:
+            if (z['top'] < bound['bot']) if dn else (z['bot'] > bound['top']):
+                cands.append((z['top'] if dn else z['bot'], 4, {'bot': z['bot'], 'top': z['top'], 'name': z['name'], 'always_reacts': False, 'zfp': z['zfp_num']}))
     if not cands:
         return None
     t = sorted(cands, key=lambda c: (-c[0] if dn else c[0], c[1]))[0][2]
@@ -160,8 +170,10 @@ def build(pair, monday, X, lead=None):
     tgt = _target(X, bdir, near, U) if near is not None else None
     nxt, conf_t, why_t = _after_bs(tgt)
     # ── chain + timing: durations 6.8 (SS 2-5 sessions, BS 1-3, WL / RWL / R < 1), Trading Speed Rule 6.10 (+1 day)
+    n_real = 5
     if lead is not None:
         plan = [list(d['shapes']) for d in lead['days']]
+        n_real = lead.get('n_real', 5)
         audit.append('Day shapes = the DXY day shapes (same shapes, inverted direction)')
     elif s0['shape'] in ('BS', 'PBS'):
         plan = [['BS'], [nxt] if nxt != 'R' else ['R'], ['SS'], ['SS'], ['SS', 'BS']]
@@ -171,6 +183,7 @@ def build(pair, monday, X, lead=None):
         plan = [['SS'] for _ in range(n_ss)] + [['SS', 'RWL', 'BS']] + [['BS'] for _ in range(5)]
         plan = plan[:4] if n_ss == 2 else plan[:3]
         plan.append([nxt] if nxt != 'WL+RWL' else ['WL', 'RWL'])
+        n_real = len(plan)                                   # the chain ends here (6.6 Step 3: max 5 shapes / confidence); later days carry no designation
         while len(plan) < 5:
             plan.append(['SS'])
         audit.append(f"SS ({n_ss} session{'s' if n_ss > 1 else ''}) -> [Trigger: consolidation ends retesting the opposing liquidity {far['name'] if far else '-'}, 6.4.2] -> RWL -> BS {bdir} through {near['name'] if near else '-'} "
@@ -203,7 +216,7 @@ def build(pair, monday, X, lead=None):
     piv_far = ((pivot['bot'] if bdir == 'down' else pivot['top']) if pivot else mid)       # the pivot edge on the breakout side
 
     def leg(day, shape, a, b, t_end, frm, to):
-        legs.append({'day': day, 'shape': shape, 'dir': 'up' if b > a else 'down', 'from': a, 'to': b, 'from_zone': frm, 'to_zone': to, 't0': pts[-1][0], 't1': t_end})
+        legs.append({'day': day, 'shape': shape, 'dir': 'up' if b > a else 'down', 'from': a, 'to': b, 'from_zone': frm, 'to_zone': to, 't0': pts[-1][0], 't1': t_end, 'pad': DAYS.index(day) >= n_real})
         pts.append((t_end, b))
         return b
     for i, shapes in enumerate(plan[:5]):
@@ -213,8 +226,13 @@ def build(pair, monday, X, lead=None):
         p0 = pos
         if shapes == ['SS']:
             # one swing per session (6.1.1 'Each swing typically spans 1-3 trading sessions'): first toward the bound farther from price, then back
-            first_down = abs(pos - f_edge) >= abs(pos - c_edge)
-            go_down = first_down if ss_seen == 0 else (pos > mid)
+            left = 0                                         # consecutive SS sessions from this one on: the last of them ends at the opposing liquidity
+            for p in plan[i:5]:
+                if p != ['SS']:
+                    break
+                left += 1
+            to_far = (left % 2 == 1)
+            go_down = (bdir == 'up') if to_far else (bdir == 'down')
             pos = leg(DAYS[i], 'SS', pos, f_edge if go_down else c_edge, d1 - 4 * 3600000, None, floor if go_down else ceil)
             day.update(dir='range', lo=f_edge, hi=c_edge, key=(floor if go_down else ceil)['name'] if (floor if go_down else ceil) else '-', conf=chain[0]['cum']); ss_seen += 1
         elif shapes == ['SS', 'RWL', 'BS']:
@@ -252,7 +270,7 @@ def build(pair, monday, X, lead=None):
                'text': f"PRIMARY: SS -> BS {bdir} -> {nxt} | DECISION ZONE: {far['name']} fails (1H close beyond it) -> ALTERNATIVE: SS -> BS {inv[bdir]} -> {a_n} at {a_t['name'] if a_t else '-'}"}
         audit.append(alt['text'])
     return {'pair': pair, 'monday': monday, 's0': s0, 'storyline': story, 'bdir': bdir, 'chain': chain, 'days': days, 'path': pts, 'alt': alt, 'audit': audit,
-            'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'next': nxt, 'range': (f_edge, c_edge), 'mid': mid, 'far': far, 'near': near, 'legs': legs}
+            'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'next': nxt, 'range': (f_edge, c_edge), 'mid': mid, 'far': far, 'near': near, 'legs': legs, 'n_real': n_real}
 
 
 def pine(pair, monday, E2):

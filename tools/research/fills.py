@@ -14,9 +14,12 @@ for s in R['setups']:
     day0 = D.week_start_ms(mon) + {'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4}[s['day']] * 86400000
     t0, st, tf = max(day0, D.boundary_ms(mon)), 'not filled', None      # a resting order from the start of its day
     stop_entry = s['category'] == 'Reinforcement'          # a stop-limit fires when price trades THROUGH the rung in the trade's direction
+    t_end = day0 + (1 + len(s.get('days', [1])) - 1) * 86400000     # the entry is valid inside its own day(s) only (R3 law: the order's bracket comes from the E2 day)
     for x in b:
         if x['time'] < t0:
             continue
+        if tf is None and x['time'] >= t_end:
+            st = 'not filled in its day (order expires)'; break
         if tf is None:
             hit = x['low'] <= s['entry'] <= x['high']
             if not stop_entry:

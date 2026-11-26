@@ -431,3 +431,16 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - Golden week now: DXY 7 setups unchanged (all within 3 pips of his). EURUSD 5 setups: EU1 Mon LONG 1.14095 / 1.14037 / 1.14401 (his 1.14106 / 1.14039 / 1.14442), EU2 Tue SHORT 1.14385 / 1.14451 / 1.14063 (his 1.14441 / 1.14505 / 1.14004),
   EU3 Wed LONG 1.14018 / 1.13960 / 1.14239 (his 1.14012 / 1.13964 / 1.14276), EU4 Wed BS LONG 1.14018 / 1.13892 / 1.14498 (his 1.13953 / 1.13868 / 1.14544), EU5 Fri SHORT 1.14598 / 1.14643 / 1.14239 (his 1.14578 / 1.14649 / 1.14205); Wed RWL short rejected on RRR.
   GBPUSD 4 setups: GB1 Mon LONG 1.33333 / 1.33269 / 1.33559 (his 1.33331 / 1.33224 / 1.33941) ...; the weak Friday 1H supply zones (1.33544-1.33582, 1.33623-1.33764) capture the TPs and later entries. OPEN.
+
+## 2026-11-26 - SAME CODE ON APR 20-24: three canon fixes in E2 / E3, golden week unchanged
+- First run on other weeks was poor (Apr 20: 1 TP / 3 SL; May 18 and Aug 17: almost every setup rejected). Traced on Apr 20:
+  (1) e2 current_shape: a single WL after consolidation days is NOT "two piercing moves" -> phase 'late' (one SS session, then the transition), only two piercing sessions give the 2-day consolidation (FA 9);
+  (2) e2 _bounds: an IP bound under 30% must lie within the swing-scalp reach (GS Law 2: 0-30 pips from spot), else the graded 1H/4H supply-demand zone bounds the range (Apr 20: 98.045-98.402 instead of 98.045-99.217);
+  (3) e2 SS swing order counted back from the transition: the last SS swing goes to the opposing liquidity (6.4.2), the one before to the breakout side (golden week unchanged: Mon floor, Tue ceiling);
+  (4) e2 _target: BoM zones / sweep targets / walls under 30% only; MoM zones and soft walls are passed through (P452 "MoM ... gets pierced when opposing BoM is reached"; 8R.5) -> Apr 20 target = 4H BoM supply 98.884-99.031 (Thu high 98.93, Fri fall);
+  (5) e3: a 4H target zone -> TP at its near edge + 1 pip (GS:477-481; E3C:320-327) -> 98.874 (hit Thu; the LQZ-inside TP 98.952 missed by 2 pips); padded days after the chain end carry no setup (R3 law);
+  (6) e3 entries: candidates in the order F1-A (nested order block, shorts) -> F1-C (internal rung) -> TS-1 (zone edge), next one tried when RRR fails (E3C:372-386);
+  (7) tools/research/fills.py: an entry is valid inside its own E2 day(s) only (R3 law: the order's bracket comes from the E2 day).
+- Apr 20-24 DXY now: Mon SS | Tue SS+RWL+BS up | Wed BS up | Thu WL+RWL down. DX2 Tue SS LONG 98.045 / 97.994 / 98.215 TP hit; DX3 Tue BS LONG 98.054 / 98.012 / 98.874 TP hit Thu (his real trade: L 98.02 / 97.87 / 98.77);
+  DX4 Wed ladder LONG 98.270 / 98.189 / 98.874 TP hit (his second real trade: L 98.29 / 98.185 / 98.77); Mon short 98.415 never filled; Thu WL short at the 4H BoM rejected on RRR (entry 98.884, stop 98.977) - the week's Friday fall is not traded yet.
+- Golden week after these changes: DXY 7 setups identical; EURUSD 5 setups: 4 TP, EU2 stopped.

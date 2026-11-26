@@ -16,6 +16,7 @@ import e1_data as D
 RRR_FLOOR, GOLD_MIN, GOLD_MAX, SL_CEIL, MAX_SETUPS = 3.0, 4.0, 9.5, 36.0, 11
 TF_RANK = {'15': 0, '30': 1, '60': 2, '240': 3}
 DAY_IDX = {'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4}
+SD_TF = {'240': '4H', '60': '1H', '30': '30m', '15': '15m'}
 CAT = {'SS': 'Swing Scalp', 'RWL': 'Reversal', 'WL': 'HTF Swing', 'BS': 'HTF Swing', 'PBS': 'HTF Swing', 'R': 'Swing Scalp'}
 SESSION = {'Swing Scalp': 'London', 'Reversal': 'NY', 'HTF Swing': 'NY', 'Reinforcement': 'NY Open'}      # E3C:147-152
 
@@ -44,30 +45,37 @@ def _inside(a, b):
     return b['bot'] <= a['bot'] and a['top'] <= b['top']
 
 
-def _entry(anchor, direction, shape, env, pair):
-    """E3C:177-203 inside the anchor zone"""
+def _entries(anchor, direction, shape, env, pair):
+    """E3C:177-203 entry candidates inside the anchor zone, in refinement order (E3C:372-386 '3 attempts on each anchor'):
+    TS-1 the zone edge closest to approaching price -> F1-C the internal LQZ rung near edge -> F1-A (SHORT only) a nested lower-timeframe order block, 1 pip above its bottom.
+    (the spec's own Monday example: band bottom 101.027 gave RRR 1.79 -> rejected; the nested block entry 101.14 gave 4.92)"""
     pip, rungs, blocks, sd = env
     typ = 'Supply' if direction == 'down' else 'Demand'
+    inset = 0.2 * pip if shape in ('RWL', 'WL') else 0.0     # F1-D
     if anchor.get('sweep'):                                  # whiplash into a sweep zone: the middle of the zone the stops rest in (operator's golden Friday long)
-        return (anchor['bot'] + anchor['top']) / 2, anchor, 'sweep zone mid'
-    rank = TF_RANK.get(anchor.get('tf', '240'), 3)
-    nested = [b for b in blocks if b['type'] == typ and TF_RANK[b['tf']] < max(rank, 1) + (1 if anchor.get('ip') else 0) and _overlap(b, anchor)]
-    nested = [b for b in nested if direction == 'down' and anchor['bot'] <= b['bot'] <= anchor['top']]      # F1-A scope pin: order-block SHORT only, the block's bottom inside the band
-    if nested and not anchor.get('ip'):
-        b = max(nested, key=lambda b: TF_RANK[b['tf']])      # the highest timeframe block nested in the band
-        e = b['bot'] + 1 * pip if direction == 'down' else b['top']        # F1-A: order-block SHORT only, 1 pip above the bottom edge
-        return e, b, f"{'30m' if b['tf'] == '30' else '15m' if b['tf'] == '15' else '1H' if b['tf'] == '60' else '4H'} order block edge"
-    inner = [r for r in rungs if _inside(r, anchor) and 'fib' not in r]
-    if inner:                                                # F1-C: internal rung near edge = the rung first met by approaching price
-        r = min(inner, key=lambda r: r['bot']) if direction == 'down' else max(inner, key=lambda r: r['top'])
-        e = r['bot'] if direction == 'down' else r['top'] - (0.2 * pip if shape in ('RWL', 'WL') else 0.0)        # F1-D inset on a bounce
-        return e, r, 'internal LQZ rung'
-    edge = [r for r in rungs if _overlap(r, anchor) and 'fib' not in r]
-    if edge and anchor.get('ip'):
-        r = min(edge, key=lambda r: abs(((r['bot'] + r['top']) / 2) - (anchor['bot'] if direction == 'down' else anchor['top'])))
-        e = r['bot'] if direction == 'down' else r['top'] - (0.2 * pip if shape in ('RWL', 'WL') else 0.0)
-        return e, r, 'LQZ rung at the zone'
-    return (anchor['bot'] if direction == 'down' else anchor['top']), anchor, 'zone edge (TS-1)'
+        return [((anchor['bot'] + anchor['top']) / 2, anchor, 'sweep zone mid')]
+    out = []
+    real = [r for r in rungs if 'fib' not in r]
+    if anchor.get('ip'):                                     # an IP zone is never an entry source: the LQZ rung at it is (E3C:139-143)
+        inner = [r for r in real if _overlap(r, anchor)]
+        inner.sort(key=lambda r: r['bot'] if direction == 'down' else -r['top'])
+        for r in inner[:3]:
+            out.append((r['bot'] if direction == 'down' else r['top'] - inset, r, 'LQZ rung at the zone'))
+        if not out:
+            out.append((anchor['bot'] if direction == 'down' else anchor['top'], anchor, 'zone edge (TS-1)'))
+        return out
+    # priority = the spec's measured fixes first: F1-A (order-block SHORT) -> F1-C (internal LQZ rung, "NOT the zone's defendedEdge") -> TS-1 zone edge; the next one is tried when RRR fails
+    if direction == 'down':
+        rank = TF_RANK.get(anchor.get('tf', '240'), 3)
+        nested = [b for b in blocks if b['type'] == typ and TF_RANK[b['tf']] < max(rank, 1) and anchor['bot'] <= b['bot'] <= anchor['top']]
+        for b in sorted(nested, key=lambda b: (-TF_RANK[b['tf']], b['bot']))[:1]:
+            out.append((b['bot'] + 1 * pip, b, f"{SD_TF[b['tf']]} order block bottom + 1 pip (F1-A)"))
+    inner = [r for r in real if _inside(r, anchor)]
+    inner.sort(key=lambda r: r['bot'] if direction == 'down' else -r['top'])
+    for r in inner[:1]:
+        out.append((r['bot'] if direction == 'down' else r['top'] - inset, r, 'internal LQZ rung'))
+    out.append((anchor['bot'] if direction == 'down' else anchor['top'], anchor, 'zone edge (TS-1)'))
+    return out
 
 
 def _stops(entry, step, direction, env, anchor):
@@ -117,6 +125,8 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
     if leg['shape'] in ('BS', 'PBS') and tz is not None:
         boms = sorted([z for z in sd if z['tf'] in ('240', '60') and z['type'] == opp and _overlap(z, tz)], key=lambda z: -z['top'] if direction == 'down' else z['bot'])      # the first zone the move reaches
         for z in boms:
+            if z['tf'] == '240':                             # GS:477-481 a 4H zone reacts at once; E3C:320-327 strong zone -> close edge + 1-2 pip spread "so you dont miss the exit"
+                out.append((z['top'] + pip if direction == 'down' else z['bot'] - pip, z, '4H target zone near edge + 1 pip (strong zone)'))
             ins = [r for r in rungs if _inside(r, z)]
             for r in sorted(ins, key=lambda r: -r['top'] if direction == 'down' else r['bot']):
                 out.append(((r['bot'] + r['top']) / 2, z, 'LQZ inside the target zone: midpoint'))
@@ -194,6 +204,8 @@ def build(pair, monday, X, E2):
             m = dict(l); m['days'] = [l['day']]; merged.append(m)
     setups, used, anchor, log = [], set(), None, []
     for k, leg in enumerate(merged):
+        if leg.get('pad'):
+            continue                                         # no E2 designation for that day -> no setup (R3 law)
         direction = leg['dir']
         if anchor is None:
             anchor = _first_anchor(leg, X, env)
@@ -214,25 +226,25 @@ def build(pair, monday, X, E2):
                 else:
                     a = {'bot': lv[0] - 0.05 * U, 'top': lv[0], 'ext': max(cl), 'sweep': True, 'name': 'sweep zone'}
         cat = CAT.get(leg['shape'], 'Swing Scalp')
-        entry, step, how = _entry(a, direction, leg['shape'], env, pair)
+        ecands = _entries(a, direction, leg['shape'], env, pair)
         if a.get('rung'):                                    # the previous TP rung: entry on its near edge for the new direction
-            entry, step, how = (a['bot'] if direction == 'down' else a['top'] - (0.2 * pip if leg['shape'] in ('RWL', 'WL') else 0.0)), a, 'LQZ rung (previous TP rung)'
+            ecands = [((a['bot'] if direction == 'down' else a['top'] - (0.2 * pip if leg['shape'] in ('RWL', 'WL') else 0.0)), a, 'LQZ rung (previous TP rung)')]
         if leg['shape'] in ('BS', 'PBS') and setups and setups[-1]['shape'] == 'RWL':
-            entry, step, how = setups[-1]['tp'], a, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)'
-        stop, why_sl = _pick_stop(entry, _stops(entry, step, direction, env, a), pip, cat)
-        cands = [c for c in _target(leg, entry, direction, E2, X, env, used, pair) if ((c[0] < entry) if direction == 'down' else (c[0] > entry))]
-        s = None
-        if stop is not None:
-            tries = 0
-            for tp, tz, why_tp in cands:                     # E3C:372-386: re-anchor the TP on the next opposing rung, at most three attempts
-                tries += 1
+            ecands = [(setups[-1]['tp'], a, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
+        s, entry, stop, cands = None, None, None, []
+        for entry, step, how in ecands[:3]:                  # E3C:372-386: up to three attempts per anchor - the entry, then the TP walk on it
+            stop, why_sl = _pick_stop(entry, _stops(entry, step, direction, env, a), pip, cat)
+            cands = [c for c in _target(leg, entry, direction, E2, X, env, used, pair) if ((c[0] < entry) if direction == 'down' else (c[0] > entry))]
+            if stop is None:
+                continue
+            for tries, (tp, tz, why_tp) in enumerate(cands[:3], 1):
                 rrr = abs(tp - entry) / abs(entry - stop)
                 if rrr >= RRR_FLOOR:
                     s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
                          'why': f"entry {how}; SL {why_sl}; TP {why_tp}"}
                     break
-                if tries >= 3:
-                    break
+            if s is not None:
+                break
         if s is None:
             log.append(f"{leg['day']} {leg['shape']} {direction}: rejected (no TP with RRR >= {RRR_FLOOR} in three attempts; entry {entry:.5f} SL {stop})")
             anchor = (cands[0][1] if cands else leg['to_zone'])

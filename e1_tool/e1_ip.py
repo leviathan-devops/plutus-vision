@@ -128,7 +128,7 @@ def levels(pair, monday, side):
         if not any(abs(z['level'] - d['high']) < 1e-9 for z in lsz):
             lsz.append({'bot': d['high'] - 0.10 * U, 'top': d['high'], 'side': 'Supply-side', 'level': d['high'], 'source': 'daily high ' + d['date']})
     for z in lsz:
-        later = [x for x in daily if x['date'] > z['source'][-10:]]
+        later = [x for x in daily if x['date'] > z['source'][-10:]]      # completed sessions only: the map is the weekend map (the operator's bands are drawn before Monday's first hours)
         z['swept'] = any((x['low'] < z['level']) if z['side'] == 'Demand-side' else (x['high'] > z['level']) for x in later)
         z['priority'] = 'ACTIVE SL TRIGGER' if abs(z['level'] - spot) <= 0.30 * U else 'STANDARD'
     magnets = []
