@@ -1,0 +1,40 @@
+EURUSD 2026-05-18 anchor price 1.16231 | chart shows zones between 1.15470 and 1.16726 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 OBJECTS ON THE CHART (all of these are Engine 1 zones):
+  pressure zone  UPPER RESISTANCE   1.16641-1.16726 MODERATE | 30-50% ZFP | MoM
+  pressure zone  UPPER RESISTANCE   1.16493-1.16562 HEAVY | 5-15% ZFP | MoM
+  pressure zone  EQUILIBRIUM ZONE   1.16219-1.16296 MODERATE-HEAVY | 30-50% ZFP | MoM
+  pressure zone  MID-RANGE SUPPORT  1.15970-1.16036 MODERATE | 15-30% ZFP | BoM
+  supply/demand  1H (Unmitigated) | MoM       Supply 1.16655-1.16726
+  supply/demand  1H (Mitigated 2x) | MoM      Supply 1.16456-1.16574
+  supply/demand  1H (Unmitigated) | MoM       Supply 1.16266-1.16356
+  sweep zone     Supply-side 1.16676-1.16726 | sweep reach to 1.16826 (dotted box)
+  sweep zone     Supply-side 1.16211-1.16261 | sweep reach to 1.16361 (dotted box)
+  sweep zone     Demand-side 1.16168-1.16218 | sweep reach to 1.16068 (dotted box)
+  sweep zone     Demand-side 1.16083-1.16133 | sweep reach to 1.15983 (dotted box)
+  liquidity band (sealed V1, 4H) 1.16705-1.16773
+  liquidity band (sealed V1, 4H) 1.16604-1.16672
+  liquidity band (sealed V1, 4H) 1.16477-1.16545
+  liquidity band (sealed V1, 4H) 1.16327-1.16395
+  liquidity band (sealed V1, 4H) 1.16203-1.16271
+  liquidity band (sealed V1, 4H) 1.16094-1.16162
+  liquidity band (sealed V1, 4H) 1.15747-1.15815
+  liquidity band (sealed V1, 4H) 1.15619-1.15687
+  liquidity band (sealed V1, 4H) 1.15503-1.15571
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: EQUILIBRIUM ZONE | ZFP: 30-50% | 05-15 LON: spike down through EQUILIBRIUM ZONE (ZFP 30), every 1H close back at a sweep target [the row's ZFP condition is not met: best description, one tier lower] | F
+   Ceiling: UPPER RESISTANCE [IP MoM Depleted ZFP 10] -> PIERCED (MoM with 3 reactions: depleted -> PIERCED branch (6.4.2; P533:1159))
+   Floor: MID-RANGE SUPPORT [IP BoM Depleted ZFP 37] -> PIERCED (BoM with 3 reactions: depleted, likely to fail on the next test (P533:1159))
+   Breakout direction: none - both bounds hold | pair translation of the DXY chain (None inverted)
+   chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range box 1.15970-1.16562 key zone UPPER RESISTANCE                   | actual H 1.16608 L 1.16219 C 1.16556
+  Tue forecast SS         range box 1.15970-1.16562 key zone UPPER RESISTANCE                   | actual H 1.16617 L 1.15921 C 1.16047
+  Wed forecast SS         range box 1.15970-1.16562 key zone UPPER RESISTANCE                   | actual H 1.16448 L 1.15827 C 1.16235
+  Thu forecast SS         range box 1.15970-1.16562 key zone UPPER RESISTANCE                   | actual H 1.16353 L 1.15762 C 1.16168
+  Fri forecast SS         range box 1.15970-1.16562 key zone UPPER RESISTANCE                   | actual H 1.16205 L 1.15882 C 1.16017
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  EU1      Mon SS     SHORT E 1.16512 SL 1.16575 TP 1.15970 8.6R | filled Mon 08:30 -> STOPPED Mon 20:15
+  EU2      Mon SS     SHORT E 1.16297 SL 1.16386 TP 1.15970 3.67R | filled Mon 06:00 -> STOPPED Mon 07:15
+  ! Mon SS up: SOURCE_INVALID - no ORDER_BLOCK / LQZ entry at MID-RANGE SUPPORT (E3C:135)
+  ! Mon SS SHORT 1.16466: DUPLICATE of SS 1.16512 (E3C:463)
