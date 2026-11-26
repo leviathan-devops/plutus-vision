@@ -181,3 +181,5 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 
 ## Count
 ANSWERED 14 · FIXED 37 · OPEN 50 · PART 33 (of 134). S1 / S4 need OPEN + PART = 0.
+
+- UPDATE 2026-11-26 (late): B-26 / A-22 (ZR-6B stop choice by mirrorConfidenceScore) -> FIXED by D-73; A-15 (per-day designation) PART: D-70 spill-over (E3C:123), D-71 rocket brackets, D-72 narrative gate per E2 day; E1 Step 9.5 gap scan built (D-68), Step 0.45a / 0.45d built (D-64, 93f8d1e).

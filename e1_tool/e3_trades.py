@@ -191,7 +191,26 @@ def _steps(X):
     return [dict(r, thick=False) for r in X['v1']['60']['liquidity']], [dict(b, thick=True) for b in X['v1']['240']['liquidity']]
 
 
-def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False):
+ZR6B = True
+
+
+def _mirror_conf(c, a, direction, E2):
+    """mirrorConfidenceScore (E3C:274-282): base 0.5; +0.2 if shapeConf >= 0.65; +0.15 VIRGIN or ACTIVE_1; -0.2 DEPLETED; +0.15 fuel INTACT; -0.2 ABSORBED; +0.1 shapeDay.direction === direction.
+    Pressure state: strong reactions of a pressure zone / taps of a candle zone (E3C:152-165). Fuel (ZR-1 operative defense; handover DESIGN_BLUEPRINT 16.7 'shielding liquidity has been consumed'):
+    ABSORBED when the anchor has been visited three times or more (E3C 8.25 '3+ ... Zone depleted'), else INTACT"""
+    dday = next((d for d in E2['days'] if d['day'] == c['days'][0]), None)
+    sc = 0.5 + (0.2 if (dday is not None and dday['conf'] >= 0.65) else 0.0)
+    m = a.get('mech') or {}
+    rx = m.get('reactions', a.get('mit', 0)) if ('mech' in a or 'mit' in a) else 0
+    visits = m.get('visits', a.get('mit', 0)) if ('mech' in a or 'mit' in a) else 0
+    sc += 0.15 if rx <= 1 else (-0.2 if rx >= 3 else 0.0)
+    sc += -0.2 if visits >= 3 else 0.15
+    if dday is not None and dday['dir'] in ('up', 'down') and dday['dir'] == direction:
+        sc += 0.1
+    return round(sc, 2)
+
+
+def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, conf=None):
     """E3C:247-256 SL ladder steps. (b) '1-2 pips INSIDE the CLOSE edge of the NEXT STEP away', the step that may shield a stop being THICK (FA 2.1 'Thin liquidity zones are NEVER allowed as entry or SL
     zones'): the first V1 4H band or the SECOND 1H rung beyond the entry's own (smallest) step; (a) '3 pips OUTSIDE the FAR edge of the CURRENT entry step'. EUR/USD has no shield (NO_SHIELD): (a).
     D17 ceiling 36 pips; golden minimum 4 pips (E3C:279-293). Returns (sl, why) or (None, reason)."""
@@ -228,6 +247,16 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False):
             ok.append((sl, why))
     if every:
         return ok
+    if ok and conf is not None and conf >= 0.6 and ZR6B and pair not in NO_SHIELD:
+        # ZR-6B Rule S3 (E3C:284-286): 'confidence >= 0.6 -> RR-tight (3p back edge); confidence < 0.6 -> safety (next-rung)'. RR-tight = the tighter of the first shield stop (b) and
+        # rule (a) on the ENTRY ZONE (E3C:249 '3 pips outside the back edge of the entry zone'; E3C:259 'S/D PRESSURE_STRUCTURE (the S/D itself acting as the backstop)') - not on the thin
+        # liquidity rung the entry happens to stand in; EUR/USD (NO_SHIELD, direct zone test) keeps rule (a) on its entry step (D-73)
+        tight = [q for q in ok if q[1].startswith('(b)')][:1] + [q for q in ok if q[1].startswith('(a)') and (cur is None or 'current step' not in q[1])]
+        if tight:
+            sl, why = min(tight, key=lambda q: abs(q[0] - entry))
+            return sl, why + f' [ZR-6B RR-tight, mirror confidence {conf:.2f}]'
+    if ok and conf is not None and ZR6B:
+        return ok[0][0], ok[0][1] + f' [ZR-6B safety, mirror confidence {conf:.2f}]'
     return ok[0] if ok else (None, 'SL_INVALID: no ladder-step stop between 4 and 36 pips')
 
 
@@ -402,7 +431,8 @@ def _build(pair, monday, X, E2, tag):
             log.append(f"{c['days'][0]} {c['shape']} {direction}: SOURCE_INVALID - no ORDER_BLOCK / LQZ entry at {a.get('name', '')} (E3C:135)"); continue
         s, why_fail = None, 'TP_NULL'
         for entry, step, how in ecands[:3]:                  # E3C:386 '3 attempts on each anchor (3 E, 3 SL, 3 TP)'
-            stop, why_sl = _stop(entry, direction, step if 'bot' in step else a, X, pair, dmin=12.0 if c.get('role') == 'transition' else None, zone=a)   # GS Law 3 table 'Breakout | SL 12-20 pips'
+            stop, why_sl = _stop(entry, direction, step if 'bot' in step else a, X, pair, dmin=12.0 if c.get('role') == 'transition' else None, zone=a,   # GS Law 3 table 'Breakout | SL 12-20 pips'
+                                 conf=_mirror_conf(c, a, direction, E2))
             if stop is None:
                 why_fail = why_sl; continue
             tps = [t for t in _target(dict(c, shape=c.get('shape_tp', c['shape'])), entry, direction, E2, X, env, set(), pair) if ((t[0] < entry) if direction == 'down' else (t[0] > entry))]
@@ -443,8 +473,14 @@ def _build(pair, monday, X, E2, tag):
         s.update(day=c['days'][0], days=c['days'], shape=c['shape'], category=cat, session=SESSION_WINDOW[cat], sl_pips=round(abs(s['entry'] - s['sl']) / pip, 1),
                  t0=c.get('t0'), t1=c.get('t1'), anchor=a, role=c.get('role'), rest_from=c.get('rest_from'))
         ipz = a if a.get('ip') else _ip_at(a, X)
-        story = E2.get('bdir') or E2.get('storyline')        # the week's macro arc: the chain's breakout direction, else the 4H storyline
-        misaligned = story in ('up', 'down') and (story == 'up') != (s['dir'] == 'LONG')     # E3C:1054 NARRATIVE_MISALIGNED: the gate judges setups against the storyline; aligned ones pass
+        # E3C:874-879 'narrativeAligned(setup, model, pair)': the narrative of a setup is its E2 shape day (R3 law: E2 designates the day's shape and direction; Phase 4.1 layer 5
+        # 'Day-Shape Alignment'); a swing scalp of a range day is designated in BOTH directions (E3C:96), so neither is misaligned; the week's macro arc is a confidence term
+        # (layer 7), not the gate (D-72)
+        dday = next((d for d in E2['days'] if d['day'] == c['days'][0]), None)
+        story = dday['dir'] if dday is not None else None
+        if c['shape'] != 'SS' and c['dir'] in ('up', 'down'):
+            story = c['dir']                                 # a directional step is its own designation
+        misaligned = story in ('up', 'down') and (story == 'up') != (s['dir'] == 'LONG')
         if misaligned and ipz is not None and ipz['zfp_num'] > 30 and not a.get('sweep'):
             log.append(f"{s['day']} {s['shape']} {s['dir']} {s['entry']:.5f}: NARRATIVE - anchor zone {ipz['name']} ZFP {ipz['zfp_num']}% > 30 (E3C:874-876 'suppress > 30 (WEAK)')"); continue
         s['confidence'], s['conf_parts'] = _confidence(s, X, E2, pair)
