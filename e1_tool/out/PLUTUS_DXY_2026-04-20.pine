@@ -1,5 +1,5 @@
 //@version=6
-indicator("PLUTUS VISION DXY 2026-04-20", overlay=true, max_boxes_count=500, max_labels_count=500, max_lines_count=500)
+indicator("PLUTUS VISION DXY 2026-04-20", overlay=true, max_boxes_count=2000, max_labels_count=2000, max_lines_count=2000)
 // week of 2026-04-20 (DXY); every number computed by e1_tool from data closed before the anchor 2026-04-20 06:00 UTC (Monday London open)
 show_ip = input.bool(true, "E1 IP Zones")
 show_lv = input.bool(true, "E1 levels inside IP zones")
@@ -13,6 +13,7 @@ show_ob = input.bool(false, "V1 order blocks (data)")
 show_far = input.bool(false, "E1 zones beyond this week's reach")
 show_e2 = input.bool(true, "E2 Shape chain")
 show_e3 = input.bool(true, "E3 Trade setups")
+show_tbl = input.bool(true, "Info Table")
 isPair = str.contains(syminfo.ticker, "DXY")
 if barstate.islast and isPair
     if show_lq
@@ -41,6 +42,7 @@ if barstate.islast and isPair
         box.new(1776027600000, 97.984, 1777064400000, 97.920, bgcolor=color.new(color.rgb(46,139,87), 94), border_color=color.new(color.rgb(63,164,106), 60), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1776027600000, 97.832, 1777064400000, 97.768, bgcolor=color.new(color.rgb(46,139,87), 94), border_color=color.new(color.rgb(63,164,106), 60), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1776027600000, 97.730, 1777064400000, 97.666, bgcolor=color.new(color.rgb(46,139,87), 94), border_color=color.new(color.rgb(63,164,106), 60), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1776027600000, 97.559, 1777064400000, 97.495, bgcolor=color.new(color.rgb(46,139,87), 94), border_color=color.new(color.rgb(63,164,106), 60), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
     if show_ob
         box.new(1776027600000, 99.183, 1777064400000, 99.019, bgcolor=color.new(color.rgb(247,124,128), 85), border_color=color.new(color.rgb(247,124,128), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1776027600000, 97.685, 1777064400000, 97.561, bgcolor=color.new(color.rgb(49,121,245), 85), border_color=color.new(color.rgb(49,121,245), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
@@ -139,6 +141,8 @@ if barstate.islast and isPair
         box.new(1776043800000, 99.073, 1777064400000, 99.041, bgcolor=color.new(color.rgb(242,54,69), 90), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
         label.new(1776135600000, 99.057, "15m (Mitigated 3x) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_lsz
+        box.new(1776027600000, 97.539, 1777064400000, 97.489, bgcolor=color.new(color.rgb(40,180,80), 92), border_color=color.new(color.rgb(40,180,80), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1776027600000, 97.489, 1777064400000, 97.389, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1776027600000, 97.682, 1777064400000, 97.632, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1776027600000, 97.632, 1777064400000, 97.532, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         label.new(1776200400000, 97.657, "LSZ demand-side + 4H BoM (confluent) | sweep to 97.532", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
@@ -162,12 +166,9 @@ if barstate.islast and isPair
         box.new(1776027600000, 97.405, 1777064400000, 97.355, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1776027600000, 97.355, 1777064400000, 97.255, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         label.new(1776200400000, 97.380, "LSZ demand-side | sweep to 97.255", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
-        box.new(1776027600000, 97.539, 1777064400000, 97.489, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
-        box.new(1776027600000, 97.489, 1777064400000, 97.389, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1776344400000, 97.514, "LSZ demand-side | sweep to 97.389", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1776027600000, 99.183, 1777064400000, 99.133, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1776027600000, 99.283, 1777064400000, 99.183, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1776056400000, 99.158, "LSZ supply-side | sweep to 99.283", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
+        label.new(1776344400000, 99.158, "LSZ supply-side | sweep to 99.283", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
     if show_ip
         // #3 UPPER RESISTANCE 98.939-99.005 MODERATE 7.0/14 Soft Wall Tier 1 | BoM Active 1 reactions | ENTRY-PRIMARY
         box.new(1776027600000, 99.005, 1777064400000, 98.939, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
@@ -181,13 +182,13 @@ if barstate.islast and isPair
         // #5 KEY SUPPORT BAND 97.725-97.799 MODERATE 7.0/14 Soft Wall Tier 1 | MoM Active 2 reactions | TP-TARGET
         box.new(1776027600000, 97.799, 1777064400000, 97.725, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
         label.new(1776243600000, 97.762, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 1 MoM + 4H demand, 1H demand, 4H liquidity", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // #6 KEY SUPPORT BAND 97.466-97.541 MODERATE 7.0/14 Soft Wall Tier 2 | BoM Active 2 reactions | ENTRY-PRIMARY
+        box.new(1776027600000, 97.541, 1777064400000, 97.466, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
+        label.new(1776243600000, 97.503, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 2 BoM + sweep zone, 4H liquidity", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip and show_far
         // #4 RESISTANCE CEILING 99.217-99.298 MODERATE 7.0/14 Standard Wall Tier 2 | BoM Depleted 3 reactions | TP-TARGET
         box.new(1776027600000, 99.298, 1777064400000, 99.217, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
         label.new(1776243600000, 99.257, "RESISTANCE CEILING | MODERATE | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // #6 KEY SUPPORT BAND 97.466-97.541 MODERATE 7.0/14 Soft Wall Tier 2 | BoM Active 2 reactions | ENTRY-PRIMARY
-        box.new(1776027600000, 97.541, 1777064400000, 97.466, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
-        label.new(1776243600000, 97.503, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip
         box.new(1776027600000, 98.866, 1777064400000, 98.806, bgcolor=color.new(color.rgb(220,100,50), 93), border_color=color.new(color.rgb(220,100,50), 50), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1776027600000, 98.727, 1777064400000, 98.667, bgcolor=color.new(color.rgb(220,100,50), 93), border_color=color.new(color.rgb(220,100,50), 50), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
@@ -229,6 +230,11 @@ if barstate.islast and isPair
         line.new(1776632400000, 97.749, 1777064400000, 97.749, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Liquidity Sweep Target (D1 swing low 12-24)
         line.new(1776632400000, 97.728, 1777064400000, 97.728, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // BoM 1X 4H Demand Zone (top edge)
         line.new(1776632400000, 97.750, 1777064400000, 97.750, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Round number quarter figure
+        line.new(1776632400000, 97.511, 1777064400000, 97.511, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot weekly classic S1
+        line.new(1776632400000, 97.466, 1777064400000, 97.466, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 04-16 classic S3
+        line.new(1776632400000, 97.489, 1777064400000, 97.489, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Liquidity Sweep Target (D1 swing low 02-26)
+        line.new(1776632400000, 97.496, 1777064400000, 97.496, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Fib 61.8% of major swing
+        line.new(1776632400000, 97.500, 1777064400000, 97.500, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Round number half figure
     if show_opt
         line.new(1776027600000, 98.402, 1777064400000, 98.402, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=1)
         label.new(1776906000000, 98.402, "1.4bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
@@ -271,3 +277,97 @@ if barstate.islast and isPair
         box.new(1776891600000, 98.660, 1776960000000, 98.615, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         box.new(1776891600000, 98.869, 1776960000000, 98.660, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1776902400000, 98.689, "DX3 Ladder L 4.8R if DX1", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    if show_tbl
+        var table tb = table.new(position.top_right, 2, 17, bgcolor=color.new(color.black, 10), border_color=color.rgb(40,40,45), border_width=1)
+        table.cell(tb, 0, 0, "TRIDENT v8", text_color=color.rgb(100,150,255), bgcolor=color.rgb(20,20,40), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 0, "DXY Apr20-24", text_color=color.rgb(100,150,255), bgcolor=color.rgb(20,20,40), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 1, "Chain", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 1, "SS -> RWL -> BS -> RWL | 26%", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 2, "Alt chain", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 2, "SS -> BS -> WL -> RWL | 27%", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 3, "Days", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 3, "Mon SS | Tue SS+RWL+BS | Wed BS | Thu BS+RWL | Fri RWL", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 4, "ZONES", text_color=color.rgb(100,150,255), bgcolor=color.rgb(20,20,40), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 4, "", text_color=color.rgb(100,150,255), bgcolor=color.rgb(20,20,40), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 5, "UPPER RESISTANCE", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 5, "98.94-99.00 | MODERATE | 30-50% ZFP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 6, "UPPER RESISTANCE", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 6, "98.46-98.54 | MODERATE-HEAVY | 30-50% ZFP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 7, "MID-RANGE SUPPORT", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 7, "98.06-98.14 | MODERATE | 30-50% ZFP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 8, "KEY SUPPORT BAND", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 8, "97.72-97.80 | MODERATE | 30-50% ZFP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 9, "KEY SUPPORT BAND", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 9, "97.47-97.54 | MODERATE | 30-50% ZFP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 10, "TRADES", text_color=color.rgb(100,150,255), bgcolor=color.rgb(20,20,40), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 10, "", text_color=color.rgb(100,150,255), bgcolor=color.rgb(20,20,40), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 11, "Short", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 11, "-", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 12, "SL | TP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 12, "-", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 13, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 13, "-", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 14, "Long DX1", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 14, "Entry 98.02", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 15, "SL | TP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 15, "97.86 | 98.87", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 16, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 16, "Tue BS | 5.3R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+
+// ENGINE 3 - FULL-SPECTRUM TRADE MAP | WEEK OF 2026-04-20 | DXY
+// 
+// === WEEKLY EXECUTION CALENDAR ===
+// Day | Pair | Dir | Setup Type | Entry | Shape | Session | Conf | Notes
+// Mon | DXY | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
+// Tue | DXY | LONG | HTF Swing | 98.019 | BS | NY Mid | 85 | DX1 rests from Mon
+// Wed | DXY | LONG | Reinforcement | 98.270 | Ladder | NY Open | 85 | DX2 if DX1
+// Thu | DXY | LONG | Reinforcement | 98.660 | Ladder | NY Open | 85 | DX3 if DX1
+// Fri | DXY | - | - | - | RWL | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
+// 
+// --- HTF SWING SETUPS ---
+// DX1 | DXY | LONG | HTF Swing | Day: Tue | Session: NY Mid | Shape: BS
+//   Entry: 98.019 | SL: 97.859 | TP: 98.869 | RRR: 5.31 / blended 5.58 | Quality: HIGH | Confidence: 85
+//   Anchor Zone: sweep zone (opposing) [LSZ] | Shape Trigger: BS @ Tue NY Mid | Day Catalysts: red folder: NO DATA
+//   Audit Trail: entry zone edge (TS-1); SL (a) 1 pip outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027; E3C:304) [ZR-6B RR-tight, mirror confidence 0.90]; TP 4H target zone near edge + 1 pip (strong zone) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Tue NY Mid 14:00-18:00 UTC (order rests from Mon)
+// 
+// --- SWING SCALP SETUPS ---
+// none
+// 
+// --- REINFORCEMENT ENTRIES ---
+// DX2 | DXY | LONG | Reinforcement | Day: Wed | Session: NY Open | Shape: Ladder
+//   Entry: 98.270 | SL: 98.104 | TP: 98.869 | RRR: 3.65 | Quality: HIGH | Confidence: 85
+//   Anchor Zone: liquidity rung [LQZ] | Shape Trigger: Ladder @ Wed NY Open | Day Catalysts: red folder: NO DATA
+//   Audit Trail: reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: DX1 | Anchor Hit Window: Wed NY Open 12:30-14:00 UTC
+// DX3 | DXY | LONG | Reinforcement | Day: Thu | Session: NY Open | Shape: Ladder
+//   Entry: 98.660 | SL: 98.615 | TP: 98.869 | RRR: 4.81 | Quality: HIGH | Confidence: 85
+//   Anchor Zone: liquidity rung [LQZ] | Shape Trigger: Ladder @ Thu NY Open | Day Catalysts: red folder: NO DATA
+//   Audit Trail: reinforcement 2 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: DX1 | Anchor Hit Window: Thu NY Open 12:30-14:00 UTC
+// 
+// --- TRANSITION SETUPS ---
+// none
+// 
+// --- DAILY SESSION NOTES ---
+// Mon: SS range | key zone 1H (Unmitigated) | MoM | range 97.869-98.539 | confidence 65% | catalysts: 10:00 NY cut 1.1600 1.9bn, 10:00 NY cut 1.1783 1.4bn, 10:00 NY cut 1.1750 1.1bn, red folder: NO DATA
+// Tue: SS+RWL+BS up | key zone 4H (Unmitigated) | BoM | range 97.969-98.364 | confidence 33% | catalysts: red folder: NO DATA
+// Wed: BS up | key zone 4H (Unmitigated) | BoM | range 98.064-98.522 | confidence 33% | catalysts: red folder: NO DATA
+// Thu: BS+RWL up | key zone 1H (Unmitigated) | MoM | range 98.522-98.884 | confidence 26% | catalysts: red folder: NO DATA
+// Fri: RWL down | key zone 1H (Unmitigated) | MoM | range 98.402-98.801 | confidence 26% | catalysts: red folder: NO DATA
+// Weekend: Close ALL positions by NY close Friday - per pair
+// 
+// --- DISCARDED (reason on every discard) ---
+// Mon SS down: REJECT RRR 2.59 outside [3.0, 15.0] (entry 98.40200)
+// Tue SS up: REJECT RRR 1.72 outside [3.0, 15.0] (entry 98.04500)
+// Mon SS up: REJECT RRR 2.02 outside [3.0, 15.0] (entry 98.04500)
+// Tue RWL down: REJECT RRR 1.58 outside [3.0, 15.0] (entry 98.29983)
+// reinforcement at 98.50959: REJECT RRR 2.34 / SL 15.6p
+// reinforcement at 98.60959: REJECT RRR 2.80 / SL 9.5p
+// Tue BS up: REJECT RRR 2.14 outside [3.0, 15.0] (entry 98.43900)
+// Thu RWL down: REJECT RRR 2.41 outside [3.0, 15.0] (entry 98.87400)
+// 
+// --- WEEKLY STATS ---
+// Total Setups: 3 | HTF: 1 | Scalps: 0 | Reinforcements: 2 | Transitions: 0
+// Average RRR: 4.59 | Median RRR: 4.81
+// f(T) Acceptance (E3C:996: 8 per pair minimum): 3 setups on DXY - NOT met

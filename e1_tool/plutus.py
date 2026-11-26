@@ -17,7 +17,63 @@ def run(pair, monday):
     except ImportError:
         E3 = None
     extra = E2.pine(pair, monday, chain) + (E3.pine(pair, monday, setups) if E3 else []) + table(pair, monday, X, chain, setups)
-    return X, chain, setups, EP.generate(pair, monday, X, extra, EP.reach(X, chain))
+    src = EP.generate(pair, monday, X, extra, EP.reach(X, chain))
+    return X, chain, setups, src + '\n' + '\n'.join('// ' + l for l in report(pair, monday, X, chain, setups)) + '\n'
+
+
+CASCADE = {'DXY': 'native', 'EURUSD': 'DXY->EU', 'GBPUSD': 'EU->GU'}
+SES_UTC = {'London Open': '06:00-09:00', 'London/NY Overlap': '12:00-14:00', 'NY Open': '12:30-14:00', 'NY Mid': '14:00-18:00'}      # GS Part 10 session clock (ET) in UTC, EDT weeks
+
+
+def report(pair, monday, X, chain, R):
+    """E3C 8.13 'The E3 Output Format (FULL)' + Phase 8 label law (BE1-BE12): weekly execution calendar (every day covered or 'No qualifying setups - [reason]'), the setups by category with
+    DAY / SESSION WINDOW / SHAPE TRIGGER / SETUP CATEGORY / ANCHOR HIT WINDOW (the E2-designated session bracket of the setup's day, R3 law), parent reference on reinforcements (BE9),
+    daily session notes with the day's catalysts (BE8), the profit-taking law (BE11), every discard with its reason (Phase 12), weekly stats with the f(T) acceptance line (E3C:996).
+    Carried at the end of the Pine as comments: one command -> one file."""
+    f = (lambda v: '%.3f' % v) if pair == 'DXY' else (lambda v: '%.5f' % v)
+    S = [s for s in R.get('setups', []) if not s.get('clone')]
+    rep = {}
+    for s in R.get('setups', []):
+        if s.get('clone'):
+            rep.setdefault(s['origin']['id'], []).append(s['day'])
+    days = chain.get('days', [])
+    name = lambda a: (a.get('label') or a.get('name') or 'liquidity rung')
+    cls = lambda a: (a.get('kind') or (a.get('mech') or {}).get('bom') or ('LSZ' if (a.get('sweep') or a.get('lsz')) else 'LQZ' if (a.get('liq') or 'tf' not in a) else 'IP'))
+    o = [f"ENGINE 3 - FULL-SPECTRUM TRADE MAP | WEEK OF {monday} | {PNAME[pair]}", '',
+         '=== WEEKLY EXECUTION CALENDAR ===', 'Day | Pair | Dir | Setup Type | Entry | Shape | Session | Conf | Notes']
+    for d in days:
+        rows = [s for s in S if s['day'] == d['day']]
+        for s in rows:
+            note = (f"if {s['parent']}" if s.get('parent') else '') + (f" repeated {', '.join(rep[s['id']])}" if rep.get(s['id']) else '') + (f" rests from {s['rest_from']}" if s.get('rest_from') else '')
+            o.append(f"{d['day']} | {PNAME[pair]} | {s['dir']} | {s['category']} | {f(s['entry'])} | {s['shape']} | {s['session']} | {s['confidence']} | {s['id']}{' ' + note.strip() if note.strip() else ''}")
+        if not rows:
+            o.append(f"{d['day']} | {PNAME[pair]} | - | - | - | {'+'.join(d['shapes'])} | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)")
+    for d_ in ('Mon', 'Tue', 'Wed', 'Thu', 'Fri'):
+        if not any(d['day'] == d_ for d in days):
+            o.append(f"{d_} | {PNAME[pair]} | - | - | - | - | - | - | No qualifying setups - Engine 2 gives this day no shape (chain confidence under 25%)")
+    for title, cats in (('HTF SWING SETUPS', ('HTF Swing', 'Reversal')), ('SWING SCALP SETUPS', ('Swing Scalp',)), ('REINFORCEMENT ENTRIES', ('Reinforcement',)), ('TRANSITION SETUPS', ('Transition',))):
+        rows = [s for s in S if s['category'] in cats]
+        o += ['', f"--- {title} ---"] + ([] if rows else ['none'])
+        for s in rows:
+            a = s['anchor']; dd = next((d for d in days if d['day'] == s['day']), None)
+            o.append(f"{s['id']} | {PNAME[pair]} | {s['dir']} | {s['category']} | Day: {s['day']} | Session: {s['session']} | Shape: {s['shape']}")
+            o.append(f"  Entry: {f(s['entry'])} | SL: {f(s['sl'])} | TP: {f(s['tp'])} | RRR: {s['rrr']:.2f}{(' / blended ' + format(s['rrr_blended'], '.2f')) if s.get('rrr_blended') else ''} | Quality: {s.get('quality', '-')} | Confidence: {s['confidence']}")
+            o.append(f"  Anchor Zone: {name(a)} [{cls(a)}{', tested ' + str(a['mit']) + 'x' if a.get('mit') is not None else ''}] | Shape Trigger: {s['shape']} @ {s['day']} {s['session']} | Day Catalysts: {', '.join(dd['triggers']) if dd and dd.get('triggers') else 'none listed'}")
+            o.append(f"  Audit Trail: {s['why']} | attempts {s.get('attempts', 1)}")
+            o.append(f"  Cascade Source: {CASCADE[pair]} | Parent Trade Ref: {s.get('parent') or '-'} | Anchor Hit Window: {s['day']} {s['session']} {SES_UTC.get(s['session'], '')} UTC" + (f" (order rests from {s['rest_from']})" if s.get('rest_from') else '') + (f" | repeated: {', '.join(rep[s['id']])}" if rep.get(s['id']) else ''))
+    o += ['', '--- DAILY SESSION NOTES ---']
+    for d in days:
+        o.append(f"{d['day']}: {'+'.join(d['shapes'])} {d['dir']} | key zone {d['key']} | range {f(d['lo'])}-{f(d['hi'])} | confidence {int(round(100 * d['conf']))}% | catalysts: {', '.join(d.get('triggers') or []) or 'none listed'}")
+    o.append('Weekend: Close ALL positions by NY close Friday - per pair')
+    o += ['', '--- DISCARDED (reason on every discard) ---'] + ([l for l in R.get('log', [])] or ['none'])
+    rr = sorted(s['rrr'] for s in S)
+    med = (rr[len(rr) // 2] if len(rr) % 2 else (rr[len(rr) // 2 - 1] + rr[len(rr) // 2]) / 2) if rr else 0.0
+    n = lambda c: sum(1 for s in S if s['category'] in c)
+    o += ['', '--- WEEKLY STATS ---',
+          f"Total Setups: {len(S)} | HTF: {n(('HTF Swing', 'Reversal'))} | Scalps: {n(('Swing Scalp',))} | Reinforcements: {n(('Reinforcement',))} | Transitions: {n(('Transition',))}",
+          f"Average RRR: {(sum(rr) / len(rr)) if rr else 0.0:.2f} | Median RRR: {med:.2f}",
+          f"f(T) Acceptance (E3C:996: 8 per pair minimum): {len(S)} setups on {PNAME[pair]} - {'met' if len(S) >= 8 else 'NOT met'}"]
+    return o
 
 
 ACCENT = {'DXY': ('20,20,40', '100,150,255'), 'EURUSD': ('10,30,60', '80,140,255'), 'GBPUSD': ('40,15,50', '180,100,220')}       # P533 10.10 pair accent colours
