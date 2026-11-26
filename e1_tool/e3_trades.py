@@ -155,7 +155,10 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
     zs.sort(key=lambda z: -z['top'] if direction == 'down' else z['bot'])
     # Refined Law 14 (E3C:346-347): 'Price cannot teleport past UNMITIGATED zones ... The "no teleport" constraint applies ONLY to zones with reactionCount = 0': an unmitigated opposing
     # 1H / 4H zone standing wholly before the E2-projected zone is where this swing ends - nothing beyond it is a target (D-66)
-    virgin = [z for z in zs if z.get('mit', 1) == 0 and (tz is None or not _overlap(z, tz)) and ((z['top'] > end) if direction == 'down' else (z['bot'] < end))]
+    # ... and only a zone that is a valid stop for price: BoM, or MoM standing under a pressure zone below 30% (P452:2082 'No IP + standalone MoM = it gets pierced (not valid TP)';
+    # the same reading as Engine 2's breakout target, D-49 / D-50)
+    holds = lambda z: z.get('kind') == 'BoM' or any(q['zfp_num'] < 30 and _overlap(q, z) for q in X['zones'])
+    virgin = [z for z in zs if z.get('mit', 1) == 0 and holds(z) and (tz is None or not _overlap(z, tz)) and ((z['top'] > end) if direction == 'down' else (z['bot'] < end))]
     if virgin and LAW14:
         z0 = virgin[0]
         out = []

@@ -102,17 +102,25 @@ def generate(pair, monday, X, extra=(), rch=None):
     for flag, far in (('show_lsz', False), ('show_lsz and show_far', True)):
       o.append(f'    if {flag}')
       n0 = len(o)
-      for z in X['lsz']:
-        if z['swept']:
-            continue
+      # sweep zones of one side standing within 0.05 of each other are ONE cluster of stops (P533 Step 0.5a 'If two swing lows are within 0.05 DXY points of each other, they are a
+      # "repeated level"'): drawn as one box from the nearest extreme's zone to the farthest extreme, one label, one sweep reach (A13: no sweep-zone pairs a pip apart)
+      merged = []
+      for z in sorted([z for z in X['lsz'] if not z['swept']], key=lambda z: (z['side'], z['level'])):
+          if merged and merged[-1]['side'] == z['side'] and z['level'] - merged[-1]['hi'] <= 0.05 * U + 1e-12:
+              merged[-1]['hi'] = z['level']; merged[-1]['n'] += 1
+              merged[-1]['priority'] = 'ACTIVE' if (merged[-1]['priority'].startswith('ACTIVE') or z['priority'].startswith('ACTIVE')) else z['priority']
+              merged[-1]['confluent_bom'] = merged[-1].get('confluent_bom') or z.get('confluent_bom')
+          else:
+              merged.append(dict(z, lo=z['level'], hi=z['level'], n=1))
+      for z in merged:
         act = z['priority'].startswith('ACTIVE')
         c = '80,230,100' if act else '40,180,80'
-        zb, zt = (z['level'], z['level'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['level'] - 0.05 * U, z['level'])
+        zb, zt = (z['lo'], z['hi'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['lo'] - 0.05 * U, z['hi'])
         if near(zb, zt) == far:
             continue
         o.append(f"        box.new({tsL}, {g(zt)}, {tsR}, {g(zb)}, bgcolor=color.new(color.rgb({c}), {78 if act else 84}), border_color=color.rgb({c}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
         # Step 0.45a (P533 'LSZ BOTTOM EDGE EXTENSION'): 'Institutions often sweep 0.05-0.10 beyond the visible extreme before reversing' - the sweep reach beyond the extreme, dotted
-        xb, xt = (z['level'] - 0.10 * U, z['level']) if z['side'] == 'Demand-side' else (z['level'], z['level'] + 0.10 * U)
+        xb, xt = (z['lo'] - 0.10 * U, z['lo']) if z['side'] == 'Demand-side' else (z['hi'], z['hi'] + 0.10 * U)
         o.append(f"        box.new({tsL}, {g(xt)}, {tsR}, {g(xb)}, bgcolor=color.new(color.rgb({c}), 100), border_color=color.new(color.rgb({c}), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
         n_lz += 1
         o.append(f"        label.new({tsL + (8 + 40 * (n_lz % 3)) * H}, {g((zt + zb) / 2)}, \"LSZ {'supply' if z['side'] == 'Supply-side' else 'demand'}-side{' + 4H BoM (confluent)' if z.get('confluent_bom') else ''} | sweep to {g(xt if z['side'] == 'Supply-side' else xb)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
