@@ -1,3 +1,7 @@
+## SECOND OUTSIDE G1 COUNT (2026-11-26, audit/G1_count_dryrun2.md, ledger 79): E1 46 / E2 43 / E3 29; outside the golden week 42 / 33 / 12. S3 NOT MET. Frames were of the code before D-60 / D-61.
+WORK ORDER: (1) pairs' SS bounds / day boxes (GBPUSD + EURUSD May 18, GBPUSD Apr 20); (2) Friday reversal timing + Thursday breakout boxes (E2X 6.8 / 6.10 durations); (3) E1 zone on the turning side when price sits beyond the map (Step 9.5 gap scan / breakout extension: DXY Oct 5, DXY May 18, EURUSD Oct 5);
+(4) entries exactly one forward spread short (front fill at first contact: check fills.py touch rule); (5) stops inside the sweep (ZR-6B); (6) labels. Then brief v3 (audit/G1_brief3.md: E1 objects defined per goal prompt 4b + colour legend), frames evidence/s3c, facts audit/g1_facts_c, third outside count.
+
 ## OUTSIDE G1 COUNT (dry run, 2026-11-26, audit/G1_count_dryrun.md): all 12 maps E1 82 / E2 35 / E3 33; outside the golden week 81 / 29 / 17. S3 NOT MET. Golden DXY + EURUSD: E3 100 (7/7 each), E2 60.
 WORK ORDER from its defect list: (1) ENGINE 2 - range boxes / zigzag on SS weeks, pair bounds, day boxes of the breakout days; (2) zones the reach filter hides although the week trades there (e1_pine.reach); turns with no zone;
 (3) entries one pip beyond the extremes (front-edge entry / forward spread: E3C 8.19 'Forward Spread' DXY 0.02, EUR 1 pip, GBP 2 pips; Mechanism A 'Front = zone edge nearest spot + forward spread'); (4) stops; (5) Pine: label overprint, right-edge labels, SL / TP marking, header.
