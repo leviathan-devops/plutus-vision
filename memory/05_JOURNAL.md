@@ -357,3 +357,13 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   V1 order blocks + liquidity ladder on 4H / 1H / 30m / 15m (e1_v1.harvest_all), option strikes (level kind 'EUR/USD ...'), zone mechanics (BoM/MoM, reactions, Engine 3 status), intra-zone levels.
 - NEXT: (1) e1_pine.py: draw these families in trident_v8 form (IP zones red / orange / teal with name + degree + ZFP range; sweep zones green; strike lines amber; candle zones with "4H|1H ... BoM/MoM NX" labels; V1 ladder as thin green bands; V1 order blocks blue / red),
   two-week window ending Friday 17:00 NY; (2) render DXY Jul 6-10 in Pinebox, OPEN the frame, compare with g1 / g4 family by family (ledger rows); (3) re-run Apr 20-24 with the new anchor and e1_ip; (4) Step 0.6 key levels, core/spike, reaction counter display; then E2, E3.
+
+## 2026-11-26 - FIRST GOLDEN-WEEK RENDER OF THE REBUILT E1 = FAIL ON PRESENTATION (ledger rows 51-52; frame evidence/e1tool_DXY_1H_2026-07-06_gw.png)
+- e1_pine.py was rewritten on e1_ip + e1_v1 (old E2/E3 drawing removed; e2_shapes.py / e3_setups.py / e1_zones.py / e1_report.py / e1_outcome.py still import the OLD modules and are stale - rebuild, do not run).
+- The frame is unreadable: too many layers at once. FIXES, each from canon / the reference render (trident_v8 drew 5 IP zones, 6 LSZ of 5 pips, 7 strike lines and nothing else):
+  1. Sweep zones: canon base width is 0.05 ([low, low+0.05] / [high-0.05, high], P533:1255-1262); draw only UNSWEPT ones (a swept extreme has no resting stops) - the 0.05-0.10 extension is a scan note, not the box.
+  2. 4H candle zones: draw only those that pass the prompt's noise rejection AND are still zones: 0X-1X, price on the correct side (the frame showed 2x and 4x mitigated ones).
+  3. V1 ladder: the sealed V1 draws it itself on the live chart; in the generated script show the 1H bands as thin lines / very transparent bands and only inside the prior-week range +- one ADR; order blocks: label only "TF D/S", lower timeframes only near price.
+  4. IP labels: three short lines inside the visible week (name / degree + ZFP / tier + BoM-MoM), not at the left edge; pbfit already limits the axis to the visible candles +-60%.
+  5. Default view for judging = one layer set at a time: (i) IP + LSZ + strikes (the trident_v8 set), (ii) supply/demand (4H candles + V1 order blocks), (iii) ladder. Render three frames per week and judge each against g1 / g4.
+- After that: the comparison rows vs the oracle, then Apr 20-24 re-check, then E2 / E3.
