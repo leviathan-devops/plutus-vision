@@ -648,6 +648,16 @@ def build(pair, monday, X, lead=None, force_dir=None):
                     add('SS', 'range', e + 2, len(S), tgt2, tgt, 'MODERATE', "6.3 'PBS -> R/SS'", role='ss_after')
     if lead is None and mode == 'ss' and bdir is not None:
         near, far = (ceil, floor) if bdir == 'up' else (floor, ceil)
+    # E3C Phase 1 step 6 (E3C:123) 'Trading Speed Adjustment: for each day, if E2's confidence < 65%, propagate the shape to the next day (the predicted shape "spills over" - today's move
+    # often becomes tomorrow's move)'; step 7 '5 entries present, no null shape': a chain that ends before Friday (6.6 Step 3: cumulative confidence under 25%) leaves its last shape running
+    # into the next trading day when that shape's confidence is under 65% (D-70)
+    if chain and lead is None and chain[-1]['s1'] < len(S) and chain[-1]['cum'] < 0.65 and chain[-1]['shape'] != 'SS':
+        d_last = S[chain[-1]['s1'] - 1]['i']
+        nxt_day = [k for k in range(len(S)) if S[k]['i'] == d_last + 1]
+        if nxt_day:
+            chain[-1]['s1'] = nxt_day[-1] + 1
+            chain[-1]['spill'] = True
+            audit.append(f"  spill-over (E3C:123): {chain[-1]['shape']} {chain[-1]['dir']} runs into {DAYS[d_last + 1]} (confidence {chain[-1]['cum']} < 0.65)")
     audit.append('chain: ' + ' -> '.join(f"{c['shape']} [{c['tier']}, cum {c['cum']}]" for c in chain))
     # ---------------------------------------------------------------- Step 5: path + day decomposition
     f_edge = floor['top'] if floor else spot - 0.30 * U

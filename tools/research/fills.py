@@ -29,6 +29,7 @@ for s in R['setups']:
         S = E2M.week_sessions(mon)
         ses = next((x for x in S if x['t0'] <= pf[0] < x['t1']), None)
         start = pf[0] if (ses is None or ses['s'] == 'TKY') else next((x['t0'] for x in S if x['s'] == 'TKY' and x['t0'] > pf[0]), t_end)
+        start = max(start, s['valid_from'])              # ... of the rocket's OWN day (E3C:625 'placed in London premarket'; every order's bracket comes from its designated day, R3 law)
         t_end = pf[1] if pf[1] else t_end
     while True:
         st, tf, first, tx = 'not filled', None, True, None

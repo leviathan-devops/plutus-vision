@@ -519,7 +519,7 @@ def _reinforce(s, X, E2, env, pair, log):
         if sum(1 for q in out if (min(q['entry'], q['sl']) <= max(s['entry'], s['sl']) and max(q['entry'], q['sl']) >= min(s['entry'], s['sl']))) >= 2:
             log.append(f"reinforcement at {e2:.5f}: REJECT overlapping risk (8R.3)"); continue
         di = min(len(s['days']) - 1, len(out) + 1)
-        out.append({'dir': s['dir'], 'entry': e2, 'sl': sl2, 'tp': s['tp'], 'rrr': round(rr, 2), 'day': s['days'][di], 'days': s['days'][di:], 't0': None, 't1': s.get('t1'), 'rest_from': s['day'],   # E3C:625 pending from the parent's start, live once the parent is filled, cancelled at the parent's TP
+        out.append({'dir': s['dir'], 'entry': e2, 'sl': sl2, 'tp': s['tp'], 'rrr': round(rr, 2), 'day': s['days'][di], 'days': s['days'][di:], 't0': None, 't1': s.get('t1'), 'rest_from': None,   # E3C:625 pending from the parent's start, live once the parent is filled, cancelled at the parent's TP
                     'shape': 'Ladder', 'category': 'Reinforcement', 'session': SESSION_WINDOW['Reinforcement'], 'sl_pips': round(d2, 1), 'parent': None, 'parent_ref': s, 'tp_zone': s['tp_zone'],
                     'anchor': r, 'size': (30, 20, 20)[len(out)], 'confidence': s['confidence'], 'quality': s['quality'],
                     'why': f"reinforcement {len(out) + 1} (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP)"})
