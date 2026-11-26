@@ -42,9 +42,10 @@ for s in R['setups']:
                 if (not stop_entry) and ((long and x['open'] <= s['sl']) or ((not long) and x['open'] >= s['sl'])):
                     st = 'void: price already beyond the stop when the order starts'; break
             if tf is None:
-                hit = x['low'] <= s['entry'] <= x['high']
+                e0 = s.get('front') if s.get('front') is not None else s['entry']       # Mechanism A front entry = first contact (E3C:1064)
+                hit = x['low'] <= e0 <= x['high']
                 if not stop_entry:
-                    hit = hit or (long and x['open'] <= s['entry']) or ((not long) and x['open'] >= s['entry'])
+                    hit = hit or (long and x['open'] <= e0) or ((not long) and x['open'] >= e0)
                 if hit:
                     tf = x['time']; st = 'filled, still open at the week end'
                 continue

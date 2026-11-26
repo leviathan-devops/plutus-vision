@@ -15,6 +15,7 @@ import e1_data as D
 
 RRR_FLOOR, GOLD_MIN, GOLD_MAX, SL_CEIL, MAX_SETUPS = 3.0, 4.0, 9.5, 36.0, 11
 ALT_SETUPS = False       # the alternative chain's breakout setups need their Decision Zone trigger (6.6 Step 4) before they may rest as orders: not emitted until that trigger is built
+FWD = {'DXY': 0.02, 'EURUSD': 0.0001, 'GBPUSD': 0.0002}     # E3C 8.19 pair table, column 'Forward Spread'
 TF_RANK = {'15': 0, '30': 1, '60': 2, '240': 3}
 DAY_IDX = {'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4}
 DAYS = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri')
@@ -390,6 +391,10 @@ def _build(pair, monday, X, E2, tag):
                 break
         if s is None:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: REJECT {why_fail} (entry {entry:.5f})"); continue
+        if '(TS-1)' in how:
+            # E3C:1060-1066 Mechanism A: the FRONT entry of a zone-edge position = 'Zone edge nearest spot + forward spread | First contact' (E3C 8.19 spreads): the order is met when price
+            # comes within the pair's forward spread of the edge; entry / SL / TP / RRR stay those of the edge (TS-1)
+            s['front'] = entry - FWD[pair] if direction == 'down' else entry + FWD[pair]
         s.update(day=c['days'][0], days=c['days'], shape=c['shape'], category=cat, session=SESSION_WINDOW[cat], sl_pips=round(abs(s['entry'] - s['sl']) / pip, 1),
                  t0=c.get('t0'), t1=c.get('t1'), anchor=a, role=c.get('role'), rest_from=c.get('rest_from'))
         ipz = a if a.get('ip') else _ip_at(a, X)
@@ -521,6 +526,8 @@ def pine(pair, monday, R):
         x1 = min(max(s['t1'] if s.get('t1') is not None else s['valid_to'], x0 + 6 * 3600000), wk1)
         o.append(f"        // {s['id']} {s['day']} {s['shape']} {s['dir']} E {g(s['entry'])} SL {g(s['sl'])} TP {g(s['tp'])} RRR {s['rrr']} | {s['category']} / {s['session']} | {s['why']}")
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['sl']))}, {x1}, {g(min(s['entry'], s['sl']))}, bgcolor=color.new(color.rgb(242,54,69), {92 if s.get('alt') else 84}), border_color=color.rgb(242,54,69), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
+        if s.get('front') is not None:                       # first-contact band between the front entry and the edge
+            o.append(f"        box.new({x0}, {g(max(s['entry'], s['front']))}, {x1}, {g(min(s['entry'], s['front']))}, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['tp']))}, {x1}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), {93 if s.get('alt') else 88}), border_color=color.rgb(8,153,129), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
         ly = s['entry'] + 0.18 * (s['tp'] - s['entry'])        # inside the green box, next to its own entry edge: setups sharing one TP no longer stack their labels (A13)
         k = starts.get(x0, 0); starts[x0] = k + 1             # setups resting from the same bar: labels staggered along the box so they do not print over each other (A13)
