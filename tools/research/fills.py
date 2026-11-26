@@ -38,7 +38,9 @@ for s in R['setups']:
     st0 = ANCH.setdefault(k, {'battles': 0, 'busy_until': 0}) if k else None
     day_order = s['shape'] == 'SS' and s.get('role') != 'last-swing'          # the per-day swing-scalp orders of a consolidation (one per anchor per day)
     if st0 is not None and day_order and 'bot' in a:
-        thru = next((x for x in h1 if x['time'] + 3600000 <= start and ((x['close'] < a['bot'] - tick) if long else (x['close'] > a['top'] + tick))), None)
+        # a sweep zone carrying its extension fails when price closes beyond the extended range (P533 7.1 Rule 2.5 'price sweeping through the LSZ signals zone failure')
+        lo_, hi_ = (min(a['bot'], a['reach']), max(a['top'], a['reach'])) if a.get('reach') is not None else (a['bot'], a['top'])
+        thru = next((x for x in h1 if x['time'] + 3600000 <= start and ((x['close'] < lo_ - tick) if long else (x['close'] > hi_ + tick))), None)
         if thru is not None and not stop_entry:
             print(head + f"void: the anchor zone was closed through on 1H {ts(thru['time'])} (VIOLATED, E3C:150)"); continue
         if st0['battles'] >= 3:

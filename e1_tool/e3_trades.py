@@ -60,7 +60,10 @@ def _entries(anchor, direction, shape, env, pair):
         if shape in ('WL', 'RWL'):                           # whiplash into a sweep zone: the middle of the zone the stops rest in (operator's golden Friday long; GS Law 3 'Whiplash: post-spike entry')
             return [mid]
         # every other shape meets the sweep zone as a bound: TS-1 'zone edge CLOSEST to approaching price' (E3C:177-181), then the middle
-        return [(anchor['bot'] if direction == 'down' else anchor['top'], anchor, 'sweep zone near edge (TS-1)'), mid]
+        out = [(anchor['bot'] if direction == 'down' else anchor['top'], anchor, 'sweep zone near edge (TS-1)'), mid]
+        if anchor.get('reach') is not None and SWEEP_EXT:    # third attempt (E3C:386): the exact swing extreme the stops rest at (P533 0.45a / 0.45b 'The exact swing low price is where ... stop-loss orders are placed')
+            out.append((anchor['top'] if direction == 'down' else anchor['bot'], anchor, 'sweep zone: the exact swing extreme (P533 0.45a/b)'))
+        return out
     out = []
     real = [r for r in rungs if 'fib' not in r]
     if anchor.get('ip'):                                     # an IP zone is never an entry source: the ORDER_BLOCK / LQZ at it are (E3C:139-143 STRUCTURAL_ENTRY_SOURCES)
@@ -196,6 +199,7 @@ def _steps(X):
 
 
 ZR6B = True
+SWEEP_EXT = True
 
 
 def _mirror_conf(c, a, direction, E2):
@@ -231,11 +235,22 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
     tk = sorted([s for s in thick if beyond(s)], key=lambda s: s['bot'] if dn else -s['top'])
     cands = []
     step_a = cur if cur is not None else anchor
+    # P533 7.1 Rule 2.5 'LIQUIDITY SWEEP ZONE SL PLACEMENT ... If the LSZ has been extended per LSZ Bottom Edge Extension (sweep scan 0.05-0.10 ...), use the extended range for SL placement';
+    # E3C:1027 'LSZ Zones (with bottom edge extension) | Phase 4 | SL ladder-steps model': a sweep zone carrying its extension ('reach', Step 0.45a) is ONE step up to the end of the reach -
+    # the stop stands 3 pips outside it, and a shield inside the reach is not a 'NEXT step away' (D-84)
+    ext = anchor.get('reach') if (anchor is not None and anchor.get('sweep') and SWEEP_EXT) else None
+    if ext is not None:
+        cands.append(((ext + 3 * pip) if dn else (ext - 3 * pip), "(a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027)"))
+        th = [s_ for s_ in th if ((s_['bot'] > ext) if dn else (s_['top'] < ext))]
+        tk = [s_ for s_ in tk if ((s_['bot'] > ext) if dn else (s_['top'] < ext))]
+        step_a = None
     if step_a is not None:
         cands.append(((step_a['top'] + 3 * pip) if dn else (step_a['bot'] - 3 * pip), "(a) 3 pips outside the far edge of the current step"))
     # E3C:249 operator verbatim '3 pips outside the back edge of the ENTRY ZONE'; E3C:254 '(entry zone's back edge + 3p)': when the liquidity step holding the entry gives no valid stop,
     # the entry structure, then the anchor zone itself, is the current step (D-65)
     for z_, nm in ((anchor, 'entry structure'), (zone, 'entry zone')):
+        if ext is not None:
+            break
         if z_ is not None and z_ is not step_a and z_.get('top', 0) > z_.get('bot', 0) and not z_.get('ip'):
             cands.append(((z_['top'] + 3 * pip) if dn else (z_['bot'] - 3 * pip), f"(a) 3 pips outside the back edge of the {nm}"))
     if pair not in NO_SHIELD:
