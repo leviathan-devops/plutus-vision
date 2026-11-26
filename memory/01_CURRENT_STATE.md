@@ -1,3 +1,7 @@
+## STATE (NEWEST, 2026-11-26 ~22:15 UTC) - after the third outside count: D-70 .. D-77 committed. NEXT = fourth outside count on this code (frames evidence/s3d, facts audit/g1_facts_d, brief audit/G1_brief4.md = brief 3 + 'DXY Apr 20: the obvious trades are his two real trades (goal prompt S3)').
+- Golden oracle distances now (tools/research/oracle_diff.py PAIR): DXY #2-#6, #8 all within 2.5 pips on entry / SL / TP; EURUSD #2 #3 #4 #6 #8 within ~3 (#5 SL 4.4, #7 rocket 6.9); GBPUSD #1 #2 #5 within 3 pips (#3 entry 7.5 off, #4 #6 #7 not on the map).
+- Locator 31 TP fills / 18 stops over 16 maps. Opus sub-agents: 5-hour usage limit hit at ~21:10 UTC, reset 21:40.
+
 ## THIRD OUTSIDE G1 COUNT (2026-11-26 late, audit/G1_count_dryrun3.md, ledger 80b): E1 91.7 / E2 68.3 / E3 29.5; outside the golden week 91.2 / 64.4 / 14.0. S3 NOT MET.
 WORK ORDER: (1) ENGINE 3 outside the golden week (49 of 57 obvious trades missed): per map list each missed leg with the candidate that should have caught it and its reject reason (facts files audit/g1_facts_c show the '!' reject lines); (2) E1 selection: 20-34 drawings per map, sweep-zone pairs 1 pip apart (merge per P533 0.5 repeated extremes / cluster 0.05), which V1 bands and LTF zones belong on the default view; (3) E2 on GBPUSD (May 18 Monday break of the ceiling; Apr 20), Tuesday breaks in range weeks; (4) labels. Since its frames: D-70 .. D-73 + front fix (commit after f02a8e3). Fourth count only after E3 moves on the locator.
 

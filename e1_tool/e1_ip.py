@@ -139,6 +139,10 @@ def levels(pair, monday, side):
         z['confluent_bom'] = any(q['bot'] <= zt_ and q['top'] >= zb_ and q['type'] == ('Demand' if z['side'] == 'Demand-side' else 'Supply') for q in z4_)
         later = [x for x in daily if x['date'] > z['source'][-10:]]      # completed sessions only: the map is the weekend map (the operator's bands are drawn before Monday's first hours)
         z['swept'] = any((x['low'] < z['level']) if z['side'] == 'Demand-side' else (x['high'] > z['level']) for x in later)
+        # the reference report (Apr 20-24, section 5) lists the low / high of EVERY recent day of the prior week as a sweep zone, also those a later day of that week traded
+        # through (97.97 Apr 14 under 97.83 Apr 16 and 97.63 Apr 17) - the operator's long 98.02 that week is the top edge of that zone: the last five days' extremes stay on the map
+        if RECENT_LSZ and z['source'][-10:] >= daily[-5]['date']:
+            z['swept_recent'] = z['swept']; z['swept'] = False
         z['priority'] = 'ACTIVE SL TRIGGER' if abs(z['level'] - spot) <= 0.30 * U else 'STANDARD'
     magnets = []
     for sd, arr in (('low', lows), ('high', highs)):
@@ -202,6 +206,7 @@ def levels(pair, monday, side):
 
 
 GAP_SCAN = True
+RECENT_LSZ = True
 
 
 def gap_scan(X, final, by, U):

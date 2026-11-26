@@ -377,6 +377,8 @@ def _build(pair, monday, X, E2, tag):
     for z in sd:
         z['key'] = (z['tf'], round(z['bot'], 6), round(z['top'], 6))
     cands, log = _cands(E2, monday, X)
+    import e2_chain as E2M_
+    S_ = E2M_.week_sessions(monday)
     setups = []
     floor_rrr = 2.5 if E2['chain'] and all(x['shape'] == 'SS' for x in E2['chain']) else RRR_FLOOR      # E3C:1106-1115 'Consolidation week (relaxed) | 2.5' (a week whose chain is SS throughout)
     for c in cands:
@@ -409,6 +411,12 @@ def _build(pair, monday, X, E2, tag):
             # Law 27 (E3C:443-449 'BS -> RWL: TP of BS becomes RWL entry zone'): the reversal rests at the breakout's TP from the moment the breakout starts
             ecands = [(pbs['tp'], a, "the breakout's TP level (Law 27: TP of N = entry of N+1)")]
             c = dict(c, rest_from=pbs['day'])
+        if c.get('role') == 'bs' and E2.get('far_liq') is not None and c.get('from_zone') is not None and c['from_zone'].get('liq') and c.get('role') != 'transition':
+            # the breakout's entry stands at the opposing liquidity beyond the range (6.4.2) - during the consolidation that zone is the day's DEEP zone on that side (E3C:115 WorkingDayMap
+            # 'deepDemandZoneId'; F1-C 'the deep-demand / deep-supply rule', E3C:190-193): the same order rests there from the first day of the consolidation (D-76)
+            ss0 = next((x for x in E2['chain'] if x['shape'] == 'SS'), None)
+            if ss0 is not None:
+                c = dict(c, rest_from=DAYS[S_[ss0['s0']]['i']])
         if c.get('role') == 'transition':                    # the break of the range boundary itself: a stop order at the failing bound's far edge (GS Law 3 'Breakout: at zone edge (break confirmation)')
             lvl = a['top'] if direction == 'up' else a['bot']
             ecands = [(lvl, {'bot': a['bot'], 'top': a['top']}, 'range boundary break (E3C:457): stop order at the far edge of the failing bound')]
@@ -449,6 +457,16 @@ def _build(pair, monday, X, E2, tag):
                     r2 = abs(tp - e2) / abs(e2 - stop)
                     if r2 >= floor_rrr:
                         entry, rrr, how = e2, r2, how + ' (hair-miss repair: 0.2 pip inside, E3C:196-197)'
+                if rrr > MAX_RRR:
+                    # E3C:365 'MAX_CHAIN_RRR ceiling: 15.0 (Law-13) - chains beyond 15R fill-and-stop': a stop that tight is the dumb anchor (E3C:369-383 'refineSetup on SAME anchors
+                    # (entry FIXED - re-anchor SL/TP only): sl = next-rung's ...'): the next ladder stop outward that brings the RRR under the ceiling (D-75)
+                    wider = sorted([q for q in _stop(entry, direction, step if 'bot' in step else a, X, pair, zone=a, every=True) if abs(q[0] - entry) > abs(stop - entry) + 1e-12],
+                                   key=lambda q: abs(q[0] - entry))
+                    for sl2, why2 in wider:
+                        r2 = abs(tp - entry) / abs(entry - sl2)
+                        if floor_rrr <= r2 <= MAX_RRR:
+                            stop, why_sl, rrr = sl2, why2 + ' (re-anchored outward: RRR over the 15R ceiling, E3C:365)', r2
+                            break
                 if floor_rrr <= rrr <= MAX_RRR:
                     s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
                          'why': f"entry {how}; SL {why_sl}; TP {why_tp}", 'src': (round(step['bot'], 6), round(step['top'], 6)) if 'bot' in step else None}
