@@ -1,0 +1,38 @@
+DXY 2026-10-05 anchor price 102.308 | chart shows zones between 101.668 and 102.635 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  sweep zone Supply-side 102.485-102.535 | sweep reach to 102.635 (dotted outline)
+  sweep zone Supply-side 102.157-102.207 | sweep reach to 102.307 (dotted outline)
+  sweep zone Supply-side 102.082-102.132 | sweep reach to 102.232 (dotted outline)
+  pressure zone MID-RANGE SUPPORT 101.961-102.051 MODERATE | 30-50% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 101.916-101.996
+  supply/demand 1H (Unmitigated) | MoM Demand 101.855-101.926
+      part: sweep zone Demand-side 101.855-101.905 | sweep reach to 101.755 (dotted outline)
+  pressure zone KEY SUPPORT BAND 101.750-101.843 MODERATE | 30-50% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | BoM Demand 101.668-101.798
+  sweep zone Demand-side 101.668-101.718 | sweep reach to 101.568 (dotted outline)
+  (7 zones, 3 parts)
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: MID-RANGE SUPPORT | ZFP: 30-50% | 10-05 TKY: 1H close through MID-RANGE SUPPORT (ZFP 30), price still beyond [the row's ZFP condition is not met: best description, one tier lower] | FA 9: 3 piercing ses
+   Ceiling: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+   Breakout direction: none - both bounds hold | 
+   chain: SS [HIGH, cum 0.8]
+   PRIMARY: SS | DECISION ZONE: Liquidity Sweep Zone 1H close beyond it -> ALTERNATIVE: SS -> BS
+  Mon forecast SS         range box 101.855-102.635 key zone Liquidity Sweep Zone               | actual H 102.433 L 102.084 C 102.113
+  Tue forecast SS         range box 101.855-102.635 key zone Liquidity Sweep Zone               | actual H 102.285 L 101.754 C 101.841
+  Wed forecast SS         range box 101.855-102.635 key zone Liquidity Sweep Zone               | actual H 102.499 L 101.822 C 102.277
+  Thu forecast SS         range box 101.855-102.635 key zone Liquidity Sweep Zone               | actual H 102.467 L 102.033 C 102.124
+  Fri forecast SS         range box 101.855-102.635 key zone Liquidity Sweep Zone               | actual H 102.335 L 101.920 C 102.232
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  DX1      Mon SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | filled - -> not filled inside its bracket (order expires)
+  DX2      Mon SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | filled - -> not filled inside its bracket (order expires)
+  DX3      Tue SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | filled - -> not filled inside its bracket (order expires)
+  DX4      Tue SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | filled Tue 11:00 -> STOPPED Tue 11:30
+  DX5      Wed SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | filled Wed 12:15 -> TP HIT Fri 05:30
+  DX6      Wed SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
+  DX7      Thu SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | not placed: the earlier order at this anchor is still an open position
+  DX8      Thu SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
+  DX9      Fri SS     SHORT E 102.485 SL 102.565 TP 101.941 6.8R | filled - -> not filled
+  DX10     Fri SS     LONG  E 101.926 SL 101.825 TP 102.520 5.88R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)

@@ -1,0 +1,38 @@
+EURUSD 2026-10-05 anchor price 1.11920 | chart shows zones between 1.11510 and 1.12853 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  supply/demand 1H (Unmitigated) | BoM Supply 1.12716-1.12853
+      part: gap in-fill level 1.12806-1.12866 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, minor swing
+      part: sweep zone Supply-side 1.12803-1.12853 | sweep reach to 1.12953 (dotted outline)
+  gap in-fill level 1.12611-1.12671 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot
+      part: sweep zone Supply-side 1.12562-1.12612 | sweep reach to 1.12712 (dotted outline)
+  pressure zone UPPER RESISTANCE 1.12451-1.12530 MODERATE | 15-30% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | MoM Supply 1.12491-1.12612
+  sweep zone Demand-side 1.12208-1.12258 | sweep reach to 1.12108 (dotted outline)
+  sweep zone Demand-side 1.12149-1.12199 | sweep reach to 1.12049 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 1.12039-1.12149
+  sweep zone Demand-side 1.11610-1.11660 | sweep reach to 1.11510 (dotted outline)
+  (6 zones, 5 parts)
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 15-30% | 10-05 TKY: 1H close through UPPER RESISTANCE (ZFP 22), price still beyond [the row's ZFP condition is not met: best description, one tier lower] | FA 9: 3 piercing sessi
+   Ceiling: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+   Floor: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Breakout direction: none - both bounds hold | pair translation of the DXY chain (None inverted)
+   chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range box 1.11510-1.12612 key zone 1H (Unmitigated) | MoM             | actual H 1.12249 L 1.11690 C 1.12218
+  Tue forecast SS         range box 1.11510-1.12612 key zone 1H (Unmitigated) | MoM             | actual H 1.12767 L 1.12028 C 1.12583
+  Wed forecast SS         range box 1.11510-1.12612 key zone 1H (Unmitigated) | MoM             | actual H 1.12629 L 1.11645 C 1.11953
+  Thu forecast SS         range box 1.11510-1.12612 key zone 1H (Unmitigated) | MoM             | actual H 1.12267 L 1.11719 C 1.12089
+  Fri forecast SS         range box 1.11510-1.12612 key zone 1H (Unmitigated) | MoM             | actual H 1.12427 L 1.11874 C 1.11973
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  EU1      Mon SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | filled - -> not filled inside its bracket (order expires)
+  EU2      Mon SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | filled - -> not filled inside its bracket (order expires)
+  EU3      Tue SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | filled Tue 09:45 -> STOPPED Tue 11:15
+  EU4      Tue SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | filled - -> not filled inside its bracket (order expires)
+  EU5      Wed SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
+  EU6      Wed SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | filled Wed 12:15 -> filled, still open at the week end
+  EU7      Thu SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
+  EU8      Thu SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | not placed: the earlier order at this anchor is still an open position
+  EU9      Fri SS     SHORT E 1.12491 SL 1.12642 TP 1.11625 5.74R | void: the anchor zone was closed through on 1H Tue 11:00 (VIOLATED, E3C:150)
+  EU10     Fri SS     LONG  E 1.11660 SL 1.11580 TP 1.12476 10.2R | not placed: the earlier order at this anchor is still an open position

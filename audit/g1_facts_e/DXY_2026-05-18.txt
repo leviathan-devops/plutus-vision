@@ -1,0 +1,47 @@
+DXY 2026-05-18 anchor price 99.301 | chart shows zones between 98.844 and 99.509 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  liquidity band (sealed V1, 4H) 99.449-99.503
+  sweep zone Supply-side 99.359-99.409 | sweep reach to 99.509 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 99.359-99.413
+  supply/demand 1H (Unmitigated) | MoM Demand 99.251-99.298
+      part: sweep zone Supply-side 99.270-99.320 | sweep reach to 99.420 (dotted outline)
+      part: sweep zone Demand-side 99.251-99.301 | sweep reach to 99.151 (dotted outline)
+  supply/demand 1H (Unmitigated) | MoM Demand 99.174-99.244
+      part: liquidity band (sealed V1, 4H) 99.244-99.298
+      part: liquidity band (sealed V1, 4H) 99.125-99.179
+  pressure zone MID-RANGE SUPPORT 98.963-99.037 MODERATE | 15-30% ZFP | MoM
+      part: supply/demand 1H (Mitigated 2x) | MoM Demand 99.001-99.097
+      part: liquidity band (sealed V1, 4H) 98.996-99.050
+  supply/demand 1H (Unmitigated) | MoM Demand 98.844-98.889
+      part: liquidity band (sealed V1, 4H) 98.885-98.939
+      part: sweep zone Supply-side 98.857-98.907 | sweep reach to 99.007 (dotted outline)
+      part: sweep zone Demand-side 98.844-98.894 | sweep reach to 98.744 (dotted outline)
+  (6 zones, 10 parts)
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: Liquidity Sweep Zone | ZFP: - | price between MID-RANGE SUPPORT and Liquidity Sweep Zone, no breakout in the last two sessions [the row's ZFP condition is not met: best description, one tier lower]
+   Ceiling: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Floor: MID-RANGE SUPPORT [IP MoM Fortress ZFP 22] -> HOLD (5 strong reactions = FORTRESS (E3C lifecycle: 95% direction flip))
+   Breakout direction: none - both bounds hold | 
+   chain: SS [HIGH, cum 0.8]
+   PRIMARY: SS | DECISION ZONE: Liquidity Sweep Zone 1H close beyond it -> ALTERNATIVE: SS -> BS -> R
+  Mon forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.307 L 98.946 C 98.983
+  Tue forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.434 L 98.944 C 99.315
+  Wed forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.472 L 98.966 C 99.136
+  Thu forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.515 L 99.064 C 99.203
+  Fri forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.412 L 99.172 C 99.319
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  DX1      Mon SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | filled - -> not filled inside its bracket (order expires)
+  DX2      Mon SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | filled Mon 11:30 -> STOPPED Mon 16:15
+  DX3      Tue SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | filled Tue 13:15 -> STOPPED Wed 08:15
+  DX4      Tue SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
+  DX5      Wed SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | filled Wed 08:15 -> STOPPED Wed 14:00
+  DX6      Wed SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
+  DX7      Thu SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | void: the anchor zone was closed through on 1H Wed 07:00 (VIOLATED, E3C:150)
+  DX8      Thu SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
+  DX9      Fri SS     SHORT E 99.359 SL 99.459 TP 99.052 3.08R | void: the anchor zone was closed through on 1H Wed 07:00 (VIOLATED, E3C:150)
+  DX10     Fri SS     LONG  E 99.050 SL 98.971 TP 99.394 4.35R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
+  ! Mon SS up: REJECT RRR 2.20 outside [2.5, 15.0] (entry 99.24400)
+  ! Mon SS up: REJECT RRR 1.44 outside [2.5, 15.0] (entry 99.29800)
+  ! Mon SS LONG 99.06100: DUPLICATE of SS 99.05000 (E3C:463)

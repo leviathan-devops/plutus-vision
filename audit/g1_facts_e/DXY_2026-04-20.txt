@@ -1,0 +1,61 @@
+DXY 2026-04-20 anchor price 98.349 | chart shows zones between 97.632 and 99.031 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  pressure zone UPPER RESISTANCE 98.939-99.005 MODERATE | 30-50% ZFP | BoM
+      part: supply/demand 4H (Unmitigated) | BoM Supply 98.884-99.031
+      part: liquidity band (sealed V1, 4H) 98.903-98.967
+  supply/demand 1H (Unmitigated) | MoM Supply 98.675-98.845
+      part: liquidity band (sealed V1, 4H) 98.804-98.868
+      part: gap in-fill level 98.806-98.866 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, extended daily close, minor swing
+      part: liquidity band (sealed V1, 4H) 98.689-98.753
+      part: gap in-fill level 98.667-98.727 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, extended daily close, minor swing
+  liquidity band (sealed V1, 4H) 98.561-98.625
+  pressure zone UPPER RESISTANCE 98.456-98.541 MODERATE-HEAVY | 30-50% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 98.461-98.525
+  supply/demand 1H (Unmitigated) | MoM Supply 98.402-98.439
+      part: sweep zone Supply-side 98.345-98.439 | sweep reach to 98.539 (dotted outline)
+      part: sweep zone Demand-side 98.364-98.414 | sweep reach to 98.264 (dotted outline)
+  liquidity band (sealed V1, 4H) 98.300-98.364
+  gap in-fill level 98.220-98.280 MODERATE | 30-50% ZFP | signals: daily pivot, option strike (Tier 3 / 4), round number
+      part: sweep zone Demand-side 98.261-98.311 | sweep reach to 98.161 (dotted outline)
+      part: sweep zone Supply-side 98.235-98.292 | sweep reach to 98.392 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 98.182-98.246
+  pressure zone MID-RANGE SUPPORT 98.058-98.145 MODERATE | 30-50% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 98.014-98.078
+  supply/demand 1H (Unmitigated) | MoM Demand 97.937-98.045
+      part: sweep zone Demand-side 97.969-98.055 | sweep reach to 97.869 (dotted outline)
+      part: gap in-fill level 97.988-98.048 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, minor swing, round number
+      part: liquidity band (sealed V1, 4H) 97.920-97.984
+  sweep zone Demand-side 97.832-97.882 | sweep reach to 97.732 (dotted outline)
+  pressure zone KEY SUPPORT BAND 97.725-97.799 MODERATE | 30-50% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 97.768-97.832
+      part: supply/demand 1H (Unmitigated) | BoM Demand 97.632-97.828
+      part: liquidity band (sealed V1, 4H) 97.666-97.730
+      part: supply/demand 4H (Unmitigated) | BoM Demand 97.576-97.728
+  sweep zone Demand-side 97.632-97.682 | sweep reach to 97.532 (dotted outline) | confluent with a 4H BoM zone
+  (12 zones, 20 parts)
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: KEY SUPPORT BAND | ZFP: 30-50% | 04-17 LON: spike down through KEY SUPPORT BAND (ZFP 30), every 1H close back at a sweep target [the row's ZFP condition is not met: best description, one tier lower] | F
+   Ceiling: 1H (Unmitigated) | MoM [SD MoM Active] -> SLOW (active MoM (1 reactions), opposing liquidity sweep zone (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+   Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+   Breakout direction: up | the ceiling is the bound that goes: active MoM (1 reactions), opposing liquidity sweep zone (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2)
+   chain: SS [MODERATE-HIGH, cum 0.65] -> RWL [MODERATE, cum 0.33] -> BS [MODERATE, cum 0.33] -> RWL [HIGH, cum 0.26]
+   PRIMARY: SS -> RWL -> BS -> RWL | DECISION ZONE: 1H (Unmitigated) | MoM 1H close beyond it -> ALTERNATIVE: SS -> BS -> WL -> RWL [confidence 0.27]
+  Mon forecast SS         range box 97.937-98.439 key zone 1H (Unmitigated) | MoM             | actual H 98.395 L 98.006 C 98.050
+  Tue forecast SS+RWL+BS  up    box 97.969-98.364 key zone 4H (Unmitigated) | BoM             | actual H 98.567 L 98.041 C 98.383
+  Wed forecast BS         up    box 98.064-98.522 key zone 4H (Unmitigated) | BoM             | actual H 98.643 L 98.211 C 98.616
+  Thu forecast BS+RWL     up    box 98.522-98.884 key zone 1H (Unmitigated) | MoM             | actual H 98.939 L 98.534 C 98.826
+  Fri forecast RWL        down  box 98.402-98.801 key zone 1H (Unmitigated) | MoM             | actual H 98.915 L 98.489 C 98.510
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  DX1      Mon SS     SHORT E 98.415 SL 98.471 TP 98.060 6.36R | filled Mon 06:15 -> TP HIT Mon 15:15
+  DX2      Mon SS     LONG  E 98.045 SL 97.974 TP 98.387 4.82R | filled Mon 15:15 -> TP HIT Tue 15:30
+  DX3      Tue BS     LONG  E 98.019 SL 97.939 TP 98.869 10.63R | filled Mon 15:15 -> TP HIT Thu 17:15
+  DX4      Tue SS     LONG  E 98.045 SL 97.974 TP 98.285 3.38R | filled Mon 21:00 -> TP HIT Tue 08:00
+  DX5      Wed Ladder LONG  E 98.270 SL 98.104 TP 98.869 3.65R | filled Wed 05:15 -> TP HIT Thu 17:15
+  DX6      Thu Ladder LONG  E 98.660 SL 98.615 TP 98.869 4.81R | filled Thu 00:00 -> STOPPED Thu 00:15
+  ! Tue RWL down: REJECT RRR 1.58 outside [3.0, 15.0] (entry 98.29983)
+  ! reinforcement at 98.50959: REJECT RRR 2.34 / SL 15.6p
+  ! reinforcement at 98.60959: REJECT RRR 2.80 / SL 9.5p
+  ! Tue BS up: REJECT RRR 2.14 outside [3.0, 15.0] (entry 98.43900)
+  ! Thu RWL down: REJECT RRR 2.41 outside [3.0, 15.0] (entry 98.87400)

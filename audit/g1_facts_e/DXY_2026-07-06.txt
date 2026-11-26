@@ -1,0 +1,53 @@
+DXY 2026-07-06 anchor price 101.025 | chart shows zones between 100.470 and 101.430 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  supply/demand 4H (Unmitigated) | BoM Supply 101.316-101.430
+      part: sweep zone Supply-side 101.344-101.432 | sweep reach to 101.532 (dotted outline) | confluent with a 4H BoM zone
+      part: liquidity band (sealed V1, 4H) 101.372-101.432
+      part: supply/demand 1H (Unmitigated) | MoM Supply 101.314-101.360
+  pressure zone UPPER RESISTANCE 101.199-101.262 MODERATE-HEAVY | 15-30% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 101.245-101.305
+      part: sweep zone Demand-side 101.152-101.202 | sweep reach to 101.052 (dotted outline)
+  pressure zone EQUILIBRIUM ZONE 100.985-101.077 MODERATE-HEAVY | 30-50% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | MoM Supply 101.027-101.153
+      part: liquidity band (sealed V1, 4H) 101.067-101.127
+      part: sweep zone Demand-side 101.049-101.121 | sweep reach to 100.949 (dotted outline)
+      part: sweep zone Supply-side 100.942-101.028 | sweep reach to 101.128 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 100.957-101.017
+  supply/demand 1H (Mitigated 2x) | MoM Demand 100.825-100.851
+      part: sweep zone Demand-side 100.826-100.876 | sweep reach to 100.726 (dotted outline)
+  pressure zone MID-RANGE SUPPORT 100.724-100.815 MODERATE | 15-30% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | BoM Demand 100.654-100.748
+  gap in-fill level 100.599-100.659 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, minor swing
+      part: sweep zone Demand-side 100.558-100.653 | sweep reach to 100.458 (dotted outline)
+  pressure zone KEY SUPPORT BAND 100.470-100.530 MODERATE | 30-50% ZFP | BoM
+      part: liquidity band (sealed V1, 4H) 100.498-100.558
+  (7 zones, 14 parts)
+ENGINE 2:
+   Current Shape: SS range (HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 15-30% | price between MID-RANGE SUPPORT and UPPER RESISTANCE, no breakout in the last two sessions | FA 9: 2 piercing sessions -> 'EXPECT 1-2 FULL DAYS OF HTF CONSOLIDATION'
+   Ceiling: UPPER RESISTANCE [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 1H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+   Floor: MID-RANGE SUPPORT [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 4H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+   Breakout direction: down | both bounds go the same way, pressure reading unclear [('candle size', 'up'), ('wick direction', 'down'), ('triangle', None)]: 4H storyline tiebreaker = down (standing 4H BoM Supply 101.32-101.43)
+   chain: SS [HIGH, cum 0.8] -> RWL [MODERATE, cum 0.4] -> BS [MODERATE, cum 0.4] -> WL [HIGH, cum 0.32] -> RWL [HIGH, cum 0.32]
+   PRIMARY: SS -> RWL -> BS -> WL -> RWL | DECISION ZONE: UPPER RESISTANCE ZFP 22% > 45 or a 1H close beyond it -> ALTERNATIVE: SS -> SS -> BS -> WL -> RWL [confidence 0.32]
+  Mon forecast SS         range box 100.724-101.262 key zone UPPER RESISTANCE                   | actual H 101.145 L 100.838 C 100.871
+  Tue forecast SS         range box 100.724-101.262 key zone UPPER RESISTANCE                   | actual H 101.126 L 100.803 C 101.092
+  Wed forecast SS+RWL+BS  down  box 100.985-101.305 key zone 1H (Unmitigated) | BoM             | actual H 101.275 L 100.946 C 101.069
+  Thu forecast BS         down  box 100.968-101.247 key zone 1H (Unmitigated) | BoM             | actual H 101.071 L 100.786 C 100.937
+  Fri forecast BS+WL+RWL  down  box 100.654-100.968 key zone MID-RANGE SUPPORT                  | actual H 100.997 L 100.598 C 100.965
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  DX1      Mon SS     SHORT E 101.203 SL 101.255 TP 100.830 7.17R | filled - -> not filled inside its bracket (order expires)
+  DX2      Mon SS     SHORT E 101.138 SL 101.183 TP 100.830 6.85R | filled Mon 09:45 -> TP HIT Tue 01:30
+  DX3      Mon SS     LONG  E 100.851 SL 100.795 TP 101.184 5.94R | filled Mon 18:30 -> TP HIT Tue 23:45
+  DX4      Tue SS     SHORT E 101.203 SL 101.255 TP 100.830 7.17R | filled - -> not filled inside its bracket (order expires)
+  DX5      Tue SS     SHORT E 101.138 SL 101.183 TP 100.830 6.85R | filled Tue 19:15 -> STOPPED Tue 23:45
+  DX6      Tue SS     LONG  E 100.851 SL 100.795 TP 101.184 5.94R | not placed: the earlier order at this anchor is still an open position
+  DX7      Wed BS     SHORT E 101.235 SL 101.322 TP 100.700 6.15R | filled Wed 09:00 -> TP HIT Fri 02:00
+  DX8      Wed SS     SHORT E 101.203 SL 101.255 TP 100.995 3.98R | filled Tue 23:45 -> TP HIT Wed 06:30
+  DX9      Wed RWL    LONG  E 100.980 SL 100.906 TP 101.230 3.35R | filled Wed 07:15 -> TP HIT Wed 09:00
+  DX10     Thu Ladder SHORT E 100.980 SL 101.077 TP 100.700 3.06R | filled Thu 00:00 -> TP HIT Fri 02:00
+  DX11     Fri RWL    LONG  E 100.628 SL 100.548 TP 100.925 3.72R | filled Fri 02:00 -> TP HIT Fri 13:00
+  ! reinforcement at 100.74139: REJECT RRR 0.54 / SL 10.4p
+  ! Wed BS down: REJECT RRR 0.31 outside [3.0, 15.0] (entry 100.72380)
+  ! Mon SS LONG 100.81400: DUPLICATE of SS 100.85100 (E3C:463)
