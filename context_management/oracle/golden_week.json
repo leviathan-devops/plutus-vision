@@ -1,0 +1,37 @@
+{
+  "_note": "Operator's own golden-week charting, read first-hand 2026-11-26 from /home/user/inputs/trades/WINNING_TRADE_LIBARARY/Jul_6-10_DXY_Gold_Standard (g1 = 'Screenshot from 2026-07-16 12-13-28.png', g4 = 'Screenshot from 2026-07-17 01-01-08.png'). COMPARISON ONLY - never used by tool code. Pixel reads are +-1 pip.",
+  "week": "2026-07-06",
+  "DXY": {
+    "zones": [
+      {"name": "4H (Unmitigated) | BoM", "side": "supply", "bot": 101.32, "top": 101.43, "from": "2026-07-01 ~16:00 UTC", "source": "g1"},
+      {"name": "upper green band (IP / liquidity), white line 101.24 inside", "side": "resistance", "bot": 101.19, "top": 101.29, "source": "g1"},
+      {"name": "1H (Unmitigated) | MoM", "side": "demand", "bot": 100.82, "top": 100.845, "from": "2026-07-03 ~18:00", "to": "2026-07-07 ~12:00", "source": "g4"},
+      {"name": "1H (Unmitigated) | BoM", "side": "demand", "bot": 100.653, "top": 100.743, "from": "2026-07-03 ~08:00", "source": "g1, g4"},
+      {"name": "lower green band (IP / liquidity)", "side": "support", "bot": 100.555, "top": 100.68, "source": "g1"}
+    ],
+    "week_frame_box": {"bot": 100.58, "top": 101.29, "note": "white rectangle spanning the whole trading week (g1); in g4 it runs 100.61 - 101.25"},
+    "liquidity_rungs": [101.25, 101.24, 101.20, 101.19, 101.14, 101.115, 101.09, 101.00, 100.975, 100.94, 100.905, 100.845, 100.77, 100.68, 100.61, 100.545],
+    "shape_tags": {"Mon": "SS + BS", "Tue": "SS", "Wed": "SS + RWL + BS", "Thu": "Ladder (short)", "Fri": "WL + RWL"},
+    "realized": "Mon up to ~101.13 then down to ~100.84 by Tue morning; Tue up to ~101.10; Wed dip ~100.98 then peak ~101.27 into the upper band, sell-off; Thu down to ~100.85; Fri flush to ~100.60 at ~06:00 UTC into the lower band / 1H BoM demand, recovery to ~101.15",
+    "trades": [
+      {"n": 1, "day": "Mon", "dir": "LONG",  "entry": 100.945, "sl": 100.905, "tp": 101.115, "tag": "SS long @1H LQZ"},
+      {"n": 2, "day": "Mon", "dir": "SHORT", "entry": 101.14,  "sl": 101.20,  "tp": 100.845, "tag": "BS short @1H LQZ"},
+      {"n": 3, "day": "Tue", "dir": "LONG",  "entry": 100.845, "sl": 100.77,  "tp": 101.19,  "tag": "SS long @1H MoM"},
+      {"n": 4, "day": "Wed", "dir": "SHORT", "entry": 101.19,  "sl": 101.25,  "tp": 100.975, "tag": "SS short @1H LQZ"},
+      {"n": 5, "day": "Wed", "dir": "LONG",  "entry": 100.975, "sl": 100.905, "tp": 101.24,  "tag": "RWL long @1H LQZ"},
+      {"n": 6, "day": "Wed", "dir": "SHORT", "entry": 101.235, "sl": 101.33,  "tp": 100.68,  "tag": "BS short @4H BoM (g1 shows it as 101.275 / 101.33 / 100.675)"},
+      {"n": 7, "day": "Thu", "dir": "SHORT", "entry": 100.975, "sl": 101.09,  "tp": null,    "tag": "ladder short (levels read from g4; TP not legible)"},
+      {"n": 8, "day": "Fri", "dir": "LONG",  "entry": 100.61,  "sl": 100.545, "tp": null,    "tag": "WL + RWL long at the floor (levels read from g4; TP not legible)"}
+    ],
+    "tolerance_pips": 3
+  },
+  "EURUSD": {
+    "zones": [
+      {"name": "1H (Unmitigated) | BoM", "side": "supply", "bot": 1.1446, "top": 1.1456, "source": "g5/g7 (earlier read, re-read before judging)"},
+      {"name": "1H (Unmitigated) | MoM", "side": "demand", "bot": 1.1400, "top": 1.1417, "source": "g5/g7 (earlier read)"}
+    ],
+    "trades": [{"day": "Wed", "dir": "LONG", "entry": 1.1402}, {"day": "Wed", "dir": "LONG", "entry": 1.13935}],
+    "fib_grid": {"0": 1.13925, "1": 1.14315, "1.618": 1.14556},
+    "tolerance_pips": 3
+  }
+}
