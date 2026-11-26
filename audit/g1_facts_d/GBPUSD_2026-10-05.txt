@@ -1,0 +1,33 @@
+GBPUSD 2026-10-05 anchor price 1.32090 | chart shows zones between 1.31899 and 1.32535 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 OBJECTS ON THE CHART (all of these are Engine 1 zones):
+  pressure zone  UPPER RESISTANCE   1.32457-1.32535 MODERATE | 30-50% ZFP | MoM
+  pressure zone  MID-RANGE SUPPORT  1.31991-1.32051 MODERATE | 30-50% ZFP | MoM
+  gap in-fill level (dashed box)    1.32270-1.32330 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, option strike (Tier 3 / 4)
+  gap in-fill level (dashed box)    1.32124-1.32184 MODERATE | 30-50% ZFP | signals: daily pivot, extended daily close
+  supply/demand  1H (Unmitigated) | BoM       Supply 1.32319-1.32395
+  sweep zone     Supply-side 1.32530-1.32580 | sweep reach to 1.32680 (dotted box)
+  sweep zone     Supply-side 1.32510-1.32560 | sweep reach to 1.32660 (dotted box)
+  sweep zone     Supply-side 1.32450-1.32500 | sweep reach to 1.32600 (dotted box)
+  sweep zone     Demand-side 1.32226-1.32276 | sweep reach to 1.32126 (dotted box)
+  sweep zone     Demand-side 1.32183-1.32233 | sweep reach to 1.32083 (dotted box)
+  sweep zone     Demand-side 1.32021-1.32071 | sweep reach to 1.31921 (dotted box)
+  sweep zone     Demand-side 1.31899-1.31949 | sweep reach to 1.31799 (dotted box)
+  liquidity band (sealed V1, 4H) 1.32526-1.32636
+  liquidity band (sealed V1, 4H) 1.32121-1.32231
+  liquidity band (sealed V1, 4H) 1.31932-1.32042
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 30-50% | 10-02 LON: spike up through UPPER RESISTANCE (ZFP 30), every 1H close back at a sweep target [the row's ZFP condition is not met: best description, one tier lower] | FA 
+   Ceiling: 1H (Unmitigated) | BoM [SD BoM Virgin] -> HOLD (BoM zone: always reacts if unmitigated (E2X:149))
+   Floor: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Breakout direction: none - both bounds hold | pair translation of the DXY chain (None inverted)
+   chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range box 1.31921-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32390 L 1.31900 C 1.32211
+  Tue forecast SS         range box 1.31921-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32856 L 1.32013 C 1.32742
+  Wed forecast SS         range box 1.31921-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32761 L 1.31935 C 1.32126
+  Thu forecast SS         range box 1.31921-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32485 L 1.31843 C 1.32268
+  Fri forecast SS         range box 1.31921-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32503 L 1.32057 C 1.32242
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  GB1      Mon SS     SHORT E 1.32319 SL 1.32425 TP 1.31994 3.07R | filled Mon 07:45 -> TP HIT Mon 13:30 || re-armed: filled Tue 01:30 -> STOPPED Tue 08:30
+  GB2      Mon SS     LONG  E 1.32071 SL 1.31991 TP 1.32309 2.98R | filled Mon 06:00 -> TP HIT Mon 08:00 || re-armed: filled Tue 06:00 -> TP HIT Tue 07:30 || re-armed: filled Wed 11:15 -> STOPPED Wed 12:15

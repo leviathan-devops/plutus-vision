@@ -1,0 +1,42 @@
+GBPUSD 2026-05-18 anchor price 1.33230 | chart shows zones between 1.32484 and 1.34557 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 OBJECTS ON THE CHART (all of these are Engine 1 zones):
+  pressure zone  UPPER RESISTANCE   1.34497-1.34557 MODERATE-HEAVY | 30-50% ZFP | BoM
+  pressure zone  UPPER RESISTANCE   1.33950-1.34037 MODERATE | 30-50% ZFP | MoM
+  pressure zone  MID-RANGE SUPPORT  1.32995-1.33055 MODERATE | 15-30% ZFP | MoM
+  pressure zone  KEY SUPPORT BAND   1.32484-1.32544 MODERATE | 30-50% ZFP | BoM
+  gap in-fill level (dashed box)    1.34239-1.34299 MODERATE | 30-50% ZFP | signals: daily pivot, round number
+  gap in-fill level (dashed box)    1.33720-1.33780 MODERATE | 30-50% ZFP | signals: daily pivot, minor swing, round number
+  gap in-fill level (dashed box)    1.33492-1.33552 MODERATE | 30-50% ZFP | signals: daily pivot, minor swing, round number
+  gap in-fill level (dashed box)    1.33240-1.33300 MODERATE | 30-50% ZFP | signals: daily pivot, round number
+  gap in-fill level (dashed box)    1.32668-1.32728 MODERATE | 30-50% ZFP | signals: daily pivot, minor swing
+  supply/demand  1H (Unmitigated) | MoM       Supply 1.33941-1.34037
+  sweep zone     Supply-side 1.33987-1.34037 | sweep reach to 1.34137 (dotted box)
+  sweep zone     Demand-side 1.33950-1.34000 | sweep reach to 1.33850 (dotted box)
+  sweep zone     Supply-side 1.33203-1.33253 | sweep reach to 1.33353 (dotted box)
+  sweep zone     Demand-side 1.33147-1.33197 | sweep reach to 1.33047 (dotted box)
+  sweep zone     Demand-side 1.33022-1.33072 | sweep reach to 1.32922 (dotted box)
+  liquidity band (sealed V1, 4H) 1.34423-1.34540
+  liquidity band (sealed V1, 4H) 1.34222-1.34339
+  liquidity band (sealed V1, 4H) 1.33816-1.33933
+  liquidity band (sealed V1, 4H) 1.33527-1.33644
+  liquidity band (sealed V1, 4H) 1.33264-1.33381
+  liquidity band (sealed V1, 4H) 1.33025-1.33142
+  liquidity band (sealed V1, 4H) 1.32856-1.32973
+  liquidity band (sealed V1, 4H) 1.32569-1.32686
+  liquidity band (sealed V1, 4H) 1.32394-1.32511
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: 1H (Unmitigated) | MoM | ZFP: - | price between Liquidity Sweep Zone and 1H (Unmitigated) | MoM, no breakout in the last two sessions [the row's ZFP condition is not met: best description, one tier lowe
+   Ceiling: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+   Floor: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Breakout direction: none - both bounds hold | pair translation of the DXY chain (None inverted)
+   chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range box 1.33047-1.34037 key zone 1H (Unmitigated) | MoM             | actual H 1.34494 L 1.33217 C 1.34322
+  Tue forecast SS         range box 1.33047-1.34037 key zone 1H (Unmitigated) | MoM             | actual H 1.34371 L 1.33785 C 1.33943
+  Wed forecast SS         range box 1.33047-1.34037 key zone 1H (Unmitigated) | MoM             | actual H 1.34630 L 1.33750 C 1.34331
+  Thu forecast SS         range box 1.33047-1.34037 key zone 1H (Unmitigated) | MoM             | actual H 1.34548 L 1.33904 C 1.34308
+  Fri forecast SS         range box 1.33047-1.34037 key zone 1H (Unmitigated) | MoM             | actual H 1.34631 L 1.34132 C 1.34195
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  GB1      Mon SS     SHORT E 1.33983 SL 1.34067 TP 1.33121 10.26R | filled Mon 12:30 -> STOPPED Mon 15:30
+  GB2      Mon SS     LONG  E 1.33197 SL 1.33132 TP 1.33941 11.45R | filled Mon 06:00 -> TP HIT Mon 12:30 || re-armed: filled - -> not filled
