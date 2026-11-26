@@ -460,3 +460,13 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - Jul 13 DXY: Monday long 100.946 stopped by the 100.87 wick (stop 6 pips), Monday short at the ceiling 101.207 filled 16:30 and stopped 19:00 (high ~101.30 vs stop 101.269) - both scalps were at the right zones and both stops were inside the zone's own depth:
   the ceiling zone is Upper Resistance 101.2-101.3 (10 pips deep) with the 4H BoM supply right above; a stop "3 pips outside the current step (rung)" sits INSIDE the zone. CAUSE TO FIX: for an entry at a zone that will be pierced into (IP zone / wide zone),
   the stop must be outside the ZONE (GS Law 4: outside the liquidity shield; E3C ladder step = the zone, not the rung inside it) - check against the golden week numbers before changing (DX3 Wed short 101.203 stop 101.256 = 0.6 pips inside the zone top 101.262; his 101.25).
+
+## 2026-11-26 - E1 DEFECT FOUND ON OCT 5 (ledger 64-65): NO ZONE ABOVE SPOT WHEN PRICE SITS AT / NEAR ITS HIGHS ("blue sky") - top priority for E1
+- Oct 5 DXY: spot 102.308 after a Sunday-open spike to 102.5; the week then rejected 102.4-102.5 three times. My map has nothing above spot: IP levels up there (round 102.50, weekly / daily pivot R-levels) score under MODERATE because
+  (a) Step 0c swing highs need two later daily bars in my code (e1_ip.levels: `for i in range(2, len(win) - 2)`) - canon P533:1224-1228 states only the wick and close-position test, no neighbour count -> the last two days and a fresh high can never be a Supply Ceiling Target;
+  (b) the anchors are completed days only - Monday's pre-anchor session high (the spike) is not a level at all although it is data before the anchor; (c) e1_sd rejects the fresh supply candle at the spike because its move has not yet broken structure (bos).
+  The operator named this very zone on this very week (L-28: "top zone ... whiplashed price hardest" and my old label LIGHT was wrong: it deserved structural-extreme, round-number and BoM credit).
+- TO DO (canon first: P533:1205-1245 Step 0, :1288-1311 Step 0.5, P452:785-833 Steps 1-5 "prior daily high ... structural extreme memory"): give the current session's extreme (Sunday open .. anchor) and the last days' highs / lows their Step 0 status with the neighbours that exist;
+  let a zone whose candle sits at the running extreme stand without the structure test until price has had the chance to break it; then re-render Oct 5 and the golden week (must not change) and judge.
+- The same defect explains May 18 and Jun 8 (no ceiling, no target, every setup rejected).
+- G2 outside audit of e1_sd / e2_chain / e3_trades against the canon text was launched (report: audit/G2_audit_engines.md when it finishes).
