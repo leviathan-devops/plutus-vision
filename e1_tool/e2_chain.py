@@ -295,10 +295,12 @@ def target(X, side, bound, src_tf=None):
     for z in X['zones']:
         if (z['top'] < bound['bot']) if dn else (z['bot'] > bound['top']):
             m = z.get('mech', {})
+            if z['zfp_num'] >= 30 and m.get('bom') != 'BoM':
+                continue                                     # P452:2082 'strong IP ... = it holds (valid TP)'; a weak (30%+) zone of class MoM is pierced on the way to BoM liquidity (E2X:140) (D-49)
             cands.append((z['top'] if dn else z['bot'], 2, {'bot': z['bot'], 'top': z['top'], 'name': z['name'], 'src': 'IP', 'zfp': z['zfp_num'], 'cls': m.get('bom'), 'rx': m.get('reactions', 0), 'ip': z}))
     for z in X['sd']:
         if z['tf'] in ('240', '60') and z['type'] == ('Demand' if dn else 'Supply') and ((z['top'] <= bound['top'] and z['bot'] < bound['bot']) if dn else (z['bot'] >= bound['bot'] and z['top'] > bound['top'])):
-            if z['kind'] == 'MoM' and not any(q['bot'] <= z['top'] and q['top'] >= z['bot'] for q in X['zones']):
+            if z['kind'] == 'MoM' and not any(q['bot'] <= z['top'] and q['top'] >= z['bot'] and q['zfp_num'] < 30 for q in X['zones']):
                 continue                                     # P452:2082 'No IP + standalone MoM = it gets pierced (not valid TP)'; 6.4.2 'pierce through zone until reaching BoM Liquidity' (D-49)
             if src_tf is None or TF_RANK[z['tf']] <= TF_RANK[src_tf] + 2:
                 cands.append((z['top'] if dn else z['bot'], 1, {'bot': z['bot'], 'top': z['top'], 'name': z['label'], 'src': 'SD', 'cls': z['kind'], 'rx': z['mit'], 'tf': z['tf'], 'sd': z}))

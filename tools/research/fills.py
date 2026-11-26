@@ -13,7 +13,7 @@ DAY = 86400000
 for s in R['setups']:
     long = s['dir'] == 'LONG'
     t0, t_end = s['valid_from'], s['valid_to']             # the order's bracket from Engine 3 (R3 law)
-    stop_entry = s['category'] == 'Reinforcement'          # a stop-limit fires when price trades THROUGH the rung in the trade's direction
+    stop_entry = s['category'] in ('Reinforcement', 'Transition')          # a stop-limit fires when price trades THROUGH the rung in the trade's direction
     # a swing scalp of a consolidation is one order per anchor per day (E3C:129 '(WorkingDay, zone) pair', E3C:468 cap key (pair, anchorBucket, day)): after a TP it re-arms at the next
     # trading day's start while its bracket lasts; a stop = the level closed through (VIOLATED, never an entry again); the 4th battle is skipped (E3C:150 'index i > 2 skipped')
     rearm = s['shape'] == 'SS' and s.get('role') != 'last-swing' and (t_end - t0) > DAY

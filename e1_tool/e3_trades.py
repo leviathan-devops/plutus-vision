@@ -234,6 +234,12 @@ def _confidence(s, X, E2, pair):
     parts.append(('RRR', 5 if s['rrr'] >= 3 else 3 if s['rrr'] >= 2 else 0))
     slp = s['sl_pips']
     parts.append(('SL distance', -10 if slp > 80 else -5 if slp > 50 else 0))
+    smax = {'EURUSD': 100, 'GBPUSD': 120, 'DXY': 30}[pair]  # E3C:407-410 three-band SL-distance confidence (DXY in index points of 0.01)
+    parts.append(('SL band', -10 if slp > smax else 10 if slp < 30 else 5 if slp < 60 else 0))
+    if pair != 'DXY':
+        parts.append(('DXY cascade (E3C:412)', 10))          # the pair setups come from the DXY chain: DXY -> EU inverse, EU -> GU kept
+    if pair == 'GBPUSD' and s['dir'] == 'LONG':
+        parts.append(('GU short-squeeze (E3C:414)', 5))
     dist = abs(s['entry'] - X['spot']) / pip
     parts.append(('proximity', -8 if dist > 150 else -4 if dist > 80 else 0))
     pw = X['weekly'][-1]
@@ -296,6 +302,10 @@ def _cands(E2, monday, X):
                 c['to_zone'] = E2.get('pivot') or st['to']
                 c['to'] = (c['to_zone']['bot'] if st['dir'] == 'up' else c['to_zone']['top']) if c['to_zone'] else c['to']
             out.append(c)
+            if st['shape'] in ('BS', 'PBS') and st.get('role') == 'bs' and E2.get('near') is not None and any(x['shape'] == 'SS' for x in E2['chain']):
+                # E3C:107 'SS->BS Transition | Transition Entry'; E3C:457 'SS -> BS: Range boundary break becomes BS entry'; E3C:1133 late consolidation -> 'Swing Scalps + BS Transition Entry'
+                nb = E2['near']
+                out.append(dict(c, role='transition', from_zone=dict(nb), **{'from': nb['top'] if st['dir'] == 'up' else nb['bot']}))
     return out, log
 
 
@@ -329,7 +339,7 @@ def _build(pair, monday, X, E2, tag):
             if ls is not None:
                 ecands = [(ls['tp'], {'bot': ls['tp'], 'top': ls['tp']}, 'the last swing\'s TP level (Law 27: TP of N = entry of N+1)')]
         prev = next((q for q in reversed(setups) if q['shape'] == 'RWL' and q['days'][-1] == c['days'][0]), None)
-        if c['shape'] in ('BS', 'PBS') and prev is not None:
+        if c['shape'] in ('BS', 'PBS') and prev is not None and c.get('role') != 'transition':
             lvl, pz = prev['tp'], prev['tp_zone']           # Law 27 (E3C:438-449): TP of the RWL = entry of the BS
             ecands = [(lvl, pz if pz.get('liq') else {'bot': lvl, 'top': lvl}, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
         pbs = next((q for q in reversed(setups) if q['shape'] in ('BS', 'PBS') and q.get('parent') is None), None)
@@ -337,6 +347,10 @@ def _build(pair, monday, X, E2, tag):
             # Law 27 (E3C:443-449 'BS -> RWL: TP of BS becomes RWL entry zone'): the reversal rests at the breakout's TP from the moment the breakout starts
             ecands = [(pbs['tp'], a, "the breakout's TP level (Law 27: TP of N = entry of N+1)")]
             c = dict(c, rest_from=pbs['day'])
+        if c.get('role') == 'transition':                    # the break of the range boundary itself: a stop order at the failing bound's far edge (GS Law 3 'Breakout: at zone edge (break confirmation)')
+            lvl = a['top'] if direction == 'up' else a['bot']
+            ecands = [(lvl, {'bot': a['bot'], 'top': a['top']}, 'range boundary break (E3C:457): stop order at the far edge of the failing bound')]
+            cat = 'Transition'
         if not ecands:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: SOURCE_INVALID - no ORDER_BLOCK / LQZ entry at {a.get('name', '')} (E3C:135)"); continue
         s, why_fail = None, 'TP_NULL'
@@ -368,7 +382,7 @@ def _build(pair, monday, X, E2, tag):
             log.append(f"{s['day']} {s['shape']} {s['dir']} {s['entry']:.5f}: CONFIDENCE {s['confidence']} < {INCLUDE} (E3C:1011)"); continue
         s['quality'] = 'HIGH' if s['confidence'] >= 80 else 'STANDARD'
         setups.append(s)
-        if c['shape'] in ('BS', 'PBS'):
+        if c['shape'] in ('BS', 'PBS') and c.get('role') != 'transition':
             setups += _reinforce(s, X, E2, env, pair, log)
     # Phase 6.3 (E3C:459-471): duplicates (same category, same day, entries within 5 pips: first kept), conflicts (opposite direction, same day + session, within 15 pips: higher confidence kept),
     # emission cap (pair, anchor bucket, day): one per bucket
