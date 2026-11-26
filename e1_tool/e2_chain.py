@@ -148,6 +148,23 @@ def _target(X, side, bound, U):
     return t
 
 
+def _opposing_liquidity(X, far, up):
+    """6.4.2 'Consolidation ends in price retesting opposing liquidity': the liquidity the retest reaches = the next liquidity band (the sealed V1's 1H rung or 4H band, R-30 / GS Law 4
+    '1H / 4H LSZ') wholly beyond the far bound's own entry rung, lying against that bound (within the canon cluster distance 0.15 of its far edge).
+    Operator's golden week: DXY 4H band 101.245-101.305 (RWL TP 101.24, BS short 101.235), EURUSD 1H rung 1.13902-1.1393 ('deep shield', RWL TP 1.1395, BS long 1.13953)."""
+    if far is None or 'v1' not in X:
+        return None
+    U = X['U']
+    r1 = [r for r in X['v1']['60']['liquidity'] if r['bot'] <= far['top'] and r['top'] >= far['bot']]
+    ref = (min(r1, key=lambda r: r['bot'])['top'] if up else max(r1, key=lambda r: r['top'])['bot']) if r1 else (far['bot'] if up else far['top'])
+    bands = [dict(b, tf=tf) for tf in ('60', '240') for b in X['v1'][tf]['liquidity']]
+    beyond = [b for b in bands if ((b['bot'] > ref and b['bot'] <= far['top'] + 0.15 * U) if up else (b['top'] < ref and b['top'] >= far['bot'] - 0.15 * U))]
+    if not beyond:
+        return None
+    b = min(beyond, key=lambda b: b['bot']) if up else max(beyond, key=lambda b: b['top'])
+    return {'bot': b['bot'], 'top': b['top'], 'tf': b['tf'], 'liq': True, 'name': f"{SD.TFNAME[b['tf']]} liquidity (opposing)", 'zfp_num': 15, 'score': 6}
+
+
 def _mom(z):
     """the bound is a Middle-of-Move supply / demand zone (P452:694-697)"""
     return bool(z) and z.get('sd') is not None and z['sd']['kind'] == 'MoM'
@@ -257,6 +274,9 @@ def build(pair, monday, X, lead=None, force_dir=None):
     pts = [(t_anchor, spot)]
     toward_far = (far['bot'] if bdir == 'down' else far['top']) if far else (c_edge if bdir == 'down' else f_edge)        # the opposing-liquidity edge price retests before the breakout
     far_pierce = (far['top'] if bdir == 'down' else far['bot']) if far else toward_far
+    far_liq = _opposing_liquidity(X, far, bdir == 'down')    # the retest of the transition day ends at the liquidity standing against the far bound (6.4.2)
+    if far_liq is not None:
+        far_pierce = far_liq['bot'] if bdir == 'down' else far_liq['top']
     near_edge = (near['top'] if bdir == 'down' else near['bot']) if near else (f_edge if bdir == 'down' else c_edge)
     near_far = (near['bot'] if bdir == 'down' else near['top']) if near else near_edge
     t_in = (tgt['top'] if bdir == 'down' else tgt['bot']) if tgt else near_far
@@ -289,8 +309,8 @@ def build(pair, monday, X, lead=None, force_dir=None):
             # SS swing back to the pivot, RWL into the opposing liquidity (6.4.2 'consolidation ends in price retesting opposing liquidity'), then the breakout
             if (pos > piv_far) == (bdir == 'down') and abs(pos - piv_far) > 1e-12:
                 pos = leg(DAYS[i], 'SS', pos, piv_far, d0 + 7 * 3600000, far, pivot)
-            pos = leg(DAYS[i], 'RWL', pos, far_pierce, d0 + 14 * 3600000, pivot, far)
-            pos = leg(DAYS[i], 'BS', pos, mid, d1 - 3 * 3600000, far, tgt)
+            pos = leg(DAYS[i], 'RWL', pos, far_pierce, d0 + 14 * 3600000, pivot, far_liq or far)
+            pos = leg(DAYS[i], 'BS', pos, mid, d1 - 3 * 3600000, far_liq or far, tgt)
             day.update(dir=bdir, lo=min(piv_far, mid, far_pierce, toward_far), hi=max(piv_far, mid, far_pierce, toward_far), key=far['name'] if far else '-', conf=chain[min(1, len(chain) - 1)]['cum'])
         elif shapes == ['BS']:
             # 6.10 "TODAY'S move is the journey TO what I thought today's move will be": a continuation day reaches the bound; the day after pierces it to the target
@@ -331,7 +351,7 @@ def build(pair, monday, X, lead=None, force_dir=None):
         alt_chain = build(pair, monday, X, lead, force_dir=inv[bdir])      # the same map read with the other bound failing: its legs feed the conditional (ALT) setups of Engine 3
     return {'alt_chain': alt_chain, 'pair': pair, 'monday': monday, 's0': s0, 'storyline': story, 'bdir': bdir, 'chain': chain, 'days': days, 'path': pts, 'alt': alt, 'audit': audit,
             'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'target2': tgt2, 'mode': mode, 'next': nxt, 'range': (f_edge, c_edge), 'mid': mid, 'far': far, 'near': near,
-            'legs': legs, 'n_real': n_real}
+            'legs': legs, 'n_real': n_real, 'far_liq': far_liq}
 
 
 def pine(pair, monday, E2):

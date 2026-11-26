@@ -144,6 +144,8 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
         out.append((tz['top'] + pip if direction == 'down' else tz['bot'] - pip, tz, 'E2 target near edge + 1 pip'))
         return out
     if leg['shape'] == 'RWL' and tz is not None:
+        if tz.get('liq'):                                    # the retest ends at the opposing liquidity (6.4.2): STRONG -> its near edge + 1 pip spread (E3C:320-327)
+            out.append((tz['bot'] - pip if direction == 'up' else tz['top'] + pip, tz, 'opposing liquidity near edge + 1 pip (6.4.2 retest)'))
         out.append(((tz['bot'] + tz['top']) / 2, tz, 'opposing zone midpoint (pierce)'))
         out.append((tz['bot'] - pip if direction == 'up' else tz['top'] + pip, tz, 'opposing zone near edge + 1 pip'))
         return out
@@ -273,8 +275,9 @@ def _build(pair, monday, X, E2, tag):
         if a.get('rung'):                                    # the previous TP rung: entry on its near edge for the new direction
             ecands = [((a['bot'] if direction == 'down' else a['top'] - (0.2 * pip if leg['shape'] in ('RWL', 'WL') else 0.0)), a, 'LQZ rung (previous TP rung)')]
         if leg['shape'] in ('BS', 'PBS') and setups and setups[-1]['shape'] == 'RWL':
-            lvl = setups[-1]['tp']
-            ecands = [(lvl, {'bot': lvl, 'top': lvl}, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
+            # Law 27 (E3C:438-449): TP of the RWL = entry of the BS. When that TP is the opposing liquidity band (6.4.2 retest), the band is the entry step of the breakout trade
+            lvl, pz = setups[-1]['tp'], setups[-1]['tp_zone']
+            ecands = [(lvl, pz if pz.get('liq') else {'bot': lvl, 'top': lvl}, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
         if pair != 'DXY':
             # E3C 10.4 (mirror lane): 'usedEuAnchors + alt-retry with excludedAnchorIds on collision' - an anchor already carrying a setup of that day and direction is excluded;
             # the mirror then takes the next liquidity step on the deep side (F1-C '#6 EU Wed deep-demand E 1.13935 = deep shield')
@@ -307,6 +310,8 @@ def _build(pair, monday, X, E2, tag):
         if s is None:
             log.append(f"{leg['day']} {leg['shape']} {direction}: rejected (no TP with RRR >= {RRR_FLOOR} in three attempts; entry {entry:.5f} SL {stop})")
             anchor = (cands[0][1] if cands else leg['to_zone'])
+            if anchor is not None and anchor.get('liq') and E2.get('far') is not None:
+                anchor = E2['far']                           # no retest trade -> no Law-27 link: the next trade anchors at the Engine 2 bound itself (R3 law)
             continue
         s.update(day=leg['days'][0], days=leg['days'], shape=leg['shape'], category=cat, session=SESSION[cat], sl_pips=round(abs(entry - stop) / pip, 1), t0=leg['t0'], t1=leg['t1'],
                  anchor=a, id=f"{pair[:2]}{tag}{len(setups) + 1}")
