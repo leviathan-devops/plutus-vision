@@ -84,6 +84,7 @@ def generate(pair, monday, X, extra=(), rch=None):
     if len(o) == n0:
         o.append('        na')
     # supply / demand candle zones (e1_sd): 4H + 1H on the working chart, 30m + 15m as the entry layer
+    n_sd = n_lz = 0
     for flag, tfs, far in (('show_sd', ('240', '60'), False), ('show_sd and show_far', ('240', '60'), True), ('show_ltf', ('30', '15'), False), ('show_ltf and show_far', ('30', '15'), True)):
         o.append(f'    if {flag}')
         n0 = len(o)
@@ -93,7 +94,8 @@ def generate(pair, monday, X, extra=(), rch=None):
             c = '41,98,255' if z['type'] == 'Demand' else '242,54,69'
             x0 = max(z['origin_time'], tsL)
             o.append(f"        box.new({x0}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), {84 if z['tf'] in ('240', '60') else 90}), border_color=color.rgb({c}), border_width={2 if z['tf'] == '240' else 1}, xloc=xloc.bar_time)")
-            o.append(f"        label.new({x0 + int((tsR - x0) * 0.30)}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+            n_sd += 1                                        # labels of stacked zones alternate between three columns so they do not print on one spot (A13)
+        o.append(f"        label.new({tsL + (30 + 34 * (n_sd % 3)) * H}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
         if len(o) == n0:
             o.append('        na')
     # liquidity sweep zones (P533:1246-1287): [low, low + 0.05] / [high - 0.05, high]; a swept extreme has no resting stops left
@@ -112,7 +114,8 @@ def generate(pair, monday, X, extra=(), rch=None):
         # Step 0.45a (P533 'LSZ BOTTOM EDGE EXTENSION'): 'Institutions often sweep 0.05-0.10 beyond the visible extreme before reversing' - the sweep reach beyond the extreme, dotted
         xb, xt = (z['level'] - 0.10 * U, z['level']) if z['side'] == 'Demand-side' else (z['level'], z['level'] + 0.10 * U)
         o.append(f"        box.new({tsL}, {g(xt)}, {tsR}, {g(xb)}, bgcolor=color.new(color.rgb({c}), 100), border_color=color.new(color.rgb({c}), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
-        o.append(f"        label.new({tsL + 24 * H}, {g((zt + zb) / 2)}, \"LSZ {'supply' if z['side'] == 'Supply-side' else 'demand'}-side{' + 4H BoM (confluent)' if z.get('confluent_bom') else ''} | sweep to {g(xt if z['side'] == 'Supply-side' else xb)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
+        n_lz += 1
+        o.append(f"        label.new({tsL + (8 + 40 * (n_lz % 3)) * H}, {g((zt + zb) / 2)}, \"LSZ {'supply' if z['side'] == 'Supply-side' else 'demand'}-side{' + 4H BoM (confluent)' if z.get('confluent_bom') else ''} | sweep to {g(xt if z['side'] == 'Supply-side' else xb)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
       if len(o) == n0:
         o.append('        na')
     # IP zones (the six ranked first), trident_v8 form

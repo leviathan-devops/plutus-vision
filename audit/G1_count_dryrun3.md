@@ -981,3 +981,89 @@ Friday was 1.3413-1.3463 chop.
 - In _all the day tags "Tue SS 80%" etc. are under candles.
 - The day boxes sit below the whole Tue-Fri price action.
 
+---
+## Summary table (12 maps)
+
+| # | Map | E1 (reacted / reached + missing) | E2 (days right / 5) | E3 (caught / obvious) | stopped setups | E1 "none bloated / bunched / missing" |
+|---|---|---|---|---|---|---|
+| 1 | DXY 2026-07-06 | 13/15 = 87% | 4/5 = 80% | 7/7 = 100% | 0 | FAILED |
+| 2 | EURUSD 2026-07-06 | 14/14 = 100% | 4/5 = 80% | 6/7 = 86% | 3 (EU2, EU4 re-arm, EU10) | FAILED |
+| 3 | GBPUSD 2026-07-06 | 25/27 = 93% | 4/5 = 80% | 2/7 = 29% | 1 (GB4) | FAILED |
+| 4 | DXY 2026-04-20 | 24/24 = 100% | 4/5 = 80% | 2/7 = 29% | 0 | FAILED |
+| 5 | EURUSD 2026-04-20 | 21/21 = 100% | 4/5 = 80% | 1/6 = 17% | 2 (EU4, EU5) | FAILED |
+| 6 | GBPUSD 2026-04-20 | 15/17 = 88% | 1/5 = 20% | 0/8 = 0% | 0 | FAILED |
+| 7 | DXY 2026-10-05 | 8/10 = 80% | 4/5 = 80% | 1/7 = 14% | 1 (DX2) | FAILED |
+| 8 | EURUSD 2026-10-05 | 8/10 = 80% | 4/5 = 80% | 0/6 = 0% | 1 (EU1) | FAILED |
+| 9 | GBPUSD 2026-10-05 | 12/14 = 86% | 3/5 = 60% | 1/7 = 14% | 1 (GB1) | FAILED |
+| 10 | DXY 2026-05-18 | 12/12 = 100% | 5/5 = 100% | 2/5 = 40% | 0 | FAILED |
+| 11 | EURUSD 2026-05-18 | 13/14 = 93% | 4/5 = 80% | 0/5 = 0% | 2 (EU1, EU2) | FAILED |
+| 12 | GBPUSD 2026-05-18 | 12/15 = 80% | 0/5 = 0% | 1/6 = 17% | 1 (GB1) | FAILED |
+| | **All 12 (pooled)** | **177/193 = 91.7%** | **41/60 = 68.3%** | **23/78 = 29.5%** | **12** | 0 of 12 met |
+| | **9 maps outside 2026-07-06** | **125/137 = 91.2%** | **29/45 = 64.4%** | **8/57 = 14.0%** | **8** | 0 of 9 met |
+| | 3 anchor-week maps only | 52/56 = 92.9% | 12/15 = 80% | 15/21 = 71.4% | 4 | 0 of 3 met |
+
+Reading:
+- E3 is 71% on the anchor week, where the operator's trades are known, and 14% on the nine other weeks. That is the clearest gap in the build.
+- E1 looks high everywhere, but only because the "bunched / bloated" condition fails on every map: zones tile the whole range, so price is always "at a zone". On the maps where zones are sparse (2026-10-05), the week's real turns sit in empty space.
+- E2 holds up in range weeks and fails whenever the week trends (GBPUSD 04-20, GBPUSD 05-18) or on Fridays with "no designation".
+
+## The five defects that cost the most
+
+**1. E3 emits almost no live setups outside the anchor week, so obvious trades go untraded.** This costs 49 of 57 obvious trades in the 9 non-anchor maps.
+- Candidates die to RRR filters, NARRATIVE ZFP > 30, SL_INVALID, TP_NULL and "parent not filled".
+- Weeks 2026-10-05 and 2026-05-18 have 1-2 setups per map, all on Monday's two bounds.
+- Examples:
+  - GBPUSD 04-20 has no live setup at all (GB1 never filled, GB2 void); 0/8.
+  - DXY 04-20 "Tue RWL down" rejected (RRR 1.79) at 98.567 before a 35-pip drop. DX5 (98.215 Wed) and DX6 (98.660 Thu) are drawn on the chart but "never live", although both levels traded and the drawn boxes would have won.
+  - GBPUSD 07-06 "Mon SS SHORT 1.33959" suppressed by NARRATIVE, then a 45-pip drop.
+  - EURUSD 04-20 "Mon SS LONG" suppressed, then the Mon 1.1748 -> 1.1789 rally untraded.
+- No map has a setup for the second half of a range (Wed-Fri reversals at the opposite bound).
+
+**2. E2 "SS 80%" on all five days with a box as wide as the week, plus "no designation" Fridays.**
+- On 6 maps (2026-10-05, 2026-05-18) the chain is one SS repeated five times. When the week trends the whole forecast fails:
+  - GBPUSD 05-18: 0/5. The 1.34037 "HOLD-LONG" ceiling broke Mon 06:00-16:00 (to 1.34494), and price never came back.
+  - GBPUSD 10-05 Tue: 1.32856, 46 pips over the ceiling.
+  - EURUSD 10-05 Tue: BS to 1.12767.
+  - DXY 10-05 Tue: through the floor to 101.754.
+- On all three 2026-04-20 maps Friday is "no designation (chain ended)":
+  - DXY Fri 98.915 -> 98.489;
+  - EURUSD Fri 1.16729 -> 1.1723;
+  - GBPUSD Fri 1.34532 -> 1.3537.
+- GBPUSD 04-20 also drew a 9-pip Tue day box (1.34879-1.34973) for a 65-pip day.
+
+**3. Setups that fill on the wrong day, or fade the breakout, and get stopped.** There are 12 losses in total; 8 outside the anchor week.
+- Day labels do not gate the order:
+  - EURUSD 04-20 EU4 "Wed Ladder" filled Tue 07:45 and was stopped Tue 13:30.
+  - EURUSD 04-20 EU5 "Thu Ladder" filled Tue 17:00 and was stopped Tue 17:30.
+  - EURUSD 07-06 EU10 "Fri Ladder" filled Thu 06:15 and was stopped Thu 07:00.
+  - GBPUSD 07-06 GB4 "Fri RWL" filled Thu 06:15 and was stopped Fri 02:00. Its TP 1.33506 was 30 pips beyond the real 1.33807 turn.
+- Range-bound shorts were placed into breakouts:
+  - GBPUSD 05-18 GB1 1.33983 (Mon 15:45);
+  - EURUSD 10-05 EU1 1.12491 (Tue 11:15);
+  - EURUSD 05-18 EU1 1.16512 / EU2 1.16297 (Mon);
+  - GBPUSD 10-05 GB1 1.32319 (Tue 08:30; TP 1.31900 touched to the pip, not filled).
+  - DXY 10-05 DX2 LONG 101.926 was stopped Tue 11:45 at 101.754, 15 minutes before a 75-pip rally.
+
+**4. E1 bloat and bunching: the zone map tiles the entire range, so it cannot tell a trader where price will turn.**
+- 20-34 drawings per map:
+  - GBPUSD 07-06: 34 drawings over 1.3264-1.3463, with three UPPER RESISTANCE zones in 57 pips.
+  - DXY 04-20: 98.24-98.44 stacks 8 drawings, including 2 identical LSZ.
+  - EURUSD 04-20: 1.1654-1.1700 stacks 8 drawings.
+  - EURUSD 05-18: 1.1608-1.1636 stacks 8 drawings.
+- Duplicate LSZ pairs a pip apart:
+  - GBPUSD 07-06 1.33341/1.33340;
+  - DXY 04-20 98.241/98.242;
+  - GBPUSD 10-05 1.31814/1.31806.
+- In the two-week frames this hides the history candles and makes the 90%+ E1 a coverage artefact.
+
+**5. Missing structure at the week's real turns, which is the reverse failure on sparse maps.**
+- GBPUSD 10-05: the week high 1.32856 (Tue 11:00-20:00, origin of a 90-pip drop) has no zone. The facts header claims the week's reach is 1.32535.
+- EURUSD 10-05: Wed 12:00-Thu 13:00 traded in an empty 1.1165-1.1203 band; the Thu 11:00 1.11719 turn has no zone, and there is no IP support at all.
+- DXY 10-05: no resistance structure above 102.05 for four days; the Mon 06:00 102.433 top is unmarked.
+- GBPUSD 04-20: the Thu 14:00 1.35182 top of a 70-pip drop is unmarked.
+- EURUSD 05-18: both lows (Wed 1.15827, Thu 1.15762) were held by an unlabelled V1 band 14-21 pips under the drawn MID-RANGE SUPPORT.
+- Presentation makes this worse on every map:
+  - labels print on top of each other (zone labels over S/D labels, LSZ labels doubled, setup labels over gap labels);
+  - Friday / Thursday purple day tags are illegible;
+  - _week frames cut labels to "ATE | 30-50% ZFP";
+  - the DXY 04-20 _week price axis is not fitted to the week.
