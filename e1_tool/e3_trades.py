@@ -200,6 +200,7 @@ def _steps(X):
 
 ZR6B = True
 SWEEP_EXT = True
+DEPLETED_BOUND = True
 
 
 def _mirror_conf(c, a, direction, E2):
@@ -351,7 +352,16 @@ def _cands(E2, monday, X):
                     # 6.4.2: the slow consolidation ends retesting the opposing liquidity FROM the pivot: on the transition day the swing in the breakout direction ends at the pivot (its far side)
                     out.append({'shape': 'SS', 'dir': d, 'from_zone': dict(a), 'to_zone': E2['pivot'], 'from': a['bot'] if d == 'down' else a['top'], 'days': [DAYS[S[tr['s0']]['i']]],
                                 'to': E2['pivot']['bot'] if d == 'down' else E2['pivot']['top'], 't0': S[tr['s0']]['t0'] - 86400000, 't1': S[tr['s0']]['t1'], 'role': 'last-swing'})
-                for anc in sorted(inner, key=lambda q: -q['top'] if d == 'down' else q['bot']) + [a]:      # GS Law 3: the LTF zone first, the HTF bound after (Phase 6.3 keeps the first)
+                bound = [a]
+                if DEPLETED_BOUND and (E2M.info(a) or {}).get('counter') == 'Depleted':
+                    # P533:1159 '3+ reactions (Depleted): Zone is likely to fail on next test. Use for TP targeting only - NOT for entries ... price will likely pierce through it';
+                    # E3C:1052 ZONE_DEPLETED 'reactionCount >= 3 (TP-only)'; 6.4.2 'pierce through zone until reaching BoM Liquidity': the swing from this side starts at the liquidity
+                    # beyond the depleted bound, and no structure standing on the depleted zone is an entry (D-85)
+                    lb = E2M.liquidity_beyond(X, a, d == 'down')
+                    inner = [q for q in inner if not _overlap(q, a)]
+                    bound = [lb] if lb is not None else []
+                    log.append(f"SS {d}: ZONE_DEPLETED - {a.get('name', '')} has 3+ reactions (TP only, P533:1159) -> " + (f"entry at {lb['name']} beyond it (6.4.2)" if lb is not None else 'no liquidity beyond it: no entry on this side'))
+                for anc in sorted(inner, key=lambda q: -q['top'] if d == 'down' else q['bot']) + bound:      # GS Law 3: the LTF zone first, the HTF bound after (Phase 6.3 keeps the first)
                     out.append({'shape': 'SS', 'dir': d, 'from_zone': dict(anc, name=anc.get('name', anc.get('label'))), 'to_zone': t, 'from': anc['bot'] if d == 'down' else anc['top'],
                                 'to': t['top'] if d == 'down' else t['bot'], 'days': dn, 't0': max(S[st['s0']]['t0'], D.boundary_ms(monday)), 't1': S[st['s1'] - 1]['t1'], 'role': st.get('role')})
         elif st['shape'] in ('WL', 'PWL'):
