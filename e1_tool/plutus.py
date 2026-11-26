@@ -17,7 +17,7 @@ def run(pair, monday):
     except ImportError:
         E3 = None
     extra = E2.pine(pair, monday, chain) + (E3.pine(pair, monday, setups) if E3 else [])
-    return X, chain, setups, EP.generate(pair, monday, X, extra)
+    return X, chain, setups, EP.generate(pair, monday, X, extra, EP.reach(X, chain))
 
 
 if __name__ == '__main__':

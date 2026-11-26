@@ -21,8 +21,24 @@ def run(pair, monday):
     return X
 
 
-def generate(pair, monday, X, extra=()):
+def reach(X, E2):
+    """GS Law 2 / Law 7 ('for each day's predicted shape, determine the expected price travel range ... a zone 100 pips away is INVALID if the shape chain predicts consolidation near spot'),
+    L-28 (no far floating zones): the week's reach = the envelope of the Engine 2 day map, extended to the first mapped zone beyond each end (what would stop the path next).
+    Zones outside it stay in the script behind the toggle 'show_far' (nothing is deleted, R-37)."""
+    days = [d for i, d in enumerate(E2['days']) if i < E2.get('n_real', 5)] or E2['days']
+    lo, hi = min(d['lo'] for d in days), max(d['hi'] for d in days)
+    zs = [z for z in X['zones'] if z['drawn']] + [z for z in X['sd'] if z['tf'] in ('240', '60')]
+    below = [z for z in zs if z['top'] < lo]; above = [z for z in zs if z['bot'] > hi]
+    if below:
+        lo = max(below, key=lambda z: z['top'])['bot']
+    if above:
+        hi = min(above, key=lambda z: z['bot'])['top']
+    return lo, hi
+
+
+def generate(pair, monday, X, extra=(), rch=None):
     g = lambda v: ('%.3f' if pair == 'DXY' else '%.5f') % v
+    near = (lambda b, t: True) if rch is None else (lambda b, t: b <= rch[1] and t >= rch[0])
     b0, tsR, wk0 = D.boundary_ms(monday), D.week_end_ms(monday), D.week_start_ms(monday)
     tsL, H = wk0 - 7 * 86400000, 3600000
     U = X['U']; pw = X['weekly'][-1]
@@ -32,7 +48,8 @@ def generate(pair, monday, X, extra=()):
          f'// week of {monday} ({pair}); every number computed by e1_tool from data closed before the anchor {D.ts(b0)} UTC (Monday London open)',
          'show_ip = input.bool(true, "E1 IP Zones")', 'show_lv = input.bool(true, "E1 levels inside IP zones")', 'show_lsz = input.bool(true, "E1 LSZ")',
          'show_opt = input.bool(true, "E1 Option Strikes")', 'show_sd = input.bool(true, "E1 Supply / Demand 4H + 1H")', 'show_ltf = input.bool(false, "E1 Supply / Demand 30m + 15m")',
-         'show_lq = input.bool(true, "E1 Liquidity ladder (V1 data)")', 'show_ob = input.bool(false, "V1 order blocks (data)")',
+         'show_lq = input.bool(true, "E1 Liquidity ladder 1H (V1 data)")', 'show_lq4 = input.bool(true, "E1 Liquidity bands 4H (V1 data)")', 'show_ob = input.bool(false, "V1 order blocks (data)")',
+         'show_far = input.bool(false, "E1 zones beyond this week\'s reach")',
          'show_e2 = input.bool(true, "E2 Shape chain")', 'show_e3 = input.bool(true, "E3 Trade setups")',
          f'isPair = str.contains(syminfo.ticker, "{D.SYM[pair].split("_")[-1]}")', 'if barstate.islast and isPair']
     # liquidity ladder: the sealed V1's 1H liquidity bands at the anchor (R-30), around the prior week's range (V1 itself draws the live ladder)
@@ -41,6 +58,13 @@ def generate(pair, monday, X, extra=()):
     for z in X['v1']['60']['liquidity']:
         if lo_v <= z['bot'] and z['top'] <= hi_v:
             o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 70), border_color=color.new(color.rgb(63,164,106), 40), border_width=1, xloc=xloc.bar_time)")
+    if len(o) == n0:
+        o.append('        na')
+    o.append('    if show_lq4')
+    n0 = len(o)
+    for z in X['v1']['240']['liquidity']:
+        if lo_v <= z['bot'] and z['top'] <= hi_v and near(z['bot'], z['top']):
+            o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)")
     if len(o) == n0:
         o.append('        na')
     o.append('    if show_ob')
@@ -53,11 +77,11 @@ def generate(pair, monday, X, extra=()):
     if len(o) == n0:
         o.append('        na')
     # supply / demand candle zones (e1_sd): 4H + 1H on the working chart, 30m + 15m as the entry layer
-    for flag, tfs in (('show_sd', ('240', '60')), ('show_ltf', ('30', '15'))):
+    for flag, tfs, far in (('show_sd', ('240', '60'), False), ('show_sd and show_far', ('240', '60'), True), ('show_ltf', ('30', '15'), False), ('show_ltf and show_far', ('30', '15'), True)):
         o.append(f'    if {flag}')
         n0 = len(o)
         for z in X['sd']:
-            if z['tf'] not in tfs:
+            if z['tf'] not in tfs or near(z['bot'], z['top']) == far:
                 continue
             c = '41,98,255' if z['type'] == 'Demand' else '242,54,69'
             x0 = max(z['origin_time'], tsL)
@@ -66,33 +90,37 @@ def generate(pair, monday, X, extra=()):
         if len(o) == n0:
             o.append('        na')
     # liquidity sweep zones (P533:1246-1287): [low, low + 0.05] / [high - 0.05, high]; a swept extreme has no resting stops left
-    o.append('    if show_lsz')
-    n0 = len(o)
-    for z in X['lsz']:
+    for flag, far in (('show_lsz', False), ('show_lsz and show_far', True)):
+      o.append(f'    if {flag}')
+      n0 = len(o)
+      for z in X['lsz']:
         if z['swept']:
             continue
         act = z['priority'].startswith('ACTIVE')
         c = '80,230,100' if act else '40,180,80'
         zb, zt = (z['level'], z['level'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['level'] - 0.05 * U, z['level'])
+        if near(zb, zt) == far:
+            continue
         o.append(f"        box.new({tsL}, {g(zt)}, {tsR}, {g(zb)}, bgcolor=color.new(color.rgb({c}), {60 if act else 70}), border_color=color.rgb({c}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
-    if len(o) == n0:
+      if len(o) == n0:
         o.append('        na')
     # IP zones (the six ranked first), trident_v8 form
-    o.append('    if show_ip')
-    n0 = len(o)
-    for z in X['zones']:
-        if not z['drawn']:
+    for flag, far in (('show_ip', False), ('show_ip and show_far', True)):
+      o.append(f'    if {flag}')
+      n0 = len(o)
+      for z in X['zones']:
+        if not z['drawn'] or near(z['bot'], z['top']) == far:
             continue
         c = SHADE[z['cat']][z['degree']]
         o.append(f"        // #{z['rank']} {z['name']} {g(z['bot'])}-{g(z['top'])} {z['degree']} {z['score']}/14 {z['type']} {z['tier']} | {z['mech']['bom']} {z['mech']['counter']} {z['mech']['reactions']} reactions | {z['mech']['e3_status']}")
         o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 70), border_color=color.rgb({c}), border_width=2, xloc=xloc.bar_time)")
         o.append(f"        label.new({tsL + 60 * H}, {g((z['top'] + z['bot']) / 2)}, \"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} {z['mech']['bom']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
-    if len(o) == n0:
+      if len(o) == n0:
         o.append('        na')
     o.append('    if show_ip and show_lv')
     n0 = len(o)
     for z in X['zones']:
-        if not z['drawn']:
+        if not z['drawn'] or not near(z['bot'], z['top']):
             continue
         seen = set()
         for l in z['members_lv']:
@@ -107,7 +135,7 @@ def generate(pair, monday, X, extra=()):
     n0 = len(o)
     seen = set()
     for l in sorted(X['L'], key=lambda l: -l.get('notional_m', 0)):
-        if l['pillar'] == 8 and not l.get('expired') and g(l['p']) not in seen:
+        if l['pillar'] == 8 and not l.get('expired') and g(l['p']) not in seen and near(l['p'], l['p']):
             seen.add(g(l['p']))
             amt = ('%.1fbn' % (l['notional_m'] / 1000)) if l['notional_m'] >= 1000 else '%dM' % l['notional_m']
             o.append(f"        line.new({tsL}, {g(l['p'])}, {tsR}, {g(l['p'])}, xloc=xloc.bar_time, color=color.rgb(255,200,60), width={2 if l['tier'] == 1 else 1})")
