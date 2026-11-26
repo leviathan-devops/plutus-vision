@@ -94,8 +94,8 @@ def generate(pair, monday, X, extra=(), rch=None):
             c = '41,98,255' if z['type'] == 'Demand' else '242,54,69'
             x0 = max(z['origin_time'], tsL)
             o.append(f"        box.new({x0}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), {84 if z['tf'] in ('240', '60') else 90}), border_color=color.rgb({c}), border_width={2 if z['tf'] == '240' else 1}, xloc=xloc.bar_time)")
-            n_sd += 1                                        # labels of stacked zones alternate between three columns so they do not print on one spot (A13)
-        o.append(f"        label.new({tsL + (30 + 34 * (n_sd % 3)) * H}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+            n_sd += 1                                    # labels of stacked zones alternate between three columns so they do not print on one spot (A13)
+            o.append(f"        label.new({max(x0, tsL + (30 + 34 * (n_sd % 3)) * H)}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
         if len(o) == n0:
             o.append('        na')
     # liquidity sweep zones (P533:1246-1287): [low, low + 0.05] / [high - 0.05, high]; a swept extreme has no resting stops left
