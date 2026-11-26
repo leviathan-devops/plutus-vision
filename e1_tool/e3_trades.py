@@ -116,6 +116,14 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
         out.append((tz['bot'] - pip if direction == 'up' else tz['top'] + pip, tz, 'opposing zone near edge + 1 pip'))
         return out
     if leg['shape'] == 'WL':
+        if leg.get('role') in ('rwl', 'rwl0'):
+            # the reversal after a breakout is a partial recovery of 30-100 pips (GS Law 2 'RWL | 30-100 pips (partial recovery)'): its TP is the first liquidity rung at least 30 pips
+            # along the way, at the rung's midpoint (E3C:306-309 rule 4)
+            real = [r for r in rungs if 'fib' not in r]
+            far = sorted([r for r in real if 30 * pip <= ((entry - (r['bot'] + r['top']) / 2) if direction == 'down' else ((r['bot'] + r['top']) / 2 - entry)) <= 100 * pip],
+                         key=lambda r: -r['top'] if direction == 'down' else r['bot'])
+            for r in far[:1]:
+                out.append(((r['bot'] + r['top']) / 2, dict(r, rung=True), 'first LQZ rung 30+ pips along the reversal: midpoint (GS Law 2; rule 4)'))
         side = 'Supply-side' if direction == 'up' else 'Demand-side'
         lz = [z for z in X['lsz'] if z['side'] == side and not z['swept'] and ahead(z['level'])
               and ((z['level'] <= end + 0.10 * U) if direction == 'up' else (z['level'] >= end - 0.10 * U))]
