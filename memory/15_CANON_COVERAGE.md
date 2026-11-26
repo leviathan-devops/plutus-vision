@@ -101,7 +101,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E2-610 | 2040-2057; FA:574-590 | trading speed rule; conservation of energy (after 2 strong piercing moves 1-2 days of consolidation) | PB |
 | E2-TRV | GS LAW2 | expected travel per shape per day | NB |
 | E2-ZOC | GS-WAR | ZoC holds / fails logic drives the chain | NB |
-| E2-AIR | FA:169-209, 289-303; Fibonacci_Spiderwebs.pdf | Fibonacci spiderweb anchored to Earth points maps the trajectory | NB (PDF not yet read) |
+| E2-AIR | FA:169-209, 289-303; Fibonacci_Spiderwebs.pdf | Fibonacci spiderweb anchored to Earth points maps the trajectory | NB (PDF read 2026-11-26: rules + golden arithmetic in memory/08 last section; build = next step) |
 | E2-R03 | R-03 | render: day BOXES first, then the LINE | NB (line only) |
 
 ## 4. Engine 3 (E3C; R-16) — REBUILT 2026-11-26 in e1_tool/e3_trades.py (chain along the E2 legs; TS-1 / F1-A / F1-C / F1-D entries, ladder-step stops, single TP, RRR floor with three attempts, BS reinforcement, position boxes); golden week DXY: his trades within 3 pips (ledger 57-58). Built: P0 (per shape), P2 (entry sources), P3, P42, P43, P44, P6 (chains), P9 (one reinforcement), R09. Not yet built: P1 confidence spill, P25, P41, P5, P7 (sessions as labels only), P8 labels, P10 (pairs run their own chain with the inverted DXY shapes), P11, P12, OUT, ZT, DIR, F

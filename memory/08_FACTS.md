@@ -213,3 +213,26 @@
 - GBPUSD stops match almost no structure edge within 2.5 pips (#1 = bottom of an IP zone -0.1; #2 = 4H band top +0.9; #4 = 15m band bottom 0.0; #3, #5 none): on GBPUSD the tool's ladder is too sparse / different from what he used.
   Tool vs his GBPUSD Monday long: entry 1.33333 identical, tool stop 25 pips (rule (b) on the 4H band) vs his 10.7 -> RRR 2.39 -> rejected. E2 range 1.33333-1.33941 = his Monday pair L 1.33331 -> 1.33941, S 1.33934 -> 1.33347 to the pip.
 - Entries: every DXY / EURUSD entry lies inside a 15m / 30m / 1H band or a 15m / 30m order block (scalp-stack structure); GBPUSD #1 / #3 = top edge of the 1H MoM demand 1.33082-1.33333 (TS-1), #2 = bottom edge of the IP / supply 1.33933, #5 inside the V1 4H supply OB.
+
+## THE FIBONACCI SPIDERWEB IS HOW HIS TRADES ARE BUILT (read first-hand 2026-11-26 late: /home/user/inputs/4d1ca379-Fibonacci_Spiderwebs.pdf, 4 pages; GS Law 5 lines 81-97) - NOT YET IN CODE
+Source text (operator's own document): 1. Map W/D BoM S/D zones. 2. Fib-anchor price action on the 4H: same anchors as Fib rockets, swing low + swing high, 'Deepest + Most Recent', 'BoM Anchors - NOT subsequent market structure HL/LH'.
+3. BS / WL SWING moves: 1H price action; 'London Session open position = Trade Setup Anchor (use this confirm direction as well. Strong pressure = session move)'; 'Nearest Fib level = entry'; '1-2 Fib levels back = SL';
+   'Fib wormhole anchor of entry level = TP (0.618 -> 1.618, etc)'; 'If price has been consolidating/SS for 1+ days, BS is likely imminent. If 4+ SS trades have been presented over 1-2 days - NY session = BS begins'; 'Target 2 or 3 levels for swings from a SS anchor point'.
+4. SS / Recovery SCALP moves: 15m price action; 'Anchor to nearest NON-SURGE swing high/swing low ... the fib anchors are inside a 15m consolidation range. NOT anchored to previous BS/WL anchors'; 'Trade with the trend. Direction = Trend';
+   London Session open position = Trade Setup Anchor; nearest Fib level = entry with 'a 0.5-1 pip buffer in front of the entry ... MANDATORY'; '1-2 Fib levels back = SL', 'Add a 1 pip buffer to the SL from the exact fib level. 2-3 is safer';
+   'Fib wormhole anchor of entry level = TP (0.382 -> 1.382, etc)' with 'a 1.5-2 pip buffer in front of the TP or you will miss it. MANDATORY ... If you skip this you will miss 60% of TPs'.
+5. Price in the MIDDLE OF A SWING at London open: 'Default to SDL mechanics - spiderweb is secondary'; 30m; 'ANCHOR THE NEAREST SWING HIGH/LOW FROM THE SAME TRADING DAY'; map the 30m SDL entry to the corresponding fib level; wormhole = TP.
+'Spiderwebs can pierce UM 4H BoM zones.' 'AFTER 2 STRONG PIERCING SWING MOVES - EXPECT 1-2 FULL DAYS OF HTF CONSOLIDATION ... the chain is WL -> RWL -> SWING SCALPS -> BS/WLS/PBS'.
+WORKED AGAINST HIS GOLDEN DXY TRADES (my arithmetic; R = range height between two Earth points, retracement r measured from the range end the trade moves away from; TP = entry +- R exactly = the wormhole r -> 1 + r):
+- #1 Mon L 100.945 / 100.905 / 101.115: range 100.840-101.010 (R 17.0): entry 0.618, SL 0.382 (one level back), TP 1.618 - all three to the pip.
+- #2 Mon S 101.14 / 101.20 / 100.845: range 100.908-101.203 (R 29.5): entry 0.786, SL 1.0 = range high 101.203 (= the 1H rung bottom), TP 1.786.
+- #3 Tue L 100.845 / 100.77 / 101.19: range 100.771-101.116 (R 34.5; hi = #1's TP rung 101.115): entry 0.786, SL 1.0 = range low, TP 1.786.
+- #4 Wed S 101.19 / 101.25 / 100.975: range 101.0825-101.2975 (R 21.5; lo = rung 101.09, hi = band top 101.29): entry 0.5, SL 0.786 (two levels back), TP 1.5.
+- #5 Wed L 100.975 / 100.905 / 101.24: range 100.8425-101.1075 (R 26.5; lo = rung 100.845): entry 0.5, SL 0.786 (0.6 pip off his), TP 1.5.
+- #6 Wed S 101.235 / 101.33 / 100.68: range 100.892-101.447 (R 55.5; hi = his 4H BoM supply top 101.44): entry 0.618, SL 0.786, TP 1.618.
+- #8 Fri L 100.615 / 100.545 / 100.94: range 100.5455-100.8705 (R 32.5; lo = 15m BoM demand bottom / 4H band top): entry 0.786, SL 1.0 = range low, TP 1.786.
+So: entry at retracement 0.5 / 0.618 / 0.786 of a range anchored on two Earth points, SL 1-2 Fib levels back (0.168-0.286 R -> RRR 3.5-6, his measured 4-6), TP exactly one range height from the entry. My E3 reproduces his numbers only because
+those Fib levels coincide with rungs / zone edges on that week; on other weeks my stops (ladder steps) and TPs (far bound) are NOT his construction. THIS IS THE UNBUILT LAYER (goal prompt Law 5, anti-pattern A9 'Air (spiderweb)', coverage row E2-AIR / E3-P3).
+BUILD NEXT (canon order): (1) spider anchors: 4H swing low / high (deepest + most recent, BoM anchors) for BS / WL swings; 15m consolidation-range swing high / low (non-surge) for SS / recovery scalps; same-day 30m swing for mid-swing days;
+(2) the day's London-open position = the setup anchor (Monday = the forecast anchor itself; later days = the E2 path's day-open position, E3C WorkingDayMap dayOpenSpot); (3) entry = nearest Fib level in the trend direction (0.5-1 pip in front),
+SL = 1-2 levels back + 1 pip, TP = wormhole - 1.5 to 2 pips; (4) check all 23 golden trades (DXY above; do EURUSD / GBPUSD the same way) before touching other weeks.
