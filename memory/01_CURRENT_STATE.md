@@ -1,3 +1,8 @@
+## OUTSIDE G1 COUNT (dry run, 2026-11-26, audit/G1_count_dryrun.md): all 12 maps E1 82 / E2 35 / E3 33; outside the golden week 81 / 29 / 17. S3 NOT MET. Golden DXY + EURUSD: E3 100 (7/7 each), E2 60.
+WORK ORDER from its defect list: (1) ENGINE 2 - range boxes / zigzag on SS weeks, pair bounds, day boxes of the breakout days; (2) zones the reach filter hides although the week trades there (e1_pine.reach); turns with no zone;
+(3) entries one pip beyond the extremes (front-edge entry / forward spread: E3C 8.19 'Forward Spread' DXY 0.02, EUR 1 pip, GBP 2 pips; Mechanism A 'Front = zone edge nearest spot + forward spread'); (4) stops; (5) Pine: label overprint, right-edge labels, SL / TP marking, header.
+Re-run the outside count after each batch of fixes (frames -> evidence/s3, facts -> audit/g1_facts, brief audit/G1_brief.md).
+
 ## STATE (NEWEST, 2026-11-26 night, fable-5-2) - S2 holds (checkpoint 0f2114b); S3 DRY RUN IN PROGRESS. Operator order stands: do not stop while S1-S6 are open.
 - Since the checkpoint: D-54 rockets (20+ pips from the primary, ladder-step stop, premarket timing, parent-link bug fixed), D-55 zones straddling a bound's edge are range anchors (EURUSD his #2), D-56 reversal TP = first rung 30+ pips (EURUSD Fri TP 1.14239).
 - In-window anchor-week trades of his caught (fills helper): DXY 7 / 7, EURUSD 7 / 7, GBPUSD 3 / 7 (his DXY #1 and EURUSD #1 are PRE-ANCHOR trades). 16-map locator: 21 TP fills / 19 stops.
