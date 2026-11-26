@@ -322,3 +322,9 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
      also Step 0.5 role-reversal magnet at 100.556 existed in the old e1_pillars.step05_magnets but not here.
   D3 his green bands may be HTF liquidity (V1 4H bands 101.245-101.305 and 100.498-100.558 sit at them) joined with the IP cluster (L-39). Check g1 again when both layers render.
 - NEXT after D1/D2: wire e1_pine.py to e1_ip + e1_v1 + step0f candles (trident_v8 form), render DXY Jul 6-10, open the frame, compare with the oracle; then E2 / E3 per goal prompt section 9. Re-check Apr 20-24.
+
+## 2026-11-26 - D2 / D3 resolved by re-reading canon (P533:1213-1245, 1246-1287; FA:47-61): his GREEN bands are liquidity sweep zones (standard Earth), not 9-pillar IP zones
+- Fractal Architecture: "Liquidity Sweep Zones (LSZs, the green zones, the green blocks where liquidity sweeps happen) are standard Earth density"; trident_v8.pine draws LSZ as green filled boxes. So on the golden chart: lower green band 100.555-100.68 = the sweep zone above the prior-week low 100.558
+  (canon [low, low+0.05] extended 0.05-0.10 = up to 100.658-100.708); upper green band 101.19-101.29 = supply-side liquidity under the recent highs / V1's 4H liquidity band 101.245-101.305. The prior-week low scoring LIGHT as an IP zone is therefore NOT a defect.
+- Canon Step 0b/0c define a swing extreme by the rejection wick (>= 0.15, close in the far half); no neighbour count is stated (e1_run used 2 bars each side = its own U-01). The reference report lists each recent daily low / high as a sweep zone -> e1_ip now adds the last 5 completed days' lows / highs as sweep-zone sources (10-pip zones) with a `swept` flag.
+- Still open: D1 (upper IP band position vs the 1.1400 wall 101.232). Then the Pine wiring (e1_pine.py must read e1_ip.build + e1_v1.harvest_all + the 4H/1H candle zones), render, compare with g1/g4.

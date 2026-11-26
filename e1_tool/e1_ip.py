@@ -120,7 +120,16 @@ def levels(pair, monday, side):
                       'struct': 2, 'bonus': 2.0 if conf else 1.0, 'confluent': conf, 'extreme': True})
     lsz = [{'bot': x['p'], 'top': x['p'] + 0.10 * U, 'side': 'Demand-side', 'level': x['p'], 'source': 'D1 swing low ' + x['date']} for x in lows] + \
           [{'bot': x['p'] - 0.10 * U, 'top': x['p'], 'side': 'Supply-side', 'level': x['p'], 'source': 'D1 swing high ' + x['date']} for x in highs]
+    # Step 0.45 "ALL prior swing lows / highs where stops would cluster": the reference report (Apr 20-24) lists the low / high of each recent day of the prior week as a sweep zone
+    # (97.63 Apr 17, 97.83 Apr 16, 97.97 Apr 14 ...), so the daily extremes of the last 5 completed days are sweep-zone sources too; 0.45a: extended 0.05-0.10 beyond the 0.05 base.
+    for d in daily[-5:]:
+        if not any(abs(z['level'] - d['low']) < 1e-9 for z in lsz):
+            lsz.append({'bot': d['low'], 'top': d['low'] + 0.10 * U, 'side': 'Demand-side', 'level': d['low'], 'source': 'daily low ' + d['date']})
+        if not any(abs(z['level'] - d['high']) < 1e-9 for z in lsz):
+            lsz.append({'bot': d['high'] - 0.10 * U, 'top': d['high'], 'side': 'Supply-side', 'level': d['high'], 'source': 'daily high ' + d['date']})
     for z in lsz:
+        later = [x for x in daily if x['date'] > z['source'][-10:]]
+        z['swept'] = any((x['low'] < z['level']) if z['side'] == 'Demand-side' else (x['high'] > z['level']) for x in later)
         z['priority'] = 'ACTIVE SL TRIGGER' if abs(z['level'] - spot) <= 0.30 * U else 'STANDARD'
     magnets = []
     for sd, arr in (('low', lows), ('high', highs)):
