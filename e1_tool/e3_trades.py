@@ -133,6 +133,11 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
     # SS / R: the E2-projected opposing zone FIRST (E3C:333), then the walk over the opposing 1H / 4H zones on the way (LQZ inside -> midpoint, else near edge)
     if tz is not None and tz.get('zfp_num', 40) < 30 and not (tz['bot'] <= X['spot'] <= tz['top']):
         out.append((tz['top'] + pip if direction == 'down' else tz['bot'] - pip, tz, 'E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327)'))
+    if tz is not None and 'tf' in tz and 'zfp_num' not in tz and not (tz['bot'] <= X['spot'] <= tz['top']):
+        # the E2 zone is a supply / demand candle zone (no ZFP of its own, G2 C-01): E3C:333 'E2-shapeDay projected opposing zone ... FIRST'; rule 5 'no LQZ overlap -> TP at zone NEAR EDGE',
+        # BoM = STRONG -> 'closest zone edge ... add a 1-2 pip spread' (E3C:320-327)
+        sp = pip if tz.get('kind') == 'BoM' else 0.0
+        out.append((tz['top'] + sp if direction == 'down' else tz['bot'] - sp, tz, f"E2 bounding supply / demand zone near edge{' + 1 pip (BoM)' if sp else ''} (E3C:333, rule 5)"))
     if tz is not None and tz.get('liq'):                     # a thick liquidity band (V1 4H) = strong pressure: 'exit on the closest zone edge' (E3C:320-327)
         out.append((tz['top'] if direction == 'down' else tz['bot'], tz, 'liquidity band near edge (strong, E3C:320-327)'))
     zs = [z for z in sd if z['tf'] in ('240', '60') and z['type'] == opp and id(z) not in used and z.get('key') not in used
