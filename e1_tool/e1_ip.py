@@ -80,7 +80,7 @@ def levels(pair, monday, side):
     for e in side['expiries'].get('EURUSD' if pair == 'DXY' else pair, []):
         fx = eur if e.get('ccy', 'EUR') == 'EUR' else D.closed('GBPUSD', '60', monday)[-1]['close'] if e.get('ccy') == 'GBP' else 1.0
         usd = e['notional_m'] / 1000.0 * fx
-        t = 1 if usd >= 1.5 else 2 if usd >= 0.85 else 3
+        t = 1 if e['notional_m'] >= 1500 else 2 if e['notional_m'] >= 850 else 3      # P533:1443-1447: thresholds are stated on the EUR/USD expiry notional (EUR), bands +-0.07 / 0.10 / 0.15
         p = K * e['strike'] ** W_EUR if pair == 'DXY' else e['strike']
         lv = {'p': p, 'pillar': 8, 'kind': f"{'EUR/USD ' if pair == 'DXY' else ''}{e['strike']:.4f} {e['notional_m']}M {e.get('cut_date', '')[5:]} (Tier {t})", 'tier': t, 'usd': usd,
               'band': {1: 0.07, 2: 0.10, 3: 0.15}[t] * U, 'expired': e.get('state') == 'ghost', 'strike': e['strike'], 'notional_m': e['notional_m']}

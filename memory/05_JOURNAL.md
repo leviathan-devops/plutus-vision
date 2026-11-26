@@ -328,3 +328,11 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   (canon [low, low+0.05] extended 0.05-0.10 = up to 100.658-100.708); upper green band 101.19-101.29 = supply-side liquidity under the recent highs / V1's 4H liquidity band 101.245-101.305. The prior-week low scoring LIGHT as an IP zone is therefore NOT a defect.
 - Canon Step 0b/0c define a swing extreme by the rejection wick (>= 0.15, close in the far half); no neighbour count is stated (e1_run used 2 bars each side = its own U-01). The reference report lists each recent daily low / high as a sweep zone -> e1_ip now adds the last 5 completed days' lows / highs as sweep-zone sources (10-pip zones) with a `swept` flag.
 - Still open: D1 (upper IP band position vs the 1.1400 wall 101.232). Then the Pine wiring (e1_pine.py must read e1_ip.build + e1_v1.harvest_all + the 4H/1H candle zones), render, compare with g1/g4.
+
+## 2026-11-26 - Pillar 8 re-read (P533:1436-1454; P452:890-950): facts for D1
+- Tiers are on the EUR notional: >= 1.5B EUR = Tier 1 CRITICAL OPTION WALL (confidence band +-0.07 DXY), 850M-1.499B = Tier 2 (+-0.10), below = excluded unless overridden (+-0.15). Fixed in e1_ip (was USD-converted).
+- K audit trail in canon names H.10 for USDJPY / USDCAD / USDSEK / USDCHF and a supplementary source for GBPUSD -> K from the five component rates (as coded); never index-anchored.
+- Golden week: the Mon Jul 6 EUR/USD 1.1400 EUR 2.2bn strike is a Tier 1 wall at DXY 101.232; its confidence band 101.162-101.302 contains his upper green band 101.19-101.29 (white line 101.24).
+  e1_ip currently centres that zone on a better-scoring seed ~5 pips lower (101.133-101.222). D1 to settle from canon P533:1496-1505 ("group into zones where levels cluster within 0.10-0.15; degree = the group's highest-scoring level"):
+  the ZONE is the cluster, the best level only gives the degree. Check whether the tight cluster containing the wall (wall +- band, quarter figure 101.25, pivots, MAs, V1 4H liquidity 101.245-101.305) should be the zone, instead of a +-0.05 window around the best seed.
+- Sweep zones now match his lower green band (100.558-100.658 vs 100.555-100.68).
