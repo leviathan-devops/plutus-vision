@@ -1,4 +1,4 @@
-# PLUTUS VISION GOAL (short form for /goal, under 4000 characters; full text = memory/14_GOAL_PROMPT.md, which stays binding)
+# PLUTUS VISION GOAL (short form; full text memory/14_GOAL_PROMPT.md stays binding)
 
 GOAL: translate the operator's working trading process, exactly as written in his canon, into ONE Python program that for a trading week + pair outputs ONE Pine v6 script
 (trident_v8 form, on top of the sealed V1) with accurate Engine 1 zones, an accurate Engine 2 shape chain and accurate Engine 3 trade setups, proven on Pinebox pixels. Nothing else.
@@ -28,10 +28,10 @@ SL / TP (>= 5 of 6 + Thursday ladder short + Friday WL), EURUSD Wednesday longs 
 (golden, Apr 20-24, two more) x DXY / EURUSD / GBPUSD: each engine 80-90%, none under 70. S4 outside audit: zero open deviations. S5 ship package -> two fresh sub-agents x two unseen
 weeks each replicate S3. S6 one command -> one Pine v6 with toggles.
 
-LOOP: next failing coverage row -> read its canon text in full -> write / repair the function -> expectation row -> render -> open the frame -> compare -> ledger -> trace deltas to
-their canon step -> commit + push to AGENT; update memory/01, 05, 07, 15. Never "improve" a passing step; after every change re-check the golden week and the weeks already passed.
+LOOP: next failing coverage row -> read its canon text -> write / repair the function -> expectation row -> render -> open the frame -> ledger -> trace deltas to their canon step ->
+commit + push to AGENT; update memory. Never "improve" a passing step; after every change re-check the golden week and the weeks already passed.
 
-CONTEXT: after every compaction read memory/14 in full, then memory/00's read order. Persist facts / rulings / decisions / lessons / frames / state every few steps.
+CONTEXT: after every compaction read memory/14 in full, then memory/00's read order; persist state every few steps.
 
 COMMUNICATION: no message to the operator except an answer to a direct question (<= 5 lines), one checkpoint line with its frame when a success condition flips, or one line for a
 blocker only he can remove. No apologies, options, advice or numbers from my own scripts. The turn does not end until S1-S6 hold.
