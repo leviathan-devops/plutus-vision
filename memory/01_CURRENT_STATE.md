@@ -1,3 +1,15 @@
+## STATE (NEWEST, 2026-11-26 late, opus-5-5) - ENGINE 3 v2 IN PROGRESS (e1_tool/e3_trades.py rewritten: _cands / _stop / _confidence / _build / _reinforce; old file in git history before this commit)
+- E3 v2 = Phase 2 candidates from the E2 chain (SS steps -> BOTH directions at every standing 1H/4H S/D zone inside the range within 30 pips of the bound + the bound itself, LTF zones first;
+  other E2 moves -> one candidate at the zone E2 starts them from; retest anchored at the pivot; post-spike RWL at the unswept sweep zone against the target), gates FRESHNESS / MOM_REVERSAL / SOURCE_INVALID /
+  NARRATIVE (> 30) / CONFIDENCE (< 65, base = 100 - ZFP midpoint of the anchor's IP zone else 70, D-42), stop = memory/08 refined model (rule (b) first thick step / second thin rung, 1 pip inside; (a) fallback;
+  EUR/USD NO_SHIELD -> (a)), TP walk with the E2 zone FIRST, RRR 3-15, Phase 6.3 duplicates / conflicts, Phase 6.2 chain links, Phase 9 up to 3 reinforcements, reason code on every discard.
+- GOLDEN DXY NOW: DX2 Mon S 101.138/101.213/100.825 (his #2), DX3 Mon L 100.851/100.743/101.189 (his #3), DX4 Wed BS S 101.273/101.359/100.685 (his #6: entry 3.8 off), DX5 Thu ladder 100.980/101.059,
+  DX6 Fri RWL L 100.628/100.548/100.940 (his #8); 5 TP, 1 unfilled (DX1 101.203). MISSING his #4 (Wed S 101.19/101.25/100.975) and #5 (Wed L 100.975/100.905/101.24).
+- NEXT (exact): (1) Wed RWL (retest) candidate rejected by CONFIDENCE 60.5 - print conf_parts, check each part against E3C:392-404; its entry must be the pivot's LOWER rung (Law 27: the TP of the last SS short
+  into the pivot); (2) the last SS swing before the retest (transition day) targets the PIVOT (6.4.2: the consolidation ends retesting opposing liquidity from the pivot) -> his #4 TP 100.975; (3) BS entry =
+  the RWL TP (Law 27) -> 101.235; (4) re-check EURUSD / GBPUSD / Apr 20 + all weeks (snap.py), frames, ledger; (5) audit/G2_response.md: write every finding's disposition (FIXED commit / ANSWERED canon line /
+  OPEN); (6) S/D findings; (7) fresh audit agent (opus).
+
 ## STATE (NEWEST, 2026-11-26, model now claude-opus-5-5 after the operator's /model switch) - G2 AUDIT REPORT ARRIVED: audit/G2_audit_engines.md (134 findings: 53 HIGH). WORKING IT.
 - Disposition file to keep current: audit/G2_response.md (one row per finding: FIXED <commit> / ANSWERED <refuting canon line> / OPEN). Batch I DONE (commit 9e44b34): C-32 (V1 harvest with bars scaled to the
   chart's real tick: DXY x10, FX x1000; cache dir e1_tool/cache/v1s), D-01 (tools/leak_check.py in the pre-commit hook), D-02/D-04 (superseded modules -> tools/research/superseded/), D-03 (tools/research/oracle_diff.py), D-05.
