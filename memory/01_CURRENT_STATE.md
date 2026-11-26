@@ -1,3 +1,6 @@
+## S2 CHECKPOINT (2026-11-26, commit tagged s2-checkpoint): anchor week Jul 6-10 2026 holds on DXY + EURUSD by the S2 list - E2 4/5 day tags, E3 his DXY #2-#6 within 3 pips + Thursday rocket + Friday WL+RWL, EURUSD Wed longs 1.14018 / 1.13940,
+8 / 9 setups; frames: ledger 76b (1H) and 75b (15m entries, Backtest tab). NOT part of S2 and still open on the anchor week: his DXY #1, EURUSD #1 #2, GBPUSD #2 #6 #7; EURUSD / GBPUSD reversal TPs. NOW: S3 (four weeks x three pairs), S1 / S4 (audit list), S5, S6.
+
 ## STATE (NEWEST, 2026-11-26 late, fable-5-2) - OPERATOR: "If the goal is not met, you're not allowed to stop." DO NOT END A TURN WHILE S1-S6 ARE OPEN (no blocker exists). Loop = take the next loser, find the bug in MY build, fix by canon line, re-check all maps.
 - Commits since the block below: 9ec23b1 (D-47 stop shields walked nearest first), D-48 (E2 supply/demand bound = first scalp TP), D-49 / D-50 (breakout target passes standalone MoM zones and weak MoM pressure zones, P452:2082),
   Law-27 reversal at the breakout TP, D-51 Transition Entry (E3C:107 / 457), D-52 confidence terms (E3C:407-414), f723b0b. audit/G2_response.md = disposition of all 134 findings (37 FIXED, 13 ANSWERED, 28 PART, 56 OPEN) - update it when a finding closes.

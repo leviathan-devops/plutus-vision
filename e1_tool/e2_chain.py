@@ -605,6 +605,10 @@ def build(pair, monday, X, lead=None, force_dir=None):
             ok = add('BS', bdir, i_ny, i_ny + dur, far_liq or near, tgt, (bc if bdir == 'up' else bf)[1],
                      f"{near['name']} goes ({kind}) -> BS toward {tgt['name'] if tgt else '-'} ({dur} sessions{', 4H element: twice as long (6.10)' if k4 else ''})", role='bs')
             nx, tier, txt = after_bs(tgt)
+            if nx == 'RWL' and tgt is not None and any((not l['swept']) and l['side'] == ('Demand-side' if bdir == 'down' else 'Supply-side')
+                                                       and ((tgt['bot'] - 0.10 * U <= l['level'] <= tgt['top']) if bdir == 'down' else (tgt['bot'] <= l['level'] <= tgt['top'] + 0.10 * U)) for l in X['lsz']):
+                nx = 'WL+RWL'                                # unswept stops rest against the target: the surge ends in a whiplash into them (P452:968 'brief breach then reversal'; 6.4 'WL -> RWL')
+                txt += ' - an unswept sweep zone lies against the target: the surge ends in a whiplash into it (WL -> RWL)'
             e = i_ny + dur
             if ok and nx in ('RWL', 'WL+RWL'):
                 wl = nx == 'WL+RWL' and add('WL', bdir, e, e + 1, tgt, tgt, tier, txt, role='wl')
