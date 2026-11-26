@@ -293,3 +293,89 @@ Week: Mon 1.33972/1.33286 | Tue 1.34015/1.33487 | Wed 1.34104/1.33222 | Thu 1.34
 - "GB5 Ladder L 4." is cut at the right edge.
 - The Fri tag is illegible.
 
+---
+## 4. DXY 2026-04-20
+
+Week: Mon 98.395/98.006 | Tue 98.567/98.041 | Wed 98.643/98.211 | Thu 98.939/98.534 | Fri 98.915/98.489.
+
+**Obvious trades.** These were listed from the _zones frame and the 1H bars before the setups were read.
+
+| # | Trade |
+|---|---|
+| T1 | Mon SHORT 98.39 (Mon 05:00-06:00 top, LSZ / band 98.30-98.40) -> 98.01 (MID-RANGE SUPPORT / gap 97.988-98.048), Mon 15:00 |
+| T2 | Mon-Tue LONG 98.01-98.05 (base Mon 15:00-Tue 00:00) -> 98.55 (UPPER RESISTANCE 98.456-98.541), Tue 17:00 |
+| T3 | Tue SHORT 98.55-98.57 (UPPER RESISTANCE) -> 98.21 (gap 98.220-98.280), Wed 05:00 |
+| T4 | Wed LONG 98.21 (gap 98.22-98.28) -> 98.64 Wed 20:00 / 98.80 Thu 10:00 |
+| T5 | Thu SHORT 98.80 (1H supply 98.675-98.845) -> 98.534 (UPPER RESISTANCE / band 98.46-98.56), Thu 14:00 |
+| T6 | Thu LONG 98.534-98.55 -> 98.90-98.94 (4H BoM supply 98.884-99.031), Thu 17:00 |
+| T7 | Fri SHORT 98.90-98.94 (4H BoM / UPPER RESISTANCE 98.939) -> 98.49-98.53 (UPPER RESISTANCE 98.456-98.541), Fri 15:00-20:00 |
+
+**E1 zones reached (range 98.006-98.939)**
+
+| Zone | Verdict |
+|---|---|
+| UPPER RESISTANCE 98.939-99.005 | REACTED (Thu 17:00 98.939 -> 98.688; Fri 03:00 98.915 -> 98.489) |
+| UPPER RESISTANCE 98.456-98.541 | REACTED (Tue 17:00/19:00 cap 98.567 -> 98.211; Thu 14:00 low 98.534; Fri close 98.49-98.53). Wed 15:00 broke up through it. |
+| MID-RANGE SUPPORT 98.058-98.145 | REACTED (Mon 15:00-Tue 06:00 consolidation 98.01-98.16) |
+| GAP 98.806-98.866 | REACTED (Thu 19:00-Fri 01:00 consolidation) |
+| GAP 98.667-98.727 | REACTED (Thu 02:00-04:00 cap 98.714; Thu 11:00-13:00 consolidation) |
+| GAP 98.220-98.280 | REACTED (Mon 06:00-12:00 consolidation; Wed 05:00 low 98.211 -> 98.643) |
+| GAP 97.988-98.048 | REACTED (Mon 15:00 low 98.006) |
+| 4H BoM supply 98.884-99.031 | REACTED (Thu 17:00, Fri 03:00) |
+| 1H MoM supply 98.675-98.845 | REACTED (Thu 10:00 98.803 -> 98.534) |
+| 1H MoM supply 98.402-98.439 | REACTED (Tue 21:00-Wed 04:00 consolidation under it) |
+| 1H MoM demand 97.937-98.045 | REACTED (Mon 98.006) |
+| LSZ supply 98.389-98.439 (reach 98.539) | REACTED (Tue 98.567, 2.8 pips past reach) |
+| LSZ supply 98.345-98.395 (reach 98.495) | REACTED (Mon 06:00 top 98.395 -> 98.006). Tue ran 7 pips past reach. |
+| LSZ supply 98.242-98.292 (reach 98.392) | REACTED (Tue 08:00-13:00 caps 98.29-98.31 -> 98.12) |
+| LSZ supply 98.241-98.291 (reach 98.391) | REACTED. A duplicate of the box above (1 pip apart). |
+| LSZ demand 98.261-98.311 (reach 98.161) | REACTED (Wed 05:00 98.211). Mon 13:00 ran 8 pips past reach. |
+| V1 bands 98.903-98.967, 98.804-98.868, 98.689-98.753, 98.561-98.625, 98.461-98.525, 98.300-98.364, 98.182-98.246, 98.014-98.078 | all REACTED (8) |
+
+- Not reached: KEY SUPPORT 97.725-97.799, 1H BoM demand 97.632-97.828, 4H BoM demand 97.576-97.728, LSZ demand 97.632-97.682, bands 97.920-97.984, 97.768-97.832, 97.666-97.730.
+- Missing turning points: none (98.395, 98.006, 98.567, 98.211, 98.643, 98.553, 98.803, 98.534, 98.939, 98.915, 98.489 all sit in a drawing).
+
+**E1 = 24 / 24 = 100%.** The "none bloated / bunched" condition FAILED:
+- 31 drawings tile 97.53-99.03, every 5-10 pips.
+- 98.24-98.44 holds 4 overlapping supply LSZ (two of them identical), a demand LSZ, a 1H supply, a gap and a band.
+- In the _zones frame the green LSZ stack at 98.25-98.40 hides the candles.
+- The 100% is a coverage artefact: a zone exists wherever price turns because a zone exists at nearly every price.
+
+**E2**
+
+| Day | Verdict |
+|---|---|
+| Mon SS (97.937-98.439) | RIGHT. 98.006-98.395 inside the bounds. |
+| Tue SS+RWL+BS up | RIGHT. Asian range, then a break up to 98.567. The drawn RWL dip to 97.92 never came, but shape and direction held. |
+| Wed BS up | RIGHT. 98.211 -> through UPPER RESISTANCE to 98.643. |
+| Thu BS+RWL up | RIGHT. Up to 98.80, RWL dip 98.534, then up to 98.939 (the 4H BoM supply). |
+| Fri | WRONG. "no designation (chain ended)", while Friday dropped 43 pips, 98.915 -> 98.489. |
+
+**E2 = 4 / 5 = 80%.**
+
+**E3**
+
+| Trade | Verdict |
+|---|---|
+| T1 | CAUGHT. DX1 SHORT 98.415, filled Mon 06:15 (first contact), TP 98.045 Mon 15:15. |
+| T2 | CAUGHT. DX2 LONG 98.045, TP 98.402 Tue 16:45. DX4 LONG 98.045 also hit TP 98.300. |
+| T3 Tue SHORT 98.55 | MISSED. The "Tue RWL down" was rejected (RRR 1.79). |
+| T4 Wed LONG 98.21 | MISSED. DX5 (Wed Ladder LONG 98.215) is drawn on the chart, but "parent DX3 not filled -> order never live". |
+| T5 Thu SHORT 98.80 | MISSED. There was no setup. |
+| T6 Thu LONG 98.54 | MISSED. DX6 (Thu Ladder LONG 98.660) is drawn, but never live (same parent rule). |
+| T7 Fri SHORT 98.90 | MISSED. There was no setup: the "Thu RWL down" was rejected (RRR 1.99), and there is no Friday designation. |
+
+- Stopped setups: none.
+- DX3 never filled.
+- DX5 and DX6 are drawn as position boxes on the chart but were never live orders. The chart shows two trades that the tool says do not exist.
+
+**E3 = 2 / 7 = 29%.**
+
+**Presentation**
+- The _week frame's price axis is not fitted to the week: it runs 97.5-99.3 because of a spike candle after Friday's close, which squashes the week's candles.
+- The DX3 / DX2 / DX4 labels are printed on top of one another at 98.05-98.10.
+- The Tue day tag overlaps candles and the DX5 label.
+- The Thu tag (purple) is illegible over the candles.
+- The alternative-chain dotted lines dive to 97.62, far below anything price did.
+- The LSZ labels at 98.25-98.40 overlap each other ("sweep to 98.161" over "sweep to 98.392").
+

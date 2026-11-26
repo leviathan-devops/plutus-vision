@@ -133,7 +133,7 @@ if barstate.islast and isPair
         label.new(1782766800000, 100.583, "LSZ demand-side | sweep to 100.458", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1782680400000, 101.430, 1783717200000, 101.380, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1782680400000, 101.530, 1783717200000, 101.430, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1782766800000, 101.405, "LSZ supply-side | sweep to 101.530", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
+        label.new(1782766800000, 101.405, "LSZ supply-side + 4H BoM (confluent) | sweep to 101.530", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1782680400000, 100.653, 1783717200000, 100.603, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1782680400000, 100.603, 1783717200000, 100.503, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         label.new(1782766800000, 100.628, "LSZ demand-side | sweep to 100.503", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
@@ -158,7 +158,7 @@ if barstate.islast and isPair
         label.new(1782766800000, 101.775, "LSZ supply-side | sweep to 101.900", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1782680400000, 101.595, 1783717200000, 101.545, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1782680400000, 101.695, 1783717200000, 101.595, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1782766800000, 101.570, "LSZ supply-side | sweep to 101.695", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
+        label.new(1782766800000, 101.570, "LSZ supply-side + 4H BoM (confluent) | sweep to 101.695", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
     if show_ip
         // #2 UPPER RESISTANCE 101.199-101.262 MODERATE-HEAVY 8.0/14 Standard Wall Tier 2 | MoM Active 1 reactions | TP-TARGET
         box.new(1782680400000, 101.262, 1783717200000, 101.199, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)

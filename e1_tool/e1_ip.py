@@ -132,7 +132,11 @@ def levels(pair, monday, side):
             lsz.append({'bot': d['low'], 'top': d['low'] + 0.10 * U, 'side': 'Demand-side', 'level': d['low'], 'source': 'daily low ' + d['date']})
         if not any(abs(z['level'] - d['high']) < 1e-9 for z in lsz):
             lsz.append({'bot': d['high'] - 0.10 * U, 'top': d['high'], 'side': 'Supply-side', 'level': d['high'], 'source': 'daily high ' + d['date']})
+    z4_ = [q for q in SD.zone_map(pair, monday)['zones'] if q['tf'] == '240' and q['kind'] == 'BoM']
     for z in lsz:
+        # Step 0.45d (P533): a sweep zone overlapping a 4H BoM demand / supply zone = 'CONFLUENT LIQUIDITY SWEEP + BoM ZONE - this is the HIGHEST PRIORITY zone for trade construction'
+        zb_, zt_ = (z['level'], z['level'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['level'] - 0.05 * U, z['level'])
+        z['confluent_bom'] = any(q['bot'] <= zt_ and q['top'] >= zb_ and q['type'] == ('Demand' if z['side'] == 'Demand-side' else 'Supply') for q in z4_)
         later = [x for x in daily if x['date'] > z['source'][-10:]]      # completed sessions only: the map is the weekend map (the operator's bands are drawn before Monday's first hours)
         z['swept'] = any((x['low'] < z['level']) if z['side'] == 'Demand-side' else (x['high'] > z['level']) for x in later)
         z['priority'] = 'ACTIVE SL TRIGGER' if abs(z['level'] - spot) <= 0.30 * U else 'STANDARD'

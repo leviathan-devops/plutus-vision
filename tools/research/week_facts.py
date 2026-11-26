@@ -27,7 +27,7 @@ for z in sorted(X['lsz'], key=lambda z: -z['level']):
     zb, zt = (z['level'], z['level'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['level'] - 0.05 * U, z['level'])
     if near(zb, zt):
         r = z['level'] - 0.10 * U if z['side'] == 'Demand-side' else z['level'] + 0.10 * U
-        print(f"  sweep zone     {z['side']:<11} {f(zb)}-{f(zt)} | sweep reach to {f(r)} (dotted box)")
+        print(f"  sweep zone     {z['side']:<11} {f(zb)}-{f(zt)} | sweep reach to {f(r)} (dotted box){' | confluent with a 4H BoM zone' if z.get('confluent_bom') else ''}")
 for z in sorted(X['v1']['240']['liquidity'], key=lambda z: -z['top']):
     if near(z['bot'], z['top']):
         print(f"  liquidity band (sealed V1, 4H) {f(z['bot'])}-{f(z['top'])}")
