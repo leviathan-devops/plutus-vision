@@ -197,38 +197,50 @@ def build(pair, monday, X, lead=None):
     t_in = (tgt['top'] if bdir == 'down' else tgt['bot']) if tgt else near_far
     t_out = (tgt['bot'] if bdir == 'down' else tgt['top']) if tgt else near_far
     ss_seen = 0
+    legs = []                                                # every expected zone-to-zone move of the week, in order: the input of Engine 3 (R3 law: E2 designates, E3 obeys)
+    piv_far = ((pivot['bot'] if bdir == 'down' else pivot['top']) if pivot else mid)       # the pivot edge on the breakout side
+
+    def leg(day, shape, a, b, t_end, frm, to):
+        legs.append({'day': day, 'shape': shape, 'dir': 'up' if b > a else 'down', 'from': a, 'to': b, 'from_zone': frm, 'to_zone': to})
+        pts.append((t_end, b))
+        return b
     for i, shapes in enumerate(plan[:5]):
         d0 = wk0 + i * 86400000; d1 = d0 + 86400000
         start = max(d0, t_anchor) if i == 0 else d0
         day = {'day': DAYS[i], 'date': (dt.date.fromisoformat(monday) + dt.timedelta(days=i)).isoformat(), 'shapes': shapes, 't0': start, 't1': d1}
+        p0 = pos
         if shapes == ['SS']:
             # one swing per session (6.1.1 'Each swing typically spans 1-3 trading sessions'): first toward the bound farther from price, then back
             first_down = abs(pos - f_edge) >= abs(pos - c_edge)
-            go_down = first_down if ss_seen % 2 == 0 else (pos > mid)
-            end = f_edge if go_down else c_edge
-            day.update(dir='range', lo=f_edge, hi=c_edge, key=(floor if go_down else ceil)['name'] if (floor if go_down else ceil) else '-', conf=chain[0]['cum'])
-            pts.append((d1 - 4 * 3600000, end)); pos = end; ss_seen += 1
+            go_down = first_down if ss_seen == 0 else (pos > mid)
+            pos = leg(DAYS[i], 'SS', pos, f_edge if go_down else c_edge, d1 - 4 * 3600000, None, floor if go_down else ceil)
+            day.update(dir='range', lo=f_edge, hi=c_edge, key=(floor if go_down else ceil)['name'] if (floor if go_down else ceil) else '-', conf=chain[0]['cum']); ss_seen += 1
         elif shapes == ['SS', 'RWL', 'BS']:
-            day.update(dir=bdir, lo=min(mid, far_pierce, toward_far), hi=max(mid, far_pierce, toward_far), key=far['name'] if far else '-', conf=chain[min(1, len(chain) - 1)]['cum'])
-            pts.append((d0 + 12 * 3600000, far_pierce)); pts.append((d1 - 4 * 3600000, mid)); pos = mid
+            # SS swing back to the pivot, RWL into the opposing liquidity (6.4.2 'consolidation ends in price retesting opposing liquidity'), then the breakout
+            if (pos > piv_far) == (bdir == 'down') and abs(pos - piv_far) > 1e-12:
+                pos = leg(DAYS[i], 'SS', pos, piv_far, d0 + 7 * 3600000, far, pivot)
+            pos = leg(DAYS[i], 'RWL', pos, far_pierce, d0 + 14 * 3600000, pivot, far)
+            pos = leg(DAYS[i], 'BS', pos, mid, d1 - 3 * 3600000, far, tgt)
+            day.update(dir=bdir, lo=min(piv_far, mid, far_pierce, toward_far), hi=max(piv_far, mid, far_pierce, toward_far), key=far['name'] if far else '-', conf=chain[min(1, len(chain) - 1)]['cum'])
         elif shapes == ['BS']:
             # 6.10 "TODAY'S move is the journey TO what I thought today's move will be": a continuation day reaches the bound; the day after pierces it to the target
             more = any(p not in (['BS'], ['SS']) for p in plan[i + 1:5])
             reached = abs(pos - near_edge) < 1e-12 or ((pos < near_edge) == (bdir == 'down'))
-            a, b = pos, (near_edge if (more and not reached) else near_far if ((pos > near_far) == (bdir == 'down')) else t_in)
-            day.update(dir=bdir, lo=min(a, b), hi=max(a, b), key=near['name'] if near else '-', conf=chain[min(1, len(chain) - 1)]['cum'])
-            pts.append((d1 - 4 * 3600000, b)); pos = b
+            b_ = near_edge if (more and not reached) else near_far if ((pos > near_far) == (bdir == 'down')) else t_in
+            pos = leg(DAYS[i], 'BS', pos, b_, d1 - 4 * 3600000, far, tgt)
+            day.update(dir=bdir, lo=min(p0, pos), hi=max(p0, pos), key=near['name'] if near else '-', conf=chain[min(1, len(chain) - 1)]['cum'])
         elif shapes in (['WL', 'RWL'], ['RWL'], ['WL']):
             # 6.8: WL / RWL target = 'Origin zone (return)'; within the session the return reaches the pivot's near edge
-            rec = ((pivot['bot'] if bdir == 'down' else pivot['top']) if pivot else mid)
-            day.update(dir=inv[bdir], lo=min(t_out, rec, pos), hi=max(t_out, rec, pos), key=tgt['name'] if tgt else '-', conf=chain[-1]['cum'])
-            pts.append((d0 + 10 * 3600000, t_out)); pts.append((d1 - 4 * 3600000, rec)); pos = rec
+            rec = piv_far
+            pos = leg(DAYS[i], 'BS', pos, t_out, d0 + 10 * 3600000, far, tgt)
+            pos = leg(DAYS[i], 'WL', pos, rec, d1 - 4 * 3600000, tgt, pivot)
+            day.update(dir=inv[bdir], lo=min(t_out, rec, p0), hi=max(t_out, rec, p0), key=tgt['name'] if tgt else '-', conf=chain[-1]['cum'])
         elif shapes == ['PBS']:
-            day.update(dir=bdir, lo=min(pos, t_out), hi=max(pos, t_out), key=tgt['name'] if tgt else '-', conf=chain[-1]['cum'])
-            pts.append((d1 - 4 * 3600000, t_out)); pos = t_out
+            pos = leg(DAYS[i], 'PBS', pos, t_out, d1 - 4 * 3600000, far, tgt)
+            day.update(dir=bdir, lo=min(p0, pos), hi=max(p0, pos), key=tgt['name'] if tgt else '-', conf=chain[-1]['cum'])
         else:                                                # R: stabilization at the target
-            day.update(dir='range', lo=min(pos, t_in, t_out), hi=max(pos, t_in, t_out), key=tgt['name'] if tgt else '-', conf=chain[-1]['cum'])
-            pts.append((d1 - 4 * 3600000, (t_in + t_out) / 2)); pos = (t_in + t_out) / 2
+            pos = leg(DAYS[i], 'R', pos, (t_in + t_out) / 2, d1 - 4 * 3600000, tgt, tgt)
+            day.update(dir='range', lo=min(p0, t_in, t_out), hi=max(p0, t_in, t_out), key=tgt['name'] if tgt else '-', conf=chain[-1]['cum'])
         days.append(day)
     alt = None
     if far is not None:
@@ -238,7 +250,7 @@ def build(pair, monday, X, lead=None):
                'text': f"PRIMARY: SS -> BS {bdir} -> {nxt} | DECISION ZONE: {far['name']} fails (1H close beyond it) -> ALTERNATIVE: SS -> BS {inv[bdir]} -> {a_n} at {a_t['name'] if a_t else '-'}"}
         audit.append(alt['text'])
     return {'pair': pair, 'monday': monday, 's0': s0, 'storyline': story, 'bdir': bdir, 'chain': chain, 'days': days, 'path': pts, 'alt': alt, 'audit': audit,
-            'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'next': nxt, 'range': (f_edge, c_edge), 'mid': mid}
+            'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'next': nxt, 'range': (f_edge, c_edge), 'mid': mid, 'far': far, 'near': near, 'legs': legs}
 
 
 def pine(pair, monday, E2):
@@ -269,3 +281,5 @@ if __name__ == '__main__':
     for d in E2['days']:
         print(f"  {d['day']} {d['date']}: {' + '.join(d['shapes']):<14} {d['dir']:<5} | Key Zone: {d['key']:<28} | {f % d['lo']}-{f % d['hi']} | Confidence: {int(d['conf'] * 100)}%")
     print('path:', ' -> '.join(f % p for _, p in E2['path']))
+    for l in E2['legs']:
+        print(f"  leg {l['day']} {l['shape']:<4} {l['dir']:<5} {f % l['from']} -> {f % l['to']}")

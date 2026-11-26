@@ -396,3 +396,17 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   GBPUSD (no option data: every IP zone a Soft Wall): SS bounds fall back to 1H zones 1.33333-1.33544; Monday's real rally went to 1.3398 - levels too tight there, day shapes Wed-Fri right. Open.
 - plutus.py MONDAY PAIR [out] = E1 + E2 (+ E3 when e3_trades.py exists) -> one Pine; tools/e1render now calls it.
 - NEXT: e3_trades.py from the corrected spec (re-read phases 0-4, 8R, cascade mirror first): entries at zone edges / rungs per the day map, ladder-step SL, one TP at the opposing zone, position boxes; compare with the 8 + 8 + 7 trades.
+
+## 2026-11-26 - E3 DESIGN FIXED BEFORE CODING (from E3C :60-725 re-read + the 23 oracle trades); e2_chain now emits explicit LEGS
+- e2_chain.build()['legs'] = ordered zone-to-zone moves {day, shape, dir, from, to, from_zone, to_zone}. Golden DXY: Mon SS down 101.025->100.815 | Tue SS up ->101.199 | Wed SS down ->100.985 | Wed RWL up ->101.262 | Wed BS down ->101.031 |
+  Thu BS ->100.815 | Fri BS ->100.558 | Fri WL up ->100.985. His trades are these legs one for one (BS legs = one trade + Thursday reinforcement). On EURUSD / GBPUSD the same legs inverted.
+- E3 = ONE TRADE-FLOW CHAIN along the E2 legs (E3C Law 27: TP of N = entry of N+1; R3 law). Rules to code in e1_tool/e3_trades.py, each with its spec line:
+  ENTRY (E3C:177-203): anchor = the previous trade's TP zone (first trade: nearest 1H/4H supply/demand zone against the leg from spot). Inside the anchor: a nested lower-timeframe V1 ORDER_BLOCK -> its near edge (shorts +1 pip, F1-A);
+  else an internal LQZ rung -> rung near edge (long = ceiling, RWL bounce inset 0.2 pip, F1-C / F1-D); else the zone's near edge (TS-1). WL entry in a sweep zone = its midpoint (his 100.615 = mid of 100.556-100.679).
+  SL (E3C:247-296; GS Law 4): candidates (a) 3 pips outside the far edge of the current step, (X) 1 pip outside the back edge of the first LQZ band wholly beyond the entry; golden envelope 4-9.5 pips; D17 ceiling 36.
+     Measured on his trades: DXY six trades fit X within 2.4 pips; EURUSD B / D / F / G fit (a) within 1.2 pips; GBPUSD shorts fit (a) on the entry zone within 1.3 pips. WL in a sweep zone: 1-2 pips beyond the sweep extreme (100.545).
+  TP (E3C:298-352): ONE TP at the opposing pressure, E2-projected zone first: SS swing -> nearest unconsumed opposing 1H+ zone before the leg end with an LQZ band inside (band midpoint), else the bound's near edge -/+ 1 pip (strong zone);
+     SS into the pivot -> LQZ band at the pivot's far edge; RWL -> the opposing zone's midpoint; BS -> the E2 target: LQZ band fully inside the BoM zone, midpoint; WL -> near edge of the first opposing sweep zone before the pivot.
+     A zone used as an entry anchor earlier in the chain is consumed (one-time use) and is passed through. RRR floor 3.0 with the 3-attempt refinement on the same anchors (E3C:354-386).
+  REINFORCEMENT (E3C:619-687): on the BS primary only: stop-limit at an intermediate LQZ rung along the TP path, own SL 1 pip outside the back edge of the next rung, the parent's TP (his Thu short 100.975 / 101.09).
+  T1 of the DXY oracle (Mon long 100.945) was entered ~03:00 UTC Monday, BEFORE the 06:00 UTC anchor (price was 101.025 at the anchor): it cannot be a forward setup; five DXY trades remain to match.
