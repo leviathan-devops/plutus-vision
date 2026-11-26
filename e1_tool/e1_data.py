@@ -21,8 +21,21 @@ def bars(pair, tf):
 
 
 def boundary_ms(monday):
-    """Friday 17:00 New York before the target week = the price-data boundary (report header "Data As-Of"; P533:380)."""
-    d = dt.date.fromisoformat(monday) - dt.timedelta(days=3)
+    """THE TEMPORAL ANCHOR = Monday London open of the target week, 02:00 New York (P533 session table: London Open 02:00-05:00 ET; CLAUDE.md hard constraint
+    "Temporal anchor = Monday, start of the trading week"; R-15 "rewind to Monday London open"). Nothing stamped at or after it may feed the map."""
+    d = dt.date.fromisoformat(monday)
+    return int(dt.datetime(d.year, d.month, d.day, 2, 0, tzinfo=NY).timestamp() * 1000)
+
+
+def week_start_ms(monday):
+    """the trading week opens Sunday 17:00 New York"""
+    d = dt.date.fromisoformat(monday) - dt.timedelta(days=1)
+    return int(dt.datetime(d.year, d.month, d.day, 17, 0, tzinfo=NY).timestamp() * 1000)
+
+
+def week_end_ms(monday):
+    """Friday 17:00 New York"""
+    d = dt.date.fromisoformat(monday) + dt.timedelta(days=4)
     return int(dt.datetime(d.year, d.month, d.day, 17, 0, tzinfo=NY).timestamp() * 1000)
 
 
@@ -52,7 +65,10 @@ def daily(pair, monday):
             cur['high'] = max(cur['high'], b['high']); cur['low'] = min(cur['low'], b['low']); cur['close'] = b['close']
     if cur:
         out.append(cur)
-    return out
+    # only COMPLETED trading days (a day ends 17:00 New York on its date); the session running at the anchor is not a prior day
+    b0 = boundary_ms(monday)
+    done = lambda d: int(dt.datetime.combine(dt.date.fromisoformat(d['date']), dt.time(17, 0), NY).timestamp() * 1000) <= b0
+    return [d for d in out if done(d)]
 
 
 def weekly(pair, monday):
