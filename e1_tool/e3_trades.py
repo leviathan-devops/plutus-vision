@@ -143,13 +143,24 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
             out.append((tz['bot'] - pip if direction == 'up' else tz['top'] + pip, tz, 'pivot near edge + 1 pip'))
         return out
     # SS / R: the E2-projected opposing zone FIRST (E3C:333), then the walk over the opposing 1H / 4H zones on the way (LQZ inside -> midpoint, else near edge)
+    def near(z):
+        # the near edge of the JOINED zone (L-39 'a pressure zone = candle structure + level cluster joined'): the pressure zone under 30% and the standing 1H / 4H candle zone of the
+        # opposing side that overlap the target are one zone - price meets its first edge. Not on EUR/USD: 'DIRECT_ZONE_TEST' (E3C 8.19; FA 10 'PA often directly touches the overlap
+        # point') - his golden EURUSD #3 TP 1.14004 lies in the overlap of the 1H demand and the pressure zone, his DXY #2 / GBPUSD #2 TPs on the candle zone's near edge (D-91)
+        e = z['top'] if direction == 'down' else z['bot']
+        if pair in NO_SHIELD or not JOIN_TP:
+            return e
+        parts = [q for q in X['zones'] if q['zfp_num'] < 30 and _overlap(q, z)] + [q for q in sd if q['tf'] in ('240', '60') and q['type'] == opp and q.get('mit', 0) < 3 and _overlap(q, z)]
+        for q in parts:
+            e = max(e, q['top']) if direction == 'down' else min(e, q['bot'])
+        return e if ahead(e) else (z['top'] if direction == 'down' else z['bot'])
     if tz is not None and tz.get('zfp_num', 40) < 30 and not (tz['bot'] <= X['spot'] <= tz['top']):
-        out.append((tz['top'] + pip if direction == 'down' else tz['bot'] - pip, tz, 'E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327)'))
+        out.append((near(tz) + pip if direction == 'down' else near(tz) - pip, tz, 'E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327)'))
     if tz is not None and 'tf' in tz and 'zfp_num' not in tz and not (tz['bot'] <= X['spot'] <= tz['top']):
         # the E2 zone is a supply / demand candle zone (no ZFP of its own, G2 C-01): E3C:333 'E2-shapeDay projected opposing zone ... FIRST'; rule 5 'no LQZ overlap -> TP at zone NEAR EDGE',
         # BoM = STRONG -> 'closest zone edge ... add a 1-2 pip spread' (E3C:320-327)
-        sp = pip if tz.get('kind') == 'BoM' else 0.0
-        out.append((tz['top'] + sp if direction == 'down' else tz['bot'] - sp, tz, f"E2 bounding supply / demand zone near edge{' + 1 pip (BoM)' if sp else ''} (E3C:333, rule 5)"))
+        sp = pip if (tz.get('kind') == 'BoM' or near(tz) != (tz['top'] if direction == 'down' else tz['bot'])) else 0.0
+        out.append((near(tz) + sp if direction == 'down' else near(tz) - sp, tz, f"E2 bounding supply / demand zone near edge{' + 1 pip (strong)' if sp else ''} (E3C:333, rule 5)"))
     if tz is not None and tz.get('liq'):                     # a thick liquidity band (V1 4H) = strong pressure: 'exit on the closest zone edge' (E3C:320-327)
         out.append((tz['top'] if direction == 'down' else tz['bot'], tz, 'liquidity band near edge (strong, E3C:320-327)'))
     zs = [z for z in sd if z['tf'] in ('240', '60') and z['type'] == opp and id(z) not in used and z.get('key') not in used
@@ -204,6 +215,7 @@ def _steps(X):
 
 ZR6B = True
 SWEEP_EXT = True
+JOIN_TP = True
 SWEEP_TP = True
 DEPLETED_BOUND = True
 
@@ -524,6 +536,8 @@ def _build(pair, monday, X, E2, tag):
             # (never an entry source, E3C:136) the order block / LQZ rung the entry stands on. Stop orders (transition, reinforcements) and Law-27 level entries have no zone to stagger in (D-62)
             zm = step if ('bot' in step and step['top'] > step['bot']) else a      # the structure the entry is resolved on (rung / order block / the zone itself for a TS-1 edge)
             edge = zm['bot'] if direction == 'down' else zm['top']
+            if zm.get('sweep') and abs(edge - s['entry']) > 1e-9:
+                edge = s['entry']                             # an entry resolved INSIDE a sweep zone (its middle / its extreme, after the edge failed the RRR floor) is met at that level, not at the edge (D-92)
             front = edge - FWD[pair] if direction == 'down' else edge + FWD[pair]
             back = (zm['top'] - FWD[pair]) if direction == 'down' else (zm['bot'] + FWD[pair])
             if (front <= s['entry']) if direction == 'down' else (front >= s['entry']):
