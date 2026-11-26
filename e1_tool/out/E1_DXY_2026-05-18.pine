@@ -47,6 +47,19 @@ if barstate.islast and isPair
         box.new(1778446800000, 99.179, 1779483600000, 99.125, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
         box.new(1778446800000, 99.050, 1779483600000, 98.996, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
         box.new(1778446800000, 98.939, 1779483600000, 98.885, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.836, 1779483600000, 98.782, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.753, 1779483600000, 98.699, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.667, 1779483600000, 98.613, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.566, 1779483600000, 98.512, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.460, 1779483600000, 98.406, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.364, 1779483600000, 98.310, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.285, 1779483600000, 98.231, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.153, 1779483600000, 98.099, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.074, 1779483600000, 98.020, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 97.984, 1779483600000, 97.930, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 97.832, 1779483600000, 97.778, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 97.720, 1779483600000, 97.666, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 97.632, 1779483600000, 97.578, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.rgb(63,164,106), border_width=1, xloc=xloc.bar_time)
     if show_ob
         box.new(1778727600000, 98.523, 1779483600000, 98.416, bgcolor=color.new(color.rgb(49,121,245), 85), border_color=color.new(color.rgb(49,121,245), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1778504400000, 97.973, 1779483600000, 97.850, bgcolor=color.new(color.rgb(49,121,245), 85), border_color=color.new(color.rgb(49,121,245), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
@@ -74,7 +87,6 @@ if barstate.islast and isPair
         label.new(1779012360000, 99.049, "1H (Mitigated 2x) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1778792400000, 98.889, 1779483600000, 98.844, bgcolor=color.new(color.rgb(41,98,255), 78), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1778999760000, 98.867, "1H (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-    if show_sd and show_far
         box.new(1778781600000, 98.843, 1779483600000, 98.808, bgcolor=color.new(color.rgb(41,98,255), 78), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1778992200000, 98.826, "1H (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1778763600000, 98.700, 1779483600000, 98.545, bgcolor=color.new(color.rgb(41,98,255), 78), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
@@ -91,6 +103,8 @@ if barstate.islast and isPair
         label.new(1778820840000, 97.912, "1H (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1778446800000, 97.837, 1779483600000, 97.625, bgcolor=color.new(color.rgb(41,98,255), 78), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1778757840000, 97.731, "1H (Mitigated 5x) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    if show_sd and show_far
+        na
     if show_ltf
         box.new(1779072300000, 99.374, 1779483600000, 99.341, bgcolor=color.new(color.rgb(242,54,69), 86), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
         label.new(1779195690000, 99.357, "15m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
@@ -104,7 +118,6 @@ if barstate.islast and isPair
         label.new(1779007950000, 98.953, "15m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1778794200000, 98.880, 1779483600000, 98.844, bgcolor=color.new(color.rgb(41,98,255), 86), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1779001020000, 98.862, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-    if show_ltf and show_far
         box.new(1778783400000, 98.823, 1779483600000, 98.804, bgcolor=color.new(color.rgb(41,98,255), 86), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1778993460000, 98.814, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1778778000000, 98.801, 1779483600000, 98.778, bgcolor=color.new(color.rgb(41,98,255), 86), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
@@ -131,7 +144,13 @@ if barstate.islast and isPair
         label.new(1778757840000, 97.852, "15m (Mitigated 3x) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1778446800000, 97.746, 1779483600000, 97.669, bgcolor=color.new(color.rgb(41,98,255), 86), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1778757840000, 97.707, "15m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    if show_ltf and show_far
+        na
     if show_lsz
+        box.new(1778446800000, 97.900, 1779483600000, 97.850, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 97.953, 1779483600000, 97.903, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.314, 1779483600000, 98.264, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
+        box.new(1778446800000, 98.466, 1779483600000, 98.416, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1778446800000, 98.894, 1779483600000, 98.844, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1778446800000, 99.320, 1779483600000, 99.270, bgcolor=color.new(color.rgb(80,230,100), 60), border_color=color.rgb(80,230,100), border_width=2, xloc=xloc.bar_time)
         box.new(1778446800000, 99.301, 1779483600000, 99.251, bgcolor=color.new(color.rgb(80,230,100), 60), border_color=color.rgb(80,230,100), border_width=2, xloc=xloc.bar_time)
@@ -140,15 +159,10 @@ if barstate.islast and isPair
         box.new(1778446800000, 96.544, 1779483600000, 96.494, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1778446800000, 97.405, 1779483600000, 97.355, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1778446800000, 97.539, 1779483600000, 97.489, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
-        box.new(1778446800000, 97.900, 1779483600000, 97.850, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
-        box.new(1778446800000, 97.953, 1779483600000, 97.903, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
-        box.new(1778446800000, 98.314, 1779483600000, 98.264, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
-        box.new(1778446800000, 98.466, 1779483600000, 98.416, bgcolor=color.new(color.rgb(40,180,80), 70), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
     if show_ip
         // #2 MID-RANGE SUPPORT 98.963-99.037 MODERATE 7.0/14 Standard Wall Tier 2 | MoM Depleted 5 reactions | REJECT
         box.new(1778446800000, 99.037, 1779483600000, 98.963, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
         label.new(1778662800000, 99.000, "MID-RANGE SUPPORT | MODERATE | 15-30% ZFP | Tier 2 MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-    if show_ip and show_far
         // #3 KEY SUPPORT BAND 98.732-98.792 MODERATE 7.0/14 Standard Wall Tier 2 | MoM Depleted 4 reactions | REJECT
         box.new(1778446800000, 98.792, 1779483600000, 98.732, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
         label.new(1778662800000, 98.762, "KEY SUPPORT BAND | MODERATE | 15-30% ZFP | Tier 2 MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
@@ -164,6 +178,8 @@ if barstate.islast and isPair
         // #6 KEY SUPPORT BAND 97.720-97.794 MODERATE 6.5/14 Standard Wall Tier 2 | BoM Depleted 4 reactions | TP-TARGET
         box.new(1778446800000, 97.794, 1779483600000, 97.720, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
         label.new(1778662800000, 97.757, "KEY SUPPORT BAND | MODERATE | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    if show_ip and show_far
+        na
     if show_ip and show_lv
         line.new(1779051600000, 99.000, 1779483600000, 99.000, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot weekly camarilla S2
         line.new(1779051600000, 98.965, 1779483600000, 98.965, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-13 classic R3
@@ -176,9 +192,66 @@ if barstate.islast and isPair
         line.new(1779051600000, 98.982, 1779483600000, 98.982, xloc=xloc.bar_time, color=color.new(color.rgb(250,220,90), 35), width=1, style=line.style_dotted)   // MA TRIPLE+ [EMA20 4H, SMA9 W1, SMA50 1H, SMA50 D1, EMA50 1H]
         line.new(1779051600000, 98.975, 1779483600000, 98.975, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Minor Swing Level (4H low)
         line.new(1779051600000, 98.973, 1779483600000, 98.973, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Fib 23.6% of prior week
+        line.new(1779051600000, 98.782, 1779483600000, 98.782, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-13 classic R2
+        line.new(1779051600000, 98.733, 1779483600000, 98.733, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-14 classic PP
+        line.new(1779051600000, 98.742, 1779483600000, 98.742, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-14 camarilla S3
+        line.new(1779051600000, 98.787, 1779483600000, 98.787, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-14 camarilla S2
+        line.new(1779051600000, 98.757, 1779483600000, 98.757, xloc=xloc.bar_time, color=color.new(color.rgb(250,220,90), 35), width=1, style=line.style_dotted)   // MA TRIPLE+ [EMA9 W1, EMA10 W1, EMA20 W1, EMA100 1H, SMA20 4H
+        line.new(1779051600000, 98.758, 1779483600000, 98.758, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Fib 38.2% of prior week
+        line.new(1779051600000, 98.750, 1779483600000, 98.750, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Round number quarter figure
+        line.new(1779051600000, 98.461, 1779483600000, 98.461, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot weekly camarilla S4
+        line.new(1779051600000, 98.542, 1779483600000, 98.542, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-13 camarilla R2
+        line.new(1779051600000, 98.512, 1779483600000, 98.512, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-13 camarilla R1
+        line.new(1779051600000, 98.546, 1779483600000, 98.546, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-14 fib S1
+        line.new(1779051600000, 98.493, 1779483600000, 98.493, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-15 classic S3
+        line.new(1779051600000, 98.492, 1779483600000, 98.492, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Liquidity Sweep Target (D1 swing low 03-10)
+        line.new(1779051600000, 98.523, 1779483600000, 98.523, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // MoM 0X 4H Demand Zone (top edge)
+        line.new(1779051600000, 98.525, 1779483600000, 98.525, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Minor Swing Level (D1 low)
+        line.new(1779051600000, 98.541, 1779483600000, 98.541, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Minor Swing Level (4H low)
+        line.new(1779051600000, 98.460, 1779483600000, 98.460, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Minor Swing Level (4H high)
+        line.new(1779051600000, 98.481, 1779483600000, 98.481, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Prior daily close 05-13
+        line.new(1779051600000, 98.500, 1779483600000, 98.500, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Round number half figure
+        line.new(1779051600000, 98.306, 1779483600000, 98.306, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot weekly classic S1
+        line.new(1779051600000, 98.251, 1779483600000, 98.251, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot weekly fib S1
+        line.new(1779051600000, 98.297, 1779483600000, 98.297, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-13 classic S1
+        line.new(1779051600000, 98.320, 1779483600000, 98.320, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-13 fib S1
+        line.new(1779051600000, 98.241, 1779483600000, 98.241, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-13 fib S2
+        line.new(1779051600000, 98.242, 1779483600000, 98.242, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-14 classic S2
+        line.new(1779051600000, 98.305, 1779483600000, 98.305, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // MoM 0X 4H Demand Zone (bottom edge)
+        line.new(1779051600000, 98.240, 1779483600000, 98.240, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Minor Swing Level (4H high)
+        line.new(1779051600000, 98.291, 1779483600000, 98.291, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Prior daily close 05-12
+        line.new(1779051600000, 98.264, 1779483600000, 98.264, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Prior daily low 05-13
+        line.new(1779051600000, 98.250, 1779483600000, 98.250, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Round number quarter figure
+        line.new(1779051600000, 97.963, 1779483600000, 97.963, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 05-13 classic S3
+        line.new(1779051600000, 97.989, 1779483600000, 97.989, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // MoM 0X 4H Demand Zone (top edge)
+        line.new(1779051600000, 98.002, 1779483600000, 98.002, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Minor Swing Level (D1 high)
+        line.new(1779051600000, 97.970, 1779483600000, 97.970, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Minor Swing Level (4H low)
+        line.new(1779051600000, 98.000, 1779483600000, 98.000, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Round number big figure
+        line.new(1779051600000, 97.720, 1779483600000, 97.720, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Liquidity Sweep Target (D1 swing low 05-01)
+        line.new(1779051600000, 97.750, 1779483600000, 97.750, xloc=xloc.bar_time, color=color.new(color.rgb(200,150,255), 35), width=1, style=line.style_dotted)   // Round number quarter figure
     if show_opt
+        line.new(1778446800000, 98.762, 1779483600000, 98.762, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
+        label.new(1779325200000, 98.762, "4.1bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        line.new(1778446800000, 98.508, 1779483600000, 98.508, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
+        label.new(1779325200000, 98.508, "3.7bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        line.new(1778446800000, 98.275, 1779483600000, 98.275, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
+        label.new(1779325200000, 98.275, "2.6bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        line.new(1778446800000, 97.722, 1779483600000, 97.722, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
+        label.new(1779325200000, 97.722, "2.6bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        line.new(1778446800000, 97.794, 1779483600000, 97.794, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
+        label.new(1779325200000, 97.794, "2.1bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        line.new(1778446800000, 97.806, 1779483600000, 97.806, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
+        label.new(1779325200000, 97.806, "2.0bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        line.new(1778446800000, 98.244, 1779483600000, 98.244, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
+        label.new(1779325200000, 98.244, "1.9bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        line.new(1778446800000, 98.517, 1779483600000, 98.517, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
+        label.new(1779325200000, 98.517, "1.5bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        line.new(1778446800000, 98.033, 1779483600000, 98.033, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=1)
+        label.new(1779325200000, 98.033, "1.2bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
         line.new(1778446800000, 99.008, 1779483600000, 99.008, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=1)
         label.new(1779325200000, 99.008, "1.0bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        line.new(1778446800000, 98.347, 1779483600000, 98.347, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=1)
+        label.new(1779325200000, 98.347, "850M Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
     if show_e2
         box.new(1779084000000, 99.359, 1779138000000, 99.037, bgcolor=color.new(color.rgb(120,144,156), 88), border_color=color.new(color.rgb(120,144,156), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1779111000000, 99.359, "Mon SS\n 80%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(120,144,156), size=size.small)
@@ -189,27 +262,26 @@ if barstate.islast and isPair
         box.new(1779310800000, 99.359, 1779397200000, 99.037, bgcolor=color.new(color.rgb(120,144,156), 88), border_color=color.new(color.rgb(120,144,156), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1779354000000, 99.359, "Thu SS\n 80%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(120,144,156), size=size.small)
         box.new(1779397200000, 99.359, 1779483600000, 99.037, bgcolor=color.new(color.rgb(120,144,156), 88), border_color=color.new(color.rgb(120,144,156), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1779440400000, 99.359, "Fri SS\n 80%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(120,144,156), size=size.small)
-        line.new(1779084000000, 99.301, 1779138000000, 99.359, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1779138000000, 99.359, 1779224400000, 99.037, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1779224400000, 99.037, 1779310800000, 99.359, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1779310800000, 99.359, 1779397200000, 99.037, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1779397200000, 99.037, 1779483600000, 99.359, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        label.new(1779418800000, 99.359, "Fri SS\n 80%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(120,144,156), size=size.small)
+        line.new(1779084000000, 99.301, 1779138000000, 99.037, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1779138000000, 99.037, 1779206400000, 99.359, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1779206400000, 99.359, 1779256800000, 99.037, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1779256800000, 99.037, 1779310800000, 99.359, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1779310800000, 99.359, 1779379200000, 99.037, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1779379200000, 99.037, 1779429600000, 99.359, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1779429600000, 99.359, 1779483600000, 99.037, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1779084000000, 99.301, 1779138000000, 99.359, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1779138000000, 99.359, 1779224400000, 99.037, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1779224400000, 99.037, 1779256800000, 99.359, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1779138000000, 99.359, 1779206400000, 99.037, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1779206400000, 99.037, 1779256800000, 99.359, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1779256800000, 99.359, 1779379200000, 99.359, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1779379200000, 99.359, 1779397200000, 99.359, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
     if show_e3
         // DX1 Mon SS SHORT E 99.359 SL 99.459 TP 99.047 RRR 3.13 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (b) 1 pip inside the close edge of the shield (4H band); TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327)
         box.new(1779084000000, 99.459, 1779483600000, 99.359, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1779084000000, 99.359, 1779483600000, 99.339, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1779084000000, 99.359, 1779483600000, 99.047, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         label.new(1779094800000, 99.303, "DX1 SS S 3.1R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // DX2 Mon SS LONG E 99.038 SL 98.929 TP 99.409 RRR 3.4 | Swing Scalp / London Open | entry 15m order block at the zone, top (TS-1); SL (b) 1 pip inside the close edge of the shield (4H band); TP weak zone far edge
-        box.new(1779084000000, 99.038, 1779483600000, 98.929, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1779084000000, 99.409, 1779483600000, 99.038, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1779127200000, 99.105, "DX2 SS L 3.4R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // DX3 Mon SS LONG E 99.097 SL 99.040 TP 99.409 RRR 5.47 | Swing Scalp / London Open | entry zone edge (TS-1); SL (b) 1 pip inside the close edge of the shield (4H band); TP weak zone far edge
-        box.new(1779084000000, 99.097, 1779483600000, 99.040, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1779084000000, 99.409, 1779483600000, 99.097, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1779159600000, 99.153, "DX3 SS L 5.5R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // DX2 Mon SS LONG E 99.050 SL 98.929 TP 99.409 RRR 2.97 | Swing Scalp / London Open | entry internal LQZ rung; SL (b) 1 pip inside the close edge of the shield (4H band); TP weak zone far edge
+        box.new(1779084000000, 99.050, 1779483600000, 98.929, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1779084000000, 99.409, 1779483600000, 99.050, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1779127200000, 99.115, "DX2 SS L 3.0R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)

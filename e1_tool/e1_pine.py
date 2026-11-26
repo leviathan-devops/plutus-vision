@@ -27,14 +27,19 @@ def reach(X, E2):
     Zones outside it stay in the script behind the toggle 'show_far' (nothing is deleted, R-37)."""
     days = [d for i, d in enumerate(E2['days']) if i < E2.get('n_real', 5)] or E2['days']
     lo, hi = min(d['lo'] for d in days), max(d['hi'] for d in days)
-    pw = X['weekly'][-1]                                     # the Engine 1 map is the prior week's range and the first zone beyond each end (D-12: the report maps and the operator's approved six lie there);
-    lo, hi = min(lo, pw['low']), max(hi, pw['high'])         # Engine 2's envelope may only widen it, so a wrong day map cannot hide zones the week trades at
     zs = [z for z in X['zones'] if z['drawn']] + [z for z in X['sd'] if z['tf'] in ('240', '60')]
     below = [z for z in zs if z['top'] < lo]; above = [z for z in zs if z['bot'] > hi]
     if below:
         lo = max(below, key=lambda z: z['top'])['bot']
     if above:
         hi = min(above, key=lambda z: z['bot'])['top']
+    # the alternative reading of every bound (6.6 Step 4: the chain that activates if the bound fails) has a target too: where a breakout through the ceiling / the floor would stop
+    # (e2_chain.target) belongs to the week's reach, so the zone the week ends up trading at is on the chart when the primary chain is wrong (D-58)
+    import e2_chain as E2M
+    for side, bound in (('up', E2.get('ceil')), ('down', E2.get('floor'))):
+        t = E2M.target(X, side, bound) if bound is not None else None
+        if t is not None:
+            lo, hi = min(lo, t['bot']), max(hi, t['top'])
     return lo, hi
 
 
