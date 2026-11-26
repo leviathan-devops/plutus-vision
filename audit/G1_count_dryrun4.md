@@ -244,3 +244,64 @@ Stopped-out setups: none. GB3 void, GB5 and GB7 not filled.
 ### Step 5 - presentation
 - Zones frame: label-on-label collisions at 1.3400, 1.3375, 1.3420 and 1.3280 (two or three white labels printed on the same line); boxes cover the whole chart.
 - All/week frames: "GB3 RWL S 4.1R", "Wed SS+RWL+BS" and "GB4 BS L 7.7R" overlap each other on Wed; the purple Fri tag is unreadable over the Friday candles; "GB7 Ladder L 4.0R if GB" is clipped at the right edge.
+
+## Map 4 - DXY 2026-04-20
+
+Week action (1H, UTC): Mon 98.27-98.395 (Mon 04-06) -> 98.006 (Mon 15), stall 98.01-98.16 into Tue 06; Tue up to 98.309, dip 98.123 (13), surge 98.567 (17); Wed 98.211 (05) -> 98.643 (21); Thu 98.737 -> 98.534 (14) -> 98.939 (17); Fri 98.915 (02) -> 98.489 (20). (The spike to 99.33 at the right edge is after Friday's close and is outside the week.)
+
+### Step 1 - obvious trades (written from the `_zones` frame before opening any setup)
+Per the brief (S3) the counted obvious trades of this map are the operator's two real trades:
+| # | trade | turn |
+|---|---|---|
+| A | LONG 98.02 / SL 97.87 / TP 98.77 | Mon 15:00 low 98.006 at GAP 97.988-98.048 / 1H MoM demand -> Thu 98.939 |
+| B | LONG 98.29 / SL 98.185 / TP 98.77 | Wed 05:00 low 98.211 at GAP 98.220-98.280 -> Thu 98.939 |
+For information only (not in the %), the other clean zone-to-zone moves visible on the 1H frame: (c) Mon SHORT 98.395 (1H MoM supply 98.402) -> 98.006, -39 p; (d) Tue SHORT 98.567 (UPPER RESISTANCE 98.456-98.541) -> 98.211, -36 p; (e) Fri SHORT 98.915 (4H BoM supply 98.884) -> 98.489, -43 p.
+
+### Step 2 - E1
+| zone (facts) | verdict | delta |
+|---|---|---|
+| IP UPPER RESISTANCE 98.939-99.005 | REACTED | Thu 17 high 98.939 = lower edge -> -18 p; Fri 98.915 -> -43 p |
+| IP UPPER RESISTANCE 98.456-98.541 | REACTED | Tue 17 98.567 (2.6 p beyond) -> -36 p; Fri 16-20 stall 98.49-98.52 |
+| IP MID-RANGE SUPPORT 98.058-98.145 | REACTED | Mon 16 - Tue 06 stall 98.01-98.16 |
+| IP KEY SUPPORT BAND 97.725-97.799 | not reached | |
+| GAP 98.806-98.866 | REACTED | Thu 19 - Fri 06 stall 98.76-98.915 |
+| GAP 98.667-98.727 | REACTED | Wed 22 - Thu 10 stall |
+| GAP 98.220-98.280 | REACTED | Wed 05 98.211 -> +73 p |
+| GAP 97.988-98.048 | REACTED | Mon 15 98.006 -> stall, then +56 p |
+| 4H BoM supply 98.884-99.031 | REACTED | Thu 98.939, Fri 98.915 |
+| 1H MoM supply 98.675-98.845 | REACTED | Thu 10 98.803 -> 98.534 |
+| 1H MoM supply 98.402-98.439 | REACTED | Mon 04-06 98.395 (0.7 p below) -> -39 p |
+| 1H MoM demand 97.937-98.045 | REACTED | Mon 98.006 |
+| 1H BoM demand 97.632-97.828 / 4H BoM demand 97.576-97.728 | not reached | |
+| LSZ supply 98.389-98.439 / 98.345-98.395 (2) | REACTED (2) | Mon 98.395 |
+| LSZ demand 98.364-98.414 (reach 98.264) | REACTED | Tue 22 - Wed 03 stall 98.31-98.41 (then Wed wick 98.211, 5 p beyond reach) |
+| LSZ supply 98.242-98.292 / 98.241-98.291 / 98.235-98.285 (3) | REACTED (3) | Mon 01-06 chop, high 98.395 at the reach |
+| LSZ demand 98.261-98.311 (reach 98.161) | REACTED | Mon 07-12 stall 98.155-98.34 (crossed Mon 13 to 98.006); Wed 98.211 bounce |
+| LSZ demand 98.005-98.055 / 97.969-98.019 (2) | REACTED (2) | Mon 98.006 |
+| LSZ demand 97.832-97.882 / 97.632-97.682 | not reached | |
+| bands 98.903-98.967, 98.804-98.868, 98.689-98.753, 98.561-98.625, 98.461-98.525, 98.300-98.364, 98.182-98.246, 98.014-98.078 (8) | REACTED (8) | each at a turn or stall listed above |
+| bands 97.920-97.984, 97.768-97.832, 97.666-97.730 | not reached | |
+Reached 28, reacted 28, pierced 0. Unzoned turning points: none.
+**E1 = 28 / 28 = 100 %.** Gate: **FAIL - bunched/bloated.** 36 objects between 97.53 and 99.03; between 98.18 and 98.44 there are 6 LSZ + 1 gap + 1H MoM supply + 2 bands stacked (three LSZ supply boxes 98.235 / 98.241 / 98.242 are within 0.7 p of each other and should be one box); the labels "LSZ supply-side | sweep to 98.539" and "LSZ demand-side | sweep to 98.264" print over each other at 98.40 in the history half.
+
+### Step 3 - E2
+| day | forecast | candles | verdict |
+|---|---|---|---|
+| Mon | SS range 97.937-98.439, key 1H MoM | ceiling 98.395 -> floor 98.006, stall, inside the box | RIGHT |
+| Tue | SS+RWL+BS up, key 4H BoM | range 98.07-98.16, up to 98.309, dip 98.123, surge 98.567, close up | RIGHT |
+| Wed | BS up, box 98.064-98.522 | dip 98.211 then surge to 98.643, close 98.616 | RIGHT |
+| Thu | BS+RWL up, box 98.522-98.884 | 98.534 -> spike 98.939 -> 98.77, close 98.826 | RIGHT |
+| Fri | RWL down, box 98.402-98.801 | steady decline 98.915 -> 98.489, closed at the low, no reversal | WRONG - direction right, but a whiplash (spike that immediately reverses) did not happen; Friday was a one-way decline (BS-type) |
+**E2 = 4 / 5 = 80 %.**
+
+### Step 4 - E3
+| obvious trade | setup | verdict |
+|---|---|---|
+| A LONG 98.02 | DX3 LONG 98.019 / 97.939 / 98.874, filled Mon 15:15, TP Thu 17:30 (also DX2 98.045 -> 98.402 TP) | CAUGHT |
+| B LONG 98.29 | DX5 LONG 98.270 / 98.104 / 98.874, filled Wed 05:15, TP Thu 17:30 | CAUGHT |
+Stopped-out setups: **DX6** LONG 98.660 / 98.615 (filled Thu 00:00, stopped Thu 00:15).
+**E3 = 2 / 2 = 100 %.** Information only: of the other three visible moves, (c) Mon short was caught by DX1 (98.415 -> 98.045 TP); (d) Tue short 98.567 and (e) Fri short 98.915 have no setup (both rejected for RRR in the facts).
+
+### Step 5 - presentation
+- History half: label collisions at 98.40 ("LSZ supply-side | sweep to 98.539" / "LSZ demand-side | sweep to 98.264") and at 98.92 ("UPPER RESISTANCE" over "4H (Unmitigated) | BoM"); "GAP IN-FILL" label over the Apr 17-18 candles.
+- Week frame: DX2 / DX3 / DX4 labels pile up on Monday's low candles; "Tue SS+RWL+BS" and "DX5 Ladder ... if DX3" overlap; purple Thu / Fri tags are drawn over the Thu-Fri candles and are barely legible.
