@@ -488,3 +488,10 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - Pattern 3 (order life): setups rest for their whole E2 day(s); a long whose TP level already traded that morning was filled in the fall (May 18 DX3). Law 27 is a SEQUENCE.
 - Pattern 4 (timing): the right zone on the wrong day (Oct 5: the BoM-demand long designated Friday, the pierce came Tuesday).
 - Not yet built and relevant: staggered three entries (E3C Phase 9), confidence (Phase 5) and its SL switch (ZR-6B), consolidation phase / ZFP trend (E2-CP), WLS shape (6.1.5; strict "3+ zones within 0.30-0.50" did not match Jun 8: span 0.59).
+
+## 2026-11-26 (model opus-5-5) - G2 audit arrived and is being worked (audit/G2_audit_engines.md, 134 findings)
+- Batch I (9e44b34): V1 harvest at the chart's real tick (C-32), superseded modules out of e1_tool (D-02/D-04), oracle code out of the engines (D-03/D-05), tools/leak_check.py in the pre-commit hook (D-01).
+- ENGINE 2 v2 (2717f06): the template is gone; the chain is extended from the canon tables (D-34..D-41). Reference weeks come out of the rules: golden DXY Tue/Wed/Thu/Fri tags, Apr 20 Wed-Thu BS up.
+  Learned: the decision tree's reaction counter discriminates the weeks (Apr 20 ceiling MoM 1 reaction + liquidity beyond the floor = slow consolidation then pierce up; Sep 14 ceiling 3 taps = pierced;
+  May 18 floor 5 strong reactions = FORTRESS holds); a spike and its next-session return are ONE whiplash; FA 9 counts moves.
+- Remaining E2 issues: weeks where E1 has nothing beyond spot on one side (Aug 17 below; fix in E1 Step 9.5 / Key Support levels), tie weeks decided by the storyline (Jul 13 wrong).

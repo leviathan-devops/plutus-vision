@@ -7,6 +7,12 @@
   4H validation (A-06), TF element matching (A-07), triggers per day (A-08), termination < 25% with undesignated days not drawn (B-07/C-16), alternative chain with ZFP threshold + confidence, drawn (A-13).
   Then E3 phases (A-15..A-47, B-18..B-37, C-17..C-25), then the S/D findings (A-48..A-52, B-38..B-45, C-27..C-31), then a FRESH audit agent (model opus; the Fable auditor is rate-limited until Dec 2).
 - Golden week must still come out (S2): re-check DXY / EURUSD / GBPUSD + Apr 20 after every step with the snapshot tool (scratchpad snap.py) and tools/research/oracle_diff.py.
+- DONE (commit 2717f06): ENGINE 2 v2 = canon chain extension (memory/09 design; D-34..D-41). Golden DXY: Mon SS | Tue SS | Wed SS+RWL+BS down | Thu BS down | Fri BS+RWL (his: SS+BS, SS, SS+RWL+BS, ladder, WL+RWL).
+  Apr 20: Mon-Tue SS, Wed SS+RWL+BS up, Thu BS up. Pairs mirror DXY on their own zones. Known E2 gaps: Aug 17 (no E1 zone below spot -> floor = sweep zone -> SS all week; E1 Step 9.5 gap scan missing in e1_ip),
+  Jul 13 direction (tie -> storyline up; the week broke down), Sep 14 BS a day late. E3 still the old leg-chain code (golden DXY now 4 setups instead of 7).
+- NEXT = ENGINE 3 v2 (memory/09 E3 part): candidates = the E2-designated (day, zone, side) tuples (legs) + the opposite side on SS days (E3C:96 'both directions'); Phase 2 gates (freshness, BoM/MoM + exceptions,
+  POI tier), Phase 3 entries (F1-A on the OB itself, F1-D RWL only, F1-E), Phase 4 stops = rule (a)/(b) on liquidity steps incl. V1 4H bands (memory/08 stop model) + Law 7 buffers, TP rules (zone midpoint,
+  strong/weak, no teleport, TF law, TP_NULL), Phase 5 confidence >= 65, Phase 6 chains/conflicts, Phase 7 sessions, Phase 9 2-3 reinforcements, Phase 10 mirror, Phase 12 reason codes. Keep his golden trades.
 
 ## STATE (NEWEST, 2026-11-26 night, after compaction 8) - S2 holds on DXY and now better on EURUSD / GBPUSD; S3 loop continues; G2 audit agent a2349814137719c02 still running (report: audit/G2_audit_engines.md)
 - This step (commits 50a6a23, be33e66, 9a9..): E1: pre-anchor session bar as D1 data (D-25), last days scanned in Step 0 (D-26). E2: sweep-zone bound on an empty side (D-27), "MoM bound is the one pierced" (D-28), plan for a breakout running at the anchor (D-29),
