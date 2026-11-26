@@ -621,7 +621,9 @@ def build(pair, monday, X, lead=None, force_dir=None):
                 add(rs, inv[bdir], i_lon, i_ny, far, far_liq, (bc if bdir == 'up' else bf)[1], f"6.4.2 'Consolidation ends in price retesting opposing liquidity' ({far_liq['name']})"
                     + (" - a whiplash against the preceding BS = RWL (6.1.4)" if rs == 'RWL' else ''), role='retest')
                 cum /= CONF[(bc if bdir == 'up' else bf)[1]]          # the retest and the pierce are one branch of 6.4.2: its confidence is counted once, on the BS
-            tgt = measured_move(X, near, far, bdir) if kind == 'FAIL' else target(X, bdir, near, src_tf)
+            # 6.5 'BS | ... target zone determines magnitude | Target: Measured Move'; 6.1.2 'toward the next IP zone or Structural Extreme Magnet': with no zone standing beyond the
+            # failing bound the breakout still has its measured-move target (P452 Pillar 9 Step 4) (D-80)
+            tgt = measured_move(X, near, far, bdir) if kind == 'FAIL' else (target(X, bdir, near, src_tf) or measured_move(X, near, far, bdir))
             k4 = src_tf == '240' or (tgt is not None and (tgt.get('tf') == '240' or tgt['src'] in ('IP', 'MM')))
             dur = BS_SESSIONS * (2 if k4 else 1)
             ok = add('BS', bdir, i_ny, i_ny + dur, far_liq or near, tgt, (bc if bdir == 'up' else bf)[1],

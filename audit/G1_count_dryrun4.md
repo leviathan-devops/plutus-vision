@@ -305,3 +305,74 @@ Stopped-out setups: **DX6** LONG 98.660 / 98.615 (filled Thu 00:00, stopped Thu 
 ### Step 5 - presentation
 - History half: label collisions at 98.40 ("LSZ supply-side | sweep to 98.539" / "LSZ demand-side | sweep to 98.264") and at 98.92 ("UPPER RESISTANCE" over "4H (Unmitigated) | BoM"); "GAP IN-FILL" label over the Apr 17-18 candles.
 - Week frame: DX2 / DX3 / DX4 labels pile up on Monday's low candles; "Tue SS+RWL+BS" and "DX5 Ladder ... if DX3" overlap; purple Thu / Fri tags are drawn over the Thu-Fri candles and are barely legible.
+
+## Map 5 - EURUSD 2026-04-20
+
+Week action (1H, UTC): Mon 1.1747 (04-06) -> 1.1791 (Mon 13 - Tue 00 stall); Tue 1.1791 -> 1.17565 -> 1.17759 -> 1.17187 (Tue 19); Wed 1.17624 (05) -> 1.1703 (21); Thu 1.16921 / 1.16789 (11) -> 1.17165 (14) -> 1.16691 (17); Fri 1.16729 (02) -> 1.1723 (20).
+
+### Step 1 - obvious trades (written from the `_zones` frame before opening any setup)
+| # | move | from zone -> to zone |
+|---|---|---|
+| A | Mon LONG 1.1747 -> 1.1790 (+44 p) | EQUILIBRIUM 1.17497-1.17573 -> 1H MoM supply 1.17847-1.17988 |
+| B | Tue SHORT 1.1791 -> 1.1719 (-72 p) | 1H MoM supply -> GAP 1.17203-1.17263 / 1H MoM demand 1.17004-1.17207 |
+| C | Tue-Wed LONG 1.1719 -> 1.1762 (+44 p) | GAP 1.17203 / 1H MoM demand -> EQUILIBRIUM / LSZ 1.1758-1.1762 |
+| D | Wed-Thu SHORT 1.1762 -> 1.1669 (-93 p; first leg to 1.1692 -70 p) | EQUILIBRIUM -> 4H BoM demand 1.16809-1.16996 / 1H BoM demand 1.16638-1.16754 |
+| E | Thu-Fri LONG 1.1669 -> 1.1723 (+54 p) | 1H BoM demand / GAP 1.16744-1.16804 -> GAP 1.17203-1.17263 |
+Obvious trades: 5.
+
+### Step 2 - E1
+| zone (facts) | verdict | delta |
+|---|---|---|
+| IP UPPER RESISTANCE 1.18213-1.18292 / 1.17988-1.18067 | not reached | week high 1.1791 |
+| IP UPPER RESISTANCE 1.17706-1.17791 | REACTED | Mon 07-12 highs 1.17718 / 1.17755 stall; Tue 01-07 lows 1.1772-1.1773 stall |
+| IP EQUILIBRIUM 1.17497-1.17573 | REACTED | Mon 04 1.1747 -> +44 p; Wed 05 1.17624 (5 p above) -> -93 p |
+| IP MID-RANGE SUPPORT 1.16973-1.17033 | REACTED | Wed 19 - Thu 09 chop 1.1690-1.1713 |
+| IP KEY SUPPORT BAND 1.16570-1.16638 | not reached | week low 1.16691 |
+| GAP 1.17347-1.17407 | REACTED | Tue 22 - Wed 03 stall |
+| GAP 1.17203-1.17263 | REACTED | Tue 17-20 lows 1.17201 / 1.17187 -> +44 p; Fri top 1.1723 |
+| GAP 1.16744-1.16804 | REACTED | Thu 11 1.16789; Fri 01-07 stall 1.1673-1.1676 |
+| 1H BoM supply 1.18239-1.18491 | not reached | |
+| 1H MoM supply 1.17847-1.17988 | REACTED | Mon 13 - Tue 00 stall at 1.178-1.1791 -> -72 p |
+| 1H MoM demand 1.17004-1.17207 | REACTED | Tue 19 1.17187 -> +44 p (crossed Wed 21) |
+| 4H BoM demand 1.16809-1.16996 | REACTED | Wed 22 1.16921, Thu 11 1.16789 stall |
+| 1H BoM demand 1.16638-1.16754 | REACTED | Thu 17 1.16691 -> +54 p |
+| 4H MoM demand 1.16543-1.16748 | REACTED | Thu 17 1.16691 |
+| LSZ supply 1.18188-1.18238 / 1.18060-1.18110 / 1.18030-1.18080 | not reached | |
+| LSZ demand 1.17719-1.17769 (reach 1.17619) | REACTED | Tue 01-06 stall at its lower edge |
+| LSZ demand 1.17668-1.17718 (reach 1.17568) | REACTED | Tue 07 1.17565 = reach -> stall |
+| LSZ supply 1.17611-1.17661 (reach 1.17761) | REACTED | Mon 07-12 stall under 1.17755; Wed 1.17624 |
+| LSZ supply 1.17575-1.17625 (reach 1.17725) | REACTED | Wed 05 1.17624 -> down |
+| LSZ demand 1.17592-1.17642 (reach 1.17492) | REACTED | Tue 10-13 1.1754 stall |
+| LSZ demand 1.17527-1.17577 (reach 1.17427) | REACTED | Mon 04 1.1747 |
+| LSZ demand 1.17277-1.17327 (reach 1.17177) | REACTED | Tue 19 1.17187 |
+| LSZ demand 1.16638-1.16688 | not reached | Thu low 1.16691, 0.3 p above |
+| bands 1.18125-1.18216, 1.17958-1.18049 | not reached | |
+| bands 1.17710-1.17801, 1.17564-1.17655, 1.17327-1.17418, 1.17126-1.17217, 1.16876-1.16967 (5) | REACTED (5) | at the turns / stalls above |
+| band 1.16581-1.16672 | not reached | |
+Reached 23, reacted 23, pierced 0. Unzoned turning points: none.
+**E1 = 23 / 23 = 100 %.** Gate: **FAIL - bunched/bloated.** 34 objects in 1.1654-1.1849; 1.1750-1.1780 holds 2 IP + 6 LSZ + 2 bands; in the zones frame the two LSZ labels at 1.1760 are printed on top of each other and cannot be read ("LSZ supply-side | sweep to ..." over "LSZ demand-side ...").
+
+### Step 3 - E2
+| day | forecast | candles | verdict |
+|---|---|---|---|
+| Mon | SS range 1.17004-1.17988, key 1H MoM | 1.1747 -> 1.1790, held under the 1H MoM supply, inside the box | RIGHT |
+| Tue | SS+RWL+BS down, key 4H BoM | chop 1.1772-1.1786, drop 1.17565, pop 1.17759, break to 1.17187, close down | RIGHT |
+| Wed | BS down, box 1.17380-1.17865 | 1.17624 -> 1.1703, close at the low | RIGHT (box sits above most of the day) |
+| Thu | BS+RWL down, box 1.16996-1.17380 | 1.16789 -> spike 1.17165 -> 1.16691, close down | RIGHT |
+| Fri | RWL up, box 1.17032-1.17207 | one-way rise 1.16729 -> 1.1723, held at the high | WRONG - direction right, but no whiplash (no spike that immediately reversed) |
+**E2 = 4 / 5 = 80 %.**
+
+### Step 4 - E3
+| obvious trade | setup | verdict |
+|---|---|---|
+| A Mon LONG 1.1747 | none (EU2 LONG is at 1.17207, not filled) | MISSED |
+| B Tue SHORT 1.1791 | EU3 SHORT 1.17920 / 1.17996 / 1.17497 (TP Tue 15:00); EU4 SHORT 1.17920 -> 1.17006 (TP Thu 00:00) | CAUGHT |
+| C Tue-Wed LONG 1.1719 | EU2 LONG 1.17207 expired after Monday; Tue 19 traded 1.17187 with no order | MISSED |
+| D Wed SHORT 1.1762 | EU5 SHORT 1.17656 not filled (Wed high 1.17624, 3.2 p short) | MISSED |
+| E Thu-Fri LONG 1.1669 | none (Thu RWL up rejected for RRR) | MISSED |
+Stopped-out setups: none. EU1, EU2, EU5, EU6 not filled.
+**E3 = 1 / 5 = 20 %.**
+
+### Step 5 - presentation
+- History half: the two LSZ labels at 1.1760 overprint each other; zone labels sit over the Apr 15-18 candles.
+- Week frame: "Tue SS+RWL+BS down 33%" is crossed by the yellow path; EU1 / EU3 labels on the Mon-Tue candles; "EU5 Ladder S 12.3R if EU4" over Wed candles; purple "Thu BS+RWL" / "Fri RWL" tags on top of the Thu-Fri candles.
