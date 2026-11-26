@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# g1facts OUTDIR PAIR:MONDAY ... : facts files for the outside G1 count (exact prices of every drawing + what the week's candles did); research output, never a verdict
+set -u; R="$(cd "$(dirname "$0")/.." && pwd)"; out="$1"; shift; mkdir -p "$R/$out"
+for pm in "$@"; do p="${pm%%:*}"; m="${pm##*:}"
+  { python3 "$R/tools/research/week_facts.py" "$p" "$m"
+    echo; echo "ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);"
+    echo " 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)"
+    python3 "$R/tools/research/fills.py" "$p" "$m" | tail -n +2; } > "$R/$out/${p}_${m}.txt" 2>&1
+done

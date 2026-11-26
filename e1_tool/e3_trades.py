@@ -153,6 +153,14 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
           and ahead(z['top'] if direction == 'down' else z['bot'])
           and (((z['top'] >= end) if direction == 'down' else (z['bot'] <= end)) or (tz is not None and _overlap(z, tz)))]       # on the way to the E2 leg end, or lying against the E2 zone
     zs.sort(key=lambda z: -z['top'] if direction == 'down' else z['bot'])
+    # Refined Law 14 (E3C:346-347): 'Price cannot teleport past UNMITIGATED zones ... The "no teleport" constraint applies ONLY to zones with reactionCount = 0': an unmitigated opposing
+    # 1H / 4H zone standing wholly before the E2-projected zone is where this swing ends - nothing beyond it is a target (D-66)
+    virgin = [z for z in zs if z.get('mit', 1) == 0 and (tz is None or not _overlap(z, tz)) and ((z['top'] > end) if direction == 'down' else (z['bot'] < end))]
+    if virgin and LAW14:
+        z0 = virgin[0]
+        out = []
+        zs = [z for z in zs if ((z['top'] >= z0['top']) if direction == 'down' else (z['bot'] <= z0['bot']))]
+        tz = None
     for z in zs:
         ov = [r for r in rungs if _overlap(r, z)]
         for r in sorted(ov, key=lambda r: -r['top'] if direction == 'down' else r['bot']):
@@ -171,6 +179,7 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
 
 
 LAW7 = {'DXY': 5, 'EURUSD': 2, 'GBPUSD': 3}       # E3C:299-304 per-pair SL buffers (pips; DXY in index points of 0.01)
+LAW14 = True
 MAX_RRR = 15.0                                   # E3C:365 'MAX_CHAIN_RRR ceiling: 15.0 (Law-13) - chains beyond 15R fill-and-stop'
 INCLUDE = 65                                     # E3C:1011 'confidence >= 65 required for inclusion'
 NO_SHIELD = ('EURUSD',)                          # E3C 8.19 pair table: EUR/USD 'DIRECT_ZONE_TEST, NO_SHIELD'; FA 10: 'PA often directly touches the overlap point ... No Liquidity Shield'
@@ -182,7 +191,7 @@ def _steps(X):
     return [dict(r, thick=False) for r in X['v1']['60']['liquidity']], [dict(b, thick=True) for b in X['v1']['240']['liquidity']]
 
 
-def _stop(entry, direction, anchor, X, pair, dmin=None):
+def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False):
     """E3C:247-256 SL ladder steps. (b) '1-2 pips INSIDE the CLOSE edge of the NEXT STEP away', the step that may shield a stop being THICK (FA 2.1 'Thin liquidity zones are NEVER allowed as entry or SL
     zones'): the first V1 4H band or the SECOND 1H rung beyond the entry's own (smallest) step; (a) '3 pips OUTSIDE the FAR edge of the CURRENT entry step'. EUR/USD has no shield (NO_SHIELD): (a).
     D17 ceiling 36 pips; golden minimum 4 pips (E3C:279-293). Returns (sl, why) or (None, reason)."""
@@ -201,17 +210,25 @@ def _stop(entry, direction, anchor, X, pair, dmin=None):
     step_a = cur if cur is not None else anchor
     if step_a is not None:
         cands.append(((step_a['top'] + 3 * pip) if dn else (step_a['bot'] - 3 * pip), "(a) 3 pips outside the far edge of the current step"))
+    # E3C:249 operator verbatim '3 pips outside the back edge of the ENTRY ZONE'; E3C:254 '(entry zone's back edge + 3p)': when the liquidity step holding the entry gives no valid stop,
+    # the entry structure, then the anchor zone itself, is the current step (D-65)
+    for z_, nm in ((anchor, 'entry structure'), (zone, 'entry zone')):
+        if z_ is not None and z_ is not step_a and z_.get('top', 0) > z_.get('bot', 0) and not z_.get('ip'):
+            cands.append(((z_['top'] + 3 * pip) if dn else (z_['bot'] - 3 * pip), f"(a) 3 pips outside the back edge of the {nm}"))
     if pair not in NO_SHIELD:
         # every step that may shield a stop, nearest first: thick 4H bands, and the thin 1H rungs from the second on (FA 2.1); a shield closer than the golden minimum is the step the entry
         # itself stands on - the next one is the 'NEXT STEP away' (E3C:255)
         sh = sorted(th[1:] + tk, key=lambda s: s['bot'] if dn else -s['top'])
         for k, s in enumerate(sh):
             cands.insert(k, ((s['bot'] + pip) if dn else (s['top'] - pip), f"(b) 1 pip inside the close edge of the shield ({'4H band' if s['thick'] else '1H rung beyond the first'})"))
+    ok = []
     for sl, why in cands:
         d = abs(sl - entry) / pip
-        if (dmin or GOLD_MIN) <= d <= SL_CEIL and ((sl > entry) if dn else (sl < entry)):
-            return sl, why
-    return None, 'SL_INVALID: no ladder-step stop between 4 and 36 pips'
+        if (dmin or GOLD_MIN) <= d <= SL_CEIL and ((sl > entry) if dn else (sl < entry)) and not any(abs(sl - q[0]) < 0.5 * pip for q in ok):
+            ok.append((sl, why))
+    if every:
+        return ok
+    return ok[0] if ok else (None, 'SL_INVALID: no ladder-step stop between 4 and 36 pips')
 
 
 def _ip_at(z, X):
@@ -368,7 +385,7 @@ def _build(pair, monday, X, E2, tag):
             log.append(f"{c['days'][0]} {c['shape']} {direction}: SOURCE_INVALID - no ORDER_BLOCK / LQZ entry at {a.get('name', '')} (E3C:135)"); continue
         s, why_fail = None, 'TP_NULL'
         for entry, step, how in ecands[:3]:                  # E3C:386 '3 attempts on each anchor (3 E, 3 SL, 3 TP)'
-            stop, why_sl = _stop(entry, direction, step if 'bot' in step else a, X, pair, dmin=12.0 if c.get('role') == 'transition' else None)   # GS Law 3 table 'Breakout | SL 12-20 pips'
+            stop, why_sl = _stop(entry, direction, step if 'bot' in step else a, X, pair, dmin=12.0 if c.get('role') == 'transition' else None, zone=a)   # GS Law 3 table 'Breakout | SL 12-20 pips'
             if stop is None:
                 why_fail = why_sl; continue
             tps = [t for t in _target(dict(c, shape=c.get('shape_tp', c['shape'])), entry, direction, E2, X, env, set(), pair) if ((t[0] < entry) if direction == 'down' else (t[0] > entry))]
