@@ -1,0 +1,21 @@
+EURUSD 2026-05-18 spot 1.16231
+  E2 Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: EQUILIBRIUM ZONE | ZFP: 30-50% | 05-15 LON: spike down through EQUILIBRIUM ZONE (ZFP 30), every 1H close back at a sweep target [the row's ZFP condition
+  E2 Ceiling: UPPER RESISTANCE [IP MoM Depleted ZFP 10] -> PIERCED (MoM with 3 reactions: depleted -> PIERCED branch (6.4.2; P533:1159))
+  E2 Floor: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+  E2 Breakout direction: none - both bounds hold | pair translation of the DXY chain (None inverted)
+  E2 chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range 1.16218-1.16493 | actual H 1.16608 L 1.16219 C 1.16556
+  Tue forecast SS         range 1.16218-1.16493 | actual H 1.16617 L 1.15921 C 1.16047
+  Wed forecast SS         range 1.16218-1.16493 | actual H 1.16448 L 1.15827 C 1.16235
+  Thu forecast SS         range 1.16218-1.16493 | actual H 1.16353 L 1.15762 C 1.16168
+  Fri forecast SS         range 1.16218-1.16493 | actual H 1.16205 L 1.15882 C 1.16017
+  IP RESISTANCE CEILING 1.18444-1.18504 Post-Expiry Ghost 20-40% BoM
+  IP UPPER RESISTANCE   1.16939-1.17026 Standard Wall 15-30% MoM
+  IP UPPER RESISTANCE   1.16641-1.16726 Soft Wall 30-50% MoM
+  IP UPPER RESISTANCE   1.16493-1.16562 Hard Wall 5-15% MoM
+  IP EQUILIBRIUM ZONE   1.16219-1.16296 Soft Wall 30-50% MoM
+  IP MID-RANGE SUPPORT  1.15970-1.16036 Standard Wall 15-30% BoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP):
+  EU1      Mon SS     SHORT E 1.16512 SL 1.16575 TP 1.16155 5.66R | filled Mon 12:30 -> STOPPED Mon 20:15
+  EU2      Mon SS     LONG  E 1.16218 SL 1.16173 TP 1.16483 5.83R | filled Tue 09:00 -> STOPPED Tue 09:15

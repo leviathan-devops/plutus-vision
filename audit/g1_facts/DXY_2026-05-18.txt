@@ -1,0 +1,21 @@
+DXY 2026-05-18 spot 99.301
+  E2 Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: Liquidity Sweep Zone | ZFP: - | price between MID-RANGE SUPPORT and Liquidity Sweep Zone, no breakout in the last two sessions [the row's ZFP condition 
+  E2 Ceiling: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+  E2 Floor: MID-RANGE SUPPORT [IP MoM Fortress ZFP 22] -> HOLD (5 strong reactions = FORTRESS (E3C lifecycle: 95% direction flip))
+  E2 Breakout direction: none - both bounds hold | 
+  E2 chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range 99.037-99.359 | actual H 99.307 L 98.946 C 98.983
+  Tue forecast SS         range 99.037-99.359 | actual H 99.434 L 98.944 C 99.315
+  Wed forecast SS         range 99.037-99.359 | actual H 99.472 L 98.966 C 99.136
+  Thu forecast SS         range 99.037-99.359 | actual H 99.515 L 99.064 C 99.203
+  Fri forecast SS         range 99.037-99.359 | actual H 99.412 L 99.172 C 99.319
+  IP MID-RANGE SUPPORT  98.963-99.037 Standard Wall 15-30% MoM
+  IP KEY SUPPORT BAND   98.732-98.792 Standard Wall 15-30% MoM
+  IP KEY SUPPORT BAND   98.460-98.546 Standard Wall 15-30% MoM
+  IP KEY SUPPORT BAND   98.240-98.320 Standard Wall 15-30% BoM
+  IP KEY SUPPORT BAND   97.959-98.033 Standard Wall 15-30% BoM
+  IP KEY SUPPORT BAND   97.720-97.794 Standard Wall 15-30% BoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP):
+  DX1      Mon SS     SHORT E 99.359 SL 99.459 TP 99.047 3.13R | filled Tue 13:30 -> STOPPED Wed 08:15
+  DX2      Mon SS     LONG  E 99.038 SL 98.929 TP 99.409 3.4R | filled Mon 12:30 -> TP HIT Tue 14:15 || re-armed: filled Wed 15:15 -> TP HIT Thu 13:15 || re-armed: filled - -> not filled

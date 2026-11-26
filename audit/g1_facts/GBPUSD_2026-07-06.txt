@@ -1,0 +1,24 @@
+GBPUSD 2026-07-06 spot 1.33362
+  E2 Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 30-50% | 07-03 NY: spike down through UPPER RESISTANCE (ZFP 45), every 1H close back at a sweep target [the row's ZFP condition 
+  E2 Ceiling: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+  E2 Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+  E2 Breakout direction: up | pair translation of the DXY chain (down inverted)
+  E2 chain: SS [HIGH, cum 0.8] -> RWL [MODERATE, cum 0.4] -> BS [MODERATE, cum 0.4] -> WL [HIGH, cum 0.32] -> RWL [HIGH, cum 0.32]
+  Mon forecast SS         range 1.33333-1.33941 | actual H 1.33972 L 1.33286 C 1.33879
+  Tue forecast SS         range 1.33333-1.33941 | actual H 1.34015 L 1.33487 C 1.33589
+  Wed forecast SS+RWL+BS  up    1.33155-1.33941 | actual H 1.34104 L 1.33222 C 1.33877
+  Thu forecast BS         up    1.33270-1.33825 | actual H 1.34308 L 1.33799 C 1.34078
+  Fri forecast BS+WL+RWL  up    1.33825-1.34340 | actual H 1.34517 L 1.33917 C 1.33968
+  IP RESISTANCE CEILING 1.34484-1.34548 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.33643-1.33717 Soft Wall 30-50% MoM
+  IP UPPER RESISTANCE   1.33435-1.33521 Soft Wall 30-50% MoM
+  IP MID-RANGE SUPPORT  1.33225-1.33285 Soft Wall 30-50% MoM
+  IP KEY SUPPORT BAND   1.32970-1.33046 Soft Wall 30-50% MoM
+  IP KEY SUPPORT BAND   1.32789-1.32877 Soft Wall 30-50% MoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP):
+  GB1      Mon SS     LONG  E 1.33333 SL 1.33235 TP 1.33941 6.2R | filled Mon 06:15 -> TP HIT Mon 18:45 || re-armed: filled - -> not filled inside its bracket (order expires)
+  GB2      Wed BS     LONG  E 1.33245 SL 1.33012 TP 1.34254 4.33R | filled Wed 09:00 -> TP HIT Thu 06:15
+  GB3      Thu Ladder LONG  E 1.33473 SL 1.33235 TP 1.34254 3.29R | filled - -> not filled inside its bracket (order expires)
+  GB4      Fri RWL    SHORT E 1.34254 SL 1.34396 TP 1.33506 5.28R | filled Thu 06:15 -> STOPPED Fri 02:00
+  GB5      Fri Ladder LONG  E 1.33888 SL 1.33795 TP 1.34254 3.96R | filled Wed 21:00 -> TP HIT Thu 06:15

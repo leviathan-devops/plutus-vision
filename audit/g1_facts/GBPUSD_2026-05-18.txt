@@ -1,0 +1,21 @@
+GBPUSD 2026-05-18 spot 1.33230
+  E2 Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: 1H (Unmitigated) | MoM | ZFP: - | price between Liquidity Sweep Zone and 1H (Unmitigated) | MoM, no breakout in the last two sessions [the row's ZFP con
+  E2 Ceiling: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+  E2 Floor: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+  E2 Breakout direction: none - both bounds hold | pair translation of the DXY chain (None inverted)
+  E2 chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range 1.33197-1.33941 | actual H 1.34494 L 1.33217 C 1.34322
+  Tue forecast SS         range 1.33197-1.33941 | actual H 1.34371 L 1.33785 C 1.33943
+  Wed forecast SS         range 1.33197-1.33941 | actual H 1.34630 L 1.33750 C 1.34331
+  Thu forecast SS         range 1.33197-1.33941 | actual H 1.34548 L 1.33904 C 1.34308
+  Fri forecast SS         range 1.33197-1.33941 | actual H 1.34631 L 1.34132 C 1.34195
+  IP RESISTANCE CEILING 1.35705-1.35765 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.34774-1.34857 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.34497-1.34557 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   1.33950-1.34037 Soft Wall 30-50% MoM
+  IP MID-RANGE SUPPORT  1.32995-1.33055 Standard Wall 15-30% MoM
+  IP KEY SUPPORT BAND   1.32484-1.32544 Soft Wall 30-50% BoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP):
+  GB1      Mon SS     SHORT E 1.33983 SL 1.34232 TP 1.33121 3.46R | filled Mon 12:30 -> STOPPED Mon 15:45
+  GB2      Mon SS     LONG  E 1.33197 SL 1.33132 TP 1.33941 11.45R | filled - -> not filled

@@ -1,0 +1,26 @@
+DXY 2026-04-20 spot 98.349
+  E2 Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: KEY SUPPORT BAND | ZFP: 30-50% | 04-17 LON: spike down through KEY SUPPORT BAND (ZFP 30), every 1H close back at a sweep target [the row's ZFP condition
+  E2 Ceiling: 1H (Unmitigated) | MoM [SD MoM Active] -> SLOW (active MoM (1 reactions), opposing liquidity 4H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+  E2 Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+  E2 Breakout direction: up | the ceiling is the bound that goes: active MoM (1 reactions), opposing liquidity 4H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2
+  E2 chain: SS [MODERATE-HIGH, cum 0.65] -> RWL [MODERATE, cum 0.33] -> BS [MODERATE, cum 0.33] -> RWL [HIGH, cum 0.26]
+  Mon forecast SS         range 98.045-98.402 | actual H 98.395 L 98.006 C 98.050
+  Tue forecast SS         range 98.045-98.402 | actual H 98.567 L 98.041 C 98.383
+  Wed forecast SS+RWL+BS  up    97.920-98.402 | actual H 98.643 L 98.211 C 98.616
+  Thu forecast BS         up    98.020-98.502 | actual H 98.939 L 98.534 C 98.826
+  Fri forecast BS+RWL     up    98.402-98.884 | actual H 98.915 L 98.489 C 98.510
+  IP RESISTANCE CEILING 99.217-99.298 Standard Wall 15-30% BoM
+  IP UPPER RESISTANCE   98.939-99.005 Soft Wall 30-50% BoM
+  IP UPPER RESISTANCE   98.456-98.541 Soft Wall 30-50% MoM
+  IP MID-RANGE SUPPORT  98.058-98.145 Soft Wall 30-50% MoM
+  IP KEY SUPPORT BAND   97.725-97.799 Soft Wall 30-50% MoM
+  IP KEY SUPPORT BAND   97.466-97.541 Soft Wall 30-50% BoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP):
+  DX1      Mon SS     SHORT E 98.415 SL 98.471 TP 98.045 6.63R | filled Tue 17:00 -> STOPPED Tue 17:15
+  DX2      Mon SS     LONG  E 98.045 SL 97.974 TP 98.402 5.03R | filled Mon 15:15 -> TP HIT Tue 16:45
+  DX3      Wed BS     LONG  E 97.984 SL 97.822 TP 98.874 5.49R | filled - -> not filled
+  DX4      Wed SS     LONG  E 98.045 SL 97.974 TP 98.300 3.59R | filled - -> not filled inside its bracket (order expires)
+  DX5      Wed BS     LONG  E 98.439 SL 98.354 TP 98.874 5.12R | filled Tue 21:15 -> STOPPED Wed 00:00
+  DX6      Thu Ladder LONG  E 98.215 SL 98.068 TP 98.874 4.5R | parent DX3 not filled -> order never live
+  DX7      Fri Ladder LONG  E 98.660 SL 98.615 TP 98.874 4.81R | parent DX3 not filled -> order never live

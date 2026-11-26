@@ -1,0 +1,27 @@
+DXY 2026-07-06 spot 101.025
+  E2 Current Shape: SS range (HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 15-30% | price between MID-RANGE SUPPORT and UPPER RESISTANCE, no breakout in the last two sessions | FA 9: 2 piercing sessions -> 'EXPEC
+  E2 Ceiling: UPPER RESISTANCE [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 1H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+  E2 Floor: MID-RANGE SUPPORT [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 4H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+  E2 Breakout direction: down | both bounds go the same way, pressure reading unclear [('candle size', 'up'), ('wick direction', 'down'), ('triangle', None)]: 4H storyline tiebreaker = down (standing 4H BoM Supply 1
+  E2 chain: SS [HIGH, cum 0.8] -> RWL [MODERATE, cum 0.4] -> BS [MODERATE, cum 0.4] -> WL [HIGH, cum 0.32] -> RWL [HIGH, cum 0.32]
+  Mon forecast SS         range 100.815-101.199 | actual H 101.145 L 100.838 C 100.871
+  Tue forecast SS         range 100.815-101.199 | actual H 101.126 L 100.803 C 101.092
+  Wed forecast SS+RWL+BS  down  100.815-101.305 | actual H 101.275 L 100.946 C 101.069
+  Thu forecast BS         down  100.968-101.247 | actual H 101.071 L 100.786 C 100.937
+  Fri forecast BS+WL+RWL  down  100.654-100.968 | actual H 100.997 L 100.598 C 100.965
+  IP UPPER RESISTANCE   101.448-101.537 Standard Wall 15-30% MoM
+  IP UPPER RESISTANCE   101.199-101.262 Standard Wall 15-30% MoM
+  IP EQUILIBRIUM ZONE   100.985-101.077 Soft Wall 30-50% MoM
+  IP MID-RANGE SUPPORT  100.724-100.815 Standard Wall 15-30% MoM
+  IP KEY SUPPORT BAND   100.248-100.316 Standard Wall 15-30% BoM
+  IP KEY SUPPORT BAND   99.495-99.559 Soft Wall 30-50% BoM
+
+SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP):
+  DX1      Mon SS     SHORT E 101.203 SL 101.255 TP 100.825 7.26R | filled - -> not filled inside its bracket (order expires)
+  DX2      Mon SS     SHORT E 101.138 SL 101.213 TP 100.825 4.19R | filled Mon 10:00 -> TP HIT Tue 01:30
+  DX3      Mon SS     LONG  E 100.851 SL 100.743 TP 101.189 3.13R | filled Mon 18:45 -> TP HIT Tue 23:45
+  DX4      Wed BS     SHORT E 101.235 SL 101.322 TP 100.685 6.32R | filled Wed 09:00 -> TP HIT Fri 02:00
+  DX5      Wed SS     SHORT E 101.203 SL 101.255 TP 100.980 4.27R | filled Wed 01:30 -> TP HIT Wed 07:15
+  DX6      Wed RWL    LONG  E 100.980 SL 100.906 TP 101.235 3.42R | filled Wed 07:15 -> TP HIT Wed 09:00
+  DX7      Thu Ladder SHORT E 100.980 SL 101.077 TP 100.685 3.06R | filled Thu 00:00 -> TP HIT Fri 02:00
+  DX8      Fri RWL    LONG  E 100.628 SL 100.548 TP 100.940 3.9R | filled Fri 02:15 -> TP HIT Fri 14:00
