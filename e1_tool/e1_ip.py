@@ -4,7 +4,7 @@ the operator's verdict on its render: "THESE 6 ARE CORRECT ... 3 4 AND 5 NEED RE
 L-37 / L-38 (4H supply/demand = the candle before the strong move, wick to wick, no minimum size -> e1_pillars.step0f), L-35 (ZFP shown as the type's range), tight band for "too wide" (canon TIGHT CONFLUENCE 0.10).
 All thresholds are the canon's DXY-point numbers scaled to the pair (1.00 DXY point = 100 pips). No price literal."""
 import datetime as dt, math
-import e1_data as D, e1_pillars as P
+import e1_data as D, e1_pillars as P, e1_sd as SD
 
 MA_WEIGHT = {200: 3.0, 100: 2.0, 50: 1.5, 20: 1.0, 10: 0.5, 9: 0.5}            # P533:1078-1084
 DEGREES = ((12, 'EXTREME'), (10, 'HEAVY'), (8, 'MODERATE-HEAVY'), (6, 'MODERATE'), (4, 'LIGHT'), (0, 'MINIMAL'))    # P533:1487-1494
@@ -149,19 +149,11 @@ def levels(pair, monday, side):
         inst = any(o['bottom'] <= m['p'] <= o['top'] for o in obs)
         L.append({'p': m['p'], 'pillar': 5, 'kind': m['kind'] + f" ({m['n']}x)" + (' INSTITUTIONAL MAGNET' if inst else ''), 'struct': 2,
                   'bonus': 2.0 if (m['n'] >= 3 or m['role'] == 'reversal' or inst) else 1.5, 'extreme': True})
-    # Step 0f 4H supply/demand (L-37, L-38) with the prompt's noise rejection (P452:741-745): edges are structural levels (weight 1)
+    # Step 0f 4H supply/demand (L-37, L-38; e1_sd: candle before the move, one-time use, structure break, noise rejection P452:741-745): edges are structural levels (weight 1)
     b0 = D.boundary_ms(monday)
-    z4 = []
-    for z in P.step0f(pair, monday, '240', 60):
-        if z['top'] - z['bot'] > 0.40 * U:
-            continue
-        later = [x for x in b4 if x['time'] > z['end_time']]
-        last_in = max([x['time'] for x in later if x['low'] <= z['top'] and x['high'] >= z['bot']] + [z['origin_time']])
-        if last_in < b0 - 21 * 86400000:
-            continue                                             # no price interaction in the last 3 weeks
-        if z['kind'] == 'MoM' and z['hard'] >= 3:
-            continue
-        z4.append(z)
+    sd = SD.zone_map(pair, monday)['zones']
+    z4 = [z for z in sd if z['tf'] == '240']
+    for z in z4:
         lab = f"{z['kind']} {z['mit']}X 4H {z['type']} Zone"
         L.append({'p': z['top'], 'pillar': 5, 'kind': lab + ' (top edge)', 'struct': 1, 'z4': z}); L.append({'p': z['bot'], 'pillar': 5, 'kind': lab + ' (bottom edge)', 'struct': 1, 'z4': z})
     for tf, arr in (('D1', win), ('4H', [x for x in b4 if x['time'] >= b0 - 60 * 86400000])):     # Step 0h minor swings
@@ -194,7 +186,7 @@ def levels(pair, monday, side):
     q, x = 0.25 * U, math.floor((min(p5) - 0.5 * U) / (0.25 * U))
     while x * q <= max(p5) + 0.5 * U:
         L.append({'p': round(x * q, 6), 'pillar': 6, 'kind': 'Round number ' + ('big figure' if x % 4 == 0 else 'half figure' if x % 2 == 0 else 'quarter figure'), 'round': True}); x += 1
-    return {'L': L, 't3': t3, 'spot': spot, 'K': K, 'U': U, 'daily': daily, 'weekly': weekly, 'b4': b4, 'lsz': lsz, 'z4': z4, 'obs': obs, 'magnets': magnets, 'lows': lows, 'highs': highs}
+    return {'L': L, 't3': t3, 'spot': spot, 'K': K, 'U': U, 'daily': daily, 'weekly': weekly, 'b4': b4, 'lsz': lsz, 'z4': z4, 'sd': sd, 'obs': obs, 'magnets': magnets, 'lows': lows, 'highs': highs}
 
 
 def round_psych(p, U):
@@ -302,6 +294,28 @@ def mechanics(z, b4, trend, extremes, zones, spot, U):
     return m
 
 
+def intra_zone(z, X, U):
+    """Step 0.6 (P533:1312-1340): micro-levels inside a MODERATE+ zone - 1H supply/demand zones of the prior weeks inside it, fib 0.382 / 0.618 of the zone's own range,
+    prior daily closes inside, round numbers inside; tagged Precision Floor (bottom 40%) / Precision Ceiling (top 40%) / Mid-Anchor (middle 20%); Structural 0.5"""
+    b, t = z['bot'], z['top']
+    out = []
+    for q in X['sd']:
+        if q['tf'] == '60' and b <= q['bot'] and q['top'] <= t:
+            out.append({'p': q['bot'], 'source': f"1H {q['type']} zone (bottom)"}); out.append({'p': q['top'], 'source': f"1H {q['type']} zone (top)"})
+    for rr in (0.382, 0.618):
+        out.append({'p': b + rr * (t - b), 'source': f'Fib {rr} of the zone'})
+    for d in X['daily'][-10:]:
+        if b <= d['close'] <= t:
+            out.append({'p': d['close'], 'source': 'Prior close ' + d['date'][5:]})
+    q, x = 0.25 * U, math.ceil(b / (0.25 * U) - 1e-9)
+    while x * q <= t + 1e-9:
+        out.append({'p': round(x * q, 6), 'source': 'Round number'}); x += 1
+    for l in out:
+        f = (l['p'] - b) / (t - b) if t > b else 0.5
+        l['tag'] = 'Intra-Zone Precision Floor' if f <= 0.4 else 'Intra-Zone Precision Ceiling' if f >= 0.6 else 'Intra-Zone Mid-Anchor'
+    return sorted(out, key=lambda l: -l['p'])
+
+
 def build(pair, monday, side):
     X = levels(pair, monday, side)
     L, U, spot, daily = X['L'], X['U'], X['spot'], X['daily']
@@ -373,8 +387,8 @@ def build(pair, monday, side):
     final = [z for z in zones if z['score'] >= 6]
     for z in final:
         z['degree'] = next(nm for th, nm in DEGREES if z['score'] >= th)
-        z['tier'] = 'Tier 1' if any(l.get('z4') and l['z4']['kind'] == 'BoM' and l['z4']['mit'] <= 1 for l in z['members_lv']) else 'Tier 2'
-        z['intra'] = sorted({l['p'] for l in z['members_lv'] if l.get('round') or l['kind'].startswith('Fib') or 'close' in l['kind']})
+        z['tier'] = 'Tier 1' if any(q['kind'] == 'BoM' and q['mit'] <= 1 and q['bot'] <= z['top'] and q['top'] >= z['bot'] for q in X['z4']) else 'Tier 2'
+        z['intra'] = intra_zone(z, X, U)
     ab = [z for z in final if z['bot'] > spot]; be = sorted([z for z in final if z['top'] < spot], key=lambda z: -z['top'])
     for z in final:
         if z['bot'] <= spot <= z['top']:

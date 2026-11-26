@@ -1,11 +1,17 @@
-"""e1_pine.py - the tool's output: ONE Pine v6 script holding the week's Engine 1 map as data, in the form of trident_v8.pine (P533 Part X; colours C-19 of the approved render):
-IP Resistance red / Equilibrium orange / IP Support teal (label = name, degree, ZFP range), LSZ green, option-strike targets amber, plus the supply/demand candles (4H) and the sealed V1's
-order blocks + liquidity ladder as data (R-30), all inside the two-week window (R-36). E2 / E3 layers are added by their own modules.
+"""e1_pine.py - the tool's output: ONE Pine v6 script holding the week's map as data, in the form of trident_v8.pine (P533 Part X; e1_tool/reference/trident_v8.pine :40-66, :346-387):
+IP Resistance red / Equilibrium orange / IP Support teal by pressure tier (label = name | degree | ZFP range | tier), LSZ green boxes, option-strike targets amber lines.
+On top of that the operator's own chart grammar (golden-week screenshots): supply / demand candle zones as red / blue boxes labelled "<TF> (Unmitigated) | BoM", the liquidity ladder as thin green rungs.
+L-39: inside an IP zone the computed levels (pivots, moving averages, fibs, strikes, anchors) are drawn as thin lines so the data levels stay visible next to the candle structure.
+R-36: window = the active week + one week left. Engine 2 / Engine 3 layers are appended by their modules through generate(..., extra=[...]).
 usage: python3 e1_pine.py MONDAY PAIR > out.pine"""
 import sys, json, os
 import e1_data as D, e1_ip as IP, e1_v1 as V1
 
-CAT = {'RES': '180,40,30', 'MID': '255,152,0', 'SUP': '0,150,150'}
+# trident_v8.pine :44-66 pressure-ladder colours
+SHADE = {'RES': {'EXTREME': '180,40,30', 'HEAVY': '200,60,35', 'MODERATE-HEAVY': '210,80,40', 'MODERATE': '220,100,50', 'LIGHT': '230,130,60', 'MINIMAL': '240,160,90'},
+         'MID': {'EXTREME': '255,152,0', 'HEAVY': '245,145,10', 'MODERATE-HEAVY': '235,138,20', 'MODERATE': '225,131,30', 'LIGHT': '215,124,40', 'MINIMAL': '205,117,50'},
+         'SUP': {'EXTREME': '0,150,150', 'HEAVY': '0,170,160', 'MODERATE-HEAVY': '20,180,170', 'MODERATE': '40,190,180', 'LIGHT': '60,200,190', 'MINIMAL': '80,210,200'}}
+LEVEL_COL = {1: '230,230,230', 2: '250,220,90', 5: '120,220,255', 6: '200,150,255', 8: '255,200,60'}      # pivots / moving averages / structural anchors / fib + round / strikes
 
 
 def run(pair, monday):
@@ -15,54 +21,100 @@ def run(pair, monday):
     return X
 
 
-def generate(pair, monday, X):
+def generate(pair, monday, X, extra=()):
     g = lambda v: ('%.3f' if pair == 'DXY' else '%.5f') % v
-    b0, tsR = D.boundary_ms(monday), D.week_end_ms(monday)
-    tsL, H = D.week_start_ms(monday) - 7 * 86400000, 3600000
-    o = ['//@version=6', f'indicator("PLUTUS E1 {pair} {monday}", overlay=true, max_boxes_count=500, max_labels_count=500, max_lines_count=500)',
-         f'// Engine 1 map, week of {monday} ({pair}); computed by e1_tool from data closed before the anchor {D.ts(b0)} UTC',
-         'show_ip = input.bool(true, "IP Zones")', 'show_lsz = input.bool(true, "LSZ")', 'show_opt = input.bool(true, "Option Strikes")', 'show_sd = input.bool(true, "Supply / Demand (4H candles)")',
-         'show_ob = input.bool(true, "V1 order blocks (data)")', 'show_lq = input.bool(true, "V1 liquidity ladder (data)")',
+    b0, tsR, wk0 = D.boundary_ms(monday), D.week_end_ms(monday), D.week_start_ms(monday)
+    tsL, H = wk0 - 7 * 86400000, 3600000
+    U = X['U']; pw = X['weekly'][-1]
+    adr = sum(d['high'] - d['low'] for d in X['daily'][-10:]) / 10
+    lo_v, hi_v = pw['low'] - adr, pw['high'] + adr
+    o = ['//@version=6', f'indicator("PLUTUS VISION {pair} {monday}", overlay=true, max_boxes_count=500, max_labels_count=500, max_lines_count=500)',
+         f'// week of {monday} ({pair}); every number computed by e1_tool from data closed before the anchor {D.ts(b0)} UTC (Monday London open)',
+         'show_ip = input.bool(true, "E1 IP Zones")', 'show_lv = input.bool(true, "E1 levels inside IP zones")', 'show_lsz = input.bool(true, "E1 LSZ")',
+         'show_opt = input.bool(true, "E1 Option Strikes")', 'show_sd = input.bool(true, "E1 Supply / Demand 4H + 1H")', 'show_ltf = input.bool(false, "E1 Supply / Demand 30m + 15m")',
+         'show_lq = input.bool(true, "E1 Liquidity ladder (V1 data)")', 'show_ob = input.bool(false, "V1 order blocks (data)")',
+         'show_e2 = input.bool(true, "E2 Shape chain")', 'show_e3 = input.bool(true, "E3 Trade setups")',
          f'isPair = str.contains(syminfo.ticker, "{D.SYM[pair].split("_")[-1]}")', 'if barstate.islast and isPair']
+    # liquidity ladder: the sealed V1's 1H liquidity bands at the anchor (R-30), around the prior week's range (V1 itself draws the live ladder)
     o.append('    if show_lq')
+    n0 = len(o)
     for z in X['v1']['60']['liquidity']:
-        o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 55), border_color=color.new(color.rgb(63,164,106), 30), border_width=1, xloc=xloc.bar_time)")
+        if lo_v <= z['bot'] and z['top'] <= hi_v:
+            o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 70), border_color=color.new(color.rgb(63,164,106), 40), border_width=1, xloc=xloc.bar_time)")
+    if len(o) == n0:
+        o.append('        na')
     o.append('    if show_ob')
+    n0 = len(o)
     for tf in ('240', '60', '30', '15'):
         for z in X['v1'][tf]['order_blocks']:
-            c = '49,121,245' if z['side'] == 'Demand' else '247,124,128'
-            o.append(f"        box.new({max(z['time'], tsL)}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 80), border_color=color.rgb({c}), border_width=1, xloc=xloc.bar_time)")
-            o.append(f"        label.new({max(z['time'], tsL)}, {g(z['top'])}, \"{V1.TFNAME[tf]} {z['side']} OB\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
-    o.append('    if show_sd')
-    for z in X['z4']:
-        c = '49,121,245' if z['type'] == 'Demand' else '200,60,60'
-        mit = 'Unmitigated' if z['mit'] == 0 else f"Mitigated {z['mit']}x"
-        o.append(f"        box.new({max(z['origin_time'], tsL)}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 82), border_color=color.rgb({c}), border_width=2, xloc=xloc.bar_time)")
-        o.append(f"        label.new({max(z['origin_time'], tsL) + 30 * H}, {g(z['top'])}, \"4H ({mit}) | {z['kind']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+            if lo_v <= z['bot'] and z['top'] <= hi_v:
+                c = '49,121,245' if z['side'] == 'Demand' else '247,124,128'
+                o.append(f"        box.new({max(z['time'], tsL)}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 85), border_color=color.new(color.rgb({c}), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
+    if len(o) == n0:
+        o.append('        na')
+    # supply / demand candle zones (e1_sd): 4H + 1H on the working chart, 30m + 15m as the entry layer
+    for flag, tfs in (('show_sd', ('240', '60')), ('show_ltf', ('30', '15'))):
+        o.append(f'    if {flag}')
+        n0 = len(o)
+        for z in X['sd']:
+            if z['tf'] not in tfs:
+                continue
+            c = '41,98,255' if z['type'] == 'Demand' else '242,54,69'
+            x0 = max(z['origin_time'], tsL)
+            o.append(f"        box.new({x0}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), {78 if z['tf'] in ('240', '60') else 86}), border_color=color.rgb({c}), border_width={2 if z['tf'] == '240' else 1}, xloc=xloc.bar_time)")
+            o.append(f"        label.new({x0 + int((tsR - x0) * 0.30)}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+        if len(o) == n0:
+            o.append('        na')
+    # liquidity sweep zones (P533:1246-1287): [low, low + 0.05] / [high - 0.05, high]; a swept extreme has no resting stops left
     o.append('    if show_lsz')
-    days = [d['date'] for d in X['daily'][-10:]]
+    n0 = len(o)
     for z in X['lsz']:
-        if z['swept'] and z['source'][-10:] < days[0]:
+        if z['swept']:
             continue
         act = z['priority'].startswith('ACTIVE')
         c = '80,230,100' if act else '40,180,80'
-        o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), {60 if act else 70}), border_color=color.rgb({c}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
+        zb, zt = (z['level'], z['level'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['level'] - 0.05 * U, z['level'])
+        o.append(f"        box.new({tsL}, {g(zt)}, {tsR}, {g(zb)}, bgcolor=color.new(color.rgb({c}), {60 if act else 70}), border_color=color.rgb({c}), border_width={2 if act else 1}, xloc=xloc.bar_time)")
+    if len(o) == n0:
+        o.append('        na')
+    # IP zones (the six ranked first), trident_v8 form
     o.append('    if show_ip')
+    n0 = len(o)
     for z in X['zones']:
         if not z['drawn']:
             continue
-        c = CAT[z['cat']]
+        c = SHADE[z['cat']][z['degree']]
         o.append(f"        // #{z['rank']} {z['name']} {g(z['bot'])}-{g(z['top'])} {z['degree']} {z['score']}/14 {z['type']} {z['tier']} | {z['mech']['bom']} {z['mech']['counter']} {z['mech']['reactions']} reactions | {z['mech']['e3_status']}")
         o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 70), border_color=color.rgb({c}), border_width=2, xloc=xloc.bar_time)")
-        o.append(f"        label.new({tsL + 8 * H}, {g((z['top'] + z['bot']) / 2)}, \"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} | {z['mech']['bom']} {z['mech']['reactions']}R\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+        o.append(f"        label.new({tsL + 60 * H}, {g((z['top'] + z['bot']) / 2)}, \"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} {z['mech']['bom']}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+    if len(o) == n0:
+        o.append('        na')
+    o.append('    if show_ip and show_lv')
+    n0 = len(o)
+    for z in X['zones']:
+        if not z['drawn']:
+            continue
+        seen = set()
+        for l in z['members_lv']:
+            if l['pillar'] == 8 or l.get('legacy') or g(l['p']) in seen:
+                continue
+            seen.add(g(l['p']))
+            o.append(f"        line.new({wk0}, {g(l['p'])}, {tsR}, {g(l['p'])}, xloc=xloc.bar_time, color=color.new(color.rgb({LEVEL_COL.get(l['pillar'], '200,200,200')}), 35), width=1, style=line.style_dotted)   // {l['kind'][:60]}")
+    if len(o) == n0:
+        o.append('        na')
+    # live option-strike targets (trident_v8 :377-386)
     o.append('    if show_opt')
+    n0 = len(o)
     seen = set()
-    for l in X['L']:
+    for l in sorted(X['L'], key=lambda l: -l.get('notional_m', 0)):
         if l['pillar'] == 8 and not l.get('expired') and g(l['p']) not in seen:
             seen.add(g(l['p']))
             amt = ('%.1fbn' % (l['notional_m'] / 1000)) if l['notional_m'] >= 1000 else '%dM' % l['notional_m']
             o.append(f"        line.new({tsL}, {g(l['p'])}, {tsR}, {g(l['p'])}, xloc=xloc.bar_time, color=color.rgb(255,200,60), width={2 if l['tier'] == 1 else 1})")
-            o.append(f"        label.new({tsR - 30 * H}, {g(l['p'])}, \"{amt} Option Strike Target\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)")
+            o.append(f"        label.new({tsR - 44 * H}, {g(l['p'])}, \"{amt} Option Strike Target\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)")
+    if len(o) == n0:
+        o.append('        na')
+    o += list(extra)
     return '\n'.join(o) + '\n'
 
 

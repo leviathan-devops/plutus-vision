@@ -15,6 +15,15 @@ TFS = ('240', '60', '30', '15')
 TFNAME = {'240': '4H', '60': '1H', '30': '30m', '15': '15m'}
 
 
+def _atr14(bars):
+    """Pine ta.atr(14): Wilder's moving average of the true range"""
+    tr = [bars[0]['high'] - bars[0]['low']] + [max(b['high'] - b['low'], abs(b['high'] - p['close']), abs(b['low'] - p['close'])) for p, b in zip(bars, bars[1:])]
+    a = sum(tr[:14]) / 14
+    for x in tr[14:]:
+        a = (a * 13 + x) / 14
+    return a
+
+
 def harvest(pair, monday, tf):
     """-> {'tf', 'bars', 'order_blocks': [{side, bot, top, time}], 'liquidity': [{bot, top}]} ; cached on disk (deterministic for closed bars)"""
     cache = os.path.join(HERE, 'cache', 'v1', f'{pair}_{tf}_{monday}.json')
@@ -35,6 +44,15 @@ def harvest(pair, monday, tf):
             obs.append({'side': 'Supply', 'bot': lo, 'top': hi, 'time': b['left']})
         elif c.startswith('#2e8b57'):
             liq.append({'bot': lo, 'top': hi})
+    # The sealed V1 paints a band as [top - max(span, thickness), top] with thickness = max(0.35 x ATR(14), syminfo.mintick) (sealed file :1202-1203, :1244-1249).
+    # This engine reports mintick = 0.01 for every symbol (measured), so on FX pairs every band comes back exactly 0.01 = 100 pips thick. On the operator's TradingView chart
+    # (mintick 0.00001) the same band is 0.35 x ATR(14) thick; restore that from the same bars. The band's top (the level) is untouched.
+    ENGINE_TICK = 0.01
+    if D.PIP[pair] < ENGINE_TICK:
+        thick = 0.35 * _atr14(bars)
+        for z in liq:
+            if abs((z['top'] - z['bot']) - ENGINE_TICK) < 1e-9:
+                z['bot'] = z['top'] - thick
     out = {'tf': tf, 'bars': len(bars), 'first_bar': bars[0]['time'], 'last_bar': bars[-1]['time'],
            'order_blocks': sorted(obs, key=lambda z: -z['top']), 'liquidity': sorted(liq, key=lambda z: -z['top'])}
     os.makedirs(os.path.dirname(cache), exist_ok=True)

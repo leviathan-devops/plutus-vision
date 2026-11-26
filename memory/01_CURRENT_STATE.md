@@ -1,3 +1,9 @@
+## STATE (NEWEST, 2026-11-26 after compaction 6) - E1 on the golden week matches the oracle on DXY (zones, bands, rungs); S/D zones exact on EURUSD / GBPUSD too. NOW: E2, then E3, on the golden week (three pairs).
+- Run: `cd e1_tool && python3 e1_sd.py MONDAY PAIR` (supply/demand map) / `python3 e1_ip.py MONDAY PAIR` (IP zones) / `python3 e1_v1.py MONDAY PAIR` (V1 harvest) ; render `tools/e1render PAIR MONDAY 1H [input=value ...]` (E1TAG=_x suffix).
+- Oracle for all three engines and three pairs: context_management/oracle/golden_week.json (zones, rungs, Fib grids, 8 + 8 + 7 trades). Read the journal entry "(after compaction 6)" first.
+- Next steps: (1) e2_tool: canon P533:1725-2057 day map + chain -> day boxes + line (R-03) vs his tags Mon SS+BS, Tue SS, Wed SS+RWL+BS, Thu ladder short, Fri WL+RWL; (2) e3: corrected spec on rungs (V1 bands + zone edges + zone Fib) vs his trades;
+  (3) EURUSD / GBPUSD frames; (4) Apr 20-24 and two more weeks; (5) outside audit; (6) ship package + two blind sub-agents.
+
 ## STATE (NEWEST - supersedes the block below where they differ) 2026-11-26: steps 1-2 of the list below are DONE (e1_v1.py, anchor = Monday London open); step 3 e1_ip.py is WRITTEN and runs.
 Open deltas on the golden week D1 (upper band 9 pips low), D2 (prior-week-low floor scores LIGHT: swing rule excludes the last two days), D3 (green bands vs V1 4H liquidity) - see the last entry of memory/05_JOURNAL.md. Fix each by re-reading its canon lines, then continue with step 4.
 

@@ -48,7 +48,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | id | ref | requirement (short) | function | state |
 |---|---|---|---|---|
 | E1-V1 | R-30, R-04 | supply/demand + liquidity zones = the sealed V1's output; the tool takes them as data without editing V1 | e1_v1.harvest / harvest_all (sealed V1 + last 400 closed bars -> station /model -> boxes by colour); MEASURED: 15/16 of his golden rungs, his entries on 15m/30m order blocks | B |
-| E1-MTF | GS LAW1, GS-REF, L-40 | per-timeframe zone sets 4H / 1H / 30m / 15m, nested + refined | | NB |
+| E1-MTF | GS LAW1, GS-REF, L-40 | per-timeframe zone sets 4H / 1H / 30m / 15m, nested + refined | e1_sd.scan / zone_map (11 of his 12 golden-week boxes exact on three pairs) | B |
 | E1-A | P533:808-921 | Protocol A: investingLive expiries, temporal boundary, tiers >= 1.5B / 850M-1.499B / excluded | sidecar/, e1_pillars.tier | B |
 | E1-P1 | P533:967-1064 | pivots classic / fib / camarilla, weekly + last 3 days, verification checks | e1_pillars.pivots, pillar1 | B |
 | E1-P2 | P533:1065-1091 | MA grid EMA/SMA 9,10,20,50,100,200; clusters; recapture | e1_pillars.pillar2 | PB (recapture missing) |
@@ -60,9 +60,9 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E1-S045 | P533:1246-1283 | LSZ at every swing extreme [low, low+0.05] / [high-0.05, high]; hidden liquidity in gaps >= 0.15 (4H swings / 4H BoM); confluent sweep + BoM flag; ACTIVE SL TRIGGER within 0.30 | step045_lsz | PB (0.45c, 0.45d missing) |
 | E1-S045a | P533:1284-1287 | LSZ extended 0.05-0.10 beyond the extreme | | NB |
 | E1-S05 | P533:1288-1311 | repeated extreme magnets within 0.05 on 2+ dates; role reversal; institutional magnet | step05_magnets | PB (0.5d missing) |
-| E1-S06 | P533:1312-1340 | intra-zone key levels for every MODERATE+ zone: 1H S/D of the prior 1-2 weeks inside it, fib .382/.618 of the zone's own range, prior daily closes inside, round numbers inside; tags precision floor (bottom 40%) / ceiling (top 40%) / mid-anchor; Structural 0.5 | | NB |
-| E1-S0f | P533:1341-1398, P452:637-745; L-37, L-38 | 4H S/D = the single candle before the strong move [low, high]; verification trail; BoM/MoM; mitigation soft/hard; noise rejection (4 rules) | e1_pillars.step0f | PB ("strong move" = inefficiency gap only; BoM/MoM by alternation) |
-| E1-S0g | P533:1399-1402, P452:749-765 | 1H zones only nested inside a 4H/D1 zone (precision) or as gap-fill; never standalone IP levels | e1_zones.valid_sd | PB (standalone 1H zones used) |
+| E1-S06 | P533:1312-1340 | intra-zone key levels for every MODERATE+ zone: 1H S/D of the prior 1-2 weeks inside it, fib .382/.618 of the zone's own range, prior daily closes inside, round numbers inside; tags precision floor (bottom 40%) / ceiling (top 40%) / mid-anchor; Structural 0.5 | e1_ip.intra_zone | B (not yet drawn) |
+| E1-S0f | P533:1341-1398, P452:637-745; L-37, L-38 | 4H S/D = the single candle before the strong move [low, high]; verification trail; BoM/MoM; mitigation soft/hard; noise rejection (4 rules) | e1_sd.scan (origin candle, base, mitigation soft/hard, broken, structure break, BoM/MoM over valid zones) | B |
+| E1-S0g | P533:1399-1402, P452:749-765 | 1H zones only nested inside a 4H/D1 zone (precision) or as gap-fill; never standalone IP levels | e1_sd.zone_map (1H zones drawn as supply/demand boxes, never as IP levels; nested_in flag) | B (per L-40 and his charts 1H zones stand on their own as S/D boxes) |
 | E1-S0h | P533:1403-1406, P452:767-781 | minor swings D1 AND 4H, wick >= 0.08, 40% close; Structural 0.5 | step0_swings | PB (4H missing) |
 | E1-S15 | P533:1407-1410, P452:785-833 | anchors: prior daily closes / highs / lows (5 days), weekly close/high/low, HWC/LWC, MA recapture, structural extreme memory, scoring | e1_synth.collect | PB (HWC/LWC, recapture missing) |
 | E1-S55 | P533:1411-1423 | Key Support Band: core (candle bodies) vs spike (wicks = LSZ extension, half score) | | NB |

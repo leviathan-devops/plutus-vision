@@ -367,3 +367,20 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   4. IP labels: three short lines inside the visible week (name / degree + ZFP / tier + BoM-MoM), not at the left edge; pbfit already limits the axis to the visible candles +-60%.
   5. Default view for judging = one layer set at a time: (i) IP + LSZ + strikes (the trident_v8 set), (ii) supply/demand (4H candles + V1 order blocks), (iii) ladder. Render three frames per week and judge each against g1 / g4.
 - After that: the comparison rows vs the oracle, then Apr 20-24 re-check, then E2 / E3.
+
+## 2026-11-26 (after compaction 6) - E1 SUPPLY/DEMAND LAYER REBUILT (e1_tool/e1_sd.py) AND CHECKED AGAINST 12 HAND-DRAWN BOXES ON THREE PAIRS; oracle extended to EURUSD + GBPUSD
+- Oracle (context_management/oracle/golden_week.json) now holds, read first-hand at zoom from g2/g3/g5/g6/g7/g8: DXY zones re-measured (4H BoM 101.318-101.429; 1H BoM 100.654-100.744; 1H MoM 100.822-100.850; 4H MoM 100.21-100.34;
+  three green liquidity bands 101.19-101.29 / 100.94-100.985 / 100.556-100.679; white lines 101.24 and 100.975 = EUR/USD 1.1400 / 1.1450 strike targets), Fri long 100.615 / 100.545 / 100.94;
+  EURUSD: 8 trades, 5 zones, 14 rungs, Fib grid; GBPUSD: 7 trades, 4 zones, 17 rungs, Fib grid. On every pair the week is ONE trade-flow chain: TP of each trade = entry of the next (E3C Law 27); EURUSD mirrors DXY trade for trade.
+- e1_sd.py (rows E1-S0f / S0g / MTF / GS-REF / GS-TAX): per timeframe 240/60/30/15: candle before the inefficiency (gap between the candles before and after), large-bodied (>= 50%) same-direction candles directly before the
+  inefficiency belong to the move, an inside bar is replaced by its mother candle (max 3 steps); visits: soft = wicks, hard = a full body inside; broken = a close beyond the far edge; break of structure = by the anchor the move has
+  taken out the last 2-bar swing point before the origin; BoM/MoM by alternation over structure-valid zones; valid = unbroken, no hard mitigation, structure broken, price on its side, <= 0.40 wide, touched within the prior three weeks;
+  same-type overlap on one timeframe -> BoM first, then less mitigated, then fresher; adjacent timeframes with both edges within 5 pips -> one "Refined" zone (narrower). `python3 e1_sd.py MONDAY PAIR`.
+- RESULT vs his boxes: DXY 4/4 exact with labels (1H MoM shows "Mitigated 2x": two wick taps Sunday night / Monday before the anchor); GBPUSD 4/4 exact (labels: MoM demand correct); EURUSD 3/4 exact
+  (his "1H BoM" supply 1.14459-1.14530 = the 30m candle Jul 3 12:00, valid in scan('30') but absorbed by the overlapping 30m BoM of 08:30; his wide red region = my "4H (Mitigated 2x) MoM" 1.14475-1.14635).
+- e1_ip now takes its 4H edges from e1_sd; POI tier = range overlap with a 4H BoM 0X-1X; Step 0.6 intra_zone() added. Golden-week upper IP zone = 101.199-101.262 (his band 101.19-101.29: 0.9 / 2.8 pips).
+- e1_v1: this engine reports syminfo.mintick = 0.01 for every symbol, so V1's FX bands came back 100 pips thick; thickness restored to 0.35 x ATR(14) (= V1's own floor; checked on DXY 0.0232). Rungs within 3 pips: DXY 15/16, EURUSD 14/14,
+  GBPUSD 10/17 - five of the seven missing GBPUSD rungs are INSIDE his 1H demand zone at its own Fib 0.382 / 0.5 / 0.786 and edges (Law 5: Fib anchored to the entry zone's two edges) -> E3 rung set = V1 bands + zone edges + zone-internal Fib levels.
+- e1_pine.py rewritten: layers show_ip / show_lv (member levels as dotted lines, L-39) / show_lsz / show_opt / show_sd (4H + 1H) / show_ltf (30m + 15m) / show_lq / show_ob / show_e2 / show_e3; generate(..., extra=[]) takes the E2 / E3 lines.
+- Frames opened: evidence/e1tool_DXY_1H_2026-07-06_gw2_sd.png and _gw2_ip.png (ledger 53-54): readable; every zone the week reached reacted except Mid-Range Support, which Friday's flush crossed before the sweep-zone reversal.
+- NEXT: E2 from canon 6.1-6.10 on the golden week (day boxes + line) against his tags; E3 from the corrected spec on the V1 ladder + e1_sd zones against the 8 + 8 + 7 trades; then EURUSD / GBPUSD frames; then S3-S6.
