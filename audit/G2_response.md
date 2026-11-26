@@ -38,7 +38,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | A-24 | OPEN | computeGoldenSL fallback (only its 4-36 pip envelope is enforced) |
 | A-25 | OPEN | Refined Law 14 no-teleport test on the TP path |
 | A-26 | FIXED 9d7c72b | MAX_RRR 15 |
-| A-27 | OPEN | blended RRR / three staggered entries |
+| A-27 | PART | Mechanism A FRONT entry built as the first-contact band of zone-edge setups (D-59, E3C:1060-1066); middle / back entries and the blended RRR OPEN |
 | A-28 | PART | RWL hair-miss repair built (E3C:196-197); F1-E recovery-shelf adjust OPEN |
 | A-29 | OPEN | Fibonacci Spiderweb anchoring (three contexts) |
 | A-30 | PART | internal LQZ rung (F1-C); E1 Step 0.6 key levels not passed to TS-1 |
@@ -52,7 +52,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | A-38 | PART | reason code on every discard; Phase 12 floor invariants as a final pass OPEN |
 | A-39 | OPEN | BoS + flip + retest requirement for reversals |
 | A-40 | PART | SS->BS Transition Entry built (D-51, f723b0b); scalp-stack / swing-stack compliance as a gate OPEN |
-| A-41 | OPEN | reinforcement timing inheritance |
+| A-41 | PART | reinforcement orders pending from the first London premarket after the parent's fill and cancelled at the parent's exit (D-54, E3C:625); the 1-2-3 activation test OPEN |
 | A-42 | PART | sizing 50 / 30 / 20 noted; trip-wire, rocket type OPEN |
 | A-43 | PART | 8R.10 path mapping in _reinforce(); 8R.5, Phase 11 OPEN |
 | A-44 | OPEN | acceptance counts |
@@ -80,7 +80,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | B-06 | OPEN | not re-checked in v2 |
 | B-07 | FIXED 2717f06 | termination under 25% (D-35); later days carry no designation and are not drawn |
 | B-08 | FIXED 2717f06 | chain extended step by step (D-34) |
-| B-09 | PART | see A-09 |
+| B-09 | PART | consolidation length from the canon minima + elapsed sessions (D-41); swing phase D-57; Early / Mid / Late phase -> valid setup types OPEN |
 | B-10 | OPEN | not re-checked in v2 |
 | B-11 | FIXED 2717f06 | bounds carry source + class; no ZFP on non-IP bounds |
 | B-12 | FIXED 2717f06 | MoM bounds go through 6.4.2 |
@@ -105,10 +105,10 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | B-27 | PART | 4-36 pip envelope; Law 4 bands per category OPEN |
 | B-28 | FIXED 9d7c72b | zone midpoint with an LQZ inside (D-33) |
 | B-29 | PART | strong = near edge + 1 pip, liquidity band = near edge (D-45); weak = far edge only where coded for sweep targets |
-| B-30 | OPEN | not re-checked in v2 |
+| B-30 | PART | reversal after a breakout: TP = first liquidity rung 30+ pips along the way (D-56, GS Law 2), then the sweep-zone / pivot targets; WL targets not re-checked |
 | B-31 | FIXED 9d7c72b | TP_NULL discard; range-middle fallback removed |
 | B-32 | PART | three entry attempts x three TP attempts on the same anchor; SL re-anchor step OPEN |
-| B-33 | PART | up to 3 reinforcements at rungs on the TP path, 20+ pips apart; Fib 1.382 / 1.618 placement OPEN |
+| B-33 | PART | rockets: first liquidity step 20+ pips beyond the primary, ladder-step stop, pending from the first London premarket after the parent's fill, cancelled with the parent (D-54); Fib 1.382 / 1.618 placement and the trip-wire OPEN |
 | B-34 | PART | both directions at the bounds + inner 1H / 4H zones; scalp stack 30m / 15m (E3C:96) OPEN |
 | B-35 | OPEN | |
 | B-36 | PART | every capped setup is logged; cap key (pair, anchorBucket, day) OPEN |
@@ -135,7 +135,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | C-04 | OPEN | not re-checked in v2 |
 | C-05 | ANSWERED | D-35 (E2X:169 needs a percentage) |
 | C-06 | PART | D-40 (whiplash merge, FA 9 counts moves); window length OPEN |
-| C-07 | ANSWERED | D-41: first swing toward the nearer bound (P533 2.3 'magnetize toward the IL levels'); order counted back from the transition (6.4.2) |
+| C-07 | ANSWERED | D-57: swings of two sessions (E2X:21 '1-3 trading sessions'), counted back from the transition (6.4.2) or continuing the swing in progress at the anchor; replaces the one-swing-a-day rule |
 | C-08 | PART | sessions from P533 2.2.1; remaining intraday constants OPEN |
 | C-09 | OPEN | not re-checked in v2 |
 | C-10 | OPEN | not re-checked in v2 |
@@ -180,4 +180,4 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | D-05 | FIXED 9e44b34 | |
 
 ## Count
-ANSWERED 14 · FIXED 36 · OPEN 55 · PART 29 (of 134). S1 / S4 need OPEN + PART = 0.
+ANSWERED 14 · FIXED 37 · OPEN 50 · PART 33 (of 134). S1 / S4 need OPEN + PART = 0.
