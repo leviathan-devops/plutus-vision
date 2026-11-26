@@ -106,13 +106,13 @@ def generate(pair, monday, X, extra=(), rch=None):
     plus = lambda z: (' + ' + ', '.join(parts[id(z)])) if parts.get(id(z)) else ''
     adr = sum(d['high'] - d['low'] for d in X['daily'][-10:]) / 10
     lo_v, hi_v = pw['low'] - adr, pw['high'] + adr
-    o = ['//@version=6', f'indicator("PLUTUS VISION {pair} {monday}", overlay=true, max_boxes_count=500, max_labels_count=500, max_lines_count=500)',
+    o = ['//@version=6', f'indicator("PLUTUS VISION {pair} {monday}", overlay=true, max_boxes_count=2000, max_labels_count=2000, max_lines_count=2000)',      # PG6 (P533:3909)
          f'// week of {monday} ({pair}); every number computed by e1_tool from data closed before the anchor {D.ts(b0)} UTC (Monday London open)',
          'show_ip = input.bool(true, "E1 IP Zones")', 'show_lv = input.bool(true, "E1 levels inside IP zones")', 'show_lsz = input.bool(true, "E1 LSZ")',
          'show_opt = input.bool(true, "E1 Option Strikes")', 'show_sd = input.bool(true, "E1 Supply / Demand 4H + 1H")', 'show_ltf = input.bool(false, "E1 Supply / Demand 30m + 15m")',
          'show_lq = input.bool(true, "E1 Liquidity ladder 1H (V1 data)")', 'show_lq4 = input.bool(true, "E1 Liquidity bands 4H (V1 data)")', 'show_ob = input.bool(false, "V1 order blocks (data)")',
          'show_far = input.bool(false, "E1 zones beyond this week\'s reach")',
-         'show_e2 = input.bool(true, "E2 Shape chain")', 'show_e3 = input.bool(true, "E3 Trade setups")',
+         'show_e2 = input.bool(true, "E2 Shape chain")', 'show_e3 = input.bool(true, "E3 Trade setups")', 'show_tbl = input.bool(true, "Info Table")',
          f'isPair = str.contains(syminfo.ticker, "{D.SYM[pair].split("_")[-1]}")', 'if barstate.islast and isPair']
     # liquidity ladder: the sealed V1's 1H liquidity bands at the anchor (R-30), around the prior week's range (V1 itself draws the live ladder)
     o.append('    if show_lq')
