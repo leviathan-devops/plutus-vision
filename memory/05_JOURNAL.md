@@ -336,3 +336,12 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   e1_ip currently centres that zone on a better-scoring seed ~5 pips lower (101.133-101.222). D1 to settle from canon P533:1496-1505 ("group into zones where levels cluster within 0.10-0.15; degree = the group's highest-scoring level"):
   the ZONE is the cluster, the best level only gives the degree. Check whether the tight cluster containing the wall (wall +- band, quarter figure 101.25, pivots, MAs, V1 4H liquidity 101.245-101.305) should be the zone, instead of a +-0.05 window around the best seed.
 - Sweep zones now match his lower green band (100.558-100.658 vs 100.555-100.68).
+
+## 2026-11-26 - D1 DIAGNOSED (golden week, upper zone): a scoring plateau + tie-breaks place the zone, not the wall
+- Printed every scored seed 101.12-101.31 (e1_ip.build -> X['scored']): ALL have base 5-7 with T2 O2 S1-2: Technical 2 everywhere (dense pivots / MA clusters), Options 2 for any price within max(0.10, band) of the Tier-1 1.1400 wall (a 20-pip plateau), Structural from anchors within 10 pips.
+  Best seed 101.133 (base 7) is removed by the 0.15 separation from the Equilibrium seed 101.028; the remaining base-6 seeds tie and the tie-break "distance to spot" picks 101.18 -> zone 101.133-101.222 instead of the wall 101.232 / quarter 101.25 (his band 101.19-101.29).
+- Drawn six now: UPPER RES 101.430-101.503 (8.0), UPPER RES 101.133-101.222 (8.0), EQUILIBRIUM 100.985-101.077 (9.0), MID-RANGE SUPPORT 100.724-100.815 (7.0), KEY SUPPORT 100.268-100.344 (8.0), KEY SUPPORT 99.492-99.559 (8.5).
+- TO DECIDE FROM CANON (re-read P533:1461-1505 in full first; no tuning): (a) how the Options dimension is matched - the Technical row uses exact 3 pips = 2 / 10 pips = 1; the wall's +-0.07 is a CONFIDENCE band of the conversion, not a 2-point radius;
+  (b) "group into zones where levels cluster within 0.10-0.15; pressure degree = the group's highest-scoring level" - the zone is the CLUSTER, so around a Critical Option Wall the tight cluster containing the wall level (101.232, 101.248 MA triple, 101.25 quarter + 4H supply top) is the zone and the wall line is drawn inside it (L-39);
+  (c) whether a seed that IS the wall / anchor outranks seeds that merely lie near one.
+- Then: e1_pine wiring (IP zones from e1_ip, sweep zones, V1 order blocks + liquidity ladder per timeframe, 4H/1H candle zones, strike lines), render Jul 6-10 DXY, open the frame, compare with g1 / g4.
