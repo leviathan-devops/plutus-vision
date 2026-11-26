@@ -127,6 +127,8 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
     # SS / R: the E2-projected opposing zone FIRST (E3C:333), then the walk over the opposing 1H / 4H zones on the way (LQZ inside -> midpoint, else near edge)
     if tz is not None and tz.get('zfp_num', 40) < 30 and not (tz['bot'] <= X['spot'] <= tz['top']):
         out.append((tz['top'] + pip if direction == 'down' else tz['bot'] - pip, tz, 'E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327)'))
+    if tz is not None and tz.get('liq'):                     # a thick liquidity band (V1 4H) = strong pressure: 'exit on the closest zone edge' (E3C:320-327)
+        out.append((tz['top'] if direction == 'down' else tz['bot'], tz, 'liquidity band near edge (strong, E3C:320-327)'))
     zs = [z for z in sd if z['tf'] in ('240', '60') and z['type'] == opp and id(z) not in used and z.get('key') not in used
           and ahead(z['top'] if direction == 'down' else z['bot'])
           and (((z['top'] >= end) if direction == 'down' else (z['bot'] <= end)) or (tz is not None and _overlap(z, tz)))]       # on the way to the E2 leg end, or lying against the E2 zone

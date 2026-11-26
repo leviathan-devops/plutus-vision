@@ -129,6 +129,10 @@ def bounds(X):
     above = sorted([z for z in X['zones'] if z['bot'] > spot], key=lambda z: z['bot'])
     below = sorted([z for z in X['zones'] if z['top'] < spot], key=lambda z: -z['top'])
     pivot = next((z for z in X['zones'] if z['bot'] <= spot <= z['top']), None)
+    if pivot is None and 'v1' in X:                          # no IP zone holds spot: the pivot area (P452 'EQUILIBRIUM ZONE: Pivot area') is the thick liquidity nearest spot (a V1 4H band; FA 2.1 Earth
+        lq = sorted(X['v1']['240']['liquidity'], key=lambda b: 0.0 if b['bot'] <= spot <= b['top'] else min(abs(b['bot'] - spot), abs(b['top'] - spot)))   # = the foundation), within the swing-scalp reach (D-44)
+        if lq and (0.0 if lq[0]['bot'] <= spot <= lq[0]['top'] else min(abs(lq[0]['bot'] - spot), abs(lq[0]['top'] - spot))) <= 0.30 * U:
+            pivot = {'bot': lq[0]['bot'], 'top': lq[0]['top'], 'name': '4H liquidity (pivot)', 'liq': True}
     sd = [q for q in X['sd'] if q['tf'] in ('240', '60')]
     grade = lambda q: q.get('excursion', 0.0) >= (0.50 if q['tf'] == '240' else 0.30) * U
     pool = [q for q in sd if grade(q)] or sd
