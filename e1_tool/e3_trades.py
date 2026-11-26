@@ -267,8 +267,11 @@ def _cands(E2, monday, X):
                 # every (day, zone) pair on the correct side (E3C:129): the E2 bound and each standing 1H / 4H supply (short) / demand (long) zone inside the range within the swing-scalp reach of the
                 # range edge it guards (GS Law 2: SS 0-30 pips; GS Law 3: entries at the LTF zones, the bound = the HTF frame)
                 lim = 0.30 * X['U']
-                inner = [q for q in X['sd'] if q['tf'] in ('240', '60') and q['type'] == ('Supply' if d == 'down' else 'Demand') and lo['top'] <= q['bot'] and q['top'] <= hi['bot']
-                         and ((hi['bot'] - q['top'] <= lim) if d == 'down' else (q['bot'] - lo['top'] <= lim))]
+                # a zone belongs to the range when its ENTRY edge lies between the bounds (a demand zone whose top is above the floor, a supply zone whose bottom is below the ceiling):
+                # one that straddles a bound's edge is still met before the bound (TS-1 'edge closest to approaching price')
+                inner = [q for q in X['sd'] if q['tf'] in ('240', '60') and q['type'] == ('Supply' if d == 'down' else 'Demand')
+                         and ((lo['top'] <= q['bot'] < hi['bot']) if d == 'down' else (lo['top'] < q['top'] <= hi['bot']))
+                         and ((hi['bot'] - q['bot'] <= lim) if d == 'down' else (q['top'] - lo['top'] <= lim))]
                 tr = next((x for x in E2['chain'] if x.get('role') == 'retest'), None)
                 if tr is not None and E2.get('pivot') is not None and d == E2.get('bdir') and S[tr['s0']]['i'] in days:
                     # 6.4.2: the slow consolidation ends retesting the opposing liquidity FROM the pivot: on the transition day the swing in the breakout direction ends at the pivot (its far side)
