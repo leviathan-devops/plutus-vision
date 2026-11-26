@@ -39,7 +39,7 @@ Commits: 9e44b34 (batch I) · 2717f06 (Engine 2 v2) · 9d7c72b + 38e6a0b (Engine
 | A-25 | OPEN | Refined Law 14 no-teleport test on the TP path |
 | A-26 | FIXED 9d7c72b | MAX_RRR 15 |
 | A-27 | OPEN | blended RRR / three staggered entries |
-| A-28 | OPEN | F1-E shelf adjust, RWL hair-miss repair |
+| A-28 | PART | RWL hair-miss repair built (E3C:196-197); F1-E recovery-shelf adjust OPEN |
 | A-29 | OPEN | Fibonacci Spiderweb anchoring (three contexts) |
 | A-30 | PART | internal LQZ rung (F1-C); E1 Step 0.6 key levels not passed to TS-1 |
 | A-31 | FIXED 9d7c72b | duplicates 5 pips / conflicts 15 pips |

@@ -375,6 +375,12 @@ def _build(pair, monday, X, E2, tag):
                 why_fail = 'TP_NULL: no opposing zone on the way (E3C:1016 honest absence)'; continue
             for tries, (tp, tz, why_tp) in enumerate(tps[:3], 1):
                 rrr = abs(tp - entry) / abs(entry - stop)
+                if c['shape'] == 'RWL' and floor_rrr - 0.1 <= rrr < floor_rrr:
+                    # E3C:196-197 'RWL_HAIR_MISS_RRR_DELTA = 0.1 - setups with RRR in [floor - 0.1, floor) get one repair attempt': the entry pulled 0.2 pips inside (RWL_BOUNCE_INSET_PIPS)
+                    e2 = entry + 0.2 * pip if direction == 'down' else entry - 0.2 * pip
+                    r2 = abs(tp - e2) / abs(e2 - stop)
+                    if r2 >= floor_rrr:
+                        entry, rrr, how = e2, r2, how + ' (hair-miss repair: 0.2 pip inside, E3C:196-197)'
                 if floor_rrr <= rrr <= MAX_RRR:
                     s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
                          'why': f"entry {how}; SL {why_sl}; TP {why_tp}", 'src': (round(step['bot'], 6), round(step['top'], 6)) if 'bot' in step else None}
