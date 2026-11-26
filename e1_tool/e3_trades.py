@@ -62,12 +62,18 @@ def _entries(anchor, direction, shape, env, pair):
         return [(anchor['bot'] if direction == 'down' else anchor['top'], anchor, 'sweep zone near edge (TS-1)'), mid]
     out = []
     real = [r for r in rungs if 'fib' not in r]
-    if anchor.get('ip'):                                     # an IP zone is never an entry source: the LQZ rung at it is (E3C:139-143)
+    if anchor.get('ip'):                                     # an IP zone is never an entry source: the ORDER_BLOCK / LQZ at it are (E3C:139-143 STRUCTURAL_ENTRY_SOURCES)
         inner = [r for r in real if _overlap(r, anchor)]
-        inner.sort(key=lambda r: r['bot'] if direction == 'down' else -r['top'])
-        for r in inner[:3]:
+        for r in inner:
             out.append((r['bot'] if direction == 'down' else r['top'] - inset, r, 'LQZ rung at the zone'))
-        return out                                           # no rung at the IP zone -> no entry (SOURCE_INVALID, E3C:136)
+        # the candle structure of the pressure zone (L-39: zone = A candle structure + B levels joined): an order block of the trade's side lying mostly inside it (D-46)
+        half = lambda b: (min(b['top'], anchor['top']) - max(b['bot'], anchor['bot'])) >= 0.5 * (b['top'] - b['bot'])
+        obs = [b for b in blocks if b['type'] == typ and TF_RANK.get(b['tf'], 3) <= TF_RANK['60'] and half(b)] + \
+              [dict(q, src='E1 S/D') for q in sd if q['type'] == typ and q['tf'] in ('60', '30', '15') and q.get('mit', 0) < 3 and half(q)]
+        for b in obs:
+            out.append(((b['bot'] + pip) if direction == 'down' else b['top'], b, f"{SD_TF.get(b['tf'], b['tf'])} order block at the zone, {'bottom + 1 pip (F1-A)' if direction == 'down' else 'top (TS-1)'}"))
+        out.sort(key=lambda e: e[0] if direction == 'down' else -e[0])          # TS-1 'SNIPER ENTRY = zone edge CLOSEST to approaching price' (E3C:177-181)
+        return out[:3]                                       # nothing at the IP zone -> no entry (SOURCE_INVALID, E3C:136)
     # priority = the spec's measured fixes first: F1-A (order-block SHORT) -> F1-C (internal LQZ rung, "NOT the zone's defendedEdge") -> TS-1 zone edge; the next one is tried when RRR fails
     if direction == 'down':
         rank = TF_RANK.get(anchor.get('tf', '240'), 3)

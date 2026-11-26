@@ -495,3 +495,15 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   Learned: the decision tree's reaction counter discriminates the weeks (Apr 20 ceiling MoM 1 reaction + liquidity beyond the floor = slow consolidation then pierce up; Sep 14 ceiling 3 taps = pierced;
   May 18 floor 5 strong reactions = FORTRESS holds); a spike and its next-session return are ONE whiplash; FA 9 counts moves.
 - Remaining E2 issues: weeks where E1 has nothing beyond spot on one side (Aug 17 below; fix in E1 Step 9.5 / Key Support levels), tie weeks decided by the storyline (Jul 13 wrong).
+
+## 2026-11-26 (after compaction 9, opus-5-5) - EURUSD golden-week E3 work
+- Commit fbf932c: D-44 (E2 pivot = nearest V1 4H band when no IP zone holds spot) + D-45 (TP at a liquidity-band target = its near edge, E3C:320-327 rule 5). EU6 = his #4 within 0.6/0.4/0.7, EU4 = his #5 within 0.8/4.4/1.0.
+- D-46 (uncommitted while the other weeks run): IP-zone anchors also take the order blocks lying mostly inside them (F1-A / TS-1, closest to approaching price). EU1 = his #3 Tue S within 0.1/0.3/5.9; EURUSD golden now 5 TP 1 SL (EU2 Mon S 1.14385) 1 unfilled (EU3 = same order as EU6). DXY unchanged.
+- Read first-hand this step: E3C Phase 0 table (SS -> Scalp Stack 30m/15m/5m, 4-8 swing scalps), Phase 1 WorkingDayMap (per day keyZone / supplyZone / demandZone / deepDemandZone), Phase 2-3 (TS-1, F1-A/C/D/E),
+  Phase 4.1 layer 4 'Timeframe Stack Compliance ... violation = REJECT', Phase 4.2 SL ladder steps (+ mirrorConfidenceScore >= 0.6 -> (a), < 0.6 -> (b)), Phase 4.3 TP rules + Law-14 walk, 4.4 RRR, Phase 6.2/6.3, Phase 7.1; GS Laws 1-6.
+- FACTS (bug locator): his golden EURUSD and DXY weeks are each ONE Law-27 chain (TP of N = entry of N+1 within 0-3.4 pips for every consecutive pair of his trades). His Monday scalps on both pairs sit at the scalp-stack
+  order blocks nearest spot just beyond the two 4H liquidity bands bracketing spot (DXY L 100.945 = 15m OB 100.929-100.950, S 101.14 = 30m OB 101.128-101.205 + 1; EURUSD S 1.14322 = 15m MoM supply 1.14316-1.14336, L 1.14106 = 4H band bottom / internal rung of the 1H MoM demand).
+  Still missing: DXY #1, EURUSD #1, #2, #7 (Thu reinforcement 1.14233), EURUSD #8 TP (1.14205 vs mine 1.14349). Candidate canon steps: scalp-stack anchors for SS (E3C:96 + 4.1 layer 4), Law-27 re-arm inside SS runs, per-day supply/demand designation (Phase 1/7).
+- D-46 side effects on the other weeks (snapshot diff, 9 maps): May 18 + Jul 13 each gain one Monday SS long at a 30m OB top above the IP floor (99.061, 100.997) - both stopped by the pierce to the deepest LTF demand under the
+  pressure zone (98.946 = 15m MoM demand 98.935-98.970; 100.87 = 15m MoM demand 100.870-100.914). Points to the canon's deep-demand zone (WorkingDayMap deepDemandZoneId) / staggered entries (Phase 9) / SL relevant zone (ZR-1),
+  not to the entry source. GS Law 4 rule 3 read with the E1 sweep zones fails on his golden trades (no sweep zone between entry and SL on #1, #2) - the 'shield' there is the V1 liquidity band, so that rule is not added.
