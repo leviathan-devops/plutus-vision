@@ -529,3 +529,4 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   DXY 100.94, EURUSD 1.14205, GBPUSD 1.33882 = 32-37 pips each).
 - STILL WRONG, by map (fills helper): Jul 13 (direction: 3 stops), Aug 17 (SS forecast, week broke down; E1 has nothing below), Jun 8 (ceiling short stopped at once), Sep 14 (floor long 98.943 never reached; FRESHNESS removes the ceiling),
   EURUSD May 18 (range too high: floor 1.16218 broke Tue), EURUSD Apr 20 (ceiling short 1.17920 missed the highs 1.17902 / 1.17910 by 1-2 pips: F1-C internal rung chosen before the zone edge; BS target sits directly under the floor), GBPUSD May 18 / Oct 5 shorts stopped.
+- D-53 narrative gate = misaligned setups only (E3C:1054). Bug-locator baseline over 16 maps (golden x3, Apr 20 x3, Oct 5 x3, May 18 x3, DXY Jul 13 / Sep 14 / Jun 8 / Aug 17) with fills.py: 18 TP fills, 16 stops. Scratch list: scratchpad fills_narr2.txt.

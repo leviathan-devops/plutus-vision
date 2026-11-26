@@ -375,7 +375,9 @@ def _build(pair, monday, X, E2, tag):
         s.update(day=c['days'][0], days=c['days'], shape=c['shape'], category=cat, session=SESSION_WINDOW[cat], sl_pips=round(abs(s['entry'] - s['sl']) / pip, 1),
                  t0=c.get('t0'), t1=c.get('t1'), anchor=a, role=c.get('role'), rest_from=c.get('rest_from'))
         ipz = a if a.get('ip') else _ip_at(a, X)
-        if ipz is not None and ipz['zfp_num'] > 30 and not a.get('sweep'):
+        story = E2.get('bdir') or E2.get('storyline')        # the week's macro arc: the chain's breakout direction, else the 4H storyline
+        misaligned = story in ('up', 'down') and (story == 'up') != (s['dir'] == 'LONG')     # E3C:1054 NARRATIVE_MISALIGNED: the gate judges setups against the storyline; aligned ones pass
+        if misaligned and ipz is not None and ipz['zfp_num'] > 30 and not a.get('sweep'):
             log.append(f"{s['day']} {s['shape']} {s['dir']} {s['entry']:.5f}: NARRATIVE - anchor zone {ipz['name']} ZFP {ipz['zfp_num']}% > 30 (E3C:874-876 'suppress > 30 (WEAK)')"); continue
         s['confidence'], s['conf_parts'] = _confidence(s, X, E2, pair)
         if s['confidence'] < INCLUDE:
