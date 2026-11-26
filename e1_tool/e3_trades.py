@@ -175,6 +175,10 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
     if tz is not None:
         if tz.get('zfp_num', 40) < 30 and not (tz['bot'] <= X['spot'] <= tz['top']):
             out.append((tz['top'] + pip if direction == 'down' else tz['bot'] - pip, tz, 'bounding zone near edge + 1 pip (strong zone)'))
+        elif tz.get('sweep') and SWEEP_TP:
+            # a sweep zone bounding the range: E3C:313-315 rule 5 'no LQZ overlap -> TP at zone NEAR EDGE (quick exit)', rule 6 'NEVER target FAR edge of distant zone';
+            # P533 7.1 Rule 3 SS 'nearest MAJOR opposing zone edge OR nearest LSZ edge' (D-86)
+            out.append((tz['top'] if direction == 'down' else tz['bot'], tz, 'bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge)'))
         else:                                                # weak zone / pivot: far edge, the LQZ band lying on it
             fe = tz['bot'] if direction == 'down' else tz['top']
             rr = sorted([r for r in rungs if r['bot'] - 2 * pip <= fe <= r['top'] + 2 * pip], key=lambda r: abs((r['bot'] + r['top']) / 2 - fe))
@@ -200,6 +204,7 @@ def _steps(X):
 
 ZR6B = True
 SWEEP_EXT = True
+SWEEP_TP = True
 DEPLETED_BOUND = True
 
 
