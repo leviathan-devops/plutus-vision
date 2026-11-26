@@ -524,7 +524,7 @@ def pine(pair, monday, R):
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['tp']))}, {x1}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), {93 if s.get('alt') else 88}), border_color=color.rgb(8,153,129), border_width=1, border_style={'line.style_dashed' if s.get('alt') else 'line.style_solid'}, xloc=xloc.bar_time)")
         ly = s['entry'] + 0.18 * (s['tp'] - s['entry'])        # inside the green box, next to its own entry edge: setups sharing one TP no longer stack their labels (A13)
         k = starts.get(x0, 0); starts[x0] = k + 1             # setups resting from the same bar: labels staggered along the box so they do not print over each other (A13)
-        lx = min(x0 + 3 * 3600000 + k * 9 * 3600000, x1 - 3600000)
+        lx = max(x0 + 2 * 3600000, min(x0 + 3 * 3600000 + k * 9 * 3600000, x1 - 3600000, wk1 - 14 * 3600000))     # kept clear of the chart's right edge
         o.append(f"        label.new({lx}, {g(ly)}, \"{s['id']} {'ALT ' if s.get('alt') else ''}{s['shape']} {'S' if s['dir'] == 'SHORT' else 'L'} {s['rrr']:.1f}R\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
 

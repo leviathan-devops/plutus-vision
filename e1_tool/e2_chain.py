@@ -17,6 +17,7 @@ NY = D.NY
 CONF = {'VERY HIGH': 0.90, 'HIGH': 0.80, 'MODERATE-HIGH': 0.65, 'MODERATE': 0.50, 'LOW-MOD': 0.35}    # word tiers of 6.2 / 6.4 / 6.4.1 as the numbers 6.6 Step 3 needs (D-35)
 DAYS = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri')
 TF_RANK = {'15': 0, '30': 1, '60': 2, '240': 3}
+SS_SWING = 2                                     # sessions per swing of a consolidation (E2X:21 'Each swing typically spans 1-3 trading sessions')
 PIERCING = ('BS', 'PBS', 'WL', 'PWL', 'RWL', 'PRWL')
 PIERCE_ORDER = {'FAIL': 0, 'PIERCED': 1, 'BREAK-RETURN': 2, 'SLOW': 3}      # how soon the bound goes (6.4.1 / 6.4.2 branch texts)
 SS_MIN_SESSIONS = 2          # 6.8 'SS ... 2-5 sessions'
@@ -651,6 +652,34 @@ def build(pair, monday, X, lead=None, force_dir=None):
             days_in = sorted({S[k]['i'] for k in range(a, b)})
             if not days_in:
                 continue
+            if st['shape'] == 'SS':
+                # 6.1.1 'Each swing typically spans 1-3 trading sessions' -> two sessions per swing. Phase: before a transition the swings are counted BACK from it - the last one runs in the
+                # breakout direction and ends at the pivot when a retest follows (6.4.2 'Consolidation ends in price retesting opposing liquidity'), else at the failing bound; with no
+                # transition this week the first swing continues the one in progress at the anchor (the last pre-anchor session closed in its upper half -> up) (D-57)
+                ses = list(range(a, b))
+                swings = [ses[k:k + SS_SWING] for k in range(0, len(ses), SS_SWING)]
+                idx = chain.index(st)
+                nx = chain[idx + 1] if idx + 1 < len(chain) else None
+                if nx is not None and bdir in ('up', 'down') and nx['shape'] in ('RWL', 'BS', 'PBS', 'WL'):
+                    swings = [ses[max(0, k - SS_SWING):k] for k in range(len(ses), 0, -SS_SWING)][::-1]          # whole swings counted back from the transition
+                    dirs = [(bdir if (len(swings) - 1 - j) % 2 == 0 else inv[bdir]) for j in range(len(swings))]
+                    end_piv = nx.get('role') == 'retest' and pivot is not None
+                else:
+                    lp = past_sessions(pair, monday, 1)
+                    lb = lp[-1]['bars'] if lp else []
+                    up0 = (lb[-1]['close'] >= (max(x['high'] for x in lb) + min(x['low'] for x in lb)) / 2) if lb else (abs(hi - pos) < abs(pos - lo))
+                    dirs = [('up' if (j % 2 == 0) == up0 else 'down') for j in range(len(swings))]
+                    end_piv = False
+                for j, (sw, dj) in enumerate(zip(swings, dirs)):
+                    d_end = min(t1, S[sw[-1]]['t1'])
+                    nxt = hi if dj == 'up' else lo
+                    if end_piv and j == len(swings) - 1:
+                        nxt = pivot['bot'] if dj == 'down' else pivot['top']
+                    legs.append({'day': DAYS[S[sw[0]]['i']], 'shape': 'SS', 'dir': dj, 'from': pos, 'to': nxt, 'from_zone': None, 'to_zone': ceil if dj == 'up' else floor,
+                                 't0': pts[-1][0], 't1': d_end, 'pad': False})
+                    pos, last_dir = nxt, dj
+                    pts.append((d_end, pos))
+                continue
             for j, di in enumerate(days_in):                     # one swing per session-day (6.1.1 'Each swing typically spans 1-3 trading sessions')
                 d_end = min(t1, S[max(k for k in range(a, b) if S[k]['i'] == di)]['t1'])
                 go_up = (abs(hi - pos) < abs(pos - lo)) if last_dir is None else (last_dir == 'down')   # first swing: toward the nearer bound (P533 2.3 'magnetize toward the IL levels', D-41)
@@ -730,7 +759,7 @@ def pine(pair, monday, E2):
     for d in E2['days']:
         c = col.get(d['shapes'][-1], '200,200,200')
         o.append(f"        box.new({d['t0']}, {g(d['hi'])}, {d['t1']}, {g(d['lo'])}, bgcolor=color.new(color.rgb({c}), 88), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
-        o.append(f"        label.new({(d['t0'] + d['t1']) // 2}, {g(d['hi'])}, \"{d['day']} {'+'.join(d['shapes'])}\\n{arrow[d['dir']].strip()} {int(d['conf'] * 100)}%\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
+        o.append(f"        label.new({(d['t0'] + d['t1']) // 2 if d['day'] != 'Fri' else d['t0'] + (d['t1'] - d['t0']) // 4}, {g(d['hi'])}, \"{d['day']} {'+'.join(d['shapes'])}\\n{arrow[d['dir']].strip()} {int(d['conf'] * 100)}%\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
     p = E2['path']
     for (t0, p0), (t1, p1) in zip(p, p[1:]):
         o.append(f"        line.new({t0}, {g(p0)}, {t1}, {g(p1)}, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)")

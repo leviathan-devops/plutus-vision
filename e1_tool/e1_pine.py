@@ -27,6 +27,8 @@ def reach(X, E2):
     Zones outside it stay in the script behind the toggle 'show_far' (nothing is deleted, R-37)."""
     days = [d for i, d in enumerate(E2['days']) if i < E2.get('n_real', 5)] or E2['days']
     lo, hi = min(d['lo'] for d in days), max(d['hi'] for d in days)
+    pw = X['weekly'][-1]                                     # the Engine 1 map is the prior week's range and the first zone beyond each end (D-12: the report maps and the operator's approved six lie there);
+    lo, hi = min(lo, pw['low']), max(hi, pw['high'])         # Engine 2's envelope may only widen it, so a wrong day map cannot hide zones the week trades at
     zs = [z for z in X['zones'] if z['drawn']] + [z for z in X['sd'] if z['tf'] in ('240', '60')]
     below = [z for z in zs if z['top'] < lo]; above = [z for z in zs if z['bot'] > hi]
     if below:
