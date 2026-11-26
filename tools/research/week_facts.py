@@ -21,12 +21,16 @@ for z in X.get('infill', []):
 for z in sorted(X['sd'], key=lambda z: -z['top']):
     if z['tf'] in ('240', '60') and near(z['bot'], z['top']):
         print(f"  supply/demand  {z['label']:<28} {z['type']:<6} {f(z['bot'])}-{f(z['top'])}")
-for z in sorted(X['lsz'], key=lambda z: -z['level']):
-    if z['swept']:
-        continue
-    zb, zt = (z['level'], z['level'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['level'] - 0.05 * U, z['level'])
+merged = []                                              # as drawn: sweep zones of one side within 0.05 of each other are one box
+for z in sorted([z for z in X['lsz'] if not z['swept']], key=lambda z: (z['side'], z['level'])):
+    if merged and merged[-1]['side'] == z['side'] and z['level'] - merged[-1]['hi'] <= 0.05 * U + 1e-12:
+        merged[-1]['hi'] = z['level']; merged[-1]['confluent_bom'] = merged[-1].get('confluent_bom') or z.get('confluent_bom')
+    else:
+        merged.append(dict(z, lo=z['level'], hi=z['level']))
+for z in sorted(merged, key=lambda z: -z['hi']):
+    zb, zt = (z['lo'], z['hi'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['lo'] - 0.05 * U, z['hi'])
     if near(zb, zt):
-        r = z['level'] - 0.10 * U if z['side'] == 'Demand-side' else z['level'] + 0.10 * U
+        r = z['lo'] - 0.10 * U if z['side'] == 'Demand-side' else z['hi'] + 0.10 * U
         print(f"  sweep zone     {z['side']:<11} {f(zb)}-{f(zt)} | sweep reach to {f(r)} (dotted box){' | confluent with a 4H BoM zone' if z.get('confluent_bom') else ''}")
 for z in sorted(X['v1']['240']['liquidity'], key=lambda z: -z['top']):
     if near(z['bot'], z['top']):

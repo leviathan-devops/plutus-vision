@@ -634,8 +634,8 @@ def pine(pair, monday, R):
         if s.get('front') is not None:                       # first-contact band between the front entry and the edge
             o.append(f"        box.new({x0}, {g(max(s['entry'], s['front']))}, {x1}, {g(min(s['entry'], s['front']))}, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['tp']))}, {x1}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), {94 if (s.get('alt') or cond) else 88}), border_color=color.rgb(8,153,129), border_width=1, border_style={'line.style_dashed' if (s.get('alt') or cond) else 'line.style_solid'}, xloc=xloc.bar_time)")
-        ly = s['entry'] + 0.18 * (s['tp'] - s['entry'])        # inside the green box, next to its own entry edge: setups sharing one TP no longer stack their labels (A13)
         k = starts.get(x0, 0); starts[x0] = k + 1             # setups resting from the same bar: labels staggered along the box so they do not print over each other (A13)
+        ly = s['entry'] + (0.14 + 0.10 * (k % 3)) * (s['tp'] - s['entry'])   # inside the green box near its own entry edge; three rows for setups that start together
         lx = max(x0 + 2 * 3600000, min(x0 + 3 * 3600000 + k * 9 * 3600000, x1 - 3600000, wk1 - 14 * 3600000))     # kept clear of the chart's right edge
         o.append(f"        label.new({lx}, {g(ly)}, \"{s['id']} {'ALT ' if s.get('alt') else ''}{s['shape']} {'S' if s['dir'] == 'SHORT' else 'L'} {s['rrr']:.1f}R{(' if ' + str(s.get('parent'))) if cond else ''}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
