@@ -605,11 +605,36 @@ def build(pair, monday, X, E2):
             day0 = D.week_start_ms(monday) + DAY_IDX[s['rest_from']] * 86400000
         s['valid_from'] = max(day0, b0)
         s['valid_to'] = D.week_start_ms(monday) + (DAY_IDX[s['days'][-1]] + 1) * 86400000
-        if s['shape'] == 'SS' and DAY_IDX[s['day']] in ss_days:
-            # the swing scalps of a consolidation rest at both bounds for the whole consolidation (E3C Setup Universe: 'SS: Swing Scalps (both directions)'): which bound is met first is not designated
-            run = [d for d in ss_days if all(x in ss_days for x in range(min(d, DAY_IDX[s['day']]), max(d, DAY_IDX[s['day']]) + 1))]
-            s['valid_from'] = max(D.week_start_ms(monday) + min(run) * 86400000, b0)
-            s['valid_to'] = D.week_start_ms(monday) + (max(run) + 1) * 86400000
+    # Phase 1 / 2 / 6.3 (E3C:115 WorkingDayMap per day; E3C:129 'For each (WorkingDay, zone) pair ... generate a trade candidate'; E3C:468 cap key '(pair, anchorBucket, day)': one setup
+    # per anchor per DAY; E3C:996 'f(T) Acceptance: ... 8 DXY + 8 EU + 8 GU ... LESS is REJECT'): a swing scalp of a consolidation is one order per anchor for EACH day of the
+    # consolidation, bracketed by its day; which day meets which bound is not designated, so both rest every day (D-78)
+    wk0 = D.week_start_ms(monday)
+    out = []
+    for s in R['setups']:
+        s['anchor_key'] = (s['dir'], round(s['anchor']['bot'], 6), round(s['anchor']['top'], 6)) if 'bot' in s['anchor'] else (s['dir'], round(s['entry'], 6))
+        if s['shape'] == 'SS' and s.get('role') != 'last-swing' and DAY_IDX[s['day']] in ss_days:
+            run = sorted(d for d in ss_days if all(x in ss_days for x in range(min(d, DAY_IDX[s['day']]), max(d, DAY_IDX[s['day']]) + 1)))
+            for n, d in enumerate(run):
+                q = s if n == 0 else dict(s, clone=True)
+                q.update(day=DAYS[d], days=[DAYS[d]], valid_from=max(wk0 + d * 86400000, b0), valid_to=wk0 + (d + 1) * 86400000)
+                q['t0'], q['t1'] = q['valid_from'], q['valid_to']
+                out.append(q)
+        else:
+            out.append(s)
+    extra = len(out) - MAX_SETUPS
+    if extra > 0:                                            # L-04 '<= 11 setups per week per pair': the per-day repeats of the latest days go first, never a designated swing
+        for q in sorted([q for q in out if q.get('clone')], key=lambda q: (-DAY_IDX[q['day']], q.get('confidence', 0)))[:extra]:
+            out.remove(q)
+            R['log'].append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - more than {MAX_SETUPS} setups this week (L-04)")
+    out.sort(key=lambda q: (DAY_IDX[q['day']], 0 if q.get('parent_ref') is None else 1))
+    pfx = out[0]['id'][:2] if out else ''
+    for i, q in enumerate(out):
+        if not q.get('alt'):
+            q['id'] = f"{pfx}{i + 1}"
+    for q in out:
+        if q.get('parent_ref') is not None:
+            q['parent'] = q['parent_ref']['id']
+    R['setups'] = out
     return R
 
 

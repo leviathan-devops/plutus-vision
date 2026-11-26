@@ -112,7 +112,9 @@ def _sweep_bound(X, up):
     6.5 'LSZ' as rejection anchor). Touching sweep zones are one cluster; its extreme = where the stops end."""
     U, spot = X['U'], X['spot']
     side = 'Supply-side' if up else 'Demand-side'
-    lv = sorted([z['level'] for z in X['lsz'] if z['side'] == side and not z['swept'] and ((z['level'] - 0.05 * U > spot) if up else (z['level'] + 0.05 * U < spot))], reverse=not up)
+    # a range is bounded by stops still resting: an extreme a later day already traded through (kept on the map as a recent sweep zone, D-77) has had its stops taken
+    lv = sorted([z['level'] for z in X['lsz'] if z['side'] == side and not z['swept'] and not z.get('swept_recent')
+                 and ((z['level'] - 0.05 * U > spot) if up else (z['level'] + 0.05 * U < spot))], reverse=not up)
     if not lv:
         return None
     cl = [lv[0]]
