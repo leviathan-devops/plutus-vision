@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# s3frames OUTDIR PAIR:MONDAY ... : for each map render three frames for the outside G1 count: PAIR_MONDAY_zones.png (two weeks, zones only), _all.png (two weeks, every layer),
+# _week.png (the forecast week only, every layer, price axis fitted to the week)
+set -u; R="$(cd "$(dirname "$0")/.." && pwd)"; out="$1"; shift; mkdir -p "$R/$out"
+export PATH=$HOME/.local/bin:$PATH XDG_RUNTIME_DIR=/run/user/0
+for pm in "$@"; do p="${pm%%:*}"; m="${pm##*:}"
+  E1TAG=_zones "$R/tools/e1render" "$p" "$m" 1H show_lv=false show_lq=false show_e2=false show_e3=false >/dev/null 2>&1 && mv "$R/evidence/e1tool_${p}_1H_${m}_zones.png" "$R/$out/${p}_${m}_zones.png"
+  E1TAG=_all "$R/tools/e1render" "$p" "$m" 1H show_lv=false show_lq=false >/dev/null 2>&1 && mv "$R/evidence/e1tool_${p}_1H_${m}_all.png" "$R/$out/${p}_${m}_all.png"
+  "$R/tools/pb" goto "$(date -u -d "$m - 1 days" +%F)T12:00" "$(date -u -d "$m + 5 days" +%F)" >/dev/null; "$R/tools/pbfit" >/dev/null; sleep 1
+  "$R/tools/pb" shot "tmp_week" chart >/dev/null && mv "$R/evidence/tmp_week.png" "$R/$out/${p}_${m}_week.png"
+  echo "$pm done"
+done
