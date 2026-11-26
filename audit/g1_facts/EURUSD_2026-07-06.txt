@@ -20,9 +20,10 @@ SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the 
   EU1      Mon SS     SHORT E 1.14442 SL 1.14508 TP 1.14063 5.74R | filled Mon 18:45 -> TP HIT Tue 21:15
   EU2      Mon SS     SHORT E 1.14385 SL 1.14451 TP 1.14063 4.87R | filled Mon 17:30 -> STOPPED Mon 21:45
   EU3      Mon SS     LONG  E 1.14018 SL 1.13960 TP 1.14434 7.23R | filled - -> not filled inside its bracket (order expires)
-  EU4      Wed RWL    SHORT E 1.14269 SL 1.14369 TP 1.13940 3.29R | filled Wed 07:15 -> TP HIT Wed 11:30
-  EU5      Wed BS     LONG  E 1.13940 SL 1.13872 TP 1.14555 9.11R | filled Wed 11:30 -> TP HIT Fri 02:00
-  EU6      Wed SS     LONG  E 1.14018 SL 1.13960 TP 1.14269 4.36R | filled Tue 21:30 -> TP HIT Wed 07:15
-  EU7      Thu Ladder LONG  E 1.14164 SL 1.14120 TP 1.14555 8.93R | filled Wed 21:00 -> TP HIT Fri 02:00
-  EU8      Fri RWL    SHORT E 1.14598 SL 1.14653 TP 1.14349 4.53R | filled Fri 02:15 -> TP HIT Fri 08:15
-  EU9      Fri Ladder LONG  E 1.14401 SL 1.14357 TP 1.14555 3.51R | filled Thu 06:15 -> STOPPED Thu 07:00
+  EU4      Mon SS     LONG  E 1.14095 SL 1.14037 TP 1.14434 5.89R | filled Mon 13:45 -> TP HIT Mon 18:45 || re-armed: filled Tue 19:15 -> STOPPED Tue 21:30
+  EU5      Wed RWL    SHORT E 1.14269 SL 1.14369 TP 1.13940 3.29R | filled Wed 07:15 -> TP HIT Wed 11:30
+  EU6      Wed BS     LONG  E 1.13940 SL 1.13872 TP 1.14555 9.11R | filled Wed 11:30 -> TP HIT Fri 02:00
+  EU7      Wed SS     LONG  E 1.14018 SL 1.13960 TP 1.14269 4.36R | filled Tue 21:30 -> TP HIT Wed 07:15
+  EU8      Thu Ladder LONG  E 1.14164 SL 1.14120 TP 1.14555 8.93R | filled Wed 21:00 -> TP HIT Fri 02:00
+  EU9      Fri RWL    SHORT E 1.14598 SL 1.14653 TP 1.14239 6.52R | filled Fri 02:15 -> TP HIT Fri 12:45
+  EU10     Fri Ladder LONG  E 1.14401 SL 1.14357 TP 1.14555 3.51R | filled Thu 06:15 -> STOPPED Thu 07:00

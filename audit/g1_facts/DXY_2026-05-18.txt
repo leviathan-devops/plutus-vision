@@ -19,3 +19,4 @@ DXY 2026-05-18 spot 99.301
 SETUPS (entry / SL / TP, then what the week's 15m candles did; 're-armed' = the same resting order filled again on a later day after a TP):
   DX1      Mon SS     SHORT E 99.359 SL 99.459 TP 99.047 3.13R | filled Tue 13:30 -> STOPPED Wed 08:15
   DX2      Mon SS     LONG  E 99.038 SL 98.929 TP 99.409 3.4R | filled Mon 12:30 -> TP HIT Tue 14:15 || re-armed: filled Wed 15:15 -> TP HIT Thu 13:15 || re-armed: filled - -> not filled
+  DX3      Mon SS     LONG  E 99.097 SL 99.040 TP 99.409 5.47R | filled Mon 08:30 -> STOPPED Mon 12:30

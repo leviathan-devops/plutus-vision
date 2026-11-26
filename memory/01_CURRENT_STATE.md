@@ -1,3 +1,11 @@
+## STATE (NEWEST, 2026-11-26 night, fable-5-2) - S2 holds (checkpoint 0f2114b); S3 DRY RUN IN PROGRESS. Operator order stands: do not stop while S1-S6 are open.
+- Since the checkpoint: D-54 rockets (20+ pips from the primary, ladder-step stop, premarket timing, parent-link bug fixed), D-55 zones straddling a bound's edge are range anchors (EURUSD his #2), D-56 reversal TP = first rung 30+ pips (EURUSD Fri TP 1.14239).
+- In-window anchor-week trades of his caught (fills helper): DXY 7 / 7, EURUSD 7 / 7, GBPUSD 3 / 7 (his DXY #1 and EURUSD #1 are PRE-ANCHOR trades). 16-map locator: 21 TP fills / 19 stops.
+- S3 dry run: frames evidence/s3/PAIR_MONDAY_{zones,all}.png for Jul 6, Apr 20, Oct 5, May 18 x DXY / EURUSD / GBPUSD; brief audit/G1_brief.md; facts audit/g1_facts/; the outside reviewer writes audit/G1_count_dryrun.md.
+  (frames of EURUSD Jul 6 and DXY May 18 must be re-rendered after D-55 / D-56 before the reviewer starts.) Then: work its defect list, re-run. blind_test/RUN.md = the S5 run package (draft).
+- Known open causes: GBPUSD stops fit rule (a) on the entry ZONE (+3 pips) where the tool uses rule (b) (his #5 stopped in my build); ZR-6B confidence switch tested by hand: breaks DXY #2 by 0.5 pip (B-26 stays OPEN);
+  Apr 20 breakout legs (no retest beyond the floor that week; 1-2-3 retest entry not built); pairs outside the golden week (bounds = sweep zones 1 pip from spot; soft walls excluded as bounds); narrative gate on GBPUSD (no option data -> every zone 45%).
+
 ## S2 CHECKPOINT (2026-11-26, commit tagged s2-checkpoint): anchor week Jul 6-10 2026 holds on DXY + EURUSD by the S2 list - E2 4/5 day tags, E3 his DXY #2-#6 within 3 pips + Thursday rocket + Friday WL+RWL, EURUSD Wed longs 1.14018 / 1.13940,
 8 / 9 setups; frames: ledger 76b (1H) and 75b (15m entries, Backtest tab). NOT part of S2 and still open on the anchor week: his DXY #1, EURUSD #1 #2, GBPUSD #2 #6 #7; EURUSD / GBPUSD reversal TPs. NOW: S3 (four weeks x three pairs), S1 / S4 (audit list), S5, S6.
 
