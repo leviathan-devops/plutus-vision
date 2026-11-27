@@ -33,9 +33,15 @@ def closed_until(pair, tf, ms):
     return [b for b in bars(pair, tf) if b['time'] + TFMS[tf] <= ms]
 
 
+ASOF = {}     # monday -> epoch ms: the DAILY UPDATE at a later London open of the week (L-53, D-136) builds Engine 1 / 2 / 3 as of that instant - every read then stops there
+
+
 def boundary_ms(monday):
     """THE TEMPORAL ANCHOR = Monday London open of the target week, 02:00 New York (P533 session table: London Open 02:00-05:00 ET; CLAUDE.md hard constraint
-    "Temporal anchor = Monday, start of the trading week"; R-15 "rewind to Monday London open"). Nothing stamped at or after it may feed the map."""
+    "Temporal anchor = Monday, start of the trading week"; R-15 "rewind to Monday London open"). Nothing stamped at or after it may feed the map.
+    During a daily update (ASOF): that day's London open."""
+    if monday in ASOF:
+        return ASOF[monday]
     return day_anchor_ms(monday, 0)
 
 

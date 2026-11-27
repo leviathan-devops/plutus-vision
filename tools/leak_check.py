@@ -43,24 +43,30 @@ for pair, monday in weeks:
         print('LEAK-RUNTIME', bad[-1])
     else:
         print(f'leak_check {pair} {monday}: identical output with the bar store cut at the anchor ({len(la) if False else len(a.splitlines())} Pine lines)')
-# 3. DAILY ANCHORING (L-47): each day's part of the daily output (its anchor price, its line segment, its confirmed and dropped orders) must be identical when the bar store is cut at
-#    that day's anchor - nothing after a day's anchor may feed that day.
+# 3. DAILY ANCHORING (L-47 / L-53): each day's trading-day-open part (anchor price, orders confirmed / dropped, alternative state) must be identical when the bar store is cut at that
+#    trading-day open, and each day's London-open part (zones added, chain re-anchor and its orders) identical when it is cut at that London open.
 for pair, monday in weeks:
     import plutus
     D._cache.clear(); D.bars = orig; plutus._MEMO.clear()
-    full = plutus.run(pair, monday, daily=True)[1]['daily']
+    ch = plutus.run(pair, monday, daily=True)[1]
+    full, fullL = ch['daily'], ch.get('daily_L', {})
     for i in range(1, 5):
-        t_a = D.week_start_ms(monday) + i * 86400000 if plutus.DAY_CONFIRM == 'start' else D.day_anchor_ms(monday, i)
+        for when, t_c in (('trading-day open', D.week_start_ms(monday) + i * 86400000 if plutus.DAY_CONFIRM == 'start' else D.day_anchor_ms(monday, i)), ('London open', D.day_anchor_ms(monday, i))):
 
-        def cut2(p, tf, _o=orig, _t=t_a):
-            return [x for x in _o(p, tf) if x['time'] + D.TFMS[tf] <= _t]
-        D._cache.clear(); D.bars = cut2; plutus._MEMO.clear()
-        part = plutus.run(pair, monday, daily=True)[1]['daily']
-        D.bars = orig; D._cache.clear(); plutus._MEMO.clear()
-        for j in range(0, i + 1):
-            if part[j] != full[j]:
-                bad.append(f'{pair} {monday}: day {j} of the daily output changes when the bars after day {i}\'s anchor are removed')
-                print('LEAK-DAILY', bad[-1])
-    if not [b for b in bad if b.startswith(f'{pair} {monday}: day')]:
-        print(f'leak_check {pair} {monday} daily: every day identical with the bar store cut at its anchor')
+            def cut2(p, tf, _o=orig, _t=t_c):
+                return [x for x in _o(p, tf) if x['time'] + D.TFMS[tf] <= _t]
+            D._cache.clear(); D.bars = cut2; plutus._MEMO.clear()
+            ch2 = plutus.run(pair, monday, daily=True)[1]
+            D.bars = orig; D._cache.clear(); plutus._MEMO.clear()
+            part, partL = ch2['daily'], ch2.get('daily_L', {})
+            for j in range(0, i + 1):
+                if part[j] != full[j]:
+                    bad.append(f"{pair} {monday}: day {j} (trading-day-open part) changes when the bars after the {when} of day {i} are removed")
+                    print('LEAK-DAILY', bad[-1])
+            for j in range(1, i + (1 if when == 'London open' else 0)):
+                if partL.get(j) != fullL.get(j):
+                    bad.append(f"{pair} {monday}: day {j} (London-open part) changes when the bars after the {when} of day {i} are removed")
+                    print('LEAK-DAILY', bad[-1])
+    if not [b_ for b_ in bad if b_.startswith(f'{pair} {monday}: day')]:
+        print(f'leak_check {pair} {monday} daily: every day identical with the bar store cut at its trading-day open and at its London open')
 sys.exit(1 if bad else 0)

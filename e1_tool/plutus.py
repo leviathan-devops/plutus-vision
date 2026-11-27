@@ -19,14 +19,50 @@ def _setups(pair, monday):
 
 
 def _map(pair, monday):
-    """the Engine 1 map of the week (built at the Monday anchor)"""
+    """the Engine 1 map of the week (built at the Monday anchor, never under a daily update)"""
     k = ('map', pair, monday)
     if k not in _MEMO:
-        _MEMO[k] = EP.run(pair, monday)
+        saved = D.ASOF.pop(monday, None)
+        try:
+            _MEMO[k] = EP.run(pair, monday)
+        finally:
+            if saved is not None:
+                D.ASOF[monday] = saved
     return _MEMO[k]
 
 
-def engines(pair, monday, X, XD=None):
+def _asof(monday, t, fn):
+    saved = D.ASOF.get(monday)
+    D.ASOF[monday] = t
+    try:
+        return fn()
+    finally:
+        if saved is None:
+            D.ASOF.pop(monday, None)
+        else:
+            D.ASOF[monday] = saved
+
+
+def _map_at(pair, monday, t):
+    """L-53 DAILY ZONE UPDATE: the Engine 1 map rebuilt as of instant t (a day's London open) - only bars closed by t"""
+    k = ('map_at', pair, monday, t)
+    if k not in _MEMO:
+        _MEMO[k] = _asof(monday, t, lambda: EP.run(pair, monday))
+    return _MEMO[k]
+
+
+def _engines_at(pair, monday, t):
+    """Engine 2 + 3 re-anchored at instant t on the map of t (D-136); the Phase 10 source pairs re-anchored at the same instant"""
+    k = ('eng_at', pair, monday, t)
+    if k not in _MEMO:
+        import copy
+        X = copy.deepcopy(_map_at(pair, monday, t))
+        XD = copy.deepcopy(_map_at('DXY', monday, t)) if pair != 'DXY' else None
+        _MEMO[k] = _asof(monday, t, lambda: engines(pair, monday, X, XD, t=t))
+    return _MEMO[k]
+
+
+def engines(pair, monday, X, XD=None, t=None):
     """Engine 2 + Engine 3 on the Engine 1 map X (XD = the DXY map: the master direction for a pair)"""
     lead = E2.build('DXY', monday, XD) if pair != 'DXY' else None      # DXY = master direction (P533:1899-1917; GS Law 7)
     chain = E2.build(pair, monday, X, lead)
@@ -45,7 +81,8 @@ def engines(pair, monday, X, XD=None):
     source = None
     if pair != 'DXY':
         # Phase 10 (E3C:723-770): DXY is processed first; EUR/USD mirrors the DXY setups, GBP/USD mirrors the active EUR/USD mirrors
-        source = _setups('DXY' if pair == 'EURUSD' else 'EURUSD', monday)
+        src_ = 'DXY' if pair == 'EURUSD' else 'EURUSD'
+        source = _setups(src_, monday) if t is None else _engines_at(src_, monday, t)[1]
     return chain, E3.build(pair, monday, X, chain, source)
 
 
@@ -81,131 +118,230 @@ def _status(s, t_from, t_to, pair):
 DAY_CONFIRM = 'start'      # 'start' = the trading day's open (17:00 New York the evening before) | 'london' = the day's London open (02:00 New York)
 
 
+def _levels(ch, Rr):
+    """the Decision-Zone trigger levels of a chain's alternatives: the level Engine 3 gave the alternative's orders (D-109 / D-110), else the alternative's zone (+ its sweep reach)"""
+    lv = {}
+    for s in Rr['setups']:
+        if s.get('alt') and s.get('trigger'):
+            lv.setdefault(s['trigger']['dir'], (s['trigger']['level'], s['trigger'].get('zone')))
+    for a_ in (ch.get('alts') or ([{'alt': ch.get('alt'), 'chain': ch.get('alt_chain')}] if ch.get('alt_chain') else [])):
+        al = a_.get('alt') or {}
+        d_, z_ = al.get('dir'), al.get('zone')
+        if d_ in ('up', 'down') and d_ not in lv and z_:
+            v = z_[1] if d_ == 'up' else z_[0]
+            if al.get('reach') is not None:
+                v = max(v, al['reach']) if d_ == 'up' else min(v, al['reach'])
+            lv[d_] = (v, al.get('decision_zone'))
+    return lv
+
+
+def _new_zones(Xi, have, b0):
+    """L-53 'add new zones each day as they form ... without adding a bunch of duplicate garbage': supply / demand candle zones FORMED SINCE the week anchor, sweep zones of the
+    week's own daily highs / lows (unswept) and pressure zones the day's map draws - each only where no zone of its family is drawn yet (price overlap)"""
+    out = []
+    ov = lambda z, q: z['bot'] <= q['top'] and q['bot'] <= z['top']
+    for z in Xi.get('sd', []):
+        if z.get('origin_time', 0) >= b0 and not any(ov(z, q) for q in have['sd']):
+            out.append(('sd', z)); have['sd'].append(z)
+    for l in Xi.get('lsz', []):
+        q = {'bot': l['bot'], 'top': l['top']}
+        if not l.get('swept') and l.get('source', '')[-10:] >= D.ts(b0)[:10] and not any(ov(q, h) for h in have['lsz']):
+            out.append(('lsz', dict(l))); have['lsz'].append(q)
+    for z in Xi.get('zones', []):
+        if z.get('drawn') and not any(ov(z, q) for q in have['ip']):
+            out.append(('ip', z)); have['ip'].append(z)
+    return out
+
+
+def _new_zones_pine(pair, monday, adds):
+    """the zones added by the daily updates, drawn from the London open that found them; trident_v8 colours (e1_pine)"""
+    g = lambda v: ('%.3f' if pair == 'DXY' else '%.5f') % v
+    tsR = D.week_end_ms(monday)
+    o = []
+    for flag, fam in (('show_sd', 'sd'), ('show_lsz', 'lsz'), ('show_ip', 'ip')):
+        rows = [(t, day, z) for t, day, f_, z in adds if f_ == fam and (fam != 'sd' or z['tf'] in ('240', '60'))]
+        if fam == 'sd':
+            rows_ltf = [(t, day, z) for t, day, f_, z in adds if f_ == fam and z['tf'] in ('30', '15')]
+        o.append(f'    if {flag}')
+        if not rows:
+            o.append('        na')
+        for t, day, z in rows:
+            if fam == 'sd':
+                c = '41,98,255' if z['type'] == 'Demand' else '242,54,69'
+                o.append(f"        box.new({t}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 84), border_color=color.rgb({c}), border_width={2 if z['tf'] == '240' else 1}, xloc=xloc.bar_time)")
+                txt = f"{z.get('label', z['type'])} | new {day}"
+            elif fam == 'lsz':
+                o.append(f"        box.new({t}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 70), border_color=color.new(color.rgb(63,164,106), 40), border_width=1, xloc=xloc.bar_time)")
+                txt = f"LSZ {z.get('source', '')} | new {day}"
+            else:
+                c = EP.SHADE[z['cat']][z['degree']]
+                o.append(f"        box.new({t}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 70), border_color=color.rgb({c}), border_width=2, xloc=xloc.bar_time)")
+                txt = f"{z['name']} | {z['degree']} | new {day}"
+            o.append(f"        label.new({t}, {g((z['top'] + z['bot']) / 2)}, \"{txt}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.white, 25), size=size.tiny)")
+        if fam == 'sd':
+            o.append('    if show_ltf')
+            if not rows_ltf:
+                o.append('        na')
+            for t, day, z in rows_ltf:
+                c = '41,98,255' if z['type'] == 'Demand' else '242,54,69'
+                o.append(f"        box.new({t}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 90), border_color=color.rgb({c}), border_width=1, xloc=xloc.bar_time)")
+    return o
+
+
 def daily_anchor(pair, monday, chain, R):
-    """DAILY ANCHORING (L-47; operator M-58 item 2 approving 'Tuesday-Friday orders from each day's London-open position against the fixed Monday map' and the Engine 2 line redrawn
-    per day): the shape chain and the map stay Monday's (the chain leads, R-03); at each day's London open (02:00 New York; Fibonacci Spiderwebs items 3-5 'London Session open position
-    = Trade Setup Anchor'; E3C:115 WorkingDayMap.dayOpenSpot), with only the bars closed by then:
-    - the day's line restarts from the day's London-open price and runs on to the forecast's next point;
-    - each order of that day is CONFIRMED or dropped: an order block it stands on (a supply / demand candle zone) must still be one - one-time use, never closed through (P452:699-703;
-      L-38; e1_sd.valid 'never closed through'); liquidity bands and pressure zones are levels price revisits (L-23 / L-24) and are not used up; and the open price must stand on the
-      order's side of its entry (a limit order rests on its own side of price).
-    Monday = the week anchor itself. Returns the merged chain view, the confirmed setups and the per-day record."""
+    """DAILY ANCHORING (L-47 / L-53; D-131, D-132, D-134, D-136). The Monday map and chain hold while they hold. Every trading day:
+    at its TRADING-DAY OPEN (17:00 New York the evening before; the day's orders rest through the Asian session), with only bars closed by then:
+      - a 1H close beyond a Decision Zone of the chain in force since its anchor = the chain failed (6.6 Step 4): its alternative is the chain until the next London open;
+      - the day's line restarts from that moment's price; each order of the day is CONFIRMED (order block not closed through - one-time use; price on the order's side) or dropped;
+        an order still resting / open is not copied (L-52) - it keeps resting;
+    at its LONDON OPEN (02:00 New York), with only bars closed by then (L-53 'synchronously re-update the zones at the beginning of London session each successive day'):
+      - the map is rebuilt; zones formed since the week anchor are added (no duplicates of drawn zones);
+      - a failed chain is RE-ANCHORED on the rebuilt map (Engine 2 + 3 as of the London open): its line, its day boxes and its orders from then on; the failed chain's pending
+        orders of the day are cancelled there."""
     DAYS = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri')
     f = (lambda v: '%.3f' % v) if pair == 'DXY' else (lambda v: '%.5f' % v)
+    import e3_trades as E3
     b0 = D.boundary_ms(monday)
-    segs, alt_segs, audit, keep, log, parts, days = [], [], list(chain['audit']), [], list(R['log']), {}, []
-    # 6.6 Step 4 'construct at least one alternative chain that activates if the primary fails at a specific Decision Zone': at each day's anchor, a 1H close beyond a Decision Zone
-    # since the week anchor = the primary has failed there - from that day the alternative chain is the chain (its day boxes, its line, its orders live), the primary's orders void
-    alts = [a_ for a_ in (chain.get('alts') or ([{'alt': chain.get('alt'), 'chain': chain.get('alt_chain')}] if chain.get('alt_chain') else [])) if a_.get('alt') and a_.get('chain')]
-    lvl = {}
-    for s in R['setups']:                                       # the trigger level Engine 3 gave the alternative's orders (beyond a retested liquidity / a sweep reach, D-109 / D-110)
-        if s.get('alt') and s.get('trigger'):
-            lvl.setdefault(s['trigger']['dir'], s['trigger']['level'])
-    for a_ in alts:
-        d_, z_ = a_['alt']['dir'], a_['alt']['zone']
-        if d_ not in lvl and z_:
-            lv = z_[1] if d_ == 'up' else z_[0]
-            if a_['alt'].get('reach') is not None:
-                lv = max(lv, a_['alt']['reach']) if d_ == 'up' else min(lv, a_['alt']['reach'])
-            lvl[d_] = lv
-    active = None
+    segs, alt_segs, audit, keep, log, parts, partsL, days, adds = [], [], list(chain['audit']), [], list(R['log']), {}, {}, [], []
+    X0 = _map(pair, monday)
+    have = {'sd': list(X0.get('sd', [])), 'lsz': [{'bot': l['bot'], 'top': l['top']} for l in X0.get('lsz', []) if not l.get('swept')],
+            'ip': [z for z in X0.get('zones', []) if z.get('drawn')]}
+    cur = {'chain': chain, 'R': R, 'anchor': b0, 'lvl': _levels(chain, R), 'active': None}
+
+    def alts_of(ch):
+        return [a_ for a_ in (ch.get('alts') or ([{'alt': ch.get('alt'), 'chain': ch.get('alt_chain')}] if ch.get('alt_chain') else [])) if a_.get('alt') and a_.get('chain')]
+
+    def confirm(s, i, t_a, op, since):
+        """None = confirmed, else the reason it is not"""
+        if s.get('category') == 'Reinforcement' or s.get('alt') or i == 0:
+            return None
+        z = s.get('anchor') or {}
+        sd = 'bot' in z and 'top' in z and (z.get('src') == 'SD' or ('tf' in z and not z.get('liq')))     # an order block (supply / demand candle zone): one-time use
+        brk = next((x for x in since if ((x['close'] < z['bot']) if s['dir'] == 'LONG' else (x['close'] > z['top']))), None) if sd else None
+        if brk is not None:
+            return f"anchor zone {f(z['bot'])}-{f(z['top'])} closed through {D.ts(brk['time'] + 3600000)} UTC (one-time use)"
+        if (op <= s['entry']) if s['dir'] == 'LONG' else (op >= s['entry']):
+            return f"the price at the anchor {f(op)} already on the far side of the entry {f(s['entry'])}"
+        return None
+
     for i in range(5):
-        t_a, t_e = D.day_anchor_ms(monday, i), D.week_start_ms(monday) + (i + 1) * 86400000
-        if i > 0 and DAY_CONFIRM == 'start':
-            t_a = D.week_start_ms(monday) + i * 86400000          # the trading day's open, 17:00 New York the evening before: the day's orders rest through the Asian session
+        t_a = b0 if i == 0 else (D.week_start_ms(monday) + i * 86400000 if DAY_CONFIRM == 'start' else D.day_anchor_ms(monday, i))
+        t_L, t_e = D.day_anchor_ms(monday, i), D.week_start_ms(monday) + (i + 1) * 86400000
         b1 = D.closed_until(pair, '60', t_a)
         op = b1[-1]['close']
         since = [x for x in b1 if x['time'] >= b0]
-        if i > 0 and active is None:
-            for a_ in alts:
+        # ---- trading-day open: has the chain in force failed at a Decision Zone? (6.6 Step 4) -> its alternative is the chain
+        if i > 0 and cur['active'] is None:
+            for a_ in alts_of(cur['chain']):
                 d_ = a_['alt']['dir']
-                lv = lvl.get(d_)
-                brk = next((x for x in since if ((x['close'] > lv) if d_ == 'up' else (x['close'] < lv))), None) if lv is not None else None
+                lv = cur['lvl'].get(d_)
+                brk = next((x for x in b1 if x['time'] >= cur['anchor'] and ((x['close'] > lv[0]) if d_ == 'up' else (x['close'] < lv[0]))), None) if lv else None
                 if brk is not None:
-                    active = dict(a_, level=lv, at=brk['time'] + 3600000)
-                    audit.append(f"ALTERNATIVE CHAIN ACTIVE from {DAYS[i]} (6.6 Step 4): 1H close {'above' if d_ == 'up' else 'below'} {f(lv)} ({a_['alt'].get('decision_zone', '')}) "
-                                 f"at {D.ts(active['at'])} UTC - the primary failed at its Decision Zone: " + ' -> '.join(c['shape'] for c in a_['chain'].get('chain', [])))
+                    cur['active'] = dict(a_, level=lv[0], at=brk['time'] + 3600000)
+                    audit.append(f"ALTERNATIVE CHAIN ACTIVE from the {DAYS[i]} trading-day open (6.6 Step 4): 1H close {'above' if d_ == 'up' else 'below'} {f(lv[0])} ({a_['alt'].get('decision_zone', '')}) "
+                                 f"at {D.ts(cur['active']['at'])} UTC: " + ' -> '.join(c['shape'] for c in a_['chain'].get('chain', [])))
                     break
-        view = active['chain'] if active else chain
+        view = cur['active']['chain'] if cur['active'] else cur['chain']
         d = next((x for x in view.get('days', []) if x['day'] == DAYS[i]), None) or next((x for x in chain['days'] if x['day'] == DAYS[i]), None)
         if d is not None:
             days.append(d)
         seg = _cut(view['path'], t_a, t_e)
         if i > 0 and len(seg) > 1:
             seg[0] = (t_a, op)
-        if len(seg) > 1:
-            segs.append(seg)
-        if active is None and chain.get('alt_chain'):
-            q = _cut(chain['alt_chain']['path'], t_a, t_e)
+        if cur['active'] is None and view.get('alt_chain'):
+            q = _cut(view['alt_chain']['path'], t_a, t_e)
             if i > 0 and len(q) > 1:
                 q[0] = (t_a, op)
             if len(q) > 1:
                 alt_segs.append(q)
         if i > 0:
-            audit.append(f"DAILY ANCHOR {DAYS[i]} {'trading-day open' if DAY_CONFIRM == 'start' else 'London open'} {D.ts(t_a)} UTC: price {f(op)}")
+            audit.append(f"DAILY ANCHOR {DAYS[i]} trading-day open {D.ts(t_a)} UTC: price {f(op)}")
         kept, dropped = [], []
-        # an order resting from an earlier day (D-76 'rest_from') belongs to the day it starts resting: it is confirmed at that day's anchor
-        for s in [x for x in R['setups'] if (x.get('rest_from') or x['day']) == DAYS[i]]:
+        for s in [x for x in cur['R']['setups'] if (x.get('rest_from') or x['day']) == DAYS[i]]:
             why = None
-            if s.get('clone'):
-                # L-52 'One unique trade per observable move ... a trade = one instance where price hits the entry and then the take-profit': a per-day repeat of an order that is
-                # still resting or open is the SAME trade - the live order keeps resting into this day (one box), no copy; once that order has completed (SL or TP before this
-                # day's anchor) the level may carry a NEW trade for the next move, confirmed like any order of the day
-                live = next((q for q in reversed(keep) if q.get('dir') == s['dir'] and abs(q['entry'] - s['entry']) < 1e-9 and q.get('category') == s.get('category')), None)
-                if live is not None:
-                    st_ = _status(live, max(live['valid_from'], live.get('day_anchor') or 0), t_a, pair)
-                    if st_ in ('pending', 'open'):
-                        live['valid_to'] = max(live['valid_to'], t_e)
-                        live['t1'] = max(live.get('t1') or 0, t_e)
-                        live['days'] = list(live.get('days') or [live['day']]) + [DAYS[i]]
-                        dropped.append(s)
-                        log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: NOT A NEW TRADE - {live['id']} is still {st_} at the {DAYS[i]} anchor: it keeps resting (L-52)")
-                        continue
-                    s['clone'] = False                           # the earlier order completed: a new trade for the next move
-                    s.pop('origin', None)
-                else:
-                    s['clone'] = False
-                    s.pop('origin', None)
-            if active is not None and s.get('category') != 'Reinforcement':
-                if s.get('alt') and s.get('trigger') and s['trigger']['dir'] == active['alt']['dir']:
-                    s['alt'] = False                             # the alternative chain is the chain now: its order is live, no longer conditional
-                    s['why'] = f"ALTERNATIVE chain ACTIVE since {D.ts(active['at'])} UTC: " + s['why'].split(': ', 1)[-1]
+            if cur['active'] is not None and s.get('category') != 'Reinforcement':
+                if s.get('alt') and s.get('trigger') and s['trigger']['dir'] == cur['active']['alt']['dir']:
+                    s['alt'] = False
+                    s['why'] = f"ALTERNATIVE chain ACTIVE since {D.ts(cur['active']['at'])} UTC: " + s['why'].split(': ', 1)[-1]
                     s.pop('trigger', None)
                 elif s.get('alt'):
-                    why = 'an alternative of another Decision Zone (the active alternative is the chain)'
+                    why = 'an alternative of another Decision Zone'
                 else:
-                    why = f"the primary chain failed at its Decision Zone ({D.ts(active['at'])} UTC) - the alternative chain is active"
-            if why is None and i > 0 and not s.get('alt') and s.get('category') != 'Reinforcement':
-                z = s.get('anchor') or {}
-                sd = 'bot' in z and 'top' in z and (z.get('src') == 'SD' or ('tf' in z and not z.get('liq')))     # an order block (supply / demand candle zone): one-time use
-                lo_, hi_ = (z['bot'], z['top']) if sd else (None, None)
-                brk = next((x for x in since if ((x['close'] < lo_) if s['dir'] == 'LONG' else (x['close'] > hi_))), None) if sd else None
-                if brk is not None:
-                    why = f"anchor zone {f(lo_)}-{f(hi_)} closed through {D.ts(brk['time'] + 3600000)} UTC (one-time use)"
-                elif (op <= s['entry']) if s['dir'] == 'LONG' else (op >= s['entry']):
-                    why = f"the price at the day's anchor {f(op)} already on the far side of the entry {f(s['entry'])}"
-            if s.get('parent_ref') is not None and s['parent_ref'] not in kept and s['parent_ref'] in R['setups'] and (s['parent_ref'].get('rest_from') or s['parent_ref']['day']) == DAYS[i]:
-                why = why or 'its parent was not confirmed'
+                    why = f"the chain failed at its Decision Zone ({D.ts(cur['active']['at'])} UTC) - its alternative is active"
+            if why is None and s.get('clone'):
+                live = next((q for q in reversed(keep) if q.get('dir') == s['dir'] and abs(q['entry'] - s['entry']) < 1e-9 and q.get('category') == s.get('category')), None)
+                if live is not None and _status(live, max(live['valid_from'], live.get('day_anchor') or 0), t_a, pair) in ('pending', 'open'):
+                    live['valid_to'] = max(live['valid_to'], t_e)
+                    live['t1'] = max(live.get('t1') or 0, t_e)
+                    dropped.append(s)
+                    log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: NOT A NEW TRADE - {live['id']} still resting / open: it keeps resting (L-52)")
+                    continue
+                s['clone'] = False
+                s.pop('origin', None)
+            why = why or confirm(s, i, t_a, op, since)
+            if why is None and s.get('parent_ref') is not None and s['parent_ref'] not in kept and s['parent_ref'] not in keep:
+                why = 'its parent was not confirmed'
             if why:
                 dropped.append(s)
-                log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: NOT CONFIRMED at the {DAYS[i]} anchor {D.ts(t_a)} UTC - {why}")
+                log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: NOT CONFIRMED at {D.ts(t_a)} UTC - {why}")
             else:
                 if i > 0:
                     s['day_anchor'] = t_a
                 kept.append(s)
         keep += kept
-        parts[i] = {'open': op, 'active': None if active is None else (active['alt']['dir'], active['level'], active['at']), 'segment': seg,
-                    'orders': [(s['id'], s['dir'], s['entry'], s['sl'], s['tp']) for s in kept], 'dropped': [s['id'] for s in dropped]}
+        parts[i] = {'open': op, 'active': None if cur['active'] is None else (cur['active']['alt']['dir'], cur['active']['level'], cur['active']['at']),
+                    'orders': [(s['dir'], s['entry'], s['sl'], s['tp']) for s in kept], 'dropped': len(dropped), 'seg0': seg[:1]}
+        # ---- London open (L-53): the rebuilt map adds the zones formed since the week anchor; a failed chain is re-anchored on it
+        if i > 0:
+            Xi = _map_at(pair, monday, t_L)
+            new = _new_zones(Xi, have, b0)
+            adds += [(t_L, DAYS[i], fam, z) for fam, z in new]
+            if new:
+                audit.append(f"DAILY ZONE UPDATE {DAYS[i]} London open {D.ts(t_L)} UTC (L-53): " + '; '.join(f"{fam} {f(z['bot'])}-{f(z['top'])}" for fam, z in new))
+            reanch = None
+            if cur['active'] is not None:
+                ch_i, R_i = _engines_at(pair, monday, t_L)
+                opL = Xi['spot']
+                for s in kept:                                   # the failed chain's orders of the day not yet filled are cancelled at the re-anchor
+                    if s.get('category') != 'Reinforcement' and _status(s, max(s['valid_from'], s.get('day_anchor') or 0), t_L, pair) == 'pending':
+                        s['valid_to'] = s['t1'] = max(t_L, s['valid_from'])
+                        log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: CANCELLED at the {DAYS[i]} London open - the chain is re-anchored")
+                audit.append(f"CHAIN RE-ANCHORED at the {DAYS[i]} London open {D.ts(t_L)} UTC on the rebuilt map (D-136), price {f(opL)}: " + ' -> '.join(c['shape'] for c in ch_i.get('chain', [])))
+                audit += ['  ' + a for a in ch_i['audit'] if not a.startswith('Primary Timeframe')]
+                log += [f"{DAYS[i]} re-anchored run: {l}" for l in R_i['log']]
+                cur = {'chain': ch_i, 'R': R_i, 'anchor': t_L, 'lvl': _levels(ch_i, R_i), 'active': None}
+                d2 = next((x for x in ch_i.get('days', []) if x['day'] == DAYS[i]), None)
+                if d2 is not None:
+                    days[-1:] = [d2] if (days and days[-1]['day'] == DAYS[i]) else days[-1:] + [d2]
+                seg = _cut(seg, t_a, t_L) if len(seg) > 1 else seg
+                seg2 = _cut(ch_i['path'], t_L, t_e)
+                if len(seg2) > 1:
+                    segs.append(seg2)
+                newk = []
+                for s in [x for x in R_i['setups'] if (x.get('rest_from') or x['day']) == DAYS[i] and not x.get('clone')]:
+                    why = confirm(s, i, t_L, opL, [x for x in D.closed_until(pair, '60', t_L) if x['time'] >= b0])
+                    if why is None and s.get('parent_ref') is not None and s['parent_ref'] not in newk:
+                        why = 'its parent was not confirmed'
+                    if why:
+                        log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: NOT CONFIRMED at the re-anchor {D.ts(t_L)} UTC - {why}")
+                    else:
+                        s['day_anchor'] = t_L
+                        s['valid_from'] = max(s['valid_from'], t_L)
+                        newk.append(s)
+                keep += newk
+                reanch = (t_L, [(s['dir'], s['entry'], s['sl'], s['tp']) for s in newk])
+            partsL[i] = {'adds': [(fam, round(z['bot'], 6), round(z['top'], 6)) for fam, z in new], 'reanchor': reanch}
+        if len(seg) > 1:
+            segs.append(seg)
     keep = [s for s in keep if s.get('parent_ref') is None or s['parent_ref'] in keep]
-    import e3_trades as E3
     trades = [q for q in keep if q.get('category') != 'Reinforcement' and not q.get('alt')]
     if len(trades) > E3.MAX_SETUPS:                               # L-04 / R-07: at most 11 trades a week - the latest days' weakest go first (as e3_trades.build)
         raw = lambda q: sum(v for _, v in (q.get('conf_parts') or []))
-        for q in sorted(trades, key=lambda q: (0 if q.get('clone') else 1, -E3.DAY_IDX[q['day']], q.get('confidence', 0), raw(q)))[:len(trades) - E3.MAX_SETUPS]:
-            keep = [x for x in keep if x is not q and x.get('origin') is not q and x.get('parent_ref') is not q]
+        for q in sorted(trades, key=lambda q: (-E3.DAY_IDX[q['day']], q.get('confidence', 0), raw(q)))[:len(trades) - E3.MAX_SETUPS]:
+            keep = [x for x in keep if x is not q and x.get('parent_ref') is not q]
             log.append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - more than {E3.MAX_SETUPS} trades this week (L-04)")
     pfx = {'DXY': 'DX', 'EURUSD': 'EU', 'GBPUSD': 'GB'}[pair]     # one numbering for the week: every order a unique trade (L-52)
-    keep.sort(key=lambda q: (E3.DAY_IDX[q['day']], 0 if q.get('parent_ref') is None else 1))
+    keep.sort(key=lambda q: (E3.DAY_IDX[q['day']], q.get('day_anchor') or 0, 0 if q.get('parent_ref') is None else 1))
     n, na = 0, {}
     for q in keep:
         if q.get('alt'):
@@ -219,7 +355,7 @@ def daily_anchor(pair, monday, chain, R):
         if q.get('parent_ref') is not None:
             q['parent'] = q['parent_ref']['id']
     out = dict(chain)
-    out.update(days=days, segments=segs, alt_segments=alt_segs, audit=audit, daily=parts, n_real=len(days))
+    out.update(days=days, segments=segs, alt_segments=alt_segs, audit=audit, daily=parts, daily_L=partsL, n_real=len(days), zone_adds=adds)
     R2 = dict(R)
     R2.update(setups=keep, log=log)
     return out, R2
@@ -245,7 +381,7 @@ def run(pair, monday, daily=False):
             x_d = (d['t0'] + d['t1']) // 2 if d['day'] != 'Fri' else d['t0'] + (d['t1'] - d['t0']) // 4
             w_d = int(1.65 * len(f"{d['day']} {'+'.join(d['shapes'])}") * 3600000)
             setups['avoid'] += [(x_d, w_d, y_d), (x_d, w_d, y_d - 0.05 * sp_t)]
-    extra = E2.pine(pair, monday, chain) + (E3.pine(pair, monday, setups) if E3 else []) + table(pair, monday, X, chain, setups)
+    extra = (_new_zones_pine(pair, monday, chain['zone_adds']) if chain.get('zone_adds') else []) + E2.pine(pair, monday, chain) + (E3.pine(pair, monday, setups) if E3 else []) + table(pair, monday, X, chain, setups)
     # the zones Engine 2 designates (bounds, pivot, targets, the from / to zone of every chain step): a V1 liquidity band among them is drawn by the tool even when it stands alone (D-107)
     des = [chain.get(k) for k in ('ceil', 'floor', 'pivot', 'target', 'target2', 'far_liq', 'near', 'far')] + [st.get(k) for st in chain['chain'] for k in ('frm', 'to')]
     X['e2_zones'] = [(z['bot'], z['top']) for z in des if isinstance(z, dict) and 'bot' in z]

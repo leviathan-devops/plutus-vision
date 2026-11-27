@@ -31,7 +31,7 @@ def _atr14(bars):
 
 def harvest(pair, monday, tf):
     """-> {'tf', 'bars', 'order_blocks': [{side, bot, top, time}], 'liquidity': [{bot, top}]} ; cached on disk (deterministic for closed bars)"""
-    cache = os.path.join(HERE, 'cache', 'v1s', f'{pair}_{tf}_{monday}.json')
+    cache = os.path.join(HERE, 'cache', 'v1s', f'{pair}_{tf}_{monday}.json' if monday not in D.ASOF else f'{pair}_{tf}_{monday}_{D.ASOF[monday]}.json')     # a daily update has its own bars (D-136)
     if os.path.exists(cache):
         return json.load(open(cache))
     k = ENGINE_TICK / TV_TICK[pair]
