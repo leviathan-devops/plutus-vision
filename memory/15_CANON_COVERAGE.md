@@ -25,24 +25,24 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 ## 1. The seven laws + golden-standard construction rules (GS; from his 38 winning trades)
 | id | ref | requirement | function | state |
 |---|---|---|---|---|
-| LAW1 | GS:9-28 | zones from 15m+30m+1H+4H(+8H) simultaneously; widths 5m 3-12 / 15m 5-22 / 30m 10-35 / 1H 10-50 / 4H 20-120 / 8H 30-200 pips | zone map per TF | NB |
-| LAW2 | GS:30-45, 250-270 | shape -> max entry distance from spot: SS 30, R 50, RS 80, BS 100, RWL 100, WL 200 (default 60); setups only at zones the day's shape reaches | e3 reachability | NB |
-| LAW3 | GS:47-61 | entry never at a 4H edge: 15m edge (scalp, 0-2 pips inside), 30m edge (swing), 1H edge (HTF swing, nearest key level); 4H = bias + TP only; reinforcement at FAR edge | e3 entry | NB |
-| LAW4 | GS:63-79, 272-300 | SL outside the nearest liquidity shield; 5-15 pips (median 12; never > 25 standard; 25-50 only behind 4H/8H shield); no LSZ between entry and SL -> widen to next LSZ or reject | e3 sl | NB |
+| LAW1 | GS:9-28 | zones from 15m+30m+1H+4H(+8H) simultaneously; widths 5m 3-12 / 15m 5-22 / 30m 10-35 / 1H 10-50 / 4H 20-120 / 8H 30-200 pips | zone map per TF | PB [2026-11-27 reconciled: zones of 15m / 30m / 1H / 4H are built (e1_sd stacked map, e1_v1 harvest per timeframe); 5m / 8H not built; widths not enforced as a gate] |
+| LAW2 | GS:30-45, 250-270 | shape -> max entry distance from spot: SS 30, R 50, RS 80, BS 100, RWL 100, WL 200 (default 60); setups only at zones the day's shape reaches | e3 reachability | PB [reconciled: SS reach 0.30 in e2_chain.bounds and E3 anchors; the per-shape maxima R 50 / RS 80 / BS-RWL 100 / WL 200 are not a gate on E3 candidates] |
+| LAW3 | GS:47-61 | entry never at a 4H edge: 15m edge (scalp, 0-2 pips inside), 30m edge (swing), 1H edge (HTF swing, nearest key level); 4H = bias + TP only; reinforcement at FAR edge | e3 entry | PB [reconciled: entries on LQZ rungs / nested lower-timeframe order blocks / zone edges by TS-1, F1-A, F1-C (e3_trades); a 4H band is never an entry edge; reinforcement at the FAR edge not built] |
+| LAW4 | GS:63-79, 272-300 | SL outside the nearest liquidity shield; 5-15 pips (median 12; never > 25 standard; 25-50 only behind 4H/8H shield); no LSZ between entry and SL -> widen to next LSZ or reject | e3 sl | PB [reconciled: ladder-step stops behind shields (e3_trades._stop: rule (b) thick 4H band / second 1H rung, rule (a), ZR-6B, golden fallback, 36-pip ceiling, 9.5 envelope D-111); the 25-50 pip class behind a 4H / 8H shield not built] |
 | LAW5 | GS:81-97 | Fib anchored to entry zone ceiling/floor: entries .382/.5/.618(.786); rocket 1 = 1.382; rocket 2 = 1.618; 2.382 TP / rocket-3 trigger; 2.786 extended | e3 fib |PB (built: Fib levels of a supply / demand zone as its internal steps, e3_trades._env; first rocket on the retest-leg grid 0.786 with SL 0.618, D-83; PDF TP buffer 1.5. NOT built: the spiderweb as entry construction - PDF re-read first-hand 2026-11-27, a mechanical anchoring of the Monday scalp web was probed and rejected, journal) |
 | LAW6 | GS:99-139, 325-358 | ladder = reinforcements on an existing primary at a BoM zone; rockets at next MoM zones 20-30 pips apart snapped to Fib 1.382 / 1.618; SL cascade (R1 -> primary BE; R2 -> R1 BE); TP at opposing BoM / liquidity shield | e3 rockets |PB (built: reinforcements on a BS primary at intermediate rungs 20+ pips apart, own ladder stop, parent TP, premarket bracket, cancelled with the parent; NOT built: SL cascade to breakeven, trip-wire, rocket types) |
-| LAW7 | GS:141-154 | build ALL zones from ALL TFs before any setup; per day's shape the expected travel range; no reachable zone -> "no actionable setup" | pipeline order | NB |
-| GS-C1 | GS:222-248 | per 4H zone: 15m zones within, 30m within/near, 1H overlapping; LTF zone edge = entry, LTF opposite edge + buffer = SL, 4H opposing zone = TP, Fib from LTF range; no LTF zone within 30 pips -> 4H edge flagged "HTF-only" | e3 construct | NB |
+| LAW7 | GS:141-154 | build ALL zones from ALL TFs before any setup; per day's shape the expected travel range; no reachable zone -> "no actionable setup" | pipeline order | B [reconciled: pipeline order E1 map -> E2 chain -> E3 on E2-designated zones (plutus.run); days with no anchor print No qualifying setups] |
+| GS-C1 | GS:222-248 | per 4H zone: 15m zones within, 30m within/near, 1H overlapping; LTF zone edge = entry, LTF opposite edge + buffer = SL, 4H opposing zone = TP, Fib from LTF range; no LTF zone within 30 pips -> 4H edge flagged "HTF-only" | e3 construct | PB [reconciled: lower-timeframe order blocks nested in the anchor as entry sources (D-46, _env blocks); SL = ladder steps (E3C), TP = Law-14 walk (E3C) - the GS Fib-from-LTF-range step not built] |
 | GS-C4 | GS:302-323 | depleted zone allowed as BREAKOUT entry if a fresh 15m/30m zone sits at the same price | e3 | NB |
-| GS-TAX | GS:506-535 | labels: BoM/MoM (Unmitigated / Mitigated Nx), MoM (Shielded), LSZ / Liquidity Shield (Bear/Bull Conquered, Contesting = ZoC), "15m Refined 30m" etc.; states -> entry validity (UM, 1x = ENTRY-PRIMARY; 2x conditional; 3x+ TP only; Shielded higher priority) | zone states | NB |
+| GS-TAX | GS:506-535 | labels: BoM/MoM (Unmitigated / Mitigated Nx), MoM (Shielded), LSZ / Liquidity Shield (Bear/Bull Conquered, Contesting = ZoC), "15m Refined 30m" etc.; states -> entry validity (UM, 1x = ENTRY-PRIMARY; 2x conditional; 3x+ TP only; Shielded higher priority) | zone states | PB [reconciled: BoM / MoM + Unmitigated / Mitigated Nx labels (V1 form, e1_sd), sweep zones; Shielded / ZoC states not built] |
 | GS-CND | GS:537-549 | entry confirmation candle patterns at zone touch (engulfing, pin bar, inside bar, breakout candle, piercing wick) | e3 | NB |
-| GS-TPH | GS:553-566 | TP zone timeframe >= entry zone timeframe; a 15m entry never targets a 15m zone | e3 tp | NB |
-| GS-SIZ | GS:570-582 | ladder sizing 50/30/20 (or thirds) shown | e3 | NB |
-| GS-SES | GS:586-596 | London Open scalps; London/NY overlap breakouts; NY Mid HTF swings; NY Open reinforcement triggers | e3 session | NB |
-| GS-REF | GS:600-618 | zones of adjacent TFs overlapping within 5 pips = ONE "Refined" zone: width = the narrower, status = the fresher, label "15m Refined 30m" | zone map | NB |
+| GS-TPH | GS:553-566 | TP zone timeframe >= entry zone timeframe; a 15m entry never targets a 15m zone | e3 tp | PB [reconciled: E2 target timeframe matching (e2_chain.TF_MATCH); E3 Law-14 walk stops at 1H / 4H zones only; no explicit entry-TF vs TP-TF gate] |
+| GS-SIZ | GS:570-582 | ladder sizing 50/30/20 (or thirds) shown | e3 | PB [reconciled: sizing 50 / 30 / 20 named in the reinforcement docstring / report; not drawn] |
+| GS-SES | GS:586-596 | London Open scalps; London/NY overlap breakouts; NY Mid HTF swings; NY Open reinforcement triggers | e3 session | B [reconciled: SESSION_WINDOW per category (E3C:563-571), session brackets per setup day] |
+| GS-REF | GS:600-618 | zones of adjacent TFs overlapping within 5 pips = ONE "Refined" zone: width = the narrower, status = the fresher, label "15m Refined 30m" | zone map | B [reconciled: e1_sd stacked map joins adjacent timeframes at one level as "15m Refined 30m"] |
 | GS-DXY | GS:622-634 | DXY: zone width 5-20 pips, SL 7-15, master direction | | NB |
 | GS-WAR | GS:437-503 | ZoC (3+ TF overlap): holds -> back to SS; fails -> BS to the opposing BoM, WL there, then R | e2 | NB |
-| GS-V4 | GS:703-730 | telescope 4H -> 1H -> 30m -> 15m with merge; ATR(14) Wilder; path-based setup: spot -> entry LQZ -> next zone (SL) -> demand+liquidity (TP); 3-entry staggered with forward spreads (EUR 1 pip, GBP 2, DXY 0.02); DXY cascade hard filter; trade chaining | pipeline | NB |
+| GS-V4 | GS:703-730 | telescope 4H -> 1H -> 30m -> 15m with merge; ATR(14) Wilder; path-based setup: spot -> entry LQZ -> next zone (SL) -> demand+liquidity (TP); 3-entry staggered with forward spreads (EUR 1 pip, GBP 2, DXY 0.02); DXY cascade hard filter; trade chaining | pipeline | PB [reconciled: path spot -> entry LQZ -> next step (SL) -> opposing zone (TP), Mechanism A forward spreads, trade chaining (Law 27); ATR(14), DXY cascade hard filter not built] |
 
 ## 2. Engine 1 (P533 Part III-V; P452 where "unchanged")
 | id | ref | requirement (short) | function | state |
@@ -85,25 +85,25 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | id | ref | requirement (short) | state |
 |---|---|---|---|
 | E2-61 | 1741-1769 | taxonomy SS / BS (PBS) / R (RS) / WL (RWL, PWL, PRWL) / WLS with IP-zone signatures | PB |
-| E2-62 | 1770-1782 | classification matrix applied in priority order 1-6 (zone-anchored conditions) | NB |
-| E2-63 | 1783-1799 | observed chains by frequency (SS->BS->R->WL highest) | NB |
+| E2-62 | 1770-1782 | classification matrix applied in priority order 1-6 (zone-anchored conditions) | B [reconciled: current_shape applies the matrix rows in order on the last six sessions (D-40)] |
+| E2-63 | 1783-1799 | observed chains by frequency (SS->BS->R->WL highest) | PB [reconciled: chains extended from 6.4 / 6.4.1; 6.3 cited for BS -> RWL -> SS -> BS and PBS -> R/SS; the frequency table is not a selector] |
 | E2-64 | 1800-1818 | transition rules table | PB |
 | E2-641 | 1819-1838 | ZFP-conditioned transitions (BS at Hard Wall -> RWL; 20-40 -> R; > 60 -> PBS; SS both < 30 -> SS; R > 1 session -> SS ...) | PB |
-| E2-642 | 1839-1874; FA:541-572 | MoM-zone decision tree by reaction; reaction count selects the branch; BoM always reacts | NB |
-| E2-65 | 1875-1886 | anchoring rules by shape (required E1 metrics) | NB |
+| E2-642 | 1839-1874; FA:541-572 | MoM-zone decision tree by reaction; reaction count selects the branch; BoM always reacts | B [reconciled: e2_chain.branch - reaction counter picks the branch; BoM always reacts] |
+| E2-65 | 1875-1886 | anchoring rules by shape (required E1 metrics) | B [reconciled: e2_chain.bounds (D-27, D-63, D-64, D-88)] |
 | E2-66 | 1887-1918 | forward mapping steps 1-5: current shape, transition assessment, chain extension with audit trail (max 5, stop < 25%), alternative chain with decision zone, day decomposition; pair translation (same shapes, inverted direction) | PB [2026-11-27: alternative chains - both alternatives of a two-sided range, translated to the pairs, each with its Decision Zone trigger, D-109 / D-110] |
-| E2-67 | 1919-1930 | zero-tolerance rules 1-9 | NB |
-| E2-68 | 1931-1945 | shape-to-zone quick reference (durations) | NB |
+| E2-67 | 1919-1930 | zero-tolerance rules 1-9 | PB [reconciled: rules 1-3, 5, 6 hold by construction (anchored shapes, audit trail, pre-anchor data, alternative chains, 25% stop); rule 9 catalysts = expiry cuts only (red folder / auctions NO DATA); rule 7 WLS not built] |
+| E2-68 | 1931-1945 | shape-to-zone quick reference (durations) | B [reconciled: SS_MIN_SESSIONS / BS_SESSIONS / SLOW_DAYS / FA9 durations (D-34..D-41)] |
 | E2-CP | 1946-1960 | consolidation phase detection -> valid setup types | NB |
-| E2-1D | 1961-1964 | 4H MoM one-and-done: minor WL then BS/PBS through it | NB |
-| E2-TFM | 1965-1975; FA:281-287 | timeframe element matching (4H->4H, 1H->1H, 15m -> at most 1H) | NB |
+| E2-1D | 1961-1964 | 4H MoM one-and-done: minor WL then BS/PBS through it | B [reconciled: after_bs: 4H MoM one-and-done -> WL + PBS (P533:1963)] |
+| E2-TFM | 1965-1975; FA:281-287 | timeframe element matching (4H->4H, 1H->1H, 15m -> at most 1H) | B [reconciled: TF_MATCH in e2_chain.target] |
 | E2-PR | 1976-1983 | pressure reading rules; 4H storyline tiebreaker | PB [2026-11-27 D-115: storyline / 4H trend = swing structure per P533:2649, standing 4H BoM only when the structure is mixed] |
 | E2-69 | 1984-2039 | output format incl. day-by-day decomposition (feeds E3) | PB |
 | E2-610 | 2040-2057; FA:574-590 | trading speed rule; conservation of energy (after 2 strong piercing moves 1-2 days of consolidation) | PB |
-| E2-TRV | GS LAW2 | expected travel per shape per day | NB |
+| E2-TRV | GS LAW2 | expected travel per shape per day | PB [reconciled: SS reach 0.30; BS length = measured move / target zone; no per-shape travel table per day] |
 | E2-ZOC | GS-WAR | ZoC holds / fails logic drives the chain | NB |
 | E2-AIR | FA:169-209, 289-303; Fibonacci_Spiderwebs.pdf | Fibonacci spiderweb anchored to Earth points maps the trajectory | NB (PDF read 2026-11-26: rules + golden arithmetic in memory/08 last section; build = next step) |
-| E2-R03 | R-03 | render: day BOXES first, then the LINE | NB (line only) |
+| E2-R03 | R-03 | render: day BOXES first, then the LINE | B [reconciled: day boxes drawn first, the chain line on top (e2_chain.pine)] |
 
 ## 4. Engine 3 (E3C; R-16) — REBUILT 2026-11-26 in e1_tool/e3_trades.py (chain along the E2 legs; TS-1 / F1-A / F1-C / F1-D entries, ladder-step stops, single TP, RRR floor with three attempts, BS reinforcement, position boxes); golden week DXY: his trades within 3 pips (ledger 57-58). Built: P0 (per shape), P2 (entry sources), P3, P42, P43, P44, P6 (chains), P9 (one reinforcement), R09. Not yet built: P1 confidence spill, P25, P41, P5, P7 (sessions as labels only), P8 labels, P10 (pairs run their own chain with the inverted DXY shapes), P11, P12, OUT, ZT, DIR, F
 | id | ref | requirement (short) | state |
@@ -156,7 +156,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E1-S045 | sweep zones also at the pre-anchor session high / low (D-25); 0.45e ACTIVE SL TRIGGER flag; 0.45c hidden gaps, 0.45d BoM confluence flag still missing | PB |
 | E1-S15 | anchors: + session high / low to the anchor; HWC / LWC still missing | PB |
 | E1-P9 | regime-change modifier only for zones standing against the new regime (P452:981-992); expiry-timing, macro, cross-pair, cascade modifiers and the measured move per zone still missing | PB |
-| E1-95 | Step 9.5 gap scan is NOT in e1_ip.build (the old gap_scan lived in e1_zones.py, superseded) | NB |
+| E1-95 | Step 9.5 gap scan: e1_ip.gap_scan in build (D-68), beyond the outermost pressure zone + per-day pivot signals (D-114); the in-fill levels are map objects only (E2 / E3 do not read them) | B |
 | E1-V1 | V1 4H liquidity bands drawn (show_lq4) and used for the transition-day retest; 30m / 15m bands harvested, not yet used as steps | PB |
 | E1-X | Pine: default view = the week's reach (e1_pine.reach, GS Law 2 / 7), far zones behind show_far | B |
 | E2-64 / 641 / 642 | direction: failing bound (> 45) -> the MoM bound is the one pierced (6.4.2) -> 4H storyline; a breakout running at the anchor: BS -> 6.4.1 at the next zone -> SS -> second BS (6.3) | B |
@@ -165,7 +165,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E2-CP | consolidation phase detection / "ZFP trend on the bounding zone" (expiry roll-off) decides WHEN the range breaks: not built - the plan always breaks on day 3-4 | NB |
 | E3-P2 | first anchor: nearest 1H / 4H zone against the leg, else the E2 bound (R3 law) | B |
 | E3-P3 | TS-1 at a sweep-zone bound (near edge); WL keeps the zone middle | B |
-| E3-P42 | EUR/USD NO_SHIELD -> rule (a); the confidence switch ZR-6B (>= 0.6 tight / < 0.6 next rung) and rule (b) on 4H liquidity steps (facts in memory/08) not built | PB |
+| E3-P42 | ladder-step stops: rule (b) shields nearest first, rule (a), EUR/USD NO_SHIELD rule (a), ZR-6B confidence switch (D-73), sweep-extension stops (D-84 / D-87 / D-90), golden fallback (D-102), 9.5 envelope (D-111); fuel-state relevant zone not built | PB |
 | E3-P43 | RWL TP = opposing liquidity near edge + 1 pip; 4H BoM target -> near edge + 1 pip, 4H MoM with LQZ inside -> zone midpoint (rule 4) | PB |
 | E3-P6 | Law 27: BS entry = RWL TP (band = entry step); Phase 6.3 same-anchor-same-day dedup with log; opposite-direction conflict rule (needs Phase 5 confidence) not built | PB |
 | E3-P10 | mirror lane: collision retry on the next liquidity step (deep shield); the full DXY -> EU -> GU re-anchoring of every DXY setup is still approximated by running the pair's own chain on the inverted DXY shapes | PB |
