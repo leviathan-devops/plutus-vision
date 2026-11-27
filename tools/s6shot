@@ -5,6 +5,20 @@
 set -u; R="$(cd "$(dirname "$0")/.." && pwd)"; p="$1"; m="$2"; out="${3:-$R/evidence/s6_${p}_1H_${m}_with_v1.png}"
 export PATH=$HOME/.local/bin:$PATH XDG_RUNTIME_DIR=/run/user/0
 (cd "$R/e1_tool" && python3 plutus.py "$m" "$p" >/dev/null)
+python3 - <<'PY'
+import json, urllib.request
+# earlier exports of the tool stay in the room store and would be added to the new chart too: take them out first (the sealed V1 is put in below, by name)
+try:
+    cur = json.loads(urllib.request.urlopen('http://127.0.0.1:9443/indicators', timeout=20).read())
+    names = [x.get('name') for x in (cur.get('indicators') if isinstance(cur, dict) else cur) or [] if isinstance(x, dict)]
+    for n in names:
+        if n and n.startswith('PLUTUS VISION'):
+            req = urllib.request.Request('http://127.0.0.1:9443/indicators', data=json.dumps({'name': n}).encode(), headers={'content-type': 'application/json'}, method='DELETE')
+            urllib.request.urlopen(req, timeout=20).read()
+            print('removed stale export:', n)
+except Exception as e:
+    print('room store list:', e)
+PY
 "$R/tools/pb" export "$R/e1_tool/out/PLUTUS_${p}_${m}.pine" "$p" 1H | tail -1
 python3 - "$R" <<'PY'
 import json, sys, urllib.request
@@ -16,7 +30,8 @@ fri="$(date -u -d "$m + 4 days" +%F)"
 pinebox tab --session plutus-main --to backtest >/dev/null; sleep 2
 pinebox backtest --session plutus-main --op create --name "s6-$p-$m-$$" --symbol "$p" --start "${fri}T20:00" --end "$(date -u -d "$fri + 7 days" +%F)T20:00" --tf 1h | tail -1 | cut -c1-80
 sleep 20; "$R/tools/pb" wait-engine | tail -1
-"$R/tools/pb" goto "$(date -u -d "$m - 8 days" +%F)T00:00" "$(date -u -d "$m + 5 days" +%F)" bt >/dev/null; sleep 3
+"$R/tools/pb" goto "$(date -u -d "$m - 8 days" +%F)T00:00" "$(date -u -d "$m + 5 days" +%F)" bt >/dev/null; sleep 2
+"$R/tools/pbfit" bt | cut -c1-120; sleep 2
 pinebox shot --session plutus-main --out "$out" | tail -1 | cut -c1-120
 curl -s -X DELETE -H 'content-type: application/json' -d '{"name":"Plutus Vision v1"}' http://127.0.0.1:9443/indicators >/dev/null
 pinebox down --session plutus-main >/dev/null 2>&1; pinebox up --session plutus-main --adapter xvfb >/dev/null 2>&1; echo "$out"
