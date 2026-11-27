@@ -221,6 +221,7 @@ def _steps(X):
 
 ZR6B = True
 SWEEP_EXT = True
+GOLD_FALLBACK = True       # D-102: golden stop fallback when no ladder step gives a stop (E3C:262, :289-294)
 BLEND_GATE = True          # D-100: the emission floor is met by the blended RRR of a 3-entry staggered position (E3C:357)
 JOIN_TP = True
 SWEEP_TP = True
@@ -305,7 +306,17 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
             return sl, why + f' [ZR-6B RR-tight, mirror confidence {conf:.2f}]'
     if ok and conf is not None and ZR6B:
         return ok[0][0], ok[0][1] + f' [ZR-6B safety, mirror confidence {conf:.2f}]'
-    return ok[0] if ok else (None, 'SL_INVALID: no ladder-step stop between 4 and 36 pips')
+    if ok:
+        return ok[0]
+    # E3C:262 'null -> golden fallback (computeGoldenSL_V452)'; E3C:289-294 'computeSL_LMV 4-9.5p reaction-extreme ... D17 36p ceiling'; E3C:379 'sl = next-rung's reactionExtreme + Law-7 buffer':
+    # no ladder step gives a stop -> the reaction extreme (far edge) of the next liquidity rung beyond the entry, plus the pair's Law-7 buffer (E3C:299-304) (G2 A-24, D-102)
+    if GOLD_FALLBACK and ext is None:
+        nxt = sorted([s_ for s_ in thin + thick if ((s_['top'] > entry) if dn else (s_['bot'] < entry))], key=lambda s_: s_['top'] if dn else -s_['bot'])
+        for s_ in nxt:
+            sl = (s_['top'] + LAW7[pair] * pip) if dn else (s_['bot'] - LAW7[pair] * pip)
+            if (dmin or GOLD_MIN) <= abs(sl - entry) / pip <= SL_CEIL:
+                return sl, f"golden fallback: the next liquidity rung's reaction extreme + the Law-7 buffer {LAW7[pair]} (E3C:289-294, :379)"
+    return None, 'SL_INVALID: no ladder-step stop between 4 and 36 pips'
 
 
 def _ip_at(z, X):
