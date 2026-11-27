@@ -250,3 +250,7 @@ DXY demand '1H (Unmitigated) | MoM' 100.822-100.85 -> his #3 long 100.845 (rung 
 Canon lines that say otherwise for ENTRY zones in general: P533:1157 / 2218 ('MoM (virgin) | ENTRY-REJECT'), E3C 8.14 rule 6 ('no entry at MoM unless ALL 4 exceptions'), E3C:1053 VIRGIN_MOM_DEATH_ZONE ('on counter-trend').
 Measured on the 16 locator maps: setups on virgin 1H MoM zones = 6 TP / 6 stops; 'counter-trend = against the E2 storyline' would delete GBPUSD golden #2 and keep 5 of the 6 losers. NOT BUILT as a gate; the open question is what separates
 his MoM entries (a rung inside the zone, range day) from the losers (zone edge / 30m block, no rung: DXY Oct 5 101.926, EURUSD Oct 5 1.12491 - both pierced to the BoM zone right behind them, P533:1161 priority rule).
+
+## PINEBOX LABEL QUIRKS (measured 2026-11-27, ledger 98b / 99b / 100b / 102b)
+- label.style_none: the text STARTS at the label's x (it is not centred on it). label.style_label_right: drawn to the RIGHT of its point as well. To make a label end at a time, put its point the text's width before it.
+- The x axis is bar-indexed: the weekend takes no width, so offsets must be counted in 1H bars, not clock hours. size.small text = about 6.5 px per character = 1.65 one-hour bars on the two-week 1H frame of tools/s3frames.

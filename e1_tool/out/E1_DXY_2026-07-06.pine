@@ -64,70 +64,70 @@ if barstate.islast and isPair
         box.new(1783064700000, 100.723, 1783717200000, 100.654, bgcolor=color.new(color.rgb(49,121,245), 85), border_color=color.new(color.rgb(49,121,245), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
     if show_sd
         box.new(1782946800000, 101.430, 1783717200000, 101.316, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=2, xloc=xloc.bar_time)
-        label.new(1782946800000, 101.373, "4H (Unmitigated) | BoM + 1H supply, sweep zone, 4H liquidity", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782882000000, 101.373, "4H (Unmitigated) | BoM + 1H S, LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782968400000, 101.360, 1783717200000, 101.314, bgcolor=color.new(color.rgb(242,54,69), 93), border_color=color.new(color.rgb(242,54,69), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1782990000000, 101.153, 1783717200000, 101.027, bgcolor=color.new(color.rgb(242,54,69), 93), border_color=color.new(color.rgb(242,54,69), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1783101600000, 100.851, 1783717200000, 100.825, bgcolor=color.new(color.rgb(41,98,255), 93), border_color=color.new(color.rgb(41,98,255), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1783062000000, 100.748, 1783717200000, 100.654, bgcolor=color.new(color.rgb(41,98,255), 93), border_color=color.new(color.rgb(41,98,255), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
     if show_sd and show_far
         box.new(1782680400000, 101.746, 1783717200000, 101.658, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
-        label.new(1783033200000, 101.702, "1H (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782975600000, 101.702, "1H (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 101.570, 1783717200000, 101.496, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=2, xloc=xloc.bar_time)
         label.new(1782788400000, 101.533, "4H (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 100.372, 1783717200000, 100.263, bgcolor=color.new(color.rgb(41,98,255), 84), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1782910800000, 100.317, "1H (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 100.337, 1783717200000, 100.206, bgcolor=color.new(color.rgb(41,98,255), 84), border_color=color.rgb(41,98,255), border_width=2, xloc=xloc.bar_time)
-        label.new(1783033200000, 100.272, "4H (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782975600000, 100.272, "4H (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 99.704, 1783717200000, 99.634, bgcolor=color.new(color.rgb(41,98,255), 84), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1782788400000, 99.669, "1H (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 99.618, 1783717200000, 99.533, bgcolor=color.new(color.rgb(41,98,255), 84), border_color=color.rgb(41,98,255), border_width=2, xloc=xloc.bar_time)
         label.new(1782910800000, 99.576, "4H (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 99.458, 1783717200000, 99.384, bgcolor=color.new(color.rgb(41,98,255), 84), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
-        label.new(1783033200000, 99.421, "1H (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782975600000, 99.421, "1H (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ltf
         box.new(1782952200000, 101.391, 1783717200000, 101.372, bgcolor=color.new(color.rgb(242,54,69), 90), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
         label.new(1782952200000, 101.382, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782970200000, 101.360, 1783717200000, 101.332, bgcolor=color.new(color.rgb(242,54,69), 90), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
         label.new(1782970200000, 101.346, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782972000000, 101.327, 1783717200000, 101.262, bgcolor=color.new(color.rgb(242,54,69), 90), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
-        label.new(1783033200000, 101.294, "15m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 101.294, "15m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782993600000, 101.205, 1783717200000, 101.151, bgcolor=color.new(color.rgb(242,54,69), 90), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
-        label.new(1782993600000, 101.178, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 101.178, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1783313100000, 100.956, 1783717200000, 100.941, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
-        label.new(1783313100000, 100.948, "15m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 100.948, "15m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1783306800000, 100.939, 1783717200000, 100.914, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
-        label.new(1783306800000, 100.927, "15m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 100.927, "15m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1783296000000, 100.896, 1783717200000, 100.866, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
-        label.new(1783296000000, 100.881, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 100.881, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1783081800000, 100.795, 1783717200000, 100.773, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
-        label.new(1783081800000, 100.784, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 100.784, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1783063800000, 100.725, 1783717200000, 100.678, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
-        label.new(1783063800000, 100.701, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 100.701, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 100.663, 1783717200000, 100.546, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1782788400000, 100.605, "15m (Mitigated 4x) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ltf and show_far
         box.new(1782680400000, 101.800, 1783717200000, 101.741, bgcolor=color.new(color.rgb(242,54,69), 90), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
         label.new(1782910800000, 101.770, "15m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 101.729, 1783717200000, 101.680, bgcolor=color.new(color.rgb(242,54,69), 90), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
-        label.new(1783033200000, 101.704, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 101.704, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782910800000, 101.595, 1783717200000, 101.488, bgcolor=color.new(color.rgb(242,54,69), 90), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
         label.new(1782910800000, 101.541, "15m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782909000000, 101.540, 1783717200000, 101.433, bgcolor=color.new(color.rgb(242,54,69), 90), border_color=color.rgb(242,54,69), border_width=1, xloc=xloc.bar_time)
         label.new(1782910800000, 101.487, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 100.255, 1783717200000, 100.209, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
-        label.new(1783033200000, 100.232, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 100.232, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 100.112, 1783717200000, 99.885, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1782788400000, 99.999, "15m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 99.682, 1783717200000, 99.634, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1782910800000, 99.658, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 99.588, 1783717200000, 99.563, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
-        label.new(1783033200000, 99.576, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782972000000, 99.576, "30m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 99.542, 1783717200000, 99.504, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1782788400000, 99.523, "15m (Unmitigated) | MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 99.493, 1783717200000, 99.461, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
         label.new(1782910800000, 99.477, "30m (Unmitigated) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         box.new(1782680400000, 99.444, 1783717200000, 99.408, bgcolor=color.new(color.rgb(41,98,255), 90), border_color=color.rgb(41,98,255), border_width=1, xloc=xloc.bar_time)
-        label.new(1783033200000, 99.426, "30m (Mitigated 2x) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782964800000, 99.426, "30m (Mitigated 2x) | BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_lsz
         box.new(1782680400000, 100.653, 1783717200000, 100.558, bgcolor=color.new(color.rgb(40,180,80), 92), border_color=color.new(color.rgb(40,180,80), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1782680400000, 100.558, 1783717200000, 100.458, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
@@ -147,42 +147,50 @@ if barstate.islast and isPair
         label.new(1782853200000, 99.188, "LSZ demand-side | sweep to 99.063", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1782680400000, 99.434, 1783717200000, 99.384, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1782680400000, 99.384, 1783717200000, 99.284, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1782997200000, 99.409, "LSZ demand-side | sweep to 99.284", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
+        label.new(1782910800000, 99.409, "LSZ demand-side | sweep to 99.284", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1782680400000, 101.595, 1783717200000, 101.545, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1782680400000, 101.695, 1783717200000, 101.595, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         label.new(1782709200000, 101.570, "LSZ supply-side + 4H BoM (confluent) | sweep to 101.695", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1782680400000, 101.800, 1783717200000, 101.750, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1782680400000, 101.900, 1783717200000, 101.800, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         label.new(1782853200000, 101.775, "LSZ supply-side | sweep to 101.900", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
+    // Zone Synthesis Re-verification: 13 zones verified | 0 zones corrected | 13 zones unchanged | Corrections: none
+    // KEY SUPPORT BAND: 100.470-100.530 (core) | - (no spike) | Core = primary support, Spike = LSZ target
+    // KEY SUPPORT BAND: 100.248-100.316 (core) | 100.206-100.248 (spike extends to 100.206) | Core = primary support, Spike = LSZ target
+    // KEY SUPPORT BAND: 99.495-99.559 (core) | 99.423-99.495 (spike extends to 99.423) | Core = primary support, Spike = LSZ target
+    // KEY SUPPORT BAND: 99.220-99.298 (core) | 99.092-99.220 (spike extends to 99.092) | Core = primary support, Spike = LSZ target
+    // Recommended Stop Loss Zone: 101.262 - 101.282 (EUR/USD 1.1400 2200M 07-06 (Tier 1))
+    // Recommended Stop Loss Zone: 100.674 - 100.694 (EUR/USD 1.1500 2400M 07-06 (Tier 1))
+    // Recommended Stop Loss Zone: 101.518 - 101.538 (EUR/USD 1.1350 1500M 07-07 (Tier 1))
+    // Recommended Stop Loss Zone: 100.674 - 100.694 (EUR/USD 1.1500 2800M 07-07 (Tier 1))
     if show_ip
         // #2 UPPER RESISTANCE 101.199-101.262 MODERATE-HEAVY 8.0/14 Standard Wall Tier 2 | MoM Active 1 reactions | TP-TARGET
         box.new(1782680400000, 101.262, 1783717200000, 101.199, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
-        label.new(1782896400000, 101.230, "UPPER RESISTANCE | MODERATE-HEAVY | 15-30% ZFP | Tier 2 MoM + sweep zone, 4H liquidity", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782698400000, 101.230, "UPPER RESISTANCE | MODERATE-HEAVY | 15-30% ZFP | Tier 2 MoM + LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #1 EQUILIBRIUM ZONE 100.985-101.077 MODERATE-HEAVY 9.0/14 Soft Wall Tier 2 | MoM Virgin 0 reactions | REJECT
         box.new(1782680400000, 101.077, 1783717200000, 100.985, bgcolor=color.new(color.rgb(235,138,20), 70), border_color=color.rgb(235,138,20), border_width=2, xloc=xloc.bar_time)
-        label.new(1782896400000, 101.031, "EQUILIBRIUM ZONE | MODERATE-HEAVY | 30-50% ZFP | Tier 2 MoM + 1H supply, sweep zone, 4H liquidity", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782486000000, 101.031, "EQUILIBRIUM ZONE | MODERATE-HEAVY | 30-50% ZFP | Tier 2 MoM + 1H S, LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #6 MID-RANGE SUPPORT 100.724-100.815 MODERATE 7.0/14 Standard Wall Tier 2 | MoM Active 1 reactions | TP-TARGET
         box.new(1782680400000, 100.815, 1783717200000, 100.724, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
-        label.new(1782896400000, 100.769, "MID-RANGE SUPPORT | MODERATE | 15-30% ZFP | Tier 2 MoM + 1H demand, sweep zone", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782716400000, 100.769, "MID-RANGE SUPPORT | MODERATE | 15-30% ZFP | Tier 2 MoM + 1H D, LSZ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #8 KEY SUPPORT BAND 100.470-100.530 MODERATE 6.0/14 Soft Wall Tier 2 | BoM Active 1 reactions | ENTRY-PRIMARY
         box.new(1782680400000, 100.530, 1783717200000, 100.470, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
-        label.new(1782896400000, 100.500, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 2 BoM + 4H liquidity", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782763200000, 100.500, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 2 BoM + LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip and show_far
         // #4 UPPER RESISTANCE 101.448-101.537 MODERATE-HEAVY 8.0/14 Standard Wall Tier 1 | MoM Active 1 reactions | TP-TARGET
         box.new(1782680400000, 101.537, 1783717200000, 101.448, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
-        label.new(1782896400000, 101.493, "UPPER RESISTANCE | MODERATE-HEAVY | 15-30% ZFP | Tier 1 MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782756000000, 101.493, "UPPER RESISTANCE | MODERATE-HEAVY | 15-30% ZFP | Tier 1 MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #3 KEY SUPPORT BAND 100.248-100.316 MODERATE-HEAVY 8.0/14 Standard Wall Tier 2 | BoM Active 1 reactions | ENTRY-PRIMARY
         box.new(1782680400000, 100.316, 1783717200000, 100.248, bgcolor=color.new(color.rgb(20,180,170), 70), border_color=color.rgb(20,180,170), border_width=2, xloc=xloc.bar_time)
-        label.new(1782896400000, 100.282, "KEY SUPPORT BAND | MODERATE-HEAVY | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782756000000, 100.282, "KEY SUPPORT BAND | MODERATE-HEAVY | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #5 KEY SUPPORT BAND 99.495-99.559 MODERATE 7.5/14 Soft Wall Tier 1 | BoM Active 2 reactions | ENTRY-PRIMARY
         box.new(1782680400000, 99.559, 1783717200000, 99.495, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
-        label.new(1782896400000, 99.527, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 1 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782792000000, 99.527, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 1 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip
         box.new(1782680400000, 100.659, 1783717200000, 100.599, bgcolor=color.new(color.rgb(40,190,180), 82), border_color=color.new(color.rgb(40,190,180), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1783026000000, 100.629, "GAP IN-FILL | MODERATE | 30-50% ZFP + sweep zone", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782864000000, 100.629, "GAP IN-FILL | MODERATE | 30-50% ZFP + LSZ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_disc
-        line.new(1783144800000, 100.899, 1783717200000, 100.899, xloc=xloc.bar_time, color=color.new(color.rgb(200,200,200), 35), style=line.style_dashed, width=1)
-        label.new(1783209600000, 100.899, "DISCOVERY ZONE | MA convergence", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.rgb(200,200,200), 10), size=size.tiny)
+        na
     if show_ip and show_lv
         line.new(1783285200000, 101.218, 1783717200000, 101.218, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 07-01 fib S1
         line.new(1783285200000, 101.213, 1783717200000, 101.213, xloc=xloc.bar_time, color=color.new(color.rgb(230,230,230), 35), width=1, style=line.style_dotted)   // pivot daily 07-03 classic R2
@@ -284,20 +292,34 @@ if barstate.islast and isPair
         box.new(1783404000000, 101.255, 1783526400000, 101.203, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1783404000000, 101.203, 1783526400000, 101.183, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1783404000000, 101.203, 1783526400000, 100.995, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1783522800000, 101.144, "DX5 SS S 4.0R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1783522800000, 101.140, "DX5 SS S 4.0R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // DX6 Wed RWL LONG E 100.980 SL 100.906 TP 101.235 RRR 3.42 | Reversal / NY Open | entry the last swing's TP level (Law 27: TP of N = entry of N+1); SL (b) 1 pip inside the close edge of the shield (1H rung beyond the first) [ZR-6B safety, mirror confidence 0.45]; TP opposing liquidity near edge + 1 pip (6.4.2 retest)
         box.new(1783490400000, 100.980, 1783526400000, 100.906, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1783490400000, 101.235, 1783526400000, 100.980, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         label.new(1783501200000, 101.016, "DX6 RWL L 3.4R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // DXA4 Wed BS LONG E 100.753 SL 100.700 TP 101.332 RRR 10.87 | HTF Swing / NY Mid | ALTERNATIVE chain - live only after a 1H close above 101.30500 (UPPER RESISTANCE): entry internal LQZ rung; SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 0.90]; TP LQZ inside the target zone: midpoint
+        box.new(1783317600000, 100.753, 1783699200000, 100.700, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783317600000, 100.773, 1783699200000, 100.753, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1783317600000, 101.332, 1783699200000, 100.753, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1783512000000, 100.892, "DXA4 ALT BS L 10.9R if 1H > 101.305", xloc=xloc.bar_time, style=label.style_none, textcolor=color.gray, size=size.small)
         // DX7 Thu Ladder SHORT E 100.980 SL 101.077 TP 100.685 RRR 3.06 | Reinforcement / NY Open | reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP)
         box.new(1783544400000, 101.077, 1783699200000, 100.980, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         box.new(1783544400000, 100.980, 1783699200000, 100.685, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783555200000, 100.939, "DX7 Ladder S 3.1R if DX4", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // DXA6 Thu Ladder LONG E 100.980 SL 100.906 TP 101.332 RRR 4.72 | Reinforcement / NY Open | ALTERNATIVE chain - live only after a 1H close above 101.30500 (UPPER RESISTANCE): reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP)
+        box.new(1783544400000, 100.980, 1783699200000, 100.906, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783544400000, 101.332, 1783699200000, 100.980, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1783587600000, 101.065, "DXA6 ALT Ladder L 4.7R if DXA4 if 1H > 101.305", xloc=xloc.bar_time, style=label.style_none, textcolor=color.gray, size=size.small)
         // DX8 Fri RWL LONG E 100.628 SL 100.548 TP 100.940 RRR 3.9 | Reversal / NY Open | entry sweep zone mid; SL (b) 1 pip inside the close edge of the shield (4H band) [ZR-6B RR-tight, mirror confidence 0.80]; TP first LQZ rung 30+ pips along the reversal: midpoint (GS Law 2; rule 4)
         box.new(1783630800000, 100.628, 1783717200000, 100.548, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1783630800000, 100.648, 1783717200000, 100.628, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1783630800000, 100.940, 1783717200000, 100.628, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         label.new(1783641600000, 100.672, "DX8 RWL L 3.9R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // DXA7 Fri RWL SHORT E 101.369 SL 101.424 TP 101.037 RRR 6.03 | Reversal / NY Open | ALTERNATIVE chain - live only after a 1H close above 101.30500 (UPPER RESISTANCE): entry sweep zone mid; SL (a) 3 pips outside the back edge of the entry structure [ZR-6B RR-tight, mirror confidence 0.80]; TP first LQZ rung 30+ pips along the reversal: midpoint (GS Law 2; rule 4)
+        box.new(1783705200000, 101.424, 1783717200000, 101.369, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783705200000, 101.369, 1783717200000, 101.349, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1783705200000, 101.369, 1783717200000, 101.037, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        label.new(1783712400000, 101.323, "DXA7 ALT RWL S 6.0R if 1H > 101.305", xloc=xloc.bar_time, style=label.style_none, textcolor=color.gray, size=size.small)
     if show_tbl
         var table tb = table.new(position.top_right, 2, 17, bgcolor=color.new(color.black, 10), border_color=color.rgb(40,40,45), border_width=1)
         table.cell(tb, 0, 0, "TRIDENT v8", text_color=color.rgb(100,150,255), bgcolor=color.rgb(20,20,40), text_size=size.small, text_halign=text.align_left)
@@ -335,6 +357,34 @@ if barstate.islast and isPair
         table.cell(tb, 0, 16, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 1, 16, "Mon SS | 5.9R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
 
+// ENGINE 2 - MACRO SHAPE CHAIN MAP | WEEK OF 2026-07-06 | DXY
+// Primary Timeframe: 1H | Structural Validation: 4H
+// Current Shape: SS range (HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 15-30% | price between MID-RANGE SUPPORT and UPPER RESISTANCE, no breakout in the last two sessions | FA 9: 2 piercing sessions -> 'EXPECT 1-2 FULL DAYS OF HTF CONSOLIDATION'
+// Ceiling: UPPER RESISTANCE [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 1H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+// Floor: MID-RANGE SUPPORT [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 4H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+// 4H Structural Validation: confirms - no 4H close beyond either bound in the last day
+// Direction Validation 6-check for down: 4H trend=None, BoM alignment=up, liquidity sweep=down, zone failure=None, macro shape=None, counter-trend risk NONE=None -> 1 disagree
+// Breakout direction: down | both bounds go the same way, pressure reading unclear [('candle size', 'up'), ('wick direction', 'down'), ('triangle', None)]: 4H storyline tiebreaker = down (4H structure mixed; standing 4H BoM Supply 101.32-101.43)
+// Trading Speed (6.10): raw timing = transition on Tue (consolidation 6 sessions, 5 elapsed) -> adjusted +1 day = Wed
+// NY Cut Cage (P533:690-691): 4 wall(s) of USD 1.5bn+ inside the range, last 10:00 NY cut Tue -> Spring Release Tue 10:01 NY, + 1 day (6.10) = transition on Wed
+//   -> SS range sessions LON Mon .. TKY Wed | Trigger: consolidation (post-energy) between MID-RANGE SUPPORT and UPPER RESISTANCE | HIGH -> cumulative 0.8
+//   -> RWL up sessions LON Wed .. LON Wed | Trigger: 6.4.2 'Consolidation ends in price retesting opposing liquidity' (4H liquidity (opposing)) - a whiplash against the preceding BS = RWL (6.1.4) | MODERATE -> cumulative 0.4
+//   -> BS down sessions NY Wed .. LON Fri | Trigger: MID-RANGE SUPPORT goes (SLOW) -> BS toward 1H (Unmitigated) | BoM (6 sessions, 4H element: twice as long (6.10)) | MODERATE -> cumulative 0.4
+// Direction Validation 6-check for the reaction at 1H (Unmitigated) | BoM (up): 4H trend=None, BoM alignment=up, liquidity sweep=down, zone failure=None, macro shape=None, counter-trend risk NONE=None -> 1 disagree
+//   -> WL down sessions NY Fri .. NY Fri | Trigger: 1H (Unmitigated) | BoM: a BoM zone always reacts (E2X:149) = Hard-Wall class -> RWL (6.4.1) - an unswept sweep zone lies against the target: the surge ends in a whiplash into it (WL -> RWL) | HIGH -> cumulative 0.32
+//   -> RWL up sessions NY Fri .. NY Fri | Trigger: 1H (Unmitigated) | BoM: a BoM zone always reacts (E2X:149) = Hard-Wall class -> RWL (6.4.1) - an unswept sweep zone lies against the target: the surge ends in a whiplash into it (WL -> RWL) | HIGH -> cumulative 0.32
+// CONSOLIDATION PHASE DETECTION: Phase: Late | Bounding Zones: Ceiling=[UPPER RESISTANCE, ZFP 22%], Floor=[MID-RANGE SUPPORT, ZFP 22%] | Valid Setup Types: Swing Scalps + BS Transition Entry | ZFP Trend on Bounding Zone: rising - breakout imminent (4 option wall(s) of USD 1.5bn+ caging the range reach their cut)
+// chain: SS [HIGH, cum 0.8] -> RWL [MODERATE, cum 0.4] -> BS [MODERATE, cum 0.4] -> WL [HIGH, cum 0.32] -> RWL [HIGH, cum 0.32]
+// PRIMARY: SS -> RWL -> BS -> WL -> RWL | DECISION ZONE: UPPER RESISTANCE ZFP 22% > 45 or a 1H close beyond it -> ALTERNATIVE: SS -> SS -> BS -> WL -> RWL [confidence 0.32]
+// --- DAY-BY-DAY DECOMPOSITION ---
+// Mon: SS range | Key Zone: UPPER RESISTANCE | Triggers: 10:00 NY cut 1.1500 2.4bn; 10:00 NY cut 1.1400 2.2bn; 10:00 NY cut 1.1450 1.4bn; red folder: NO DATA; auctions: NO DATA | Confidence: 80%
+// Tue: SS range | Key Zone: UPPER RESISTANCE | Triggers: 10:00 NY cut 1.1500 2.8bn; 10:00 NY cut 1.1350 1.5bn; 10:00 NY cut 1.1595 1.5bn; red folder: NO DATA; auctions: NO DATA | Confidence: 80%
+// Wed: SS + RWL + BS down | Key Zone: 1H (Unmitigated) | BoM | Triggers: red folder: NO DATA; auctions: NO DATA | Confidence: 40%
+// Thu: BS down | Key Zone: 1H (Unmitigated) | BoM | Triggers: red folder: NO DATA; auctions: NO DATA | Confidence: 40%
+// Fri: BS + WL + RWL down | Key Zone: MID-RANGE SUPPORT | Triggers: red folder: NO DATA; auctions: NO DATA | Confidence: 32%
+// --- WEEKLY SHAPE CHAIN VISUALIZATION ---
+// DXY: Mon: SS range -> Tue: SS range -> Wed: SS + RWL + BS down -> Thu: BS down -> Fri: BS + WL + RWL down
+// 
 // ENGINE 3 - FULL-SPECTRUM TRADE MAP | WEEK OF 2026-07-06 | DXY
 // 
 // === WEEKLY EXECUTION CALENDAR ===
@@ -342,76 +392,121 @@ if barstate.islast and isPair
 // Mon | DXY | SHORT | Swing Scalp | 101.203 | SS | London Open | 100 | DX1 repeated Tue
 // Mon | DXY | SHORT | Swing Scalp | 101.138 | SS | London Open | 100 | DX2 repeated Tue
 // Mon | DXY | LONG | Swing Scalp | 100.851 | SS | London Open | 78 | DX3 repeated Tue
-// Tue | DXY | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
+// Tue | DXY | - | Swing Scalp (repeat) | - | SS | London Open | - | per-day repeats: DX1 SHORT 101.203; DX2 SHORT 101.138; DX3 LONG 100.851
 // Wed | DXY | SHORT | HTF Swing | 101.235 | BS | NY Mid | 100 | DX4 rests from Mon
 // Wed | DXY | SHORT | Swing Scalp | 101.203 | SS | London Open | 100 | DX5
 // Wed | DXY | LONG | Reversal | 100.980 | RWL | NY Open | 70.5 | DX6
+// Wed | DXY | LONG | HTF Swing | 100.753 | BS | NY Mid | 91.0 | DXA4 rests from Mon
 // Thu | DXY | SHORT | Reinforcement | 100.980 | Ladder | NY Open | 100 | DX7 if DX4
+// Thu | DXY | LONG | Reinforcement | 100.980 | Ladder | NY Open | 91.0 | DXA6 if DXA4
 // Fri | DXY | LONG | Reversal | 100.628 | RWL | NY Open | 74 | DX8
+// Fri | DXY | SHORT | Reversal | 101.369 | RWL | NY Open | 98 | DXA7
 // 
 // --- HTF SWING SETUPS ---
 // DX4 | DXY | SHORT | HTF Swing | Day: Wed | Session: NY Mid | Shape: BS
 //   Entry: 101.235 | SL: 101.322 | TP: 100.685 | RRR: 6.32 | Quality: HIGH | Confidence: 100
-//   Anchor Zone: 4H liquidity (opposing) [LQZ] | Shape Trigger: BS @ Wed NY Mid | Day Catalysts: red folder: NO DATA
+//   Anchor Zone: 4H liquidity (opposing) [LQZ] | Shape Trigger: BS @ Wed NY Mid | Day Catalysts: red folder: NO DATA, auctions: NO DATA
 //   Audit Trail: entry the reverse-whiplash TP level (Law 27: TP of N = entry of N+1); SL (b) 1 pip inside the close edge of the shield (1H rung beyond the first) [ZR-6B RR-tight, mirror confidence 0.90]; TP LQZ inside the target zone: midpoint | attempts 1
 //   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Wed NY Mid 14:00-18:00 UTC (order rests from Mon)
+//   Direction validation (E3C 8.18): 1 of 6 disagree - 4H trend=-, BoM alignment=down, liquidity sweep=up, zone failure=down, macro shape=down
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside
 // DX6 | DXY | LONG | Reversal | Day: Wed | Session: NY Open | Shape: RWL
 //   Entry: 100.980 | SL: 100.906 | TP: 101.235 | RRR: 3.42 | Quality: STANDARD | Confidence: 70.5
-//   Anchor Zone: EQUILIBRIUM ZONE [MoM] | Shape Trigger: RWL @ Wed NY Open | Day Catalysts: red folder: NO DATA
+//   Anchor Zone: EQUILIBRIUM ZONE [MoM] | Shape Trigger: RWL @ Wed NY Open | Day Catalysts: red folder: NO DATA, auctions: NO DATA
 //   Audit Trail: entry the last swing's TP level (Law 27: TP of N = entry of N+1); SL (b) 1 pip inside the close edge of the shield (1H rung beyond the first) [ZR-6B safety, mirror confidence 0.45]; TP opposing liquidity near edge + 1 pip (6.4.2 retest) | attempts 1
 //   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Wed NY Open 12:30-14:00 UTC
+//   Direction validation (E3C 8.18): 2 of 6 disagree - 4H trend=-, BoM alignment=up, liquidity sweep=down, zone failure=down, macro shape=up
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside
+// DXA4 | DXY | LONG | HTF Swing | Day: Wed | Session: NY Mid | Shape: BS
+//   Entry: 100.753 | SL: 100.700 | TP: 101.332 | RRR: 10.87 / blended 10.06 | Quality: HIGH | Confidence: 91.0
+//   Anchor Zone: 1H liquidity (opposing) [LQZ] | Shape Trigger: BS @ Wed NY Mid | Day Catalysts: red folder: NO DATA, auctions: NO DATA
+//   Audit Trail: ALTERNATIVE chain - live only after a 1H close above 101.30500 (UPPER RESISTANCE): entry internal LQZ rung; SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 0.90]; TP LQZ inside the target zone: midpoint | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Wed NY Mid 14:00-18:00 UTC (order rests from Mon)
+//   Direction validation (E3C 8.18): 1 of 6 disagree - 4H trend=-, BoM alignment=up, liquidity sweep=down, zone failure=up, macro shape=up
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside | ALT trigger: 1H close above 101.305 (UPPER RESISTANCE)
 // DX8 | DXY | LONG | Reversal | Day: Fri | Session: NY Open | Shape: RWL
 //   Entry: 100.628 | SL: 100.548 | TP: 100.940 | RRR: 3.90 / blended 3.69 | Quality: STANDARD | Confidence: 74
-//   Anchor Zone: sweep zone [LSZ] | Shape Trigger: RWL @ Fri NY Open | Day Catalysts: red folder: NO DATA
+//   Anchor Zone: sweep zone [LSZ] | Shape Trigger: RWL @ Fri NY Open | Day Catalysts: red folder: NO DATA, auctions: NO DATA
 //   Audit Trail: entry sweep zone mid; SL (b) 1 pip inside the close edge of the shield (4H band) [ZR-6B RR-tight, mirror confidence 0.80]; TP first LQZ rung 30+ pips along the reversal: midpoint (GS Law 2; rule 4) | attempts 1
 //   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Fri NY Open 12:30-14:00 UTC
+//   Direction validation (E3C 8.18): 1 of 6 disagree - 4H trend=-, BoM alignment=up, liquidity sweep=up, zone failure=down, macro shape=up
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside
+// DXA7 | DXY | SHORT | Reversal | Day: Fri | Session: NY Open | Shape: RWL
+//   Entry: 101.369 | SL: 101.424 | TP: 101.037 | RRR: 6.03 / blended 5.65 | Quality: HIGH | Confidence: 98
+//   Anchor Zone: sweep zone [LSZ] | Shape Trigger: RWL @ Fri NY Open | Day Catalysts: red folder: NO DATA, auctions: NO DATA
+//   Audit Trail: ALTERNATIVE chain - live only after a 1H close above 101.30500 (UPPER RESISTANCE): entry sweep zone mid; SL (a) 3 pips outside the back edge of the entry structure [ZR-6B RR-tight, mirror confidence 0.80]; TP first LQZ rung 30+ pips along the reversal: midpoint (GS Law 2; rule 4) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Fri NY Open 12:30-14:00 UTC
+//   Direction validation (E3C 8.18): 1 of 6 disagree - 4H trend=-, BoM alignment=down, liquidity sweep=down, zone failure=up, macro shape=down
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside | ALT trigger: 1H close above 101.305 (UPPER RESISTANCE)
 // 
 // --- SWING SCALP SETUPS ---
 // DX1 | DXY | SHORT | Swing Scalp | Day: Mon | Session: London Open | Shape: SS
 //   Entry: 101.203 | SL: 101.255 | TP: 100.830 | RRR: 7.17 / blended 6.60 | Quality: HIGH | Confidence: 100
-//   Anchor Zone: UPPER RESISTANCE [MoM] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA
+//   Anchor Zone: UPPER RESISTANCE [MoM] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA, auctions: NO DATA
 //   Audit Trail: entry LQZ rung at the zone; SL (b) 1 pip inside the close edge of the shield (4H band) [ZR-6B RR-tight, mirror confidence 0.65]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327) | attempts 1
 //   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Mon London Open 06:00-09:00 UTC | repeated: Tue
+//   Direction validation (E3C 8.18): 1 of 6 disagree - 4H trend=-, BoM alignment=down, liquidity sweep=up, zone failure=down, macro shape=-
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside
 // DX2 | DXY | SHORT | Swing Scalp | Day: Mon | Session: London Open | Shape: SS
 //   Entry: 101.138 | SL: 101.183 | TP: 100.830 | RRR: 6.85 | Quality: HIGH | Confidence: 100
-//   Anchor Zone: 1H (Unmitigated) | MoM [MoM, tested 1x] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA
+//   Anchor Zone: 1H (Unmitigated) | MoM [MoM, tested 1x] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA, auctions: NO DATA
 //   Audit Trail: entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the back edge of the entry zone [ZR-6B RR-tight, mirror confidence 1.00]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327) | attempts 1
 //   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Mon London Open 06:00-09:00 UTC | repeated: Tue
+//   Direction validation (E3C 8.18): 0 of 6 disagree - 4H trend=-, BoM alignment=down, liquidity sweep=down, zone failure=down, macro shape=-
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside
 // DX3 | DXY | LONG | Swing Scalp | Day: Mon | Session: London Open | Shape: SS
 //   Entry: 100.851 | SL: 100.795 | TP: 101.184 | RRR: 5.94 / blended 5.62 | Quality: STANDARD | Confidence: 78
-//   Anchor Zone: 1H (Mitigated 2x) | MoM [MoM, tested 2x] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA
+//   Anchor Zone: 1H (Mitigated 2x) | MoM [MoM, tested 2x] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA, auctions: NO DATA
 //   Audit Trail: entry zone edge (TS-1); SL (a) 3 pips outside the back edge of the entry structure [ZR-6B RR-tight, mirror confidence 0.85]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327) | attempts 1
 //   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Mon London Open 06:00-09:00 UTC | repeated: Tue
+//   Direction validation (E3C 8.18): 1 of 6 disagree - 4H trend=-, BoM alignment=up, liquidity sweep=up, zone failure=down, macro shape=-
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside
 // DX5 | DXY | SHORT | Swing Scalp | Day: Wed | Session: London Open | Shape: SS
 //   Entry: 101.203 | SL: 101.255 | TP: 100.995 | RRR: 3.98 / blended 3.64 | Quality: HIGH | Confidence: 100
-//   Anchor Zone: UPPER RESISTANCE [MoM] | Shape Trigger: SS @ Wed London Open | Day Catalysts: red folder: NO DATA
+//   Anchor Zone: UPPER RESISTANCE [MoM] | Shape Trigger: SS @ Wed London Open | Day Catalysts: red folder: NO DATA, auctions: NO DATA
 //   Audit Trail: entry LQZ rung at the zone; SL (b) 1 pip inside the close edge of the shield (4H band) [ZR-6B safety, mirror confidence 0.55]; TP LQZ on the far edge of the pivot: midpoint | attempts 1
 //   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Wed London Open 06:00-09:00 UTC
+//   Direction validation (E3C 8.18): 1 of 6 disagree - 4H trend=-, BoM alignment=down, liquidity sweep=up, zone failure=down, macro shape=down
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside
 // 
 // --- REINFORCEMENT ENTRIES ---
 // DX7 | DXY | SHORT | Reinforcement | Day: Thu | Session: NY Open | Shape: Ladder
 //   Entry: 100.980 | SL: 101.077 | TP: 100.685 | RRR: 3.06 | Quality: HIGH | Confidence: 100
-//   Anchor Zone: liquidity rung [LQZ] | Shape Trigger: Ladder @ Thu NY Open | Day Catalysts: red folder: NO DATA
+//   Anchor Zone: liquidity rung [LQZ] | Shape Trigger: Ladder @ Thu NY Open | Day Catalysts: red folder: NO DATA, auctions: NO DATA
 //   Audit Trail: reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP) | attempts 1
 //   Cascade Source: native | Parent Trade Ref: DX4 | Anchor Hit Window: Thu NY Open 12:30-14:00 UTC
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: OUTSIDE (9.6p)
+// DXA6 | DXY | LONG | Reinforcement | Day: Thu | Session: NY Open | Shape: Ladder
+//   Entry: 100.980 | SL: 100.906 | TP: 101.332 | RRR: 4.72 | Quality: HIGH | Confidence: 91.0
+//   Anchor Zone: liquidity rung [LQZ] | Shape Trigger: Ladder @ Thu NY Open | Day Catalysts: red folder: NO DATA, auctions: NO DATA
+//   Audit Trail: ALTERNATIVE chain - live only after a 1H close above 101.30500 (UPPER RESISTANCE): reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: DXA4 | Anchor Hit Window: Thu NY Open 12:30-14:00 UTC
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: inside | ALT trigger: 1H close above 101.305 (UPPER RESISTANCE)
 // 
 // --- TRANSITION SETUPS ---
 // none
 // 
 // --- DAILY SESSION NOTES ---
-// Mon: SS range | key zone UPPER RESISTANCE | range 100.724-101.262 | confidence 80% | catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA
-// Tue: SS range | key zone UPPER RESISTANCE | range 100.724-101.262 | confidence 80% | catalysts: 10:00 NY cut 1.1500 2.8bn, 10:00 NY cut 1.1350 1.5bn, 10:00 NY cut 1.1595 1.5bn, red folder: NO DATA
-// Wed: SS+RWL+BS down | key zone 1H (Unmitigated) | BoM | range 100.985-101.305 | confidence 40% | catalysts: red folder: NO DATA
-// Thu: BS down | key zone 1H (Unmitigated) | BoM | range 100.968-101.247 | confidence 40% | catalysts: red folder: NO DATA
-// Fri: BS+WL+RWL down | key zone MID-RANGE SUPPORT | range 100.654-100.968 | confidence 32% | catalysts: red folder: NO DATA
+// Mon: SS range | key zone UPPER RESISTANCE | range 100.724-101.262 | confidence 80% | catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA, auctions: NO DATA
+// Tue: SS range | key zone UPPER RESISTANCE | range 100.724-101.262 | confidence 80% | catalysts: 10:00 NY cut 1.1500 2.8bn, 10:00 NY cut 1.1350 1.5bn, 10:00 NY cut 1.1595 1.5bn, red folder: NO DATA, auctions: NO DATA
+// Wed: SS+RWL+BS down | key zone 1H (Unmitigated) | BoM | range 100.985-101.305 | confidence 40% | catalysts: red folder: NO DATA, auctions: NO DATA
+// Thu: BS down | key zone 1H (Unmitigated) | BoM | range 100.968-101.247 | confidence 40% | catalysts: red folder: NO DATA, auctions: NO DATA
+// Fri: BS+WL+RWL down | key zone MID-RANGE SUPPORT | range 100.654-100.968 | confidence 32% | catalysts: red folder: NO DATA, auctions: NO DATA
 // Weekend: Close ALL positions by NY close Friday - per pair
 // 
 // --- DISCARDED (reason on every discard) ---
 // reinforcement at 100.74139: REJECT RRR 0.54 / SL 10.4p
 // Wed BS down: REJECT RRR 0.31 outside [3.0, 15.0] (SL 100.84579 = 12.2p, TP 100.68539 = 3.8p: LQZ inside the target zone: midpoint) (entry 100.72380)
 // Mon SS LONG 100.81400: DUPLICATE of SS 100.85100 (E3C:463)
+// ALT Wed SS down: REJECT TP_NULL: no opposing zone on the way (E3C:1016 honest absence) (entry 100.72979)
+// ALT Wed SS up: REJECT TP_NULL: no opposing zone on the way (E3C:1016 honest absence) (entry 100.79500)
+// ALT reinforcement at 101.21439: REJECT RRR 1.20 / SL 9.7p
+// ALT reinforcement at 101.28439: REJECT RRR 0.44 / SL 10.8p
+// ALT Wed BS up: REJECT RRR 0.56 outside [3.0, 15.0] (SL 101.11700 = 14.5p, TP 101.34243 = 8.1p: LQZ inside the target zone: midpoint) (entry 101.26178)
+// ALT Mon SS LONG 100.81400: DUPLICATE of SS 100.85100 (E3C:463)
+// ALT Wed SS LONG 100.81400: DUPLICATE of SS 100.81400 (E3C:463)
 // 
 // --- WEEKLY STATS ---
-// Total Setups: 8 | HTF: 3 | Scalps: 4 | Reinforcements: 1 | Transitions: 0
-// Average RRR: 5.08 | Median RRR: 4.96
-// f(T) Acceptance (E3C:996: 8 per pair minimum): 8 setups on DXY - met
+// Total Setups: 11 | HTF: 5 | Scalps: 4 | Reinforcements: 2 | Transitions: 0
+// Average RRR: 5.66 | Median RRR: 5.94
+// f(T) Acceptance (E3C:996: 8 per pair minimum): 11 setups on DXY - met

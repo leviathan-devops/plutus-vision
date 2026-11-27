@@ -133,6 +133,12 @@ def generate(pair, monday, X, extra=(), rch=None):
     near = (lambda b, t: True) if rch is None else (lambda b, t: b <= rch[1] and t >= rch[0])
     b0, tsR, wk0 = D.boundary_ms(monday), D.week_end_ms(monday), D.week_start_ms(monday)
     tsL, H = wk0 - 7 * 86400000, 3600000
+    # a zone label (label.style_none) is drawn by Pinebox with its text STARTING at the label's point (evidence/chk97, chk99; ledger 99b): the point stands the text's width - counted in
+    # 1H BARS, the weekend holds none - before the week start, so the text ENDS before the forecast week's candles (A13 'labels over candles'; outside counts 9 / 10). Width of a
+    # size.small character on the two-week 1H frame = about 1.65 bars (measured on evidence/chk100). A right-anchored style is not used - Pinebox draws label.style_label_right to the
+    # right of its point too (evidence/chk98)
+    _hb = [x_['time'] for x_ in D.closed(pair, '60', monday) if x_['time'] < wk0 - 2 * H]
+    lab_x = lambda t: (_hb[max(0, len(_hb) - 2 - int(1.65 * len(t)))] if _hb else tsL + 2 * H)
     U = X['U']; pw = X['weekly'][-1]
     sweeps = sweep_boxes(X)
     joined, parts = join_zones(X, near, sweeps)
@@ -195,7 +201,7 @@ def generate(pair, monday, X, extra=(), rch=None):
                 continue
             o.append(f"        box.new({x0}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), {84 if z['tf'] in ('240', '60') else 90}), border_color=color.rgb({c}), border_width={2 if z['tf'] == '240' else 1}, xloc=xloc.bar_time)")
             n_sd += 1                                    # labels of stacked zones alternate between three columns so they do not print on one spot (A13)
-            o.append(f"        label.new({max(x0, tsL + (30 + 34 * (n_sd % 3)) * H)}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+            o.append(f"        label.new({min(max(x0, tsL + (30 + 34 * (n_sd % 3)) * H), lab_x(z['label'] + plus(z)))}, {g((z['top'] + z['bot']) / 2)}, \"{z['label']}{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
         if len(o) == n0:
             o.append('        na')
     # liquidity sweep zones (P533:1246-1287): [low, low + 0.05] / [high - 0.05, high]; a swept extreme has no resting stops left
@@ -219,7 +225,8 @@ def generate(pair, monday, X, extra=(), rch=None):
         if part:
             continue
         n_lz += 1
-        o.append(f"        label.new({tsL + (8 + 40 * (n_lz % 3)) * H}, {g((zt + zb) / 2)}, \"LSZ {'supply' if z['side'] == 'Supply-side' else 'demand'}-side{' + 4H BoM (confluent)' if z.get('confluent_bom') else ''} | sweep to {g(xt if z['side'] == 'Supply-side' else xb)}{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
+        txt_ = f"LSZ {'supply' if z['side'] == 'Supply-side' else 'demand'}-side{' + 4H BoM (confluent)' if z.get('confluent_bom') else ''} | sweep to {g(xt if z['side'] == 'Supply-side' else xb)}{plus(z)}"
+        o.append(f"        label.new({min(tsL + (8 + 40 * (n_lz % 3)) * H, lab_x(txt_))}, {g((zt + zb) / 2)}, \"{txt_}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
       if len(o) == n0:
         o.append('        na')
     # IP zones (the six ranked first), trident_v8 form
@@ -242,7 +249,8 @@ def generate(pair, monday, X, extra=(), rch=None):
         c = SHADE[z['cat']][z['degree']]
         o.append(f"        // #{z['rank']} {z['name']} {g(z['bot'])}-{g(z['top'])} {z['degree']} {z['score']}/14 {z['type']} {z['tier']} | {z['mech']['bom']} {z['mech']['counter']} {z['mech']['reactions']} reactions | {z['mech']['e3_status']}")
         o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 70), border_color=color.rgb({c}), border_width=2, xloc=xloc.bar_time)")
-        o.append(f"        label.new({tsL + 60 * H}, {g((z['top'] + z['bot']) / 2)}, \"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} {z['mech']['bom']}{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+        txt_ = f"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} {z['mech']['bom']}{plus(z)}"
+        o.append(f"        label.new({lab_x(txt_)}, {g((z['top'] + z['bot']) / 2)}, \"{txt_}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
       if len(o) == n0:
         o.append('        na')
     # Step 9.5 gap in-fill levels (P452:1159-1184): MODERATE confidence, drawn thinner than the named zones
@@ -256,7 +264,8 @@ def generate(pair, monday, X, extra=(), rch=None):
             o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 93), border_color=color.new(color.rgb({c}), 50), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
             continue
         o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 82), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
-        o.append(f"        label.new({tsL + 96 * H}, {g((z['top'] + z['bot']) / 2)}, \"GAP IN-FILL | MODERATE | {z['zfp']} ZFP{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+        txt_ = f"GAP IN-FILL | MODERATE | {z['zfp']} ZFP{plus(z)}"
+        o.append(f"        label.new({lab_x(txt_)}, {g((z['top'] + z['bot']) / 2)}, \"{txt_}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
     if len(o) == n0:
         o.append('        na')
     # DYNAMIC DISCOVERY PROTOCOL (P452:1220-1228): the pre-week flags where the map is empty - 'level to watch', NEUTRAL (P533:3448): a thin dashed neutral line, small label (D-103)
@@ -267,7 +276,7 @@ def generate(pair, monday, X, extra=(), rch=None):
             o.append(f"        box.new({b0 - 48 * H}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(200,200,200), 92), border_color=color.new(color.rgb(200,200,200), 45), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
         else:
             o.append(f"        line.new({b0 - 48 * H}, {g(z['p'])}, {tsR}, {g(z['p'])}, xloc=xloc.bar_time, color=color.new(color.rgb(200,200,200), 35), style=line.style_dashed, width=1)")
-        o.append(f"        label.new({b0 - 30 * H}, {g(z['top'])}, \"DISCOVERY ZONE | {' + '.join(z['flags'])}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.rgb(200,200,200), 10), size=size.tiny)")
+        o.append(f"        label.new({min(b0 - 30 * H, lab_x('DISCOVERY ZONE | ' + ' + '.join(z['flags'])))}, {g(z['top'])}, \"DISCOVERY ZONE | {' + '.join(z['flags'])}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.rgb(200,200,200), 10), size=size.tiny)")
     if len(o) == n0:
         o.append('        na')
     o.append('    if show_ip and show_lv')
