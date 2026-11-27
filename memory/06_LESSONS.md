@@ -51,3 +51,7 @@
 
 - LS-34 (2026-11-26) I left a four-page source of truth (Fibonacci_Spiderwebs.pdf, goal prompt section 3 item 3) unread through ten compactions and four outside counts while trying E3 variants of my own. It holds the construction of every one of his trades (entry at a Fib level of a range between two Earth points, SL 1-2 levels back, TP one range away). Read every listed source in full BEFORE building the part it governs; a coverage row saying 'not yet read' is the first thing to clear.
 - L-50x (2026-11-27): a Pinebox render while another process uses the station (V1 harvests of a locator run) times out (CDP_TIMEOUT) and s3frames still writes a frame - the earlier pass's chart. Never render in parallel with a station user; check the 'pb ide' output (box counts) before citing a frame.
+- L-51x (2026-11-27): re-running a whole engine each morning is not 'daily anchoring' - the chain's own timing rules (6.10 +1 day) re-apply every morning and push events out of the week; hold a chain while it holds, act when it fails.
+- L-52x (2026-11-27): an order 'existing' only from a day's London open loses the Asian session his trades use (golden Friday long filled 02:15 UTC) - an order's life starts at its trading day's open.
+- L-53x (2026-11-27): improving the drawn E2 and improving the orders can pull apart (re-anchored chains: better line, fewer winners) - measure each layer separately before adopting a change for both.
+- L-54x (2026-11-27): a report to him always carries all three pairs and the whole week in one fitted frame each (M-60).

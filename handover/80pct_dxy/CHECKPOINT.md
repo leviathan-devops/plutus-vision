@@ -14,3 +14,10 @@ What this state contains (decision rows in memory/03_DECISION_CHAIN.md):
 Frames of this state: evidence/lib4/DXY_2026-07-06_week.png, evidence/lib4/GBPUSD_2026-04-13_week.png.
 Run: `python3 e1_tool/plutus.py MONDAY PAIR [out.pine]` (daily anchoring default; `--weekly` = all orders at the Monday anchor).
 Restore this exact state: `git checkout aa8d689`.
+
+## Self-contained: code + context + graph (operator, after M-60)
+- CODE: the whole repository at this commit (engines e1_tool/*.py, sidecar/ incl. protocols.py and its data, tools/ incl. leak_check.py, indicator/ with the sealed V1).
+- CONTEXT: memory/*.md (standing order 14, rulings 04 incl. L-46..L-56, operator verbatim 12 incl. M-57..M-60, decisions 03 incl. D-129..D-138, lessons 06, facts 08 incl. 'SESSION FACTS 2026-11-27', ledger 07 incl. rows 107-111c, journal 05, state 01, coverage 15), evidence/answers_m58/ (Q1, Q4, Q6), evidence/lib1-lib4 + chk107 frames, handover/70pct_functional/ (the previous checkpoint).
+- GRAPH: handover/80pct_dxy/omnigraph/graph_store/ (the OmniGraph store as on disk, /home/user/.plutus-mem, rebuilt from memory/*.md at this checkpoint: 1572 nodes, 1029 edges - Fact 1140, Decision 132, Lesson 39, Ruling 54, Task 33, Evidence 157, Artifact 17), graph_export.jsonl (full `omnigraph export`), mem_status.txt, mem_ls.txt.
+- Restore the graph elsewhere: copy graph_store/ to /home/user/.plutus-mem, or run `tools/mem/mem rebuild` (the graph is a pure function of memory/*.md + memory/graph_log.jsonl + tools/mem/schema.pg).
+- Manifest: handover/80pct_dxy/MANIFEST.sha256 (sha256 of every tracked file at this commit except the manifest itself).
