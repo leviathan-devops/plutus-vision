@@ -220,8 +220,10 @@ def _steps(X):
 
 
 ZR6B = True
-REVERSAL_B = False                                # P533:506 reversal / correction entries: stop 1-2 pips inside the next zone (D-130)
-REVERSAL_SHAPES = ('SS', 'RWL', 'R', 'WL')        # P533 6.1: swing scalps turn at a bound, the reverse whiplash / whiplash / recovery are reversals or corrections; BS / PBS / ladders follow the move
+REVERSAL_B = True                                 # P533:506 reversal / correction entries: stop 1-2 pips inside the next zone (D-130)
+REVERSAL_SHAPES = ('SS', 'RWL', 'R', 'WL')
+EU_INSIDE = False                                 # L-50 'Euro USD should use the inside stop too WHERE APPLICABLE': his golden EUR/USD stops measure 'outside the entry zone' (0.2-0.4 pips from rule (a));
+                                                  # the next-S/D-zone reading lands 2-6.5 pips off and tighter than his (D-135) - not applicable there; EUR/USD keeps (a)        # P533 6.1: swing scalps turn at a bound, the reverse whiplash / whiplash / recovery are reversals or corrections; BS / PBS / ladders follow the move
 SWEEP_EXT = True
 GOLD_FALLBACK = True       # D-102: golden stop fallback when no ladder step gives a stop (E3C:262, :289-294)
 MID_KEY = True
@@ -297,6 +299,12 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
         sh = sorted(th[1:] + tk, key=lambda s: s['bot'] if dn else -s['top'])
         for k, s in enumerate(sh):
             cands.insert(k, ((s['bot'] + pip) if dn else (s['top'] - pip), f"(b) 1 pip inside the close edge of the shield ({'4H band' if s['thick'] else '1H rung beyond the first'})"))
+    elif reversal and REVERSAL_B and EU_INSIDE:
+        # L-50 (operator M-59): 'Euro USD should use the inside stop too where applicable ... on Euro USD, the liquidity is inside the supply or demand zone ... price mitigate[s] inside
+        # of the supply and demand zone': the NEXT ZONE of a EUR/USD stop is the next supply / demand zone beyond the entry structure - the stop 1 pip inside its close edge
+        sdz = sorted([z for z in X.get('sd', []) if ((z['bot'] > ref + 1e-12) if dn else (z['top'] < ref - 1e-12))], key=lambda z: z['bot'] if dn else -z['top'])
+        for k, z in enumerate(sdz[:3]):
+            cands.insert(k, ((z['bot'] + pip) if dn else (z['top'] - pip), f"(b) 1 pip inside the close edge of the next supply / demand zone ({z.get('tf', '')} {z.get('kind', '')}; EUR/USD liquidity sits inside it, L-50)"))
     ok = []
     for sl, why in cands:
         d = abs(sl - entry) / pip
@@ -307,9 +315,11 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
     # E3C 12.2 floor invariant 'SL envelope (within GOLDEN_SL_MAX_PIPS = 9.5)'; E3C:293 'the operator-measured golden SLs are 4-9.5 pips; 36 is the safety ceiling': a ladder stop inside
     # the envelope is taken before one outside it. Not on GBP/USD (his own golden stops there are 10.6-14.1 pips) and not for rockets (own rule, E3C:302; his Thursday rocket 11.5) (D-111)
     env_ok = [q for q in ok if abs(q[0] - entry) / pip <= GOLD_MAX + 1e-9]
-    if env_ok and pair != 'GBPUSD' and envelope:
+    # L-50 'Take the wider stop ... Don't skip good trades ... it's retarded to skip it just because you need a few extra pips of stop loss': a reversal entry's inside-the-next-zone stop
+    # is not vetoed by the golden envelope - the RRR floor still decides whether the trade is good
+    if env_ok and pair != 'GBPUSD' and envelope and not (reversal and REVERSAL_B):
         ok = env_ok
-    if ok and reversal and REVERSAL_B and pair not in NO_SHIELD:
+    if ok and reversal and REVERSAL_B:
         # P533:506 'SL correction/reentry exception: When trying to catch a CORRECTION/REVERSAL - ALWAYS make sure SL is 1-2 pips INSIDE THE NEXT ZONE. This is when price is likely to pierce the
         # entry zone slightly and breathing room is needed. Standard SL rules (outside the zone) apply for trend-following entries.' Operator M-58 item 1: 'it is either 2-3 pips outside the
         # entry zone or 1-2 pips inside the next zone'. A reversal entry takes rule (b) on the first shielding zone (a thick step: FA 2.1 'Thin liquidity zones are NEVER allowed as entry or
@@ -552,7 +562,12 @@ def _build(pair, monday, X, E2, tag):
         if not ecands:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: SOURCE_INVALID - no ORDER_BLOCK / LQZ entry at {a.get('name', '')} (E3C:135)"); continue
         s, why_fail = None, 'TP_NULL'
+        e_first = None
         for entry, step, how in ecands[:3]:                  # E3C:386 '3 attempts on each anchor (3 E, 3 SL, 3 TP)'
+            if e_first is None:
+                e_first = entry
+            elif REVERSAL_B and c['shape'] in REVERSAL_SHAPES and ((entry < e_first) if direction == 'down' else (entry > e_first)):
+                continue                                     # L-50 'take the wider stop and potentially even set a BETTER entry': a later attempt is deeper, never shallower
             stop, why_sl = _stop(entry, direction, step if 'bot' in step else a, X, pair, dmin=12.0 if c.get('role') == 'transition' else None, zone=a,   # GS Law 3 table 'Breakout | SL 12-20 pips'
                                  conf=_mirror_conf(c, a, direction, E2), reversal=c['shape'] in REVERSAL_SHAPES and c.get('role') != 'transition')
             if stop is None:
