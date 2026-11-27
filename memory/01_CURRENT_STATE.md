@@ -1,7 +1,9 @@
 ## STATE (NEWEST, 2026-11-27 ~16:30 UTC) - ITEM 2 DAILY ANCHORING BUILT AND DEFAULT (D-131, commits 7460b58 / 636326e)
 - plutus.py now runs DAILY ANCHORING by default (--weekly = old behaviour, byte-identical to before on 4 weeks x 3 pairs). Monday map + chain fixed; per trading-day open (17:00 NY prior evening) the line restarts at the real price and the day's orders are confirmed (order block not closed through; price on the order's side). Leak check part 3 proves each day.
 - Reported to him: item 2 built; anchor = trading-day open (London open loses Asian fills incl. his golden Friday long); item 1 = P533:506 (reversal -> inside the next zone, trend-following -> outside) fits 6 of 7 golden stops but the E3C 9.5-pip envelope / EURUSD NO_SHIELD block it -> asked: wider stop or skip when B > 9.5 pips. D-130 trial off.
-- STILL WAITING ON HIM: Q1 (envelope), Q3a/b (E2 drawing), Q6b (repeats count).
+- STILL WAITING ON HIM: Q1 (envelope: wider B stop or skip when > 9.5 pips), Q3a/b (E2 drawing), Q6b (repeats count).
+- Protocol E built after he allowed markets.newyorkfed.org (commit 58b8a8e); only Protocol F (Forex Factory) stays NO DATA. M-58 was re-delivered after a worker restart: answered with a map of where each answer is.
+- LIBRARY COMPARISON started: frames evidence/lib1 (GBPUSD 02-23, 03-02, 04-06, 04-13); 03-02 delta in ledger 108b (E2 one day late, no reversal after the breakdown, his Wednesday 1.3313 long missed); 02-23 / 04-06 / 04-13 still to compare against his pictures.
 - NEXT: (1) the library as oracle: read his library pictures week by week (trades with entry / SL / TP, shape boxes, zone labels) into context_management/oracle/library/*.json; (2) spiderweb layer (coverage E2-AIR NB; E3C:203-230 + Spiderwebs PDF); (3) count-11 defects (ceiling short missing on DXY 05-18 = RRR blend 2.41 < 2.5; GBPUSD range boxes); (4) request markets.newyorkfed.org for Protocol E at the end of a turn.
 
 ## STATE (NEWEST, 2026-11-27 ~16:00 UTC, after compaction 14) - M-58 ANSWERED, BUILDING ITEM 2
