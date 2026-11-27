@@ -115,6 +115,7 @@ def _status(s, t_from, t_to, pair):
     return 'open' if filled else 'pending'
 
 
+REANCHOR_DRAW = True       # D-138: once the chain in force has failed, the line and day boxes are drawn from the chain re-anchored at the London open (orders unchanged)
 REANCHOR = False           # D-136 chain re-anchor on the rebuilt map: OFF (12-map locator: TP 27 -> 23, unfilled 6 -> 13 - it cancels resting winners and replaces the alternative's orders); the zone update itself stays
 DAY_CONFIRM = 'start'      # 'start' = the trading day's open (17:00 New York the evening before) | 'london' = the day's London open (02:00 New York)
 
@@ -224,6 +225,7 @@ def daily_anchor(pair, monday, chain, R):
     have = {'sd': list(X0.get('sd', [])), 'lsz': [{'bot': l['bot'], 'top': l['top']} for l in X0.get('lsz', []) if not l.get('swept')],
             'ip': [z for z in X0.get('zones', []) if z.get('drawn')]}
     cur = {'chain': chain, 'R': R, 'anchor': b0, 'lvl': _levels(chain, R), 'active': None}
+    vw = None          # D-138: the chain the LINE and DAY BOXES are drawn from once the chain in force has failed - re-anchored at a London open on the rebuilt map
 
     def alts_of(ch):
         return [a_ for a_ in (ch.get('alts') or ([{'alt': ch.get('alt'), 'chain': ch.get('alt_chain')}] if ch.get('alt_chain') else [])) if a_.get('alt') and a_.get('chain')]
@@ -258,7 +260,7 @@ def daily_anchor(pair, monday, chain, R):
                     audit.append(f"ALTERNATIVE CHAIN ACTIVE from the {DAYS[i]} trading-day open (6.6 Step 4): 1H close {'above' if d_ == 'up' else 'below'} {f(lv[0])} ({a_['alt'].get('decision_zone', '')}) "
                                  f"at {D.ts(cur['active']['at'])} UTC: " + ' -> '.join(c['shape'] for c in a_['chain'].get('chain', [])))
                     break
-        view = cur['active']['chain'] if cur['active'] else cur['chain']
+        view = vw['chain'] if vw is not None else (cur['active']['chain'] if cur['active'] else cur['chain'])
         d = next((x for x in view.get('days', []) if x['day'] == DAYS[i]), None) or next((x for x in chain['days'] if x['day'] == DAYS[i]), None)
         if d is not None:
             days.append(d)
@@ -357,6 +359,28 @@ def daily_anchor(pair, monday, chain, R):
                         newk.append(s)
                 keep += newk
                 reanch = (t_L, [(s['dir'], s['entry'], s['sl'], s['tp']) for s in newk])
+            elif REANCHOR_DRAW and (cur['active'] is not None or vw is not None):
+                # D-138: the LINE and the DAY BOXES follow the market once the chain in force has failed (L-51 'if the candles don't match the exact lines that you're drawing,
+                # then your lines are not as accurate as they should be'; L-53 daily update at London open): the chain is re-anchored on the rebuilt map for the drawing - again
+                # whenever the drawn chain fails at its own Decision Zone; the ORDERS stay with the chain in force (its alternative), none cancelled (D-137: re-anchored orders cost winners)
+                failed_vw = False
+                if vw is not None:
+                    bL = [x for x in D.closed_until(pair, '60', t_L) if x['time'] >= vw['anchor']]
+                    failed_vw = any(next((x for x in bL if ((x['close'] > lv[0]) if d_ == 'up' else (x['close'] < lv[0]))), None) is not None for d_, lv in vw['lvl'].items())
+                if vw is None or failed_vw:
+                    ch_i, R_i = _engines_at(pair, monday, t_L)
+                    vw = {'chain': ch_i, 'anchor': t_L, 'lvl': _levels(ch_i, R_i)}
+                    audit.append(f"LINE RE-ANCHORED at the {DAYS[i]} London open {D.ts(t_L)} UTC on the rebuilt map (D-138): " + ' -> '.join(c['shape'] for c in ch_i.get('chain', [])))
+                    reanch = (t_L, 'draw')
+                d2 = next((x for x in vw['chain'].get('days', []) if x['day'] == DAYS[i]), None)
+                if d2 is not None:
+                    days[-1:] = [d2] if (days and days[-1]['day'] == DAYS[i]) else days[-1:] + [d2]
+                seg = _cut(seg, t_a, t_L) if len(seg) > 1 else seg
+                seg2 = _day_line(vw['chain'], d2, monday, t_L, t_e, Xi['spot'], X0) or _cut(vw['chain']['path'], t_L, t_e)
+                if len(seg2) > 1:
+                    if seg2[0][0] == t_L:
+                        seg2[0] = (t_L, Xi['spot'])
+                    segs.append(seg2)
             partsL[i] = {'adds': [(fam, round(z['bot'], 6), round(z['top'], 6)) for fam, z in new], 'reanchor': reanch}
         if len(seg) > 1:
             segs.append(seg)
