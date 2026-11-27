@@ -29,6 +29,7 @@ if EXC != ['']:
     X2 = dict(X, sd=[z for z in X['sd'] if z in allz or z['tf'] not in ('240', '60')], infill=[z for z in X.get('infill', []) if z in allz],
               v1=dict(X['v1'], **{'240': dict(X['v1']['240'], liquidity=[z for z in X['v1']['240']['liquidity'] if z in allz])}))
     joined, parts = e1_pine.join_zones(X2, near, sweeps)
+allz = [z for z in allz if id(z) in joined or z not in X['v1']['240']['liquidity']]      # a 4H liquidity band standing alone is the sealed V1's drawing (toggle show_v1s, off)
 leaders = [z for z in allz if id(z) not in joined]
 def name(z):
     return z.get('name') or z.get('label') or ('sweep' if z in sweeps else '4H band')
@@ -41,11 +42,14 @@ for L in leaders:
         b, t = min(b, r), max(t, r)
     areas.append((b, t, name(L)[:22], len(ps)))
 areas.sort()
+# thresholds: outside reviewer 8 (calibrated on the operator's reference map): bunched = areas overlap or 0-2 pips apart; floating = more than 22 pips beyond the week's extreme; bloated = taller than 35 pips
+BLO, BUN, FLO = float(os.environ.get('Q_BLO', 35)), float(os.environ.get('Q_BUN', 2)), float(os.environ.get('Q_FLO', 22))
 wk = [x for x in D.bars(pair, '60') if D.boundary_ms(mon) <= x['time'] < D.week_end_ms(mon)]
 wl, wh = min(x['low'] for x in wk), max(x['high'] for x in wk)
-bloated = [a for a in areas if (a[1] - a[0]) / pip > 20 + 1e-9]
-bunched = [(a, b) for i, a in enumerate(areas) for b in areas[i + 1:] if b[0] - a[1] <= 3 * pip]
-floating = [a for a in areas if a[0] - wh > 30 * pip or wl - a[1] > 30 * pip]
+bloated = [a for a in areas if (a[1] - a[0]) / pip > BLO + 1e-9]
+bunched = [(a, b) for i, a in enumerate(areas) for b in areas[i + 1:] if b[0] - a[1] <= BUN * pip]
+floating = [a for a in areas if a[0] - wh > FLO * pip or wl - a[1] > FLO * pip]
+cover = sum(max(0.0, min(a[1], wh) - max(a[0], wl)) for a in areas) / (wh - wl)
 # missing: zigzag(30) turning points of the week with no area within 3 pips
 piv, d, hi_, lo_ = [], 0, (wk[0]['time'], wk[0]['high']), (wk[0]['time'], wk[0]['low'])
 for x in wk[1:]:
@@ -57,7 +61,7 @@ for x in wk[1:]:
         piv.append(lo_[1]); d = 1; hi_ = (x['time'], x['high'])
 piv.append(hi_[1] if d == 1 else lo_[1])
 missing = [p for p in piv if not any(a[0] - 3 * pip <= p <= a[1] + 3 * pip for a in areas)]
-print(f"{pair} {mon}: {len(areas)} zones | bloated {len(bloated)} | bunched pairs {len(bunched)} | floating {len(floating)} | missing {len(missing)}/{len(piv)} {[f(p) for p in missing]} | week {f(wl)}-{f(wh)}")
+print(f"{pair} {mon}: {len(areas)} zones | bloated {len(bloated)} | bunched pairs {len(bunched)} | floating {len(floating)} | missing {len(missing)}/{len(piv)} | cover {cover * 100:.0f}% | week {f(wl)}-{f(wh)}")
 if '-v' in sys.argv:
     for a in areas:
         print(f"   {f(a[0])}-{f(a[1])} ({(a[1] - a[0]) / pip:.0f}p) {a[2]} +{a[3]} parts")

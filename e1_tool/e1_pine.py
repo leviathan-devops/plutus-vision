@@ -21,7 +21,9 @@ def run(pair, monday):
     return X
 
 
-REACH_MM = True
+REACH_MM = False        # D-105: the measured-move reach (D-93) put zones 60-130 pips beyond the week on 12 of 12 maps (outside count 8, 'floating'); the reach is the E2 envelope + the first zone beyond each end
+JOIN_D = 0.05            # D-105: an Engine 1 object within 0.05 of a higher-ranking zone is a PART of it (P533 Step 0.5a 'within 0.05 DXY points of each other, they are a "repeated level"'; zone assembly step 4 groups levels within 0.10-0.15; L-39 joined zone)
+LSZ_BOX = 0.05           # D-105: the sweep zone BOX as the operator's reference script draws it (trident_v8.pine: every LSZ 0.05 tall; P533 0.45 [low, low + 0.05]); the 0.10 scan of Step 0.45a stays Engine 2's bound and the dotted reach
 
 
 def reach(X, E2):
@@ -70,7 +72,7 @@ def reach(X, E2):
 
 def discovery_drawn(X, near, sweeps):
     """the discovery flags shown: inside the chart window and not on a drawn supply / demand zone, sweep zone or 4H liquidity band (the flag marks EMPTY map, P452:1224)"""
-    solid = [z for z in X['sd'] if z['tf'] in ('240', '60')] + list(sweeps) + list(X['v1']['240']['liquidity']) + [z for z in X['zones'] if z['drawn']] + list(X.get('infill', []))
+    solid = [z for z in X['sd'] if z['tf'] in ('240', '60')] + list(sweeps) + [z for z in X['zones'] if z['drawn']] + list(X.get('infill', []))
     return [z for z in X.get('discovery', []) if near(z['bot'], z['top']) and not any(q['bot'] <= z['top'] and q['top'] >= z['bot'] for q in solid)]
 
 
@@ -86,7 +88,7 @@ def sweep_boxes(X):
         else:
             merged.append(dict(z, lo=z['level'], hi=z['level'], n=1))
     for z in merged:
-        z['bot'], z['top'] = (z['lo'], z['hi'] + 0.10 * U) if z['side'] == 'Demand-side' else (z['lo'] - 0.10 * U, z['hi'])      # the extended zone of Step 0.45a, as e1_ip holds it (D-99)
+        z['bot'], z['top'] = (z['lo'], z['hi'] + LSZ_BOX * U) if z['side'] == 'Demand-side' else (z['lo'] - LSZ_BOX * U, z['hi'])
     return merged
 
 
@@ -101,7 +103,9 @@ def join_zones(X, near, sweeps):
     objs += [(5, z, '4H liquidity') for z in X['v1']['240']['liquidity'] if near(z['bot'], z['top'])]
     leaders, joined, parts = [], {}, {}
     for rank, z, nm in sorted(objs, key=lambda o: (o[0], o[1]['bot'])):
-        L = next((l for r, l in leaders if r < rank and l['bot'] <= z['top'] and l['top'] >= z['bot']), None)
+        JD = JOIN_D * X['U']
+        cl = [l for r, l in leaders if r < rank and l['bot'] - JD <= z['top'] and l['top'] + JD >= z['bot']]
+        L = min(cl, key=lambda l: max(l['bot'] - z['top'], z['bot'] - l['top'], 0.0)) if cl else None      # the nearest higher-ranking zone within the join distance
         if L is not None:
             joined[id(z)] = L
             if nm not in parts.setdefault(id(L), []):
@@ -127,7 +131,7 @@ def generate(pair, monday, X, extra=(), rch=None):
          'show_ip = input.bool(true, "E1 IP Zones")', 'show_disc = input.bool(true, "E1 Discovery Zones (levels to watch)")', 'show_lv = input.bool(true, "E1 levels inside IP zones")', 'show_lsz = input.bool(true, "E1 LSZ")',
          'show_opt = input.bool(true, "E1 Option Strikes")', 'show_sd = input.bool(true, "E1 Supply / Demand 4H + 1H")', 'show_ltf = input.bool(false, "E1 Supply / Demand 30m + 15m")',
          'show_lq = input.bool(true, "E1 Liquidity ladder 1H (V1 data)")', 'show_lq4 = input.bool(true, "E1 Liquidity bands 4H (V1 data)")', 'show_ob = input.bool(false, "V1 order blocks (data)")',
-         'show_far = input.bool(false, "E1 zones beyond this week\'s reach")',
+         'show_far = input.bool(false, "E1 zones beyond this week\'s reach")', 'show_v1s = input.bool(false, "V1 4H liquidity bands standing alone (the sealed V1 draws them)")',
          'show_e2 = input.bool(true, "E2 Shape chain")', 'show_e3 = input.bool(true, "E3 Trade setups")', 'show_tbl = input.bool(true, "Info Table")',
          f'isPair = str.contains(syminfo.ticker, "{D.SYM[pair].split("_")[-1]}")', 'if barstate.islast and isPair']
     # liquidity ladder: the sealed V1's 1H liquidity bands at the anchor (R-30), around the prior week's range (V1 itself draws the live ladder)
@@ -138,16 +142,19 @@ def generate(pair, monday, X, extra=(), rch=None):
             o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 70), border_color=color.new(color.rgb(63,164,106), 40), border_width=1, xloc=xloc.bar_time)")
     if len(o) == n0:
         o.append('        na')
-    o.append('    if show_lq4')
-    n0 = len(o)
-    for z in X['v1']['240']['liquidity']:
-        if lo_v <= z['bot'] and z['top'] <= hi_v and near(z['bot'], z['top']):
-            if id(z) in joined:
-                o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 94), border_color=color.new(color.rgb(63,164,106), 60), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
-                continue
-            o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 80), border_color=color.new(color.rgb(63,164,106), 30), border_width=1, xloc=xloc.bar_time)")
-    if len(o) == n0:
-        o.append('        na')
+    # a 4H liquidity band of the sealed V1 is drawn by this script only as a PART of an Engine 1 zone; standing alone it is the sealed V1's own drawing underneath (goal prompt 4b: 'E1 = (a) the
+    # sealed V1 underneath: order blocks + the liquidity ladder') and sits behind the toggle show_v1s (D-105)
+    for flag, alone in (('show_lq4', False), ('show_lq4 and show_v1s', True)):
+        o.append('    if ' + flag)
+        n0 = len(o)
+        for z in X['v1']['240']['liquidity']:
+            if lo_v <= z['bot'] and z['top'] <= hi_v and near(z['bot'], z['top']) and (id(z) not in joined) == alone:
+                if not alone:
+                    o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 94), border_color=color.new(color.rgb(63,164,106), 60), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
+                else:
+                    o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 80), border_color=color.new(color.rgb(63,164,106), 30), border_width=1, xloc=xloc.bar_time)")
+        if len(o) == n0:
+            o.append('        na')
     o.append('    if show_ob')
     n0 = len(o)
     for tf in ('240', '60', '30', '15'):

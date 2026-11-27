@@ -27,6 +27,7 @@ def desc(z):
     return f"liquidity band (sealed V1, 4H) {f(z['bot'])}-{f(z['top'])}"
 allz = [z for z in X['zones'] if z['drawn'] and near(z['bot'], z['top'])] + [z for z in X['sd'] if z['tf'] in ('240', '60') and near(z['bot'], z['top'])] + \
        [z for z in X.get('infill', []) if near(z['bot'], z['top'])] + [z for z in sweeps if near(z['bot'], z['top'])] + [z for z in X['v1']['240']['liquidity'] if near(z['bot'], z['top'])]
+allz = [z for z in allz if id(z) in joined or z not in X['v1']['240']['liquidity']]      # a 4H liquidity band standing alone is the sealed V1's drawing (toggle show_v1s, off)
 leaders = [z for z in allz if id(z) not in joined]
 for L in sorted(leaders, key=lambda z: -z['top']):
     print('  ' + desc(L))
