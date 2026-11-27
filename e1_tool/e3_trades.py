@@ -223,6 +223,7 @@ ZR6B = True
 SWEEP_EXT = True
 GOLD_FALLBACK = True       # D-102: golden stop fallback when no ladder step gives a stop (E3C:262, :289-294)
 MID_KEY = True
+LAW14_PRE = 1.2            # E3C:343 'Law-14 precondition: TP >= 1.2 x SL'
 BLEND_GATE = True          # D-100: the emission floor is met by the blended RRR of a 3-entry staggered position (E3C:357)
 JOIN_TP = True
 SWEEP_TP = True
@@ -590,7 +591,9 @@ def _build(pair, monday, X, E2, tag):
                                 mid_ = ins_[0]
                         rr_ = [abs(tp_o - e) / abs(e - stop) for e in (fr_, mid_, bk_)]
                         bl = 0.33 * rr_[0] + 0.33 * rr_[1] + 0.34 * rr_[2]
-                by_blend = rrr_o < floor_rrr and bl is not None and bl >= floor_rrr
+                # E3C:343 (computeLmvTP) 'Law-14 precondition: TP >= 1.2 x SL': the order as emitted (its own entry, SL, TP) keeps a reward of at least 1.2 x its risk - the blend of the three
+                # staggered entries (a back entry standing almost on the stop carries a very large RRR) never lifts an order below that over the floor (D-118)
+                by_blend = rrr_o < floor_rrr and bl is not None and bl >= floor_rrr and rrr_o >= LAW14_PRE
                 if (floor_rrr <= rrr_o or by_blend) and rrr <= MAX_RRR:
                     lvl_tp = tp
                     tp, rrr = tp_o, (bl if by_blend else rrr_o)
