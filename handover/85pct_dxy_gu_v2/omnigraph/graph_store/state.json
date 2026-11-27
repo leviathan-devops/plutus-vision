@@ -1,0 +1,44 @@
+{
+ "fingerprint": "58e0bee403293668faf869d0c19bbe94419bc564ee89d343e2d56cf3f471d0c3",
+ "synced_at": "2026-11-27T18:31:26Z",
+ "nodes": 1582,
+ "edges": 1059,
+ "kinds": {
+  "Fact": 1143,
+  "Artifact": 17,
+  "Task": 34,
+  "Decision": 135,
+  "Ruling": 54,
+  "Lesson": 39,
+  "Evidence": 160
+ },
+ "edge_types": {
+  "About": 1058,
+  "Supports": 1
+ },
+ "warnings": [
+  "04_OPERATOR_RULINGS_LIVE.md: id L-53 already used, stored as L-53.2",
+  "05_JOURNAL.md: id D-46 already used, stored as D-46.2",
+  "05_JOURNAL.md: id D-129 already used, stored as D-129.2",
+  "05_JOURNAL.md: id M-58 already used, stored as M-58.2",
+  "05_JOURNAL.md: id L-51 already used, stored as L-51.2",
+  "05_JOURNAL.md: id journal.container-clock-utc-e1 already used, stored as journal.container-clock-utc-e1.2",
+  "06_LESSONS.md: id L-50 already used, stored as L-50.2",
+  "06_LESSONS.md: id L-51 already used, stored as L-51.3",
+  "06_LESSONS.md: id L-52 already used, stored as L-52.2",
+  "06_LESSONS.md: id L-53 already used, stored as L-53.3",
+  "06_LESSONS.md: id L-54 already used, stored as L-54.2",
+  "08_FACTS.md: id M-60 already used, stored as M-60.2",
+  "11_E1_BUILD_BRIEF.md: id L-37 already used, stored as L-37.2",
+  "11_E1_BUILD_BRIEF.md: id L-38 already used, stored as L-38.2",
+  "11_E1_BUILD_BRIEF.md: id L-39 already used, stored as L-39.2",
+  "11_E1_BUILD_BRIEF.md: id L-35 already used, stored as L-35.2",
+  "11_E1_BUILD_BRIEF.md: id L-33 already used, stored as L-33.2",
+  "12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.2",
+  "12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.3",
+  "12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.4",
+  "12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.5",
+  "15_CANON_COVERAGE.md: id R-15 already used, stored as R-15.2"
+ ],
+ "backend": "omnigraph 0.16.0"
+}

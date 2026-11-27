@@ -1,0 +1,27 @@
+backend: OmniGraph (omnigraph 0.16.0) at /root/.local/bin/omnigraph
+graph:   /home/user/.plutus-mem/graph.omni  (present)
+sources: 17 files in /home/user/plutus-vision/memory, 2 records in graph_log.jsonl
+synced:  2026-11-27T18:31:26Z  1582 nodes, 1059 edges  (up to date)
+live:    Fact 1143, Decision 135, Lesson 39, Ruling 54, Task 34, Evidence 160, Artifact 17
+warning: 04_OPERATOR_RULINGS_LIVE.md: id L-53 already used, stored as L-53.2
+warning: 05_JOURNAL.md: id D-46 already used, stored as D-46.2
+warning: 05_JOURNAL.md: id D-129 already used, stored as D-129.2
+warning: 05_JOURNAL.md: id M-58 already used, stored as M-58.2
+warning: 05_JOURNAL.md: id L-51 already used, stored as L-51.2
+warning: 05_JOURNAL.md: id journal.container-clock-utc-e1 already used, stored as journal.container-clock-utc-e1.2
+warning: 06_LESSONS.md: id L-50 already used, stored as L-50.2
+warning: 06_LESSONS.md: id L-51 already used, stored as L-51.3
+warning: 06_LESSONS.md: id L-52 already used, stored as L-52.2
+warning: 06_LESSONS.md: id L-53 already used, stored as L-53.3
+warning: 06_LESSONS.md: id L-54 already used, stored as L-54.2
+warning: 08_FACTS.md: id M-60 already used, stored as M-60.2
+warning: 11_E1_BUILD_BRIEF.md: id L-37 already used, stored as L-37.2
+warning: 11_E1_BUILD_BRIEF.md: id L-38 already used, stored as L-38.2
+warning: 11_E1_BUILD_BRIEF.md: id L-39 already used, stored as L-39.2
+warning: 11_E1_BUILD_BRIEF.md: id L-35 already used, stored as L-35.2
+warning: 11_E1_BUILD_BRIEF.md: id L-33 already used, stored as L-33.2
+warning: 12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.2
+warning: 12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.3
+warning: 12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.4
+warning: 12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.5
+warning: 15_CANON_COVERAGE.md: id R-15 already used, stored as R-15.2

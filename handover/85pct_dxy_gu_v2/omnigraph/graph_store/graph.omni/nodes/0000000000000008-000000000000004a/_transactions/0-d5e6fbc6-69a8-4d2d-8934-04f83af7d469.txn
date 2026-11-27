@@ -1,0 +1,9 @@
+$d5e6fbc6-69a8-4d2d-8934-04f83af7d469²ÿJ__id ÿÿÿÿÿÿÿÿÿ*string8R+
+#lance-schema:unenforced-primary-keytrue`Abody ÿÿÿÿÿÿÿÿÿ*string8R"
+omnigraph.stable_property_id56Gdate ÿÿÿÿÿÿÿÿÿ*
+date32:day08R"
+omnigraph.stable_property_id57?id ÿÿÿÿÿÿÿÿÿ*string8R"
+omnigraph.stable_property_id58Esource ÿÿÿÿÿÿÿÿÿ*string08R"
+omnigraph.stable_property_id59Atags ÿÿÿÿÿÿÿÿÿ*list08R"
+omnigraph.stable_property_id60item *string08Btitle ÿÿÿÿÿÿÿÿÿ*string8R"
+omnigraph.stable_property_id61
