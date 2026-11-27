@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# checkpoint DIR "TITLE" "VERDICT LINE" : make a self-contained checkpoint folder handover/DIR - the OmniGraph rebuilt from memory/*.md (store copy + full JSONL export + status / id list),
+# CHECKPOINT.md (title, code commit, verdict, contents) and MANIFEST.sha256 of every tracked file - then the caller commits it (operator: 'the commit has both the code and the context and the graph')
+set -eu; R="$(cd "$(dirname "$0")/.." && pwd)"; D="$R/handover/$1"; export PATH=$HOME/.local/bin:$PATH
+mkdir -p "$D/omnigraph"
+"$R/tools/mem/mem" rebuild >/dev/null 2>"$D/omnigraph/rebuild_warnings.txt" || true
+rm -rf "$D/omnigraph/graph_store"; mkdir -p "$D/omnigraph/graph_store"
+( cd /home/user/.plutus-mem && tar cf - --exclude=.lock . ) | ( cd "$D/omnigraph/graph_store" && tar xf - )
+omnigraph export --target /home/user/.plutus-mem/graph.omni > "$D/omnigraph/graph_export.jsonl" 2> "$D/omnigraph/export_stderr.txt"
+"$R/tools/mem/mem" status > "$D/omnigraph/mem_status.txt" 2>&1; "$R/tools/mem/mem" ls > "$D/omnigraph/mem_ls.txt" 2>&1
+code="$(cd "$R" && git rev-parse --short HEAD)"
+{ echo "# Checkpoint \"$2\""; echo; echo "Code state: branch AGENT at $code (this folder is committed on top of it)."; echo; echo "$3"; echo
+  echo "Contents: the whole repository (code) + memory/*.md (context: standing order, rulings, operator verbatim, decisions, lessons, facts, ledger, journal, state, coverage) + evidence frames + this folder's OmniGraph (graph_store/ = /home/user/.plutus-mem rebuilt from memory at this checkpoint; graph_export.jsonl = full 'omnigraph export'; mem_status.txt; mem_ls.txt) + MANIFEST.sha256."
+  echo; echo "Graph: $(grep '^synced' "$D/omnigraph/mem_status.txt" | sed 's/synced: *//')"; echo "Restore: git checkout $code; copy omnigraph/graph_store to /home/user/.plutus-mem or run tools/mem/mem rebuild."; } > "$D/CHECKPOINT.md"
+( cd "$R" && git add -A "handover/$1" memory tools/checkpoint && git ls-files | grep -v "^handover/$1/MANIFEST.sha256$" | while IFS= read -r f; do [ -f "$f" ] && printf '%s\n' "$f"; done | xargs -d '\n' sha256sum > "$D/MANIFEST.sha256" )
+echo "$D ready: $(wc -l < "$D/MANIFEST.sha256") files in the manifest; graph $(grep '^synced' "$D/omnigraph/mem_status.txt" | sed 's/.*Z *//')"
