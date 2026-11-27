@@ -44,7 +44,7 @@ Rule (goal prompt section 7, G2): each finding is a bug - fix it, or answer it w
 | id | state | note |
 |---|---|---|
 | A-16 | PART | pressure-zone anchors with 3 reactions are gated (ZONE_DEPLETED); battle-time test still outside the tool. |
-| A-20 | PART | layer 7 scores +5 / -5; layers 1, 2, 4, 5, 6 OPEN. |
+| A-20 | PART | layers 1, 2, 3, 5, 6, 7 are confidence terms (layer 7 +5 / -5). Layer 4 (stack compliance, 'violation = REJECT') is not scored: R-09 keeps the 1H as the authoritative timeframe for every setup and his own golden scalps stand on 1H zones - OPEN as a question, not as code. |
 | A-21 | see N-04 | |
 | A-36 | PART | D-95: DAY / SESSION / SHAPE TRIGGER / CATEGORY / anchor hit window (= the session bracket) in the report. |
 | A-37 | PART | mirror keys per chain step (N-07) and the 10.7 divergence flag; per-setup re-anchoring lane OPEN. |

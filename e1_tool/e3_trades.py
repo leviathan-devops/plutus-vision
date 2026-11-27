@@ -331,6 +331,19 @@ def _confidence(s, X, E2, pair):
     typed = a.get('type') in ('Supply', 'Demand') or a.get('cat') in ('RES', 'SUP')
     if typed and ((side == 'Supply' and s['dir'] == 'SHORT') or (side == 'Demand' and s['dir'] == 'LONG')):
         parts.append(('zone-direction alignment', 8))         # E3C:396 '+8 (SUPPLY->SHORT or DEMAND->LONG)': a supply / demand or resistance / support zone only (G2 round 2 N-33)
+    # Phase 4.1 confluence stack, the layers not already above (E3C:237-245; G2 A-20): 1 'Tier 1/2 POI confluence +2 / +1 / 0'; 2 'Three-Tier Option Classification bonus +3 (Critical) /
+    # +2 (Significant) / 0'; 5 'Day-Shape Alignment +5 (aligned) / 0 (neutral) / -5 (misaligned)'; 6 'Session Mechanics +3 (London) / +2 (NY) / 0 (Asian)'. Layer 4 (stack compliance) is
+    # not scored: R-09 keeps the 1H as the authoritative timeframe for every setup
+    if ipz is not None:
+        parts.append(('POI tier (layer 1)', 2 if ipz.get('tier') == 'Tier 1' else 1 if ipz.get('tier') == 'Tier 2' else 0))
+    opt = [l for l in X.get('L', []) if l.get('cut') and l.get('tier') in (1, 2) and a.get('bot', 9e9) - l.get('band', 0.0) <= l['p'] <= a.get('top', -9e9) + l.get('band', 0.0)]
+    if opt:
+        parts.append(('option classification (layer 2)', 3 if any(l['tier'] == 1 for l in opt) else 2))
+    dd = next((d for d in E2.get('days', []) if d['day'] == s.get('day')), None)
+    if dd is not None:
+        want = 'up' if s['dir'] == 'LONG' else 'down'
+        parts.append(('day-shape alignment (layer 5)', 5 if (dd['dir'] == want or (dd['dir'] == 'range' and s.get('shape') in ('SS', 'R'))) else -5 if dd['dir'] in ('up', 'down') and s.get('shape') in ('BS', 'PBS', 'Ladder') else 0))
+    parts.append(('session mechanics (layer 6)', 3 if 'London' in s.get('session', '') else 2 if 'NY' in s.get('session', '') else 0))
     story = E2.get('storyline')
     if story:
         parts.append(('storyline', 5 if (story == 'up') == (s['dir'] == 'LONG') else -5))      # E3C:245 layer 7 '+5 (aligned) / -5 (counter-trend, requires exceptional confluence)' (A-20)
@@ -761,7 +774,8 @@ def build(pair, monday, X, E2, source=None):
     trades = [q for q in out if q.get('category') != 'Reinforcement']
     extra = len(trades) - MAX_SETUPS
     if extra > 0:
-        for q in sorted(trades, key=lambda q: (0 if q.get('clone') else 1, -DAY_IDX[q['day']], q.get('confidence', 0)))[:extra]:
+        raw = lambda q: sum(v for _, v in (q.get('conf_parts') or []))        # the confidence sum before its clamp to 100 separates setups that all read 100
+        for q in sorted(trades, key=lambda q: (0 if q.get('clone') else 1, -DAY_IDX[q['day']], q.get('confidence', 0), raw(q)))[:extra]:
             out = [x for x in out if x is not q and x.get('origin') is not q and x.get('parent_ref') is not q]
             R['log'].append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - more than {MAX_SETUPS} trades this week (L-04)")
     out.sort(key=lambda q: (DAY_IDX[q['day']], 0 if q.get('parent_ref') is None else 1))
