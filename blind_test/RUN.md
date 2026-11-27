@@ -13,7 +13,7 @@ Use your OWN session name if another reviewer shares the machine (`pinebox up --
 ## 2. One command -> one Pine (v6)
 ```
 cd e1_tool && python3 plutus.py MONDAY PAIR            # PAIR = DXY | EURUSD | GBPUSD ; MONDAY = YYYY-MM-DD of the week's Monday (Feb 2026 .. Nov 2 2026)
-# -> e1_tool/out/PLUTUS_<PAIR>_<MONDAY>.pine   (zones, shape chain, setups as data; toggles: show_ip show_lv show_lsz show_opt show_sd show_ltf show_lq show_lq4 show_far show_e2 show_e3)
+# -> e1_tool/out/PLUTUS_<PAIR>_<MONDAY>.pine   (zones, shape chain, setups as data; toggles: show_ip show_lv show_lsz show_opt show_sd show_ltf show_lq show_lq4 show_far show_e2 show_e3 show_tbl; the file ends with the Engine 3 report as comments: execution calendar, labelled setups, discards with reasons)
 ```
 Inputs it reads: TradingView bars in the Pinebox bar store and the option-expiry file `sidecar/out/<MONDAY>.json`; nothing dated after Monday 02:00 New York (check: `python3 tools/leak_check.py PAIR:MONDAY`).
 The first run of a week harvests the sealed V1's order blocks / liquidity bands through the Pinebox engine (about a minute, needs Pinebox up); later runs use the cache.
@@ -26,6 +26,10 @@ tools/e1render PAIR MONDAY 1H show_lv=false show_lq=false show_e2=false show_e3=
 OPEN every frame you cite. A render that printed `"boxes":0` failed. For 15m / 30m frames of an old week use the Backtest tab:
 `tools/pb export FILE PAIR 15m` -> `pinebox backtest --session S --op create --name N --symbol PAIR --start <Friday of the week>T20:00 --end <a week later> --tf 15m` -> `tools/pb bt-keep "<script title>"` -> wait 25 s -> `tools/pb goto FROM TO bt` -> `pinebox shot --session S --out F.png`.
 Exact numbers (never a verdict): `python3 tools/research/fills.py PAIR MONDAY` prints the day map, every setup (entry / SL / TP) and what the week's 15m candles did to it.
+
+## 3b. What is on the chart (legend)
+The legend of the chart objects (Engine 1 zones and their dotted PARTS, sweep zones and their reach, day boxes and tags, position boxes, repeats labelled `DX1.Tue`, dashed conditional rockets) is the section
+"What is on the chart (legend)" of `audit/G1_brief6.md` - read that section only (not the rest of the file, and no `audit/G1_count_dryrun*.md`). Pinebox does not paint Pine tables: the info table exists in the script only.
 
 ## 4. Counting rules (goal prompt section 7, G1) — per week and pair
 - Write BEFORE looking at the setups: every clean zone-to-zone move of the week visible on the 1H chart (the obvious trades).
