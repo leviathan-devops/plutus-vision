@@ -53,3 +53,15 @@ INPUTS_REDACTED.zip: 36 files redacted, identifiers left 0
 INPUTS_REDACTED.zip: credential hits 0, AWS keys other than the documented example 0
 BUILD_DONE
 The one 'credential hit' in each redacted transcript archive is a false positive: an AIza-like run of characters inside base64 image data in the session transcript (checked by hand).
+
+DELIVERY NOTE (after the build): the chat upload refused the 450 MiB piece PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part00 ("exceeds the upload limit"); it was
+cut in two and delivered as part00a + part00b (225 MiB each); part01 delivered as built. Rejoin:
+  cat PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part00a PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part00b PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part01 > PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle
+  -> SHA-256 21813a6e74ae3b5b7fd1394ca145b760c27cc95b18ee9c2d308ef9ef3dc8acb4 (checked before delivery)
+ac5a4cb466f76ef44ae7451258fe4f6c6943dcb2daa4668ae138a824a264cae3  PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part00a
+8f435393d397a76c10b96a5343576858af6f8b27a479282904dcd1837a34d141  PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part00b
+Delivered to the operator: 00_START_HERE.md, ENGINEERING_REPORT.md, the sums file, parts 1, 2, 3 (00a, 00b, 01), 4 (unredacted), 5, 6, 7, 8.
+
+SELF-CONTAINED GITHUB BRANCHES (M-63 / L-59), pushed and checked with git ls-tree on origin:
+  handover-70pct-functional  eb0a04382f917690af8f916fdfb2f69244bd6074  (on ea7da38 = the 70% handover; + handover/70pct_functional/archives/, HANDOVER_BRANCH.md; 4,110 files)
+  handover-85pct-v3-full     cfdfdcafbdcf268cbe5af420dc5554a0b82e43dc  (on d571443 = this package; + handover/85pct_v3_full/archives/, HANDOVER_BRANCH.md; 5,444 files)
