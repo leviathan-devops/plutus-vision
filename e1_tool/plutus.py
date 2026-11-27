@@ -62,6 +62,22 @@ def _cut(path, t0, t1):
     return [(a, at(a))] + [(t, p) for t, p in path if a < t < b] + [(b, at(b))]
 
 
+def _status(s, t_from, t_to, pair):
+    """an order's state at instant t_to from the 15m bars closed by then: 'pending' (entry not reached), 'open' (filled, neither SL nor TP), 'done' (filled and resolved)"""
+    lng = s['dir'] == 'LONG'
+    filled = False
+    for x in D.closed_until(pair, '15', t_to):
+        if x['time'] < t_from:
+            continue
+        if not filled:
+            if not ((x['low'] <= s['entry']) if lng else (x['high'] >= s['entry'])):
+                continue
+            filled = True
+        if ((x['low'] <= s['sl']) if lng else (x['high'] >= s['sl'])) or ((x['high'] >= s['tp']) if lng else (x['low'] <= s['tp'])):
+            return 'done'
+    return 'open' if filled else 'pending'
+
+
 DAY_CONFIRM = 'start'      # 'start' = the trading day's open (17:00 New York the evening before) | 'london' = the day's London open (02:00 New York)
 
 
@@ -131,6 +147,25 @@ def daily_anchor(pair, monday, chain, R):
         # an order resting from an earlier day (D-76 'rest_from') belongs to the day it starts resting: it is confirmed at that day's anchor
         for s in [x for x in R['setups'] if (x.get('rest_from') or x['day']) == DAYS[i]]:
             why = None
+            if s.get('clone'):
+                # L-52 'One unique trade per observable move ... a trade = one instance where price hits the entry and then the take-profit': a per-day repeat of an order that is
+                # still resting or open is the SAME trade - the live order keeps resting into this day (one box), no copy; once that order has completed (SL or TP before this
+                # day's anchor) the level may carry a NEW trade for the next move, confirmed like any order of the day
+                live = next((q for q in reversed(keep) if q.get('dir') == s['dir'] and abs(q['entry'] - s['entry']) < 1e-9 and q.get('category') == s.get('category')), None)
+                if live is not None:
+                    st_ = _status(live, max(live['valid_from'], live.get('day_anchor') or 0), t_a, pair)
+                    if st_ in ('pending', 'open'):
+                        live['valid_to'] = max(live['valid_to'], t_e)
+                        live['t1'] = max(live.get('t1') or 0, t_e)
+                        live['days'] = list(live.get('days') or [live['day']]) + [DAYS[i]]
+                        dropped.append(s)
+                        log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: NOT A NEW TRADE - {live['id']} is still {st_} at the {DAYS[i]} anchor: it keeps resting (L-52)")
+                        continue
+                    s['clone'] = False                           # the earlier order completed: a new trade for the next move
+                    s.pop('origin', None)
+                else:
+                    s['clone'] = False
+                    s.pop('origin', None)
             if active is not None and s.get('category') != 'Reinforcement':
                 if s.get('alt') and s.get('trigger') and s['trigger']['dir'] == active['alt']['dir']:
                     s['alt'] = False                             # the alternative chain is the chain now: its order is live, no longer conditional
@@ -169,6 +204,20 @@ def daily_anchor(pair, monday, chain, R):
         for q in sorted(trades, key=lambda q: (0 if q.get('clone') else 1, -E3.DAY_IDX[q['day']], q.get('confidence', 0), raw(q)))[:len(trades) - E3.MAX_SETUPS]:
             keep = [x for x in keep if x is not q and x.get('origin') is not q and x.get('parent_ref') is not q]
             log.append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - more than {E3.MAX_SETUPS} trades this week (L-04)")
+    pfx = {'DXY': 'DX', 'EURUSD': 'EU', 'GBPUSD': 'GB'}[pair]     # one numbering for the week: every order a unique trade (L-52)
+    keep.sort(key=lambda q: (E3.DAY_IDX[q['day']], 0 if q.get('parent_ref') is None else 1))
+    n, na = 0, {}
+    for q in keep:
+        if q.get('alt'):
+            tg = q['id'][2] if len(q['id']) > 2 and q['id'][2].isalpha() else 'A'
+            na[tg] = na.get(tg, 0) + 1
+            q['id'] = f"{pfx}{tg}{na[tg]}"
+        else:
+            n += 1
+            q['id'] = f"{pfx}{n}"
+    for q in keep:
+        if q.get('parent_ref') is not None:
+            q['parent'] = q['parent_ref']['id']
     out = dict(chain)
     out.update(days=days, segments=segs, alt_segments=alt_segs, audit=audit, daily=parts, n_real=len(days))
     R2 = dict(R)
