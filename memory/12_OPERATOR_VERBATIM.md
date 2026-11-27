@@ -512,3 +512,14 @@ Save the current checkpoint fully as a downloadable handover package with ALL co
 Then tell me what you need from me in order to complete the objective fully. This is 70% functional very good work but as you can see visibly obviously form the screenshots half of your trades are accurate but slightly too tight on the SL or slightly too early and cause misses/losses and also the E2 shape chain line is highly accurate in some and medium in others and also does not always fully reflect the ACTUAL price action but is instead a generalized watered down basic line.
 If you objectively look at the screenshot you will see exactly what I'm talking about
 
+### M-58 (2026-11-27, answer to the seven asks of the handover)
+And the full omnigraph?
+
+1) it is either 2-3 pips outside the entry zone or 1-2 pips inside the next zone. Give me multiple practicals scenarios with your decisions making and questions so I can give a better answer. Fractal architecture document should also make this clear
+2) yes if you do this right without grating then sure. Make sure we have the current checkpoint FULLY saved before changing this. I'm away from my computer right now so I can't download the files, but I wanna make sure that I don't lose any progress from what you've just created.
+3) I don't understand your question illustrate this with multiple different examples for me
+4) do you have my winning trade library? I thought I added a zip folder clearly named "winning trade library" - if that is not here tell me and I will upload it. If it is look at that it is 20+ distinct trading weeks clearly labeled and marked exactly like this.
+5) I use TVC - show me exactly what you are talking about so I can see what the issue is
+6) explain this question better and the decision making context you are referring to I cannot answer this question the way you asked because I don't know what your frame of reference in which you are asking this is
+7) I enabled permissions these should work now. Else spawn a subagent on muse spark 1.3 from the opencode go api key and fetch the data that way
+

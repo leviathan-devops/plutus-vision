@@ -10,3 +10,4 @@ d9ddce89eccb73d3e87f74a5bcd322d8d63775a8eb5b9f9746cf4c7306f64d57  83277337  PLUT
 # part 3 split for the 500 MiB upload limit - rejoin:  cat PLUTUS_VISION_70pct_functional__3_GIT_HISTORY.bundle.part00 PLUTUS_VISION_70pct_functional__3_GIT_HISTORY.bundle.part01 > PLUTUS_VISION_70pct_functional__3_GIT_HISTORY.bundle  (then sha256sum must equal the line above; git bundle verify; git clone)
 ba8fcb1552a88d79234011cd1f105f61ab2fb573ab7197eea0674d802e74c619  304087040  PLUTUS_VISION_70pct_functional__3_GIT_HISTORY.bundle.part00
 9f9d653c5effe35608db03377424105f85686523ece889f7fb1fbfd25617cb56  282161691  PLUTUS_VISION_70pct_functional__3_GIT_HISTORY.bundle.part01
+915e4883cd43b047c58db57e2d09abd8765ed1c2a1ecf32b4a7db53302285e79  2632200  PLUTUS_VISION_70pct_functional__8_OMNIGRAPH.zip
