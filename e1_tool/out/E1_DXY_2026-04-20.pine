@@ -264,11 +264,11 @@ if barstate.islast and isPair
         line.new(1776873600000, 97.882, 1776879600000, 97.832, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1776879600000, 97.832, 1776978000000, 98.045, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
     if show_e3
-        // DX1 Tue BS LONG E 98.019 SL 97.859 TP 98.869 RRR 5.31 | HTF Swing / NY Mid | entry zone edge (TS-1); SL (a) 1 pip outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027; E3C:304) [ZR-6B RR-tight, mirror confidence 0.90]; TP 4H target zone near edge + 1 pip (strong zone)
-        box.new(1776664800000, 98.019, 1776960000000, 97.859, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        // DX1 Tue BS LONG E 98.019 SL 97.839 TP 98.869 RRR 4.72 | HTF Swing / NY Mid | entry zone edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B RR-tight, mirror confidence 0.90]; TP 4H target zone near edge + 1 pip (strong zone)
+        box.new(1776664800000, 98.019, 1776960000000, 97.839, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1776664800000, 98.039, 1776960000000, 98.019, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1776664800000, 98.869, 1776960000000, 98.019, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1776675600000, 98.138, "DX1 BS L 5.3R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1776675600000, 98.138, "DX1 BS L 4.7R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // DX2 Wed Ladder LONG E 98.270 SL 98.104 TP 98.869 RRR 3.65 | Reinforcement / NY Open | reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP)
         box.new(1776805200000, 98.270, 1776960000000, 98.104, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         box.new(1776805200000, 98.869, 1776960000000, 98.270, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
@@ -310,25 +310,25 @@ if barstate.islast and isPair
         table.cell(tb, 0, 14, "Long DX1", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 1, 14, "Entry 98.02", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 15, "SL | TP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 15, "97.86 | 98.87", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 15, "97.84 | 98.87", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 16, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 16, "Tue BS | 5.3R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 16, "Tue BS | 4.7R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
 
 // ENGINE 3 - FULL-SPECTRUM TRADE MAP | WEEK OF 2026-04-20 | DXY
 // 
 // === WEEKLY EXECUTION CALENDAR ===
 // Day | Pair | Dir | Setup Type | Entry | Shape | Session | Conf | Notes
 // Mon | DXY | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
-// Tue | DXY | LONG | HTF Swing | 98.019 | BS | NY Mid | 85 | DX1 rests from Mon
-// Wed | DXY | LONG | Reinforcement | 98.270 | Ladder | NY Open | 85 | DX2 if DX1
-// Thu | DXY | LONG | Reinforcement | 98.660 | Ladder | NY Open | 85 | DX3 if DX1
+// Tue | DXY | LONG | HTF Swing | 98.019 | BS | NY Mid | 72 | DX1 rests from Mon
+// Wed | DXY | LONG | Reinforcement | 98.270 | Ladder | NY Open | 72 | DX2 if DX1
+// Thu | DXY | LONG | Reinforcement | 98.660 | Ladder | NY Open | 72 | DX3 if DX1
 // Fri | DXY | - | - | - | RWL | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
 // 
 // --- HTF SWING SETUPS ---
 // DX1 | DXY | LONG | HTF Swing | Day: Tue | Session: NY Mid | Shape: BS
-//   Entry: 98.019 | SL: 97.859 | TP: 98.869 | RRR: 5.31 / blended 5.58 | Quality: HIGH | Confidence: 85
+//   Entry: 98.019 | SL: 97.839 | TP: 98.869 | RRR: 4.72 / blended 4.92 | Quality: STANDARD | Confidence: 72
 //   Anchor Zone: sweep zone (opposing) [LSZ] | Shape Trigger: BS @ Tue NY Mid | Day Catalysts: red folder: NO DATA
-//   Audit Trail: entry zone edge (TS-1); SL (a) 1 pip outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027; E3C:304) [ZR-6B RR-tight, mirror confidence 0.90]; TP 4H target zone near edge + 1 pip (strong zone) | attempts 1
+//   Audit Trail: entry zone edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B RR-tight, mirror confidence 0.90]; TP 4H target zone near edge + 1 pip (strong zone) | attempts 1
 //   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Tue NY Mid 14:00-18:00 UTC (order rests from Mon)
 // 
 // --- SWING SCALP SETUPS ---
@@ -336,12 +336,12 @@ if barstate.islast and isPair
 // 
 // --- REINFORCEMENT ENTRIES ---
 // DX2 | DXY | LONG | Reinforcement | Day: Wed | Session: NY Open | Shape: Ladder
-//   Entry: 98.270 | SL: 98.104 | TP: 98.869 | RRR: 3.65 | Quality: HIGH | Confidence: 85
+//   Entry: 98.270 | SL: 98.104 | TP: 98.869 | RRR: 3.65 | Quality: STANDARD | Confidence: 72
 //   Anchor Zone: liquidity rung [LQZ] | Shape Trigger: Ladder @ Wed NY Open | Day Catalysts: red folder: NO DATA
 //   Audit Trail: reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP) | attempts 1
 //   Cascade Source: native | Parent Trade Ref: DX1 | Anchor Hit Window: Wed NY Open 12:30-14:00 UTC
 // DX3 | DXY | LONG | Reinforcement | Day: Thu | Session: NY Open | Shape: Ladder
-//   Entry: 98.660 | SL: 98.615 | TP: 98.869 | RRR: 4.81 | Quality: HIGH | Confidence: 85
+//   Entry: 98.660 | SL: 98.615 | TP: 98.869 | RRR: 4.81 | Quality: STANDARD | Confidence: 72
 //   Anchor Zone: liquidity rung [LQZ] | Shape Trigger: Ladder @ Thu NY Open | Day Catalysts: red folder: NO DATA
 //   Audit Trail: reinforcement 2 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP) | attempts 1
 //   Cascade Source: native | Parent Trade Ref: DX1 | Anchor Hit Window: Thu NY Open 12:30-14:00 UTC
@@ -358,16 +358,16 @@ if barstate.islast and isPair
 // Weekend: Close ALL positions by NY close Friday - per pair
 // 
 // --- DISCARDED (reason on every discard) ---
-// Mon SS down: REJECT RRR 2.59 outside [3.0, 15.0] (entry 98.40200)
-// Tue SS up: REJECT RRR 1.72 outside [3.0, 15.0] (entry 98.04500)
-// Mon SS up: REJECT RRR 2.02 outside [3.0, 15.0] (entry 98.04500)
-// Tue RWL down: REJECT RRR 1.58 outside [3.0, 15.0] (entry 98.29983)
+// Mon SS down: REJECT RRR 2.36 outside [3.0, 15.0] (entry 98.41200)
+// Tue SS up: REJECT RRR 1.48 outside [3.0, 15.0] (entry 98.04500)
+// Mon SS up: REJECT RRR 1.75 outside [3.0, 15.0] (entry 98.04500)
+// Tue RWL down: REJECT RRR 1.55 outside [3.0, 15.0] (entry 98.29983)
 // reinforcement at 98.50959: REJECT RRR 2.34 / SL 15.6p
 // reinforcement at 98.60959: REJECT RRR 2.80 / SL 9.5p
-// Tue BS up: REJECT RRR 2.14 outside [3.0, 15.0] (entry 98.43900)
-// Thu RWL down: REJECT RRR 2.41 outside [3.0, 15.0] (entry 98.87400)
+// Tue BS up: REJECT RRR 2.12 outside [3.0, 15.0] (entry 98.43900)
+// Thu RWL down: REJECT RRR 2.38 outside [3.0, 15.0] (entry 98.87400)
 // 
 // --- WEEKLY STATS ---
 // Total Setups: 3 | HTF: 1 | Scalps: 0 | Reinforcements: 2 | Transitions: 0
-// Average RRR: 4.59 | Median RRR: 4.81
+// Average RRR: 4.39 | Median RRR: 4.72
 // f(T) Acceptance (E3C:996: 8 per pair minimum): 3 setups on DXY - NOT met

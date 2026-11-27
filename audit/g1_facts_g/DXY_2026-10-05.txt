@@ -1,0 +1,58 @@
+DXY 2026-10-05 anchor price 102.308 | chart shows zones between 100.980 and 103.215 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  sweep zone Supply-side 102.485-102.535 | sweep reach to 102.635 (dotted outline)
+  sweep zone Supply-side 102.157-102.207 | sweep reach to 102.307 (dotted outline)
+  sweep zone Supply-side 102.082-102.132 | sweep reach to 102.232 (dotted outline)
+  pressure zone MID-RANGE SUPPORT 101.961-102.051 MODERATE | 30-50% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 101.916-101.996
+  supply/demand 1H (Unmitigated) | MoM Demand 101.855-101.926
+      part: sweep zone Demand-side 101.855-101.905 | sweep reach to 101.755 (dotted outline)
+  pressure zone KEY SUPPORT BAND 101.750-101.843 MODERATE | 30-50% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | BoM Demand 101.668-101.798
+  sweep zone Demand-side 101.668-101.718 | sweep reach to 101.568 (dotted outline)
+  pressure zone KEY SUPPORT BAND 101.479-101.565 MODERATE-HEAVY | 15-30% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | MoM Demand 101.543-101.612
+      part: sweep zone Supply-side 101.562-101.612 | sweep reach to 101.712 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 101.461-101.541
+      part: sweep zone Supply-side 101.477-101.527 | sweep reach to 101.627 (dotted outline)
+      part: supply/demand 4H (Unmitigated) | MoM Demand 101.459-101.512
+      part: sweep zone Demand-side 101.443-101.493 | sweep reach to 101.343 (dotted outline)
+  supply/demand 1H (Unmitigated) | MoM Demand 101.374-101.405
+      part: liquidity band (sealed V1, 4H) 101.318-101.398
+  pressure zone KEY SUPPORT BAND 101.231-101.308 MODERATE | 30-50% ZFP | BoM
+      part: sweep zone Supply-side 101.258-101.308 | sweep reach to 101.408 (dotted outline)
+      part: supply/demand 1H (Unmitigated) | BoM Demand 101.160-101.307
+      part: liquidity band (sealed V1, 4H) 101.151-101.231
+  sweep zone Demand-side 101.167-101.217 | sweep reach to 101.067 (dotted outline) | confluent with a 4H BoM zone
+  pressure zone KEY SUPPORT BAND 100.980-101.056 HEAVY | 20-40% ZFP | BoM
+      part: supply/demand 4H (Unmitigated) | BoM Demand 101.026-101.307
+      part: liquidity band (sealed V1, 4H) 101.036-101.116
+      part: supply/demand 1H (Mitigated 3x) | BoM Demand 100.980-101.098
+      part: sweep zone Demand-side 100.980-101.076 | sweep reach to 100.880 (dotted outline) | confluent with a 4H BoM zone
+      part: liquidity band (sealed V1, 4H) 100.911-100.991
+  (12 zones, 18 parts)
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: MID-RANGE SUPPORT | ZFP: 30-50% | 10-05 TKY: 1H close through MID-RANGE SUPPORT (ZFP 30), price still beyond [the row's ZFP condition is not met: best description, one tier lower] | FA 9: 3 piercing ses
+   Ceiling: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+   Breakout direction: none - both bounds hold | 
+   chain: SS [HIGH, cum 0.8]
+   PRIMARY: SS | DECISION ZONE: Liquidity Sweep Zone 1H close beyond it -> ALTERNATIVE: SS -> BS
+  Mon forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.433 L 102.084 C 102.113
+  Tue forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.285 L 101.754 C 101.841
+  Wed forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.499 L 101.822 C 102.277
+  Thu forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.467 L 102.033 C 102.124
+  Fri forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.335 L 101.920 C 102.232
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  DX1      Mon SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | filled - -> not filled inside its bracket (order expires)
+  DX1.Tue    Tue SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | filled - -> not filled inside its bracket (order expires)
+  DX2      Tue SS     LONG  E 101.926 SL 101.725 TP 102.470 2.71R | filled Tue 11:00 -> TP HIT Wed 12:15
+  DX1.Wed    Wed SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | filled Wed 12:15 -> TP HIT Fri 05:30
+  DX2.Wed    Wed SS     LONG  E 101.926 SL 101.725 TP 102.470 2.71R | filled - -> not filled inside its bracket (order expires)
+  DX1.Thu    Thu SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | not placed: the earlier order at this anchor is still an open position
+  DX2.Thu    Thu SS     LONG  E 101.926 SL 101.725 TP 102.470 2.71R | filled - -> not filled inside its bracket (order expires)
+  DX1.Fri    Fri SS     SHORT E 102.485 SL 102.665 TP 101.941 3.02R | filled - -> not filled
+  DX2.Fri    Fri SS     LONG  E 101.926 SL 101.725 TP 102.470 2.71R | filled Fri 05:30 -> filled, still open at the week end
+  ! Mon SS LONG 101.92600: NOT REACHABLE - the day's path stays more than 30 pips away (law 2)

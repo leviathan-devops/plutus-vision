@@ -1,0 +1,65 @@
+GBPUSD 2026-04-20 anchor price 1.34915 | chart shows zones between 1.33671 and 1.35948 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  pressure zone RESISTANCE CEILING 1.35940-1.36008 MODERATE-HEAVY | 30-50% ZFP | BoM
+      part: sweep zone Supply-side 1.35898-1.35995 | sweep reach to 1.36095 (dotted outline) | confluent with a 4H BoM zone
+  sweep zone Supply-side 1.35844-1.35894 | sweep reach to 1.35994 (dotted outline) | confluent with a 4H BoM zone
+  pressure zone UPPER RESISTANCE 1.35719-1.35805 MODERATE-HEAVY | 30-50% ZFP | MoM
+      part: supply/demand 4H (Unmitigated) | BoM Supply 1.35610-1.35948
+      part: liquidity band (sealed V1, 4H) 1.35782-1.35894
+      part: sweep zone Supply-side 1.35743-1.35793 | sweep reach to 1.35893 (dotted outline) | confluent with a 4H BoM zone
+  gap in-fill level 1.35521-1.35581 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, minor swing
+      part: liquidity band (sealed V1, 4H) 1.35547-1.35659
+  pressure zone UPPER RESISTANCE 1.35434-1.35508 MODERATE | 30-50% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | MoM Supply 1.35400-1.35538
+      part: sweep zone Demand-side 1.35434-1.35484 | sweep reach to 1.35334 (dotted outline)
+  pressure zone UPPER RESISTANCE 1.35241-1.35327 MODERATE | 30-50% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 1.35220-1.35332
+  sweep zone Demand-side 1.35163-1.35213 | sweep reach to 1.35063 (dotted outline)
+  gap in-fill level 1.35047-1.35107 MODERATE | 30-50% ZFP | signals: daily pivot, minor swing
+      part: sweep zone Demand-side 1.35044-1.35094 | sweep reach to 1.34944 (dotted outline)
+      part: sweep zone Supply-side 1.35036-1.35086 | sweep reach to 1.35186 (dotted outline)
+  pressure zone UPPER RESISTANCE 1.34932-1.35019 HEAVY | 5-15% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 1.34973-1.35085
+      part: sweep zone Demand-side 1.34952-1.35002 | sweep reach to 1.34852 (dotted outline)
+  pressure zone MID-RANGE SUPPORT 1.34768-1.34846 MODERATE | 30-50% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 1.34691-1.34803
+      part: sweep zone Demand-side 1.34740-1.34790 | sweep reach to 1.34640 (dotted outline)
+  supply/demand 1H (Unmitigated) | MoM Demand 1.34345-1.34660
+      part: gap in-fill level 1.34640-1.34700 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, minor swing
+      part: liquidity band (sealed V1, 4H) 1.34473-1.34585
+      part: gap in-fill level 1.34423-1.34483 MODERATE | 30-50% ZFP | signals: daily pivot, minor swing
+      part: gap in-fill level 1.34317-1.34377 MODERATE | 30-50% ZFP | signals: 1H zone, extended daily close, minor swing
+  liquidity band (sealed V1, 4H) 1.34227-1.34339
+  pressure zone KEY SUPPORT BAND 1.33998-1.34073 MODERATE-HEAVY | 30-50% ZFP | BoM
+      part: liquidity band (sealed V1, 4H) 1.33983-1.34095
+      part: supply/demand 4H (Unmitigated) | BoM Demand 1.34017-1.34073
+  supply/demand 1H (Unmitigated) | BoM Demand 1.33806-1.33960
+      part: liquidity band (sealed V1, 4H) 1.33821-1.33933
+      part: sweep zone Demand-side 1.33805-1.33855 | sweep reach to 1.33705 (dotted outline)
+  (14 zones, 22 parts)
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: MID-RANGE SUPPORT | ZFP: 30-50% | 04-20 TKY: spike down through MID-RANGE SUPPORT (ZFP 45), every 1H close back at a sweep target [the row's ZFP condition is not met: best description, one tier lower] |
+   Ceiling: UPPER RESISTANCE [IP MoM Active ZFP 10] -> SLOW (active MoM (2 reactions), opposing liquidity 1H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+   Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+   Breakout direction: down | pair translation of the DXY chain (up inverted)
+   chain: SS [MODERATE-HIGH, cum 0.65] -> RWL [MODERATE, cum 0.33] -> BS [MODERATE, cum 0.33] -> RWL [HIGH, cum 0.26]
+  Mon forecast SS         range box 1.34345-1.35019 key zone UPPER RESISTANCE                   | actual H 1.35444 L 1.34818 C 1.35333
+  Tue forecast SS+RWL+BS  down  box 1.34946-1.35213 key zone 4H (Unmitigated) | BoM             | actual H 1.35396 L 1.34744 C 1.35068
+  Wed forecast BS         down  box 1.34524-1.35094 key zone 4H (Unmitigated) | BoM             | actual H 1.35353 L 1.34901 C 1.34998
+  Thu forecast BS+RWL     down  box 1.34073-1.34524 key zone 1H (Unmitigated) | MoM             | actual H 1.35182 L 1.34476 C 1.34665
+  Fri forecast RWL        up    box 1.34174-1.34660 key zone 1H (Unmitigated) | MoM             | actual H 1.35370 L 1.34532 C 1.35222
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  GB1      Mon SS     LONG  E 1.34660 SL 1.34575 TP 1.34917 3.02R | filled - -> not filled inside its bracket (order expires)
+  GB2      Tue BS     SHORT E 1.35163 SL 1.35387 TP 1.34088 4.8R | filled Mon 07:15 -> STOPPED Mon 15:15
+  GB3      Wed Ladder SHORT E 1.34818 SL 1.34983 TP 1.34088 4.45R | filled - -> not filled inside its bracket (order expires)
+  GB4      Thu RWL    LONG  E 1.34083 SL 1.33987 TP 1.34413 3.43R | filled - -> not filled
+  GB5      Thu Ladder SHORT E 1.34557 SL 1.34701 TP 1.34088 3.28R | filled - -> not filled inside its bracket (order expires)
+  ! Tue SS down: REJECT RRR 0.00 outside [3.0, 15.0] (entry 1.34987)
+  ! Mon SS down: REJECT RRR 2.24 outside [3.0, 15.0] (entry 1.34987)
+  ! Tue RWL up: REJECT RRR 0.22 outside [3.0, 15.0] (entry 1.35085)
+  ! reinforcement at 1.35016: REJECT RRR 19.04 / SL 4.9p
+  ! reinforcement at 1.34215: REJECT RRR 0.49 / SL 26.8p
+  ! reinforcement at 1.34130: REJECT RRR 0.43 / SL 10.7p
+  ! Tue BS down: REJECT RRR 2.02 outside [3.0, 15.0] (entry 1.34345)

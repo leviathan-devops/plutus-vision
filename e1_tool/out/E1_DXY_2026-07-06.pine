@@ -347,3 +347,84 @@ if barstate.islast and isPair
         table.cell(tb, 1, 15, "100.80 | 101.18", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 16, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 1, 16, "Mon SS | 5.9R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+
+// ENGINE 3 - FULL-SPECTRUM TRADE MAP | WEEK OF 2026-07-06 | DXY
+// 
+// === WEEKLY EXECUTION CALENDAR ===
+// Day | Pair | Dir | Setup Type | Entry | Shape | Session | Conf | Notes
+// Mon | DXY | SHORT | Swing Scalp | 101.203 | SS | London Open | 100 | DX1 repeated Tue
+// Mon | DXY | SHORT | Swing Scalp | 101.138 | SS | London Open | 94.5 | DX2 repeated Tue
+// Mon | DXY | LONG | Swing Scalp | 100.851 | SS | London Open | 70 | DX3 repeated Tue
+// Tue | DXY | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
+// Wed | DXY | SHORT | HTF Swing | 101.235 | BS | NY Mid | 100 | DX4 rests from Mon
+// Wed | DXY | SHORT | Swing Scalp | 101.203 | SS | London Open | 100 | DX5
+// Wed | DXY | LONG | Reversal | 100.980 | RWL | NY Open | 65.5 | DX6
+// Thu | DXY | SHORT | Reinforcement | 100.980 | Ladder | NY Open | 100 | DX7 if DX4
+// Fri | DXY | LONG | Reversal | 100.628 | RWL | NY Open | 72 | DX8
+// 
+// --- HTF SWING SETUPS ---
+// DX4 | DXY | SHORT | HTF Swing | Day: Wed | Session: NY Mid | Shape: BS
+//   Entry: 101.235 | SL: 101.322 | TP: 100.700 | RRR: 6.15 | Quality: HIGH | Confidence: 100
+//   Anchor Zone: 4H liquidity (opposing) [LQZ] | Shape Trigger: BS @ Wed NY Mid | Day Catalysts: red folder: NO DATA
+//   Audit Trail: entry the reverse-whiplash TP level (Law 27: TP of N = entry of N+1); SL (b) 1 pip inside the close edge of the shield (1H rung beyond the first) [ZR-6B RR-tight, mirror confidence 0.90]; TP LQZ inside the target zone: midpoint | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Wed NY Mid 14:00-18:00 UTC (order rests from Mon)
+// DX6 | DXY | LONG | Reversal | Day: Wed | Session: NY Open | Shape: RWL
+//   Entry: 100.980 | SL: 100.906 | TP: 101.230 | RRR: 3.35 | Quality: STANDARD | Confidence: 65.5
+//   Anchor Zone: EQUILIBRIUM ZONE [MoM] | Shape Trigger: RWL @ Wed NY Open | Day Catalysts: red folder: NO DATA
+//   Audit Trail: entry the last swing's TP level (Law 27: TP of N = entry of N+1); SL (b) 1 pip inside the close edge of the shield (1H rung beyond the first) [ZR-6B safety, mirror confidence 0.45]; TP opposing liquidity near edge + 1 pip (6.4.2 retest) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Wed NY Open 12:30-14:00 UTC
+// DX8 | DXY | LONG | Reversal | Day: Fri | Session: NY Open | Shape: RWL
+//   Entry: 100.628 | SL: 100.548 | TP: 100.925 | RRR: 3.72 / blended 3.51 | Quality: STANDARD | Confidence: 72
+//   Anchor Zone: sweep zone [LSZ] | Shape Trigger: RWL @ Fri NY Open | Day Catalysts: red folder: NO DATA
+//   Audit Trail: entry sweep zone mid; SL (b) 1 pip inside the close edge of the shield (4H band) [ZR-6B RR-tight, mirror confidence 0.80]; TP first LQZ rung 30+ pips along the reversal: midpoint (GS Law 2; rule 4) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Fri NY Open 12:30-14:00 UTC
+// 
+// --- SWING SCALP SETUPS ---
+// DX1 | DXY | SHORT | Swing Scalp | Day: Mon | Session: London Open | Shape: SS
+//   Entry: 101.203 | SL: 101.255 | TP: 100.830 | RRR: 7.17 / blended 6.60 | Quality: HIGH | Confidence: 100
+//   Anchor Zone: UPPER RESISTANCE [MoM] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA
+//   Audit Trail: entry LQZ rung at the zone; SL (b) 1 pip inside the close edge of the shield (4H band) [ZR-6B RR-tight, mirror confidence 0.65]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Mon London Open 06:00-09:00 UTC | repeated: Tue
+// DX2 | DXY | SHORT | Swing Scalp | Day: Mon | Session: London Open | Shape: SS
+//   Entry: 101.138 | SL: 101.183 | TP: 100.830 | RRR: 6.85 | Quality: HIGH | Confidence: 94.5
+//   Anchor Zone: 1H (Unmitigated) | MoM [MoM, tested 1x] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA
+//   Audit Trail: entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the back edge of the entry zone [ZR-6B RR-tight, mirror confidence 1.00]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Mon London Open 06:00-09:00 UTC | repeated: Tue
+// DX3 | DXY | LONG | Swing Scalp | Day: Mon | Session: London Open | Shape: SS
+//   Entry: 100.851 | SL: 100.795 | TP: 101.184 | RRR: 5.94 / blended 5.62 | Quality: STANDARD | Confidence: 70
+//   Anchor Zone: 1H (Mitigated 2x) | MoM [MoM, tested 2x] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA
+//   Audit Trail: entry zone edge (TS-1); SL (a) 3 pips outside the back edge of the entry structure [ZR-6B RR-tight, mirror confidence 0.85]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Mon London Open 06:00-09:00 UTC | repeated: Tue
+// DX5 | DXY | SHORT | Swing Scalp | Day: Wed | Session: London Open | Shape: SS
+//   Entry: 101.203 | SL: 101.255 | TP: 100.995 | RRR: 3.98 / blended 3.64 | Quality: HIGH | Confidence: 100
+//   Anchor Zone: UPPER RESISTANCE [MoM] | Shape Trigger: SS @ Wed London Open | Day Catalysts: red folder: NO DATA
+//   Audit Trail: entry LQZ rung at the zone; SL (b) 1 pip inside the close edge of the shield (4H band) [ZR-6B safety, mirror confidence 0.55]; TP LQZ on the far edge of the pivot: midpoint | attempts 1
+//   Cascade Source: native | Parent Trade Ref: - | Anchor Hit Window: Wed London Open 06:00-09:00 UTC
+// 
+// --- REINFORCEMENT ENTRIES ---
+// DX7 | DXY | SHORT | Reinforcement | Day: Thu | Session: NY Open | Shape: Ladder
+//   Entry: 100.980 | SL: 101.077 | TP: 100.700 | RRR: 3.06 | Quality: HIGH | Confidence: 100
+//   Anchor Zone: liquidity rung [LQZ] | Shape Trigger: Ladder @ Thu NY Open | Day Catalysts: red folder: NO DATA
+//   Audit Trail: reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP) | attempts 1
+//   Cascade Source: native | Parent Trade Ref: DX4 | Anchor Hit Window: Thu NY Open 12:30-14:00 UTC
+// 
+// --- TRANSITION SETUPS ---
+// none
+// 
+// --- DAILY SESSION NOTES ---
+// Mon: SS range | key zone UPPER RESISTANCE | range 100.724-101.262 | confidence 80% | catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA
+// Tue: SS range | key zone UPPER RESISTANCE | range 100.724-101.262 | confidence 80% | catalysts: 10:00 NY cut 1.1500 2.8bn, 10:00 NY cut 1.1350 1.5bn, 10:00 NY cut 1.1595 1.5bn, red folder: NO DATA
+// Wed: SS+RWL+BS down | key zone 1H (Unmitigated) | BoM | range 100.985-101.305 | confidence 40% | catalysts: red folder: NO DATA
+// Thu: BS down | key zone 1H (Unmitigated) | BoM | range 100.968-101.247 | confidence 40% | catalysts: red folder: NO DATA
+// Fri: BS+WL+RWL down | key zone MID-RANGE SUPPORT | range 100.654-100.968 | confidence 32% | catalysts: red folder: NO DATA
+// Weekend: Close ALL positions by NY close Friday - per pair
+// 
+// --- DISCARDED (reason on every discard) ---
+// reinforcement at 100.74139: REJECT RRR 0.54 / SL 10.4p
+// Wed BS down: REJECT RRR 0.19 outside [3.0, 15.0] (entry 100.72380)
+// Mon SS LONG 100.81400: DUPLICATE of SS 100.85100 (E3C:463)
+// 
+// --- WEEKLY STATS ---
+// Total Setups: 8 | HTF: 3 | Scalps: 4 | Reinforcements: 1 | Transitions: 0
+// Average RRR: 5.03 | Median RRR: 4.96
+// f(T) Acceptance (E3C:996: 8 per pair minimum): 8 setups on DXY - met
