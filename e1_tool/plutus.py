@@ -95,7 +95,14 @@ def report(pair, monday, X, chain, R):
             note = (f"if {s['parent']}" if s.get('parent') else '') + (f" repeated {', '.join(rep[s['id']])}" if rep.get(s['id']) else '') + (f" rests from {s['rest_from']}" if s.get('rest_from') else '')
             o.append(f"{d['day']} | {PNAME[pair]} | {s['dir']} | {s['category']} | {f(s['entry'])} | {s['shape']} | {s['session']} | {s['confidence']} | {s['id']}{' ' + note.strip() if note.strip() else ''}")
         if not rows:
-            o.append(f"{d['day']} | {PNAME[pair]} | - | - | - | {'+'.join(d['shapes'])} | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)")
+            # E3C 8.13 'every day covered or "No qualifying setups - [reason]"': a day that carries only per-day repeats lists them; a day whose orders fell to the 11-trade limit says so
+            reps = [f"{s['origin']['id']} {s['dir']} {f(s['entry'])}" for s in R.get('setups', []) if s.get('clone') and s['day'] == d['day']]
+            capped = any(l.startswith(d['day'] + ' ') and 'EMISSION_CAPPED' in l for l in R.get('log', []))
+            if reps:
+                o.append(f"{d['day']} | {PNAME[pair]} | - | Swing Scalp (repeat) | - | {'+'.join(d['shapes'])} | London Open | - | per-day repeats: {'; '.join(reps)}")
+            else:
+                why = 'the orders of this day fell to the 11-trade limit of the week (EMISSION_CAPPED, see DISCARDED)' if capped else "no anchor of this day's shape passed the gates (see DISCARDED)"
+                o.append(f"{d['day']} | {PNAME[pair]} | - | - | - | {'+'.join(d['shapes'])} | - | - | No qualifying setups - {why}")
     for d_ in ('Mon', 'Tue', 'Wed', 'Thu', 'Fri'):
         if not any(d['day'] == d_ for d in days):
             o.append(f"{d_} | {PNAME[pair]} | - | - | - | - | - | - | No qualifying setups - Engine 2 gives this day no shape (chain confidence under 25%)")

@@ -364,7 +364,7 @@ if barstate.islast and isPair
 // Mon | DXY | SHORT | Swing Scalp | 101.203 | SS | London Open | 100 | DX1 repeated Tue
 // Mon | DXY | SHORT | Swing Scalp | 101.138 | SS | London Open | 100 | DX2 repeated Tue
 // Mon | DXY | LONG | Swing Scalp | 100.851 | SS | London Open | 78 | DX3 repeated Tue
-// Tue | DXY | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
+// Tue | DXY | - | Swing Scalp (repeat) | - | SS | London Open | - | per-day repeats: DX1 SHORT 101.203; DX2 SHORT 101.138; DX3 LONG 100.851
 // Wed | DXY | SHORT | HTF Swing | 101.235 | BS | NY Mid | 100 | DX4 rests from Mon
 // Wed | DXY | SHORT | Swing Scalp | 101.203 | SS | London Open | 100 | DX5
 // Wed | DXY | LONG | Reversal | 100.980 | RWL | NY Open | 70.5 | DX6
