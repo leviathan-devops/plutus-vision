@@ -832,7 +832,9 @@ def pine(pair, monday, R):
     o = ['    if show_e3']
     if not R['setups']:
         o.append('        na')
-    seen_day, starts = set(), {}
+    seen_day, starts, placed = set(), {}, []
+    span = (max([max(s['entry'], s['sl'], s['tp']) for s in R['setups']]) - min([min(s['entry'], s['sl'], s['tp']) for s in R['setups']])) if R['setups'] else 0.0
+    txt_h = 0.035 * span                                      # one line of label text against the price span the setups cover
     for s in R['setups']:
         day0 = D.week_start_ms(monday) + DAY_IDX[s['day']] * 86400000
         first = s['day'] not in seen_day; seen_day.add(s['day'])
@@ -850,6 +852,16 @@ def pine(pair, monday, R):
         row = (k + (DAY_IDX[s['day']] if s.get('clone') else 0)) % 3     # a per-day repeat steps one row per day so neighbouring days' labels do not run into each other
         ly = s['entry'] + (0.14 + 0.10 * row) * (s['tp'] - s['entry'])   # inside the green box near its own entry edge; three rows for setups that start together
         lx = max(x0 + 2 * 3600000, min(x0 + 3 * 3600000 + k * 9 * 3600000, x1 - 3600000, wk1 - 14 * 3600000))     # kept clear of the chart's right edge
+        # no label over another label (A13; outside count 8 'setup labels pile on each other'): a label that would land within 14 hours and one text height of a placed one moves
+        # along its box, then one row further into the green side
+        for _try in range(8):
+            if not any(abs(lx - px) < 14 * 3600000 and abs(ly - py) < txt_h for px, py in placed):
+                break
+            if _try % 2 == 0 and lx + 15 * 3600000 <= min(x1 - 3600000, wk1 - 14 * 3600000):
+                lx += 15 * 3600000
+            else:
+                ly += 1.1 * txt_h * (1 if s['tp'] > s['entry'] else -1)
+        placed.append((lx, ly))
         o.append(f"        label.new({lx}, {g(ly)}, \"{s['id'] if s.get('clone') else (s['id'] + ' ' + ('ALT ' if s.get('alt') else '') + s['shape'] + ' ' + ('S' if s['dir'] == 'SHORT' else 'L') + ' ' + format(s['rrr'], '.1f') + 'R' + ((' if ' + str(s.get('parent'))) if cond else ''))}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
 
