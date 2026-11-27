@@ -30,7 +30,7 @@ Rule (goal prompt section 7, G2): each finding is a bug - fix it, or answer it w
 | N-22 | OPEN | JOIN_TP (D-91) rests on L-39 (a drawing ruling) and an undefined label. |
 | N-23 | OPEN | pivot = V1 4H band within 0.30. |
 | N-24 | PART | the window now also runs to each bound's measured-move target (D-93); zones beyond stay behind show_far. |
-| N-25 | OPEN | Phase 2 confluence >= 7 selection; Hard Wall SL anchor. |
+| N-25 | PART | a pressure-zone anchor needs confluence >= 7 (E3C:1022) - gate built (no setup of the 16 locator maps is below it); Hard Wall SL anchor (ZFP < 15%, confluence >= 8, E3C:1026) OPEN. |
 | N-26 | ANSWERED | E3C:1011 itself: 'total max unlimited (NO CAPS - operator D38)'; E3C:461-466 D10 / D16 / D38 verbatims; the weekly limit is L-04 / R-07. |
 | N-27 | FIXED (D-96) | no breakout entry at a 4H MoM zone. |
 | N-28 | ANSWERED (reading stated) | P533:1845-1848 'SHARP WHIPLASH/REVERSAL instantly -> all liquidity drained at this level -> Zone is PIERCED -> Next shape: BS or WL in OPPOSITE direction' is read: the zone's reaction (the whiplash) drains it, the next shape runs opposite to that reaction = through the zone; P533:1159 'price will likely pierce through it to reach the BoM zone' says the same of a depleted zone. The other reading (pierce, then reverse) is what EURUSD 2026-05-18 traded; the range box runs to the liquidity beyond a depleted bound for it (D-85 / D-88). |
@@ -51,3 +51,6 @@ Rule (goal prompt section 7, G2): each finding is a bug - fix it, or answer it w
 | A-44 | PART | f(T) line reported met / NOT met (D-95). |
 | E1-X | PART | Part X read; info table D-94. |
 | A-22 | ANSWERED (oracle) | the literal 'RR-tight = 3p back edge only' was run on the golden week 2026-11-27: his DXY stops #2 / #3 / #8 move from 1.7 / 2.5 / 0.3 pips off to 3.5 / 3.6 / 2.8, GBPUSD #2's stop to 5.1 off and GBPUSD #1 is no longer emitted. D-73 (the tighter of the first shield stop and the entry-zone back edge) keeps all within 2.5. Fuel-selected relevant zone: OPEN. |
+| A-34 | PART | TRIED 2026-11-27 (locator): swing-scalp orders live from the London open of their day instead of the day's start: one winner lost (EURUSD 10-05 Wednesday short filled Tue 21:00 UTC), no stop avoided. The whole-day bracket stays; liquidityScore filter OPEN. |
+| B-30 | ANSWERED (oracle) | reversal TP = first liquidity rung 30+ pips along the way (GS Law 2 'RWL 30-100 pips (partial recovery)', E3C rule 4 midpoint): his three reversal TPs - DXY #8 100.94 (tool 100.940), GBPUSD #5 1.33882 (1.33888), EURUSD #8 1.14205 (1.14239). |
+| B-03 | ANSWERED | P533:1830 'All < 30% -> SS continues' is the row for bounds that HOLD; which bound holds is the 6.4.2 tree's question ('1-2 reactions (active): Could be any branch - assess surrounding liquidity'), and his own tags of the golden week (Wed SS+RWL+BS) show a 22% bound giving way after the retest of the opposing liquidity. |

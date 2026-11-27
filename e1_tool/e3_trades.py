@@ -450,6 +450,9 @@ def _build(pair, monday, X, E2, tag):
         # Phase 2 gates
         if 'tf' in a and a.get('mit', 0) >= 3:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: FRESHNESS - {a.get('label', '')} tested {a['mit']}x (E3C:150 'index i > 2 skipped')"); continue
+        if a.get('ip') and a.get('score', 99) < 7:
+            # E3C:1022 'IP Zone Map | Phase 2 | Zone selection (confluence >= 7) generates trade candidates' (G2 round 2 N-25)
+            log.append(f"{c['days'][0]} {c['shape']} {direction}: SOURCE_INVALID - {a.get('name', '')} confluence {a.get('score')} < 7 (E3C:1022)"); continue
         if a.get('ip') and (a.get('mech') or {}).get('reactions', 0) == 3:
             # E3C:1052 ZONE_DEPLETED 'reactionCount >= 3 (TP-only)'; lifecycle E3C:158-161 (3 battles = DEPLETED, the fourth strong battle = FORTRESS): a pressure-zone anchor is gated like a
             # candle zone (G2 round 2 A-16)
