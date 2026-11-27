@@ -357,6 +357,34 @@ if barstate.islast and isPair
         table.cell(tb, 0, 16, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 1, 16, "Mon SS | 5.9R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
 
+// ENGINE 2 - MACRO SHAPE CHAIN MAP | WEEK OF 2026-07-06 | DXY
+// Primary Timeframe: 1H | Structural Validation: 4H
+// Current Shape: SS range (HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 15-30% | price between MID-RANGE SUPPORT and UPPER RESISTANCE, no breakout in the last two sessions | FA 9: 2 piercing sessions -> 'EXPECT 1-2 FULL DAYS OF HTF CONSOLIDATION'
+// Ceiling: UPPER RESISTANCE [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 1H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+// Floor: MID-RANGE SUPPORT [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 4H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+// 4H Structural Validation: confirms - no 4H close beyond either bound in the last day
+// Direction Validation 6-check for down: 4H trend=None, BoM alignment=up, liquidity sweep=down, zone failure=None, macro shape=None, counter-trend risk NONE=None -> 1 disagree
+// Breakout direction: down | both bounds go the same way, pressure reading unclear [('candle size', 'up'), ('wick direction', 'down'), ('triangle', None)]: 4H storyline tiebreaker = down (4H structure mixed; standing 4H BoM Supply 101.32-101.43)
+// Trading Speed (6.10): raw timing = transition on Tue (consolidation 6 sessions, 5 elapsed) -> adjusted +1 day = Wed
+// NY Cut Cage (P533:690-691): 4 wall(s) of USD 1.5bn+ inside the range, last 10:00 NY cut Tue -> Spring Release Tue 10:01 NY, + 1 day (6.10) = transition on Wed
+//   -> SS range sessions LON Mon .. TKY Wed | Trigger: consolidation (post-energy) between MID-RANGE SUPPORT and UPPER RESISTANCE | HIGH -> cumulative 0.8
+//   -> RWL up sessions LON Wed .. LON Wed | Trigger: 6.4.2 'Consolidation ends in price retesting opposing liquidity' (4H liquidity (opposing)) - a whiplash against the preceding BS = RWL (6.1.4) | MODERATE -> cumulative 0.4
+//   -> BS down sessions NY Wed .. LON Fri | Trigger: MID-RANGE SUPPORT goes (SLOW) -> BS toward 1H (Unmitigated) | BoM (6 sessions, 4H element: twice as long (6.10)) | MODERATE -> cumulative 0.4
+// Direction Validation 6-check for the reaction at 1H (Unmitigated) | BoM (up): 4H trend=None, BoM alignment=up, liquidity sweep=down, zone failure=None, macro shape=None, counter-trend risk NONE=None -> 1 disagree
+//   -> WL down sessions NY Fri .. NY Fri | Trigger: 1H (Unmitigated) | BoM: a BoM zone always reacts (E2X:149) = Hard-Wall class -> RWL (6.4.1) - an unswept sweep zone lies against the target: the surge ends in a whiplash into it (WL -> RWL) | HIGH -> cumulative 0.32
+//   -> RWL up sessions NY Fri .. NY Fri | Trigger: 1H (Unmitigated) | BoM: a BoM zone always reacts (E2X:149) = Hard-Wall class -> RWL (6.4.1) - an unswept sweep zone lies against the target: the surge ends in a whiplash into it (WL -> RWL) | HIGH -> cumulative 0.32
+// CONSOLIDATION PHASE DETECTION: Phase: Late | Bounding Zones: Ceiling=[UPPER RESISTANCE, ZFP 22%], Floor=[MID-RANGE SUPPORT, ZFP 22%] | Valid Setup Types: Swing Scalps + BS Transition Entry | ZFP Trend on Bounding Zone: rising - breakout imminent (4 option wall(s) of USD 1.5bn+ caging the range reach their cut)
+// chain: SS [HIGH, cum 0.8] -> RWL [MODERATE, cum 0.4] -> BS [MODERATE, cum 0.4] -> WL [HIGH, cum 0.32] -> RWL [HIGH, cum 0.32]
+// PRIMARY: SS -> RWL -> BS -> WL -> RWL | DECISION ZONE: UPPER RESISTANCE ZFP 22% > 45 or a 1H close beyond it -> ALTERNATIVE: SS -> SS -> BS -> WL -> RWL [confidence 0.32]
+// --- DAY-BY-DAY DECOMPOSITION ---
+// Mon: SS range | Key Zone: UPPER RESISTANCE | Triggers: 10:00 NY cut 1.1500 2.4bn; 10:00 NY cut 1.1400 2.2bn; 10:00 NY cut 1.1450 1.4bn; red folder: NO DATA; auctions: NO DATA | Confidence: 80%
+// Tue: SS range | Key Zone: UPPER RESISTANCE | Triggers: 10:00 NY cut 1.1500 2.8bn; 10:00 NY cut 1.1350 1.5bn; 10:00 NY cut 1.1595 1.5bn; red folder: NO DATA; auctions: NO DATA | Confidence: 80%
+// Wed: SS + RWL + BS down | Key Zone: 1H (Unmitigated) | BoM | Triggers: red folder: NO DATA; auctions: NO DATA | Confidence: 40%
+// Thu: BS down | Key Zone: 1H (Unmitigated) | BoM | Triggers: red folder: NO DATA; auctions: NO DATA | Confidence: 40%
+// Fri: BS + WL + RWL down | Key Zone: MID-RANGE SUPPORT | Triggers: red folder: NO DATA; auctions: NO DATA | Confidence: 32%
+// --- WEEKLY SHAPE CHAIN VISUALIZATION ---
+// DXY: Mon: SS range -> Tue: SS range -> Wed: SS + RWL + BS down -> Thu: BS down -> Fri: BS + WL + RWL down
+// 
 // ENGINE 3 - FULL-SPECTRUM TRADE MAP | WEEK OF 2026-07-06 | DXY
 // 
 // === WEEKLY EXECUTION CALENDAR ===

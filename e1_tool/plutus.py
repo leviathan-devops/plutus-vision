@@ -44,7 +44,7 @@ def run(pair, monday):
     edges = [d[k] for d in chain['days'] for k in ('lo', 'hi')] + [q['entry'] for q in setups['setups']]      # ... and a band a day box ends on / a setup's entry stands on
     X['e2_zones'] += [(b['bot'], b['top']) for b in X['v1']['240']['liquidity'] if any(b['bot'] - 1e-9 <= e <= b['top'] + 1e-9 for e in edges)]
     src = EP.generate(pair, monday, X, extra, EP.reach(X, chain))
-    return X, chain, setups, src + '\n' + '\n'.join('// ' + l for l in report(pair, monday, X, chain, setups)) + '\n'
+    return X, chain, setups, src + '\n' + '\n'.join('// ' + l for l in e2_report(pair, monday, chain) + [''] + report(pair, monday, X, chain, setups)) + '\n'
 
 
 FAMILY = {'SS': 'SS', 'RWL': 'SS', 'PRWL': 'SS', 'STORM': 'SS', 'BS': 'BS', 'PBS': 'BS', 'R': 'R', 'WL': 'WL', 'WLS': 'WL', 'PWL': 'WL'}
@@ -71,6 +71,20 @@ def divergence(core, own):
 
 CASCADE = {'DXY': 'native', 'EURUSD': 'DXY->EU', 'GBPUSD': 'EU->GU'}
 SES_UTC = {'London Open': '06:00-09:00', 'London/NY Overlap': '12:00-14:00', 'NY Open': '12:30-14:00', 'NY Mid': '14:00-18:00'}      # GS Part 10 session clock (ET) in UTC, EDT weeks
+
+
+def e2_report(pair, monday, chain):
+    """P533 6.9 'Engine 2 Output Format (Report Section 17) ... MUST include all of the following components': the audit trail of the chain as Engine 2 wrote it (current shape, bounds,
+    4H validation, direction, timing, every extension with its trigger, alternative chains, consolidation phase), the day-by-day decomposition in the canon's line format ('the DIRECT INPUT
+    to Engine 3's Day-Level Bridge') and the weekly chain line. Carried in the Pine as comments, in front of the Engine 3 report (6.7 RULE 2 'No Chain Without Audit Trail') (D-126)."""
+    o = [f"ENGINE 2 - MACRO SHAPE CHAIN MAP | WEEK OF {monday} | {PNAME[pair]}"]
+    o += [a for a in chain.get('audit', [])]
+    o.append('--- DAY-BY-DAY DECOMPOSITION ---')
+    for d in chain.get('days', []):
+        o.append(f"{d['day']}: {' + '.join(d['shapes'])} {d['dir']} | Key Zone: {d['key']} | Triggers: {'; '.join(d['triggers'])} | Confidence: {int(round(d['conf'] * 100))}%")
+    o.append('--- WEEKLY SHAPE CHAIN VISUALIZATION ---')
+    o.append(f"{PNAME[pair]}: " + ' -> '.join(f"{d['day']}: {' + '.join(d['shapes'])} {d['dir']}" for d in chain.get('days', [])))
+    return o
 
 
 def report(pair, monday, X, chain, R):
