@@ -232,7 +232,13 @@ def daily_anchor(pair, monday, chain, R):
 
     def confirm(s, i, t_a, op, since):
         """None = confirmed, else the reason it is not"""
-        if s.get('category') == 'Reinforcement' or s.get('alt') or i == 0:
+        if s.get('alt') or i == 0:
+            return None
+        if s.get('category') == 'Reinforcement':
+            # a rocket stands AHEAD of price in the move's direction (FA 8 trip-wire: 'trigger zone 2-4 zones ahead'; GS Law 6 'rockets at the next MoM zones'): a rung the move has
+            # already passed by the day's anchor is not a new order of that day (D-141; M-61 GBPUSD: the Thursday ladder long stood 47 pips under Thursday's open)
+            if (op >= s['entry']) if s['dir'] == 'LONG' else (op <= s['entry']):
+                return f"the move already passed this rung (price {f(op)} beyond the rocket entry {f(s['entry'])}) - rockets stand ahead of price"
             return None
         z = s.get('anchor') or {}
         sd = 'bot' in z and 'top' in z and (z.get('src') == 'SD' or ('tf' in z and not z.get('liq')))     # an order block (supply / demand candle zone): one-time use
@@ -411,10 +417,19 @@ def daily_anchor(pair, monday, chain, R):
     for q in keep:
         if q.get('parent_ref') is not None:
             q['parent'] = q['parent_ref']['id']
+    # D-141: an alternative chain's order is a CONTINGENCY until its Decision Zone breaks (6.6 Step 4; 7S.2 'Map the SS->BS Transition Setup as a contingency') - once the alternative
+    # is activated at a day's anchor its orders are drawn as live orders (D-132); a dormant contingency is not drawn as a position (it is not a trade - L-52 'one trade = one instance where
+    # price hits the entry and then the take-profit'; M-61: the dormant alternative ladder long drawn on Thursday read as the week's Thursday trade) - it stays in the report
+    cont = [q for q in keep if q.get('alt')]
+    keep = [q for q in keep if not q.get('alt') and not (q.get('parent_ref') is not None and q['parent_ref'].get('alt'))]
+    for q in cont:
+        tr = q.get('trigger') or {}
+        log.append(f"CONTINGENCY {q['id']} {q['day']} {q['shape']} {q['dir']} E {f(q['entry'])} SL {f(q['sl'])} TP {f(q['tp'])} - live only after a 1H close "
+                   f"{'above' if tr.get('dir') == 'up' else 'below'} {f(tr['level']) if tr.get('level') is not None else '-'} ({tr.get('zone', '')}); not drawn unless activated")
     out = dict(chain)
     out.update(days=days, segments=segs, alt_segments=alt_segs, audit=audit, daily=parts, daily_L=partsL, n_real=len(days), zone_adds=adds)
     R2 = dict(R)
-    R2.update(setups=keep, log=log)
+    R2.update(setups=keep, log=log, contingent=cont)
     return out, R2
 
 

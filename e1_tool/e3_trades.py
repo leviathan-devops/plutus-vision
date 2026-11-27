@@ -524,9 +524,11 @@ def _build(pair, monday, X, E2, tag):
             if ls is not None:
                 ecands = [(ls.get('tp_level', ls['tp']), {'bot': ls.get('tp_level', ls['tp']), 'top': ls.get('tp_level', ls['tp'])}, 'the last swing\'s TP level (Law 27: TP of N = entry of N+1)')]
         prev = next((q for q in reversed(setups) if q['shape'] == 'RWL' and q['days'][-1] == c['days'][0]), None)
+        law27 = False
         if c['shape'] in ('BS', 'PBS') and prev is not None and c.get('role') != 'transition':
             lvl, pz = prev.get('tp_level', prev['tp']), prev['tp_zone']           # Law 27 (E3C:438-449): TP of the RWL = entry of the BS
             ecands = [(lvl, pz if pz.get('liq') else {'bot': lvl, 'top': lvl}, 'the reverse-whiplash TP level (Law 27: TP of N = entry of N+1)')]
+            law27 = True
         pbs = next((q for q in reversed(setups) if q['shape'] in ('BS', 'PBS') and q.get('parent_ref') is None), None)
         if c.get('role') in ('rwl', 'rwl0') and not a.get('sweep') and pbs is not None and a['bot'] - 3 * pip <= pbs.get('tp_level', pbs['tp']) <= a['top'] + 3 * pip:
             # Law 27 (E3C:443-449 'BS -> RWL: TP of BS becomes RWL entry zone'): the reversal rests at the breakout's TP from the moment the breakout starts
@@ -536,7 +538,12 @@ def _build(pair, monday, X, E2, tag):
             # the breakout's entry stands at the opposing liquidity beyond the range (6.4.2) - during the consolidation that zone is the day's DEEP zone on that side (E3C:115 WorkingDayMap
             # 'deepDemandZoneId'; F1-C 'the deep-demand / deep-supply rule', E3C:190-193): the same order rests there from the first day of the consolidation (D-76)
             ss0 = next((x for x in E2['chain'] if x['shape'] == 'SS'), None)
-            if ss0 is not None:
+            if law27:
+                # Law 27 (E3C:438-449) 'TP of N = entry of N+1': an entry taken from the reverse whiplash's TP is the NEXT trade of that whiplash - it exists from the whiplash's own start
+                # (the peak the chain predicts), not from the first day of the consolidation (D-141; operator M-61 'the long on Wednesday that hit take profit, that should literally be
+                # the entry of the short at that exact point where the E2 shape chain even predicts a peak')
+                c = dict(c, rest_from=prev['day'], t0=prev.get('t0') if prev.get('t0') is not None else c.get('t0'))
+            elif ss0 is not None:
                 c = dict(c, rest_from=DAYS[S_[ss0['s0']]['i']])
         if c.get('role') == 'transition':                    # the break of the range boundary itself: a stop order at the failing bound's far edge (GS Law 3 'Breakout: at zone edge (break confirmation)')
             lvl = a['top'] if direction == 'up' else a['bot']
@@ -655,7 +662,7 @@ def _build(pair, monday, X, E2, tag):
                     rr = [abs(s['tp'] - e) / abs(e - s['sl']) for e in (front, s['entry'], back)]
                     s['rrr_blended'] = round(0.33 * rr[0] + 0.33 * rr[1] + 0.34 * rr[2], 2)        # E3C:357 'Blended RRR (3-entry staggered)'
         s.update(day=c['days'][0], days=c['days'], shape=c['shape'], category=cat, session=SESSION_WINDOW[cat], sl_pips=round(abs(s['entry'] - s['sl']) / pip, 1),
-                 t0=c.get('t0'), t1=c.get('t1'), anchor=a, role=c.get('role'), rest_from=c.get('rest_from'))
+                 t0=c.get('t0'), t1=c.get('t1'), anchor=a, role=c.get('role'), rest_from=c.get('rest_from'), law27=law27)
         ipz = a if a.get('ip') else _ip_at(a, X)
         # E3C:874-879 'narrativeAligned(setup, model, pair)': the narrative of a setup is its E2 shape day (R3 law: E2 designates the day's shape and direction; Phase 4.1 layer 5
         # 'Day-Shape Alignment'); a swing scalp of a range day is designated in BOTH directions (E3C:96), so neither is misaligned; the week's macro arc is a confidence term
@@ -851,6 +858,8 @@ def build(pair, monday, X, E2, source=None):
         if s.get('rest_from'):
             day0 = D.week_start_ms(monday) + DAY_IDX[s['rest_from']] * 86400000
         s['valid_from'] = max(day0, b0)
+        if s.get('law27') and s.get('t0') is not None:
+            s['valid_from'] = max(s['valid_from'], s['t0'])  # D-141: the Law-27 entry exists from its reverse whiplash's start
         s['valid_to'] = D.week_start_ms(monday) + (DAY_IDX[s['days'][-1]] + 1) * 86400000
     # Phase 1 / 2 / 6.3 (E3C:115 WorkingDayMap per day; E3C:129 'For each (WorkingDay, zone) pair ... generate a trade candidate'; E3C:468 cap key '(pair, anchorBucket, day)': one setup
     # per anchor per DAY; E3C:996 'f(T) Acceptance: ... 8 DXY + 8 EU + 8 GU ... LESS is REJECT'): a swing scalp of a consolidation is one order per anchor for EACH day of the
