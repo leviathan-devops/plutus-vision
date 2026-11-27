@@ -112,6 +112,8 @@ def report(pair, monday, X, chain, R):
             # E3C 12.2 floor invariants (checkMirrorFloorV45): 'Floor: RRR >= 2.5 | Session bracket valid | SL envelope (within GOLDEN_SL_MAX_PIPS = 9.5)' - reported per setup as flags
             # (his own golden GBP/USD stops are 10.6-14.1 pips, so the envelope is a flag here, not a discard); E3C 12.3 CS-1: the stop against the day's open of the E2 path
             slp = abs(s['entry'] - s['sl']) / EP.D.PIP[pair] if hasattr(EP, 'D') else s.get('sl_pips', 0)
+            if s.get('six'):
+                o.append(f"  Direction validation (E3C 8.18): {s['six'][0]} of 6 disagree - " + ', '.join(f"{k}={v or '-'}" for k, v in s['six'][1]))
             o.append(f"  Floor invariants (E3C 12.2): RRR {'>= 2.5 ok' if s['rrr'] >= 2.5 else '< 2.5'} | session bracket = the E2 step's days | SL envelope 9.5p: {'inside' if slp <= 9.5 + 1e-9 else f'OUTSIDE ({slp:.1f}p)'}"
                      + (f" | ALT trigger: 1H close {'above' if s['trigger']['dir'] == 'up' else 'below'} {f(s['trigger']['level'])} ({s['trigger']['zone']})" if s.get('trigger') else ''))
     o += ['', '--- DAILY SESSION NOTES ---']

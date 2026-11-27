@@ -653,3 +653,4 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - DIAGNOSTIC (sandbox trial R): LAW14 off (TP at the E2 zone, no stop at unmitigated zones on the way): 16 / 83 legs, +2 stops, all three golden maps change. Law 14 as written stays; the DXY 05-18 ceiling short (RRR 1.27 at the first virgin 1H MoM demand) is not rescued by dropping it.
 - Report: E3C 12.2 floor-invariant flags per setup (SL envelope 9.5 as a flag), ALT trigger line, 'auctions: NO DATA' in the day triggers (A-08, A-38 part).
 - D-111 stops inside the 9.5-pip envelope first (E3C 12.2): legs 18 / 83, TP 47 / stops 17; first version (rockets included) moved his golden Thursday rocket's stop inside Thursday's high - rockets and GBP/USD excluded on those pixels.
+- D-112 per-setup 6-check (A-04): one discard on 16 maps (an unfilled order). Diagnostic at '3 disagree': 15 discards, -2 stops / -1 TP / -1 leg - not the canon's number, not adopted.

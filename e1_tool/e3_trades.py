@@ -635,6 +635,27 @@ def _build(pair, monday, X, E2, tag):
         if s['confidence'] < INCLUDE:
             log.append(f"{s['day']} {s['shape']} {s['dir']} {s['entry']:.5f}: CONFIDENCE {s['confidence']} < {INCLUDE} (E3C:1011)"); continue
         s['quality'] = 'HIGH' if s['confidence'] >= 80 else 'STANDARD'
+        # E3C 8.18 'For every setup, run the 6-check ... if 4+ of 6 disagree with the proposed direction -> REVERSE the direction (or REJECT if no reversal pattern exists)': the checks
+        # read from the setup's own entry (nearest standing BoM above / below it, nearest unswept sweep level above / below it), the failing bound of the E2 chain, the setup's shape
+        # day; check 6 (counter-trend risk) sets size, not direction (E3C:1095). A setup 4 checks reject is discarded: its reversal would be an order E2 did not designate (R3) (D-112)
+        import e2_chain as _E
+        want_ = 'up' if s['dir'] == 'LONG' else 'down'
+        e_ = s['entry']
+        t4_ = _E.trend_4h(pair, monday)
+        votes = [('4H trend', t4_ if t4_ in ('up', 'down') else None)]
+        boms_ = [q for q in X['sd'] if q['tf'] in ('240', '60') and q['kind'] == 'BoM' and q['mit'] <= 1]
+        ab_ = [q['bot'] - e_ for q in boms_ if q['type'] == 'Supply' and q['top'] > e_]
+        be_ = [e_ - q['top'] for q in boms_ if q['type'] == 'Demand' and q['bot'] < e_]
+        votes.append(('BoM alignment', None if not (ab_ or be_) else 'down' if (ab_ and (not be_ or min(ab_) < min(be_))) else 'up'))
+        la_ = [l['level'] - e_ for l in X['lsz'] if not l['swept'] and l['level'] > e_]
+        lb_ = [e_ - l['level'] for l in X['lsz'] if not l['swept'] and l['level'] < e_]
+        votes.append(('liquidity sweep', None if not (la_ or lb_) else 'down' if (la_ and (not lb_ or min(la_) < min(lb_))) else 'up'))
+        votes.append(('zone failure', E2.get('bdir') if E2.get('bdir') in ('up', 'down') else None))
+        votes.append(('macro shape', story if story in ('up', 'down') else None))
+        dis_ = sum(1 for _, d_ in votes if d_ is not None and d_ != want_)
+        s['six'] = (dis_, votes)
+        if dis_ >= 4:
+            log.append(f"{s['day']} {s['shape']} {s['dir']} {s['entry']:.5f}: DIRECTION_VALIDATION_FAILED - {dis_} of the 6 checks disagree (E3C 8.18)"); continue
         setups.append(s)
         if c['shape'] in ('BS', 'PBS') and c.get('role') != 'transition':
             setups += _reinforce(s, X, E2, env, pair, log)

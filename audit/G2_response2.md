@@ -69,3 +69,4 @@ Rule (goal prompt section 7, G2): each finding is a bug - fix it, or answer it w
 | A-13 | FIXED (D-109) | alternative-chain setups emitted as conditional orders with the Decision Zone trigger (1H close beyond the zone); the facts script tests the trigger; pair maps carry none (the alternative chain exists for DXY only: OPEN). |
 | A-08 | FIXED | day triggers carry 'auctions: NO DATA' beside 'red folder: NO DATA' (optional inputs, L-32). |
 | A-38 / C-19 | PART | E3C 12.2 floor invariants printed per setup in the report (RRR >= 2.5, session bracket, SL envelope 9.5 pips inside / OUTSIDE); the envelope is a flag, not a discard: his own golden GBP/USD stops are 10.6-14.1 pips. CS-1 and the 3D audit tables: OPEN. |
+| A-04 | FIXED (D-112) | the 6-check runs on every setup from its own entry; 4+ disagreeing = DIRECTION_VALIDATION_FAILED; votes in the report. The counter-trend size adjustment is printed as risk only (no position sizing in the tool): OPEN. |
