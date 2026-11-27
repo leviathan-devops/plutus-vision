@@ -620,3 +620,5 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
 - S6 CHECKPOINT (ledger 90): tools/s6shot now removes stale exports from the room store and fits the Backtest chart's price axis (tools/pbfit bt); frame evidence/s6_DXY_1H_2026-07-06_with_v1.png opened: generated Pine + sealed V1 on one chart, info table painted in the Backtest tab.
 - TRIED AND REJECTED (sandbox, audit B-40): candle zones kept after a hard mitigation (P452 mitigation table): DXY 04-20 chain flips to a breakout DOWN (wrong; his real longs), golden GBPUSD #5 TP 37 pips off. One-time use stays.
   Also done: confluence layers 1 / 2 / 5 / 6 in the confidence sum (A-20), oracle prices out of code comments (D-05), S6 checkpoint frame sent (ledger 90).
+- TRIED AND REJECTED (sandbox, audit A-25): virgin pressure zones on the way as Law-14 blockers: DXY 10-05 Tuesday long loses its RRR (no setup), no new TP.
+- SEVENTH OUTSIDE COUNT (ledger 89c): E1 94 / E2 80 / E3 36; outside the golden week 92 / 78 / 19. E1 up (D-93 window), E3 flat at 12 of 63.
