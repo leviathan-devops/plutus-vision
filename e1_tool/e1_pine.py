@@ -33,7 +33,11 @@ def reach(X, E2):
     days = [d for i, d in enumerate(E2['days']) if i < E2.get('n_real', 5)] or E2['days']
     lo, hi = min(d['lo'] for d in days), max(d['hi'] for d in days)
     zs = [z for z in X['zones'] if z['drawn']] + [z for z in X['sd'] if z['tf'] in ('240', '60')]
-    below = [z for z in zs if z['top'] < lo]; above = [z for z in zs if z['bot'] > hi]
+    # ... the first zone beyond each end, when it stands within the swing-scalp reach of that end (GS Law 2: 30 pips): a zone further out is not 'what would stop the path next'
+    # this week - it floated 34-67 pips beyond the week on five maps of outside count 10 (D-113)
+    R30 = 0.30 * X['U']
+    lo0, hi0 = lo, hi
+    below = [z for z in zs if z['top'] < lo and lo - z['top'] <= R30]; above = [z for z in zs if z['bot'] > hi and z['bot'] - hi <= R30]
     if below:
         lo = max(below, key=lambda z: z['top'])['bot']
     if above:
@@ -43,7 +47,7 @@ def reach(X, E2):
     import e2_chain as E2M
     for side, bound, other in (('up', E2.get('ceil'), E2.get('floor')), ('down', E2.get('floor'), E2.get('ceil'))):
         t = E2M.target(X, side, bound) if bound is not None else None
-        if t is not None:
+        if t is not None:                                    # the alternative chain's target is where its conditional orders end (D-109 / D-110): it stays on the chart at any distance
             lo, hi = min(lo, t['bot']), max(hi, t['top'])
         # ... and its magnitude: 6.5 'BS | Failing zone triggers BS; target zone determines magnitude | Target: Measured Move' (P452 Pillar 9 Step 4: the range height projected from the
         # failing bound): the week's reach runs to the measured-move target of each bound and to the mapped zone standing at / first beyond it (D-87)
@@ -60,11 +64,11 @@ def reach(X, E2):
     # an end of the reach with no mapped zone beyond it (the open side after a trend): the first discovery flag beyond that end is what the map offers there (P452:1220-1228) (D-103)
     dz = X.get('discovery', [])
     if not [z for z in zs if z['top'] < lo]:
-        b_ = [z for z in dz if z['top'] < lo]
+        b_ = [z for z in dz if z['top'] < lo and lo - z['top'] <= R30]
         if b_:
             lo = max(b_, key=lambda z: z['top'])['bot']
     if not [z for z in zs if z['bot'] > hi]:
-        a_ = [z for z in dz if z['bot'] > hi]
+        a_ = [z for z in dz if z['bot'] > hi and z['bot'] - hi <= R30]
         if a_:
             hi = min(a_, key=lambda z: z['bot'])['top']
     return lo, hi
@@ -78,7 +82,10 @@ def e2_band(X, z):
 def discovery_drawn(X, near, sweeps):
     """the discovery flags shown: inside the chart window and not on a drawn supply / demand zone, sweep zone or 4H liquidity band (the flag marks EMPTY map, P452:1224)"""
     solid = [z for z in X['sd'] if z['tf'] in ('240', '60')] + list(sweeps) + [z for z in X['zones'] if z['drawn']] + list(X.get('infill', []))
-    return [z for z in X.get('discovery', []) if near(z['bot'], z['top']) and not any(q['bot'] <= z['top'] and q['top'] >= z['bot'] for q in solid)]
+    joined, _ = join_zones(X, near, sweeps)
+    solid += [b for b in X['v1']['240']['liquidity'] if id(b) in joined or e2_band(X, b)]      # a flag inside a drawn part is not 'empty map' (outside count 10)
+    EX = 0.03 * X['U']
+    return [z for z in X.get('discovery', []) if near(z['bot'], z['top']) and not any(q['bot'] - EX <= z['top'] and q['top'] + EX >= z['bot'] for q in solid)]
 
 
 def sweep_boxes(X):
@@ -109,7 +116,8 @@ def join_zones(X, near, sweeps):
     leaders, joined, parts = [], {}, {}
     for rank, z, nm in sorted(objs, key=lambda o: (o[0], o[1]['bot'])):
         JD = JOIN_D * X['U']
-        cl = [l for r, l in leaders if r < rank and l['bot'] - JD <= z['top'] and l['top'] + JD >= z['bot']]
+        # ... also a zone of the SAME rank (two 1H candle zones or two sweep clusters a pip apart are one zone on the chart: L-28 'three supports bunched'; outside count 10)
+        cl = [l for r, l in leaders if r <= rank and l is not z and l['bot'] - JD <= z['top'] and l['top'] + JD >= z['bot']]
         L = min(cl, key=lambda l: max(l['bot'] - z['top'], z['bot'] - l['top'], 0.0)) if cl else None      # the nearest higher-ranking zone within the join distance
         if L is not None:
             joined[id(z)] = L
