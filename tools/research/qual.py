@@ -29,7 +29,7 @@ if EXC != ['']:
     X2 = dict(X, sd=[z for z in X['sd'] if z in allz or z['tf'] not in ('240', '60')], infill=[z for z in X.get('infill', []) if z in allz],
               v1=dict(X['v1'], **{'240': dict(X['v1']['240'], liquidity=[z for z in X['v1']['240']['liquidity'] if z in allz])}))
     joined, parts = e1_pine.join_zones(X2, near, sweeps)
-allz = [z for z in allz if id(z) in joined or z not in X['v1']['240']['liquidity']]      # a 4H liquidity band standing alone is the sealed V1's drawing (toggle show_v1s, off)
+allz = [z for z in allz if id(z) in joined or z not in X['v1']['240']['liquidity'] or e1_pine.e2_band(X, z)]      # a 4H liquidity band standing alone is the sealed V1's drawing (toggle show_v1s, off)
 leaders = [z for z in allz if id(z) not in joined]
 def name(z):
     return z.get('name') or z.get('label') or ('sweep' if z in sweeps else '4H band')

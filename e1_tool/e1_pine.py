@@ -70,6 +70,11 @@ def reach(X, E2):
     return lo, hi
 
 
+def e2_band(X, z):
+    """a V1 4H liquidity band that Engine 2 designates (a range bound, the pivot, a target): the day box rests on it, so it is drawn (D-107)"""
+    return any(abs(z['bot'] - b) < 1e-9 and abs(z['top'] - t) < 1e-9 for b, t in X.get('e2_zones', []))
+
+
 def discovery_drawn(X, near, sweeps):
     """the discovery flags shown: inside the chart window and not on a drawn supply / demand zone, sweep zone or 4H liquidity band (the flag marks EMPTY map, P452:1224)"""
     solid = [z for z in X['sd'] if z['tf'] in ('240', '60')] + list(sweeps) + [z for z in X['zones'] if z['drawn']] + list(X.get('infill', []))
@@ -123,7 +128,10 @@ def generate(pair, monday, X, extra=(), rch=None):
     U = X['U']; pw = X['weekly'][-1]
     sweeps = sweep_boxes(X)
     joined, parts = join_zones(X, near, sweeps)
-    plus = lambda z: (' + ' + ', '.join(parts[id(z)])) if parts.get(id(z)) else ''
+    # the parts are named in short form (the legend: S = supply zone, D = demand zone, LSZ = sweep zone, LQ = V1 4H liquidity band, IF = gap in-fill) so that a zone's label stays inside the
+    # history half of the chart (A13 'labels over candles'; outside counts 8 / 9)
+    SHORT = {'4H supply': '4H S', '4H demand': '4H D', '1H supply': '1H S', '1H demand': '1H D', 'sweep zone': 'LSZ', '4H liquidity': 'LQ', 'in-fill': 'IF'}
+    plus = lambda z: (' + ' + ', '.join(SHORT.get(n, n) for n in parts[id(z)])) if parts.get(id(z)) else ''
     adr = sum(d['high'] - d['low'] for d in X['daily'][-10:]) / 10
     lo_v, hi_v = pw['low'] - adr, pw['high'] + adr
     o = ['//@version=6', f'indicator("PLUTUS VISION {pair} {monday}", overlay=true, max_boxes_count=2000, max_labels_count=2000, max_lines_count=2000)',      # PG6 (P533:3909)
@@ -148,8 +156,8 @@ def generate(pair, monday, X, extra=(), rch=None):
         o.append('    if ' + flag)
         n0 = len(o)
         for z in X['v1']['240']['liquidity']:
-            if lo_v <= z['bot'] and z['top'] <= hi_v and near(z['bot'], z['top']) and (id(z) not in joined) == alone:
-                if not alone:
+            if lo_v <= z['bot'] and z['top'] <= hi_v and near(z['bot'], z['top']) and (id(z) not in joined and not e2_band(X, z)) == alone:
+                if id(z) in joined:
                     o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 94), border_color=color.new(color.rgb(63,164,106), 60), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
                 else:
                     o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(46,139,87), 80), border_color=color.new(color.rgb(63,164,106), 30), border_width=1, xloc=xloc.bar_time)")
@@ -260,13 +268,15 @@ def generate(pair, monday, X, extra=(), rch=None):
     # live option-strike targets (trident_v8 :377-386)
     o.append('    if show_opt')
     n0 = len(o)
-    seen = set()
+    seen, put = set(), []
     for l in sorted(X['L'], key=lambda l: -l.get('notional_m', 0)):
         if l['pillar'] == 8 and not l.get('expired') and g(l['p']) not in seen and near(l['p'], l['p']):
             seen.add(g(l['p']))
             amt = ('%.1fbn' % (l['notional_m'] / 1000)) if l['notional_m'] >= 1000 else '%dM' % l['notional_m']
             o.append(f"        line.new({tsL}, {g(l['p'])}, {tsR}, {g(l['p'])}, xloc=xloc.bar_time, color=color.rgb(255,200,60), width={2 if l['tier'] == 1 else 1})")
-            o.append(f"        label.new({tsR - 44 * H}, {g(l['p'])}, \"{amt} Option Strike Target\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)")
+            k = sum(1 for q in put if abs(q - l['p']) < 0.06 * U)        # strike lines a few pips apart: their labels step left so they do not print over each other (A13)
+            put.append(l['p'])
+            o.append(f"        label.new({tsR - (44 + 62 * k) * H}, {g(l['p'])}, \"{amt} Option Strike Target\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)")
     if len(o) == n0:
         o.append('        na')
     o += list(extra)

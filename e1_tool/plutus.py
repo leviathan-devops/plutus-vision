@@ -29,6 +29,11 @@ def run(pair, monday):
         source = _setups(src_pair, monday)
     setups = E3.build(pair, monday, X, chain, source)
     extra = E2.pine(pair, monday, chain) + (E3.pine(pair, monday, setups) if E3 else []) + table(pair, monday, X, chain, setups)
+    # the zones Engine 2 designates (bounds, pivot, targets, the from / to zone of every chain step): a V1 liquidity band among them is drawn by the tool even when it stands alone (D-107)
+    des = [chain.get(k) for k in ('ceil', 'floor', 'pivot', 'target', 'target2', 'far_liq', 'near', 'far')] + [st.get(k) for st in chain['chain'] for k in ('frm', 'to')]
+    X['e2_zones'] = [(z['bot'], z['top']) for z in des if isinstance(z, dict) and 'bot' in z]
+    edges = [d[k] for d in chain['days'] for k in ('lo', 'hi')] + [q['entry'] for q in setups['setups']]      # ... and a band a day box ends on / a setup's entry stands on
+    X['e2_zones'] += [(b['bot'], b['top']) for b in X['v1']['240']['liquidity'] if any(b['bot'] - 1e-9 <= e <= b['top'] + 1e-9 for e in edges)]
     src = EP.generate(pair, monday, X, extra, EP.reach(X, chain))
     return X, chain, setups, src + '\n' + '\n'.join('// ' + l for l in report(pair, monday, X, chain, setups)) + '\n'
 

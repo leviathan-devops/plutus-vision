@@ -163,16 +163,16 @@ if barstate.islast and isPair
     if show_ip
         // #3 UPPER RESISTANCE 1.16641-1.16726 MODERATE-HEAVY 8.0/14 Soft Wall Tier 2 | MoM Depleted 3 reactions | REJECT
         box.new(1778446800000, 1.16726, 1779483600000, 1.16641, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.16683, "UPPER RESISTANCE | MODERATE-HEAVY | 30-50% ZFP | Tier 2 MoM + 1H supply, in-fill, sweep zone, 4H liquidity", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1778662800000, 1.16683, "UPPER RESISTANCE | MODERATE-HEAVY | 30-50% ZFP | Tier 2 MoM + 1H S, IF, LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #1 UPPER RESISTANCE 1.16493-1.16562 EXTREME 12.0/14 Hard Wall Tier 2 | MoM Depleted 3 reactions | REJECT
         box.new(1778446800000, 1.16562, 1779483600000, 1.16493, bgcolor=color.new(color.rgb(180,40,30), 70), border_color=color.rgb(180,40,30), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.16527, "UPPER RESISTANCE | EXTREME | 5-15% ZFP | Tier 2 MoM + 1H supply, 4H liquidity", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1778662800000, 1.16527, "UPPER RESISTANCE | EXTREME | 5-15% ZFP | Tier 2 MoM + 1H S, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #2 EQUILIBRIUM ZONE 1.16219-1.16296 MODERATE-HEAVY 9.0/14 Soft Wall Tier 2 | MoM Depleted 6 reactions | REJECT
         box.new(1778446800000, 1.16296, 1779483600000, 1.16219, bgcolor=color.new(color.rgb(235,138,20), 70), border_color=color.rgb(235,138,20), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.16258, "EQUILIBRIUM ZONE | MODERATE-HEAVY | 30-50% ZFP | Tier 2 MoM + 1H supply, sweep zone, 4H liquidity", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1778662800000, 1.16258, "EQUILIBRIUM ZONE | MODERATE-HEAVY | 30-50% ZFP | Tier 2 MoM + 1H S, LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #6 MID-RANGE SUPPORT 1.15970-1.16036 MODERATE 7.5/14 Standard Wall Tier 2 | BoM Depleted 3 reactions | TP-TARGET
         box.new(1778446800000, 1.16036, 1779483600000, 1.15970, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
-        label.new(1778662800000, 1.16003, "MID-RANGE SUPPORT | MODERATE | 15-30% ZFP | Tier 2 BoM + sweep zone", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1778662800000, 1.16003, "MID-RANGE SUPPORT | MODERATE | 15-30% ZFP | Tier 2 BoM + LSZ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip and show_far
         // #5 RESISTANCE CEILING 1.18444-1.18504 MODERATE-HEAVY 8.0/14 Post-Expiry Ghost Tier 2 | BoM Active 2 reactions | ENTRY-PRIMARY
         box.new(1778446800000, 1.18504, 1779483600000, 1.18444, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
@@ -224,7 +224,7 @@ if barstate.islast and isPair
         line.new(1778446800000, 1.16519, 1779483600000, 1.16519, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
         label.new(1779325200000, 1.16519, "3.7bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
         line.new(1778446800000, 1.16500, 1779483600000, 1.16500, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
-        label.new(1779325200000, 1.16500, "1.5bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
+        label.new(1779102000000, 1.16500, "1.5bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
         line.new(1778446800000, 1.15500, 1779483600000, 1.15500, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=1)
         label.new(1779325200000, 1.15500, "1.0bn Option Strike Target", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.small)
     if show_e2
