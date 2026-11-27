@@ -32,7 +32,7 @@ for s in R['setups']:
         start = max(start, s['valid_from'])
         t_end = pf[1] if pf[1] else t_end
     # one order per anchor per day (E3C:468): the freshness gate at battle time (E3C:150) - a 1H close beyond the anchor zone = VIOLATED, never an entry again; the 4th battle is skipped;
-    # an anchor whose earlier order is still an open position takes no second one until that position is closed
+    # each day's order at an anchor is its own setup (cap key '(pair, anchorBucket, day)', E3C:468): it is placed whether or not an earlier day's position from the same anchor is still open (D-101)
     k = s.get('anchor_key')
     a = s['anchor']
     st0 = ANCH.setdefault(k, {'battles': 0, 'busy_until': 0}) if k else None
@@ -45,9 +45,6 @@ for s in R['setups']:
             print(head + f"void: the anchor zone was closed through on 1H {ts(thru['time'])} (VIOLATED, E3C:150)"); continue
         if st0['battles'] >= 3:
             print(head + "skipped: 4th battle at this anchor (E3C:150 'index i > 2 skipped')"); continue
-        start = max(start, st0['busy_until'])
-        if start >= t_end:
-            print(head + 'not placed: the earlier order at this anchor is still an open position'); continue
     st, tf, first, tx = 'not filled', None, True, None
     for x in b:
         if x['time'] < start:
