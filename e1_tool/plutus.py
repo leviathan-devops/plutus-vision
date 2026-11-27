@@ -1,5 +1,6 @@
 """plutus.py - ONE command per week / pair -> ONE Pine v6 script (S6): Engine 1 map + Engine 2 shape chain + Engine 3 trade setups, every number from data closed before the Monday anchor.
-usage: python3 plutus.py MONDAY PAIR [out.pine]      (PAIR = DXY | EURUSD | GBPUSD; default output e1_tool/out/PLUTUS_<PAIR>_<MONDAY>.pine)"""
+usage: python3 plutus.py MONDAY PAIR [out.pine] [--weekly]      (PAIR = DXY | EURUSD | GBPUSD; default output e1_tool/out/PLUTUS_<PAIR>_<MONDAY>.pine;
+daily anchoring by default (D-131), --weekly = every order fixed at the Monday anchor)"""
 import sys, os
 import e1_pine as EP, e2_chain as E2, e1_data as D
 
@@ -327,7 +328,7 @@ if __name__ == '__main__':
     monday, pair = sys.argv[1], sys.argv[2]
     args_ = [a for a in sys.argv[1:] if not a.startswith('--')]
     out = args_[2] if len(args_) > 2 else os.path.join(HERE, 'out', f'PLUTUS_{pair}_{monday}.pine')
-    daily = '--daily' in sys.argv
+    daily = '--weekly' not in sys.argv              # daily anchoring is the default (D-131, L-47); --weekly = every order fixed at the Monday anchor
     X, chain, setups, src = run(pair, monday, daily=daily)
     open(out, 'w').write(src)
     print(out)
