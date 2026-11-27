@@ -1,0 +1,83 @@
+{
+ "D": {
+  "latest_notes": [
+   {
+    "bid_to_cover": 2.66,
+    "close_et": "2026-07-27 11:30 AM",
+    "high_yield": "4.315",
+    "results_file": "R_20260727_2.pdf",
+    "security_term": "2-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "2-Year",
+    "trigger": true
+   },
+   {
+    "bid_to_cover": 2.28,
+    "close_et": "2026-07-27 01:00 PM",
+    "high_yield": "4.408",
+    "results_file": "R_20260727_3.pdf",
+    "security_term": "5-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "5-Year",
+    "trigger": false
+   },
+   {
+    "bid_to_cover": 2.53,
+    "close_et": "2026-08-12 01:00 PM",
+    "high_yield": "4.683",
+    "results_file": "R_20260812_2.pdf",
+    "security_term": "10-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "10-Year",
+    "trigger": false
+   }
+  ],
+  "week_auctions": [
+   {
+    "announced": "2026-08-13",
+    "close_et": "2026-08-19 01:00 PM",
+    "close_ms": 1787158800000,
+    "original_term": "20-Year",
+    "term": "20-Year",
+    "type": "Bond"
+   },
+   {
+    "announced": "2026-08-13",
+    "close_et": "2026-08-20 01:00 PM",
+    "close_ms": 1787245200000,
+    "original_term": "30-Year",
+    "term": "29-Year 6-Month",
+    "type": "Bond"
+   }
+  ]
+ },
+ "E": {
+  "status": "NO DATA",
+  "why": "markets.newyorkfed.org (the data host of the NY Fed reverse-repo page) is not allowed by this environment's network"
+ },
+ "F": {
+  "status": "NO DATA",
+  "why": "www.forexfactory.com answers automated requests with a Cloudflare challenge"
+ },
+ "G": {
+  "latest": {
+   "change_mb": 17.423,
+   "deviation_mb": 14.944,
+   "previous_change_mb": 2.479,
+   "released_et": "2026-08-12 10:30 AM",
+   "stocks_kb": 424410,
+   "trigger": true,
+   "week_ending": "2026-08-07"
+  },
+  "schedule_url": "https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+  "source_url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCESTUS1&f=W",
+  "week_release": {
+   "in_week": true,
+   "release_et": "2026-08-19 10:30 AM",
+   "release_ms": 1787149800000,
+   "week_ending": "2026-08-14"
+  }
+ },
+ "anchor_ms": 1786946400000,
+ "week": "2026-08-17"
+}

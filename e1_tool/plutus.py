@@ -92,6 +92,16 @@ def e2_report(pair, monday, chain):
     to Engine 3's Day-Level Bridge') and the weekly chain line. Carried in the Pine as comments, in front of the Engine 3 report (6.7 RULE 2 'No Chain Without Audit Trail') (D-126)."""
     o = [f"ENGINE 2 - MACRO SHAPE CHAIN MAP | WEEK OF {monday} | {PNAME[pair]}"]
     o += [a for a in chain.get('audit', [])]
+    P = E2.protocols(monday)
+    if P is not None:                                     # P533 Part V item 14 'Volatility Trigger Summary' (Protocols D / E / F / G, P452:1443-1446), as of the anchor
+        o.append('--- VOLATILITY TRIGGERS (as of the anchor) ---')
+        for n in P['D']['latest_notes']:
+            o.append(f"Protocol D {n['term']} note: " + (f"{n['close_et']} ET bid-to-cover {n['bid_to_cover']:.2f}" + (' >= 2.6x -> VOLATILITY TRIGGER' if n['trigger'] else '') if 'bid_to_cover' in n else n.get('status', 'NO DATA')))
+        o.append('Protocol D auctions this week: ' + ('; '.join(f"{a['close_et']} ET {a['type']} {a.get('original_term') or a['term']}" for a in P['D']['week_auctions']) or 'none announced'))
+        g = P['G']['latest']
+        o.append('Protocol G EIA crude: ' + (f"week ending {g['week_ending']} change {g['change_mb']:+.3f}M vs previous {g['previous_change_mb']:+.3f}M, deviation {g['deviation_mb']:+.3f}M"
+                                             + (' >= 5M -> VOLATILITY TRIGGER' if g['trigger'] else '') if isinstance(g, dict) else str(g)) + f" | this week's release {P['G']['week_release']['release_et']} ET")
+        o.append('Protocol E ON RRP: ' + P['E']['status'] + ' | Protocol F red folder: ' + P['F']['status'])
     o.append('--- DAY-BY-DAY DECOMPOSITION ---')
     for d in chain.get('days', []):
         o.append(f"{d['day']}: {' + '.join(d['shapes'])} {d['dir']} | Key Zone: {d['key']} | Triggers: {'; '.join(d['triggers'])} | Confidence: {int(round(d['conf'] * 100))}%")

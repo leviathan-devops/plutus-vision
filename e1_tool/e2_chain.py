@@ -489,11 +489,30 @@ def _strong_4h_near(X):
     return any(dist(q) <= 0.30 * U for q in X['sd'] if q['tf'] == '240' and q['kind'] == 'BoM' and q['mit'] <= 1) or any(dist(z) <= 0.30 * U for z in X['zones'] if z.get('tier') == 'Tier 1')
 
 
+def protocols(monday):
+    """the week's Protocol D / E / F / G harvest (sidecar/protocols.py; P452:1278-1376), as it stood at the anchor; None if not harvested"""
+    import json, os
+    p = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'sidecar', 'out', 'protocols', monday + '.json')
+    return json.load(open(p)) if os.path.exists(p) else None
+
+
 def _triggers(X, date):
-    """6.6 Step 5 (d) 'note any volatility triggers (auctions, expiries, economic events)': the option cuts of the day (P533 2.2 'Spring Release' at 10:01 NY); red-folder calendar: NO DATA (optional input, L-32)"""
+    """6.6 Step 5 (d) 'note any volatility triggers (auctions, expiries, economic events)': the option cuts of the day (P533 2.2 'Spring Release' at 10:01 NY); the coupon auctions
+    announced before the anchor that close that day and the EIA petroleum release of that day (P533:693 'High-demand US Treasury auctions ... EIA petroleum supply shocks ... act as the
+    fundamental fuel'; Protocols D / G, P452:1278 / 1366); red-folder calendar (Protocol F) and ON RRP (Protocol E): NO DATA (optional inputs, L-32)"""
     cut = sorted({(l['strike'], l['notional_m']) for l in X['L'] if l['pillar'] == 8 and l.get('cut') == date}, key=lambda x: -x[1])
     t = [f"10:00 NY cut {s:.4f} {n / 1000:.1f}bn" if n >= 1000 else f"10:00 NY cut {s:.4f} {n}M" for s, n in cut[:3]]
-    return t + ['red folder: NO DATA', 'auctions: NO DATA']      # P533:693 Treasury auctions / EIA are Volatility Triggers too: not harvested (optional input, L-32; G2 A-08)
+    d0 = dt.date.fromisoformat(date)
+    P = protocols((d0 - dt.timedelta(days=d0.weekday())).isoformat())
+    if P is None:
+        return t + ['red folder: NO DATA', 'auctions: NO DATA']
+    for a in P['D']['week_auctions']:
+        if a['close_et'][:10] == date:
+            t.append(f"{a['close_et'][11:]} NY {a['type']} {a.get('original_term') or a['term']} auction")
+    w = P['G']['week_release']
+    if w['release_et'][:10] == date:
+        t.append(f"{w['release_et'][11:]} NY EIA crude stocks")
+    return t + ['red folder: NO DATA', 'ON RRP: NO DATA']
 
 
 def build(pair, monday, X, lead=None, force_dir=None):

@@ -1,0 +1,99 @@
+{
+ "D": {
+  "latest_notes": [
+   {
+    "bid_to_cover": 2.54,
+    "close_et": "2025-12-22 01:00 PM",
+    "high_yield": "3.499",
+    "results_file": "R_20251222_3.pdf",
+    "security_term": "2-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "2-Year",
+    "trigger": false
+   },
+   {
+    "bid_to_cover": 2.34,
+    "close_et": "2026-01-27 01:00 PM",
+    "high_yield": "3.823",
+    "results_file": "R_20260127_2.pdf",
+    "security_term": "5-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "5-Year",
+    "trigger": false
+   },
+   {
+    "bid_to_cover": 2.39,
+    "close_et": "2026-02-11 01:00 PM",
+    "high_yield": "4.177",
+    "results_file": "R_20260211_2.pdf",
+    "security_term": "10-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "10-Year",
+    "trigger": false
+   }
+  ],
+  "week_auctions": [
+   {
+    "announced": "2026-02-19",
+    "close_et": "2026-02-24 01:00 PM",
+    "close_ms": 1771956000000,
+    "original_term": "2-Year",
+    "term": "2-Year",
+    "type": "Note"
+   },
+   {
+    "announced": "2026-02-19",
+    "close_et": "2026-02-25 11:30 AM",
+    "close_ms": 1772037000000,
+    "original_term": "2-Year",
+    "term": "1-Year 11-Month",
+    "type": "Note"
+   },
+   {
+    "announced": "2026-02-19",
+    "close_et": "2026-02-25 01:00 PM",
+    "close_ms": 1772042400000,
+    "original_term": "5-Year",
+    "term": "5-Year",
+    "type": "Note"
+   },
+   {
+    "announced": "2026-02-19",
+    "close_et": "2026-02-26 01:00 PM",
+    "close_ms": 1772128800000,
+    "original_term": "7-Year",
+    "term": "7-Year",
+    "type": "Note"
+   }
+  ]
+ },
+ "E": {
+  "status": "NO DATA",
+  "why": "markets.newyorkfed.org (the data host of the NY Fed reverse-repo page) is not allowed by this environment's network"
+ },
+ "F": {
+  "status": "NO DATA",
+  "why": "www.forexfactory.com answers automated requests with a Cloudflare challenge"
+ },
+ "G": {
+  "latest": {
+   "change_mb": -9.014,
+   "deviation_mb": -17.544,
+   "previous_change_mb": 8.53,
+   "released_et": "2026-02-19 12:00 PM",
+   "stocks_kb": 419815,
+   "trigger": true,
+   "week_ending": "2026-02-13"
+  },
+  "schedule_url": "https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+  "source_url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCESTUS1&f=W",
+  "week_release": {
+   "in_week": true,
+   "release_et": "2026-02-25 10:30 AM",
+   "release_ms": 1772033400000,
+   "week_ending": "2026-02-20"
+  }
+ },
+ "anchor_ms": 1771830000000,
+ "week": "2026-02-23"
+}

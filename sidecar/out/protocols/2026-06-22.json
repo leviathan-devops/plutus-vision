@@ -1,0 +1,99 @@
+{
+ "D": {
+  "latest_notes": [
+   {
+    "bid_to_cover": 2.64,
+    "close_et": "2026-05-26 01:00 PM",
+    "high_yield": "4.071",
+    "results_file": "R_20260526_4.pdf",
+    "security_term": "2-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "2-Year",
+    "trigger": true
+   },
+   {
+    "bid_to_cover": 2.61,
+    "close_et": "2026-06-18 01:00 PM",
+    "high_yield": "1.955",
+    "results_file": "R_20260618_3.pdf",
+    "security_term": "4-Year 10-Month",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "5-Year",
+    "trigger": true
+   },
+   {
+    "bid_to_cover": 2.57,
+    "close_et": "2026-06-10 01:00 PM",
+    "high_yield": "4.538",
+    "results_file": "R_20260610_2.pdf",
+    "security_term": "9-Year 11-Month",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "10-Year",
+    "trigger": false
+   }
+  ],
+  "week_auctions": [
+   {
+    "announced": "2026-06-18",
+    "close_et": "2026-06-23 01:00 PM",
+    "close_ms": 1782234000000,
+    "original_term": "2-Year",
+    "term": "2-Year",
+    "type": "Note"
+   },
+   {
+    "announced": "2026-06-18",
+    "close_et": "2026-06-24 11:30 AM",
+    "close_ms": 1782315000000,
+    "original_term": "2-Year",
+    "term": "1-Year 10-Month",
+    "type": "Note"
+   },
+   {
+    "announced": "2026-06-18",
+    "close_et": "2026-06-24 01:00 PM",
+    "close_ms": 1782320400000,
+    "original_term": "5-Year",
+    "term": "5-Year",
+    "type": "Note"
+   },
+   {
+    "announced": "2026-06-18",
+    "close_et": "2026-06-25 01:00 PM",
+    "close_ms": 1782406800000,
+    "original_term": "7-Year",
+    "term": "7-Year",
+    "type": "Note"
+   }
+  ]
+ },
+ "E": {
+  "status": "NO DATA",
+  "why": "markets.newyorkfed.org (the data host of the NY Fed reverse-repo page) is not allowed by this environment's network"
+ },
+ "F": {
+  "status": "NO DATA",
+  "why": "www.forexfactory.com answers automated requests with a Cloudflare challenge"
+ },
+ "G": {
+  "latest": {
+   "change_mb": -8.263,
+   "deviation_mb": -1.036,
+   "previous_change_mb": -7.227,
+   "released_et": "2026-06-17 10:30 AM",
+   "stocks_kb": 418222,
+   "trigger": false,
+   "week_ending": "2026-06-12"
+  },
+  "schedule_url": "https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+  "source_url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCESTUS1&f=W",
+  "week_release": {
+   "in_week": true,
+   "release_et": "2026-06-24 10:30 AM",
+   "release_ms": 1782311400000,
+   "week_ending": "2026-06-19"
+  }
+ },
+ "anchor_ms": 1782108000000,
+ "week": "2026-06-22"
+}

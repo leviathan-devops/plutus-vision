@@ -1,0 +1,91 @@
+{
+ "D": {
+  "latest_notes": [
+   {
+    "bid_to_cover": 2.64,
+    "close_et": "2026-06-23 01:00 PM",
+    "high_yield": "4.189",
+    "results_file": "R_20260623_2.pdf",
+    "security_term": "2-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "2-Year",
+    "trigger": true
+   },
+   {
+    "bid_to_cover": 2.35,
+    "close_et": "2026-06-24 01:00 PM",
+    "high_yield": "4.200",
+    "results_file": "R_20260624_3.pdf",
+    "security_term": "5-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "5-Year",
+    "trigger": false
+   },
+   {
+    "bid_to_cover": 2.57,
+    "close_et": "2026-06-10 01:00 PM",
+    "high_yield": "4.538",
+    "results_file": "R_20260610_2.pdf",
+    "security_term": "9-Year 11-Month",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "10-Year",
+    "trigger": false
+   }
+  ],
+  "week_auctions": [
+   {
+    "announced": "2026-07-02",
+    "close_et": "2026-07-07 01:00 PM",
+    "close_ms": 1783443600000,
+    "original_term": "3-Year",
+    "term": "3-Year",
+    "type": "Note"
+   },
+   {
+    "announced": "2026-07-02",
+    "close_et": "2026-07-08 01:00 PM",
+    "close_ms": 1783530000000,
+    "original_term": "10-Year",
+    "term": "9-Year 10-Month",
+    "type": "Note"
+   },
+   {
+    "announced": "2026-07-02",
+    "close_et": "2026-07-09 01:00 PM",
+    "close_ms": 1783616400000,
+    "original_term": "30-Year",
+    "term": "29-Year 10-Month",
+    "type": "Bond"
+   }
+  ]
+ },
+ "E": {
+  "status": "NO DATA",
+  "why": "markets.newyorkfed.org (the data host of the NY Fed reverse-repo page) is not allowed by this environment's network"
+ },
+ "F": {
+  "status": "NO DATA",
+  "why": "www.forexfactory.com answers automated requests with a Cloudflare challenge"
+ },
+ "G": {
+  "latest": {
+   "change_mb": -3.775,
+   "deviation_mb": 2.313,
+   "previous_change_mb": -6.088,
+   "released_et": "2026-07-01 10:30 AM",
+   "stocks_kb": 408359,
+   "trigger": false,
+   "week_ending": "2026-06-26"
+  },
+  "schedule_url": "https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+  "source_url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCESTUS1&f=W",
+  "week_release": {
+   "in_week": true,
+   "release_et": "2026-07-08 10:30 AM",
+   "release_ms": 1783521000000,
+   "week_ending": "2026-07-03"
+  }
+ },
+ "anchor_ms": 1783317600000,
+ "week": "2026-07-06"
+}

@@ -1,0 +1,66 @@
+{
+ "D": {
+  "latest_notes": [
+   {
+    "bid_to_cover": 2.44,
+    "close_et": "2026-03-24 01:00 PM",
+    "high_yield": "3.936",
+    "results_file": "R_20260324_2.pdf",
+    "security_term": "2-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "2-Year",
+    "trigger": false
+   },
+   {
+    "bid_to_cover": 2.29,
+    "close_et": "2026-03-25 01:00 PM",
+    "high_yield": "3.980",
+    "results_file": "R_20260325_3.pdf",
+    "security_term": "5-Year",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "5-Year",
+    "trigger": false
+   },
+   {
+    "bid_to_cover": 2.43,
+    "close_et": "2026-04-08 01:00 PM",
+    "high_yield": "4.282",
+    "results_file": "R_20260408_2.pdf",
+    "security_term": "9-Year 10-Month",
+    "source_url": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+    "term": "10-Year",
+    "trigger": false
+   }
+  ],
+  "week_auctions": []
+ },
+ "E": {
+  "status": "NO DATA",
+  "why": "markets.newyorkfed.org (the data host of the NY Fed reverse-repo page) is not allowed by this environment's network"
+ },
+ "F": {
+  "status": "NO DATA",
+  "why": "www.forexfactory.com answers automated requests with a Cloudflare challenge"
+ },
+ "G": {
+  "latest": {
+   "change_mb": 3.081,
+   "deviation_mb": -2.37,
+   "previous_change_mb": 5.451,
+   "released_et": "2026-04-08 10:30 AM",
+   "stocks_kb": 464717,
+   "trigger": false,
+   "week_ending": "2026-04-03"
+  },
+  "schedule_url": "https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+  "source_url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCESTUS1&f=W",
+  "week_release": {
+   "in_week": true,
+   "release_et": "2026-04-15 10:30 AM",
+   "release_ms": 1776263400000,
+   "week_ending": "2026-04-10"
+  }
+ },
+ "anchor_ms": 1776060000000,
+ "week": "2026-04-13"
+}
