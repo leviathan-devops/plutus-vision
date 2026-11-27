@@ -16,12 +16,12 @@ Rule (goal prompt section 7, G2): each finding is a bug - fix it, or answer it w
 | N-08 | OPEN | the first-rocket band (D-83) was derived from his three rockets and his own grids; E3C:227 / 689 name 1.382-1.786 as the rocket entry zone with a 2.382-2.786 trip-wire. To rebuild from E3C 8R.7 alone. |
 | N-09 | ANSWERED with N-04 | every included setup is at or above his inclusion gate; rockets copy the parent's confidence (not scored on their own: OPEN). |
 | N-10 | OPEN | transition entry at an IP-zone edge; no Late-consolidation test. |
-| N-11 | OPEN | two timeframes up allowed for every source. |
-| N-12 | OPEN | 4H MoM target -> R instead of minor WL then BS / PBS through it (P533:1963). |
-| N-13 | OPEN | BoM candle-zone target -> RWL without the 6-check; WL upgrade at an unswept sweep level has no canon sentence. |
+| N-11 | FIXED | TF_MATCH table: 4H -> 4H / 1H; 1H -> 1H / 4H / 30m (P533:1968 'they react interchangeably with 4H being dominant', P533:2276 '1H/4H can be used interchangeably'); 30m -> 30m / 15m; 15m -> 30m / 1H. Left: pressure-zone and sweep targets carry no timeframe and are not filtered (OPEN). |
+| N-12 | FIXED | virgin 4H MoM target -> WL (one session) then PBS through the zone (P533:1963). |
+| N-13 | FIXED / ANSWERED | the reaction at a BoM candle-zone target now runs the 6-check on the reversal (4+ against -> the move continues, P533:1873). The whiplash into an unswept sweep level lying against the target: P533 0.45d 'When a liquidity sweep zone overlaps with a 4H BoM demand/supply zone: CONFLUENT LIQUIDITY SWEEP + BoM ZONE', P452:968 'brief breach then reversal', 6.4 'WL -> RWL', and his own tag of the golden Friday 'WL + RWL'. The 0.10 distance is the sweep extension of P533:1286. |
 | N-14 | OPEN | P452:2082 as the basis of D-49 / D-50 / D-74. |
 | N-15 | PART | threshold now USD 1.5bn (P533:690); the +1-day reading of the Spring Release as the week's transition day stays D-60 (no canon sentence names the day): OPEN. |
-| N-16 | OPEN | 6-check items 5 and 6. |
+| N-16 | FIXED | check 5 = the shape in progress at the anchor (a breakout / whiplash names a direction, a range none); check 6 = counter-trend RISK (HIGH / MODERATE / NONE), recorded, no direction vote. Left: the size adjustment of E3C:1095 is not output (OPEN). |
 | N-17 | OPEN | Late consolidation by elapsed sessions. |
 | N-18 | FIXED (D-96) | a swing-scalp order rests only on days whose E2 path comes within 30 pips of its entry. |
 | N-19 | ANSWERED | his golden GBPUSD #5 (Thursday short 1.34246 / 1.3436 / 1.33882) stands on the bottom edge of the 4H BoM supply 1.34272-1.34347 he drew himself (golden_week.json); the tool's GB6 is that trade. Left: swing scalps at inner 4H zones enter at the edge when no rung / block is inside (OPEN). |
@@ -33,8 +33,8 @@ Rule (goal prompt section 7, G2): each finding is a bug - fix it, or answer it w
 | N-25 | OPEN | Phase 2 confluence >= 7 selection; Hard Wall SL anchor. |
 | N-26 | ANSWERED | E3C:1011 itself: 'total max unlimited (NO CAPS - operator D38)'; E3C:461-466 D10 / D16 / D38 verbatims; the weekly limit is L-04 / R-07. |
 | N-27 | FIXED (D-96) | no breakout entry at a 4H MoM zone. |
-| N-28 | OPEN | direction of the PIERCED branch. |
-| N-29 | OPEN | BoM bound with 3+ reactions run through the counter. |
+| N-28 | ANSWERED (reading stated) | P533:1845-1848 'SHARP WHIPLASH/REVERSAL instantly -> all liquidity drained at this level -> Zone is PIERCED -> Next shape: BS or WL in OPPOSITE direction' is read: the zone's reaction (the whiplash) drains it, the next shape runs opposite to that reaction = through the zone; P533:1159 'price will likely pierce through it to reach the BoM zone' says the same of a depleted zone. The other reading (pierce, then reverse) is what EURUSD 2026-05-18 traded; the range box runs to the liquidity beyond a depleted bound for it (D-85 / D-88). |
+| N-29 | ANSWERED | P533:1873 guarantees the reaction of a BoM zone 'if unmitigated'; P533:1159 '3+ reactions (Depleted): Zone is likely to fail on next test' is the Zone Reaction Counter kept 'for each IP zone', BoM included (P533:1157 names BoM in the same list). |
 | N-30 | OPEN | uncited constants (list in the audit). |
 | N-31 | ANSWERED / PART | his real DXY trade of 2026-04-20 (long 98.02) filled on Monday, the day before the breakout day; his golden GBPUSD #5 filled Thursday, the day the breakout reached its target: the order rests from the start of the step that leads to it (E3C:625 pending orders placed ahead). No E3C sentence states it for primaries: PART. |
 | N-32 | FIXED (D-96) | reinforcements are not counted among the 11. |

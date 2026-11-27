@@ -19,6 +19,9 @@ DAYS = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri')
 TF_RANK = {'15': 0, '30': 1, '60': 2, '240': 3}
 SS_SWING = 2                                     # sessions per swing of a consolidation (E2X:21 'Each swing typically spans 1-3 trading sessions')
 PIERCING = ('BS', 'PBS', 'WL', 'PWL', 'RWL', 'PRWL')
+# P533:1967-1971 Timeframe Element Matching: '4H source -> 4H target (1H acceptable as similar element - they react interchangeably with 4H being dominant)'; '1H source -> 1H target
+# (30m acceptable)' and P533:2276 '1H/4H can be used interchangeably'; '30m source -> 30m target (15m acceptable)'; '15m source -> 30m or 1H target (up to 2 TF dimensions higher)' (N-11)
+TF_MATCH = {'240': ('240', '60'), '60': ('60', '240', '30'), '30': ('30', '15'), '15': ('30', '60')}
 PIERCE_ORDER = {'FAIL': 0, 'PIERCED': 1, 'BREAK-RETURN': 2, 'SLOW': 3}      # how soon the bound goes (6.4.1 / 6.4.2 branch texts)
 SS_MIN_SESSIONS = 2          # 6.8 'SS ... 2-5 sessions'
 BS_SESSIONS = 3              # 6.8 'BS 1-3 sessions'; 6.10 'Assume price moves at 30-50% of the speed you think' -> the upper figure
@@ -292,10 +295,13 @@ def six_check(X, pair, monday, proposed, B, fails, macro):
     lb = [spot - l['level'] for l in X['lsz'] if not l['swept'] and l['level'] < spot]
     v.append(('liquidity sweep', None if not (la or lb) else 'down' if (la and (not lb or min(la) < min(lb))) else 'up'))
     v.append(('zone failure', fails))
-    v.append(('macro shape', macro))
-    t = B['ceil'] if proposed == 'up' else B['floor']
-    wall = [z for z in X['zones'] if z['zfp_num'] < 20 and ((z['bot'] > spot and z['bot'] - spot <= 1.0 * U) if proposed == 'up' else (z['top'] < spot and spot - z['top'] <= 1.0 * U))]
-    v.append(('counter-trend', inv[proposed] if wall else None))
+    # E3C:1090 '5. Macro Shape: chain description -> expected direction': the shape in progress at the anchor (a breakout / whiplash names a direction, a range names none) -
+    # not the 4H storyline, which may already have chosen the proposed direction (N-16)
+    ms = macro.get('dir') if isinstance(macro, dict) and macro.get('shape') in ('BS', 'PBS', 'WL', 'RWL', 'PWL') and macro.get('dir') in ('up', 'down') else None
+    v.append(('macro shape', ms))
+    # E3C:1091 '6. Counter-Trend: hard wall level -> counter-trend risk HIGH/MODERATE/NONE'; E3C:1095 the risk sets the position size: it is recorded, it casts no direction vote
+    wall = [z for z in X['zones'] if z['zfp_num'] < 20 and ((z['bot'] > spot) if proposed == 'up' else (z['top'] < spot))]
+    v.append(('counter-trend risk ' + ('HIGH' if any(z['zfp_num'] < 15 for z in wall) else 'MODERATE' if wall else 'NONE'), None))
     dis = sum(1 for _, d in v if d is not None and d != proposed)
     return (inv[proposed] if dis >= 4 else proposed), v, dis
 
@@ -319,7 +325,7 @@ def target(X, side, bound, src_tf=None):
         if z['tf'] in ('240', '60') and z['type'] == ('Demand' if dn else 'Supply') and ((z['top'] <= bound['top'] and z['bot'] < bound['bot']) if dn else (z['bot'] >= bound['bot'] and z['top'] > bound['top'])):
             if z['kind'] == 'MoM' and not any(q['bot'] <= z['top'] and q['top'] >= z['bot'] and q['zfp_num'] < 30 for q in X['zones']):
                 continue                                     # P452:2082 'No IP + standalone MoM = it gets pierced (not valid TP)'; 6.4.2 'pierce through zone until reaching BoM Liquidity' (D-49)
-            if src_tf is None or TF_RANK[z['tf']] <= TF_RANK[src_tf] + 2:
+            if src_tf is None or z['tf'] in TF_MATCH.get(src_tf, ('240', '60')):
                 cands.append((z['top'] if dn else z['bot'], 1, {'bot': z['bot'], 'top': z['top'], 'name': z['label'], 'src': 'SD', 'cls': z['kind'], 'rx': z['mit'], 'tf': z['tf'], 'sd': z}))
     for l in X['lsz']:
         if not l['swept'] and l['side'] == ('Demand-side' if dn else 'Supply-side') and ((l['level'] < bound['bot']) if dn else (l['level'] > bound['top'])):
@@ -367,7 +373,7 @@ def after_bs(t):
         if c == 'Depleted':
             return 'PBS', 'MODERATE', f"{t['name']}: depleted ({t['rx']} taps) -> pierced, cascade (6.4.2; P533:1159)"
         if t['tf'] == '240' and c == 'Virgin':
-            return 'R', 'MODERATE', f"{t['name']}: 4H MoM one-and-done - minor reaction, then pierce (E2X:239)"
+            return 'WL+PBS', 'MODERATE', f"{t['name']}: 4H MoM one-and-done - 'a minor WL followed by BS/PBS through the zone' (P533:1963)"
         return 'R', 'MODERATE', f"{t['name']}: MoM - minor reaction (6.4.2)"
     z = t['zfp']
     if z < 20:
@@ -529,7 +535,7 @@ def build(pair, monday, X, lead=None, force_dir=None):
             bdir = prop
     if bdir in ('up', 'down') and lead is None and mode == 'ss':
         fails = 'up' if bc[0] in ('FAIL', 'PIERCED') else 'down' if bf[0] in ('FAIL', 'PIERCED') else None
-        chk, votes, dis = six_check(X, pair, monday, bdir, B, fails, story)
+        chk, votes, dis = six_check(X, pair, monday, bdir, B, fails, s0)
         audit.append(f"Direction Validation 6-check for {bdir}: " + ', '.join(f"{n}={d}" for n, d in votes) + f" -> {dis} disagree" + (f" -> REVERSED to {chk}" if chk != bdir else ''))
         bdir = chk
     if bdir is not None:
@@ -637,6 +643,13 @@ def build(pair, monday, X, lead=None, force_dir=None):
             ok = add('BS', bdir, i_ny, i_ny + dur, far_liq or near, tgt, (bc if bdir == 'up' else bf)[1],
                      f"{near['name']} goes ({kind}) -> BS toward {tgt['name'] if tgt else '-'} ({dur} sessions{', 4H element: twice as long (6.10)' if k4 else ''})", role='bs')
             nx, tier, txt = after_bs(tgt)
+            if nx == 'RWL' and tgt is not None and tgt.get('src') == 'SD' and tgt.get('cls') == 'BoM':
+                # P533:1873 'A BoM zone reaction produces a directional move (BS, WL, or RWL) determined by the Direction Validation 6-check': the reversal is the proposed
+                # direction; 4+ of 6 against it -> the move continues through (N-13)
+                chk2, v2, dis2 = six_check(X, pair, monday, inv[bdir], B, None, s0)
+                audit.append(f"Direction Validation 6-check for the reaction at {tgt['name']} ({inv[bdir]}): " + ', '.join(f"{n}={d}" for n, d in v2) + f" -> {dis2} disagree")
+                if chk2 != inv[bdir]:
+                    nx, tier, txt = 'PBS', 'MODERATE', txt + ' - 6-check: 4+ against the reversal, the move continues (P533:1873)'
             if nx == 'RWL' and tgt is not None and any((not l['swept']) and l['side'] == ('Demand-side' if bdir == 'down' else 'Supply-side')
                                                        and ((tgt['bot'] - 0.10 * U <= l['level'] <= tgt['top']) if bdir == 'down' else (tgt['bot'] <= l['level'] <= tgt['top'] + 0.10 * U)) for l in X['lsz']):
                 nx = 'WL+RWL'                                # unswept stops rest against the target: the surge ends in a whiplash into them (P452:968 'brief breach then reversal'; 6.4 'WL -> RWL')
@@ -654,9 +667,11 @@ def build(pair, monday, X, lead=None, force_dir=None):
                         add('BS', bdir, e + 1, e + 1 + BS_SESSIONS, tgt, tgt2, 'MODERATE', "6.4 'R -> BS (2nd leg): Recovery at mid-range zone that also fails'", role='bs2')
                     else:
                         add('SS', 'range', e + 1, len(S), tgt, near, 'MODERATE-HIGH', "6.4.1 'R | Persists > 1 full session | SS (reclassify)'", role='ss_after')
-            elif ok and nx == 'PBS':
+            elif ok and nx in ('PBS', 'WL+PBS'):
                 tgt2 = target(X, bdir, tgt)
-                if add('PBS', bdir, e, e + 2, tgt, tgt2, tier, txt, role='pbs'):
+                if nx == 'WL+PBS' and add('WL', bdir, e, e + 1, tgt, tgt, tier, txt, role='wl'):
+                    e += 1
+                if add('PBS', bdir, e, e + 2, tgt, tgt2, tier, txt, same=(nx == 'WL+PBS'), role='pbs'):
                     add('SS', 'range', e + 2, len(S), tgt2, tgt, 'MODERATE', "6.3 'PBS -> R/SS'", role='ss_after')
     if lead is None and mode == 'ss' and bdir is not None:
         near, far = (ceil, floor) if bdir == 'up' else (floor, ceil)
