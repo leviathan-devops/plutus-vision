@@ -1,0 +1,29 @@
+== DXY golden week: 8 orders drawn
+  DX1  Mon SS     SHORT E 101.203 SL 101.255 TP 100.830 | placed 07-06 06:00 | 1H: NOT FILLED fill -           exit -           | 15m: NOT FILLED fill -
+  DX2  Mon SS     SHORT E 101.138 SL 101.213 TP 100.830 | placed 07-06 06:00 | 1H: TP         fill 07-06 10:00 exit 07-07 01:00 | 15m: TP         fill 07-06 10:00
+  DX3  Mon SS     LONG  E 100.851 SL 100.743 TP 101.184 | placed 07-06 06:00 | 1H: TP         fill 07-06 18:00 exit 07-07 23:00 | 15m: TP         fill 07-06 18:45
+  DX4  Wed BS     SHORT E 101.235 SL 101.322 TP 100.685 | placed 07-08 06:00 | 1H: TP         fill 07-08 09:00 exit 07-10 02:00 | 15m: TP         fill 07-08 09:00
+  DX5  Wed SS     SHORT E 101.203 SL 101.255 TP 100.995 | placed 07-07 21:00 | 1H: TP         fill 07-08 01:00 exit 07-08 06:00 | 15m: TP         fill 07-08 01:30
+  DX6  Wed RWL    LONG  E 100.980 SL 100.906 TP 101.235 | placed 07-07 21:00 | 1H: TP         fill 07-08 07:00 exit 07-08 09:00 | 15m: TP         fill 07-08 07:15
+  DX7  Thu Ladder SHORT E 100.980 SL 101.077 TP 100.685 | placed 07-08 21:00 | 1H: TP         fill 07-09 00:00 exit 07-10 02:00 | 15m: TP         fill 07-09 00:00
+  DX8  Fri RWL    LONG  E 100.628 SL 100.548 TP 100.940 | placed 07-09 21:00 | 1H: TP         fill 07-10 02:00 exit 07-10 14:00 | 15m: TP         fill 07-10 02:15
+  1H  counts: drawn 8 | filled 7 | TP 7 | SL 0 | open 0 | not filled 1
+  15m counts: drawn 8 | filled 7 | TP 7 | SL 0 | open 0 | not filled 1
+== EURUSD golden week: 8 orders drawn
+  EU1  Mon SS     SHORT E 1.14442 SL 1.14508 TP 1.14068 | placed 07-06 06:00 | 1H: TP         fill 07-06 18:00 exit 07-07 21:00 | 15m: TP         fill 07-06 18:45
+  EU2  Mon SS     LONG  E 1.14018 SL 1.13960 TP 1.14429 | placed 07-06 06:00 | 1H: NOT FILLED fill -           exit -           | 15m: NOT FILLED fill -
+  EU3  Mon SS     LONG  E 1.14095 SL 1.14037 TP 1.14429 | placed 07-06 06:00 | 1H: TP         fill 07-06 13:00 exit 07-06 18:00 | 15m: TP         fill 07-06 13:45
+  EU4  Wed RWL    SHORT E 1.14269 SL 1.14369 TP 1.13940 | placed 07-07 21:00 | 1H: TP         fill 07-08 07:00 exit 07-08 11:00 | 15m: TP         fill 07-08 07:15
+  EU5  Wed BS     LONG  E 1.13940 SL 1.13872 TP 1.14555 | placed 07-08 06:00 | 1H: TP         fill 07-08 11:00 exit 07-10 02:00 | 15m: TP         fill 07-08 11:30
+  EU6  Wed SS     LONG  E 1.14018 SL 1.13960 TP 1.14254 | placed 07-07 21:00 | 1H: TP         fill 07-07 21:00 exit 07-08 07:00 | 15m: TP         fill 07-07 21:30
+  EU7  Thu Ladder LONG  E 1.14239 SL 1.14172 TP 1.14555 | placed 07-08 21:00 | 1H: TP         fill 07-09 00:00 exit 07-10 02:00 | 15m: TP         fill 07-09 00:00
+  EU8  Fri RWL    SHORT E 1.14598 SL 1.14653 TP 1.14239 | placed 07-09 21:00 | 1H: TP         fill 07-10 02:00 exit 07-10 12:00 | 15m: TP         fill 07-10 02:15
+  1H  counts: drawn 8 | filled 7 | TP 7 | SL 0 | open 0 | not filled 1
+  15m counts: drawn 8 | filled 7 | TP 7 | SL 0 | open 0 | not filled 1
+== GBPUSD golden week: 4 orders drawn
+  GB1  Mon SS     SHORT E 1.33959 SL 1.34155 TP 1.33348 | placed 07-06 06:00 | 1H: TP         fill 07-06 18:00 exit 07-08 09:00 | 15m: TP         fill 07-06 18:45
+  GB2  Mon SS     LONG  E 1.33333 SL 1.33235 TP 1.33926 | placed 07-06 06:00 | 1H: TP         fill 07-06 06:00 exit 07-06 18:00 | 15m: TP         fill 07-06 06:15
+  GB3  Wed BS     LONG  E 1.33255 SL 1.33125 TP 1.34254 | placed 07-08 06:00 | 1H: TP         fill 07-08 09:00 exit 07-09 06:00 | 15m: TP         fill 07-08 09:00
+  GB4  Fri RWL    SHORT E 1.34254 SL 1.34396 TP 1.33888 | placed 07-07 21:00 | 1H: TP         fill 07-09 06:00 exit 07-09 11:00 | 15m: TP         fill 07-09 06:15
+  1H  counts: drawn 4 | filled 4 | TP 4 | SL 0 | open 0 | not filled 0
+  15m counts: drawn 4 | filled 4 | TP 4 | SL 0 | open 0 | not filled 0
