@@ -224,6 +224,7 @@ SWEEP_EXT = True
 GOLD_FALLBACK = True       # D-102: golden stop fallback when no ladder step gives a stop (E3C:262, :289-294)
 MID_KEY = True
 LAW14_PRE = 1.2            # E3C:343 'Law-14 precondition: TP >= 1.2 x SL'
+ANCHOR_CAP = True
 BLEND_GATE = True          # D-100: the emission floor is met by the blended RRR of a 3-entry staggered position (E3C:357)
 JOIN_TP = True
 SWEEP_TP = True
@@ -681,6 +682,15 @@ def _build(pair, monday, X, E2, tag):
         con = next((k for k in kept if k['dir'] != q['dir'] and k['day'] == q['day'] and k['session'] == q['session'] and abs(k['entry'] - q['entry']) <= 15 * pip), None)
         if dup is not None:
             log.append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: DUPLICATE of {dup['shape']} {dup['entry']:.5f} (E3C:463)"); continue
+        # E3C:464 'If both setups reference the same anchorZoneId -> dedup by anchor bucket + day identity'; E3C:471 cap key '(pair, anchorBucket, day), FIRST kept, rest drop EMISSION_CAPPED':
+        # two orders of one day and direction resolved on the same entry structure with the same entry and stop are one order, whatever their categories - the first designated stays (D-120)
+        cap = next((k for k in kept if ANCHOR_CAP and k['day'] == q['day'] and k['dir'] == q['dir'] and k.get('src') is not None and k.get('src') == q.get('src') and abs(k['entry'] - q['entry']) < 0.5 * pip
+                    and abs(k['sl'] - q['sl']) < 0.5 * pip and not q.get('parent_ref') and not k.get('parent_ref')), None)
+        if cap is not None:
+            if cap['shape'] == 'SS' and q['shape'] != 'SS':     # the E2-designated swing stays (R3 law); the scalp that resolved to the same order is the one capped
+                kept.remove(cap); log.append(f"{cap['day']} {cap['shape']} {cap['dir']} {cap['entry']:.5f}: EMISSION_CAPPED - same anchor, day, entry and stop as {q['shape']} {q['entry']:.5f} (E3C:464, 471)")
+            else:
+                log.append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - same anchor, day, entry and stop as {cap['shape']} {cap['entry']:.5f} (E3C:464, 471)"); continue
         if con is not None:
             if q.get('confidence', 0) > con.get('confidence', 0):
                 kept.remove(con); log.append(f"{con['day']} {con['shape']} {con['dir']} {con['entry']:.5f}: CONFLICT - lower confidence than {q['entry']:.5f} (E3C:462)")
@@ -788,7 +798,7 @@ def build(pair, monday, X, E2, source=None):
         keep = keep if (az and ad) else []
         uniq = []
         for s in keep:                                        # the breakout and its transition entry can resolve to the same order: one of them (E3C:463 duplicate)
-            if not any(abs(u['entry'] - s['entry']) < 1e-9 and abs(u['sl'] - s['sl']) < 1e-9 and u['dir'] == s['dir'] for u in uniq):
+            if not any(abs(u['entry'] - s['entry']) < 0.5 * D.PIP[pair] and u['dir'] == s['dir'] and u['day'] == s['day'] and not s.get('parent_ref') for u in uniq):    # same anchor, day and direction: the first (E3C:464, 471)
                 uniq.append(s)
         keep = [s for s in uniq if not s.get('parent_ref') or s['parent_ref'] in uniq]
         for s in keep:
