@@ -810,13 +810,13 @@ def build(pair, monday, X, lead=None, force_dir=None):
             ib = info(far)
             thr = f"ZFP {ib['zfp']}% > 45 or a 1H close beyond it" if ib and ib['zfp'] is not None else '1H close beyond it'
             alt_chain = build(pair, monday, X, None, force_dir=inv[bdir])
-            alt = {'decision_zone': far['name'], 'dir': inv[bdir], 'threshold': thr, 'conf': alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else None,
+            alt = {'decision_zone': far['name'], 'zone': (far['bot'], far['top']), 'dir': inv[bdir], 'threshold': thr, 'conf': alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else None,
                    'text': f"PRIMARY: {' -> '.join(c['shape'] for c in chain)} | DECISION ZONE: {far['name']} {thr} -> ALTERNATIVE: {' -> '.join(c['shape'] for c in alt_chain['chain'])} "
                            f"[confidence {alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else '-'}]"}
         elif bdir is None and ceil is not None and floor is not None:
             cand = sorted([(PIERCE_ORDER.get(b[0], 9), side, z) for side, z, b in (('up', ceil, bc), ('down', floor, bf))], key=lambda x: x[0])[0]
             alt_chain = build(pair, monday, X, None, force_dir=cand[1])
-            alt = {'decision_zone': cand[2]['name'], 'dir': cand[1], 'threshold': '1H close beyond it', 'conf': alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else None,
+            alt = {'decision_zone': cand[2]['name'], 'zone': (cand[2]['bot'], cand[2]['top']), 'dir': cand[1], 'threshold': '1H close beyond it', 'conf': alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else None,
                    'text': f"PRIMARY: SS | DECISION ZONE: {cand[2]['name']} 1H close beyond it -> ALTERNATIVE: {' -> '.join(c['shape'] for c in alt_chain['chain'])}"}
         if alt:
             audit.append(alt['text'])

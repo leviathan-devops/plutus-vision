@@ -19,6 +19,13 @@ for s in R['setups']:
     stop_entry = s['category'] in ('Reinforcement', 'Transition')          # a stop-limit fires when price trades THROUGH the rung in the trade's direction
     head = f"  {s['id']:<5}{'ALT ' if s.get('alt') else '    '}{s['day']} {s['shape']:<6} {s['dir']:<5} E {f % s['entry']} SL {f % s['sl']} TP {f % s['tp']} {s['rrr']}R | "
     start = t0
+    if s.get('trigger'):                                   # an alternative-chain order: live after the first 1H close beyond its Decision Zone (P533 6.6 Step 4)
+        tg = s['trigger']
+        trig = next((x for x in h1 if ((x['close'] > tg['level'] + tick) if tg['dir'] == 'up' else (x['close'] < tg['level'] - tick))), None)
+        if trig is None:
+            print(head + f"not triggered: no 1H close {'above' if tg['dir'] == 'up' else 'below'} {f % tg['level']} ({tg['zone']}) during the week"); continue
+        start = max(start, trig['time'] + 3600000)
+        head += f"triggered {ts(trig['time'] + 3600000)} | "
     if s.get('parent'):                                    # a reinforcement is live from its parent's fill to its parent's exit (E3C:625)
         pf = FILLS.get(s['parent'])
         if pf is None or pf[0] is None:

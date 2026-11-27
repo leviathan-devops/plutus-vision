@@ -14,7 +14,7 @@ No price literal: every level is an E1 zone edge, an LQZ band or a sweep-zone le
 import e1_data as D
 
 RRR_FLOOR, GOLD_MIN, GOLD_MAX, SL_CEIL, MAX_SETUPS = 3.0, 4.0, 9.5, 36.0, 11
-ALT_SETUPS = False       # the alternative chain's breakout setups need their Decision Zone trigger (6.6 Step 4) before they may rest as orders: not emitted until that trigger is built
+ALT_SETUPS = True        # D-109: the alternative chain's breakout family is emitted as CONDITIONAL orders, live only after the Decision Zone trigger (P533 6.6 Step 4: a 1H close beyond the zone)
 FWD = {'DXY': 0.02, 'EURUSD': 0.0001, 'GBPUSD': 0.0002}     # E3C 8.19 pair table, column 'Forward Spread'
 TF_RANK = {'15': 0, '30': 1, '60': 2, '240': 3}
 DAY_IDX = {'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4}
@@ -743,10 +743,21 @@ def build(pair, monday, X, E2, source=None):
     if ALT_SETUPS and alt is not None:
         A = _build(pair, monday, X, alt, 'A')
         keep = [s for s in A['setups'] if s['shape'] in ('RWL', 'BS', 'PBS', 'WL', 'Ladder')]
+        az = (E2.get('alt') or {}).get('zone')
+        ad = (E2.get('alt') or {}).get('dir')
+        keep = keep if (az and ad) else []
+        uniq = []
+        for s in keep:                                        # the breakout and its transition entry can resolve to the same order: one of them (E3C:463 duplicate)
+            if not any(abs(u['entry'] - s['entry']) < 1e-9 and abs(u['sl'] - s['sl']) < 1e-9 and u['dir'] == s['dir'] for u in uniq):
+                uniq.append(s)
+        keep = [s for s in uniq if not s.get('parent_ref') or s['parent_ref'] in uniq]
         for s in keep:
             s['alt'] = True
-            s['why'] = 'ALTERNATIVE chain (the other bound fails): ' + s['why']
-        R['setups'] = (R['setups'] + keep)[:MAX_SETUPS]
+            # P533 6.6 Step 4 'construct at least one alternative chain that activates if the primary fails at a specific Decision Zone': the order is live only after a 1H close
+            # beyond the Decision Zone in the alternative's direction
+            s['trigger'] = {'dir': ad, 'level': az[1] if ad == 'up' else az[0], 'zone': (E2.get('alt') or {}).get('decision_zone')}
+            s['why'] = f"ALTERNATIVE chain - live only after a 1H close {'above' if ad == 'up' else 'below'} {s['trigger']['level']:.5f} ({s['trigger']['zone']}): " + s['why']
+        R['setups'] = R['setups'] + keep                      # contingency orders: not counted among the week's trades until triggered (7S.2 'Map the SS->BS Transition Setup as a contingency')
         R['log'] += ['ALT ' + l for l in A['log']]
     b0 = D.boundary_ms(monday)
     ss_days = [DAY_IDX[d['day']] for d in E2['days'] if d['shapes'] == ['SS'] and DAY_IDX[d['day']] < E2.get('n_real', 5)]
@@ -798,7 +809,7 @@ def build(pair, monday, X, E2, source=None):
     # it carries its setup's id with the day and is not a further setup (D-89)
     # ... the week carries at most 11 TRADES per pair, the per-day repeats included (L-04; R-07 'maximum 10 per week ... one to three per day'); reinforcements are not trades (R-10
     # 'These are not normal trades') and are not counted. Over the limit the repeats of the latest days go first, then the latest setups (G2 round 2 N-05, N-32)
-    trades = [q for q in out if q.get('category') != 'Reinforcement']
+    trades = [q for q in out if q.get('category') != 'Reinforcement' and not q.get('alt')]      # an alternative-chain order is a contingency: it becomes a trade only if its Decision Zone trigger fires
     extra = len(trades) - MAX_SETUPS
     if extra > 0:
         raw = lambda q: sum(v for _, v in (q.get('conf_parts') or []))        # the confidence sum before its clamp to 100 separates setups that all read 100
@@ -862,7 +873,7 @@ def pine(pair, monday, R):
             else:
                 ly += 1.1 * txt_h * (1 if s['tp'] > s['entry'] else -1)
         placed.append((lx, ly))
-        o.append(f"        label.new({lx}, {g(ly)}, \"{s['id'] if s.get('clone') else (s['id'] + ' ' + ('ALT ' if s.get('alt') else '') + s['shape'] + ' ' + ('S' if s['dir'] == 'SHORT' else 'L') + ' ' + format(s['rrr'], '.1f') + 'R' + ((' if ' + str(s.get('parent'))) if cond else ''))}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
+        o.append(f"        label.new({lx}, {g(ly)}, \"{s['id'] if s.get('clone') else (s['id'] + ' ' + ('ALT ' if s.get('alt') else '') + s['shape'] + ' ' + ('S' if s['dir'] == 'SHORT' else 'L') + ' ' + format(s['rrr'], '.1f') + 'R' + ((' if ' + str(s.get('parent'))) if cond else '') + ((' if 1H close ' + ('>' if s['trigger']['dir'] == 'up' else '<') + ' ' + g(s['trigger']['level'])) if s.get('trigger') else ''))}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
 
 
