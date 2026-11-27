@@ -50,3 +50,4 @@ Rule (goal prompt section 7, G2): each finding is a bug - fix it, or answer it w
 | A-37 | PART | mirror keys per chain step (N-07) and the 10.7 divergence flag; per-setup re-anchoring lane OPEN. |
 | A-44 | PART | f(T) line reported met / NOT met (D-95). |
 | E1-X | PART | Part X read; info table D-94. |
+| A-22 | ANSWERED (oracle) | the literal 'RR-tight = 3p back edge only' was run on the golden week 2026-11-27: his DXY stops #2 / #3 / #8 move from 1.7 / 2.5 / 0.3 pips off to 3.5 / 3.6 / 2.8, GBPUSD #2's stop to 5.1 off and GBPUSD #1 is no longer emitted. D-73 (the tighter of the first shield stop and the entry-zone back edge) keeps all within 2.5. Fuel-selected relevant zone: OPEN. |
