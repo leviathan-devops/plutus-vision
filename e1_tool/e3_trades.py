@@ -925,15 +925,19 @@ def pine(pair, monday, R):
         lx = max(x0 + 2 * 3600000, min(x0 + 3 * 3600000 + k * 9 * 3600000, x1 - 3600000, wk1 - 14 * 3600000))     # kept clear of the chart's right edge
         # no label over another label (A13; outside count 8 'setup labels pile on each other'): a label that would land within 14 hours and one text height of a placed one moves
         # along its box, then one row further into the green side
-        for _try in range(8):
-            if not any(abs(lx - px) < 14 * 3600000 and abs(ly - py) < txt_h for px, py in placed):
+        txt = s['id'] if s.get('clone') else (s['id'] + ' ' + ('ALT ' if s.get('alt') else '') + s['shape'] + ' ' + ('S' if s['dir'] == 'SHORT' else 'L') + ' ' + format(s['rrr'], '.1f') + 'R'
+                                              + ((' if ' + str(s.get('parent'))) if cond else '')
+                                              + ((' if 1H ' + ('>' if s['trigger']['dir'] == 'up' else '<') + ' ' + g(s['trigger']['level'])) if s.get('trigger') else ''))
+        wx = int(1.65 * len(txt) * 3600000)                   # Pinebox draws the text from the label's point to the right, about 1.65 one-hour bars per character (memory/08 label quirks; D-127)
+        for _try in range(10):
+            if not any(lx < px + pw and px < lx + wx and abs(ly - py) < txt_h for px, pw, py in placed):
                 break
             if _try % 2 == 0 and lx + 15 * 3600000 <= min(x1 - 3600000, wk1 - 14 * 3600000):
                 lx += 15 * 3600000
             else:
                 ly += 1.1 * txt_h * (1 if s['tp'] > s['entry'] else -1)
-        placed.append((lx, ly))
-        o.append(f"        label.new({lx}, {g(ly)}, \"{s['id'] if s.get('clone') else (s['id'] + ' ' + ('ALT ' if s.get('alt') else '') + s['shape'] + ' ' + ('S' if s['dir'] == 'SHORT' else 'L') + ' ' + format(s['rrr'], '.1f') + 'R' + ((' if ' + str(s.get('parent'))) if cond else '') + ((' if 1H ' + ('>' if s['trigger']['dir'] == 'up' else '<') + ' ' + g(s['trigger']['level'])) if s.get('trigger') else ''))}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
+        placed.append((lx, wx, ly))
+        o.append(f"        label.new({lx}, {g(ly)}, \"{txt}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
 
 

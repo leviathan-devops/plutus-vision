@@ -166,23 +166,23 @@ if barstate.islast and isPair
     if show_ip
         // #2 UPPER RESISTANCE 101.199-101.262 MODERATE-HEAVY 8.0/14 Standard Wall Tier 2 | MoM Active 1 reactions | TP-TARGET
         box.new(1782680400000, 101.262, 1783717200000, 101.199, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
-        label.new(1782698400000, 101.230, "UPPER RESISTANCE | MODERATE-HEAVY | 15-30% ZFP | Tier 2 MoM + LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782910800000, 101.230, "UPPER RESISTANCE | MODERATE-HEAVY\n15-30% ZFP | Tier 2 MoM + LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #1 EQUILIBRIUM ZONE 100.985-101.077 MODERATE-HEAVY 9.0/14 Soft Wall Tier 2 | MoM Virgin 0 reactions | REJECT
         box.new(1782680400000, 101.077, 1783717200000, 100.985, bgcolor=color.new(color.rgb(235,138,20), 70), border_color=color.rgb(235,138,20), border_width=2, xloc=xloc.bar_time)
-        label.new(1782486000000, 101.031, "EQUILIBRIUM ZONE | MODERATE-HEAVY | 30-50% ZFP | Tier 2 MoM + 1H S, LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782874800000, 101.031, "EQUILIBRIUM ZONE | MODERATE-HEAVY\n30-50% ZFP | Tier 2 MoM + 1H S, LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #6 MID-RANGE SUPPORT 100.724-100.815 MODERATE 7.0/14 Standard Wall Tier 2 | MoM Active 1 reactions | TP-TARGET
         box.new(1782680400000, 100.815, 1783717200000, 100.724, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
-        label.new(1782716400000, 100.769, "MID-RANGE SUPPORT | MODERATE | 15-30% ZFP | Tier 2 MoM + 1H D, LSZ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782900000000, 100.769, "MID-RANGE SUPPORT | MODERATE\n15-30% ZFP | Tier 2 MoM + 1H D, LSZ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #8 KEY SUPPORT BAND 100.470-100.530 MODERATE 6.0/14 Soft Wall Tier 2 | BoM Active 1 reactions | ENTRY-PRIMARY
         box.new(1782680400000, 100.530, 1783717200000, 100.470, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
-        label.new(1782763200000, 100.500, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 2 BoM + LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782939600000, 100.500, "KEY SUPPORT BAND | MODERATE\n30-50% ZFP | Tier 2 BoM + LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip and show_far
         // #4 UPPER RESISTANCE 101.448-101.537 MODERATE-HEAVY 8.0/14 Standard Wall Tier 1 | MoM Active 1 reactions | TP-TARGET
         box.new(1782680400000, 101.537, 1783717200000, 101.448, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
-        label.new(1782756000000, 101.493, "UPPER RESISTANCE | MODERATE-HEAVY | 15-30% ZFP | Tier 1 MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782910800000, 101.493, "UPPER RESISTANCE | MODERATE-HEAVY\n15-30% ZFP | Tier 1 MoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #3 KEY SUPPORT BAND 100.248-100.316 MODERATE-HEAVY 8.0/14 Standard Wall Tier 2 | BoM Active 1 reactions | ENTRY-PRIMARY
         box.new(1782680400000, 100.316, 1783717200000, 100.248, bgcolor=color.new(color.rgb(20,180,170), 70), border_color=color.rgb(20,180,170), border_width=2, xloc=xloc.bar_time)
-        label.new(1782756000000, 100.282, "KEY SUPPORT BAND | MODERATE-HEAVY | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1782910800000, 100.282, "KEY SUPPORT BAND | MODERATE-HEAVY\n15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #5 KEY SUPPORT BAND 99.495-99.559 MODERATE 7.5/14 Soft Wall Tier 1 | BoM Active 2 reactions | ENTRY-PRIMARY
         box.new(1782680400000, 99.559, 1783717200000, 99.495, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
         label.new(1782792000000, 99.527, "KEY SUPPORT BAND | MODERATE | 30-50% ZFP | Tier 1 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)

@@ -138,7 +138,15 @@ def generate(pair, monday, X, extra=(), rch=None):
     # size.small character on the two-week 1H frame = about 1.65 bars (measured on evidence/chk100). A right-anchored style is not used - Pinebox draws label.style_label_right to the
     # right of its point too (evidence/chk98)
     _hb = [x_['time'] for x_ in D.closed(pair, '60', monday) if x_['time'] < wk0 - 2 * H]
-    lab_x = lambda t: (_hb[max(0, len(_hb) - 2 - int(1.65 * len(t)))] if _hb else tsL + 2 * H)
+    lab_x = lambda t: (_hb[max(0, len(_hb) - 2 - int(1.65 * max(len(q_) for q_ in t.split('\\n'))))] if _hb else tsL + 2 * H)
+    def lab2(t):
+        # a label too long to stand inside the prior week on one line is written on two (split at the ' | ' nearest its middle): its name stays readable instead of being cut by the
+        # window's left edge (ledger 103b)
+        if len(t) <= 56 or ' | ' not in t:
+            return t
+        cuts = [i for i in range(len(t)) if t.startswith(' | ', i)]
+        c = min(cuts, key=lambda i: abs(i - len(t) / 2))
+        return t[:c] + '\\n' + t[c + 3:]
     U = X['U']; pw = X['weekly'][-1]
     sweeps = sweep_boxes(X)
     joined, parts = join_zones(X, near, sweeps)
@@ -249,7 +257,7 @@ def generate(pair, monday, X, extra=(), rch=None):
         c = SHADE[z['cat']][z['degree']]
         o.append(f"        // #{z['rank']} {z['name']} {g(z['bot'])}-{g(z['top'])} {z['degree']} {z['score']}/14 {z['type']} {z['tier']} | {z['mech']['bom']} {z['mech']['counter']} {z['mech']['reactions']} reactions | {z['mech']['e3_status']}")
         o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 70), border_color=color.rgb({c}), border_width=2, xloc=xloc.bar_time)")
-        txt_ = f"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} {z['mech']['bom']}{plus(z)}"
+        txt_ = lab2(f"{z['name']} | {z['degree']} | {z['zfp']} ZFP | {z['tier']} {z['mech']['bom']}{plus(z)}")
         o.append(f"        label.new({lab_x(txt_)}, {g((z['top'] + z['bot']) / 2)}, \"{txt_}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
       if len(o) == n0:
         o.append('        na')
