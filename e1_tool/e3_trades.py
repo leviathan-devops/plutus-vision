@@ -221,6 +221,7 @@ def _steps(X):
 
 ZR6B = True
 SWEEP_EXT = True
+BLEND_GATE = True          # D-100: the emission floor is met by the blended RRR of a 3-entry staggered position (E3C:357)
 JOIN_TP = True
 SWEEP_TP = True
 DEPLETED_BOUND = True
@@ -552,9 +553,24 @@ def _build(pair, monday, X, E2, tag):
                 extra = max(((TP_BUF if c['shape'] in ('SS', 'R') else 0.0) - (1.0 if '+ 1 pip' in why_tp else 0.0)) * pip, 0.0)
                 tp_o = tp + extra if direction == 'down' else tp - extra
                 rrr_o = abs(tp_o - entry) / abs(entry - stop)
-                if floor_rrr <= rrr_o and rrr <= MAX_RRR:
+                # E3C:355-357 'Primary RRR ... Blended RRR (3-entry staggered): (rrr1 x 0.33) + (rrr2 x 0.33) + (rrr3 x 0.34)'; E3C:313 'Blended RRR is across the 3 staggered entries';
+                # E3C:939 'RRR: [primary/blended]'; E3C:366 'Never distort zone structure to hit a target RR'; E3C:373 'entry FIXED - re-anchor SL/TP only': an entry resolved on a zone
+                # (Mechanism A, E3C:1060-1066: front = edge nearest spot + forward spread, middle = the resolved entry, back = edge farthest from spot + forward spread, one SL, one TP)
+                # is a 3-entry staggered position, and the RRR of that position is the blended one - it meets the floor before the entry is moved deeper into the zone (D-100)
+                bl = None
+                if BLEND_GATE and c.get('role') != 'transition' and 'Law 27' not in how and 'bot' in step and step['top'] > step['bot']:
+                    edge_ = step['bot'] if direction == 'down' else step['top']
+                    fr_ = edge_ - FWD[pair] if direction == 'down' else edge_ + FWD[pair]
+                    bk_ = (step['top'] - FWD[pair]) if direction == 'down' else (step['bot'] + FWD[pair])
+                    if ((bk_ < stop) if direction == 'down' else (bk_ > stop)) and ((fr_ <= entry <= bk_) if direction == 'down' else (bk_ <= entry <= fr_)):
+                        rr_ = [abs(tp_o - e) / abs(e - stop) for e in (fr_, entry, bk_)]
+                        bl = 0.33 * rr_[0] + 0.33 * rr_[1] + 0.34 * rr_[2]
+                by_blend = rrr_o < floor_rrr and bl is not None and bl >= floor_rrr
+                if (floor_rrr <= rrr_o or by_blend) and rrr <= MAX_RRR:
                     lvl_tp = tp
-                    tp, rrr = tp_o, rrr_o
+                    tp, rrr = tp_o, (bl if by_blend else rrr_o)
+                    if by_blend:
+                        how += f' - staggered front / middle / back, RRR blended (primary {rrr_o:.2f}; E3C:357)'
                     s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'tp_level': lvl_tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
                          'why': f"entry {how}; SL {why_sl}; TP {why_tp}", 'src': (round(step['bot'], 6), round(step['top'], 6)) if 'bot' in step else None}
                     break
