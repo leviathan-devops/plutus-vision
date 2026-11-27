@@ -115,6 +115,7 @@ def _status(s, t_from, t_to, pair):
     return 'open' if filled else 'pending'
 
 
+REANCHOR = False           # D-136 chain re-anchor on the rebuilt map: OFF (12-map locator: TP 27 -> 23, unfilled 6 -> 13 - it cancels resting winners and replaces the alternative's orders); the zone update itself stays
 DAY_CONFIRM = 'start'      # 'start' = the trading day's open (17:00 New York the evening before) | 'london' = the day's London open (02:00 New York)
 
 
@@ -275,6 +276,14 @@ def daily_anchor(pair, monday, chain, R):
         if i > 0:
             audit.append(f"DAILY ANCHOR {DAYS[i]} trading-day open {D.ts(t_a)} UTC: price {f(op)}")
         kept, dropped = [], []
+        if i > 0 and d is not None and d.get('shapes') == ['SS']:
+            # L-52: a swing-scalp order not yet filled keeps resting into the next day of the range - one order until it fills - re-checked at this day's anchor
+            # (order block not closed through, price on its side); the copies Engine 3 makes for the day are then the same trade (dropped below)
+            for q in keep:
+                if q.get('shape') == 'SS' and not q.get('alt') and q.get('category') != 'Reinforcement' and q['valid_to'] >= t_a - 1 and q['valid_to'] < t_e \
+                        and _status(q, max(q['valid_from'], q.get('day_anchor') or 0), t_a, pair) == 'pending' and confirm(q, i, t_a, op, since) is None:
+                    q['valid_to'] = t_e
+                    q['t1'] = max(q.get('t1') or 0, t_e)
         for s in [x for x in cur['R']['setups'] if (x.get('rest_from') or x['day']) == DAYS[i]]:
             why = None
             if cur['active'] is not None and s.get('category') != 'Reinforcement':
@@ -317,7 +326,7 @@ def daily_anchor(pair, monday, chain, R):
             if new:
                 audit.append(f"DAILY ZONE UPDATE {DAYS[i]} London open {D.ts(t_L)} UTC (L-53): " + '; '.join(f"{fam} {f(z['bot'])}-{f(z['top'])}" for fam, z in new))
             reanch = None
-            if cur['active'] is not None:
+            if cur['active'] is not None and REANCHOR:
                 ch_i, R_i = _engines_at(pair, monday, t_L)
                 opL = Xi['spot']
                 for s in kept:                                   # the failed chain's orders of the day not yet filled are cancelled at the re-anchor
