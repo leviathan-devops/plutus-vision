@@ -222,6 +222,7 @@ def _steps(X):
 ZR6B = True
 SWEEP_EXT = True
 GOLD_FALLBACK = True       # D-102: golden stop fallback when no ladder step gives a stop (E3C:262, :289-294)
+MID_KEY = True
 BLEND_GATE = True          # D-100: the emission floor is met by the blended RRR of a 3-entry staggered position (E3C:357)
 JOIN_TP = True
 SWEEP_TP = True
@@ -579,7 +580,15 @@ def _build(pair, monday, X, E2, tag):
                     fr_ = edge_ - FWD[pair] if direction == 'down' else edge_ + FWD[pair]
                     bk_ = (step['top'] - FWD[pair]) if direction == 'down' else (step['bot'] + FWD[pair])
                     if ((bk_ < stop) if direction == 'down' else (bk_ > stop)) and ((fr_ - 1.5 * pip <= entry <= bk_) if direction == 'down' else (bk_ <= entry <= fr_ + 1.5 * pip)):
-                        rr_ = [abs(tp_o - e) / abs(e - stop) for e in (fr_, entry, bk_)]
+                        mid_ = entry
+                        if MID_KEY and abs(entry - edge_) <= 1.5 * pip:
+                            # E3C:1065 'Middle | Leftward-facing candle key level from LQZ pattern | Specific candle body/wick defining LQZ edge': the resolved entry stands on the
+                            # first-contact edge, so the middle is the near edge of the first liquidity rung lying inside the zone beyond it
+                            ins_ = sorted([(r['bot'] if direction == 'down' else r['top']) for r in env[1] if 'fib' not in r
+                                           and ((entry + pip < r['bot'] < bk_ - pip) if direction == 'down' else (bk_ + pip < r['top'] < entry - pip))], key=lambda v: abs(v - entry))
+                            if ins_:
+                                mid_ = ins_[0]
+                        rr_ = [abs(tp_o - e) / abs(e - stop) for e in (fr_, mid_, bk_)]
                         bl = 0.33 * rr_[0] + 0.33 * rr_[1] + 0.34 * rr_[2]
                 by_blend = rrr_o < floor_rrr and bl is not None and bl >= floor_rrr
                 if (floor_rrr <= rrr_o or by_blend) and rrr <= MAX_RRR:
