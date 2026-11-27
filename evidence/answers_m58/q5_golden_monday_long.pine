@@ -1,0 +1,19 @@
+//@version=6
+indicator("Q5 golden Monday long DXY", overlay=true, max_boxes_count=50, max_labels_count=50, max_lines_count=50)
+if barstate.islast
+    // position: entry 100.945 -> TP 101.115 (green), entry -> SL 100.905 (red), from the first fill (Mon 01:15 UTC) to the TP (Mon 09:45 UTC)
+    box.new(1783300500000, 101.115, 1783331100000, 100.945, xloc=xloc.bar_time, bgcolor=color.new(color.rgb(8,153,129), 82), border_color=color.rgb(8,153,129), border_width=1)
+    box.new(1783300500000, 100.945, 1783331100000, 100.905, xloc=xloc.bar_time, bgcolor=color.new(color.rgb(242,54,69), 78), border_color=color.rgb(242,54,69), border_width=1)
+    line.new(1783285200000, 100.945, 1783339200000, 100.945, xloc=xloc.bar_time, color=color.rgb(255,255,255), width=1, style=line.style_dashed)
+    line.new(1783285200000, 100.905, 1783339200000, 100.905, xloc=xloc.bar_time, color=color.rgb(242,54,69), width=1, style=line.style_dashed)
+    line.new(1783285200000, 101.115, 1783339200000, 101.115, xloc=xloc.bar_time, color=color.rgb(8,153,129), width=1, style=line.style_dashed)
+    label.new(1783290600000, 100.953, "ENTRY 100.945 (your #1, Mon LONG)", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.normal)
+    label.new(1783290600000, 100.897, "SL 100.905", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,120,120), size=size.normal)
+    label.new(1783290600000, 101.123, "TP 101.115", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(80,220,170), size=size.normal)
+    // the forecast anchor: Monday London open, 02:00 New York = 06:00 UTC - nothing after it may feed the forecast, and the forecast covers only what comes after it
+    line.new(1783317600000, 100.80, 1783317600000, 101.20, xloc=xloc.bar_time, color=color.rgb(255,200,60), width=2)
+    label.new(1783317600000, 101.175, "FORECAST ANCHOR  Mon 06:00 UTC = 02:00 NY (London open)", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,200,60), size=size.normal)
+    // the trade's events on TVC:DXY 15m
+    label.new(1783302300000, 100.832, "your long fills 01:15-04:45 UTC (Asia session)", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    label.new(1783302300000, 100.817, "lowest price after the fill: 100.911 (01:30) - 0.6 pip above your SL", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    label.new(1783331100000, 101.150, "TP hit 09:45 UTC", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(80,220,170), size=size.small)

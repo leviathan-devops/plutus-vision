@@ -1,0 +1,18 @@
+//@version=6
+indicator("S2 EURUSD Jul06 ceiling short", overlay=true, max_boxes_count=60, max_labels_count=60, max_lines_count=60)
+if barstate.islast
+    box.new(1783339200000, 1.14421, 1783461600000, 1.14375, xloc=xloc.bar_time, bgcolor=color.new(color.rgb(242,54,69), 82), border_color=color.new(color.rgb(242,54,69), 30), border_width=1)
+    box.new(1783339200000, 1.14446, 1783461600000, 1.14428, xloc=xloc.bar_time, bgcolor=color.new(color.rgb(46,139,87), 80), border_color=color.new(color.rgb(46,139,87), 30), border_width=1)
+    box.new(1783339200000, 1.14623, 1783461600000, 1.14523, xloc=xloc.bar_time, bgcolor=color.new(color.rgb(0,230,118), 88), border_color=color.new(color.rgb(0,230,118), 30), border_width=1)
+    box.new(1783339200000, 1.14728, 1783461600000, 1.14658, xloc=xloc.bar_time, bgcolor=color.new(color.rgb(46,139,87), 70), border_color=color.new(color.rgb(46,139,87), 30), border_width=1)
+    line.new(1783339200000, 1.14385, 1783461600000, 1.14385, xloc=xloc.bar_time, color=color.rgb(255,255,255), width=1, style=line.style_dashed)
+    line.new(1783339200000, 1.14451, 1783461600000, 1.14451, xloc=xloc.bar_time, color=color.rgb(242,54,69), width=2, style=line.style_solid)
+    line.new(1783339200000, 1.14533, 1783461600000, 1.14533, xloc=xloc.bar_time, color=color.rgb(255,152,0), width=2, style=line.style_solid)
+    line.new(1783339200000, 1.14068, 1783461600000, 1.14068, xloc=xloc.bar_time, color=color.rgb(8,153,129), width=2, style=line.style_solid)
+    line.new(1783339200000, 1.14480, 1783461600000, 1.14480, xloc=xloc.bar_time, color=color.rgb(200,200,200), width=1, style=line.style_dotted)
+    label.new(1783383264000, 1.14367, "ENTRY 1.14385 (30m order block bottom + 1p) - ENTRY ZONE: 1H BoM supply 1.14375-1.14421", xloc=xloc.bar_time, style=label.style_label_center, color=color.new(color.rgb(15,17,22), 15), textcolor=color.rgb(255,255,255), size=size.small)
+    label.new(1783383264000, 1.14457, "A (code): SL 1.14451 = 3p outside the step - STOPPED Mon 21:45", xloc=xloc.bar_time, style=label.style_label_center, color=color.new(color.rgb(15,17,22), 15), textcolor=color.rgb(255,110,110), size=size.small)
+    label.new(1783383264000, 1.14487, "price high 1.14480 before the drop (9.5p against the entry)", xloc=xloc.bar_time, style=label.style_label_center, color=color.new(color.rgb(15,17,22), 15), textcolor=color.rgb(220,220,220), size=size.small)
+    label.new(1783383264000, 1.14540, "B: SL 1.14533 = 1p inside the sweep zone 1.14523-1.14623 - survives, TP Tue 21:15, RRR 2.14", xloc=xloc.bar_time, style=label.style_label_center, color=color.new(color.rgb(15,17,22), 15), textcolor=color.rgb(255,170,60), size=size.small)
+    label.new(1783383264000, 1.14735, "4H band 1.14658-1.14728 (B on it: SL 1.14668, RRR 1.12)", xloc=xloc.bar_time, style=label.style_label_center, color=color.new(color.rgb(15,17,22), 15), textcolor=color.rgb(120,200,140), size=size.small)
+    label.new(1783383264000, 1.14060, "TP 1.14068", xloc=xloc.bar_time, style=label.style_label_center, color=color.new(color.rgb(15,17,22), 15), textcolor=color.rgb(80,220,170), size=size.small)
