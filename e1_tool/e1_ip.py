@@ -210,6 +210,7 @@ def levels(pair, monday, side):
 
 
 GAP_SCAN = True
+CORE_SPIKE = True
 RECENT_LSZ = True
 
 
@@ -456,9 +457,59 @@ def intra_zone(z, X, U):
     return sorted(out, key=lambda l: -l['p'])
 
 
+R1_PAIRS = ('EURUSD', 'GBPUSD', 'AUDUSD')                    # P533:1520 'from an R1-qualified pair (EU/GU/AU)'
+
+
+def reverify(X, final, by, U, src_pair):
+    """P533:1516-1527 STEP 9.8 ZONE SYNTHESIS RE-VERIFICATION (mandatory, after the map is assembled and named): '1. Option Strike Verification: For every zone that cites an option strike as a
+    primary driver, verify that the strike is >= $850M notional AND from an R1-qualified pair (EU/GU/AU). If a zone cites a sub-threshold or non-R1 pair strike as primary driver, DOWNGRADE the
+    zone's Options-Derived dimension score to 0 and remove the option-related confluence bonus. 2. ... If any input to the score computation came from sub-threshold strikes, recompute the score
+    without that input.' A sub-threshold strike stands only as a Tier 3 override (P533:1128 '3+ pillar confluence + Pillar 5 Step 0/0.5 validation'; audit trail P533:1142). 3. cross-reference:
+    one zone list feeds the map, the synthesis and the Pine. Returns (output line, override audit lines)."""
+    corrected, audit = [], []
+    for z in final:
+        opts = [l for l in z.get('members_lv', []) if l['pillar'] == 8]
+        bad = []
+        for l in opts:
+            if src_pair not in R1_PAIRS:
+                bad.append(l); continue
+            if l['tier'] < 3:
+                continue
+            p5 = [x for x in by.get(5, []) if 'bonus' in x and abs(x['p'] - l['p']) <= 0.10 * U]
+            if len(z['seed']['pillars']) >= 3 and p5:
+                audit.append(f"{l['strike']:.4f} {l['notional_m']}M included via structural override: {p5[0]['kind'].split(' (')[0]} + {len(z['seed']['pillars'])} pillar confluence")
+            else:
+                bad.append(l)
+        if bad:
+            keep = {k: [x for x in v if not any(x is b for b in bad)] for k, v in by.items()}
+            s2 = score(z['seed']['p'], keep, U)
+            old = z['score']
+            z['seed']['dims'].update({k: s2[k] for k in ('tech', 'opt', 'anal', 'struct', 'psych', 'bonus')})
+            z['score'] = round(s2['tech'] + s2['opt'] + s2['anal'] + s2['struct'] + s2['psych'] + s2['bonus'] + z['regime'] + (1 if z['mech']['post_consolidation'] else 0), 1)
+            z['members_lv'] = [l for l in z['members_lv'] if not any(l is b for b in bad)]
+            corrected.append(f"{z.get('name', 'zone')} {z['bot']:.5g}-{z['top']:.5g}: {len(bad)} unverified strike(s) removed, score {old} -> {z['score']}")
+    n = len(final)
+    return (f"Zone Synthesis Re-verification: {n} zones verified | {len(corrected)} zones corrected | {n - len(corrected)} zones unchanged | Corrections: {'; '.join(corrected) if corrected else 'none'}", audit)
+
+
+def core_spike(z, b4):
+    """P533:1411-1423 STEP 5.5 KEY SUPPORT BAND TIGHTENING: 'Zone Core: The range of candle BODIES within the zone (the range where most trading occurred). This is the primary support level.
+    Zone Spike: Wicks that extend beyond the core (the range of brief price excursions) ... liquidity sweep targets, not institutional defense levels.' 4H candles of the last 90 days (the bars
+    the zone mechanics are read on). Returns (core (lo, hi) or None when no candle body lies in the zone, spike (lo, hi) or None)."""
+    touch = [c for c in b4 if c['low'] <= z['top'] and c['high'] >= z['bot']]
+    body = lambda c: (min(c['open'], c['close']), max(c['open'], c['close']))
+    ins = [(max(z['bot'], body(c)[0]), min(z['top'], body(c)[1])) for c in touch if body(c)[0] <= z['top'] and body(c)[1] >= z['bot']]
+    core = (min(a for a, _ in ins), max(b for _, b in ins)) if ins else None
+    floor = core[0] if core else z['top']
+    wicks = [c['low'] for c in touch if c['low'] < floor and body(c)[0] >= floor - 1e-12]      # a wick under the core of a candle whose body stayed at / above it
+    spike = (min(wicks), floor) if wicks else None
+    return core, spike
+
+
 def build(pair, monday, side):
     X = levels(pair, monday, side)
     L, U, spot, daily = X['L'], X['U'], X['spot'], X['daily']
+    f_ = lambda v: ('%.3f' if pair == 'DXY' else '%.5f') % v
     by = {}
     for l in L:
         by.setdefault(l['pillar'], []).append(l)
@@ -550,6 +601,46 @@ def build(pair, monday, side):
             z['name'], z['cat'] = ('RESISTANCE CEILING' if z is max(ab, key=lambda x: x['top']) else 'UPPER RESISTANCE'), 'RES'
         else:
             z['name'], z['cat'] = ('MID-RANGE SUPPORT' if be[0] is z else 'KEY SUPPORT BAND'), 'SUP'
+    # STEP 5.5 (P533:1411-1423): a KEY SUPPORT BAND is tightened to its core; the spike below it is an LSZ extension; 'Zone Core receives full Structural dimension score. Zone Spike receives
+    # half score and is tagged as "LSZ extension"' - a band no candle body ever traded in is spike only
+    for z in list(final):
+        if z.get('name') != 'KEY SUPPORT BAND' or not CORE_SPIKE:
+            continue
+        core, spike = core_spike(z, b4)
+        z['band'] = (z['bot'], z['top'])
+        if core is None:
+            if spike is None:
+                continue                                     # never traded: nothing to tighten
+            z['lsz_ext'] = True
+            z['score'] = round(z['score'] - z['seed']['dims']['struct'] / 2.0, 1)
+            z['degree'] = next((nm for th, nm in DEGREES if z['score'] >= th), z['degree'])
+            z['core_line'] = f"KEY SUPPORT BAND: - (core) | {f_(z['bot'])}-{f_(z['top'])} (spike extends to {f_(spike[0])}) | Core = primary support, Spike = LSZ target"
+            if z['score'] < 6:
+                final.remove(z)
+            continue
+        if not (core[0] - 1e-12 <= z['seed']['p'] <= core[1] + 1e-12):
+            # the band's best level lies in the spike, outside every candle body: scored as spike ('half score ... tagged as "LSZ extension"'), box unchanged
+            z['lsz_ext'] = True
+            z['score'] = round(z['score'] - z['seed']['dims']['struct'] / 2.0, 1)
+            z['degree'] = next((nm for th, nm in DEGREES if z['score'] >= th), z['degree'])
+            z['core_line'] = (f"KEY SUPPORT BAND: {f_(core[0])}-{f_(core[1])} (core) | {f_(z['bot'])}-{f_(core[0])} (spike extends to {f_(spike[0] if spike else z['bot'])}) | "
+                              'Core = primary support, Spike = LSZ target [best level in the spike: LSZ extension, half structural score]')
+            if z['score'] < 6:
+                final.remove(z)
+            continue
+        z['bot'], z['top'] = core
+        z['core'] = core
+        z['spike'] = spike
+        z['core_line'] = (f"KEY SUPPORT BAND: {f_(core[0])}-{f_(core[1])} (core) | " + (f"{f_(spike[0])}-{f_(spike[1])} (spike extends to {f_(spike[0])})" if spike else '- (no spike)')
+                          + ' | Core = primary support, Spike = LSZ target')
+    X['reverify'], X['overrides'] = reverify(X, final, by, U, 'EURUSD' if pair == 'DXY' else pair)
+    # P452:1453-1458 (P533 4.2 [unchanged]) 'Recommended Stop Loss Zone': for every CRITICAL ENTRY SHIELD (P533:690 walls of USD 1.5bn+) a hazard boundary 3-5 pips outward from the shield
+    X['sl_zones'] = []
+    for l in by.get(8, []):
+        if l.get('tier') == 1 and not l.get('expired'):
+            sgn = -1 if l['p'] < spot else 1
+            a_, b_ = l['p'] + sgn * 3 * D.PIP[pair], l['p'] + sgn * 5 * D.PIP[pair]
+            X['sl_zones'].append({'p': l['p'], 'lo': min(a_, b_), 'hi': max(a_, b_), 'kind': l['kind'], 'line': f"Recommended Stop Loss Zone: {f_(min(a_, b_))} - {f_(max(a_, b_))} ({l['kind']})"})
     for i, z in enumerate(sorted([z for z in final if not z.get('gap_infill')], key=lambda z: (-z['score'], -z['npill'], abs((z['top'] + z['bot']) / 2 - spot)))):
         z['rank'], z['drawn'] = i + 1, i < MAX_DRAWN
     for z in gaps:                                               # an in-fill level belongs to the gap between two DRAWN zones (9.5a 'between adjacent mapped zones')

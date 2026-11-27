@@ -223,6 +223,16 @@ def generate(pair, monday, X, extra=(), rch=None):
       if len(o) == n0:
         o.append('        na')
     # IP zones (the six ranked first), trident_v8 form
+    # Engine 1 post-processing lines of the report, carried as comments: Step 9.8 re-verification (P533:1516-1527) + Tier 3 override audit trail (P533:1142), Step 5.5 core / spike of the
+    # KEY SUPPORT BANDs (P533:1411-1423), Part IV 4.2 recommended stop-loss zones of the critical option walls (P452:1453-1458)
+    o.append(f"    // {X.get('reverify', '')}")
+    for a_ in X.get('overrides', []):
+        o.append(f"    // {a_}")
+    for z in X['zones']:
+        if z.get('core_line'):
+            o.append(f"    // {z['core_line']}")
+    for q_ in X.get('sl_zones', []):
+        o.append(f"    // {q_['line']}")
     for flag, far in (('show_ip', False), ('show_ip and show_far', True)):
       o.append(f'    if {flag}')
       n0 = len(o)
