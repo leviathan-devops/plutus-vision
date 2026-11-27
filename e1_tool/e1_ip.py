@@ -74,7 +74,7 @@ def levels(pair, monday, side):
     # ── Pillars 3 / 8 (P533:1092-1144, 1436-1454; recipe :234-280): K anchored on the boundary spots; tiers by USD notional
     eur = D.closed('EURUSD', '60', monday)[-1]['close']
     # K from the five other component rates (canon formula P533:928-952; the Apr 20 report's K 108.0806 is built this way and is NOT anchored on the index -
-    # its own reverse check differs from spot). Rates = the latest Fed H.10 before the anchor (sidecar). The recipe's index-anchored K moved the 1.1400 wall 9 pips: rejected.
+    # its own reverse check differs from spot). Rates = the latest Fed H.10 before the anchor (sidecar). The recipe's index-anchored K moved a golden-week wall 9 pips: rejected.
     K = P.k_factor(side['h10']['rates']) if pair == 'DXY' else None
     t3 = []
     for e in side['expiries'].get('EURUSD' if pair == 'DXY' else pair, []):
@@ -126,7 +126,7 @@ def levels(pair, monday, side):
     lsz = [{'bot': x['p'], 'top': x['p'] + 0.10 * U, 'side': 'Demand-side', 'level': x['p'], 'source': 'D1 swing low ' + x['date']} for x in lows] + \
           [{'bot': x['p'] - 0.10 * U, 'top': x['p'], 'side': 'Supply-side', 'level': x['p'], 'source': 'D1 swing high ' + x['date']} for x in highs]
     # Step 0.45 "ALL prior swing lows / highs where stops would cluster": the reference report (Apr 20-24) lists the low / high of each recent day of the prior week as a sweep zone
-    # (97.63 Apr 17, 97.83 Apr 16, 97.97 Apr 14 ...), so the daily extremes of the last 5 completed days are sweep-zone sources too; 0.45a: extended 0.05-0.10 beyond the 0.05 base.
+    # (three successive daily lows of the week before 2026-04-20: memory/08), so the daily extremes of the last 5 completed days are sweep-zone sources too; 0.45a: extended 0.05-0.10 beyond the 0.05 base.
     for d in daily[-5:] + ([sess] if sess else []):
         if not any(abs(z['level'] - d['low']) < 1e-9 for z in lsz):
             lsz.append({'bot': d['low'], 'top': d['low'] + 0.10 * U, 'side': 'Demand-side', 'level': d['low'], 'source': 'daily low ' + d['date']})
@@ -140,7 +140,7 @@ def levels(pair, monday, side):
         later = [x for x in daily if x['date'] > z['source'][-10:]]      # completed sessions only: the map is the weekend map (the operator's bands are drawn before Monday's first hours)
         z['swept'] = any((x['low'] < z['level']) if z['side'] == 'Demand-side' else (x['high'] > z['level']) for x in later)
         # the reference report (Apr 20-24, section 5) lists the low / high of EVERY recent day of the prior week as a sweep zone, also those a later day of that week traded
-        # through (97.97 Apr 14 under 97.83 Apr 16 and 97.63 Apr 17) - the operator's long 98.02 that week is the top edge of that zone: the last five days' extremes stay on the map
+        # through (the week before 2026-04-20: memory/08) - the operator's long of that week stands on the top edge of such a zone: the last five days' extremes stay on the map
         if RECENT_LSZ and z['source'][-10:] >= daily[-5]['date']:
             z['swept_recent'] = z['swept']; z['swept'] = False
         z['priority'] = 'ACTIVE SL TRIGGER' if abs(z['level'] - spot) <= 0.30 * U else 'STANDARD'

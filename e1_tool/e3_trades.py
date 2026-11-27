@@ -149,7 +149,7 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
     def near(z):
         # the near edge of the JOINED zone (L-39 'a pressure zone = candle structure + level cluster joined'): the pressure zone under 30% and the standing 1H / 4H candle zone of the
         # opposing side that overlap the target are one zone - price meets its first edge. Not on EUR/USD: 'DIRECT_ZONE_TEST' (E3C 8.19; FA 10 'PA often directly touches the overlap
-        # point') - his golden EURUSD #3 TP 1.14004 lies in the overlap of the 1H demand and the pressure zone, his DXY #2 / GBPUSD #2 TPs on the candle zone's near edge (D-91)
+        # point') - his golden EURUSD #3 TP lies in the overlap of the 1H demand and the pressure zone, his DXY #2 / GBPUSD #2 TPs on the candle zone's near edge (D-91; numbers in memory/03)
         e = z['top'] if direction == 'down' else z['bot']
         if pair in NO_SHIELD or not JOIN_TP:
             return e
@@ -656,7 +656,7 @@ def _reinforce(s, X, E2, env, pair, log):
                   key=lambda r: -r['top'] if dn else r['bot'])
     # Law 5 / Fibonacci Spiderwebs (operator's grids in golden_week.json: 0 = the retest extreme, 1 = the swing before it): on a breakout that follows a retest the FIRST rocket stands
     # in the 0.786-1.0 band of that leg's grid (E3C:225 '0.786-1.0 | FINAL BLAST. Last chance before full extension') and its stop is the grid's 0.618 level - his three rockets:
-    # DXY 100.975 = 1.0 / SL 101.09 = 0.618; EURUSD 1.14233 = 0.786 / SL 1.14183 ~ 0.618; GBPUSD 1.33629 ~ 0.85 / SL 1.33522 = 0.618 (D-83)
+    # DXY at level 1.0 / SL at 0.618; EURUSD at 0.786 / SL near 0.618; GBPUSD near 0.85 / SL at 0.618 (D-83; the prices are in memory/03 and memory/08, never here: goal prompt 'oracle numbers never appear in tool code')
     grid = None
     lg = E2.get('legs', [])
     for i_, l_ in enumerate(lg):
@@ -671,8 +671,8 @@ def _reinforce(s, X, E2, env, pair, log):
         b_lo, b_hi = min(lv(0.786), lv(1.0)) - pip, max(lv(0.786), lv(1.0)) + pip
         band = [r for r in real if b_lo <= (r['bot'] + r['top']) / 2 <= b_hi and (((r['bot'] + r['top']) / 2 < s['entry']) if dn else ((r['bot'] + r['top']) / 2 > s['entry']))]
         if band and path and not any(r is path[0] for r in band):
-            # the 20-pip step is not in the band: the first rocket is the band's first step on the way, stopped at the grid's 0.618 (EURUSD golden: 1.14239 / 1.14172 vs his 1.14233 / 1.14183);
-            # a 20-pip step already inside the band stays as it is with its ladder stop (DXY golden: 100.980 / 101.077 vs his 100.975 / 101.09)
+            # the 20-pip step is not in the band: the first rocket is the band's first step on the way, stopped at the grid's 0.618 (the EURUSD golden rocket, D-83);
+            # a 20-pip step already inside the band stays as it is with its ladder stop (the DXY golden rocket, D-83)
             r0 = max(band, key=lambda r: r['top']) if dn else min(band, key=lambda r: r['bot'])
             path = [r0] + [r for r in path if r is not r0 and (((r['bot'] + r['top']) / 2 < (r0['bot'] + r0['top']) / 2) if dn else ((r['bot'] + r['top']) / 2 > (r0['bot'] + r0['top']) / 2))]
             grid = (g0, g1, r0)
@@ -685,7 +685,7 @@ def _reinforce(s, X, E2, env, pair, log):
         e2 = (r['bot'] + r['top']) / 2
         if last is not None and abs(e2 - last) < 20 * pip:
             continue
-        sl2, why2 = _stop(e2, 'down' if dn else 'up', r, X, pair)    # the same ladder-step stop as a primary (E3C:247-256; his Thursday rocket 100.975 / 101.09 = 1-2 pips inside the 4H band above)
+        sl2, why2 = _stop(e2, 'down' if dn else 'up', r, X, pair)    # the same ladder-step stop as a primary (E3C:247-256; his Thursday rocket's stop stands 1-2 pips inside the 4H band above, D-54)
         if grid is not None and r is grid[2]:
             sl2, why2 = grid[0] + 0.618 * (grid[1] - grid[0]), 'the 0.618 level of the retest-leg Fib grid'
         if sl2 is None:
