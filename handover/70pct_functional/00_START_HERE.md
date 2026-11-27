@@ -1,6 +1,6 @@
 # PLUTUS VISION — HANDOVER PACKAGE "70% functional"
 
-Checkpoint of 2026-11-27. Branch `AGENT` of `leviathan-devops/plutus-vision`. The exact commits are in `CHECKPOINT_COMMIT.txt` next to this file (the code commit of the checkpoint, and the note that this folder is added by the commit right after it).
+Checkpoint of 2026-11-27. Branch `AGENT` of `leviathan-devops/plutus-vision`. The checkpoint commit is named in `CHECKPOINT_COMMIT.txt` next to this file; that file and `MANIFEST_REPO.sha256` (SHA-256 of every tracked file at the checkpoint) are added by the commit right after it, and `ARCHIVES_SHA256SUMS.txt` (checksums of the downloadable archives) by the last commit of the handover.
 Operator's verdict on this checkpoint (M-57, verbatim in `memory/12_OPERATOR_VERBATIM.md`): **"This is 70% functional very good work"**, with two named defects:
 
 1. "half of your trades are accurate but slightly too tight on the SL or slightly too early and cause misses/losses"
@@ -12,27 +12,32 @@ Both are true of this build. Section 6 says exactly where each one lives in the 
 
 ## 1. What is in the package
 
-The downloadable archives (built in `handover_package/` of the working directory; checksums in `SHA256SUMS.txt`):
+Seven downloadable archives, built in `handover_package/` of the working directory (git-ignored) and sent to the operator; checksums in `ARCHIVES_SHA256SUMS.txt`.
+**Durability:** the archives exist only in the build container until downloaded - the container is reclaimed after inactivity. Everything tracked (parts 1-3) is also on GitHub, branch `AGENT`. Parts 4-7 are NOT on GitHub.
 
 | Part | File | Content |
 |---|---|---|
-| 1 | `PLUTUS_VISION_70pct_functional__1_CORE.zip` | The whole repository tree at the checkpoint commit EXCEPT `sidecar/raw` and `sidecar/cache`: the tool (`e1_tool/`), the sealed V1 (`indicator/`), all memory (`memory/`), all audits and outside counts (`audit/`), all evidence frames (`evidence/`), canon copy (`canon/`), spec digests and oracle (`context_management/`), tools, sidecar source + week files (`sidecar/src`, `sidecar/out`), the blind-test run sheet, and this folder `handover/70pct_functional/` (this document, the OmniGraph, locator outputs, scratchpad research scripts, file manifest). |
-| 2 | `PLUTUS_VISION_70pct_functional__2_SIDECAR_DATA.zip` | `sidecar/raw` + `sidecar/cache`: every web page, image and model read the as-of harvest used, per week (the proof that nothing after the Monday anchor fed a map). |
-| 3 | `PLUTUS_VISION_70pct_functional__3_GIT_HISTORY.bundle` | `git bundle` of every ref (all branches incl. `AGENT`, `handover` = original canon + weekly report oracles). `git clone <bundle>` restores the full history, untampered: about 300 commits on `AGENT`, each with the canon line it rests on in its message. |
-| 4 | `PLUTUS_VISION_70pct_functional__4_TRANSCRIPTS.zip` | The raw session transcripts (`*.jsonl`) of this project: every prompt, tool call and tool result. This is the unedited record. |
-| 5 | `PLUTUS_VISION_70pct_functional__5_INPUTS.zip` | `/home/user/inputs` as unpacked in the build container: your uploaded packages (handover, canon, toolset, trades library, Fibonacci Spiderwebs PDF, Pinebox `ship-approved-v2`, aether backend). Copied read-only, nothing changed. Needed to rebuild the test bench (`tools/pinebox-bootstrap.sh` reads `/home/user/inputs/pinebox`). |
-| 6 | `PLUTUS_VISION_70pct_functional__6_SCRATCHPAD.zip` | The session scratchpad without the bulk copies of the repo (`sb`, `pin`, `pin2`, `snap_*`): every throw-away probe, baseline and intermediate output. Not needed to continue; included so nothing is withheld. |
+| 1 | `PLUTUS_VISION_70pct_functional__1_CORE.zip` | The whole repository tree at the checkpoint (`git archive`) EXCEPT `sidecar/raw` and `sidecar/cache` (part 2): the tool (`e1_tool/`), the sealed V1 (`indicator/`), all memory (`memory/`), all audits, briefs, facts files and outside counts (`audit/`), all evidence frames (`evidence/`), canon copy (`canon/`), spec digests and oracle (`context_management/`), `tools/`, sidecar source + week files (`sidecar/src`, `sidecar/out`), the blind-test run sheet, `CLAUDE.md`, and this folder `handover/70pct_functional/` (this document, the OmniGraph store + export, locator outputs, scratchpad research scripts, the file manifest). Plus the four git-ignored files of the working tree that carry content: `memory/anchor_guard.log` (the temporal-anchor guard's log) and `tools/research/levels.{DXY,EURUSD,GBPUSD}.json` (research dumps). Only `.ruff_cache/` and `__pycache__` noise is left out. |
+| 2 | `PLUTUS_VISION_70pct_functional__2_SIDECAR_DATA.zip` | `sidecar/raw` + `sidecar/cache` (tracked, 1,880 files): every web page, image, sitemap and model read the as-of harvest used, per week - the evidence that nothing published after the Monday anchor fed a map. |
+| 3 | `PLUTUS_VISION_70pct_functional__3_GIT_HISTORY.bundle` | `git bundle --all` of the repository: every branch (incl. `AGENT` up to the checkpoint, `handover` = original canon + weekly report oracles, `main`, the older agent branches) with full history. `git clone PLUTUS_VISION_70pct_functional__3_GIT_HISTORY.bundle plutus-vision && cd plutus-vision && git checkout AGENT` restores it untampered; `git bundle verify` checks it. Every commit message carries the canon line it rests on. |
+| 4 | `PLUTUS_VISION_70pct_functional__4_TRANSCRIPTS.zip` | The raw session records: `-home-user-plutus-vision/*.jsonl` (this session's transcript - every prompt, tool call and tool result - and the earlier sessions of the project), the session folder (52 sub-agent transcript files, among them the outside G1 reviewers and the G2 auditors; tool results; workflows), and the session's `images/`, `tasks/` folders. Snapshot taken while the session ran: the final messages (sending this package) are not in it. Not pushed to GitHub: the transcripts carry account details from the session context. |
+| 5 | `PLUTUS_VISION_70pct_functional__5_INPUTS.zip` | `/home/user/inputs` exactly as unpacked in the build container: the uploaded handover package (binding spec bundle with R-01..R-39, host bibles incl. the Golden Standard reference), canon, toolset, the winning-trade library, the Fibonacci Spiderwebs PDF, Pinebox `ship-approved-v2` (source of the test bench and of the TradingView bar store), the aether backend. Read-only copy. No SHIP_PACKAGES or plutus-browser tree exists there (R-39 checked). |
+| 6 | `PLUTUS_VISION_70pct_functional__6_SCRATCHPAD.zip` | The session scratchpad without its bulk copies of the repository (`sb/`, `pin/`, `pin2/`, `snap_*`, `hp/`): every probe, baseline (`od_d99_*` golden baselines, `fills_*`, `legs_*`, `e2loc_*`), facts dumps and frames of trials. Not needed to continue; included so nothing is withheld. |
+| 7 | `PLUTUS_VISION_70pct_functional__7_TESTBENCH_STATE.zip` | `~/.local/share/pinebox` of the build container without `runtime/` (rebuilt by `tools/pinebox-bootstrap.sh`): the TradingView bar store the tool reads (`data/tv-bars/` - DXY / EURUSD / GBPUSD x 15m / 30m / 1H / 4H, Feb 2025 - Nov 2026; byte-identical to the copy inside part 5's Pinebox package), the Pinebox CLI, stages, store, judge, test, fork. With part 5 a new container can run the tool without re-running the bootstrap's bar copy. |
 
-Inside this folder (`handover/70pct_functional/`, tracked in git):
+Not packaged, and why: the OmniGraph / uv binaries in `~/.local/bin` (261 MB; reinstalled with the documented one-liner in `tools/mem/README.md`), Pinebox `runtime/` (694 MB; rebuilt by `tools/pinebox-bootstrap.sh`), the scratchpad's full copies of the repository (identical to part 1 + git history).
 
-- `00_START_HERE.md` — this file.
-- `CHECKPOINT_COMMIT.txt` — commit id, date, `git status`.
-- `MANIFEST_REPO.sha256` — SHA-256 of every tracked file at the checkpoint.
-- `omnigraph/graph_store/` — the OmniGraph store directory exactly as on disk (`/home/user/.plutus-mem`: `graph.omni/`, `last_sync.jsonl`, `state.json`), rebuilt from `memory/*.md` at the checkpoint with `tools/mem/mem rebuild`.
-- `omnigraph/graph_export.jsonl` — `omnigraph export` of the full graph (every node and edge, JSONL). `omnigraph/mem_status.txt`, `omnigraph/mem_ls.txt` — counts and the id list.
-  The graph is a pure function of `memory/*.md` + `memory/graph_log.jsonl` + `tools/mem/schema.pg`; the markdown is the source of truth (`tools/mem/README.md`).
-- `locator_outputs/` — the outputs of every bug locator at the checkpoint (section 8). They are locators, never verdicts.
-- `scratchpad_scripts/` — the sandbox runner and the diagnostics named in the journal (`sbrun.sh`, `qall.sh`, `e2diag*.py`, `e2dir.py`, `e2struct.py`, `e2own.py`, `turnobj.py`, `turncov.py`).
+Inside this folder (`handover/70pct_functional/`, tracked in git and in part 1):
+
+- `00_START_HERE.md` - this file.
+- `CHECKPOINT_COMMIT.txt` - checkpoint commit id, date, `git status`, last commits.
+- `MANIFEST_REPO.sha256` - SHA-256 of every tracked file at the checkpoint.
+- `ARCHIVES_SHA256SUMS.txt` - SHA-256 and size of the seven archives.
+- `omnigraph/graph_store/` - the OmniGraph store directory exactly as on disk (`/home/user/.plutus-mem`: `graph.omni/` incl. `__history`, `last_sync.jsonl`, `state.json`; only the empty `.lock` file left out), rebuilt from `memory/*.md` at the checkpoint with `tools/mem/mem rebuild` (1,471 nodes, 895 edges).
+- `omnigraph/graph_export.jsonl` - `omnigraph export` of the full graph (every node and edge, JSONL). `omnigraph/mem_status.txt`, `omnigraph/mem_ls.txt` - counts and the id list.
+  The graph is a pure function of `memory/*.md` + `memory/graph_log.jsonl` + `tools/mem/schema.pg`; the markdown is the source of truth (`tools/mem/README.md`). Query: `tools/mem/mem q <text>`, `mem get <id>`.
+- `locator_outputs/` - the outputs of every bug locator at the checkpoint (section 8). They are locators, never verdicts.
+- `scratchpad_scripts/` - the sandbox runner and the diagnostics named in the journal (`sbrun.sh`, `qall.sh`, `e2diag*.py`, `e2dir.py`, `e2struct.py`, `e2own.py`, `turnobj.py`, `turncov.py`).
 
 ---
 
@@ -186,5 +191,5 @@ Sandbox pattern used for every trial: copy `e1_tool` + `tools/research` to a scr
 3. **E2 line**: what the line must show on a range week - the swing-by-swing path through named rungs per session, or the day boxes with a schematic line as now.
 4. **Oracles beyond the anchor week**: his hand-marked charts (zones, day tags, trades with SL / TP) for at least two more weeks - one range week and one week where GBPUSD diverged from DXY. One week in his hand is all the build has.
 5. **Data**: network access to (or exports of) the red-folder calendar for the test weeks; optionally Treasury auctions and ON RRP.
-6. **His DXY feed**: his Monday long 100.945 cannot fill on the TVC:DXY bars in the store before 17:00 UTC (morning low 100.987) - which symbol he charts, to remove a possible 3-5 pip offset from every DXY level.
+6. **His DXY feed**: on the TVC:DXY 1H bars in the store his golden Monday long 100.945 / SL 100.905 cannot fill before the 17:00 UTC bar (Monday's low until then 100.956), and that bar runs on to 100.897 - through his stop. Which DXY symbol / feed he charts decides whether every DXY level here sits a few pips off his.
 7. **Counting**: his definition of an "obvious trade" for the outside counts (reviewers list 67 to 95 on the same 12 maps), and whether per-day repeats of a range order count toward the 11.
