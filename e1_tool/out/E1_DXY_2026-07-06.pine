@@ -243,9 +243,9 @@ if barstate.islast and isPair
         label.new(1783414800000, 101.406, "Tue SS\n 80%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(120,144,156), size=size.small)
         box.new(1783458000000, 101.305, 1783544400000, 100.985, bgcolor=color.new(color.rgb(255,167,38), 88), border_color=color.new(color.rgb(255,167,38), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783501200000, 101.344, "Wed SS+RWL+BS\ndown 40%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,167,38), size=size.small)
-        box.new(1783544400000, 101.247, 1783630800000, 100.968, bgcolor=color.new(color.rgb(255,167,38), 88), border_color=color.new(color.rgb(255,167,38), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783544400000, 101.127, 1783630800000, 100.748, bgcolor=color.new(color.rgb(255,167,38), 88), border_color=color.new(color.rgb(255,167,38), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783587600000, 101.406, "Thu BS\ndown 40%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,167,38), size=size.small)
-        box.new(1783630800000, 100.968, 1783717200000, 100.654, bgcolor=color.new(color.rgb(171,71,188), 88), border_color=color.new(color.rgb(171,71,188), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783630800000, 100.815, 1783717200000, 100.654, bgcolor=color.new(color.rgb(171,71,188), 88), border_color=color.new(color.rgb(171,71,188), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783652400000, 101.344, "Fri BS+WL+RWL\ndown 32%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(171,71,188), size=size.small)
         line.new(1783317600000, 101.025, 1783339200000, 101.199, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783339200000, 101.199, 1783341000000, 100.977, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
@@ -255,13 +255,15 @@ if barstate.islast and isPair
         line.new(1783404000000, 100.871, 1783425600000, 100.815, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783425600000, 100.815, 1783432800000, 100.815, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783432800000, 100.815, 1783458000000, 101.199, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783458000000, 101.092, 1783490400000, 100.985, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783490400000, 100.985, 1783526400000, 101.305, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783526400000, 101.305, 1783544400000, 101.247, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783544400000, 101.069, 1783630800000, 100.968, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783630800000, 100.937, 1783699200000, 100.748, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783699200000, 100.748, 1783705200000, 100.654, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783705200000, 100.654, 1783717200000, 100.815, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783458000000, 101.092, 1783490400000, 101.092, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783490400000, 101.092, 1783526400000, 101.305, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783526400000, 101.305, 1783544400000, 101.127, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783544400000, 101.069, 1783576800000, 101.069, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783576800000, 101.069, 1783612800000, 100.851, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783612800000, 100.851, 1783630800000, 100.748, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783630800000, 100.937, 1783663200000, 100.937, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783663200000, 100.937, 1783675200000, 100.654, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783675200000, 100.654, 1783699200000, 100.815, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783317600000, 101.025, 1783339200000, 100.815, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1783339200000, 100.815, 1783341000000, 100.977, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1783341000000, 100.977, 1783346400000, 100.977, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
@@ -274,11 +276,13 @@ if barstate.islast and isPair
         line.new(1783490400000, 101.199, 1783512000000, 100.815, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1783512000000, 100.815, 1783519200000, 100.815, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1783519200000, 100.815, 1783526400000, 101.199, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783526400000, 101.199, 1783544400000, 101.211, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783544400000, 101.069, 1783630800000, 101.270, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783630800000, 100.937, 1783699200000, 101.316, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783699200000, 101.316, 1783705200000, 101.430, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783705200000, 101.430, 1783717200000, 101.199, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783526400000, 101.199, 1783544400000, 101.245, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783544400000, 101.069, 1783576800000, 101.245, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783576800000, 101.245, 1783612800000, 101.277, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783612800000, 101.277, 1783630800000, 101.316, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783630800000, 100.937, 1783663200000, 101.316, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783663200000, 101.316, 1783675200000, 101.430, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783675200000, 101.430, 1783699200000, 101.199, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
     if show_e3
         // DX1 Mon SS SHORT E 101.203 SL 101.255 TP 100.830 RRR 7.17 | Swing Scalp / London Open | entry LQZ rung at the zone; SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327)
         box.new(1783317600000, 101.255, 1783458000000, 101.203, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
@@ -296,13 +300,13 @@ if barstate.islast and isPair
         box.new(1783317600000, 101.184, 1783458000000, 100.851, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         label.new(1783393200000, 100.964, "DX3 SS L 3.1R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // DX4 Wed BS SHORT E 101.235 SL 101.322 TP 100.685 RRR 6.32 | HTF Swing / NY Mid | entry the reverse-whiplash TP level (Law 27: TP of N = entry of N+1); SL (b) 1 pip inside the close edge of the shield (1H rung beyond the first) [ZR-6B RR-tight, mirror confidence 0.90]; TP LQZ inside the target zone: midpoint
-        box.new(1783317600000, 101.322, 1783699200000, 101.235, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1783317600000, 101.235, 1783699200000, 100.685, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1783317600000, 101.322, 1783663200000, 101.235, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1783317600000, 101.235, 1783663200000, 100.685, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         label.new(1783425600000, 101.158, "DX4 BS S 6.3R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // DXA1 Wed BS LONG E 100.753 SL 100.700 TP 101.332 RRR 10.87 | HTF Swing / NY Mid | ALTERNATIVE chain - live only after a 1H close above 101.30500 (UPPER RESISTANCE): entry internal LQZ rung; SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 0.90]; TP LQZ inside the target zone: midpoint
-        box.new(1783317600000, 100.753, 1783699200000, 100.700, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        box.new(1783317600000, 100.773, 1783699200000, 100.753, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1783317600000, 101.332, 1783699200000, 100.753, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783317600000, 100.753, 1783663200000, 100.700, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783317600000, 100.773, 1783663200000, 100.753, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1783317600000, 101.332, 1783663200000, 100.753, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783458000000, 100.892, "DXA1 ALT BS L 10.9R if 1H > 101.305", xloc=xloc.bar_time, style=label.style_none, textcolor=color.gray, size=size.small)
         // DX5 Wed SS SHORT E 101.203 SL 101.255 TP 100.995 RRR 3.98 | Swing Scalp / London Open | entry LQZ rung at the zone; SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP LQZ on the far edge of the pivot: midpoint
         box.new(1783458000000, 101.255, 1783526400000, 101.203, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
@@ -314,22 +318,22 @@ if barstate.islast and isPair
         box.new(1783490400000, 101.235, 1783526400000, 100.980, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         label.new(1783501200000, 101.016, "DX6 RWL L 3.4R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // DX7 Thu Ladder SHORT E 100.980 SL 101.077 TP 100.685 RRR 3.06 | Reinforcement / NY Open | reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP)
-        box.new(1783544400000, 101.077, 1783699200000, 100.980, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        box.new(1783544400000, 100.980, 1783699200000, 100.685, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783544400000, 101.077, 1783663200000, 100.980, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783544400000, 100.980, 1783663200000, 100.685, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783555200000, 100.939, "DX7 Ladder S 3.1R if DX4", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // DXA2 Thu Ladder LONG E 100.980 SL 100.906 TP 101.332 RRR 4.72 | Reinforcement / NY Open | ALTERNATIVE chain - live only after a 1H close above 101.30500 (UPPER RESISTANCE): reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP)
-        box.new(1783544400000, 100.980, 1783699200000, 100.906, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        box.new(1783544400000, 101.332, 1783699200000, 100.980, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783544400000, 100.980, 1783663200000, 100.906, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783544400000, 101.332, 1783663200000, 100.980, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783436760001, 101.101, "DXA2 ALT Ladder L 4.7R if DXA1 if 1H > 101.305", xloc=xloc.bar_time, style=label.style_none, textcolor=color.gray, size=size.small)
         // DX8 Fri RWL LONG E 100.628 SL 100.548 TP 100.940 RRR 3.9 | Reversal / NY Open | entry sweep zone mid; SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP first LQZ rung 30+ pips along the reversal: midpoint (GS Law 2; rule 4)
-        box.new(1783630800000, 100.628, 1783717200000, 100.548, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1783630800000, 100.648, 1783717200000, 100.628, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1783630800000, 100.940, 1783717200000, 100.628, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1783630800000, 100.628, 1783699200000, 100.548, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1783630800000, 100.648, 1783699200000, 100.628, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1783630800000, 100.940, 1783699200000, 100.628, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         label.new(1783626840001, 100.672, "DX8 RWL L 3.9R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // DXA3 Fri RWL SHORT E 101.371 SL 101.480 TP 101.037 RRR 3.07 | Reversal / NY Open | ALTERNATIVE chain - live only after a 1H close above 101.30500 (UPPER RESISTANCE): entry sweep zone mid (hair-miss repair: 0.2 pip inside, E3C:196-197); SL (b) 1 pip inside the close edge of the shield (1H rung beyond the first) [P533:506 reversal entry: inside the next zone]; TP first LQZ rung 30+ pips along the reversal: midpoint (GS Law 2; rule 4)
-        box.new(1783705200000, 101.480, 1783717200000, 101.371, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        box.new(1783705200000, 101.371, 1783717200000, 101.351, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1783705200000, 101.371, 1783717200000, 101.037, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783675200000, 101.480, 1783699200000, 101.371, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
+        box.new(1783675200000, 101.371, 1783699200000, 101.351, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1783675200000, 101.371, 1783699200000, 101.037, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783502100000, 101.253, "DXA3 ALT RWL S 3.1R if 1H > 101.305", xloc=xloc.bar_time, style=label.style_none, textcolor=color.gray, size=size.small)
     if show_tbl
         var table tb = table.new(position.top_right, 2, 17, bgcolor=color.new(color.black, 10), border_color=color.rgb(40,40,45), border_width=1)
@@ -380,10 +384,10 @@ if barstate.islast and isPair
 // NY Cut Cage (P533:690-691): 4 wall(s) of USD 1.5bn+ inside the range, last 10:00 NY cut Tue -> Spring Release Tue 10:01 NY, + 1 day (6.10) = transition on Wed
 //   -> SS range sessions LON Mon .. TKY Wed | Trigger: consolidation (post-energy) between MID-RANGE SUPPORT and UPPER RESISTANCE | HIGH -> cumulative 0.8
 //   -> RWL up sessions LON Wed .. LON Wed | Trigger: 6.4.2 'Consolidation ends in price retesting opposing liquidity' (4H liquidity (opposing)) - a whiplash against the preceding BS = RWL (6.1.4) | MODERATE -> cumulative 0.4
-//   -> BS down sessions NY Wed .. LON Fri | Trigger: MID-RANGE SUPPORT goes (SLOW) -> BS toward 1H (Unmitigated) | BoM (6 sessions, 4H element: twice as long (6.10)) | MODERATE -> cumulative 0.4
+//   -> BS down sessions NY Wed .. TKY Fri | Trigger: MID-RANGE SUPPORT goes (SLOW) -> BS toward 1H (Unmitigated) | BoM (5 sessions, 4H element: 2-3 more 4H candles (6.10)) | MODERATE -> cumulative 0.4
 // Direction Validation 6-check for the reaction at 1H (Unmitigated) | BoM (up): 4H trend=None, BoM alignment=up, liquidity sweep=down, zone failure=None, macro shape=None, counter-trend risk NONE=None -> 1 disagree
-//   -> WL down sessions NY Fri .. NY Fri | Trigger: 1H (Unmitigated) | BoM: a BoM zone always reacts (E2X:149) = Hard-Wall class -> RWL (6.4.1) - an unswept sweep zone lies against the target: the surge ends in a whiplash into it (WL -> RWL) | HIGH -> cumulative 0.32
-//   -> RWL up sessions NY Fri .. NY Fri | Trigger: 1H (Unmitigated) | BoM: a BoM zone always reacts (E2X:149) = Hard-Wall class -> RWL (6.4.1) - an unswept sweep zone lies against the target: the surge ends in a whiplash into it (WL -> RWL) | HIGH -> cumulative 0.32
+//   -> WL down sessions LON Fri .. LON Fri | Trigger: 1H (Unmitigated) | BoM: a BoM zone always reacts (E2X:149) = Hard-Wall class -> RWL (6.4.1) - an unswept sweep zone lies against the target: the surge ends in a whiplash into it (WL -> RWL) | HIGH -> cumulative 0.32
+//   -> RWL up sessions LON Fri .. LON Fri | Trigger: 1H (Unmitigated) | BoM: a BoM zone always reacts (E2X:149) = Hard-Wall class -> RWL (6.4.1) - an unswept sweep zone lies against the target: the surge ends in a whiplash into it (WL -> RWL) | HIGH -> cumulative 0.32
 // CONSOLIDATION PHASE DETECTION: Phase: Late | Bounding Zones: Ceiling=[UPPER RESISTANCE, ZFP 22%], Floor=[MID-RANGE SUPPORT, ZFP 22%] | Valid Setup Types: Swing Scalps + BS Transition Entry | ZFP Trend on Bounding Zone: rising - breakout imminent (4 option wall(s) of USD 1.5bn+ caging the range reach their cut)
 // chain: SS [HIGH, cum 0.8] -> RWL [MODERATE, cum 0.4] -> BS [MODERATE, cum 0.4] -> WL [HIGH, cum 0.32] -> RWL [HIGH, cum 0.32]
 // PRIMARY: SS -> RWL -> BS -> WL -> RWL | DECISION ZONE: UPPER RESISTANCE ZFP 22% > 45 or a 1H close beyond it -> ALTERNATIVE: SS -> SS -> BS -> WL -> RWL [confidence 0.32]
@@ -513,8 +517,8 @@ if barstate.islast and isPair
 // Mon: SS range | key zone UPPER RESISTANCE | range 100.724-101.262 | confidence 80% | catalysts: 10:00 NY cut 1.1500 2.4bn, 10:00 NY cut 1.1400 2.2bn, 10:00 NY cut 1.1450 1.4bn, red folder: NO DATA
 // Tue: SS range | key zone UPPER RESISTANCE | range 100.724-101.262 | confidence 80% | catalysts: 10:00 NY cut 1.1500 2.8bn, 10:00 NY cut 1.1350 1.5bn, 10:00 NY cut 1.1595 1.5bn, 01:00 PM NY Note 3-Year auction, red folder: NO DATA
 // Wed: SS+RWL+BS down | key zone 1H (Unmitigated) | BoM | range 100.985-101.305 | confidence 40% | catalysts: 01:00 PM NY Note 10-Year auction, 10:30 AM NY EIA crude stocks, red folder: NO DATA
-// Thu: BS down | key zone 1H (Unmitigated) | BoM | range 100.968-101.247 | confidence 40% | catalysts: 01:00 PM NY Bond 30-Year auction, red folder: NO DATA
-// Fri: BS+WL+RWL down | key zone MID-RANGE SUPPORT | range 100.654-100.968 | confidence 32% | catalysts: red folder: NO DATA
+// Thu: BS down | key zone 1H (Unmitigated) | BoM | range 100.748-101.127 | confidence 40% | catalysts: 01:00 PM NY Bond 30-Year auction, red folder: NO DATA
+// Fri: BS+WL+RWL down | key zone MID-RANGE SUPPORT | range 100.654-100.815 | confidence 32% | catalysts: red folder: NO DATA
 // Weekend: Close ALL positions by NY close Friday - per pair
 // 
 // --- DISCARDED (reason on every discard) ---
