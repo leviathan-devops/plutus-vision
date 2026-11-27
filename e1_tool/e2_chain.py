@@ -126,7 +126,9 @@ def _sweep_bound(X, up):
             cl.append(p)
     ext = max(cl) if up else min(cl)
     # 'reach' = Step 0.45a (P533): 'Institutions often sweep 0.05-0.10 beyond the visible extreme before reversing' - how far the brief breach of this bound runs
-    return {'bot': lv[0] - 0.05 * U if up else lv[0], 'top': lv[0] if up else lv[0] + 0.05 * U, 'ext': ext, 'reach': ext + 0.10 * U if up else ext - 0.10 * U, 'sweep': True, 'name': 'Liquidity Sweep Zone'}
+    # the zone itself = the extended sweep zone Engine 1 holds (P533:1286 'Extend the liquidity sweep zone scan 0.05-0.10 DXY below swing highs (for supply-side LSZs) and 0.05-0.10 DXY above
+    # swing lows (for demand-side LSZs)': 0.10 inward of the nearest level); G2 B-37 / N-01 (D-99)
+    return {'bot': lv[0] - 0.10 * U if up else lv[0], 'top': lv[0] if up else lv[0] + 0.10 * U, 'ext': ext, 'reach': ext + 0.10 * U if up else ext - 0.10 * U, 'sweep': True, 'name': 'Liquidity Sweep Zone'}
 
 
 def bounds(X):

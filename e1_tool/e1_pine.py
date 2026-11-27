@@ -70,7 +70,7 @@ def sweep_boxes(X):
         else:
             merged.append(dict(z, lo=z['level'], hi=z['level'], n=1))
     for z in merged:
-        z['bot'], z['top'] = (z['lo'], z['hi'] + 0.05 * U) if z['side'] == 'Demand-side' else (z['lo'] - 0.05 * U, z['hi'])
+        z['bot'], z['top'] = (z['lo'], z['hi'] + 0.10 * U) if z['side'] == 'Demand-side' else (z['lo'] - 0.10 * U, z['hi'])      # the extended zone of Step 0.45a, as e1_ip holds it (D-99)
     return merged
 
 

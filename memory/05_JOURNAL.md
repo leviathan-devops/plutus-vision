@@ -622,3 +622,4 @@ NOT BUILT YET: e1_report.py (the report's audit sections), Step 0d/0e D1 order b
   Also done: confluence layers 1 / 2 / 5 / 6 in the confidence sum (A-20), oracle prices out of code comments (D-05), S6 checkpoint frame sent (ledger 90).
 - TRIED AND REJECTED (sandbox, audit A-25): virgin pressure zones on the way as Law-14 blockers: DXY 10-05 Tuesday long loses its RRR (no setup), no new TP.
 - SEVENTH OUTSIDE COUNT (ledger 89c): E1 94 / E2 80 / E3 36; outside the golden week 92 / 78 / 19. E1 up (D-93 window), E3 flat at 12 of 63.
+- D-99 sweep zones at the canon's extended width (0.10 inward) for range bounds and on the chart (audit B-37): golden unchanged; EURUSD 10-05 Monday long now fills and reaches TP, GBPUSD 10-05 Tuesday short TP; DXY 10-05 Tuesday long drops out (RRR 2.46 against the 2.5 floor with the nearer TP).
