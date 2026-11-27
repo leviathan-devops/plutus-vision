@@ -194,3 +194,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E3-P10 | cascade mirror DXY -> EU -> GU as its own lane | NB |
 | E3-P12 | reason code on every discard; narrative gate; CS-1 day-native guard, floor invariants pass | PB |
 | OUT | one command -> one Pine (plutus.py); 1H frames via tools/e1render; 15m / 30m frames of past weeks via the Backtest tab (ledger 75b) | B |
+
+## 2026-11-27 (M-61 V3) - rows touched
+| E3-P6 | Law 27 (E3C 6.2 / 8.21) now also a FILTER on the day's drawn line: an order the line reaches while an opposite order runs to its TP, inside that move by more than the 3-pip tolerance, is not placed (D-144, plutus._flow27, per day, leak-safe); duplicates 5 pips, conflicts 15 pips, chains depth 3; rule 11 not applied | PB |
+| E3-P10 | cascade under daily anchoring: a receiving pair mirrors the source pair's DAILY-CONFIRMED orders (keys recomputed after daily anchoring), and a daily re-entry on EURUSD / GBPUSD needs the source pair's matching order that day (D-142); the per-DXY-setup mirror lane + emergent lane as separate lanes still not built | PB |

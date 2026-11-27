@@ -55,3 +55,5 @@
 - L-52x (2026-11-27): an order 'existing' only from a day's London open loses the Asian session his trades use (golden Friday long filled 02:15 UTC) - an order's life starts at its trading day's open.
 - L-53x (2026-11-27): improving the drawn E2 and improving the orders can pull apart (re-anchored chains: better line, fewer winners) - measure each layer separately before adopting a change for both.
 - L-54x (2026-11-27): a report to him always carries all three pairs and the whole week in one fitted frame each (M-60).
+- L-55x (2026-11-27): his golden weeks are ONE Law-27 flow on every pair (each entry = the previous trade's TP, within ~3 pips, one trade at a time). A second order for a move that is still running is the defect he sees as 'a C' - check new order logic against that flow before anything else.
+- L-56x (2026-11-27): a canon line that reads as universal ('No exceptions') can still contradict his own golden numbers on my data (Trading Laws stop rule vs his stops inside V1 rungs) - measure it on his trades before adopting; his hand outranks my reading.
