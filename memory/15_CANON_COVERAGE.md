@@ -74,6 +74,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E1-AS | P533:1496-1506, P452:1116-1157; L-39 | collect all -> score -> clustering scan -> group -> degree = best level -> ZFP -> names | e1_ip.build (approved-render recipe: score, best-first assembly, mechanics, Pillar 9, names, rank) | PB (runs; golden-week deltas D1-D3 open, journal 2026-11-26) |
 | E1-95 | P533:1507, P452:1159-1184 | gap scan >= 0.20, in-fill with 2+ signals | e1_ip.gap_scan (D-68); drawn + listed; E2 / E3 do not read in-fill levels yet | PB |
 | E1-97 | P533:1509-1515, P452:1186-1215 | 4H overlay: POI Tier 1 / 2 / 3, hierarchy rule, ladder-step identification | in build | PB (Tier 3 "4H-only", ladder steps missing) |
+| E1-DISC | P452:1220-1230 | Dynamic Discovery Protocol: pre-week discovery flags (gaps > 0.15, major round numbers, HWC / LWC not traded, EMA convergence, structural extremes); intra-week promotion | e1_ip.discovery, e1_pine.discovery_drawn | B (D-103; pre-week flags built and pixel-checked, ledger 91b; intra-week promotion NOT RUN: post-anchor candles) |
 | E1-98 | P533:1516-1527 | synthesis re-verification (option strike >= 850M from R1 pair; score recompute; cross-reference) | | NB |
 | E1-IV | P533:1540-1567 | Part IV: extraction / filtering, tactical calculations, volatility triggers, red-folder fences | | NB (not yet read) |
 | E1-V | P533:1568-1724 | report sections + Engine 3 Status column + blind-execution protocol | e1_report | PB |

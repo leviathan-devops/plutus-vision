@@ -209,6 +209,47 @@ GAP_SCAN = True
 RECENT_LSZ = True
 
 
+def discovery(X, mapped, by, U):
+    """DYNAMIC DISCOVERY PROTOCOL (P452:1220-1228), the part run BEFORE the week: 'This protocol identifies high-probability discovery zones BEFORE the week begins:
+    1. Identify gaps > 0.15 DXY points between predicted levels - these are "discovery zones." 2. Flag zones near major round numbers (.00, .50) where price is likely to test.
+    3. Flag zones near prior HWC/LWC where price has not yet traded. 4. Flag EMA convergence zones where price action is likely to create new anchors.
+    5. Flag zones near structural extremes from Pillar 5's memory database.' (HWC / LWC = 'the highest / lowest weekly close in a given period', P452:794-795: the 90-day scan.)
+    A flag stands where the map is empty: in a gap > 0.15 between adjacent mapped zones, or beyond the outermost mapped zone (the open side after a trend, where no cluster reaches
+    MODERATE). The promotion step ('validated by intra-week price action ... promote that level') reads candles after the anchor and is not run. P533:3448: a discovery zone is a
+    'level to watch ... NEUTRAL - reduced confidence': Engines 2 and 3 do not read it."""
+    EX = 0.03 * U
+    zs = sorted(mapped, key=lambda z: z['bot'])
+    spans = [(z['bot'] - EX, z['top'] + EX) for z in zs]
+    empty = []
+    if zs:
+        empty.append((float('-inf'), zs[0]['bot']))
+        for a, b in zip(zs, zs[1:]):
+            if b['bot'] - a['top'] > 0.15 * U:
+                empty.append((a['top'], b['bot']))
+        empty.append((zs[-1]['top'], float('inf')))
+    else:
+        empty.append((float('-inf'), float('inf')))
+    flags = [(l['p'], 'round number ' + ('.00' if 'big' in l['kind'] else '.50')) for l in by.get(6, []) if l.get('round') and ('big figure' in l['kind'] or 'half figure' in l['kind'])]
+    wk = X['weekly'][-13:]                                   # the 90-day scan (P533:1213)
+    for w in (max(wk, key=lambda w: w['close']), min(wk, key=lambda w: w['close'])):
+        since = [d for d in X['daily'] if d['date'] > w['monday'] and d['date'] >= (X['weekly'][X['weekly'].index(w) + 1]['monday'] if X['weekly'].index(w) + 1 < len(X['weekly']) else '9999')]
+        if not any(d['low'] <= w['close'] <= d['high'] for d in since):
+            flags.append((w['close'], ('HWC' if w is max(wk, key=lambda q: q['close']) else 'LWC') + ' ' + w['monday'][5:] + ' (not traded since)'))
+    flags += [(l['p'], 'MA convergence') for l in by.get(2, []) if 'DOUBLE' in l['kind'] or 'TRIPLE' in l['kind']]
+    flags += [(l['p'], l['kind'].split(' 20')[0].split(' (')[0]) for l in by.get(5, []) if l.get('extreme') or l['kind'].startswith(('Liquidity Sweep Target', 'Supply Ceiling Target'))]
+    out = []
+    for p, why in sorted(flags):
+        if abs(p - X['spot']) > 2.0 * U or any(lo <= p <= hi for lo, hi in spans) or not any(lo < p < hi for lo, hi in empty):
+            continue
+        if out and p - out[-1]['p'] <= 0.05 * U + 1e-12:      # flags within the repeated-level distance (Step 0.5a) are one discovery zone
+            if why not in out[-1]['flags']:
+                out[-1]['flags'].append(why)
+            out[-1]['top'] = p
+            continue
+        out.append({'p': p, 'bot': p, 'top': p, 'flags': [why]})
+    return out
+
+
 def gap_scan(X, final, by, U):
     """STEP 9.5 POST-ZONE-MAP GAP SCAN (MANDATORY) (P452:1159-1184; P533:769): 9.5a gaps >= 0.20 between adjacent mapped zones; 9.5b candidates in the gap: a 4H demand / supply zone,
     a 1H zone (Condition B: filling the gap), a round number, a sub-threshold EUR/USD strike conversion (Tier 3 / 4), a daily pivot, a minor swing level, an extended daily close of 6-10 days ago;
@@ -496,6 +537,7 @@ def build(pair, monday, side):
             z['drawn'] = True
     # the in-fill levels are part of the Engine 1 map (drawn, listed); Engines 2 and 3 still read the named zones only - their rules for an in-fill level (bound? target? anchor?) are not built yet
     X.update(zones=sorted([z for z in final if not z.get('gap_infill')], key=lambda z: -z['top']), infill=sorted(gaps, key=lambda z: -z['top']), all_bands=zones, trend=trend, scored=scored)
+    X['discovery'] = discovery(X, [z for z in final if z.get('drawn')], by, U)
     return X
 
 

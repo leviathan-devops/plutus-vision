@@ -55,7 +55,23 @@ def reach(X, E2):
                 lo = min(lo, m['bot'])
                 at = [z for z in zs if z['bot'] <= lo <= z['top']] or sorted([z for z in zs if z['top'] < lo], key=lambda z: -z['top'])[:1]
                 lo = min([lo] + [z['bot'] for z in at if lo - z['top'] <= 0.30 * X['U']])
+    # an end of the reach with no mapped zone beyond it (the open side after a trend): the first discovery flag beyond that end is what the map offers there (P452:1220-1228) (D-103)
+    dz = X.get('discovery', [])
+    if not [z for z in zs if z['top'] < lo]:
+        b_ = [z for z in dz if z['top'] < lo]
+        if b_:
+            lo = max(b_, key=lambda z: z['top'])['bot']
+    if not [z for z in zs if z['bot'] > hi]:
+        a_ = [z for z in dz if z['bot'] > hi]
+        if a_:
+            hi = min(a_, key=lambda z: z['bot'])['top']
     return lo, hi
+
+
+def discovery_drawn(X, near, sweeps):
+    """the discovery flags shown: inside the chart window and not on a drawn supply / demand zone, sweep zone or 4H liquidity band (the flag marks EMPTY map, P452:1224)"""
+    solid = [z for z in X['sd'] if z['tf'] in ('240', '60')] + list(sweeps) + list(X['v1']['240']['liquidity']) + [z for z in X['zones'] if z['drawn']] + list(X.get('infill', []))
+    return [z for z in X.get('discovery', []) if near(z['bot'], z['top']) and not any(q['bot'] <= z['top'] and q['top'] >= z['bot'] for q in solid)]
 
 
 def sweep_boxes(X):
@@ -108,7 +124,7 @@ def generate(pair, monday, X, extra=(), rch=None):
     lo_v, hi_v = pw['low'] - adr, pw['high'] + adr
     o = ['//@version=6', f'indicator("PLUTUS VISION {pair} {monday}", overlay=true, max_boxes_count=2000, max_labels_count=2000, max_lines_count=2000)',      # PG6 (P533:3909)
          f'// week of {monday} ({pair}); every number computed by e1_tool from data closed before the anchor {D.ts(b0)} UTC (Monday London open)',
-         'show_ip = input.bool(true, "E1 IP Zones")', 'show_lv = input.bool(true, "E1 levels inside IP zones")', 'show_lsz = input.bool(true, "E1 LSZ")',
+         'show_ip = input.bool(true, "E1 IP Zones")', 'show_disc = input.bool(true, "E1 Discovery Zones (levels to watch)")', 'show_lv = input.bool(true, "E1 levels inside IP zones")', 'show_lsz = input.bool(true, "E1 LSZ")',
          'show_opt = input.bool(true, "E1 Option Strikes")', 'show_sd = input.bool(true, "E1 Supply / Demand 4H + 1H")', 'show_ltf = input.bool(false, "E1 Supply / Demand 30m + 15m")',
          'show_lq = input.bool(true, "E1 Liquidity ladder 1H (V1 data)")', 'show_lq4 = input.bool(true, "E1 Liquidity bands 4H (V1 data)")', 'show_ob = input.bool(false, "V1 order blocks (data)")',
          'show_far = input.bool(false, "E1 zones beyond this week\'s reach")',
@@ -208,6 +224,17 @@ def generate(pair, monday, X, extra=(), rch=None):
             continue
         o.append(f"        box.new({tsL}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb({c}), 82), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
         o.append(f"        label.new({tsL + 96 * H}, {g((z['top'] + z['bot']) / 2)}, \"GAP IN-FILL | MODERATE | {z['zfp']} ZFP{plus(z)}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)")
+    if len(o) == n0:
+        o.append('        na')
+    # DYNAMIC DISCOVERY PROTOCOL (P452:1220-1228): the pre-week flags where the map is empty - 'level to watch', NEUTRAL (P533:3448): a thin dashed neutral line, small label (D-103)
+    o.append('    if show_disc')
+    n0 = len(o)
+    for z in discovery_drawn(X, near, sweeps):
+        if z['top'] - z['bot'] > 1e-9:
+            o.append(f"        box.new({b0 - 48 * H}, {g(z['top'])}, {tsR}, {g(z['bot'])}, bgcolor=color.new(color.rgb(200,200,200), 92), border_color=color.new(color.rgb(200,200,200), 45), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
+        else:
+            o.append(f"        line.new({b0 - 48 * H}, {g(z['p'])}, {tsR}, {g(z['p'])}, xloc=xloc.bar_time, color=color.new(color.rgb(200,200,200), 35), style=line.style_dashed, width=1)")
+        o.append(f"        label.new({b0 - 30 * H}, {g(z['top'])}, \"DISCOVERY ZONE | {' + '.join(z['flags'])}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.rgb(200,200,200), 10), size=size.tiny)")
     if len(o) == n0:
         o.append('        na')
     o.append('    if show_ip and show_lv')

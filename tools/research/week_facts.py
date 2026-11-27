@@ -33,6 +33,11 @@ for L in sorted(leaders, key=lambda z: -z['top']):
     for z in sorted([z for z in allz if joined.get(id(z)) is L], key=lambda z: -z['top']):
         print('      part: ' + desc(z))
 print(f"  ({len(leaders)} zones, {len(allz) - len(leaders)} parts)")
+dz = e1_pine.discovery_drawn(X, near, sweeps)
+if dz:
+    print("DISCOVERY ZONES (thin dashed grey lines; canon: pre-week 'levels to watch' flagged where the zone map is EMPTY - major round numbers, untraded weekly-close extremes, MA convergences, structural extremes; not pressure zones, not used by Engines 2 / 3):")
+    for z in sorted(dz, key=lambda z: -z['top']):
+        print(f"  discovery zone {f(z['bot'])}{('-' + f(z['top'])) if z['top'] > z['bot'] else ''} | {' + '.join(z['flags'])}")
 print('ENGINE 2:')
 for a in E2['audit']:
     if a.startswith(('Ceiling', 'Floor', 'Breakout', 'chain', 'Current', 'PRIMARY')):
