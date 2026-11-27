@@ -1,0 +1,24 @@
+PLUTUS VISION - handover package '85% functional - DXY + GU (V3)', full (operator M-62)
+package commit (code V3 + D-145, memory, OmniGraph store + export, this folder's documents and outputs): efc66e93624a6b2f059244d5525dc2f3a634fa37
+branch: AGENT  remote: leviathan-devops/plutus-vision
+commit date: 2026-11-27T20:03:08+00:00
+previous package: '70% functional' = 33f747fc2b24aeb50ed67a2aa4c05dc3ba8d7eb0 (branch handover-70pct-functional)
+checkpoints in between: 80% 0d4ad41 / 2f31cf5 (code aa8d689); 85% V1 cea1954 (code bac6b50); V2 6e4f3f7 (code 262fadd); V3 8f834f4 (code ff6be1e)
+self-contained branch of this package: handover-85pct-v3-full (built from the last AGENT commit of this handover + archives/ parts 4-8)
+commits on AGENT up to the package commit: 352
+
+this file and the per-day V1 caches written by the crash sweep are added by the commit right after the package commit; ARCHIVES_SHA256SUMS.txt by the commit after the archives are built
+
+last 12 commits:
+efc66e9 HANDOVER PACKAGE '85% functional - DXY + GU (V3)', full (operator M-62) + D-145 KeyError fix
+63d10dc V3 generated Pine for the golden EURUSD / GBPUSD frames (DXY unchanged)
+8f834f4 CHECKPOINT '85% functional - DXY + GU' V3 (EURUSD fix, D-142b + D-144): code ff6be1e + frames a8bfce4 + context + OmniGraph rebuilt from memory (1606 nodes / 1102 edges, store + full export) + manifest
+a8bfce4 V3 frames + ledger 115b (EURUSD fix on the golden week, all three pairs, whole week each)
+ff6be1e D-142 + D-144 EURUSD fix (M-61 V3): Phase 10 re-entry check on the source pair's same-day record; Law 27 trade flow on the day's line
+0bb5182 M-61 V3 context: EURUSD diagnosis (why a C), D-142 / D-143 (rejected) / D-144 decisions, ledger 115 expectation, facts, lessons, coverage; evidence/answers_m61/EURUSD_why_C.md
+6e4f3f7 CHECKPOINT '85% functional - DXY + GU' V2 (Thursday E3 fix, D-141): code 262fadd + context + OmniGraph rebuilt from memory (store + full export) + manifest
+65ae7fc V2 frames + ledger 114 (Thursday fix on the golden week, all three pairs)
+262fadd D-141 Thursday fix: dormant alternative-chain orders are contingencies (report only until activated); the Law-27 short at the reverse whiplash's TP exists from that whiplash's start; rockets the move already passed are not new orders - DXY Thursday = the ladder short only, GBPUSD Thursday = the short at Wednesday's TP
+cea1954 CHECKPOINT '85% functional - DXY + GU' (V1, operator M-61): code bac6b50 (D-139 + D-140) + context (memory incl. M-61 / L-57) + OmniGraph rebuilt from memory (1579 nodes / 1049 edges, store + full export) + manifest; tools/checkpoint packages each checkpoint the same way
+bac6b50 ledger 113: golden week whole-week frames after D-139 / D-140 (evidence/m60b)
+d48d3e9 D-140: breakouts over several sessions drawn as a session ladder (zone to zone, Asia holds); non-range days hold the open through Asia and join the chain at the London open - golden DXY Wed-Fri line now steps with the candles
