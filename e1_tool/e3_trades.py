@@ -226,6 +226,7 @@ EU_INSIDE = False                                 # L-50 'Euro USD should use th
                                                   # the next-S/D-zone reading lands 2-6.5 pips off and tighter than his (D-135) - not applicable there; EUR/USD keeps (a)        # P533 6.1: swing scalps turn at a bound, the reverse whiplash / whiplash / recovery are reversals or corrections; BS / PBS / ladders follow the move
 SWEEP_EXT = True
 GOLD_FALLBACK = True       # D-102: golden stop fallback when no ladder step gives a stop (E3C:262, :289-294)
+SL_CLEAR_LQZ = False       # D-143 TRIED, REJECTED: a rule-(a) stop that ends up inside a liquidity zone moves 2 pips outside that zone's back edge (Trading Laws, operator; GS Law 4.2)
 MID_KEY = True
 LAW14_PRE = 1.2            # E3C:343 'Law-14 precondition: TP >= 1.2 x SL'
 ANCHOR_CAP = True
@@ -250,6 +251,19 @@ def _mirror_conf(c, a, direction, E2):
     if dday is not None and dday['dir'] in ('up', 'down') and dday['dir'] == direction:
         sc += 0.1
     return round(sc, 2)
+
+
+def _clear_liq(sl, entry, dn, steps, pip):
+    """Trading Laws (operator, WINNING_TRADE_LIBARARY/Original_Training_Data/Trading Laws.pdf, London Session Scalping Rules): 'If you stop loss ends up sitting inside a liquidity zone -
+    you MUST move it 2 pips outside the back edge of this zone. No exceptions.'; GS Law 4.2 'SL is placed OUTSIDE the nearest liquidity shield zone'. A stop strictly inside a liquidity step
+    of the ladder (1H rung or 4H band) on the stop side moves 2 pips beyond that step's back edge (again if it lands inside the next one). Returns (sl, moved)."""
+    moved = False
+    for _ in range(8):
+        z = next((z for z in steps if z['bot'] + 1e-12 < sl < z['top'] - 1e-12 and ((z['top'] > entry) if dn else (z['bot'] < entry))), None)
+        if z is None:
+            break
+        sl, moved = ((z['top'] + 2 * pip) if dn else (z['bot'] - 2 * pip)), True
+    return sl, moved
 
 
 def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, conf=None, envelope=True, reversal=False):
@@ -305,6 +319,17 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
         sdz = sorted([z for z in X.get('sd', []) if ((z['bot'] > ref + 1e-12) if dn else (z['top'] < ref - 1e-12))], key=lambda z: z['bot'] if dn else -z['top'])
         for k, z in enumerate(sdz[:3]):
             cands.insert(k, ((z['bot'] + pip) if dn else (z['top'] - pip), f"(b) 1 pip inside the close edge of the next supply / demand zone ({z.get('tf', '')} {z.get('kind', '')}; EUR/USD liquidity sits inside it, L-50)"))
+    if SL_CLEAR_LQZ:
+        # D-143: the deliberate inside-the-next-zone stops (b) stay ('SL inside the next zone always', Trading Laws; P533:506); a stop placed OUTSIDE a zone (a) that ends up sitting inside
+        # another liquidity zone goes 2 pips outside that zone's back edge ('No exceptions')
+        moved_ = []
+        for sl, why in cands:
+            if why.startswith('(a)'):
+                sl2, mv = _clear_liq(sl, entry, dn, thin + thick, pip)
+                if mv:
+                    sl, why = sl2, why + ' -> sat inside a liquidity zone: 2 pips outside its back edge (Trading Laws; GS Law 4.2)'
+            moved_.append((sl, why))
+        cands = moved_
     ok = []
     for sl, why in cands:
         d = abs(sl - entry) / pip
@@ -345,6 +370,8 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
         nxt = sorted([s_ for s_ in thin + thick if ((s_['top'] > entry) if dn else (s_['bot'] < entry))], key=lambda s_: s_['top'] if dn else -s_['bot'])
         for s_ in nxt:
             sl = (s_['top'] + LAW7[pair] * pip) if dn else (s_['bot'] - LAW7[pair] * pip)
+            if SL_CLEAR_LQZ:
+                sl = _clear_liq(sl, entry, dn, thin + thick, pip)[0]
             if (dmin or GOLD_MIN) <= abs(sl - entry) / pip <= SL_CEIL:
                 return sl, f"golden fallback: the next liquidity rung's reaction extreme + the Law-7 buffer {LAW7[pair]} (E3C:289-294, :379)"
     return None, 'SL_INVALID: no ladder-step stop between 4 and 36 pips'

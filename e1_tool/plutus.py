@@ -18,6 +18,15 @@ def _setups(pair, monday):
     return _MEMO[k]
 
 
+def _src_days(pair, monday):
+    """the source pair's orders CONFIRMED at each day's anchor under daily anchoring - {day index: {(shape, direction)}} - each decided only from bars closed by that day's
+    trading-day open (the source's own daily leak check), so a receiving pair may use day i's record at day i (D-142)"""
+    k = ('days', pair, monday)
+    if k not in _MEMO:
+        _MEMO[k] = {i: set(p.get('keys', ())) for i, p in run(pair, monday, daily=True)[1].get('daily', {}).items()}
+    return _MEMO[k]
+
+
 def _map(pair, monday):
     """the Engine 1 map of the week (built at the Monday anchor, never under a daily update)"""
     k = ('map', pair, monday)
@@ -115,6 +124,8 @@ def _status(s, t_from, t_to, pair):
     return 'open' if filled else 'pending'
 
 
+PHASE10_REENTRY = True     # D-142: a re-entry on a receiving pair needs the source pair's matching order that day (E3C Phase 10, L-52)
+FLOW27 = True              # D-144: an order the drawn line reaches while an opposite order runs to its TP, inside that move (> 3 pips short of its TP), is not in the trade flow (Law 27)
 REANCHOR_DRAW = True       # D-138: once the chain in force has failed, the line and day boxes are drawn from the chain re-anchored at the London open (orders unchanged)
 REANCHOR = False           # D-136 chain re-anchor on the rebuilt map: OFF (12-map locator: TP 27 -> 23, unfilled 6 -> 13 - it cancels resting winners and replaces the alternative's orders); the zone update itself stays
 DAY_CONFIRM = 'start'      # 'start' = the trading day's open (17:00 New York the evening before) | 'london' = the day's London open (02:00 New York)
@@ -206,7 +217,54 @@ def _day_line(ch, d, monday, t0, t1, price, X):
     return [(t0, price)] + E2._session_path(X, monday, t0, t1, price, lo, hi, last, None)
 
 
-def daily_anchor(pair, monday, chain, R):
+def _flow27(pair, kept, live, seg, t_a, t_e, log, f, day, status):
+    """LAW 27 TRADE FLOW (E3C 6.2 / 8.21 'TP of trade N = entry of trade N+1', 3-pip tolerance; operator M-61 'The long on Wednesday that hit take profit, that should literally be
+    the entry of the short at that exact point'; L-52 one unique trade per observable move). His golden weeks run as ONE flow on every pair: each trade enters at the previous trade's TP.
+    On the day's drawn Engine 2 line (the forecast path built at the day's anchor, GS Law 2 'The shape chain PREDICTS which zones price will reach'): when the line reaches an order's
+    entry while an OPPOSITE order is running to its TP - after that order's entry, before its TP - and the entry lies INSIDE that move, more than the 3-pip Law-27 tolerance short of its
+    TP, the order trades against the move in progress: it is not the next trade of the flow (the next trade enters at that TP) and is not placed (D-144). Rockets ride their parent's move
+    and are not judged here. kept = the day's confirmed orders; live = earlier orders still resting / open at the day's anchor. Returns the day's orders that stay."""
+    pip = D.PIP[pair]
+    pts = sorted(((int(t), float(v)) for t, v in seg), key=lambda p: p[0])
+
+    def hit(price, up, t0, t1):
+        """first time in [t0, t1] the line reaches price - from below (up) or from above"""
+        for (ta, va), (tb, vb) in zip(pts, pts[1:]):
+            if tb < t0 or ta > t1:
+                continue
+            if ((va >= price - 1e-12) if up else (va <= price + 1e-12)) and ta >= t0:
+                return ta
+            if ((va < price <= vb) if up else (va > price >= vb)) and vb != va:
+                t = ta + (tb - ta) * (price - va) / (vb - va)
+                if t0 <= t <= t1:
+                    return t
+        return None
+    prim = [q for q in kept if q.get('category') != 'Reinforcement' and not q.get('alt')]
+    tm = {}
+    for q in prim + [q for q in live if q not in prim]:
+        lg = q['dir'] == 'LONG'
+        th = t_a if (q not in prim and status(q) == 'open') else hit(q['entry'], not lg, max(t_a, q['valid_from'], q.get('day_anchor') or 0), min(t_e, q['valid_to']))
+        tt = hit(q['tp'], lg, th, t_e) if th is not None else None
+        tm[id(q)] = (th, tt)
+    drop = []
+    for b in prim:
+        tb = tm[id(b)][0]
+        if tb is None:
+            continue
+        for a in prim + [q for q in live if q not in prim]:
+            ta, tt = tm[id(a)]
+            if a is b or a['dir'] == b['dir'] or ta is None or tt is None or a in drop or not (ta < tb < tt):
+                continue
+            inside = (a['entry'] < b['entry'] < a['tp']) if a['dir'] == 'LONG' else (a['tp'] < b['entry'] < a['entry'])
+            if inside and abs(a['tp'] - b['entry']) > 3 * pip + 1e-12:
+                drop.append(b)
+                log.append(f"{day} {b['shape']} {b['dir']} {f(b['entry'])}: NOT IN THE TRADE FLOW - the {day} line reaches it {D.ts(int(tb))} UTC while {a['shape']} {a['dir']} {f(a['entry'])} runs to its TP "
+                           f"{f(a['tp'])} ({abs(a['tp'] - b['entry']) / pip:.1f} pips short of it; Law 27 'TP of trade N = entry of trade N+1', E3C 6.2 / 8.21)")
+                break
+    return [q for q in kept if q not in drop and not (q.get('parent_ref') is not None and q['parent_ref'] in drop)]
+
+
+def daily_anchor(pair, monday, chain, R, src_days=None):
     """DAILY ANCHORING (L-47 / L-53; D-131, D-132, D-134, D-136). The Monday map and chain hold while they hold. Every trading day:
     at its TRADING-DAY OPEN (17:00 New York the evening before; the day's orders rest through the Asian session), with only bars closed by then:
       - a 1H close beyond a Decision Zone of the chain in force since its anchor = the chain failed (6.6 Step 4): its alternative is the chain until the next London open;
@@ -317,6 +375,14 @@ def daily_anchor(pair, monday, chain, R):
                     dropped.append(s)
                     log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: NOT A NEW TRADE - {live['id']} still resting / open: it keeps resting (L-52)")
                     continue
+                if PHASE10_REENTRY and src_days is not None and pair != 'DXY':
+                    # Phase 10 (E3C:723-770) 'For each DXY source setup, generate the corresponding EU mirror setup' + L-52: a re-entry on a receiving pair is a new setup -
+                    # it needs its source pair to have CONFIRMED the matching order at this same day's anchor (DXY -> EU inverse, EU -> GU kept) (D-142)
+                    want = ({'LONG': 'SHORT', 'SHORT': 'LONG'}[s['dir']] if pair == 'EURUSD' else s['dir'])
+                    if (s['shape'], want) not in src_days.get(i, set()):
+                        dropped.append(s)
+                        log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: NOT A NEW TRADE - no {DAYS[i]} {s['shape']} {want} order on the source pair to mirror (Phase 10)")
+                        continue
                 s['clone'] = False
                 s.pop('origin', None)
             why = why or confirm(s, i, t_a, op, since)
@@ -329,9 +395,16 @@ def daily_anchor(pair, monday, chain, R):
                 if i > 0:
                     s['day_anchor'] = t_a
                 kept.append(s)
+        if FLOW27 and len(seg) > 1:
+            # D-144: judged on THIS day's line only (built at the trading-day open from bars closed by then) against the orders of the day and those still resting / open at its anchor
+            live_ = [q for q in keep if q.get('category') != 'Reinforcement' and not q.get('alt') and q['valid_to'] > t_a
+                     and _status(q, max(q['valid_from'], q.get('day_anchor') or 0), t_a, pair) in ('pending', 'open')]
+            kept = _flow27(pair, kept, live_, seg, t_a, t_e, log, f, DAYS[i], lambda q: _status(q, max(q['valid_from'], q.get('day_anchor') or 0), t_a, pair))
         keep += kept
         parts[i] = {'open': op, 'active': None if cur['active'] is None else (cur['active']['alt']['dir'], cur['active']['level'], cur['active']['at']),
-                    'orders': [(s['dir'], s['entry'], s['sl'], s['tp']) for s in kept], 'dropped': len(dropped), 'seg0': seg[:1]}
+                    'orders': [(s['dir'], s['entry'], s['sl'], s['tp']) for s in kept], 'dropped': len(dropped), 'seg0': seg[:1],
+                    # D-142: the Phase 10 record of the day - (shape, direction) of the primary orders confirmed at this anchor; every DXY order, on EUR/USD its active mirrors (as e3_trades.build)
+                    'keys': sorted({(s['shape'], s['dir']) for s in kept if not s.get('alt') and s.get('category') != 'Reinforcement' and (pair == 'DXY' or s.get('cascade'))})}
         # ---- London open (L-53): the rebuilt map adds the zones formed since the week anchor; a failed chain is re-anchored on it
         if i > 0:
             Xi = _map_at(pair, monday, t_L)
@@ -438,7 +511,8 @@ def run(pair, monday, daily=False):
     XD = _map('DXY', monday) if pair != 'DXY' else None
     chain, setups = engines(pair, monday, X, XD)
     if daily:
-        chain, setups = daily_anchor(pair, monday, chain, setups)
+        src_days = _src_days('DXY' if pair == 'EURUSD' else 'EURUSD', monday) if pair != 'DXY' else None
+        chain, setups = daily_anchor(pair, monday, chain, setups, src_days)
     # the day tags of Engine 2 as label extents (same placement as e2_chain.pine: one row above the envelope, odd days one row higher when a tag is composite; two text lines each;
     # Pinebox draws the text from the label's point to the right, 1.65 one-hour bars per character) - Engine 3's labels keep clear of them
     import e3_trades as E3
