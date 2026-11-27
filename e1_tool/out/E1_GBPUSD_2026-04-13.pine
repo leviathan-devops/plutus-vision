@@ -315,31 +315,31 @@ if barstate.islast and isPair
         label.new(1776330000000, 1.36191, "Thu SS\n 80%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(120,144,156), size=size.small)
         box.new(1776373200000, 1.35994, 1776459600000, 1.35221, bgcolor=color.new(color.rgb(120,144,156), 88), border_color=color.new(color.rgb(120,144,156), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1776394800000, 1.36191, "Fri SS\n 80%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(120,144,156), size=size.small)
-        line.new(1776060000000, 1.34059, 1776114000000, 1.34479, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1776146400000, 1.35168, 1776200400000, 1.35649, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1776114000000, 1.35051, 1776146400000, 1.34079, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1776232800000, 1.35652, 1776286800000, 1.35394, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1776200400000, 1.35657, 1776232800000, 1.34660, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1776286800000, 1.35574, 1776355200000, 1.35892, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1776355200000, 1.35892, 1776373200000, 1.35714, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1776373200000, 1.35255, 1776405600000, 1.35394, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1776405600000, 1.35394, 1776459600000, 1.35892, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776060000000, 1.34059, 1776081600000, 1.32998, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776081600000, 1.32998, 1776088800000, 1.32998, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776088800000, 1.32998, 1776114000000, 1.34479, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776146400000, 1.35168, 1776168000000, 1.35649, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776168000000, 1.35649, 1776175200000, 1.35649, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776175200000, 1.35649, 1776200400000, 1.34660, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776114000000, 1.35051, 1776146400000, 1.35051, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776232800000, 1.35652, 1776254400000, 1.35892, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776254400000, 1.35892, 1776261600000, 1.35892, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776261600000, 1.35892, 1776286800000, 1.35394, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776200400000, 1.35657, 1776232800000, 1.35657, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776319200000, 1.35704, 1776340800000, 1.35892, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776340800000, 1.35892, 1776348000000, 1.35892, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776348000000, 1.35892, 1776373200000, 1.35394, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776286800000, 1.35574, 1776319200000, 1.35574, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776405600000, 1.35188, 1776427200000, 1.35394, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776427200000, 1.35394, 1776434400000, 1.35394, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776434400000, 1.35394, 1776459600000, 1.35892, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1776373200000, 1.35255, 1776405600000, 1.35255, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
     if show_e3
-        // GB1 Tue SS SHORT E 1.35649 SL 1.35934 TP 1.34675 RRR 3.41 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
-        box.new(1776146400000, 1.35934, 1776200400000, 1.35649, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1776146400000, 1.35649, 1776200400000, 1.35629, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1776146400000, 1.35649, 1776200400000, 1.34675, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1776157200000, 1.35513, "GB1 SS S 3.4R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // GB2 Wed SS SHORT E 1.35902 SL 1.36129 TP 1.35409 RRR 3.78 | Swing Scalp / London Open | entry zone edge + 1 pip (TS-1; F1-A, E3C:186) - staggered front / middle / back, RRR blended (primary 2.17; E3C:357); SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
-        box.new(1776232800000, 1.36129, 1776373200000, 1.35902, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1776232800000, 1.35902, 1776373200000, 1.35872, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1776232800000, 1.35902, 1776373200000, 1.35409, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1776243600000, 1.35833, "GB2 SS S 3.8R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // GB3 Fri SS SHORT E 1.35902 SL 1.36129 TP 1.35409 RRR 3.78 | Swing Scalp / London Open | entry zone edge + 1 pip (TS-1; F1-A, E3C:186) - staggered front / middle / back, RRR blended (primary 2.17; E3C:357); SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
-        box.new(1776373200000, 1.36129, 1776459600000, 1.35902, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1776373200000, 1.35902, 1776459600000, 1.35872, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1776373200000, 1.35902, 1776459600000, 1.35409, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1776375180000, 1.35833, "GB3 SS S 3.8R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // GB1 Mon SS LONG E 1.32986 SL 1.32677 TP 1.34464 RRR 4.78 | Swing Scalp / London Open | entry internal LQZ rung; SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B RR-tight, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge + 1 pip (strong) (E3C:333, rule 5)
+        box.new(1776060000000, 1.32986, 1776459600000, 1.32677, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1776060000000, 1.33006, 1776459600000, 1.32986, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1776060000000, 1.34464, 1776459600000, 1.32986, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1776070800000, 1.33193, "GB1 SS L 4.8R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_tbl
         var table tb = table.new(position.top_right, 2, 17, bgcolor=color.new(color.black, 10), border_color=color.rgb(40,40,45), border_width=1)
         table.cell(tb, 0, 0, "TRIDENT v8", text_color=color.rgb(180,100,220), bgcolor=color.rgb(40,15,50), text_size=size.small, text_halign=text.align_left)
@@ -364,18 +364,18 @@ if barstate.islast and isPair
         table.cell(tb, 1, 9, "1.3280-1.3287 | MODERATE | 30-50% ZFP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 10, "TRADES", text_color=color.rgb(180,100,220), bgcolor=color.rgb(40,15,50), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 1, 10, "", text_color=color.rgb(180,100,220), bgcolor=color.rgb(40,15,50), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 0, 11, "Short GB1", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 11, "Entry 1.3565", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 11, "Short", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 11, "-", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 12, "SL | TP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 12, "1.3593 | 1.3468", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 12, "-", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 13, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 13, "Tue SS | 3.4R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 0, 14, "Long", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 14, "-", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 13, "-", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 0, 14, "Long GB1", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 14, "Entry 1.3299", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 15, "SL | TP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 15, "-", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 15, "1.3268 | 1.3446", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 16, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 16, "-", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 16, "Mon SS | 4.8R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
 
 // ENGINE 2 - MACRO SHAPE CHAIN MAP | WEEK OF 2026-04-13 | GBP/USD
 // Primary Timeframe: 1H | Structural Validation: 4H
@@ -389,25 +389,10 @@ if barstate.islast and isPair
 // ALTERNATIVE CHAIN ACTIVE from the Tue trading-day open (6.6 Step 4): 1H close above 1.34890 (4H (Unmitigated) | BoM) at 2026-04-13 19:00 UTC: SS -> BS -> WL -> RWL -> SS
 // DAILY ANCHOR Tue trading-day open 2026-04-13 21:00 UTC: price 1.35051
 // DAILY ZONE UPDATE Tue London open 2026-04-14 06:00 UTC (L-53): sd 1.35047-1.35155; sd 1.34956-1.35016; sd 1.34185-1.34430; lsz 1.34986-1.35086; lsz 1.35118-1.35218; ip 1.35051-1.35140; ip 1.34453-1.34547; ip 1.34220-1.34303
-// CHAIN RE-ANCHORED at the Tue London open 2026-04-14 06:00 UTC on the rebuilt map (D-136), price 1.35168: SS
-//   Current Shape: SS range (MODERATE) | Anchoring Zone: MID-RANGE SUPPORT | ZFP: 30-50% | after 04-13 NY price stabilises at MID-RANGE SUPPORT (ZFP 40) | FA 9: 2 piercing sessions -> 'EXPECT 1-2 FULL DAYS OF HTF CONSOLIDATION'
-//   Ceiling: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
-//   Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
-//   4H Structural Validation: rejects - 4H close beyond the floor
-//   Breakout direction: none | pair translation of the DXY chain: DXY ranges all week (Part IX: DXY gives direction and timing, the pair its levels)
-//     -> SS range sessions LON Tue .. NY Fri | Trigger: DXY: 6.4.1 'SS | All < 30% (both sides hold) | SS continues' - every bound holds | HIGH -> cumulative 0.8
-//   chain: SS [HIGH, cum 0.8]
-// ALTERNATIVE CHAIN ACTIVE from the Wed trading-day open (6.6 Step 4): 1H close above 1.35849 (Liquidity Sweep Zone) at 2026-04-14 13:00 UTC: SS -> BS
+// LINE RE-ANCHORED at the Tue London open 2026-04-14 06:00 UTC on the rebuilt map (D-138): SS
 // DAILY ANCHOR Wed trading-day open 2026-04-14 21:00 UTC: price 1.35657
 // DAILY ZONE UPDATE Wed London open 2026-04-15 06:00 UTC (L-53): sd 1.35790-1.35888; sd 1.35401-1.35520; sd 1.35215-1.35394; lsz 1.35794-1.35894; ip 1.35622-1.35682; ip 1.35307-1.35401; ip 1.34708-1.34792; ip 1.33000-1.33060
-// CHAIN RE-ANCHORED at the Wed London open 2026-04-15 06:00 UTC on the rebuilt map (D-136), price 1.35652: SS
-//   Current Shape: BS up (MODERATE-HIGH) | Anchoring Zone: MID-RANGE SUPPORT | ZFP: 30-50% | 04-14 LON: 1H close through MID-RANGE SUPPORT (ZFP 40), price still beyond [the row's ZFP condition is not met: best description, one tier lower]
-//   Ceiling: 1H (Unmitigated) | MoM [SD MoM Active] -> SLOW (active MoM (1 reactions), opposing liquidity 4H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
-//   Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
-//   4H Structural Validation: confirms - no 4H close beyond either bound in the last day
-//   Breakout direction: none | pair translation of the DXY chain: DXY ranges all week (Part IX: DXY gives direction and timing, the pair its levels)
-//     -> SS range sessions LON Wed .. NY Fri | Trigger: DXY: 6.4.1 'SS | All < 30% (both sides hold) | SS continues' - every bound holds | HIGH -> cumulative 0.8
-//   chain: SS [HIGH, cum 0.8]
+// LINE RE-ANCHORED at the Wed London open 2026-04-15 06:00 UTC on the rebuilt map (D-138): SS
 // DAILY ANCHOR Thu trading-day open 2026-04-15 21:00 UTC: price 1.35574
 // DAILY ZONE UPDATE Thu London open 2026-04-16 06:00 UTC (L-53): sd 1.35532-1.35586; lsz 1.35434-1.35534; ip 1.35463-1.35551
 // DAILY ANCHOR Fri trading-day open 2026-04-16 21:00 UTC: price 1.35255
@@ -431,37 +416,23 @@ if barstate.islast and isPair
 // 
 // === WEEKLY EXECUTION CALENDAR ===
 // Day | Pair | Dir | Setup Type | Entry | Shape | Session | Conf | Notes
-// Mon | GBP/USD | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
-// Tue | GBP/USD | SHORT | Swing Scalp | 1.35649 | SS | London Open | 85.0 | GB1
-// Wed | GBP/USD | SHORT | Swing Scalp | 1.35902 | SS | London Open | 78 | GB2
+// Mon | GBP/USD | LONG | Swing Scalp | 1.32986 | SS | London Open | 100 | GB1
+// Tue | GBP/USD | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
+// Wed | GBP/USD | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
 // Thu | GBP/USD | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
-// Fri | GBP/USD | SHORT | Swing Scalp | 1.35902 | SS | London Open | 78 | GB3
+// Fri | GBP/USD | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
 // 
 // --- HTF SWING SETUPS ---
 // none
 // 
 // --- SWING SCALP SETUPS ---
-// GB1 | GBP/USD | SHORT | Swing Scalp | Day: Tue | Session: London Open | Shape: SS
-//   Entry: 1.35649 | SL: 1.35934 | TP: 1.34675 | RRR: 3.41 / blended 3.90 | Quality: HIGH | Confidence: 85.0
-//   Anchor Zone: Liquidity Sweep Zone [LSZ] | Shape Trigger: SS @ Tue London Open | Day Catalysts: red folder: NO DATA
-//   Audit Trail: entry sweep zone near edge (TS-1); SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5) | attempts 1
-//   Cascade Source: EU->GU | Parent Trade Ref: - | Anchor Hit Window: Tue London Open 06:00-09:00 UTC
-//   Direction validation (E3C 8.18): 1 of 6 disagree - 4H trend=-, BoM alignment=up, liquidity sweep=down, zone failure=-, macro shape=-
-//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: OUTSIDE (28.5p)
-// GB2 | GBP/USD | SHORT | Swing Scalp | Day: Wed | Session: London Open | Shape: SS
-//   Entry: 1.35902 | SL: 1.36129 | TP: 1.35409 | RRR: 3.78 / blended 3.78 | Quality: STANDARD | Confidence: 78
-//   Anchor Zone: 1H (Unmitigated) | MoM [MoM, tested 1x] | Shape Trigger: SS @ Wed London Open | Day Catalysts: 10:30 AM NY EIA crude stocks, red folder: NO DATA
-//   Audit Trail: entry zone edge + 1 pip (TS-1; F1-A, E3C:186) - staggered front / middle / back, RRR blended (primary 2.17; E3C:357); SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5) | attempts 1
-//   Cascade Source: EU->GU | Parent Trade Ref: - | Anchor Hit Window: Wed London Open 06:00-09:00 UTC
-//   Direction validation (E3C 8.18): 2 of 6 disagree - 4H trend=-, BoM alignment=up, liquidity sweep=up, zone failure=-, macro shape=-
-//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: OUTSIDE (22.7p)
-// GB3 | GBP/USD | SHORT | Swing Scalp | Day: Fri | Session: London Open | Shape: SS
-//   Entry: 1.35902 | SL: 1.36129 | TP: 1.35409 | RRR: 3.78 / blended 3.78 | Quality: STANDARD | Confidence: 78
-//   Anchor Zone: 1H (Unmitigated) | MoM [MoM, tested 1x] | Shape Trigger: SS @ Fri London Open | Day Catalysts: red folder: NO DATA
-//   Audit Trail: entry zone edge + 1 pip (TS-1; F1-A, E3C:186) - staggered front / middle / back, RRR blended (primary 2.17; E3C:357); SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5) | attempts 1
-//   Cascade Source: EU->GU | Parent Trade Ref: - | Anchor Hit Window: Fri London Open 06:00-09:00 UTC
-//   Direction validation (E3C 8.18): 2 of 6 disagree - 4H trend=-, BoM alignment=up, liquidity sweep=up, zone failure=-, macro shape=-
-//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: OUTSIDE (22.7p)
+// GB1 | GBP/USD | LONG | Swing Scalp | Day: Mon | Session: London Open | Shape: SS
+//   Entry: 1.32986 | SL: 1.32677 | TP: 1.34464 | RRR: 4.78 / blended 4.90 | Quality: HIGH | Confidence: 100
+//   Anchor Zone: 1H (Unmitigated) | MoM [MoM, tested 0x] | Shape Trigger: SS @ Mon London Open | Day Catalysts: red folder: NO DATA
+//   Audit Trail: entry internal LQZ rung; SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B RR-tight, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge + 1 pip (strong) (E3C:333, rule 5) | attempts 1
+//   Cascade Source: EU->GU | Parent Trade Ref: - | Anchor Hit Window: Mon London Open 06:00-09:00 UTC
+//   Direction validation (E3C 8.18): 1 of 6 disagree - 4H trend=up, BoM alignment=up, liquidity sweep=down, zone failure=-, macro shape=-
+//   Floor invariants (E3C 12.2): RRR >= 2.5 ok | session bracket = the E2 step's days | SL envelope 9.5p: OUTSIDE (30.9p)
 // 
 // --- REINFORCEMENT ENTRIES ---
 // none
@@ -490,17 +461,14 @@ if barstate.islast and isPair
 // ALT Wed BS up: REJECT RRR 0.28 outside [3.0, 15.0] (SL 1.34575 = 21.5p, TP 1.34849 = 5.9p: LQZ inside the target zone: midpoint) (entry 1.34790)
 // ALT Fri SS down: REJECT RRR 2.22 outside [3.0, 15.0] (SL 1.34968 = 14.7p, TP 1.34494 = 32.7p: weak zone far edge) (entry 1.34821)
 // ALT Fri SS up: REJECT RRR 1.73 outside [3.0, 15.0] (SL 1.34575 = 9.5p, TP 1.34834 = 16.4p: LQZ inside the opposing zone: midpoint) (entry 1.34790)
-// Mon SS LONG 1.32986: NOT REACHABLE - the day's path stays more than 30 pips away (law 2)
-// Tue GB1 LONG 1.32986: NOT CONFIRMED at 2026-04-13 21:00 UTC - the chain failed at its Decision Zone (2026-04-13 19:00 UTC) - its alternative is active
-// Tue re-anchored run: Tue SS LONG 1.34585: NOT REACHABLE - the day's path stays more than 30 pips away (law 2)
-// Wed GB1.Wed SHORT 1.35649: NOT CONFIRMED at 2026-04-14 21:00 UTC - the chain failed at its Decision Zone (2026-04-14 13:00 UTC) - its alternative is active
-// Wed GB2 LONG 1.34585: NOT CONFIRMED at 2026-04-14 21:00 UTC - the chain failed at its Decision Zone (2026-04-14 13:00 UTC) - its alternative is active
-// Wed GB2 LONG 1.35394: NOT CONFIRMED at the re-anchor 2026-04-15 06:00 UTC - anchor zone 1.35215-1.35394 closed through 2026-04-13 07:00 UTC (one-time use)
-// Thu GB1.Thu SHORT 1.35902: NOT A NEW TRADE - GB1 still resting / open: it keeps resting (L-52)
-// Thu GB2.Thu LONG 1.35394: NOT CONFIRMED at 2026-04-15 21:00 UTC - anchor zone 1.35215-1.35394 closed through 2026-04-13 07:00 UTC (one-time use)
-// Fri GB2.Fri LONG 1.35394: NOT CONFIRMED at 2026-04-16 21:00 UTC - anchor zone 1.35215-1.35394 closed through 2026-04-13 07:00 UTC (one-time use)
+// Tue GB1.Tue LONG 1.32986: NOT CONFIRMED at 2026-04-13 21:00 UTC - the chain failed at its Decision Zone (2026-04-13 19:00 UTC) - its alternative is active
+// Wed GB1.Wed LONG 1.32986: NOT CONFIRMED at 2026-04-14 21:00 UTC - the chain failed at its Decision Zone (2026-04-13 19:00 UTC) - its alternative is active
+// Wed GBA2 SHORT 1.32838: NOT CONFIRMED at 2026-04-14 21:00 UTC - an alternative of another Decision Zone
+// Thu GB1.Thu LONG 1.32986: NOT CONFIRMED at 2026-04-15 21:00 UTC - the chain failed at its Decision Zone (2026-04-13 19:00 UTC) - its alternative is active
+// Thu GBB2 SHORT 1.34821: NOT CONFIRMED at 2026-04-15 21:00 UTC - the price at the anchor 1.35574 already on the far side of the entry 1.34821
+// Fri GB1.Fri LONG 1.32986: NOT CONFIRMED at 2026-04-16 21:00 UTC - the chain failed at its Decision Zone (2026-04-13 19:00 UTC) - its alternative is active
 // 
 // --- WEEKLY STATS ---
-// Total Setups: 3 | HTF: 0 | Scalps: 3 | Reinforcements: 0 | Transitions: 0
-// Average RRR: 3.66 | Median RRR: 3.78
-// f(T) Acceptance (E3C:996: 8 per pair minimum): 3 setups on GBP/USD - NOT met
+// Total Setups: 1 | HTF: 0 | Scalps: 1 | Reinforcements: 0 | Transitions: 0
+// Average RRR: 4.78 | Median RRR: 4.78
+// f(T) Acceptance (E3C:996: 8 per pair minimum): 1 setups on GBP/USD - NOT met
