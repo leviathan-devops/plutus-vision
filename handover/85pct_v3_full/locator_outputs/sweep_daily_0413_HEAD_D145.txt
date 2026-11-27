@@ -1,0 +1,5 @@
+DXY 2026-04-13 daily: OK (2 orders, 479 Pine lines)
+EURUSD 2026-04-13 daily: OK (3 orders, 508 Pine lines)
+GBPUSD 2026-04-13 daily: OK (1 orders, 476 Pine lines)
+SWEEP daily: 0 errors
+done

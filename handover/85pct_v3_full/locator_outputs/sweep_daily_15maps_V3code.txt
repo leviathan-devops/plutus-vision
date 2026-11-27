@@ -1,0 +1,17 @@
+DXY 2026-04-13 daily: ERROR URLError(ConnectionRefusedError(111, 'Connection refused')) at request.py:1334
+EURUSD 2026-04-13 daily: ERROR URLError(ConnectionRefusedError(111, 'Connection refused')) at request.py:1334
+GBPUSD 2026-04-13 daily: ERROR KeyError('zfp_num') at e3_trades.py:702
+DXY 2026-04-20 daily: OK (3 orders, 462 Pine lines)
+EURUSD 2026-04-20 daily: OK (4 orders, 457 Pine lines)
+GBPUSD 2026-04-20 daily: OK (3 orders, 480 Pine lines)
+DXY 2026-05-18 daily: OK (1 orders, 452 Pine lines)
+EURUSD 2026-05-18 daily: OK (3 orders, 463 Pine lines)
+GBPUSD 2026-05-18 daily: OK (3 orders, 452 Pine lines)
+DXY 2026-07-06 daily: OK (8 orders, 508 Pine lines)
+EURUSD 2026-07-06 daily: OK (8 orders, 483 Pine lines)
+GBPUSD 2026-07-06 daily: OK (4 orders, 479 Pine lines)
+DXY 2026-10-05 daily: OK (2 orders, 454 Pine lines)
+EURUSD 2026-10-05 daily: OK (2 orders, 458 Pine lines)
+GBPUSD 2026-10-05 daily: OK (3 orders, 414 Pine lines)
+SWEEP daily: 3 errors
+done

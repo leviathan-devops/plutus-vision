@@ -1,0 +1,321 @@
+DXY 2026-07-06 | day map: Mon SS range | Tue SS range | Wed SS+RWL+BS down | Thu BS down | Fri BS+WL+RWL down
+  DX1      Mon SS     SHORT E 101.203 SL 101.255 TP 100.830 7.17R | filled - -> not filled inside its bracket (order expires)
+  DX2      Mon SS     SHORT E 101.138 SL 101.213 TP 100.830 4.12R | filled Mon 09:45 -> TP HIT Tue 01:30
+  DX3      Mon SS     LONG  E 100.851 SL 100.743 TP 101.184 3.08R | filled Mon 18:30 -> TP HIT Tue 23:45
+  DX1.Tue    Tue SS     SHORT E 101.203 SL 101.255 TP 100.830 7.17R | filled - -> not filled inside its bracket (order expires)
+  DX2.Tue    Tue SS     SHORT E 101.138 SL 101.213 TP 100.830 4.12R | filled Tue 19:15 -> STOPPED Wed 01:30
+  DX3.Tue    Tue SS     LONG  E 100.851 SL 100.743 TP 101.184 3.08R | filled Mon 21:00 -> TP HIT Tue 23:45
+  DX4      Wed BS     SHORT E 101.235 SL 101.322 TP 100.685 6.32R | filled Wed 09:00 -> TP HIT Fri 02:00
+  DX5      Wed SS     SHORT E 101.203 SL 101.255 TP 100.995 3.98R | filled Tue 23:45 -> TP HIT Wed 06:30
+  DX6      Wed RWL    LONG  E 100.980 SL 100.906 TP 101.235 3.42R | filled Wed 07:15 -> TP HIT Wed 09:00
+  DXA4 ALT Wed BS     LONG  E 100.753 SL 100.700 TP 101.332 10.87R | not triggered: no 1H close above 101.305 (UPPER RESISTANCE) during the week
+  DX7      Thu Ladder SHORT E 100.980 SL 101.077 TP 100.685 3.06R | filled Thu 00:00 -> TP HIT Fri 02:00
+  DXA6 ALT Thu Ladder LONG  E 100.980 SL 100.906 TP 101.332 4.72R | not triggered: no 1H close above 101.305 (UPPER RESISTANCE) during the week
+  DX8      Fri RWL    LONG  E 100.628 SL 100.548 TP 100.940 3.9R | filled Fri 02:00 -> TP HIT Fri 14:00
+  DXA7 ALT Fri RWL    SHORT E 101.371 SL 101.480 TP 101.037 3.07R | not triggered: no 1H close above 101.305 (UPPER RESISTANCE) during the week
+  ! reinforcement at 100.74139: REJECT RRR 0.54 / SL 10.4p
+  ! Wed BS down: REJECT RRR 0.31 outside [3.0, 15.0] (SL 100.84579 = 12.2p, TP 100.68539 = 3.8p: LQZ inside the target zone: midpoint) (entry 100.72380)
+  ! Mon SS LONG 100.81400: DUPLICATE of SS 100.85100 (E3C:463)
+  ! ALT Wed SS down: REJECT TP_NULL: no opposing zone on the way (E3C:1016 honest absence) (entry 100.72979)
+  ! ALT Wed SS up: REJECT TP_NULL: no opposing zone on the way (E3C:1016 honest absence) (entry 100.79500)
+  ! ALT reinforcement at 101.21439: REJECT RRR 1.20 / SL 9.7p
+  ! ALT reinforcement at 101.28439: REJECT RRR 0.44 / SL 10.8p
+  ! ALT Wed BS up: REJECT RRR 0.56 outside [3.0, 15.0] (SL 101.11700 = 14.5p, TP 101.34243 = 8.1p: LQZ inside the target zone: midpoint) (entry 101.26178)
+  ! ALT Mon SS LONG 100.81400: DUPLICATE of SS 100.85100 (E3C:463)
+  ! ALT Wed SS LONG 100.81400: DUPLICATE of SS 100.81400 (E3C:463)
+EURUSD 2026-07-06 | day map: Mon SS range | Tue SS range | Wed SS+RWL+BS up | Thu BS up | Fri BS+WL+RWL up
+  EU1      Mon SS     SHORT E 1.14442 SL 1.14508 TP 1.14068 5.66R | filled Mon 18:30 -> TP HIT Tue 21:15
+  EU2      Mon SS     SHORT E 1.14385 SL 1.14451 TP 1.14068 4.8R | filled Mon 17:15 -> STOPPED Mon 21:45
+  EU3      Mon SS     LONG  E 1.14018 SL 1.13960 TP 1.14429 7.14R | filled - -> not filled inside its bracket (order expires)
+  EU4      Mon SS     LONG  E 1.14095 SL 1.14037 TP 1.14429 5.8R | filled Mon 10:00 -> TP HIT Mon 18:45
+  EU1.Tue    Tue SS     SHORT E 1.14442 SL 1.14508 TP 1.14068 5.66R | filled Mon 21:00 -> TP HIT Tue 21:15
+  EU3.Tue    Tue SS     LONG  E 1.14018 SL 1.13960 TP 1.14429 7.14R | filled - -> not filled inside its bracket (order expires)
+  EU4.Tue    Tue SS     LONG  E 1.14095 SL 1.14037 TP 1.14429 5.8R | filled Tue 19:15 -> STOPPED Tue 21:30
+  EU5      Wed RWL    SHORT E 1.14269 SL 1.14369 TP 1.13940 3.29R | filled Wed 07:15 -> TP HIT Wed 11:30
+  EU6      Wed BS     LONG  E 1.13940 SL 1.13872 TP 1.14555 9.11R | filled Wed 11:30 -> TP HIT Fri 02:00
+  EU7      Wed SS     LONG  E 1.14018 SL 1.13960 TP 1.14254 4.1R | filled Tue 21:30 -> TP HIT Wed 07:15
+  EUA5 ALT Wed BS     SHORT E 1.14573 SL 1.14753 TP 1.13837 4.09R | not triggered: no 1H close below 1.13902 (MID-RANGE SUPPORT) during the week
+  EU8      Thu Ladder LONG  E 1.14239 SL 1.14172 TP 1.14555 4.71R | filled Thu 00:00 -> TP HIT Fri 02:00
+  EUA7 ALT Thu Ladder SHORT E 1.14352 SL 1.14396 TP 1.13837 11.77R | not triggered: no 1H close below 1.13902 (MID-RANGE SUPPORT) during the week
+  EU9      Fri RWL    SHORT E 1.14598 SL 1.14653 TP 1.14239 6.52R | filled Fri 02:15 -> TP HIT Fri 12:45
+  EUA9 ALT Fri RWL    LONG  E 1.13851 SL 1.13793 TP 1.14164 5.45R | not triggered: no 1H close below 1.13902 (MID-RANGE SUPPORT) during the week
+  EUA8 ALT Fri Ladder SHORT E 1.14081 SL 1.14125 TP 1.13837 5.58R | not triggered: no 1H close below 1.13902 (MID-RANGE SUPPORT) during the week
+  ! reinforcement at 1.14498: REJECT RRR 1.30 / SL 4.4p
+  ! Wed BS up: REJECT RRR 0.35 outside [3.0, 15.0] (SL 1.14367 = 16.5p, TP 1.14591 = 5.8p: target zone near edge + 1 pip) (entry 1.14533)
+  ! ALT Wed SS down: REJECT RRR 1.61 outside [3.0, 15.0] (SL 1.14753 = 18.0p, TP 1.14284 = 28.9p: weak zone far edge) (entry 1.14573)
+  ! ALT Wed SS down: REJECT RRR 0.14 outside [3.0, 15.0] (SL 1.14753 = 18.0p, TP 1.14548 = 2.5p: bounding zone near edge + 1 pip (strong zone)) (entry 1.14573)
+  ! ALT Wed SS up: REJECT RRR 2.04 outside [3.0, 15.0] (SL 1.14454 = 5.8p, TP 1.14629 = 11.7p: LQZ inside the opposing zone: midpoint) (entry 1.14512)
+  ! ALT Wed BS down: REJECT RRR 0.97 outside [3.0, 15.0] (SL 1.14115 = 13.8p, TP 1.13842 = 13.5p: 4H target zone near edge + 1 pip (strong zone)) (entry 1.13977)
+  ! Tue SS SHORT 1.14385: EMISSION_CAPPED - more than 11 trades this week (L-04)
+GBPUSD 2026-07-06 | day map: Mon SS range | Tue SS range | Wed SS+RWL+BS up | Thu BS up | Fri BS+WL+RWL up
+  GB1      Mon SS     SHORT E 1.33959 SL 1.34155 TP 1.33348 3.12R | filled Mon 18:45 -> TP HIT Wed 09:00
+  GB2      Mon SS     LONG  E 1.33333 SL 1.33235 TP 1.33926 6.05R | filled Mon 06:15 -> TP HIT Mon 18:45
+  GB1.Tue    Tue SS     SHORT E 1.33959 SL 1.34155 TP 1.33348 3.12R | filled Mon 22:30 -> TP HIT Wed 09:00
+  GB2.Tue    Tue SS     LONG  E 1.33333 SL 1.33235 TP 1.33926 6.05R | filled - -> not filled inside its bracket (order expires)
+  GB3      Wed RWL    SHORT E 1.33473 SL 1.33593 TP 1.33255 3.13R | filled Tue 21:00 -> STOPPED Wed 03:15
+  GB4      Wed BS     LONG  E 1.33255 SL 1.33125 TP 1.34254 7.67R | filled Wed 09:00 -> TP HIT Thu 06:15
+  GBA3 ALT Wed BS     SHORT E 1.34136 SL 1.34291 TP 1.32737 9.03R | not triggered: no 1H close below 1.33082 (1H (Unmitigated) | MoM) during the week
+  GB5      Thu Ladder LONG  E 1.33473 SL 1.33235 TP 1.34254 3.29R | filled - -> not filled inside its bracket (order expires)
+  GBA4 ALT Thu Ladder SHORT E 1.33888 SL 1.33986 TP 1.32737 11.72R | not triggered: no 1H close below 1.33082 (1H (Unmitigated) | MoM) during the week
+  GB6      Fri RWL    SHORT E 1.34254 SL 1.34396 TP 1.33888 3.85R | filled Thu 06:15 -> TP HIT Thu 11:15
+  GBA6 ALT Fri RWL    LONG  E 1.32737 SL 1.32582 TP 1.33473 4.75R | not triggered: no 1H close below 1.33082 (1H (Unmitigated) | MoM) during the week
+  GB7      Fri Ladder LONG  E 1.33888 SL 1.33795 TP 1.34254 3.96R | filled - -> not filled inside its bracket (order expires)
+  GBA5 ALT Fri Ladder SHORT E 1.33613 SL 1.33725 TP 1.32737 7.8R | not triggered: no 1H close below 1.33082 (1H (Unmitigated) | MoM) during the week
+  ! Wed SS up: REJECT RRR 1.51 outside [3.0, 15.0] (SL 1.33235 = 9.8p, TP 1.33481 = 14.8p: weak zone far edge) (entry 1.33333)
+  ! reinforcement at 1.33813: REJECT RRR 2.95 / SL 15.0p
+  ! reinforcement at 1.34154: REJECT RRR 1.03 / SL 9.8p
+  ! reinforcement at 1.34222: REJECT RRR 0.20 / SL 16.6p
+  ! Wed BS up: REJECT RRR 1.83 outside [3.0, 15.0] (SL 1.33911 = 12.1p, TP 1.34254 = 22.2p: target zone near edge + 1 pip) (entry 1.34032)
+  ! ALT Wed SS down: REJECT RRR 2.75 outside [3.0, 15.0] (SL 1.34155 = 19.6p, TP 1.33421 = 53.8p: weak zone far edge) (entry 1.33951)
+  ! ALT Wed SS down: REJECT RRR 0.81 outside [3.0, 15.0] (SL 1.34155 = 11.0p, TP 1.33956 = 8.9p: weak zone far edge) (entry 1.34045)
+  ! ALT Wed SS down: REJECT RRR 1.16 outside [3.0, 15.0] (SL 1.34291 = 15.5p, TP 1.33956 = 18.0p: weak zone far edge) (entry 1.34136)
+  ! ALT Wed SS up: REJECT RRR 0.43 outside [3.0, 15.0] (SL 1.33820 = 17.4p, TP 1.34069 = 7.5p: LQZ inside the opposing zone: midpoint) (entry 1.34032)
+  ! ALT reinforcement at 1.32904: REJECT RRR 0.64 / SL 26.1p
+  ! ALT Wed BS down: REJECT RRR 1.08 outside [3.0, 15.0] (SL 1.33363 = 28.1p, TP 1.32779 = 30.3p: LQZ inside the target zone: midpoint) (entry 1.33082)
+  ! ALT Wed SS SHORT 1.34136: EMISSION_CAPPED - same anchor, day, entry and stop as BS 1.34136 (E3C:464, 471)
+DXY 2026-04-20 | day map: Mon SS range | Tue SS+RWL+BS up | Wed BS up | Thu BS+RWL up | Fri RWL down
+  DX1      Tue BS     LONG  E 98.019 SL 97.839 TP 98.874 4.75R | filled Mon 15:15 -> TP HIT Thu 17:30
+  DX2      Wed Ladder LONG  E 98.270 SL 98.104 TP 98.874 3.65R | filled Wed 05:15 -> TP HIT Thu 17:30
+  DX3      Thu RWL    SHORT E 98.874 SL 99.125 TP 98.416 3.25R | filled Thu 17:30 -> filled, still open at the week end
+  DX4      Thu Ladder LONG  E 98.660 SL 98.615 TP 98.874 4.81R | filled Thu 00:00 -> STOPPED Thu 00:15
+  ! Mon SS down: REJECT RRR 2.43 outside [3.0, 15.0] (SL 98.57083 = 15.6p, TP 98.03689 = 37.8p: LQZ inside the opposing zone: midpoint) (entry 98.41200)
+  ! Tue SS up: REJECT RRR 1.36 outside [3.0, 15.0] (SL 97.82200 = 22.3p, TP 98.34900 = 30.4p: weak zone far edge) (entry 98.04500)
+  ! Mon SS up: REJECT RRR 1.62 outside [3.0, 15.0] (SL 97.82200 = 22.3p, TP 98.40550 = 36.1p: LQZ inside the opposing zone: midpoint) (entry 98.04500)
+  ! Tue RWL down: REJECT RRR 1.58 outside [3.0, 15.0] (SL 98.47083 = 17.1p, TP 98.02900 = 27.1p: opposing zone near edge + 1 pip) (entry 98.29983)
+  ! reinforcement at 98.50959: REJECT RRR 2.34 / SL 15.6p
+  ! reinforcement at 98.60959: REJECT RRR 2.80 / SL 9.5p
+  ! Tue BS up: REJECT RRR 2.14 outside [3.0, 15.0] (SL 98.23600 = 20.3p, TP 98.87400 = 43.5p: target zone near edge + 1 pip) (entry 98.43900)
+  ! ALT Mon SS down: REJECT RRR 2.43 outside [3.0, 15.0] (SL 98.57083 = 15.6p, TP 98.03689 = 37.8p: LQZ inside the opposing zone: midpoint) (entry 98.41200)
+  ! ALT Mon SS up: REJECT RRR 1.62 outside [3.0, 15.0] (SL 97.82200 = 22.3p, TP 98.40550 = 36.1p: LQZ inside the opposing zone: midpoint) (entry 98.04500)
+  ! ALT Tue BS down: REJECT RRR 0.52 outside [3.0, 15.0] (SL 98.02383 = 8.7p, TP 97.89200 = 4.5p: E2 target near edge + 1 pip) (entry 97.93700)
+  ! ALT Tue BS down: REJECT RRR 0.33 outside [3.0, 15.0] (SL 98.07500 = 13.8p, TP 97.89200 = 4.5p: E2 target near edge + 1 pip) (entry 97.93700)
+  ! ALT Wed RWL up: REJECT RRR 2.73 outside [3.0, 15.0] (SL 97.72000 = 13.7p, TP 98.23100 = 37.4p: opposing sweep zone near edge + 1 pip) (entry 97.85700)
+EURUSD 2026-04-20 | day map: Mon SS range | Tue SS+RWL+BS down | Wed BS down | Thu BS+RWL down | Fri RWL up
+  EU1      Mon SS     SHORT E 1.17920 SL 1.17996 TP 1.17222 9.18R | filled - -> not filled inside its bracket (order expires)
+  EU2      Mon SS     LONG  E 1.17207 SL 1.17131 TP 1.17832 8.22R | filled - -> not filled inside its bracket (order expires)
+  EU3      Tue BS     SHORT E 1.17920 SL 1.17996 TP 1.17006 12.02R | filled Mon 23:00 -> TP HIT Thu 00:00
+  EUA3 ALT Wed RWL    SHORT E 1.18055 SL 1.18110 TP 1.17741 5.71R | not triggered: no 1H close above 1.17988 (1H (Unmitigated) | MoM) during the week
+  EU4      Wed Ladder SHORT E 1.17656 SL 1.17709 TP 1.17006 12.26R | filled - -> not filled inside its bracket (order expires)
+  EU5      Thu RWL    LONG  E 1.17006 SL 1.16779 TP 1.17372 6.03R | filled Thu 00:00 -> STOPPED Thu 17:30
+  EU6      Thu Ladder SHORT E 1.17372 SL 1.17425 TP 1.17006 6.9R | filled - -> not filled inside its bracket (order expires)
+  ! Tue RWL up: REJECT RRR 2.46 outside [3.0, 15.0] (SL 1.17329 = 16.8p, TP 1.17910 = 41.3p: opposing zone near edge + 1 pip) (entry 1.17497)
+  ! Tue BS down: REJECT RRR 0.32 outside [3.0, 15.0] (SL 1.17237 = 23.3p, TP 1.16929 = 7.5p: LQZ inside the target zone: midpoint) (entry 1.17004)
+  ! Tue SS SHORT 1.17920: EMISSION_CAPPED - same anchor, day, entry and stop as BS 1.17920 (E3C:464, 471)
+  ! ALT Tue BS up: REJECT RRR 0.54 outside [3.0, 15.0] (SL 1.17928 = 6.0p, TP 1.18020 = 3.2p: E2 target near edge + 1 pip) (entry 1.17988)
+  ! ALT Tue BS up: REJECT RRR 0.19 outside [3.0, 15.0] (SL 1.17817 = 17.1p, TP 1.18020 = 3.2p: E2 target near edge + 1 pip) (entry 1.17988)
+GBPUSD 2026-04-20 | day map: Mon SS range | Tue SS+RWL+BS down | Wed BS down | Thu BS+RWL down | Fri RWL up
+  GB1      Tue BS     SHORT E 1.35163 SL 1.35243 TP 1.34083 13.5R | filled Mon 07:15 -> STOPPED Mon 11:15
+  GBA1 ALT Wed RWL    SHORT E 1.35063 SL 1.35230 TP 1.34557 3.04R | triggered Mon 14:00 | filled Tue 21:00 -> STOPPED Wed 05:15
+  GB2      Wed Ladder SHORT E 1.34818 SL 1.34983 TP 1.34083 4.45R | filled - -> not filled inside its bracket (order expires)
+  GB3      Thu RWL    LONG  E 1.34083 SL 1.33923 TP 1.34963 5.5R | filled - -> not filled
+  GB4      Thu Ladder SHORT E 1.34557 SL 1.34701 TP 1.34083 3.28R | filled - -> not filled inside its bracket (order expires)
+  ! Tue SS down: REJECT RRR 0.00 outside [3.0, 15.0] (SL 1.35230 = 24.3p, TP 1.34988 = 0.1p: weak zone far edge) (entry 1.34987)
+  ! Mon SS down: REJECT RRR 2.24 outside [3.0, 15.0] (SL 1.35230 = 24.3p, TP 1.34443 = 54.5p: LQZ inside the opposing zone: midpoint) (entry 1.34987)
+  ! Mon SS up: REJECT RRR 1.30 outside [3.0, 15.0] (SL 1.34329 = 25.6p, TP 1.34917 = 33.2p: bounding zone near edge + 1 pip (strong zone)) (entry 1.34660)
+  ! Tue RWL up: REJECT RRR 0.45 outside [3.0, 15.0] (SL 1.34793 = 24.9p, TP 1.35153 = 11.1p: opposing zone near edge + 1 pip) (entry 1.35085)
+  ! reinforcement at 1.35016: REJECT RRR 19.04 / SL 4.9p
+  ! reinforcement at 1.34215: REJECT RRR 0.49 / SL 26.8p
+  ! reinforcement at 1.34130: REJECT RRR 0.43 / SL 10.7p
+  ! Tue BS down: REJECT RRR 2.13 outside [3.0, 15.0] (SL 1.34483 = 13.8p, TP 1.34052 = 29.3p: LQZ inside the target zone: midpoint) (entry 1.34345)
+  ! ALT Mon SS down: REJECT RRR 2.24 outside [3.0, 15.0] (SL 1.35230 = 24.3p, TP 1.34443 = 54.5p: LQZ inside the opposing zone: midpoint) (entry 1.34987)
+  ! ALT Mon SS up: REJECT RRR 1.30 outside [3.0, 15.0] (SL 1.34329 = 25.6p, TP 1.34917 = 33.2p: bounding zone near edge + 1 pip (strong zone)) (entry 1.34660)
+  ! ALT Tue BS up: REJECT TP_NULL: no opposing zone on the way (E3C:1016 honest absence) (entry 1.35044)
+  ! ALT Tue BS up: REJECT RRR 0.03 outside [3.0, 15.0] (SL 1.34793 = 22.6p, TP 1.35026 = 0.7p: E2 target near edge + 1 pip) (entry 1.35019)
+DXY 2026-10-05 | day map: Mon SS range | Tue SS range | Wed SS range | Thu SS range | Fri SS range
+  DX1      Mon SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | filled Mon 06:30 -> TP HIT Tue 11:15
+  DX2      Mon SS     LONG  E 101.926 SL 101.725 TP 102.420 2.93R | filled - -> not filled inside its bracket (order expires)
+  DX1.Tue    Tue SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | filled - -> not filled inside its bracket (order expires)
+  DX2.Tue    Tue SS     LONG  E 101.926 SL 101.725 TP 102.420 2.93R | filled Tue 11:00 -> TP HIT Wed 12:00
+  DX1.Wed    Wed SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | filled Wed 12:00 -> TP HIT Fri 05:30
+  DX2.Wed    Wed SS     LONG  E 101.926 SL 101.725 TP 102.420 2.93R | filled Tue 21:00 -> TP HIT Wed 12:00
+  DX1.Thu    Thu SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | filled Thu 09:45 -> TP HIT Fri 05:30
+  DX2.Thu    Thu SS     LONG  E 101.926 SL 101.725 TP 102.420 2.93R | filled - -> not filled inside its bracket (order expires)
+  DXA2 ALT Thu BS     LONG  E 102.535 SL 102.405 TP 103.155 4.77R | not triggered: no 1H close above 102.635 (Liquidity Sweep Zone) during the week
+  DX1.Fri    Fri SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | skipped: 4th battle at this anchor (E3C:150 'index i > 2 skipped')
+  DX2.Fri    Fri SS     LONG  E 101.926 SL 101.725 TP 102.420 2.93R | filled Fri 05:30 -> filled, still open at the week end
+  ! ALT Mon SS up: REJECT RRR 2.46 outside [3.0, 15.0] (SL 101.72500 = 20.1p, TP 102.42000 = 49.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 101.92600)
+  ! ALT Mon SS up: REJECT RRR 2.46 outside [3.0, 15.0] (SL 101.72500 = 20.1p, TP 102.42000 = 49.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 101.92600)
+  ! ALT Thu BS down: REJECT RRR 0.66 outside [3.0, 15.0] (SL 101.92605 = 7.1p, TP 101.80800 = 4.7p: E2 target near edge + 1 pip) (entry 101.85500)
+  ! ALT Fri RWL up: REJECT RRR 0.94 outside [3.0, 15.0] (SL 101.53100 = 16.2p, TP 101.84500 = 15.2p: pivot near edge + 1 pip) (entry 101.69300)
+EURUSD 2026-10-05 | day map: Mon SS range | Tue SS range | Wed SS range | Thu SS range | Fri SS range
+  EU1      Mon SS     SHORT E 1.12585 SL 1.12742 TP 1.11725 5.48R | filled - -> not filled inside its bracket (order expires)
+  EU2      Mon SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | filled Mon 06:30 -> TP HIT Tue 09:45
+  EU1.Tue    Tue SS     SHORT E 1.12585 SL 1.12742 TP 1.11725 5.48R | filled Tue 11:15 -> STOPPED Tue 12:00
+  EU2.Tue    Tue SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | filled - -> not filled inside its bracket (order expires)
+  EU1.Wed    Wed SS     SHORT E 1.12585 SL 1.12742 TP 1.11725 5.48R | filled Tue 21:00 -> TP HIT Wed 12:15
+  EU2.Wed    Wed SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | filled Wed 12:15 -> filled, still open at the week end
+  EU1.Thu    Thu SS     SHORT E 1.12585 SL 1.12742 TP 1.11725 5.48R | filled - -> not filled inside its bracket (order expires)
+  EU2.Thu    Thu SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | filled Thu 11:30 -> filled, still open at the week end
+  EUB3 ALT Thu BS     LONG  E 1.12612 SL 1.12556 TP 1.12784 3.1R | not triggered: no 1H close above 1.12712 (1H (Unmitigated) | MoM) during the week
+  EU1.Fri    Fri SS     SHORT E 1.12585 SL 1.12742 TP 1.11725 5.48R | filled - -> not filled
+  EU2.Fri    Fri SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | skipped: 4th battle at this anchor (E3C:150 'index i > 2 skipped')
+  EUB4 ALT Fri RWL    SHORT E 1.12828 SL 1.12883 TP 1.12461 6.67R | not triggered: no 1H close above 1.12712 (1H (Unmitigated) | MoM) during the week
+  ! ALT Thu BS down: REJECT SL_INVALID: no ladder-step stop between 4 and 36 pips (entry 1.11710)
+GBPUSD 2026-10-05 | day map: Mon SS range | Tue SS range | Wed SS range | Thu SS range | Fri SS range
+  GB1      Mon SS     SHORT E 1.32329 SL 1.32437 TP 1.32014 2.91R | filled Mon 07:45 -> TP HIT Mon 13:15
+  GB2      Mon SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled Mon 13:45 -> TP HIT Tue 01:30
+  GB1.Tue    Tue SS     SHORT E 1.32329 SL 1.32437 TP 1.32014 2.91R | filled Tue 01:30 -> TP HIT Tue 06:15
+  GB2.Tue    Tue SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled - -> not filled inside its bracket (order expires)
+  GB1.Wed    Wed SS     SHORT E 1.32329 SL 1.32437 TP 1.32014 2.91R | void: the anchor zone was closed through on 1H Tue 08:00 (VIOLATED, E3C:150)
+  GB2.Wed    Wed SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled - -> not filled inside its bracket (order expires)
+  GB1.Thu    Thu SS     SHORT E 1.32329 SL 1.32437 TP 1.32014 2.91R | void: the anchor zone was closed through on 1H Tue 08:00 (VIOLATED, E3C:150)
+  GB2.Thu    Thu SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled Thu 07:00 -> TP HIT Thu 14:15
+  GB1.Fri    Fri SS     SHORT E 1.32329 SL 1.32437 TP 1.32014 2.91R | void: the anchor zone was closed through on 1H Tue 08:00 (VIOLATED, E3C:150)
+  GB2.Fri    Fri SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled - -> not filled
+  GBB3 ALT Fri RWL    SHORT E 1.32475 SL 1.32536 TP 1.32097 6.23R | triggered Tue 09:00 | filled Fri 01:30 -> TP HIT Fri 12:45
+  ! ALT Thu BS down: REJECT RRR 0.95 outside [3.0, 15.0] (SL 1.32131 = 13.2p, TP 1.31874 = 12.5p: E2 target near edge + 1 pip) (entry 1.31999)
+  ! ALT Thu BS up: REJECT RRR 0.42 outside [3.0, 15.0] (SL 1.32289 = 10.6p, TP 1.32440 = 4.5p: E2 target near edge + 1 pip) (entry 1.32395)
+DXY 2026-05-18 | day map: Mon SS range | Tue SS range | Wed SS range | Thu SS range | Fri SS range
+  DXA1 ALT Wed BS     LONG  E 99.359 SL 99.288 TP 99.635 3.89R | not triggered: no 1H close above 99.509 (Liquidity Sweep Zone) during the week
+  DXB1 ALT Thu RWL    LONG  E 98.869 SL 98.826 TP 99.279 9.54R | triggered Mon 23:00 | filled - -> not filled inside its bracket (order expires)
+  ! Mon SS down: REJECT RRR 0.98 outside [2.5, 15.0] (SL 99.57777 = 16.9p, TP 99.24402 = 16.5p: LQZ inside the opposing zone: midpoint) (entry 99.40900)
+  ! Mon SS up: REJECT RRR 2.02 outside [2.5, 15.0] (SL 98.92900 = 12.1p, TP 99.29400 = 24.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.09700)
+  ! Mon SS up: REJECT RRR 0.67 outside [2.5, 15.0] (SL 99.16900 = 7.5p, TP 99.29400 = 5.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.24400)
+  ! Mon SS up: REJECT RRR 0.01 outside [2.5, 15.0] (SL 99.16900 = 12.4p, TP 99.29400 = 0.1p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.29800)
+  ! Mon SS up: REJECT RRR 2.35 outside [2.5, 15.0] (SL 98.92900 = 10.9p, TP 99.29400 = 25.6p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.03800)
+  ! ALT R ['Fri']: recovery - no designated swing (6.1.3 transitional)
+  ! ALT Mon SS down: REJECT RRR 0.98 outside [3.0, 15.0] (SL 99.57777 = 16.9p, TP 99.24402 = 16.5p: LQZ inside the opposing zone: midpoint) (entry 99.40900)
+  ! ALT Mon SS up: REJECT RRR 2.02 outside [3.0, 15.0] (SL 98.92900 = 12.1p, TP 99.29400 = 24.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.09700)
+  ! ALT Mon SS up: REJECT RRR 0.67 outside [3.0, 15.0] (SL 99.16900 = 7.5p, TP 99.29400 = 5.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.24400)
+  ! ALT Mon SS up: REJECT RRR 0.01 outside [3.0, 15.0] (SL 99.16900 = 12.4p, TP 99.29400 = 0.1p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.29800)
+  ! ALT Mon SS up: REJECT RRR 2.35 outside [3.0, 15.0] (SL 98.92900 = 10.9p, TP 99.29400 = 25.6p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.03800)
+  ! ALT Fri SS SHORT 99.64500: DIRECTION_VALIDATION_FAILED - 5 of the 6 checks disagree (E3C 8.18)
+  ! ALT Mon SS down: REJECT RRR 0.98 outside [3.0, 15.0] (SL 99.57777 = 16.9p, TP 99.24402 = 16.5p: LQZ inside the opposing zone: midpoint) (entry 99.40900)
+  ! ALT Mon SS up: REJECT RRR 2.02 outside [3.0, 15.0] (SL 98.92900 = 12.1p, TP 99.29400 = 24.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.09700)
+  ! ALT Mon SS up: REJECT RRR 0.67 outside [3.0, 15.0] (SL 99.16900 = 7.5p, TP 99.29400 = 5.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.24400)
+  ! ALT Mon SS up: REJECT RRR 0.01 outside [3.0, 15.0] (SL 99.16900 = 12.4p, TP 99.29400 = 0.1p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.29800)
+  ! ALT Mon SS up: REJECT RRR 2.35 outside [3.0, 15.0] (SL 98.92900 = 10.9p, TP 99.29400 = 25.6p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.03800)
+  ! ALT Wed BS down: REJECT RRR 2.08 outside [3.0, 15.0] (SL 99.08000 = 5.7p, TP 98.90400 = 11.9p: E2 target near edge + 1 pip) (entry 99.02282)
+  ! ALT Fri SS down: REJECT RRR 1.02 outside [3.0, 15.0] (SL 99.13477 = 11.2p, TP 98.90900 = 11.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.02282)
+  ! ALT Fri SS up: REJECT RRR 1.83 outside [3.0, 15.0] (SL 98.82600 = 4.3p, TP 98.94750 = 7.9p: bounding zone near edge + 1 pip (strong zone)) (entry 98.86900)
+EURUSD 2026-05-18 | day map: Mon SS range | Tue SS range | Wed SS range | Thu SS range | Fri SS range
+  EU1      Mon SS     SHORT E 1.16604 SL 1.16702 TP 1.15985 6.29R | filled Mon 20:15 -> TP HIT Tue 14:15
+  EU2      Mon SS     SHORT E 1.16297 SL 1.16386 TP 1.15985 3.51R | filled Mon 06:00 -> STOPPED Mon 07:15
+  EU3      Mon SS     LONG  E 1.15815 SL 1.15717 TP 1.16285 4.78R | filled - -> not filled inside its bracket (order expires)
+  EU1.Tue    Tue SS     SHORT E 1.16604 SL 1.16702 TP 1.15985 6.29R | filled Mon 21:45 -> TP HIT Tue 14:15
+  EU2.Tue    Tue SS     SHORT E 1.16297 SL 1.16386 TP 1.15985 3.51R | void: the anchor zone was closed through on 1H Mon 06:00 (VIOLATED, E3C:150)
+  EU3.Tue    Tue SS     LONG  E 1.15815 SL 1.15717 TP 1.16285 4.78R | filled - -> not filled inside its bracket (order expires)
+  EU1.Wed    Wed SS     SHORT E 1.16604 SL 1.16702 TP 1.15985 6.29R | filled - -> not filled inside its bracket (order expires)
+  EU2.Wed    Wed SS     SHORT E 1.16297 SL 1.16386 TP 1.15985 3.51R | void: the anchor zone was closed through on 1H Mon 06:00 (VIOLATED, E3C:150)
+  EU3.Wed    Wed SS     LONG  E 1.15815 SL 1.15717 TP 1.16285 4.78R | filled - -> not filled inside its bracket (order expires)
+  EU1.Thu    Thu SS     SHORT E 1.16604 SL 1.16702 TP 1.15985 6.29R | filled - -> not filled inside its bracket (order expires)
+  EU2.Thu    Thu SS     SHORT E 1.16297 SL 1.16386 TP 1.15985 3.51R | void: the anchor zone was closed through on 1H Mon 06:00 (VIOLATED, E3C:150)
+  EUB4 ALT Thu RWL    SHORT E 1.16701 SL 1.16756 TP 1.16155 9.92R | triggered Mon 22:00 | filled - -> not filled inside its bracket (order expires)
+  ! SS down: ZONE_DEPLETED - UPPER RESISTANCE has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! SS up: ZONE_DEPLETED - MID-RANGE SUPPORT has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT SS down: ZONE_DEPLETED - UPPER RESISTANCE has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT SS up: ZONE_DEPLETED - MID-RANGE SUPPORT has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT R ['Fri']: recovery - no designated swing (6.1.3 transitional)
+  ! ALT SS down: ZONE_DEPLETED - MID-RANGE SUPPORT has 3+ reactions (TP only, P533:1159) -> entry at sweep zone (opposing) beyond it (6.4.2)
+  ! ALT Mon SS LONG 1.15815: DIRECTION_VALIDATION_FAILED - 4 of the 6 checks disagree (E3C 8.18)
+  ! ALT Wed BS down: ZONE_DEPLETED - MID-RANGE SUPPORT has 3 reactions (TP only, E3C:1052)
+  ! ALT Fri SS up: SOURCE_INVALID - no ORDER_BLOCK / LQZ entry at KEY SUPPORT BAND (E3C:135)
+  ! ALT SS down: ZONE_DEPLETED - UPPER RESISTANCE has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT SS up: ZONE_DEPLETED - MID-RANGE SUPPORT has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT SS up: ZONE_DEPLETED - UPPER RESISTANCE has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT Wed BS up: ZONE_DEPLETED - UPPER RESISTANCE has 3 reactions (TP only, E3C:1052)
+  ! ALT Fri SS up: REJECT RRR 1.18 outside [3.0, 15.0] (SL 1.16447 = 9.8p, TP 1.16661 = 11.6p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 1.16545)
+  ! ALT Fri SS SHORT 1.16676: DUPLICATE of SS 1.16697 (E3C:463)
+  ! Fri SS LONG 1.15815: EMISSION_CAPPED - more than 11 trades this week (L-04)
+  ! Fri SS SHORT 1.16604: EMISSION_CAPPED - more than 11 trades this week (L-04)
+  ! Fri SS SHORT 1.16297: EMISSION_CAPPED - more than 11 trades this week (L-04)
+  ! Thu SS LONG 1.15815: EMISSION_CAPPED - more than 11 trades this week (L-04)
+GBPUSD 2026-05-18 | day map: Mon SS range | Tue SS range | Wed SS range | Thu SS range | Fri SS range
+  GB1      Mon SS     SHORT E 1.33983 SL 1.34232 TP 1.33262 2.89R | filled Mon 12:30 -> STOPPED Mon 15:45
+  GB2      Mon SS     LONG  E 1.33247 SL 1.32963 TP 1.33926 2.77R | filled Mon 06:00 -> TP HIT Mon 12:30
+  GB1.Tue    Tue SS     SHORT E 1.33983 SL 1.34232 TP 1.33262 2.89R | void: the anchor zone was closed through on 1H Mon 15:00 (VIOLATED, E3C:150)
+  GB2.Tue    Tue SS     LONG  E 1.33247 SL 1.32963 TP 1.33926 2.77R | filled - -> not filled inside its bracket (order expires)
+  GB1.Wed    Wed SS     SHORT E 1.33983 SL 1.34232 TP 1.33262 2.89R | void: the anchor zone was closed through on 1H Mon 15:00 (VIOLATED, E3C:150)
+  GB2.Wed    Wed SS     LONG  E 1.33247 SL 1.32963 TP 1.33926 2.77R | filled - -> not filled inside its bracket (order expires)
+  GBB2 ALT Wed BS     LONG  E 1.34037 SL 1.33923 TP 1.34487 3.94R | triggered Mon 16:00 | filled Tue 21:00 -> STOPPED Tue 21:15
+  GB1.Thu    Thu SS     SHORT E 1.33983 SL 1.34232 TP 1.33262 2.89R | void: the anchor zone was closed through on 1H Mon 15:00 (VIOLATED, E3C:150)
+  GB2.Thu    Thu SS     LONG  E 1.33247 SL 1.32963 TP 1.33926 2.77R | filled - -> not filled inside its bracket (order expires)
+  GBB3 ALT Thu RWL    SHORT E 1.34487 SL 1.34633 TP 1.33924 3.84R | triggered Mon 16:00 | filled Wed 15:15 -> TP HIT Thu 13:30
+  GB1.Fri    Fri SS     SHORT E 1.33983 SL 1.34232 TP 1.33262 2.89R | void: the anchor zone was closed through on 1H Mon 15:00 (VIOLATED, E3C:150)
+  GB2.Fri    Fri SS     LONG  E 1.33247 SL 1.32963 TP 1.33926 2.77R | filled - -> not filled
+  ! ALT R ['Fri']: recovery - no designated swing (6.1.3 transitional)
+  ! ALT Mon SS down: REJECT RRR 2.89 outside [3.0, 15.0] (SL 1.34232 = 24.9p, TP 1.33262 = 72.1p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 1.33951)
+  ! ALT Wed BS down: REJECT RRR 0.57 outside [3.0, 15.0] (SL 1.33537 = 29.0p, TP 1.33082 = 16.5p: E2 target near edge + 1 pip) (entry 1.33247)
+  ! ALT Fri SS down: REJECT RRR 0.55 outside [3.0, 15.0] (SL 1.33537 = 29.0p, TP 1.33087 = 16.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 1.33247)
+  ! ALT Fri SS up: REJECT RRR 1.01 outside [3.0, 15.0] (SL 1.32963 = 8.4p, TP 1.33132 = 8.5p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 1.33047)
+  ! ALT Mon SS down: REJECT RRR 2.89 outside [3.0, 15.0] (SL 1.34232 = 24.9p, TP 1.33262 = 72.1p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 1.33951)
+DXY 2026-07-13 | day map: Mon SS range | Tue SS+BS up | Wed BS up | Thu BS+RWL+SS up | Fri SS range
+  DX1      Tue BS     LONG  E 100.992 SL 100.917 TP 101.332 4.53R | filled Mon 07:30 -> STOPPED Mon 08:00
+  DXA1 ALT Tue BS     SHORT E 101.264 SL 101.335 TP 100.999 3.73R | triggered Mon 09:00 | filled Mon 16:30 -> TP HIT Tue 12:15
+  DX2      Thu RWL    SHORT E 101.332 SL 101.381 TP 101.029 6.09R | filled - -> not filled inside its bracket (order expires)
+  DXA2 ALT Thu RWL    LONG  E 100.971 SL 100.888 TP 101.280 3.72R | triggered Mon 09:00 | filled - -> void: price already beyond the stop when the order starts
+  ! Mon SS down: REJECT RRR 1.12 outside [3.0, 15.0] (SL 101.40500 = 19.5p, TP 100.99116 = 21.9p: LQZ inside the opposing zone: midpoint) (entry 101.21000)
+  ! Tue SS up: REJECT RRR 0.79 outside [3.0, 15.0] (SL 100.84000 = 15.2p, TP 101.11200 = 12.0p: weak zone far edge) (entry 100.99200)
+  ! Mon SS up: REJECT RRR 1.30 outside [3.0, 15.0] (SL 100.84000 = 15.2p, TP 101.18961 = 19.8p: bounding zone near edge + 1 pip (strong zone)) (entry 100.99200)
+  ! Tue SS down: REJECT RRR 0.35 outside [3.0, 15.0] (SL 101.07623 = 6.3p, TP 100.99097 = 2.2p: LQZ inside the opposing zone: midpoint) (entry 101.01293)
+  ! Tue SS up: REJECT RRR 1.15 outside [3.0, 15.0] (SL 100.88800 = 10.4p, TP 101.11200 = 12.0p: weak zone far edge) (entry 100.99700)
+  ! Tue SS up: REJECT TP_NULL: no opposing zone on the way (E3C:1016 honest absence) (entry 100.99700)
+  ! reinforcement at 101.22297: REJECT RRR 1.02 / SL 10.6p
+  ! reinforcement at 101.27997: REJECT RRR 0.69 / SL 7.5p
+  ! Thu SS down: REJECT RRR 0.22 outside [3.0, 15.0] (SL 101.62893 = 26.2p, TP 101.30900 = 5.8p: bounding zone near edge + 1 pip (strong zone)) (entry 101.32400)
+  ! Thu SS down: REJECT RRR 0.44 outside [3.0, 15.0] (SL 101.62893 = 22.3p, TP 101.30900 = 9.7p: bounding zone near edge + 1 pip (strong zone)) (entry 101.31600)
+  ! Thu SS up: REJECT RRR 0.64 outside [3.0, 15.0] (SL 101.11700 = 12.2p, TP 101.31657 = 7.8p: LQZ inside the opposing zone: midpoint) (entry 101.23900)
+  ! ALT Tue SS down: REJECT RRR 0.66 outside [3.0, 15.0] (SL 101.40500 = 19.5p, TP 101.08123 = 12.9p: weak zone far edge) (entry 101.21000)
+  ! ALT Mon SS down: REJECT RRR 1.12 outside [3.0, 15.0] (SL 101.40500 = 19.5p, TP 100.99116 = 21.9p: LQZ inside the opposing zone: midpoint) (entry 101.21000)
+  ! ALT Mon SS up: REJECT RRR 1.30 outside [3.0, 15.0] (SL 100.84000 = 15.2p, TP 101.18961 = 19.8p: bounding zone near edge + 1 pip (strong zone)) (entry 100.99200)
+  ! ALT Tue SS down: REJECT RRR 1.71 outside [3.0, 15.0] (SL 101.37093 = 10.7p, TP 101.08123 = 18.3p: weak zone far edge) (entry 101.24423)
+  ! ALT Tue SS down: REJECT TP_NULL: no opposing zone on the way (E3C:1016 honest absence) (entry 101.24423)
+  ! ALT Tue SS up: REJECT RRR 0.59 outside [3.0, 15.0] (SL 101.11700 = 12.2p, TP 101.31097 = 7.2p: LQZ on the far edge of the pivot: midpoint) (entry 101.23900)
+  ! ALT reinforcement at 101.02897: REJECT RRR 0.63 / SL 4.7p
+DXY 2026-08-17 | day map: Mon SS range | Tue SS range | Wed SS range | Thu SS range | Fri SS range
+  DX1      Mon SS     SHORT E 99.728 SL 99.780 TP 99.499 4.38R | filled - -> not filled inside its bracket (order expires)
+  DX1.Tue    Tue SS     SHORT E 99.728 SL 99.780 TP 99.499 4.38R | filled - -> not filled inside its bracket (order expires)
+  DX1.Wed    Wed SS     SHORT E 99.728 SL 99.780 TP 99.499 4.38R | filled - -> not filled inside its bracket (order expires)
+  DXB2 ALT Wed BS     SHORT E 99.434 SL 99.481 TP 99.223 4.51R | triggered Wed 13:00 | filled - -> not filled inside its bracket (order expires)
+  DX1.Thu    Thu SS     SHORT E 99.728 SL 99.780 TP 99.499 4.38R | filled - -> not filled inside its bracket (order expires)
+  DX1.Fri    Fri SS     SHORT E 99.728 SL 99.780 TP 99.499 4.38R | filled - -> not filled
+  DXA2 ALT Fri RWL    SHORT E 99.804 SL 99.864 TP 99.482 5.39R | not triggered: no 1H close above 99.929 (UPPER RESISTANCE) during the week
+  ! Mon SS down: REJECT RRR 1.55 outside [2.5, 15.0] (SL 99.74733 = 9.7p, TP 99.49900 = 15.1p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.65000)
+  ! Mon SS down: REJECT RRR 1.48 outside [2.5, 15.0] (SL 99.64483 = 5.9p, TP 99.49900 = 8.7p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.58600)
+  ! Mon SS down: REJECT RRR 1.86 outside [2.5, 15.0] (SL 99.97333 = 16.6p, TP 99.49900 = 30.8p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.80733)
+  ! Mon SS up: REJECT RRR 0.95 outside [2.5, 15.0] (SL 99.16900 = 21.5p, TP 99.58800 = 20.4p: weak zone (virgin MoM, low confluence): far edge (E3C:329)) (entry 99.38400)
+  ! ALT Mon SS down: REJECT RRR 1.55 outside [3.0, 15.0] (SL 99.74733 = 9.7p, TP 99.49900 = 15.1p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.65000)
+  ! ALT Mon SS down: REJECT RRR 1.48 outside [3.0, 15.0] (SL 99.64483 = 5.9p, TP 99.49900 = 8.7p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.58600)
+  ! ALT Mon SS down: REJECT RRR 1.86 outside [3.0, 15.0] (SL 99.97333 = 16.6p, TP 99.49900 = 30.8p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.80733)
+  ! ALT Mon SS up: REJECT RRR 0.95 outside [3.0, 15.0] (SL 99.16900 = 21.5p, TP 99.58800 = 20.4p: weak zone (virgin MoM, low confluence): far edge (E3C:329)) (entry 99.38400)
+  ! ALT Wed BS up: REJECT RRR 1.04 outside [3.0, 15.0] (SL 99.69900 = 9.2p, TP 99.88666 = 9.6p: LQZ inside the target zone: midpoint) (entry 99.79100)
+  ! ALT Wed BS up: REJECT RRR 0.29 outside [3.0, 15.0] (SL 99.69900 = 16.0p, TP 99.90650 = 4.7p: LQZ inside the target zone: midpoint) (entry 99.85925)
+  ! ALT Fri SS down: REJECT RRR 1.09 outside [3.0, 15.0] (SL 100.00633 = 6.3p, TP 99.87425 = 6.9p: bounding zone near edge + 1 pip (strong zone)) (entry 99.81600)
+  ! ALT Fri SS up: REJECT RRR 0.49 outside [3.0, 15.0] (SL 99.69900 = 9.2p, TP 99.83566 = 4.5p: LQZ inside the opposing zone: midpoint) (entry 99.79100)
+  ! ALT Mon SS down: REJECT RRR 1.55 outside [3.0, 15.0] (SL 99.74733 = 9.7p, TP 99.49900 = 15.1p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.65000)
+  ! ALT Mon SS down: REJECT RRR 1.48 outside [3.0, 15.0] (SL 99.64483 = 5.9p, TP 99.49900 = 8.7p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.58600)
+  ! ALT Mon SS down: REJECT RRR 1.86 outside [3.0, 15.0] (SL 99.97333 = 16.6p, TP 99.49900 = 30.8p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.80733)
+  ! ALT Mon SS up: REJECT RRR 0.95 outside [3.0, 15.0] (SL 99.16900 = 21.5p, TP 99.58800 = 20.4p: weak zone (virgin MoM, low confluence): far edge (E3C:329)) (entry 99.38400)
+  ! ALT Wed BS down: REJECT RRR 1.24 outside [3.0, 15.0] (SL 99.51400 = 13.0p, TP 99.22300 = 16.1p: E2 target near edge + 1 pip) (entry 99.38400)
+  ! ALT Thu RWL up: REJECT RRR 1.13 outside [3.0, 15.0] (SL 98.95600 = 23.2p, TP 99.44933 = 26.1p: pivot near edge + 1 pip) (entry 99.18800)
+  ! ALT Fri SS up: REJECT RRR 0.78 outside [3.0, 15.0] (SL 98.95600 = 23.2p, TP 99.36900 = 18.1p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.18800)
+DXY 2026-06-08 | day map: Mon SS range | Tue SS range | Wed SS range | Thu SS range | Fri SS range
+  DX1      Mon SS     SHORT E 100.074 SL 100.304 TP 99.369 3.07R | filled Mon 06:00 -> STOPPED Thu 17:15
+  DX2      Mon SS     LONG  E 99.329 SL 99.050 TP 100.059 2.62R | filled - -> not filled inside its bracket (order expires)
+  DX1.Tue    Tue SS     SHORT E 100.074 SL 100.304 TP 99.369 3.07R | filled Tue 00:00 -> STOPPED Thu 17:15
+  DX2.Tue    Tue SS     LONG  E 99.329 SL 99.050 TP 100.059 2.62R | filled - -> not filled inside its bracket (order expires)
+  DX1.Wed    Wed SS     SHORT E 100.074 SL 100.304 TP 99.369 3.07R | filled - -> not filled inside its bracket (order expires)
+  DX2.Wed    Wed SS     LONG  E 99.329 SL 99.050 TP 100.059 2.62R | filled - -> not filled inside its bracket (order expires)
+  DXA2 ALT Wed BS     LONG  E 100.174 SL 100.000 TP 101.125 5.47R | not triggered: no 1H close above 100.274 (Liquidity Sweep Zone) during the week
+  DX1.Thu    Thu SS     SHORT E 100.074 SL 100.304 TP 99.369 3.07R | filled Wed 22:00 -> STOPPED Thu 17:15
+  DX2.Thu    Thu SS     LONG  E 99.329 SL 99.050 TP 100.059 2.62R | filled - -> not filled inside its bracket (order expires)
+  DX1.Fri    Fri SS     SHORT E 100.074 SL 100.304 TP 99.369 3.07R | skipped: 4th battle at this anchor (E3C:150 'index i > 2 skipped')
+  DX2.Fri    Fri SS     LONG  E 99.329 SL 99.050 TP 100.059 2.62R | filled - -> not filled
+  ! ALT Mon SS up: REJECT RRR 2.62 outside [3.0, 15.0] (SL 99.05000 = 27.9p, TP 100.05900 = 73.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.35400)
+  ! ALT Mon SS up: REJECT RRR 2.62 outside [3.0, 15.0] (SL 99.05000 = 27.9p, TP 100.05900 = 73.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.35400)
+  ! ALT Wed BS down: REJECT RRR 1.17 outside [3.0, 15.0] (SL 99.24746 = 8.4p, TP 99.06444 = 9.9p: LQZ inside the target zone: midpoint) (entry 99.16300)
+  ! ALT Wed BS down: REJECT RRR 0.70 outside [3.0, 15.0] (SL 99.30471 = 14.2p, TP 99.06444 = 9.9p: LQZ inside the target zone: midpoint) (entry 99.16300)
+  ! ALT Fri RWL up: REJECT RRR 2.13 outside [3.0, 15.0] (SL 98.95600 = 11.8p, TP 99.32500 = 25.1p: opposing sweep zone near edge + 1 pip) (entry 99.07400)
+DXY 2026-09-14 | day map: Mon SS range | Tue SS range | Wed SS range | Thu SS+BS up | Fri BS up
+  DX1      Mon SS     LONG  E 98.943 SL 98.821 TP 99.351 3.34R | filled - -> not filled inside its bracket (order expires)
+  DX1.Tue    Tue SS     LONG  E 98.943 SL 98.821 TP 99.351 3.34R | filled - -> not filled inside its bracket (order expires)
+  DX1.Wed    Wed SS     LONG  E 98.943 SL 98.821 TP 99.351 3.34R | filled - -> not filled inside its bracket (order expires)
+  DXA2 ALT Fri RWL    LONG  E 98.857 SL 98.752 TP 99.218 3.43R | not triggered: no 1H close below 98.875 (1H (Unmitigated) | MoM) during the week
+  ! SS down: ZONE_DEPLETED - 1H (Mitigated 3x) | MoM has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! Mon SS down: REJECT RRR 1.17 outside [3.0, 15.0] (SL 99.56524 = 16.2p, TP 99.21337 = 19.0p: LQZ inside the opposing zone: midpoint) (entry 99.40324)
+  ! Mon SS up: REJECT RRR 1.42 outside [3.0, 15.0] (SL 99.10800 = 11.1p, TP 99.37698 = 15.8p: LQZ inside the opposing zone: midpoint) (entry 99.21900)
+  ! Thu BS up: FRESHNESS - 1H (Mitigated 3x) | MoM tested 3x (E3C:150 'index i > 2 skipped')
+  ! ALT SS down: ZONE_DEPLETED - 1H (Mitigated 3x) | MoM has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT Mon SS down: REJECT RRR 1.17 outside [3.0, 15.0] (SL 99.56524 = 16.2p, TP 99.21337 = 19.0p: LQZ inside the opposing zone: midpoint) (entry 99.40324)
+  ! ALT Mon SS up: REJECT RRR 1.42 outside [3.0, 15.0] (SL 99.10800 = 11.1p, TP 99.37698 = 15.8p: LQZ inside the opposing zone: midpoint) (entry 99.21900)
+  ! ALT Thu BS down: REJECT RRR 0.56 outside [3.0, 15.0] (SL 98.93000 = 5.5p, TP 98.84400 = 3.1p: target zone near edge + 1 pip) (entry 98.87500)

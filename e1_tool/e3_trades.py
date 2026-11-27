@@ -690,7 +690,9 @@ def _build(pair, monday, X, E2, tag):
                     s['rrr_blended'] = round(0.33 * rr[0] + 0.33 * rr[1] + 0.34 * rr[2], 2)        # E3C:357 'Blended RRR (3-entry staggered)'
         s.update(day=c['days'][0], days=c['days'], shape=c['shape'], category=cat, session=SESSION_WINDOW[cat], sl_pips=round(abs(s['entry'] - s['sl']) / pip, 1),
                  t0=c.get('t0'), t1=c.get('t1'), anchor=a, role=c.get('role'), rest_from=c.get('rest_from'), law27=law27)
-        ipz = a if a.get('ip') else _ip_at(a, X)
+        # an Engine 2 target candidate (e2_chain bound / target candidates: {'src': 'IP', 'zfp': .., 'ip': <the IP zone>}) carries its pressure zone NESTED under 'ip' - the narrative
+        # check reads that zone's own ZFP (D-145: the candidate itself has no 'zfp_num' - KeyError on DXY 2026-04-27, an alternative chain's SS step after the breakout target)
+        ipz = (a['ip'] if isinstance(a.get('ip'), dict) else a) if a.get('ip') else _ip_at(a, X)
         # E3C:874-879 'narrativeAligned(setup, model, pair)': the narrative of a setup is its E2 shape day (R3 law: E2 designates the day's shape and direction; Phase 4.1 layer 5
         # 'Day-Shape Alignment'); a swing scalp of a range day is designated in BOTH directions (E3C:96), so neither is misaligned; the week's macro arc is a confidence term
         # (layer 7), not the gate (D-72)

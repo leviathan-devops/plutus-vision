@@ -1,0 +1,49 @@
+{
+ "fingerprint": "f57cf1de6af1b960652d1fabece79b28ddbfe124d80afba078b3dabdf5fd80fc",
+ "synced_at": "2026-11-27T20:02:29Z",
+ "nodes": 1618,
+ "edges": 1121,
+ "kinds": {
+  "Fact": 1166,
+  "Artifact": 17,
+  "Task": 36,
+  "Decision": 140,
+  "Ruling": 54,
+  "Lesson": 43,
+  "Evidence": 162
+ },
+ "edge_types": {
+  "About": 1120,
+  "Supports": 1
+ },
+ "warnings": [
+  "04_OPERATOR_RULINGS_LIVE.md: id L-53 already used, stored as L-53.2",
+  "05_JOURNAL.md: id D-46 already used, stored as D-46.2",
+  "05_JOURNAL.md: id D-129 already used, stored as D-129.2",
+  "05_JOURNAL.md: id M-58 already used, stored as M-58.2",
+  "05_JOURNAL.md: id L-51 already used, stored as L-51.2",
+  "05_JOURNAL.md: id M-61 already used, stored as M-61.2",
+  "05_JOURNAL.md: id journal.container-clock-utc-e1 already used, stored as journal.container-clock-utc-e1.2",
+  "06_LESSONS.md: id L-50 already used, stored as L-50.2",
+  "06_LESSONS.md: id L-51 already used, stored as L-51.3",
+  "06_LESSONS.md: id L-52 already used, stored as L-52.2",
+  "06_LESSONS.md: id L-53 already used, stored as L-53.3",
+  "06_LESSONS.md: id L-54 already used, stored as L-54.2",
+  "06_LESSONS.md: id L-55 already used, stored as L-55.2",
+  "06_LESSONS.md: id L-56 already used, stored as L-56.2",
+  "06_LESSONS.md: id L-57 already used, stored as L-57.2",
+  "06_LESSONS.md: id L-58 already used, stored as L-58.2",
+  "08_FACTS.md: id M-60 already used, stored as M-60.2",
+  "11_E1_BUILD_BRIEF.md: id L-37 already used, stored as L-37.2",
+  "11_E1_BUILD_BRIEF.md: id L-38 already used, stored as L-38.2",
+  "11_E1_BUILD_BRIEF.md: id L-39 already used, stored as L-39.2",
+  "11_E1_BUILD_BRIEF.md: id L-35 already used, stored as L-35.2",
+  "11_E1_BUILD_BRIEF.md: id L-33 already used, stored as L-33.2",
+  "12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.2",
+  "12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.3",
+  "12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.4",
+  "12_OPERATOR_VERBATIM.md: id operator-verbatim.m already used, stored as operator-verbatim.m.5",
+  "15_CANON_COVERAGE.md: id R-15 already used, stored as R-15.2"
+ ],
+ "backend": "omnigraph 0.16.0"
+}

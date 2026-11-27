@@ -1,0 +1,17 @@
+DXY 2026-07-06: 3/5 | Mon SS ok | Tue SS ok | Wed SS+RWL+BS down X | Thu BS down ok | Fri BS+WL+RWL down X
+EURUSD 2026-07-06: 3/5 | Mon SS ok | Tue SS ok | Wed SS+RWL+BS up X | Thu BS up ok | Fri BS+WL+RWL up X
+GBPUSD 2026-07-06: 4/5 | Mon SS ok | Tue SS ok | Wed SS+RWL+BS up ok | Thu BS up ok | Fri BS+WL+RWL up X
+DXY 2026-04-20: 5/5 | Mon SS ok | Tue SS+RWL+BS up ok | Wed BS up ok | Thu BS+RWL up ok | Fri RWL down ok
+EURUSD 2026-04-20: 5/5 | Mon SS ok | Tue SS+RWL+BS down ok | Wed BS down ok | Thu BS+RWL down ok | Fri RWL up ok
+GBPUSD 2026-04-20: 3/5 | Mon SS X | Tue SS+RWL+BS down ok | Wed BS down X | Thu BS+RWL down ok | Fri RWL up ok
+DXY 2026-10-05: 5/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS ok | Fri SS ok
+EURUSD 2026-10-05: 5/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS ok | Fri SS ok
+GBPUSD 2026-10-05: 3/5 | Mon SS ok | Tue SS X | Wed SS X | Thu SS ok | Fri SS ok
+DXY 2026-05-18: 5/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS ok | Fri SS ok
+EURUSD 2026-05-18: 5/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS ok | Fri SS ok
+GBPUSD 2026-05-18: 0/5 | Mon SS X | Tue SS X | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-07-13: 1/5 | Mon SS X | Tue SS+BS up X | Wed BS up X | Thu BS+RWL+SS up ok | Fri SS X
+DXY 2026-08-17: 2/5 | Mon SS ok | Tue SS ok | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-06-08: 5/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS ok | Fri SS ok
+DXY 2026-09-14: 0/5 | Mon SS X | Tue SS X | Wed SS X | Thu SS+BS up X | Fri BS up X
+E2 LOCATOR 54/80

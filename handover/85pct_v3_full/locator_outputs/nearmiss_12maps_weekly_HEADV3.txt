@@ -1,0 +1,29 @@
+== DXY 2026-07-06
+   ENTRY NEAR-MISS DX1       Mon SS   SHORT E 101.203 SL 101.255 (5.2p) TP 100.830 | price turned 5.8 pips short of the entry at 101.145 (Mon 10:00) and reached the TP
+== EURUSD 2026-07-06
+   STOP NEAR-MISS  EU2       Mon SS   SHORT E 1.14385 SL 1.14451 (6.6p) TP 1.14068 | filled Mon 17:30, stopped Mon 21:45; price went 2.9 pips beyond the stop to 1.14480, then reached the TP Tue 21:15
+   STOP NEAR-MISS  EU4.Tue   Tue SS   LONG  E 1.14095 SL 1.14037 (5.8p) TP 1.14429 | filled Tue 19:15, stopped Tue 21:30; price went 12.6 pips beyond the stop to 1.13911, then reached the TP Thu 06:15
+== GBPUSD 2026-07-06
+   STOP NEAR-MISS  GB3       Wed RWL  SHORT E 1.33473 SL 1.33593 (12.0p) TP 1.33255 | filled Tue 21:00, stopped Wed 03:15; price went 10.9 pips beyond the stop to 1.33702, then reached the TP Wed 09:00
+== DXY 2026-04-20
+== EURUSD 2026-04-20
+   ENTRY NEAR-MISS EU1       Mon SS   SHORT E 1.17920 SL 1.17996 (7.6p) TP 1.17222 | price turned 1.8 pips short of the entry at 1.17902 (Mon 17:00) and reached the TP
+   ENTRY NEAR-MISS EU3       Tue BS   SHORT E 1.17920 SL 1.17996 (7.6p) TP 1.17006 | price turned 1.0 pips short of the entry at 1.17910 (Mon 23:00) and reached the TP
+== GBPUSD 2026-04-20
+== DXY 2026-10-05
+   ENTRY NEAR-MISS DX1       Mon SS   SHORT E 102.435 SL 102.665 (23.0p) TP 101.941 | price turned 0.2 pips short of the entry at 102.433 (Mon 06:30) and reached the TP
+== EURUSD 2026-10-05
+   STOP NEAR-MISS  EU1.Tue   Tue SS   SHORT E 1.12585 SL 1.12742 (15.7p) TP 1.11725 | filled Tue 11:15, stopped Tue 12:00; price went 2.5 pips beyond the stop to 1.12767, then reached the TP Wed 12:15
+== GBPUSD 2026-10-05
+   ENTRY NEAR-MISS GB2       Mon SS   LONG  E 1.31899 SL 1.31769 (13.0p) TP 1.32304 | price turned 0.1 pips short of the entry at 1.31900 (Mon 13:45) and reached the TP
+   STOP NEAR-MISS  GB1.Tue   Tue SS   SHORT E 1.32329 SL 1.32437 (10.8p) TP 1.32014 | filled Tue 07:30, stopped Tue 08:30; price went 41.9 pips beyond the stop to 1.32856, then reached the TP Wed 12:15
+   STOP NEAR-MISS  GB1.Wed   Wed SS   SHORT E 1.32329 SL 1.32437 (10.8p) TP 1.32014 | filled Tue 21:00, stopped Tue 21:00; price went 32.4 pips beyond the stop to 1.32761, then reached the TP Wed 12:15
+   ENTRY NEAR-MISS GB2.Wed   Wed SS   LONG  E 1.31899 SL 1.31769 (13.0p) TP 1.32304 | price turned 3.6 pips short of the entry at 1.31935 (Wed 12:15) and reached the TP
+== DXY 2026-05-18
+== EURUSD 2026-05-18
+   STOP NEAR-MISS  EU2       Mon SS   SHORT E 1.16297 SL 1.16386 (8.9p) TP 1.15985 | filled Mon 06:15, stopped Mon 07:15; price went 23.1 pips beyond the stop to 1.16617, then reached the TP Tue 14:15
+   STOP NEAR-MISS  EU2.Tue   Tue SS   SHORT E 1.16297 SL 1.16386 (8.9p) TP 1.15985 | filled Mon 21:00, stopped Mon 21:00; price went 23.1 pips beyond the stop to 1.16617, then reached the TP Tue 14:15
+   STOP NEAR-MISS  EU2.Wed   Wed SS   SHORT E 1.16297 SL 1.16386 (8.9p) TP 1.15985 | filled Wed 15:15, stopped Wed 15:15; price went 6.2 pips beyond the stop to 1.16448, then reached the TP Thu 07:15
+   ENTRY NEAR-MISS EU3.Wed   Wed SS   LONG  E 1.15815 SL 1.15717 (9.8p) TP 1.16285 | price turned 1.2 pips short of the entry at 1.15827 (Wed 14:00) and reached the TP
+== GBPUSD 2026-05-18
+NEARMISS (locator): primary orders 87 | TP 32 | stopped 18, of them stop near-misses 9 | unfilled 34, of them entry near-misses 7

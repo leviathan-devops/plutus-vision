@@ -1,0 +1,15 @@
+DXY 2026-07-06: nearest oracle trade per setup (pips off: entry / SL / TP)
+  DX1 Mon SS     SHORT 101.203 / 101.255 / 100.830 vs #2 Mon:   6.3 /   5.5 /   1.5
+  DX2 Mon SS     SHORT 101.138 / 101.213 / 100.830 vs #2 Mon:   0.2 /   1.3 /   1.5
+  DX3 Mon SS     LONG  100.851 / 100.743 / 101.184 vs #3 Tue:   0.6 /   2.7 /   0.6
+  DX1.Tue Tue SS     SHORT 101.203 / 101.255 / 100.830 vs #2 Mon:   6.3 /   5.5 /   1.5
+  DX2.Tue Tue SS     SHORT 101.138 / 101.213 / 100.830 vs #2 Mon:   0.2 /   1.3 /   1.5
+  DX3.Tue Tue SS     LONG  100.851 / 100.743 / 101.184 vs #3 Tue:   0.6 /   2.7 /   0.6
+  DX4 Wed BS     SHORT 101.235 / 101.322 / 100.685 vs #6 Wed:   0.0 /   0.8 /   0.5
+  DX5 Wed SS     SHORT 101.203 / 101.255 / 100.995 vs #4 Wed:   1.3 /   0.5 /   2.0
+  DX6 Wed RWL    LONG  100.980 / 100.906 / 101.235 vs #5 Wed:   0.5 /   0.1 /   0.5
+  DXA4 Wed BS     LONG  100.753 / 100.700 / 101.332 vs #3 Tue:   9.2 /   7.0 /  14.2
+  DX7 Thu Ladder SHORT 100.980 / 101.077 / 100.685 vs #6 Wed:  25.5 /  25.3 /   0.5
+  DXA6 Thu Ladder LONG  100.980 / 100.906 / 101.332 vs #5 Wed:   0.5 /   0.1 /   9.2
+  DX8 Fri RWL    LONG  100.628 / 100.548 / 100.940 vs #8 Fri:   1.3 /   0.3 /   0.0
+  DXA7 Fri RWL    SHORT 101.371 / 101.480 / 101.037 vs #4 Wed:  18.1 /  23.0 /   6.2

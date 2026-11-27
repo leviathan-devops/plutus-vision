@@ -1,0 +1,5 @@
+GBPUSD 2026-07-06: nearest oracle trade per setup (pips off: entry / SL / TP)
+  GB1 Mon SS     SHORT 1.33959 / 1.34155 / 1.33348 vs #2 Mon:   2.5 /   8.0 /   0.1
+  GB2 Mon SS     LONG  1.33333 / 1.33235 / 1.33926 vs #1 Mon:   0.2 /   1.1 /   1.5
+  GB3 Wed BS     LONG  1.33255 / 1.33125 / 1.34254 vs #3 Wed:   7.5 /   7.4 /   0.8
+  GB4 Fri RWL    SHORT 1.34254 / 1.34396 / 1.33888 vs #5 Thu:   0.8 /   3.6 /   0.6

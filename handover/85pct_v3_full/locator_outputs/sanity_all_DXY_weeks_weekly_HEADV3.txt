@@ -1,0 +1,33 @@
+DXY 2026-04-06: 2 setups (1 counted) ok
+DXY 2026-04-13: 3 setups (2 counted) ok
+DXY 2026-04-20: 4 setups (4 counted) ok
+DXY 2026-04-27: RUN ERROR KeyError('zfp_num')
+DXY 2026-05-04: 5 setups (3 counted) ok
+DXY 2026-05-11: 2 setups (1 counted) ok
+DXY 2026-05-18: 2 setups (0 counted) ok
+DXY 2026-05-25: 4 setups (2 counted) ok
+DXY 2026-06-01: 2 setups (0 counted) ok
+DXY 2026-06-08: 3 setups (2 counted)
+    DX1: Monday SHORT limit 100.07400 already through the anchor price 100.11100
+DXY 2026-06-15: RUN ERROR KeyError('zfp_num')
+DXY 2026-06-22: 3 setups (1 counted) ok
+DXY 2026-06-29: 1 setups (1 counted) ok
+DXY 2026-07-06: 11 setups (8 counted) ok
+DXY 2026-07-13: 4 setups (2 counted) ok
+DXY 2026-07-20: 7 setups (5 counted) ok
+DXY 2026-07-27: 3 setups (1 counted) ok
+DXY 2026-08-03: 2 setups (2 counted) ok
+DXY 2026-08-10: 3 setups (3 counted) ok
+DXY 2026-08-17: 3 setups (1 counted) ok
+DXY 2026-08-24: 3 setups (0 counted) ok
+DXY 2026-08-31: 4 setups (4 counted) ok
+DXY 2026-09-07: 3 setups (2 counted) ok
+DXY 2026-09-14: 2 setups (1 counted) ok
+DXY 2026-09-21: 2 setups (1 counted) ok
+DXY 2026-09-28: 1 setups (1 counted) ok
+DXY 2026-10-05: 3 setups (2 counted) ok
+DXY 2026-10-12: 0 setups (0 counted) ok
+DXY 2026-10-19: 2 setups (0 counted) ok
+DXY 2026-10-26: 1 setups (1 counted) ok
+DXY 2026-11-02: 3 setups (1 counted) ok
+SANITY findings 3

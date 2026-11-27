@@ -1,0 +1,8 @@
+leak_check DXY 2026-07-06: identical output with the bar store cut at the anchor (541 Pine lines)
+leak_check EURUSD 2026-07-06: identical output with the bar store cut at the anchor (531 Pine lines)
+leak_check GBPUSD 2026-07-06: identical output with the bar store cut at the anchor (536 Pine lines)
+leak_check GBPUSD 2026-10-05: identical output with the bar store cut at the anchor (421 Pine lines)
+leak_check DXY 2026-07-06 daily: every day identical with the bar store cut at its trading-day open and at its London open
+leak_check EURUSD 2026-07-06 daily: every day identical with the bar store cut at its trading-day open and at its London open
+leak_check GBPUSD 2026-07-06 daily: every day identical with the bar store cut at its trading-day open and at its London open
+leak_check GBPUSD 2026-10-05 daily: every day identical with the bar store cut at its trading-day open and at its London open
