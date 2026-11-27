@@ -512,7 +512,7 @@ def _triggers(X, date):
     w = P['G']['week_release']
     if w['release_et'][:10] == date:
         t.append(f"{w['release_et'][11:]} NY EIA crude stocks")
-    return t + ['red folder: NO DATA', 'ON RRP: NO DATA']
+    return t + ['red folder: NO DATA'] + ([] if (P.get('E') or {}).get('status') == 'OK' else ['ON RRP: NO DATA'])      # ON RRP is a pre-week reading (report block), not an event of the day
 
 
 def build(pair, monday, X, lead=None, force_dir=None):

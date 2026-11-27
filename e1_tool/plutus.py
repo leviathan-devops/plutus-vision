@@ -201,7 +201,10 @@ def e2_report(pair, monday, chain):
         g = P['G']['latest']
         o.append('Protocol G EIA crude: ' + (f"week ending {g['week_ending']} change {g['change_mb']:+.3f}M vs previous {g['previous_change_mb']:+.3f}M, deviation {g['deviation_mb']:+.3f}M"
                                              + (' >= 5M -> VOLATILITY TRIGGER' if g['trigger'] else '') if isinstance(g, dict) else str(g)) + f" | this week's release {P['G']['week_release']['release_et']} ET")
-        o.append('Protocol E ON RRP: ' + P['E']['status'] + ' | Protocol F red folder: ' + P['F']['status'])
+        e_ = P['E']
+        o.append('Protocol E ON RRP: ' + (f"{e_['current']['date']} accepted USD {e_['current']['accepted_bn']:.3f}bn vs {e_['previous']['date']} USD {e_['previous']['accepted_bn']:.3f}bn, change {e_['change_bn']:+.3f}bn"
+                                           + (' - contraction >= USD 50bn -> VOLATILITY TRIGGER' if e_['trigger'] else '') if e_.get('status') == 'OK' else e_.get('status', 'NO DATA'))
+                 + ' | Protocol F red folder: ' + P['F']['status'])
     o.append('--- DAY-BY-DAY DECOMPOSITION ---')
     for d in chain.get('days', []):
         o.append(f"{d['day']}: {' + '.join(d['shapes'])} {d['dir']} | Key Zone: {d['key']} | Triggers: {'; '.join(d['triggers'])} | Confidence: {int(round(d['conf'] * 100))}%")

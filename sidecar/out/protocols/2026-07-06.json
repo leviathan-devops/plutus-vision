@@ -60,8 +60,18 @@
   ]
  },
  "E": {
-  "status": "NO DATA",
-  "why": "markets.newyorkfed.org (the data host of the NY Fed reverse-repo page) is not allowed by this environment's network"
+  "change_bn": 1.174,
+  "current": {
+   "accepted_bn": 2.175,
+   "date": "2026-07-02"
+  },
+  "previous": {
+   "accepted_bn": 1.001,
+   "date": "2026-07-01"
+  },
+  "source_url": "https://www.newyorkfed.org/markets/desk-operations/reverse-repo",
+  "status": "OK",
+  "trigger": false
  },
  "F": {
   "status": "NO DATA",

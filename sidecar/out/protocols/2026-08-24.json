@@ -47,7 +47,7 @@
     "close_ms": 1787758200000,
     "original_term": "2-Year",
     "term": "1-Year 11-Month",
-    "type": "Note"
+    "type": "FRN"
    },
    {
     "announced": "2026-08-20",
@@ -68,8 +68,18 @@
   ]
  },
  "E": {
-  "status": "NO DATA",
-  "why": "markets.newyorkfed.org (the data host of the NY Fed reverse-repo page) is not allowed by this environment's network"
+  "change_bn": -0.025,
+  "current": {
+   "accepted_bn": 0.2,
+   "date": "2026-08-21"
+  },
+  "previous": {
+   "accepted_bn": 0.225,
+   "date": "2026-08-20"
+  },
+  "source_url": "https://www.newyorkfed.org/markets/desk-operations/reverse-repo",
+  "status": "OK",
+  "trigger": false
  },
  "F": {
   "status": "NO DATA",

@@ -4,8 +4,8 @@
   D  US Treasury auctions  - source www.treasurydirect.gov (TA_WS JSON of the auction tables P452:1280 points at):
        latest 2Y / 5Y / 10Y note results closed before the anchor; 'If the Bid-to-Cover ratio is >= 2.6x, classify as a VOLATILITY TRIGGER' (P452:1443);
        the auctions of the forecast week that were ANNOUNCED before the anchor (close date + time only - their results are after the anchor and are not kept).
-  E  NY Fed ON RRP         - the data behind www.newyorkfed.org/markets/desk-operations/reverse-repo is served by markets.newyorkfed.org, which this environment's
-                              network does not allow: NO DATA (L-32).
+  E  NY Fed ON RRP         - markets.newyorkfed.org (the data behind www.newyorkfed.org/markets/desk-operations/reverse-repo): the last two operations dated before the
+                              Monday; 'If contraction >= USD 50 Billion, classify as a VOLATILITY TRIGGER' (P452:1444).
   F  Economic calendar     - www.forexfactory.com answers automated requests with a Cloudflare challenge: NO DATA (L-32).
   G  EIA petroleum status  - source www.eia.gov: weekly U.S. crude oil stocks (WCESTUS1); 'Extract the weekly crude oil stock change. Calculate deviation against the
        previous week's print. If absolute deviation >= 5M barrels, classify as a VOLATILITY TRIGGER' (P452:1446); only prints RELEASED before the anchor
@@ -98,6 +98,28 @@ def release(we, alt):
     return d, t, et(d.isoformat(), t)
 
 
+RRP = 'https://markets.newyorkfed.org/api/rp/reverserepo/propositions/search.json?startDate={a}&endDate={b}'
+RRP_TRIGGER_BN = 50.0      # P452:1444 'If contraction >= USD 50 Billion, classify as a VOLATILITY TRIGGER'
+
+
+def protocol_e(monday, anchor):
+    """P452:1444 'Extract the current session's Accepted Total. Compare against the preceding business day.' As of the anchor (Monday 02:00 New York) the current session is the last
+    operation dated before the Monday (the Monday's own operation closes in the New York afternoon)"""
+    m = dt.date.fromisoformat(monday)
+    d = json.loads(fetch(RRP.format(a=m - dt.timedelta(days=14), b=m - dt.timedelta(days=1)), f'rrp_{monday}.json'))
+    ops = sorted([o for o in d.get('repo', {}).get('operations', []) if o.get('operationDate') and o['operationDate'] < monday and o.get('totalAmtAccepted') is not None],
+                 key=lambda o: o['operationDate'])
+    out = {'source_url': 'https://www.newyorkfed.org/markets/desk-operations/reverse-repo'}
+    if len(ops) < 2:
+        out['status'] = 'NO DATA'
+        return out
+    cur, prev = ops[-1], ops[-2]
+    a, b = cur['totalAmtAccepted'] / 1e9, prev['totalAmtAccepted'] / 1e9
+    out.update(status='OK', current={'date': cur['operationDate'], 'accepted_bn': round(a, 3)}, previous={'date': prev['operationDate'], 'accepted_bn': round(b, 3)},
+               change_bn=round(a - b, 3), trigger=(b - a) >= RRP_TRIGGER_BN)
+    return out
+
+
 def protocol_g(monday, anchor):
     t = fetch(EIA_STOCKS, 'eia_wcestus1.html')
     alt = eia_alternates()
@@ -138,7 +160,7 @@ def main():
     anchor = D.boundary_ms(a.week)
     res = {'week': a.week, 'anchor_ms': anchor,
            'D': protocol_d(a.week, anchor),
-           'E': {'status': 'NO DATA', 'why': 'markets.newyorkfed.org (the data host of the NY Fed reverse-repo page) is not allowed by this environment\'s network'},
+           'E': protocol_e(a.week, anchor),
            'F': {'status': 'NO DATA', 'why': 'www.forexfactory.com answers automated requests with a Cloudflare challenge'},
            'G': protocol_g(a.week, anchor)}
     os.makedirs(OUT, exist_ok=True)
