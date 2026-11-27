@@ -1,0 +1,82 @@
+DXY 2026-02-02 weekly: drawn 12 | filled 3 | TP 0 | SL 0 | open 3 | never filled 9
+DXY 2026-02-09 weekly: drawn 5 | filled 0 | TP 0 | SL 0 | open 0 | never filled 5
+DXY 2026-02-16 weekly: drawn 6 | filled 0 | TP 0 | SL 0 | open 0 | never filled 6
+DXY 2026-02-23 weekly: drawn 1 | filled 0 | TP 0 | SL 0 | open 0 | never filled 1
+DXY 2026-03-02 weekly: drawn 3 | filled 2 | TP 0 | SL 2 | open 0 | never filled 1
+DXY 2026-03-09 weekly: drawn 1 | filled 1 | TP 0 | SL 1 | open 0 | never filled 0
+DXY 2026-03-16 weekly: drawn 12 | filled 7 | TP 1 | SL 6 | open 0 | never filled 5
+DXY 2026-03-23 weekly: drawn 7 | filled 2 | TP 2 | SL 0 | open 0 | never filled 5
+DXY 2026-03-30 weekly: drawn 2 | filled 2 | TP 0 | SL 2 | open 0 | never filled 0
+DXY 2026-04-06 weekly: drawn 3 | filled 1 | TP 0 | SL 1 | open 0 | never filled 2
+DXY 2026-04-13 weekly: drawn 11 | filled 6 | TP 0 | SL 6 | open 0 | never filled 5
+DXY 2026-04-20 weekly: drawn 4 | filled 4 | TP 2 | SL 2 | open 0 | never filled 0
+DXY 2026-04-27 weekly: drawn 5 | filled 3 | TP 0 | SL 3 | open 0 | never filled 2
+DXY 2026-05-04 weekly: drawn 13 | filled 9 | TP 0 | SL 8 | open 1 | never filled 4
+DXY 2026-05-11 weekly: drawn 3 | filled 1 | TP 0 | SL 1 | open 0 | never filled 2
+DXY 2026-05-18 weekly: drawn 2 | filled 0 | TP 0 | SL 0 | open 0 | never filled 2
+DXY 2026-05-25 weekly: drawn 12 | filled 3 | TP 0 | SL 3 | open 0 | never filled 9
+DXY 2026-06-01 weekly: drawn 2 | filled 0 | TP 0 | SL 0 | open 0 | never filled 2
+DXY 2026-06-08 weekly: drawn 11 | filled 3 | TP 0 | SL 3 | open 0 | never filled 8
+DXY 2026-06-15 weekly: drawn 7 | filled 5 | TP 0 | SL 5 | open 0 | never filled 2
+DXY 2026-06-22 weekly: drawn 7 | filled 5 | TP 0 | SL 5 | open 0 | never filled 2
+DXY 2026-06-29 weekly: drawn 1 | filled 1 | TP 0 | SL 1 | open 0 | never filled 0
+DXY 2026-07-06 weekly: drawn 14 | filled 8 | TP 8 | SL 0 | open 0 | never filled 6
+DXY 2026-07-13 weekly: drawn 4 | filled 3 | TP 1 | SL 2 | open 0 | never filled 1
+DXY 2026-07-20 weekly: drawn 7 | filled 2 | TP 0 | SL 2 | open 0 | never filled 5
+DXY 2026-07-27 weekly: drawn 3 | filled 1 | TP 0 | SL 1 | open 0 | never filled 2
+DXY 2026-08-03 weekly: drawn 6 | filled 2 | TP 0 | SL 2 | open 0 | never filled 4
+DXY 2026-08-10 weekly: drawn 6 | filled 0 | TP 0 | SL 0 | open 0 | never filled 6
+DXY 2026-08-17 weekly: drawn 7 | filled 0 | TP 0 | SL 0 | open 0 | never filled 7
+DXY 2026-08-24 weekly: drawn 3 | filled 1 | TP 0 | SL 1 | open 0 | never filled 2
+DXY 2026-08-31 weekly: drawn 4 | filled 2 | TP 0 | SL 2 | open 0 | never filled 2
+DXY 2026-09-07 weekly: drawn 4 | filled 2 | TP 1 | SL 1 | open 0 | never filled 2
+DXY 2026-09-14 weekly: drawn 4 | filled 0 | TP 0 | SL 0 | open 0 | never filled 4
+DXY 2026-09-21 weekly: drawn 6 | filled 1 | TP 0 | SL 0 | open 1 | never filled 5
+DXY 2026-09-28 weekly: drawn 5 | filled 0 | TP 0 | SL 0 | open 0 | never filled 5
+DXY 2026-10-05 weekly: drawn 11 | filled 5 | TP 5 | SL 0 | open 0 | never filled 6
+DXY 2026-10-12 weekly: drawn 0 | filled 0 | TP 0 | SL 0 | open 0 | never filled 0
+DXY 2026-10-19 weekly: drawn 2 | filled 1 | TP 0 | SL 1 | open 0 | never filled 1
+DXY 2026-10-26 weekly: drawn 1 | filled 1 | TP 0 | SL 1 | open 0 | never filled 0
+DXY 2026-11-02 weekly: drawn 7 | filled 3 | TP 1 | SL 2 | open 0 | never filled 4
+EURUSD 2026-02-02 weekly: drawn 11 | filled 5 | TP 0 | SL 5 | open 0 | never filled 6
+EURUSD 2026-02-09 weekly: drawn 7 | filled 2 | TP 0 | SL 2 | open 0 | never filled 5
+EURUSD 2026-02-16 weekly: drawn 2 | filled 0 | TP 0 | SL 0 | open 0 | never filled 2
+EURUSD 2026-02-23 weekly: drawn 11 | filled 6 | TP 0 | SL 6 | open 0 | never filled 5
+EURUSD 2026-03-02 weekly: drawn 3 | filled 0 | TP 0 | SL 0 | open 0 | never filled 3
+EURUSD 2026-03-09 weekly: drawn 6 | filled 4 | TP 0 | SL 4 | open 0 | never filled 2
+EURUSD 2026-03-16 weekly: drawn 10 | filled 6 | TP 1 | SL 5 | open 0 | never filled 4
+EURUSD 2026-03-23 weekly: drawn 14 | filled 4 | TP 1 | SL 3 | open 0 | never filled 10
+EURUSD 2026-03-30 weekly: drawn 2 | filled 2 | TP 0 | SL 2 | open 0 | never filled 0
+EURUSD 2026-04-06 weekly: drawn 7 | filled 3 | TP 0 | SL 3 | open 0 | never filled 4
+EURUSD 2026-04-13 weekly: drawn 12 | filled 8 | TP 0 | SL 8 | open 0 | never filled 4
+EURUSD 2026-04-20 weekly: drawn 7 | filled 1 | TP 0 | SL 1 | open 0 | never filled 6
+EURUSD 2026-05-18 weekly: drawn 12 | filled 6 | TP 3 | SL 3 | open 0 | never filled 6
+EURUSD 2026-06-08 weekly: drawn 11 | filled 2 | TP 2 | SL 0 | open 0 | never filled 9
+EURUSD 2026-07-06 weekly: drawn 16 | filled 10 | TP 8 | SL 2 | open 0 | never filled 6
+EURUSD 2026-08-17 weekly: drawn 7 | filled 4 | TP 0 | SL 4 | open 0 | never filled 3
+EURUSD 2026-09-14 weekly: drawn 10 | filled 0 | TP 0 | SL 0 | open 0 | never filled 10
+EURUSD 2026-10-05 weekly: drawn 12 | filled 4 | TP 2 | SL 1 | open 1 | never filled 8
+EURUSD 2026-10-19 weekly: drawn 12 | filled 7 | TP 3 | SL 4 | open 0 | never filled 5
+GBPUSD 2026-02-02 weekly: drawn 5 | filled 0 | TP 0 | SL 0 | open 0 | never filled 5
+GBPUSD 2026-02-09 weekly: drawn 8 | filled 2 | TP 0 | SL 2 | open 0 | never filled 6
+GBPUSD 2026-02-16 weekly: drawn 8 | filled 1 | TP 0 | SL 1 | open 0 | never filled 7
+GBPUSD 2026-02-23 weekly: drawn 6 | filled 2 | TP 0 | SL 2 | open 0 | never filled 4
+GBPUSD 2026-03-02 weekly: drawn 2 | filled 0 | TP 0 | SL 0 | open 0 | never filled 2
+GBPUSD 2026-03-09 weekly: drawn 1 | filled 1 | TP 0 | SL 1 | open 0 | never filled 0
+GBPUSD 2026-03-16 weekly: drawn 13 | filled 6 | TP 1 | SL 5 | open 0 | never filled 7
+GBPUSD 2026-03-23 weekly: drawn 13 | filled 5 | TP 2 | SL 3 | open 0 | never filled 8
+GBPUSD 2026-03-30 weekly: drawn 4 | filled 4 | TP 0 | SL 4 | open 0 | never filled 0
+GBPUSD 2026-04-06 weekly: drawn 6 | filled 2 | TP 0 | SL 2 | open 0 | never filled 4
+GBPUSD 2026-04-13 weekly: drawn 7 | filled 1 | TP 0 | SL 1 | open 0 | never filled 6
+GBPUSD 2026-04-20 weekly: drawn 5 | filled 2 | TP 0 | SL 2 | open 0 | never filled 3
+GBPUSD 2026-05-18 weekly: drawn 12 | filled 8 | TP 2 | SL 6 | open 0 | never filled 4
+GBPUSD 2026-07-06 weekly: drawn 13 | filled 7 | TP 6 | SL 1 | open 0 | never filled 6
+GBPUSD 2026-08-17 weekly: drawn 0 | filled 0 | TP 0 | SL 0 | open 0 | never filled 0
+GBPUSD 2026-10-05 weekly: drawn 11 | filled 7 | TP 3 | SL 4 | open 0 | never filled 4
+TOTAL ALL        maps  75 | drawn  510 | filled  212 | TP   55 | SL  151 | open   6 | never filled  298 | TP share of resolved 27%
+TOTAL DXY        maps  40 | drawn  224 | filled   90 | TP   21 | SL   64 | open   5 | never filled  134 | TP share of resolved 25%
+TOTAL NOT GOLDEN maps  72 | drawn  467 | filled  187 | TP   33 | SL  148 | open   6 | never filled  280 | TP share of resolved 18%
+TOTAL GOLDEN     maps   3 | drawn   43 | filled   25 | TP   22 | SL    3 | open   0 | never filled   18 | TP share of resolved 88%
+TOTAL EURUSD     maps  19 | drawn  172 | filled   74 | TP   20 | SL   53 | open   1 | never filled   98 | TP share of resolved 27%
+TOTAL GBPUSD     maps  16 | drawn  114 | filled   48 | TP   14 | SL   34 | open   0 | never filled   66 | TP share of resolved 29%
+DONE
