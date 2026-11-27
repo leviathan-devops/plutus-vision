@@ -77,7 +77,22 @@ def daily_anchor(pair, monday, chain, R):
     DAYS = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri')
     f = (lambda v: '%.3f' % v) if pair == 'DXY' else (lambda v: '%.5f' % v)
     b0 = D.boundary_ms(monday)
-    segs, alt_segs, audit, keep, log, parts = [], [], list(chain['audit']), [], list(R['log']), {}
+    segs, alt_segs, audit, keep, log, parts, days = [], [], list(chain['audit']), [], list(R['log']), {}, []
+    # 6.6 Step 4 'construct at least one alternative chain that activates if the primary fails at a specific Decision Zone': at each day's anchor, a 1H close beyond a Decision Zone
+    # since the week anchor = the primary has failed there - from that day the alternative chain is the chain (its day boxes, its line, its orders live), the primary's orders void
+    alts = [a_ for a_ in (chain.get('alts') or ([{'alt': chain.get('alt'), 'chain': chain.get('alt_chain')}] if chain.get('alt_chain') else [])) if a_.get('alt') and a_.get('chain')]
+    lvl = {}
+    for s in R['setups']:                                       # the trigger level Engine 3 gave the alternative's orders (beyond a retested liquidity / a sweep reach, D-109 / D-110)
+        if s.get('alt') and s.get('trigger'):
+            lvl.setdefault(s['trigger']['dir'], s['trigger']['level'])
+    for a_ in alts:
+        d_, z_ = a_['alt']['dir'], a_['alt']['zone']
+        if d_ not in lvl and z_:
+            lv = z_[1] if d_ == 'up' else z_[0]
+            if a_['alt'].get('reach') is not None:
+                lv = max(lv, a_['alt']['reach']) if d_ == 'up' else min(lv, a_['alt']['reach'])
+            lvl[d_] = lv
+    active = None
     for i in range(5):
         t_a, t_e = D.day_anchor_ms(monday, i), D.week_start_ms(monday) + (i + 1) * 86400000
         if i > 0 and DAY_CONFIRM == 'start':
@@ -85,12 +100,26 @@ def daily_anchor(pair, monday, chain, R):
         b1 = D.closed_until(pair, '60', t_a)
         op = b1[-1]['close']
         since = [x for x in b1 if x['time'] >= b0]
-        seg = _cut(chain['path'], t_a, t_e)
+        if i > 0 and active is None:
+            for a_ in alts:
+                d_ = a_['alt']['dir']
+                lv = lvl.get(d_)
+                brk = next((x for x in since if ((x['close'] > lv) if d_ == 'up' else (x['close'] < lv))), None) if lv is not None else None
+                if brk is not None:
+                    active = dict(a_, level=lv, at=brk['time'] + 3600000)
+                    audit.append(f"ALTERNATIVE CHAIN ACTIVE from {DAYS[i]} (6.6 Step 4): 1H close {'above' if d_ == 'up' else 'below'} {f(lv)} ({a_['alt'].get('decision_zone', '')}) "
+                                 f"at {D.ts(active['at'])} UTC - the primary failed at its Decision Zone: " + ' -> '.join(c['shape'] for c in a_['chain'].get('chain', [])))
+                    break
+        view = active['chain'] if active else chain
+        d = next((x for x in view.get('days', []) if x['day'] == DAYS[i]), None) or next((x for x in chain['days'] if x['day'] == DAYS[i]), None)
+        if d is not None:
+            days.append(d)
+        seg = _cut(view['path'], t_a, t_e)
         if i > 0 and len(seg) > 1:
             seg[0] = (t_a, op)
         if len(seg) > 1:
             segs.append(seg)
-        if chain.get('alt_chain'):
+        if active is None and chain.get('alt_chain'):
             q = _cut(chain['alt_chain']['path'], t_a, t_e)
             if i > 0 and len(q) > 1:
                 q[0] = (t_a, op)
@@ -102,7 +131,16 @@ def daily_anchor(pair, monday, chain, R):
         # an order resting from an earlier day (D-76 'rest_from') belongs to the day it starts resting: it is confirmed at that day's anchor
         for s in [x for x in R['setups'] if (x.get('rest_from') or x['day']) == DAYS[i]]:
             why = None
-            if i > 0 and not s.get('alt') and s.get('category') != 'Reinforcement':
+            if active is not None and s.get('category') != 'Reinforcement':
+                if s.get('alt') and s.get('trigger') and s['trigger']['dir'] == active['alt']['dir']:
+                    s['alt'] = False                             # the alternative chain is the chain now: its order is live, no longer conditional
+                    s['why'] = f"ALTERNATIVE chain ACTIVE since {D.ts(active['at'])} UTC: " + s['why'].split(': ', 1)[-1]
+                    s.pop('trigger', None)
+                elif s.get('alt'):
+                    why = 'an alternative of another Decision Zone (the active alternative is the chain)'
+                else:
+                    why = f"the primary chain failed at its Decision Zone ({D.ts(active['at'])} UTC) - the alternative chain is active"
+            if why is None and i > 0 and not s.get('alt') and s.get('category') != 'Reinforcement':
                 z = s.get('anchor') or {}
                 sd = 'bot' in z and 'top' in z and (z.get('src') == 'SD' or ('tf' in z and not z.get('liq')))     # an order block (supply / demand candle zone): one-time use
                 lo_, hi_ = (z['bot'], z['top']) if sd else (None, None)
@@ -110,7 +148,7 @@ def daily_anchor(pair, monday, chain, R):
                 if brk is not None:
                     why = f"anchor zone {f(lo_)}-{f(hi_)} closed through {D.ts(brk['time'] + 3600000)} UTC (one-time use)"
                 elif (op <= s['entry']) if s['dir'] == 'LONG' else (op >= s['entry']):
-                    why = f"London-open price {f(op)} already on the far side of the entry {f(s['entry'])}"
+                    why = f"the price at the day's anchor {f(op)} already on the far side of the entry {f(s['entry'])}"
             if s.get('parent_ref') is not None and s['parent_ref'] not in kept and s['parent_ref'] in R['setups'] and (s['parent_ref'].get('rest_from') or s['parent_ref']['day']) == DAYS[i]:
                 why = why or 'its parent was not confirmed'
             if why:
@@ -121,10 +159,18 @@ def daily_anchor(pair, monday, chain, R):
                     s['day_anchor'] = t_a
                 kept.append(s)
         keep += kept
-        parts[i] = {'open': op, 'segment': seg, 'orders': [(s['id'], s['dir'], s['entry'], s['sl'], s['tp']) for s in kept], 'dropped': [s['id'] for s in dropped]}
+        parts[i] = {'open': op, 'active': None if active is None else (active['alt']['dir'], active['level'], active['at']), 'segment': seg,
+                    'orders': [(s['id'], s['dir'], s['entry'], s['sl'], s['tp']) for s in kept], 'dropped': [s['id'] for s in dropped]}
     keep = [s for s in keep if s.get('parent_ref') is None or s['parent_ref'] in keep]
+    import e3_trades as E3
+    trades = [q for q in keep if q.get('category') != 'Reinforcement' and not q.get('alt')]
+    if len(trades) > E3.MAX_SETUPS:                               # L-04 / R-07: at most 11 trades a week - the latest days' weakest go first (as e3_trades.build)
+        raw = lambda q: sum(v for _, v in (q.get('conf_parts') or []))
+        for q in sorted(trades, key=lambda q: (0 if q.get('clone') else 1, -E3.DAY_IDX[q['day']], q.get('confidence', 0), raw(q)))[:len(trades) - E3.MAX_SETUPS]:
+            keep = [x for x in keep if x is not q and x.get('origin') is not q and x.get('parent_ref') is not q]
+            log.append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - more than {E3.MAX_SETUPS} trades this week (L-04)")
     out = dict(chain)
-    out.update(segments=segs, alt_segments=alt_segs, audit=audit, daily=parts)
+    out.update(days=days, segments=segs, alt_segments=alt_segs, audit=audit, daily=parts, n_real=len(days))
     R2 = dict(R)
     R2.update(setups=keep, log=log)
     return out, R2
