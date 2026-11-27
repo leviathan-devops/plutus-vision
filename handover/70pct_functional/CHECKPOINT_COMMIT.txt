@@ -1,0 +1,27 @@
+PLUTUS VISION - handover checkpoint '70% functional'
+checkpoint commit (code, memory, graph, this folder's contents): 3e3e43770d541e60066c21e6e455886768016012
+branch: AGENT  remote: leviathan-devops/plutus-vision
+commit date: 2026-11-27T13:24:39+00:00
+this file and MANIFEST_REPO.sha256 are added by the commit right after it
+commits on AGENT up to the checkpoint: 299
+
+git status at the checkpoint:
+## AGENT...origin/AGENT [ahead 1]
+?? handover/70pct_functional/CHECKPOINT_COMMIT.txt
+
+last 15 commits:
+3e3e437 Handover checkpoint '70% functional' (operator M-57): handover/70pct_functional (document, OmniGraph store + export, locator outputs, scratchpad scripts); nearmiss.py locator; M-57 / L-45 recorded
+d2922d7 journal + state after the eleventh count's first fixes
+24b4c7b order labels inside the week and clear of the day tags (after count 11); ledger 106 / 106b; journal
+0607764 Eleventh outside G1 count (ledger 105c): E1 98.5 / E2 81.7 / E3 50.7; state
+bf5dedc audit response: rows for D-116 .. D-126
+3e7c017 journal: eleventh count started; sweep-reach trial rejected
+366ce81 frames + facts + brief for the eleventh outside count (code D-113 .. D-128); ledger 105 / 105b
+d0a5b0c two-line zone labels, extent-aware setup-label collisions (D-128); ledger 103-104b; state
+4c48ba9 E1 labels end before the forecast week (D-127; A13); ledger 98-102b with the two failed attempts; Pinebox label quirks in memory/08
+635d655 ledger 97 / 97b: golden DXY re-rendered on the current code (compiles, content as expected); frames evidence/chk97
+b3282d7 Pine carries the Engine 2 Section 17 output as comments (D-126; P533 6.9, 6.7 RULE 2)
+7c196d7 E2 consolidation phase detection per the canon table; Transition Entry only in the Late phase (D-125; P533 6.8 / 6.9, E3C 8.23)
+b2951fc report: day rows list per-day repeats and name the 11-trade limit; journal
+63337f5 E2 spill-over passes from day to day: five designated days (D-122; E3C:123-124)
+cf46182 E2 breakout target: a MoM zone lying against the failing bound is pierced with it (D-121; P533 6.4.2 'pierce through zone until reaching BoM Liquidity')
