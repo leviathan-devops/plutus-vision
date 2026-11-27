@@ -36,8 +36,8 @@ def name(z):
 areas = []
 for L in leaders:
     ps = [z for z in allz if joined.get(id(z)) is L]
-    b, t = min([L['bot']] + [z['bot'] for z in ps]), max([L['top']] + [z['top'] for z in ps])
-    if L in sweeps:
+    b, t = (L['bot'], L['top']) if os.environ.get('Q_MODE') == 'a' else (min([L['bot']] + [z['bot'] for z in ps]), max([L['top']] + [z['top'] for z in ps]))      # Q_MODE=a: labelled boxes only (reviewer 10's reading (a))
+    if L in sweeps and os.environ.get('Q_MODE') != 'a':
         r = L['lo'] - 0.10 * U if L['side'] == 'Demand-side' else L['hi'] + 0.10 * U
         b, t = min(b, r), max(t, r)
     areas.append((b, t, name(L)[:22], len(ps)))
