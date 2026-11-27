@@ -488,7 +488,7 @@ def _triggers(X, date):
     """6.6 Step 5 (d) 'note any volatility triggers (auctions, expiries, economic events)': the option cuts of the day (P533 2.2 'Spring Release' at 10:01 NY); red-folder calendar: NO DATA (optional input, L-32)"""
     cut = sorted({(l['strike'], l['notional_m']) for l in X['L'] if l['pillar'] == 8 and l.get('cut') == date}, key=lambda x: -x[1])
     t = [f"10:00 NY cut {s:.4f} {n / 1000:.1f}bn" if n >= 1000 else f"10:00 NY cut {s:.4f} {n}M" for s, n in cut[:3]]
-    return t + ['red folder: NO DATA']
+    return t + ['red folder: NO DATA', 'auctions: NO DATA']      # P533:693 Treasury auctions / EIA are Volatility Triggers too: not harvested (optional input, L-32; G2 A-08)
 
 
 def build(pair, monday, X, lead=None, force_dir=None):

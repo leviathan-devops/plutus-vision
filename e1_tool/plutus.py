@@ -109,6 +109,11 @@ def report(pair, monday, X, chain, R):
             o.append(f"  Anchor Zone: {name(a)} [{cls(a)}{', tested ' + str(a['mit']) + 'x' if a.get('mit') is not None else ''}] | Shape Trigger: {s['shape']} @ {s['day']} {s['session']} | Day Catalysts: {', '.join(dd['triggers']) if dd and dd.get('triggers') else 'none listed'}")
             o.append(f"  Audit Trail: {s['why']} | attempts {s.get('attempts', 1)}")
             o.append(f"  Cascade Source: {CASCADE[pair]} | Parent Trade Ref: {s.get('parent') or '-'} | Anchor Hit Window: {s['day']} {s['session']} {SES_UTC.get(s['session'], '')} UTC" + (f" (order rests from {s['rest_from']})" if s.get('rest_from') else '') + (f" | repeated: {', '.join(rep[s['id']])}" if rep.get(s['id']) else ''))
+            # E3C 12.2 floor invariants (checkMirrorFloorV45): 'Floor: RRR >= 2.5 | Session bracket valid | SL envelope (within GOLDEN_SL_MAX_PIPS = 9.5)' - reported per setup as flags
+            # (his own golden GBP/USD stops are 10.6-14.1 pips, so the envelope is a flag here, not a discard); E3C 12.3 CS-1: the stop against the day's open of the E2 path
+            slp = abs(s['entry'] - s['sl']) / EP.D.PIP[pair] if hasattr(EP, 'D') else s.get('sl_pips', 0)
+            o.append(f"  Floor invariants (E3C 12.2): RRR {'>= 2.5 ok' if s['rrr'] >= 2.5 else '< 2.5'} | session bracket = the E2 step's days | SL envelope 9.5p: {'inside' if slp <= 9.5 + 1e-9 else f'OUTSIDE ({slp:.1f}p)'}"
+                     + (f" | ALT trigger: 1H close {'above' if s['trigger']['dir'] == 'up' else 'below'} {f(s['trigger']['level'])} ({s['trigger']['zone']})" if s.get('trigger') else ''))
     o += ['', '--- DAILY SESSION NOTES ---']
     for d in days:
         o.append(f"{d['day']}: {'+'.join(d['shapes'])} {d['dir']} | key zone {d['key']} | range {f(d['lo'])}-{f(d['hi'])} | confidence {int(round(100 * d['conf']))}% | catalysts: {', '.join(d.get('triggers') or []) or 'none listed'}")
