@@ -5,6 +5,7 @@
 #    + runtime proof (the tool's output is identical when every bar after the anchor is removed) on the golden week, DXY and EURUSD (G2 audit D-01)
 # Installed by: git config core.hooksPath tools/git-hooks
 root="$(git rev-parse --show-toplevel)"; cd "$root" || exit 1
+bash tools/locks/check_e1.sh || { echo "pre-commit: Engine 1 is locked (M-67) - commit refused" >&2; exit 1; }
 files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^indicator/.*\.pine$' || true)
 if [ -n "$files" ]; then python3 tools/anchor_guard.py $files || exit 1; fi
 py=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '^e1_tool/[^/]*\.py$' || true)
