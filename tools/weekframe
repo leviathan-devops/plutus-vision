@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# weekframe OUTDIR PAIR:MONDAY ... : ONE screenshot per map with every layer, the x-axis exactly Monday 00:00 UTC -> Friday 21:00 UTC (the whole trading week, nothing else)
+# and the price axis fitted to that week's candles + drawings (M-60: 'I need to see the entire trading week in a single screenshot'). Renders one map at a time.
+set -u; R="$(cd "$(dirname "$0")/.." && pwd)"; out="$1"; shift; mkdir -p "$R/$out"
+export PATH=$HOME/.local/bin:$PATH XDG_RUNTIME_DIR=/run/user/0
+for pm in "$@"; do p="${pm%%:*}"; m="${pm##*:}"
+  ( cd "$R/e1_tool" && python3 plutus.py "$m" "$p" "out/E1_${p}_${m}.pine" ${PLUTUS_FLAGS:-} >/dev/null ) || { echo "$pm tool failed"; continue; }
+  res="$("$R/tools/pb" ide "$R/e1_tool/out/E1_${p}_${m}.pine" "$p" 1H show_lv=false show_lq=false 2>&1 | tail -1 | cut -c1-200)"
+  echo "$pm render: $res"
+  case "$res" in *REFUSED*|*rror*) echo "$pm NOT RENDERED - no frame written"; continue;; esac
+  "$R/tools/pb" goto "${m}T00:00" "$(date -u -d "$m + 4 days" +%F)T21:00" >/dev/null; "$R/tools/pbfit" >/dev/null; sleep 1
+  "$R/tools/pb" shot "tmp_wk" chart >/dev/null && mv "$R/evidence/tmp_wk.png" "$R/$out/${p}_${m}_fullweek.png" && echo "$pm -> $out/${p}_${m}_fullweek.png"
+done
