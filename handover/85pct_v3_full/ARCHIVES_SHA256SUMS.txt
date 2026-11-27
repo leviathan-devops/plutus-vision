@@ -1,0 +1,55 @@
+SHA-256 and size of the downloadable archives of the '85% functional - DXY + GU (V3)' full package (built from 5d52b4e; handover_package/, git-ignored; delivered by chat file upload)
+
+015ddbc6ec89c82e69936742c40a393c7ececefd182dec72661f8b7077ec42c7  PLUTUS_VISION_85pct_V3__1_CORE.zip
+bfba0b080c493a8b1ca94436fdfaa3799204f6f29567d56ee700085421ba6782  PLUTUS_VISION_85pct_V3__2_SIDECAR_DATA.zip
+21813a6e74ae3b5b7fd1394ca145b760c27cc95b18ee9c2d308ef9ef3dc8acb4  PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle
+e0d423dc9edb0bc45d1f14937f77fe48e9619c213d1b63a6eb2ca77f7627da5a  PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part00
+d13810fa8b09ac793ce33ef2917dc578911ce7a3d1588df6d6d7df6400cace00  PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part01
+80acd43279b7dcee41442039ed03e33cf3f02bf880a4f13a96386bbd7dd31faa  PLUTUS_VISION_85pct_V3__4_TRANSCRIPTS.zip
+d9ddce89eccb73d3e87f74a5bcd322d8d63775a8eb5b9f9746cf4c7306f64d57  PLUTUS_VISION_85pct_V3__5_INPUTS.zip
+c0072f79e07e2e60a03ce3671e47da1a02e9604644631e753748acbc6dfa1b07  PLUTUS_VISION_85pct_V3__6_SCRATCHPAD.zip
+69a561fa8e75d3ab4f8a92fc8e10d3dea45ea89d4cf8147f3a6e0bea0b7cf44d  PLUTUS_VISION_85pct_V3__7_TESTBENCH_STATE.zip
+0a1396534cda389819479c978580e689a576c2aa62af1f67c66846afe4bbc814  PLUTUS_VISION_85pct_V3__8_OMNIGRAPH.zip
+131189887 PLUTUS_VISION_85pct_V3__1_CORE.zip
+359439786 PLUTUS_VISION_85pct_V3__2_SIDECAR_DATA.zip
+599595501 PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle
+471859200 PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part00
+127736301 PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part01
+235578830 PLUTUS_VISION_85pct_V3__4_TRANSCRIPTS.zip
+83277337 PLUTUS_VISION_85pct_V3__5_INPUTS.zip
+70206751 PLUTUS_VISION_85pct_V3__6_SCRATCHPAD.zip
+16378241 PLUTUS_VISION_85pct_V3__7_TESTBENCH_STATE.zip
+2583026 PLUTUS_VISION_85pct_V3__8_OMNIGRAPH.zip
+1093 PLUTUS_VISION_85pct_V3__SHA256SUMS.txt
+
+Bundle in two parts (500 MiB upload limit): cat PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part00 PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle.part01 > PLUTUS_VISION_85pct_V3__3_GIT_HISTORY.bundle, then compare its SHA-256 above; git bundle verify.
+Part 5 (inputs) is byte-identical to the 70% package's part 5 (/home/user/inputs unchanged).
+
+REDACTED copies on the public branches (handover-70pct-functional, handover-85pct-v3-full: <dir>/archives/, SHA256SUMS + REASSEMBLE.md + REDACTION_AND_SCAN.md there):
+532af7e36f7a865929898681dd8d156132bec1157d6845b7698b400ad76acd2a  70_4_TRANSCRIPTS_REDACTED.zip
+22dd3178fb3500d026f9fa0d4a36aaf20c259157230941e604c587b5acdbc6e4  70_6_SCRATCHPAD_REDACTED.zip
+8393460668fd9edbaed5fd01780e111adec354be50f0d4da81d19b0191e42256  70_7_TESTBENCH_STATE_REDACTED.zip
+aa0ca04a07ace32c67bef00090b37f0bffb096521657a4b4a62ea7d3e719e2fb  85_4_TRANSCRIPTS_REDACTED.zip
+3fa022b55896051255c90aba26272878bad1e181b1820c97ce58b5312ad18bb0  85_6_SCRATCHPAD_REDACTED.zip
+4678cc36aaacdab42881fbebff4ec3c87123a48147f6a2fb6f64b1ff6e8996c2  85_7_TESTBENCH_STATE_REDACTED.zip
+0dab12b03677975b8819d93e944cc1864bfa00126b967717ea6d51ff62f7804a  INPUTS_REDACTED.zip
+
+Redaction log:
+== B redacted copies for the public branches
+70_4_TRANSCRIPTS_REDACTED.zip: 54 files redacted, identifiers left 0
+INPUTS_REDACTED.zip: 36 files redacted, identifiers left 0
+70_6_SCRATCHPAD_REDACTED.zip: 0 files redacted, identifiers left 0
+70_7_TESTBENCH_STATE_REDACTED.zip: 1 files redacted, identifiers left 0
+85_4_TRANSCRIPTS_REDACTED.zip: 57 files redacted, identifiers left 0
+85_6_SCRATCHPAD_REDACTED.zip: 1 files redacted, identifiers left 0
+85_7_TESTBENCH_STATE_REDACTED.zip: 1 files redacted, identifiers left 0
+== B scan of the redacted copies for credentials (text inside the zips)
+70_4_TRANSCRIPTS_REDACTED.zip: credential hits 1, AWS keys other than the documented example 0
+70_6_SCRATCHPAD_REDACTED.zip: credential hits 0, AWS keys other than the documented example 0
+70_7_TESTBENCH_STATE_REDACTED.zip: credential hits 0, AWS keys other than the documented example 0
+85_4_TRANSCRIPTS_REDACTED.zip: credential hits 1, AWS keys other than the documented example 0
+85_6_SCRATCHPAD_REDACTED.zip: credential hits 0, AWS keys other than the documented example 0
+85_7_TESTBENCH_STATE_REDACTED.zip: credential hits 0, AWS keys other than the documented example 0
+INPUTS_REDACTED.zip: credential hits 0, AWS keys other than the documented example 0
+BUILD_DONE
+The one 'credential hit' in each redacted transcript archive is a false positive: an AIza-like run of characters inside base64 image data in the session transcript (checked by hand).
