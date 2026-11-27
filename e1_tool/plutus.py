@@ -10,6 +10,8 @@ def run(pair, monday):
     X = EP.run(pair, monday)
     lead = E2.build('DXY', monday, EP.run('DXY', monday)) if pair != 'DXY' else None      # DXY = master direction (P533:1899-1917; GS Law 7)
     chain = E2.build(pair, monday, X, lead)
+    if lead is not None:
+        chain['divergence'] = divergence(lead, E2.build(pair, monday, X, None))
     setups = []
     try:
         import e3_trades as E3
@@ -19,6 +21,28 @@ def run(pair, monday):
     extra = E2.pine(pair, monday, chain) + (E3.pine(pair, monday, setups) if E3 else []) + table(pair, monday, X, chain, setups)
     src = EP.generate(pair, monday, X, extra, EP.reach(X, chain))
     return X, chain, setups, src + '\n' + '\n'.join('// ' + l for l in report(pair, monday, X, chain, setups)) + '\n'
+
+
+FAMILY = {'SS': 'SS', 'RWL': 'SS', 'PRWL': 'SS', 'STORM': 'SS', 'BS': 'BS', 'PBS': 'BS', 'R': 'R', 'WL': 'WL', 'WLS': 'WL', 'PWL': 'WL'}
+MASTER = ['SS', 'BS', 'R', 'WL']
+
+
+def divergence(core, own):
+    """E3C 10.7 'The 35% Divergence Rule (FLAG ONLY - never override)': per day, the DXY chain's shape family against the pair's OWN chain (the pair's bounds read without the DXY lead):
+    'Shape-family alignment (SS~SS/RWL/STORM/PRWL; BS~BS/PBS; R; WL~WL/WLS/PWL) OR +-1 step on master SS->BS->R->WL; divergence = (5-aligned)/5; missing day = not-aligned;
+    <= 0.35 -> VALIDATED else -> DIVERGED, flag only'. The DXY translation stays the pair's chain (P533 9.13 'Do NOT override the DXY direction')."""
+    cd = {d['day']: d for d in core.get('days', [])}; od = {d['day']: d for d in own.get('days', [])}
+    aligned, rows = 0, []
+    for day in ('Mon', 'Tue', 'Wed', 'Thu', 'Fri'):
+        a, b = cd.get(day), od.get(day)
+        ok = False
+        if a and b:
+            fa, fb = {FAMILY.get(x, x) for x in a['shapes']}, {FAMILY.get(x, x) for x in b['shapes']}
+            ok = bool(fa & fb) or any(abs(MASTER.index(x) - MASTER.index(y)) <= 1 for x in fa for y in fb if x in MASTER and y in MASTER)
+        aligned += ok
+        rows.append(f"{day} {'+'.join(a['shapes']) if a else '-'} / {'+'.join(b['shapes']) if b else '-'}{'' if ok else ' (not aligned)'}")
+    dv = (5 - aligned) / 5
+    return {'value': dv, 'state': 'VALIDATED' if dv <= 0.35 else 'DIVERGED', 'rows': rows, 'own_dir': own.get('bdir')}
 
 
 CASCADE = {'DXY': 'native', 'EURUSD': 'DXY->EU', 'GBPUSD': 'EU->GU'}
@@ -65,6 +89,10 @@ def report(pair, monday, X, chain, R):
     for d in days:
         o.append(f"{d['day']}: {'+'.join(d['shapes'])} {d['dir']} | key zone {d['key']} | range {f(d['lo'])}-{f(d['hi'])} | confidence {int(round(100 * d['conf']))}% | catalysts: {', '.join(d.get('triggers') or []) or 'none listed'}")
     o.append('Weekend: Close ALL positions by NY close Friday - per pair')
+    dv = chain.get('divergence')
+    if dv is not None:
+        o += ['', f"--- CASCADE (E3C 10.7, flag only) --- divergence {dv['value']:.2f} -> {dv['state']} | DXY chain / pair's own chain per day: " + ' | '.join(dv['rows'])
+              + f" | pair's own breakout direction: {dv['own_dir'] or 'none'}"]
     o += ['', '--- DISCARDED (reason on every discard) ---'] + ([l for l in R.get('log', [])] or ['none'])
     rr = sorted(s['rrr'] for s in S)
     med = (rr[len(rr) // 2] if len(rr) % 2 else (rr[len(rr) // 2 - 1] + rr[len(rr) // 2]) / 2) if rr else 0.0
