@@ -533,7 +533,7 @@ def run(pair, monday, daily=False):
     X['e2_zones'] = [(z['bot'], z['top']) for z in des if isinstance(z, dict) and 'bot' in z]
     edges = [d[k] for d in chain['days'] for k in ('lo', 'hi')] + [q['entry'] for q in setups['setups']]      # ... and a band a day box ends on / a setup's entry stands on
     X['e2_zones'] += [(b['bot'], b['top']) for b in X['v1']['240']['liquidity'] if any(b['bot'] - 1e-9 <= e <= b['top'] + 1e-9 for e in edges)]
-    src = EP.generate(pair, monday, X, extra, EP.reach(X, chain))
+    src = EP.generate(pair, monday, X, extra, EP.reach(X, chain), pre=(E3.pine_state(pair, monday, setups) if E3 else []))
     return X, chain, setups, src + '\n' + '\n'.join('// ' + l for l in e2_report(pair, monday, chain) + [''] + report(pair, monday, X, chain, setups)) + '\n'
 
 

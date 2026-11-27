@@ -959,51 +959,121 @@ def build(pair, monday, X, E2, source=None):
     return R
 
 
+SPAN_BOXES = True            # D-146 (operator M-64): a position box covers its trade only - from the candle that touches the entry to the candle that touches the TP (or SL), one candle each side
+
+
+def _fill_cond(s):
+    """the Pine condition under which order s is filled on a bar: a resting limit (long below / short above the market) when the bar trades through its entry; a rocket (stop-limit in the
+    move's direction, E3C:625 'stop-limit at an intermediate LQZ rung') when the move reaches it"""
+    g = '%.5f' % s['entry']
+    if s.get('category') == 'Reinforcement':
+        return f"low <= {g}" if s['dir'] == 'SHORT' else f"high >= {g}"
+    return f"low <= {g}" if s['dir'] == 'LONG' else f"high >= {g}"
+
+
+def pine_state(pair, monday, R):
+    """D-146 (operator M-64: 'from the exact entry to the exact TP with maybe a 1 or 2 candle buffer ... It should not extend beyond the exact entry and take profit'): per order, top-level
+    Pine state updated on every bar of the chart - the bar that fills it (inside its life [start, valid_to); a rocket only once its parent is filled and before the parent exits; an
+    alternative-chain order only after the 1H close beyond its trigger), then the bar that touches its SL or TP (SL first when one bar touches both). The levels, the life and the
+    trigger are the anchor's; the bars are the chart's own - the indicator draws the trade the way a position tool does, nothing after an anchor feeds a level (temporal anchor)."""
+    if not SPAN_BOXES or not R['setups']:
+        return []
+    g = lambda v: ('%.3f' if pair == 'DXY' else '%.5f') % v
+    b0, wk1 = D.boundary_ms(monday), D.week_end_ms(monday)
+    idx = {id(s): k for k, s in enumerate(R['setups'])}
+    o = ['// E3 trade spans (D-146): the bar each order fills and the bar it exits, tracked on the chart\'s own candles', 'e3bw = nz(time - time[1], 3600000)']
+    for k, s in enumerate(R['setups']):
+        x0 = _order_start(s, monday, b0)
+        o.append(f"var int e3E{k} = na")
+        o.append(f"var int e3X{k} = na")
+        o.append(f"var int e3R{k} = 0")
+        if s.get('alt') and s.get('trigger'):
+            o.append(f"var bool e3T{k} = false")
+        live = [f"time >= {x0}"]
+        if s.get('alt') and s.get('trigger'):
+            o.append(f"if isPair and not e3T{k} and time >= {x0} and close {'>' if s['trigger']['dir'] == 'up' else '<'} {g(s['trigger']['level'])}")
+            o.append(f"    e3T{k} := true")
+            live.append(f"e3T{k}")
+        par = s.get('parent_ref')
+        if par is not None and id(par) in idx:
+            j = idx[id(par)]
+            live.append(f"not na(e3E{j}) and time > e3E{j} and na(e3X{j})")
+        else:
+            live.append(f"time < {min(s.get('valid_to') or wk1, wk1)}")
+        o.append(f"if isPair and na(e3E{k}) and {' and '.join(live)} and {_fill_cond(s).replace('%.5f' % s['entry'], g(s['entry']))}")
+        o.append(f"    e3E{k} := time")
+        lng = s['dir'] == 'LONG'
+        o.append(f"if isPair and not na(e3E{k}) and na(e3X{k})")
+        o.append(f"    if {'low <= ' + g(s['sl']) if lng else 'high >= ' + g(s['sl'])}")
+        o.append(f"        e3X{k} := time")
+        o.append(f"        e3R{k} := -1")
+        o.append(f"    else if {'high >= ' + g(s['tp']) if lng else 'low <= ' + g(s['tp'])}")
+        o.append(f"        e3X{k} := time")
+        o.append(f"        e3R{k} := 1")
+    return o
+
+
+def _order_start(s, monday, b0):
+    """the time an order exists from (as drawn before D-146): its day's start, a resting / rocket order's valid_from, a daily-anchored order's day anchor"""
+    day0 = D.week_start_ms(monday) + DAY_IDX[s['day']] * 86400000
+    x0 = max(day0 if s.get('t0') is None else min(day0, s['t0']), b0)
+    if s['category'] == 'Reinforcement' or s.get('rest_from'):
+        x0 = max(s.get('valid_from') or x0, b0)
+    if s.get('day_anchor'):
+        x0 = max(x0, s['day_anchor'])
+    return x0
+
+
 def pine(pair, monday, R):
-    """R-09: position boxes - red = SL side, green = entry -> TP, entry on their shared edge; each box spans the time Engine 2 gives its leg"""
+    """R-09: position boxes - red = SL side, green = entry -> TP, entry on their shared edge. D-146 (operator M-64): each box covers its trade only - from one candle before the candle that
+    fills it to one candle after the candle that touches its TP (or SL), tracked on the chart's own candles by pine_state(); an order that never fills is a three-candle stub where it
+    was placed (dashed). The label starts at the box's first candle."""
     g = lambda v: ('%.3f' if pair == 'DXY' else '%.5f') % v
     b0, wk1 = D.boundary_ms(monday), D.week_end_ms(monday)
     o = ['    if show_e3']
     if not R['setups']:
         o.append('        na')
-    seen_day, starts, placed = set(), {}, list(R.get('avoid') or [])      # 'avoid' = the day tags of Engine 2 (x, width, y): no order label prints over a day tag (outside count 11)
-    span = (max([max(s['entry'], s['sl'], s['tp']) for s in R['setups']]) - min([min(s['entry'], s['sl'], s['tp']) for s in R['setups']])) if R['setups'] else 0.0
+    per_day, labs = {}, []
+    span = (max([max(q['entry'], q['sl'], q['tp']) for q in R['setups']]) - min([min(q['entry'], q['sl'], q['tp']) for q in R['setups']])) if R['setups'] else 0.0
     txt_h = 0.035 * span                                      # one line of label text against the price span the setups cover
-    for s in R['setups']:
-        day0 = D.week_start_ms(monday) + DAY_IDX[s['day']] * 86400000
-        first = s['day'] not in seen_day; seen_day.add(s['day'])
-        x0 = max(day0 if first or s.get('t0') is None else s['t0'], b0)   # a setup is a resting order from the start of its day; later setups of the same day follow in leg order
+    for k, s in enumerate(R['setups']):
+        x0 = _order_start(s, monday, b0)
         cond = s['category'] == 'Reinforcement'               # a rocket is a CONDITIONAL order (live only once its parent is filled, E3C:625): dashed outline, lighter fill, 'if <parent>' in its label
-        if cond or s.get('rest_from'):                        # a resting order is drawn from the day it starts to rest (D-76), not from the day of its tag
-            x0 = max(s.get('valid_from') or x0, b0)
-        if s.get('day_anchor'):                               # daily anchoring (L-47): an order exists from the London open it was built at
-            x0 = max(x0, s['day_anchor'])
-        x1 = min(max(s['t1'] if s.get('t1') is not None else s['valid_to'], x0 + 6 * 3600000), wk1)
+        dash = s.get('alt') or cond
         o.append(f"        // {s['id']} {s['day']} {s['shape']} {s['dir']} E {g(s['entry'])} SL {g(s['sl'])} TP {g(s['tp'])} RRR {s['rrr']} | {s['category']} / {s['session']} | {s['why']}")
-        o.append(f"        box.new({x0}, {g(max(s['entry'], s['sl']))}, {x1}, {g(min(s['entry'], s['sl']))}, bgcolor=color.new(color.rgb(242,54,69), {92 if (s.get('alt') or cond) else 84}), border_color=color.rgb(242,54,69), border_width=1, border_style={'line.style_dashed' if (s.get('alt') or cond) else 'line.style_solid'}, xloc=xloc.bar_time)")
+        if SPAN_BOXES:
+            o.append(f"        e3a{k} = not na(e3E{k}) ? e3E{k} - e3bw : {x0}")
+            o.append(f"        e3b{k} = not na(e3E{k}) ? (na(e3X{k}) ? time : e3X{k}) + e3bw : {x0} + 3 * e3bw")
+            xa, xb = f"e3a{k}", f"e3b{k}"
+        else:
+            xa, xb = str(x0), str(min(max(s['t1'] if s.get('t1') is not None else s['valid_to'], x0 + 6 * 3600000), wk1))
+        stub = f"na(e3E{k})" if SPAN_BOXES else 'false'
+        o.append(f"        box.new({xa}, {g(max(s['entry'], s['sl']))}, {xb}, {g(min(s['entry'], s['sl']))}, bgcolor=color.new(color.rgb(242,54,69), {92 if dash else 84}), border_color=color.rgb(242,54,69), border_width=1, border_style={stub} or {'true' if dash else 'false'} ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)")
         if s.get('front') is not None:                       # first-contact band between the front entry and the edge
-            o.append(f"        box.new({x0}, {g(max(s['entry'], s['front']))}, {x1}, {g(min(s['entry'], s['front']))}, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
-        o.append(f"        box.new({x0}, {g(max(s['entry'], s['tp']))}, {x1}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), {94 if (s.get('alt') or cond) else 88}), border_color=color.rgb(8,153,129), border_width=1, border_style={'line.style_dashed' if (s.get('alt') or cond) else 'line.style_solid'}, xloc=xloc.bar_time)")
-        k = starts.get(x0, 0); starts[x0] = k + 1             # setups resting from the same bar: labels staggered along the box so they do not print over each other (A13)
-        row = (k + (DAY_IDX[s['day']] if s.get('clone') else 0)) % 3     # a per-day repeat steps one row per day so neighbouring days' labels do not run into each other
-        ly = s['entry'] + (0.14 + 0.10 * row) * (s['tp'] - s['entry'])   # inside the green box near its own entry edge; three rows for setups that start together
-        lx = max(x0 + 2 * 3600000, min(x0 + 3 * 3600000 + k * 9 * 3600000, x1 - 3600000, wk1 - 14 * 3600000))     # kept clear of the chart's right edge
-        # no label over another label (A13; outside count 8 'setup labels pile on each other'): a label that would land within 14 hours and one text height of a placed one moves
-        # along its box, then one row further into the green side
+            o.append(f"        box.new({xa}, {g(max(s['entry'], s['front']))}, {xb}, {g(min(s['entry'], s['front']))}, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)")
+        o.append(f"        box.new({xa}, {g(max(s['entry'], s['tp']))}, {xb}, {g(min(s['entry'], s['tp']))}, bgcolor=color.new(color.rgb(8,153,129), {94 if dash else 88}), border_color=color.rgb(8,153,129), border_width=1, border_style={stub} or {'true' if dash else 'false'} ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)")
+        row = per_day.get(s['day'], 0); per_day[s['day']] = row + 1
+        ly = s['entry'] + (0.14 + 0.12 * (row % 3)) * (s['tp'] - s['entry'])     # inside the green box near its own entry edge; orders of one day step one row each (A13)
         txt = s['id'] if s.get('clone') else (s['id'] + ' ' + ('ALT ' if s.get('alt') else '') + s['shape'] + ' ' + ('S' if s['dir'] == 'SHORT' else 'L') + ' ' + format(s['rrr'], '.1f') + 'R'
                                               + ((' if ' + str(s.get('parent'))) if cond else '')
                                               + ((' if 1H ' + ('>' if s['trigger']['dir'] == 'up' else '<') + ' ' + g(s['trigger']['level'])) if s.get('trigger') else ''))
-        wx = int(1.65 * len(txt) * 3600000)                   # Pinebox draws the text from the label's point to the right, about 1.65 one-hour bars per character (memory/08 label quirks; D-127)
-        lx = max(b0, min(lx, wk1 - wx - 2 * 3600000))         # the whole text stays inside the week: no label cut by the chart's right edge (outside count 11)
-        for _try in range(10):
-            if not any(lx < px + pw and px < lx + wx and abs(ly - py) < txt_h for px, pw, py in placed):
-                break
-            if _try % 2 == 0 and lx + 15 * 3600000 <= min(x1 - 3600000, wk1 - wx - 2 * 3600000):
-                lx += 15 * 3600000
-            else:
-                ly += 1.1 * txt_h * (1 if s['tp'] > s['entry'] else -1)
-        placed.append((lx, wx, ly))
-        o.append(f"        label.new({lx}, {g(ly)}, \"{txt}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
+        labs.append((k, xa, ly, txt, s))
+    if SPAN_BOXES:
+        # D-146: the labels start at their box's first candle, which the chart decides (the fill) - so the no-overlap rule (A13) runs in the Pine: a label whose text would print over an
+        # earlier one (text width ~1.65 one-hour bars per character, memory/08; one text height apart) steps one row further into its own green box; two passes
+        for k, xa, ly, txt, s in labs:
+            o.append(f"        e3y{k} = {g(ly)}")
+        for _pass in range(2):
+            for i, (k, xa, ly, txt, s) in enumerate(labs):
+                for j, xb_, lyb, txtb, sb in labs[:i]:
+                    step = g(1.1 * txt_h * (1 if s['tp'] > s['entry'] else -1))
+                    o.append(f"        if {xa} < e3a{j} + {int(1.65 * len(txtb))} * e3bw and e3a{j} < {xa} + {int(1.65 * len(txt))} * e3bw and math.abs(e3y{k} - e3y{j}) < {g(txt_h)}")
+                    o.append(f"            e3y{k} := e3y{k} + {step}")
+        for k, xa, ly, txt, s in labs:
+            o.append(f"        label.new({xa} + e3bw, e3y{k}, \"{txt}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
+    else:
+        for k, xa, ly, txt, s in labs:
+            o.append(f"        label.new({xa} + 3600000, {g(ly)}, \"{txt}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
 
 

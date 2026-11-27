@@ -1,3 +1,7 @@
+## STATE (NEWEST, 2026-11-27 ~20:55 UTC) - POLISH PHASE (M-64 / L-60): D-146 trade boxes entry -> TP built; frames evidence/v3b; waiting for his next steps
+- He accepted the package ('Okay, great') and opened the polish phase: trade boxes from the exact entry to the exact TP with a 1-2 candle buffer (D-146, built: tracked by the Pine on the chart's candles; stubs for never-filled orders; in-Pine label de-collision).
+- NEXT: send him the three evidence/v3b frames; then his next steps (he said he will give them).
+
 ## STATE (NEWEST, 2026-11-27 ~20:40 UTC) - M-62 / M-63 DONE: full handover package '85% functional - DXY + GU (V3)' built, delivered, and both handovers pushed as self-contained branches
 - He accepted the V1 / V2 / V3 report ('Okay, great') and ordered a full updated handover package covering everything since the 70% package (L-58, M-62 verbatim in memory/12).
 - Package = handover/85pct_v3_full/ (tracked: 00_START_HERE.md, ENGINEERING_REPORT.md, COMMITS_SINCE_70PCT.md, CHECKPOINTS.md, VISUAL_CHECKPOINTS.md, DURABLE_FACTS_SINCE_70PCT.md, CODE_MAP_SINCE_70PCT.md, CODE_CHANGES_SINCE_70PCT.patch, locator_outputs/ at HEAD, scratchpad_scripts/, answers_m58_q3/, canon_text_extracts/, omnigraph/, MANIFEST_REPO.sha256, CHECKPOINT_COMMIT.txt, ARCHIVES_SHA256SUMS.txt) + archives 1-8 in handover_package/ (git-ignored) named PLUTUS_VISION_85pct_V3__<n>_<PART>, sent with SendUserFile (500 MiB limit: the git bundle in parts).

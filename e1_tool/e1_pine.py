@@ -128,7 +128,7 @@ def join_zones(X, near, sweeps):
     return joined, parts
 
 
-def generate(pair, monday, X, extra=(), rch=None):
+def generate(pair, monday, X, extra=(), rch=None, pre=()):
     g = lambda v: ('%.3f' if pair == 'DXY' else '%.5f') % v
     near = (lambda b, t: True) if rch is None else (lambda b, t: b <= rch[1] and t >= rch[0])
     b0, tsR, wk0 = D.boundary_ms(monday), D.week_end_ms(monday), D.week_start_ms(monday)
@@ -163,7 +163,7 @@ def generate(pair, monday, X, extra=(), rch=None):
          'show_lq = input.bool(true, "E1 Liquidity ladder 1H (V1 data)")', 'show_lq4 = input.bool(true, "E1 Liquidity bands 4H (V1 data)")', 'show_ob = input.bool(false, "V1 order blocks (data)")',
          'show_far = input.bool(false, "E1 zones beyond this week\'s reach")', 'show_v1s = input.bool(false, "V1 4H liquidity bands standing alone (the sealed V1 draws them)")',
          'show_e2 = input.bool(true, "E2 Shape chain")', 'show_e3 = input.bool(true, "E3 Trade setups")', 'show_tbl = input.bool(true, "Info Table")',
-         f'isPair = str.contains(syminfo.ticker, "{D.SYM[pair].split("_")[-1]}")', 'if barstate.islast and isPair']
+         f'isPair = str.contains(syminfo.ticker, "{D.SYM[pair].split("_")[-1]}")'] + list(pre) + ['if barstate.islast and isPair']      # pre = per-bar state code (D-146: Engine 3 trade spans)
     # liquidity ladder: the sealed V1's 1H liquidity bands at the anchor (R-30), around the prior week's range (V1 itself draws the live ladder)
     o.append('    if show_lq')
     n0 = len(o)

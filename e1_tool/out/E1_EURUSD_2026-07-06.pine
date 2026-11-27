@@ -17,6 +17,104 @@ show_e2 = input.bool(true, "E2 Shape chain")
 show_e3 = input.bool(true, "E3 Trade setups")
 show_tbl = input.bool(true, "Info Table")
 isPair = str.contains(syminfo.ticker, "EURUSD")
+// E3 trade spans (D-146): the bar each order fills and the bar it exits, tracked on the chart's own candles
+e3bw = nz(time - time[1], 3600000)
+var int e3E0 = na
+var int e3X0 = na
+var int e3R0 = 0
+if isPair and na(e3E0) and time >= 1783317600000 and time < 1783458000000 and high >= 1.14442
+    e3E0 := time
+if isPair and not na(e3E0) and na(e3X0)
+    if high >= 1.14508
+        e3X0 := time
+        e3R0 := -1
+    else if low <= 1.14068
+        e3X0 := time
+        e3R0 := 1
+var int e3E1 = na
+var int e3X1 = na
+var int e3R1 = 0
+if isPair and na(e3E1) and time >= 1783317600000 and time < 1783458000000 and low <= 1.14018
+    e3E1 := time
+if isPair and not na(e3E1) and na(e3X1)
+    if low <= 1.13960
+        e3X1 := time
+        e3R1 := -1
+    else if high >= 1.14429
+        e3X1 := time
+        e3R1 := 1
+var int e3E2 = na
+var int e3X2 = na
+var int e3R2 = 0
+if isPair and na(e3E2) and time >= 1783317600000 and time < 1783371600000 and low <= 1.14095
+    e3E2 := time
+if isPair and not na(e3E2) and na(e3X2)
+    if low <= 1.14037
+        e3X2 := time
+        e3R2 := -1
+    else if high >= 1.14429
+        e3X2 := time
+        e3R2 := 1
+var int e3E3 = na
+var int e3X3 = na
+var int e3R3 = 0
+if isPair and na(e3E3) and time >= 1783458000000 and time < 1783544400000 and high >= 1.14269
+    e3E3 := time
+if isPair and not na(e3E3) and na(e3X3)
+    if high >= 1.14369
+        e3X3 := time
+        e3R3 := -1
+    else if low <= 1.13940
+        e3X3 := time
+        e3R3 := 1
+var int e3E4 = na
+var int e3X4 = na
+var int e3R4 = 0
+if isPair and na(e3E4) and time >= 1783490400000 and time < 1783717200000 and low <= 1.13940
+    e3E4 := time
+if isPair and not na(e3E4) and na(e3X4)
+    if low <= 1.13872
+        e3X4 := time
+        e3R4 := -1
+    else if high >= 1.14555
+        e3X4 := time
+        e3R4 := 1
+var int e3E5 = na
+var int e3X5 = na
+var int e3R5 = 0
+if isPair and na(e3E5) and time >= 1783458000000 and time < 1783544400000 and low <= 1.14018
+    e3E5 := time
+if isPair and not na(e3E5) and na(e3X5)
+    if low <= 1.13960
+        e3X5 := time
+        e3R5 := -1
+    else if high >= 1.14254
+        e3X5 := time
+        e3R5 := 1
+var int e3E6 = na
+var int e3X6 = na
+var int e3R6 = 0
+if isPair and na(e3E6) and time >= 1783544400000 and not na(e3E4) and time > e3E4 and na(e3X4) and high >= 1.14239
+    e3E6 := time
+if isPair and not na(e3E6) and na(e3X6)
+    if low <= 1.14172
+        e3X6 := time
+        e3R6 := -1
+    else if high >= 1.14555
+        e3X6 := time
+        e3R6 := 1
+var int e3E7 = na
+var int e3X7 = na
+var int e3R7 = 0
+if isPair and na(e3E7) and time >= 1783630800000 and time < 1783717200000 and high >= 1.14598
+    e3E7 := time
+if isPair and not na(e3E7) and na(e3X7)
+    if high >= 1.14653
+        e3X7 := time
+        e3R7 := -1
+    else if low <= 1.14239
+        e3X7 := time
+        e3R7 := 1
 if barstate.islast and isPair
     if show_lq
         box.new(1782680400000, 1.14748, 1783717200000, 1.14720, bgcolor=color.new(color.rgb(46,139,87), 70), border_color=color.new(color.rgb(63,164,106), 40), border_width=1, xloc=xloc.bar_time)
@@ -264,42 +362,178 @@ if barstate.islast and isPair
         line.new(1783675200000, 1.14623, 1783699200000, 1.14444, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
     if show_e3
         // EU1 Mon SS SHORT E 1.14442 SL 1.14508 TP 1.14068 RRR 5.66 | Swing Scalp / London Open | entry 15m order block at the zone, bottom + 1 pip (F1-A); SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 0.65]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327)
-        box.new(1783317600000, 1.14508, 1783458000000, 1.14442, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1783317600000, 1.14442, 1783458000000, 1.14422, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1783317600000, 1.14442, 1783458000000, 1.14068, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1783328400000, 1.14390, "EU1 SS S 5.7R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        e3a0 = not na(e3E0) ? e3E0 - e3bw : 1783317600000
+        e3b0 = not na(e3E0) ? (na(e3X0) ? time : e3X0) + e3bw : 1783317600000 + 3 * e3bw
+        box.new(e3a0, 1.14508, e3b0, 1.14442, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=na(e3E0) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
+        box.new(e3a0, 1.14442, e3b0, 1.14422, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(e3a0, 1.14442, e3b0, 1.14068, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=na(e3E0) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
         // EU2 Mon SS LONG E 1.14018 SL 1.13960 TP 1.14429 RRR 7.14 | Swing Scalp / London Open | entry LQZ rung at the zone; SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 0.65]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327)
-        box.new(1783317600000, 1.14018, 1783458000000, 1.13960, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1783317600000, 1.14028, 1783458000000, 1.14018, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1783317600000, 1.14429, 1783458000000, 1.14018, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1783360800000, 1.14117, "EU2 SS L 7.1R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        e3a1 = not na(e3E1) ? e3E1 - e3bw : 1783317600000
+        e3b1 = not na(e3E1) ? (na(e3X1) ? time : e3X1) + e3bw : 1783317600000 + 3 * e3bw
+        box.new(e3a1, 1.14018, e3b1, 1.13960, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=na(e3E1) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
+        box.new(e3a1, 1.14028, e3b1, 1.14018, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(e3a1, 1.14429, e3b1, 1.14018, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=na(e3E1) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
         // EU3 Mon SS LONG E 1.14095 SL 1.14037 TP 1.14429 RRR 5.8 | Swing Scalp / London Open | entry internal LQZ rung; SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding zone near edge + 1 pip (strong zone, E3C:320-327)
-        box.new(1783317600000, 1.14095, 1783371600000, 1.14037, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1783317600000, 1.14105, 1783371600000, 1.14095, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1783317600000, 1.14429, 1783371600000, 1.14095, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1783368000000, 1.14208, "EU3 SS L 5.8R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        e3a2 = not na(e3E2) ? e3E2 - e3bw : 1783317600000
+        e3b2 = not na(e3E2) ? (na(e3X2) ? time : e3X2) + e3bw : 1783317600000 + 3 * e3bw
+        box.new(e3a2, 1.14095, e3b2, 1.14037, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=na(e3E2) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
+        box.new(e3a2, 1.14105, e3b2, 1.14095, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(e3a2, 1.14429, e3b2, 1.14095, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=na(e3E2) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
         // EU4 Wed RWL SHORT E 1.14269 SL 1.14369 TP 1.13940 RRR 3.29 | Reversal / NY Open | entry the last swing's TP level (Law 27: TP of N = entry of N+1); SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 0.80]; TP opposing liquidity near edge + 1 pip (6.4.2 retest)
-        box.new(1783458000000, 1.14369, 1783526400000, 1.14269, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1783458000000, 1.14269, 1783526400000, 1.13940, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1783468800000, 1.14223, "EU4 RWL S 3.3R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        e3a3 = not na(e3E3) ? e3E3 - e3bw : 1783458000000
+        e3b3 = not na(e3E3) ? (na(e3X3) ? time : e3X3) + e3bw : 1783458000000 + 3 * e3bw
+        box.new(e3a3, 1.14369, e3b3, 1.14269, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=na(e3E3) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
+        box.new(e3a3, 1.14269, e3b3, 1.13940, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=na(e3E3) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
         // EU5 Wed BS LONG E 1.13940 SL 1.13872 TP 1.14555 RRR 9.11 | HTF Swing / NY Mid | entry the reverse-whiplash TP level (Law 27: TP of N = entry of N+1); SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 0.90]; TP 4H target zone midpoint (LQZ inside the zone, rule 4)
-        box.new(1783490400000, 1.13940, 1783663200000, 1.13872, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1783490400000, 1.14555, 1783663200000, 1.13940, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1783501200000, 1.14026, "EU5 BS L 9.1R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        e3a4 = not na(e3E4) ? e3E4 - e3bw : 1783490400000
+        e3b4 = not na(e3E4) ? (na(e3X4) ? time : e3X4) + e3bw : 1783490400000 + 3 * e3bw
+        box.new(e3a4, 1.13940, e3b4, 1.13872, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=na(e3E4) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
+        box.new(e3a4, 1.14555, e3b4, 1.13940, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=na(e3E4) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
         // EU6 Wed SS LONG E 1.14018 SL 1.13960 TP 1.14254 RRR 4.1 | Swing Scalp / London Open | entry LQZ rung at the zone; SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 0.55]; TP liquidity band near edge (strong, E3C:320-327)
-        box.new(1783458000000, 1.14018, 1783526400000, 1.13960, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1783458000000, 1.14028, 1783526400000, 1.14018, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1783458000000, 1.14254, 1783526400000, 1.14018, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1783501200000, 1.14075, "EU6 SS L 4.1R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        e3a5 = not na(e3E5) ? e3E5 - e3bw : 1783458000000
+        e3b5 = not na(e3E5) ? (na(e3X5) ? time : e3X5) + e3bw : 1783458000000 + 3 * e3bw
+        box.new(e3a5, 1.14018, e3b5, 1.13960, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=na(e3E5) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
+        box.new(e3a5, 1.14028, e3b5, 1.14018, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(e3a5, 1.14254, e3b5, 1.14018, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=na(e3E5) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
         // EU7 Thu Ladder LONG E 1.14239 SL 1.14172 TP 1.14555 RRR 4.71 | Reinforcement / NY Open | reinforcement 1 (stop-limit at the LQZ rung on the TP path; own ladder-step SL; parent TP)
-        box.new(1783544400000, 1.14239, 1783663200000, 1.14172, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        box.new(1783544400000, 1.14555, 1783663200000, 1.14239, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1783555200000, 1.14283, "EU7 Ladder L 4.7R if EU5", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        e3a6 = not na(e3E6) ? e3E6 - e3bw : 1783544400000
+        e3b6 = not na(e3E6) ? (na(e3X6) ? time : e3X6) + e3bw : 1783544400000 + 3 * e3bw
+        box.new(e3a6, 1.14239, e3b6, 1.14172, bgcolor=color.new(color.rgb(242,54,69), 92), border_color=color.rgb(242,54,69), border_width=1, border_style=na(e3E6) or true ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
+        box.new(e3a6, 1.14555, e3b6, 1.14239, bgcolor=color.new(color.rgb(8,153,129), 94), border_color=color.rgb(8,153,129), border_width=1, border_style=na(e3E6) or true ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
         // EU8 Fri RWL SHORT E 1.14598 SL 1.14653 TP 1.14239 RRR 6.52 | Reversal / NY Open | entry sweep zone mid; SL (a) 3 pips outside the far edge of the current step [ZR-6B safety, mirror confidence 0.80]; TP first LQZ rung 30+ pips along the reversal: midpoint (GS Law 2; rule 4)
-        box.new(1783630800000, 1.14653, 1783699200000, 1.14598, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1783630800000, 1.14598, 1783699200000, 1.14588, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1783630800000, 1.14598, 1783699200000, 1.14239, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1783626840001, 1.14548, "EU8 RWL S 6.5R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        e3a7 = not na(e3E7) ? e3E7 - e3bw : 1783630800000
+        e3b7 = not na(e3E7) ? (na(e3X7) ? time : e3X7) + e3bw : 1783630800000 + 3 * e3bw
+        box.new(e3a7, 1.14653, e3b7, 1.14598, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=na(e3E7) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
+        box.new(e3a7, 1.14598, e3b7, 1.14588, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(e3a7, 1.14598, e3b7, 1.14239, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=na(e3E7) or false ? line.style_dashed : line.style_solid, xloc=xloc.bar_time)
+        e3y0 = 1.14390
+        e3y1 = 1.14125
+        e3y2 = 1.14222
+        e3y3 = 1.14223
+        e3y4 = 1.14100
+        e3y5 = 1.14108
+        e3y6 = 1.14283
+        e3y7 = 1.14548
+        if e3a1 < e3a0 + 21 * e3bw and e3a0 < e3a1 + 21 * e3bw and math.abs(e3y1 - e3y0) < 0.00027
+            e3y1 := e3y1 + 0.00030
+        if e3a2 < e3a0 + 21 * e3bw and e3a0 < e3a2 + 21 * e3bw and math.abs(e3y2 - e3y0) < 0.00027
+            e3y2 := e3y2 + 0.00030
+        if e3a2 < e3a1 + 21 * e3bw and e3a1 < e3a2 + 21 * e3bw and math.abs(e3y2 - e3y1) < 0.00027
+            e3y2 := e3y2 + 0.00030
+        if e3a3 < e3a0 + 21 * e3bw and e3a0 < e3a3 + 23 * e3bw and math.abs(e3y3 - e3y0) < 0.00027
+            e3y3 := e3y3 + -0.00030
+        if e3a3 < e3a1 + 21 * e3bw and e3a1 < e3a3 + 23 * e3bw and math.abs(e3y3 - e3y1) < 0.00027
+            e3y3 := e3y3 + -0.00030
+        if e3a3 < e3a2 + 21 * e3bw and e3a2 < e3a3 + 23 * e3bw and math.abs(e3y3 - e3y2) < 0.00027
+            e3y3 := e3y3 + -0.00030
+        if e3a4 < e3a0 + 21 * e3bw and e3a0 < e3a4 + 21 * e3bw and math.abs(e3y4 - e3y0) < 0.00027
+            e3y4 := e3y4 + 0.00030
+        if e3a4 < e3a1 + 21 * e3bw and e3a1 < e3a4 + 21 * e3bw and math.abs(e3y4 - e3y1) < 0.00027
+            e3y4 := e3y4 + 0.00030
+        if e3a4 < e3a2 + 21 * e3bw and e3a2 < e3a4 + 21 * e3bw and math.abs(e3y4 - e3y2) < 0.00027
+            e3y4 := e3y4 + 0.00030
+        if e3a4 < e3a3 + 23 * e3bw and e3a3 < e3a4 + 21 * e3bw and math.abs(e3y4 - e3y3) < 0.00027
+            e3y4 := e3y4 + 0.00030
+        if e3a5 < e3a0 + 21 * e3bw and e3a0 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y0) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a5 < e3a1 + 21 * e3bw and e3a1 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y1) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a5 < e3a2 + 21 * e3bw and e3a2 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y2) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a5 < e3a3 + 23 * e3bw and e3a3 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y3) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a5 < e3a4 + 21 * e3bw and e3a4 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y4) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a6 < e3a0 + 21 * e3bw and e3a0 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y0) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a1 + 21 * e3bw and e3a1 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y1) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a2 + 21 * e3bw and e3a2 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y2) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a3 + 23 * e3bw and e3a3 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y3) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a4 + 21 * e3bw and e3a4 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y4) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a5 + 21 * e3bw and e3a5 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y5) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a7 < e3a0 + 21 * e3bw and e3a0 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y0) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a1 + 21 * e3bw and e3a1 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y1) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a2 + 21 * e3bw and e3a2 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y2) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a3 + 23 * e3bw and e3a3 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y3) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a4 + 21 * e3bw and e3a4 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y4) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a5 + 21 * e3bw and e3a5 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y5) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a6 + 39 * e3bw and e3a6 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y6) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a1 < e3a0 + 21 * e3bw and e3a0 < e3a1 + 21 * e3bw and math.abs(e3y1 - e3y0) < 0.00027
+            e3y1 := e3y1 + 0.00030
+        if e3a2 < e3a0 + 21 * e3bw and e3a0 < e3a2 + 21 * e3bw and math.abs(e3y2 - e3y0) < 0.00027
+            e3y2 := e3y2 + 0.00030
+        if e3a2 < e3a1 + 21 * e3bw and e3a1 < e3a2 + 21 * e3bw and math.abs(e3y2 - e3y1) < 0.00027
+            e3y2 := e3y2 + 0.00030
+        if e3a3 < e3a0 + 21 * e3bw and e3a0 < e3a3 + 23 * e3bw and math.abs(e3y3 - e3y0) < 0.00027
+            e3y3 := e3y3 + -0.00030
+        if e3a3 < e3a1 + 21 * e3bw and e3a1 < e3a3 + 23 * e3bw and math.abs(e3y3 - e3y1) < 0.00027
+            e3y3 := e3y3 + -0.00030
+        if e3a3 < e3a2 + 21 * e3bw and e3a2 < e3a3 + 23 * e3bw and math.abs(e3y3 - e3y2) < 0.00027
+            e3y3 := e3y3 + -0.00030
+        if e3a4 < e3a0 + 21 * e3bw and e3a0 < e3a4 + 21 * e3bw and math.abs(e3y4 - e3y0) < 0.00027
+            e3y4 := e3y4 + 0.00030
+        if e3a4 < e3a1 + 21 * e3bw and e3a1 < e3a4 + 21 * e3bw and math.abs(e3y4 - e3y1) < 0.00027
+            e3y4 := e3y4 + 0.00030
+        if e3a4 < e3a2 + 21 * e3bw and e3a2 < e3a4 + 21 * e3bw and math.abs(e3y4 - e3y2) < 0.00027
+            e3y4 := e3y4 + 0.00030
+        if e3a4 < e3a3 + 23 * e3bw and e3a3 < e3a4 + 21 * e3bw and math.abs(e3y4 - e3y3) < 0.00027
+            e3y4 := e3y4 + 0.00030
+        if e3a5 < e3a0 + 21 * e3bw and e3a0 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y0) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a5 < e3a1 + 21 * e3bw and e3a1 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y1) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a5 < e3a2 + 21 * e3bw and e3a2 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y2) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a5 < e3a3 + 23 * e3bw and e3a3 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y3) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a5 < e3a4 + 21 * e3bw and e3a4 < e3a5 + 21 * e3bw and math.abs(e3y5 - e3y4) < 0.00027
+            e3y5 := e3y5 + 0.00030
+        if e3a6 < e3a0 + 21 * e3bw and e3a0 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y0) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a1 + 21 * e3bw and e3a1 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y1) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a2 + 21 * e3bw and e3a2 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y2) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a3 + 23 * e3bw and e3a3 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y3) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a4 + 21 * e3bw and e3a4 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y4) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a6 < e3a5 + 21 * e3bw and e3a5 < e3a6 + 39 * e3bw and math.abs(e3y6 - e3y5) < 0.00027
+            e3y6 := e3y6 + 0.00030
+        if e3a7 < e3a0 + 21 * e3bw and e3a0 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y0) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a1 + 21 * e3bw and e3a1 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y1) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a2 + 21 * e3bw and e3a2 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y2) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a3 + 23 * e3bw and e3a3 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y3) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a4 + 21 * e3bw and e3a4 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y4) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a5 + 21 * e3bw and e3a5 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y5) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        if e3a7 < e3a6 + 39 * e3bw and e3a6 < e3a7 + 23 * e3bw and math.abs(e3y7 - e3y6) < 0.00027
+            e3y7 := e3y7 + -0.00030
+        label.new(e3a0 + e3bw, e3y0, "EU1 SS S 5.7R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(e3a1 + e3bw, e3y1, "EU2 SS L 7.1R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(e3a2 + e3bw, e3y2, "EU3 SS L 5.8R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(e3a3 + e3bw, e3y3, "EU4 RWL S 3.3R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(e3a4 + e3bw, e3y4, "EU5 BS L 9.1R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(e3a5 + e3bw, e3y5, "EU6 SS L 4.1R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(e3a6 + e3bw, e3y6, "EU7 Ladder L 4.7R if EU5", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(e3a7 + e3bw, e3y7, "EU8 RWL S 6.5R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_tbl
         var table tb = table.new(position.top_right, 2, 17, bgcolor=color.new(color.black, 10), border_color=color.rgb(40,40,45), border_width=1)
         table.cell(tb, 0, 0, "TRIDENT v8", text_color=color.rgb(80,140,255), bgcolor=color.rgb(10,30,60), text_size=size.small, text_halign=text.align_left)
