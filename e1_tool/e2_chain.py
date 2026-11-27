@@ -24,6 +24,7 @@ PIERCING = ('BS', 'PBS', 'WL', 'PWL', 'RWL', 'PRWL')
 TF_MATCH = {'240': ('240', '60'), '60': ('60', '240', '30'), '30': ('30', '15'), '15': ('30', '60')}
 PIERCE_ORDER = {'FAIL': 0, 'PIERCED': 1, 'BREAK-RETURN': 2, 'SLOW': 3}      # how soon the bound goes (6.4.1 / 6.4.2 branch texts)
 SS_MIN_SESSIONS = 2          # 6.8 'SS ... 2-5 sessions'
+SPEED_4H_HOURS = True        # D-139: 6.10 '2-3 more 4H candles' read in hours (+12 h), not as twice the session count
 BS_SESSIONS = 3              # 6.8 'BS 1-3 sessions'; 6.10 'Assume price moves at 30-50% of the speed you think' -> the upper figure
 SLOW_DAYS = 2                # 6.4.2 / 6.10.5 'slow consolidation ... 2-4 days'
 FA9_DAYS = 1                 # FA 9 'EXPECT 1-2 FULL DAYS OF HTF CONSOLIDATION'
@@ -712,9 +713,16 @@ def build(pair, monday, X, lead=None, force_dir=None):
             # failing bound the breakout still has its measured-move target (P452 Pillar 9 Step 4) (D-80)
             tgt = measured_move(X, near, far, bdir) if kind == 'FAIL' else (target(X, bdir, near, src_tf) or measured_move(X, near, far, bdir))
             k4 = src_tf == '240' or (tgt is not None and (tgt.get('tf') == '240' or tgt['src'] in ('IP', 'MM')))
-            dur = BS_SESSIONS * (2 if k4 else 1)
+            dur = BS_SESSIONS
+            if k4 and SPEED_4H_HOURS:
+                # 6.10 item 2 'A 4H breakout that appears imminent may take 2-3 more 4H candles to complete than initially predicted': the 4H element's breakout runs 3 x 4H = 12 hours
+                # (the upper figure, as BS_SESSIONS takes 6.8's upper figure) past the end of its BS_SESSIONS sessions - counted in hours, not by doubling the session count (D-139)
+                end_ = S[min(i_ny + BS_SESSIONS, len(S)) - 1]['t1'] + 12 * 3600000
+                dur = next((k - i_ny + 1 for k in range(i_ny, len(S)) if S[k]['t1'] >= end_), len(S) - i_ny)
+            elif k4:
+                dur = BS_SESSIONS * 2
             ok = add('BS', bdir, i_ny, i_ny + dur, far_liq or near, tgt, (bc if bdir == 'up' else bf)[1],
-                     f"{near['name']} goes ({kind}) -> BS toward {tgt['name'] if tgt else '-'} ({dur} sessions{', 4H element: twice as long (6.10)' if k4 else ''})", role='bs')
+                     f"{near['name']} goes ({kind}) -> BS toward {tgt['name'] if tgt else '-'} ({dur} sessions{', 4H element: 2-3 more 4H candles (6.10)' if k4 else ''})", role='bs')
             nx, tier, txt = after_bs(tgt)
             if nx == 'RWL' and tgt is not None and tgt.get('src') == 'SD' and tgt.get('cls') == 'BoM':
                 # P533:1873 'A BoM zone reaction produces a directional move (BS, WL, or RWL) determined by the Direction Validation 6-check': the reversal is the proposed
