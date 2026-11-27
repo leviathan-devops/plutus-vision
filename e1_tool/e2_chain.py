@@ -319,12 +319,12 @@ def target(X, side, bound, src_tf=None):
         if (z['top'] < bound['bot']) if dn else (z['bot'] > bound['top']):
             m = z.get('mech', {})
             if z['zfp_num'] >= 30 and m.get('bom') != 'BoM':
-                continue                                     # P452:2082 'strong IP ... = it holds (valid TP)'; a weak (30%+) zone of class MoM is pierced on the way to BoM liquidity (E2X:140) (D-49)
+                continue                                     # 6.4.2 'Then pierce through zone until reaching BoM Liquidity -> Next shape: SS -> BS (breakout to BoM target)' (P533:1864-1865): a weak (30%+) zone of class MoM is passed on the way to the BoM target (D-49; oracle: his GBPUSD golden breakout TP 1.34246 stands at the 4H BoM supply beyond the MoM pressure zone 1.3395-1.3404)
             cands.append((z['top'] if dn else z['bot'], 2, {'bot': z['bot'], 'top': z['top'], 'name': z['name'], 'src': 'IP', 'zfp': z['zfp_num'], 'cls': m.get('bom'), 'rx': m.get('reactions', 0), 'ip': z}))
     for z in X['sd']:
         if z['tf'] in ('240', '60') and z['type'] == ('Demand' if dn else 'Supply') and ((z['top'] <= bound['top'] and z['bot'] < bound['bot']) if dn else (z['bot'] >= bound['bot'] and z['top'] > bound['top'])):
             if z['kind'] == 'MoM' and not any(q['bot'] <= z['top'] and q['top'] >= z['bot'] and q['zfp_num'] < 30 for q in X['zones']):
-                continue                                     # P452:2082 'No IP + standalone MoM = it gets pierced (not valid TP)'; 6.4.2 'pierce through zone until reaching BoM Liquidity' (D-49)
+                continue                                     # 6.4.2 'pierce through zone until reaching BoM Liquidity ... (breakout to BoM target)'; P533:491 'MoM zones tend to get PIERCED': a standalone MoM candle zone is passed (D-49)
             if src_tf is None or z['tf'] in TF_MATCH.get(src_tf, ('240', '60')):
                 cands.append((z['top'] if dn else z['bot'], 1, {'bot': z['bot'], 'top': z['top'], 'name': z['label'], 'src': 'SD', 'cls': z['kind'], 'rx': z['mit'], 'tf': z['tf'], 'sd': z}))
     for l in X['lsz']:

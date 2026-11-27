@@ -174,7 +174,7 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
     # 1H / 4H zone standing wholly before the E2-projected zone is where this swing ends - nothing beyond it is a target (D-66)
     # ... and only a zone that is a valid stop for price: BoM, or MoM standing under a pressure zone below 30% (P452:2082 'No IP + standalone MoM = it gets pierced (not valid TP)';
     # the same reading as Engine 2's breakout target, D-49 / D-50)
-    holds = lambda z: z.get('kind') == 'BoM' or any(q['zfp_num'] < 30 and _overlap(q, z) for q in X['zones'])
+    holds = lambda z: True                                   # every unmitigated opposing zone ends the walk, as the Law says; a virgin MoM of low confluence is exited at its FAR edge (E3C:329) (D-97)
     virgin = [z for z in zs if z.get('mit', 1) == 0 and holds(z) and (tz is None or not _overlap(z, tz)) and ((z['top'] > end) if direction == 'down' else (z['bot'] < end))]
     if virgin and LAW14:
         z0 = virgin[0]
@@ -185,7 +185,10 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
         ov = [r for r in rungs if _overlap(r, z)]
         for r in sorted(ov, key=lambda r: -r['top'] if direction == 'down' else r['bot']):
             out.append(((r['bot'] + r['top']) / 2, z, 'LQZ inside the opposing zone: midpoint'))
-        out.append((z['top'] if direction == 'down' else z['bot'], z, 'opposing zone near edge'))
+        if z.get('kind') == 'MoM' and z.get('mit', 1) == 0 and not any(q['zfp_num'] < 30 and _overlap(q, z) for q in X['zones']):
+            out.append((z['bot'] if direction == 'down' else z['top'], z, 'weak zone (virgin MoM, low confluence): far edge (E3C:329)'))
+        else:
+            out.append((z['top'] if direction == 'down' else z['bot'], z, 'opposing zone near edge'))
     if tz is not None:
         if tz.get('zfp_num', 40) < 30 and not (tz['bot'] <= X['spot'] <= tz['top']):
             out.append((tz['top'] + pip if direction == 'down' else tz['bot'] - pip, tz, 'bounding zone near edge + 1 pip (strong zone)'))
