@@ -709,11 +709,33 @@ def build(pair, monday, X, E2, source=None):
     # per anchor per DAY; E3C:996 'f(T) Acceptance: ... 8 DXY + 8 EU + 8 GU ... LESS is REJECT'): a swing scalp of a consolidation is one order per anchor for EACH day of the
     # consolidation, bracketed by its day; which day meets which bound is not designated, so both rest every day (D-78)
     wk0 = D.week_start_ms(monday)
+    pip_ = D.PIP[pair]
+    path_ = E2.get('path') or []
+
+    def reach_ok(day_i, entry):
+        # goal prompt law 2 / GS Law 2 + Law 7 ('for each day's predicted shape, determine the expected price travel range ... Only generate setups at zones within the expected range
+        # for that day's shape'; SS: 0-30 pips): a swing-scalp order rests on a day only when Engine 2's path of THAT day comes within 30 pips of its entry (G2 round 2 N-18)
+        d_ = next((x for x in E2['days'] if DAY_IDX[x['day']] == day_i), None)
+        if d_ is None or len(path_) < 2:
+            return True
+        def at(t):
+            for (ta, pa), (tb, pb) in zip(path_, path_[1:]):
+                if ta <= t <= tb:
+                    return pa + (pb - pa) * ((t - ta) / (tb - ta) if tb > ta else 1.0)
+            return path_[-1][1] if t > path_[-1][0] else path_[0][1]
+        seg = [p for t, p in path_ if d_['t0'] <= t <= d_['t1']] + [at(d_['t0']), at(d_['t1'])]
+        lo_, hi_ = min(seg), max(seg)
+        return (0.0 if lo_ <= entry <= hi_ else min(abs(entry - lo_), abs(entry - hi_))) <= 30 * pip_
     out = []
     for s in R['setups']:
         s['anchor_key'] = (s['dir'], round(s['anchor']['bot'], 6), round(s['anchor']['top'], 6)) if 'bot' in s['anchor'] else (s['dir'], round(s['entry'], 6))
         if s['shape'] == 'SS' and s.get('role') != 'last-swing' and DAY_IDX[s['day']] in ss_days:
             run = sorted(d for d in ss_days if all(x in ss_days for x in range(min(d, DAY_IDX[s['day']]), max(d, DAY_IDX[s['day']]) + 1)))
+            ok_days = [d for d in run if reach_ok(d, s['entry'])]
+            for d in run:
+                if d not in ok_days:
+                    R['log'].append(f"{DAYS[d]} SS {s['dir']} {s['entry']:.5f}: NOT REACHABLE - the day's path stays more than 30 pips away (law 2)")
+            run = ok_days
             for n, d in enumerate(run):
                 q = s if n == 0 else dict(s, clone=True, origin=s)
                 q.update(day=DAYS[d], days=[DAYS[d]], valid_from=max(wk0 + d * 86400000, b0), valid_to=wk0 + (d + 1) * 86400000)
@@ -723,12 +745,14 @@ def build(pair, monday, X, E2, source=None):
             out.append(s)
     # L-04 '<= 11 setups per week per pair': a per-day repeat is the SAME setup (same anchor, entry, SL, TP) placed again for its day (E3C:468 cap key '(pair, anchorBucket, day)') -
     # it carries its setup's id with the day and is not a further setup (D-89)
-    uniq = [q for q in out if not q.get('clone')]
-    extra = len(uniq) - MAX_SETUPS
+    # ... the week carries at most 11 TRADES per pair, the per-day repeats included (L-04; R-07 'maximum 10 per week ... one to three per day'); reinforcements are not trades (R-10
+    # 'These are not normal trades') and are not counted. Over the limit the repeats of the latest days go first, then the latest setups (G2 round 2 N-05, N-32)
+    trades = [q for q in out if q.get('category') != 'Reinforcement']
+    extra = len(trades) - MAX_SETUPS
     if extra > 0:
-        for q in sorted(uniq, key=lambda q: (-DAY_IDX[q['day']], q.get('confidence', 0)))[:extra]:
-            out = [x for x in out if x is not q and x.get('origin') is not q]
-            R['log'].append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - more than {MAX_SETUPS} setups this week (L-04)")
+        for q in sorted(trades, key=lambda q: (0 if q.get('clone') else 1, -DAY_IDX[q['day']], q.get('confidence', 0)))[:extra]:
+            out = [x for x in out if x is not q and x.get('origin') is not q and x.get('parent_ref') is not q]
+            R['log'].append(f"{q['day']} {q['shape']} {q['dir']} {q['entry']:.5f}: EMISSION_CAPPED - more than {MAX_SETUPS} trades this week (L-04)")
     out.sort(key=lambda q: (DAY_IDX[q['day']], 0 if q.get('parent_ref') is None else 1))
     pfx = out[0]['id'][:2] if out else ''
     n = 0
