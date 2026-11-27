@@ -585,7 +585,7 @@ def _build(pair, monday, X, E2, tag):
                     s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'tp_level': lvl_tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
                          'why': f"entry {how}; SL {why_sl}; TP {why_tp}", 'src': (round(step['bot'], 6), round(step['top'], 6)) if 'bot' in step else None}
                     break
-                why_fail = f"RRR {min(rrr, rrr_o) if rrr <= MAX_RRR else rrr:.2f} outside [{floor_rrr}, {MAX_RRR}]"
+                why_fail = f"RRR {min(rrr, rrr_o) if rrr <= MAX_RRR else rrr:.2f} outside [{floor_rrr}, {MAX_RRR}] (SL {stop:.5f} = {abs(entry - stop) / pip:.1f}p, TP {tp_o:.5f} = {abs(tp_o - entry) / pip:.1f}p: {why_tp[:60]})"
             if s is not None:
                 break
         if s is None:
