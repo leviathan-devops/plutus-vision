@@ -94,7 +94,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E2-66 | 1887-1918 | forward mapping steps 1-5: current shape, transition assessment, chain extension with audit trail (max 5, stop < 25%), alternative chain with decision zone, day decomposition; pair translation (same shapes, inverted direction) | PB [2026-11-27: alternative chains - both alternatives of a two-sided range, translated to the pairs, each with its Decision Zone trigger, D-109 / D-110] |
 | E2-67 | 1919-1930 | zero-tolerance rules 1-9 | PB [reconciled: rules 1-3, 5, 6 hold by construction (anchored shapes, audit trail, pre-anchor data, alternative chains, 25% stop); rule 9 catalysts = expiry cuts only (red folder / auctions NO DATA); rule 7 WLS not built] |
 | E2-68 | 1931-1945 | shape-to-zone quick reference (durations) | B [reconciled: SS_MIN_SESSIONS / BS_SESSIONS / SLOW_DAYS / FA9 durations (D-34..D-41)] |
-| E2-CP | 1946-1960 | consolidation phase detection -> valid setup types | NB |
+| E2-CP | 1946-1960 | consolidation phase detection -> valid setup types | B [2026-11-27 D-125: phase per the canon table, 6.9 output line, Transition Entry only in the Late phase; the Double Whiplash Inverse of the Mid phase is not built (row E3-P0)] |
 | E2-1D | 1961-1964 | 4H MoM one-and-done: minor WL then BS/PBS through it | B [reconciled: after_bs: 4H MoM one-and-done -> WL + PBS (P533:1963)] |
 | E2-TFM | 1965-1975; FA:281-287 | timeframe element matching (4H->4H, 1H->1H, 15m -> at most 1H) | B [reconciled: TF_MATCH in e2_chain.target] |
 | E2-PR | 1976-1983 | pressure reading rules; 4H storyline tiebreaker | PB [2026-11-27 D-115: storyline / 4H trend = swing structure per P533:2649, standing 4H BoM only when the structure is mixed] |
@@ -162,7 +162,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E2-64 / 641 / 642 | direction: failing bound (> 45) -> the MoM bound is the one pierced (6.4.2) -> 4H storyline; a breakout running at the anchor: BS -> 6.4.1 at the next zone -> SS -> second BS (6.3) | B |
 | E2-65 | SS bounds: wall / pressure zone under 30% within the scalp reach -> graded 1H / 4H supply-demand zone -> nearest unswept sweep zone beyond spot (D-27) -> measured move | B |
 | E2-66 | transition day: the retest reaches the opposing liquidity band (V1 1H rung / 4H band against the far bound, e2_chain._opposing_liquidity) | B |
-| E2-CP | consolidation phase detection / "ZFP trend on the bounding zone" (expiry roll-off) decides WHEN the range breaks: not built - the plan always breaks on day 3-4 | NB |
+| E2-CP | consolidation phase detection / "ZFP trend on the bounding zone" (expiry roll-off) decides WHEN the range breaks: not built - the plan always breaks on day 3-4 | B [2026-11-27 D-125: phase per the canon table, 6.9 output line, Transition Entry only in the Late phase; the Double Whiplash Inverse of the Mid phase is not built (row E3-P0)] |
 | E3-P2 | first anchor: nearest 1H / 4H zone against the leg, else the E2 bound (R3 law) | B |
 | E3-P3 | TS-1 at a sweep-zone bound (near edge); WL keeps the zone middle | B |
 | E3-P42 | ladder-step stops: rule (b) shields nearest first, rule (a), EUR/USD NO_SHIELD rule (a), ZR-6B confidence switch (D-73), sweep-extension stops (D-84 / D-87 / D-90), golden fallback (D-102), 9.5 envelope (D-111); fuel-state relevant zone not built | PB |
@@ -179,7 +179,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E2-TGT | breakout target = first BoM / strong object beyond the failing bound; weak (30%+) MoM pressure zones and standalone MoM candle zones are passed (D-49, D-50; P452:2082) | B |
 | E2-WL | the surge ends in a whiplash when unswept stops rest against the target (P452:968; 6.4) | B |
 | E2-ALT | alternative chain built and drawn dotted; its Engine 3 setups wait for the Decision Zone trigger | PB |
-| E2-CP | consolidation phase Early / Mid / Late -> valid setup types (E3C 8.23) | NB |
+| E2-CP | consolidation phase Early / Mid / Late -> valid setup types (E3C 8.23) | B [2026-11-27 D-125: phase per the canon table, 6.9 output line, Transition Entry only in the Late phase; the Double Whiplash Inverse of the Mid phase is not built (row E3-P0)] |
 | E2-PAIR | pairs = the DXY shapes inverted on the pair's own zones (P533 6.6 v5.0.0 addition) | B |
 | E3-P0 | setup universe: SS scalps both directions, BS swing + rockets, RWL reversal, SS->BS Transition Entry (D-51); scalp-stack / swing-stack compliance gate | PB |
 | E3-P1 / P7 | WorkingDayMap (one supply / demand / deep-demand zone per day) and the 12-step day assignment | NB |

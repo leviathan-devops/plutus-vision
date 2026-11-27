@@ -225,6 +225,7 @@ GOLD_FALLBACK = True       # D-102: golden stop fallback when no ladder step giv
 MID_KEY = True
 LAW14_PRE = 1.2            # E3C:343 'Law-14 precondition: TP >= 1.2 x SL'
 ANCHOR_CAP = True
+TRANSITION_LATE = True
 BLEND_GATE = True          # D-100: the emission floor is met by the blended RRR of a 3-entry staggered position (E3C:357)
 JOIN_TP = True
 SWEEP_TP = True
@@ -452,7 +453,8 @@ def _cands(E2, monday, X):
                 c['to_zone'] = E2.get('pivot') or st['to']
                 c['to'] = (c['to_zone']['bot'] if st['dir'] == 'up' else c['to_zone']['top']) if c['to_zone'] else c['to']
             out.append(c)
-            if st['shape'] in ('BS', 'PBS') and st.get('role') == 'bs' and E2.get('near') is not None and any(x['shape'] == 'SS' for x in E2['chain']):
+            if st['shape'] in ('BS', 'PBS') and st.get('role') == 'bs' and E2.get('near') is not None and any(x['shape'] == 'SS' for x in E2['chain']) \
+                    and (not TRANSITION_LATE or (E2.get('cphase') or {}).get('phase') == 'Late'):      # E3C 8.23 'Late consolidation | ZFP trending up on bounding zone | Swing Scalps + BS Transition Entry' (D-125)
                 # E3C:107 'SS->BS Transition | Transition Entry'; E3C:457 'SS -> BS: Range boundary break becomes BS entry'; E3C:1133 late consolidation -> 'Swing Scalps + BS Transition Entry'
                 nb = E2['near']
                 out.append(dict(c, role='transition', from_zone=dict(nb), **{'from': nb['top'] if st['dir'] == 'up' else nb['bot']}))

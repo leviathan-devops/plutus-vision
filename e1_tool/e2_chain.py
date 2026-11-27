@@ -564,6 +564,7 @@ def build(pair, monday, X, lead=None, force_dir=None):
         audit.append(f"  -> {shape} {d} sessions {S[a]['s']} {DAYS[S[a]['i']]} .. {S[min(b, len(S)) - 1]['s']} {DAYS[S[min(b, len(S)) - 1]['i']]} | Trigger: {trig} | {tier} -> cumulative {round(cum, 2)}")
         return True
     raw_day = adj_day = None
+    cage_n = 0
     if lead is not None:
         # E2X:178-196: the pair's chain = the DXY shapes on the same sessions, direction inverted; every level from the pair's OWN map (E3C 10.2 'zones of the same element')
         near, far = ((ceil, floor) if bdir == 'up' else (floor, ceil)) if bdir else (None, None)
@@ -622,6 +623,7 @@ def build(pair, monday, X, lead=None, force_dir=None):
         m0 = dt.date.fromisoformat(monday)
         lo_c = (floor['bot'] if floor else spot) ; hi_c = (ceil['top'] if ceil else spot)
         cage = [l for l in X['L'] if l.get('cut') and l.get('usd', 0.0) >= 1.5 and l['cut'] >= monday and lo_c - l.get('band', 0.0) <= l['p'] <= hi_c + l.get('band', 0.0)]
+        cage_n = len(cage)
         if cage:
             k_c = (dt.date.fromisoformat(max(l['cut'] for l in cage)) - m0).days
             if 0 <= k_c <= 4:
@@ -694,6 +696,23 @@ def build(pair, monday, X, lead=None, force_dir=None):
         chain[-1]['s1'] = nxt_day[-1] + 1
         chain[-1]['spill'] = True
         audit.append(f"  spill-over (E3C:123): {chain[-1]['shape']} {chain[-1]['dir']} runs into {DAYS[d_last + 1]} (confidence {chain[-1]['cum']} < 0.65)")
+    # 6.8 Consolidation Phase Detection (E2X:222-233; E3C 8.23): Early = 'SS/WLS just started (< 1 session)', Mid = 'ongoing (1-3 sessions)', Late = 'ZFP trending up on bounding zone'
+    # -> valid setup types. The ZFP of a bounding zone trends up when a Pillar 9 breakout pre-condition stands on it (its modifiers, P452:977-984) or an option wall caging the range
+    # reaches its cut (Spring Release +20-30%, P533:690-691; Appendix B.2) (D-125; G2 N-17: 'Late' is the ZFP trend, not the elapsed sessions)
+    cphase = None
+    if lead is not None:
+        cphase = lead.get('cphase')
+    elif mode == 'ss' and any(c['shape'] == 'SS' for c in chain):
+        el_ = s0.get('elapsed', 0)
+        rising = [z['name'] for z in (ceil, floor) if z is not None and (info(z) or {}).get('src') == 'IP' and (z.get('mods') or (z.get('ip') or {}).get('mods'))]
+        trend = 'rising' if (rising or cage_n) else 'stable'
+        ph = 'Late' if trend == 'rising' else ('Early' if el_ < 1 else 'Mid')
+        valid = {'Early': 'Swing Scalps (both directions)', 'Mid': 'Swing Scalps + Double Whiplash Inverse', 'Late': 'Swing Scalps + BS Transition Entry'}[ph]
+        zf = lambda z: '-' if z is None else f"{z.get('name', '-')}, ZFP {(info(z) or {}).get('zfp') if (info(z) or {}).get('zfp') is not None else '-'}%"
+        cphase = {'phase': ph, 'trend': trend, 'valid': valid}
+        audit.append(f"CONSOLIDATION PHASE DETECTION: Phase: {ph} | Bounding Zones: Ceiling=[{zf(ceil)}], Floor=[{zf(floor)}] | Valid Setup Types: {valid} | ZFP Trend on Bounding Zone: {trend} - "
+                     + ('breakout imminent' if trend == 'rising' else 'consolidation continues')
+                     + (f" ({cage_n} option wall(s) of USD 1.5bn+ caging the range reach their cut)" if cage_n else '') + (f" (pre-conditions on {', '.join(rising)})" if rising else ''))
     audit.append('chain: ' + ' -> '.join(f"{c['shape']} [{c['tier']}, cum {c['cum']}]" for c in chain))
     # ---------------------------------------------------------------- Step 5: path + day decomposition
     f_edge = floor['top'] if floor else spot - 0.30 * U
@@ -836,7 +855,7 @@ def build(pair, monday, X, lead=None, force_dir=None):
             alts.append({'alt': a2, 'chain': ac2})
         for a_ in alts:
             audit.append(a_['alt']['text'])
-    return {'pair': pair, 'monday': monday, 's0': s0, 'storyline': story, 'bdir': bdir, 'kind': kind, 'mode': mode, 'chain': chain, 'days': days, 'path': pts, 'legs': legs,
+    return {'cphase': cphase, 'pair': pair, 'monday': monday, 's0': s0, 'storyline': story, 'bdir': bdir, 'kind': kind, 'mode': mode, 'chain': chain, 'days': days, 'path': pts, 'legs': legs,
             'alt': alt, 'alt_chain': alt_chain, 'alts': alts, 'audit': audit, 'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'target2': tgt2, 'far_liq': far_liq,
             'near': near, 'far': far, 'mid': mid, 'range': (f_edge, c_edge), 'n_real': n_real, 'raw_day': raw_day, 'adj_day': adj_day}
 
