@@ -603,18 +603,18 @@ def build(pair, monday, X, lead=None, force_dir=None):
         adj_day = raw_day + 1
         audit.append(f"Trading Speed (6.10): raw timing = transition on {DAYS[raw_day] if raw_day < 5 else 'next week'} (consolidation {need} sessions, {el} elapsed) -> adjusted +1 day = "
                      f"{DAYS[adj_day] if adj_day < 5 else 'next week'}")
-        # The NY Cut Cage (P533:690-691): option walls of $850M+ standing in the range pin price until their 10:00 NY cut; 'At exactly 10:01 AM NY ... the market experiences a Spring Release -
+        # The NY Cut Cage (P533:690-691): option walls of USD 1.5bn+ ('Critical Entry Shields', P533:690) standing in the range pin price until their 10:00 NY cut; 'At exactly 10:01 AM NY ... the market experiences a Spring Release -
         # violently breaking out or reversing'; Appendix B.2 'Option expiry timing (Spring Release) +20-30%' lifts the caged bound over the 45% of 6.4.1. The LAST cut known at the anchor is the
         # trigger; trading speed adds a day (6.10); FA 9's full day(s) of consolidation remain the floor (D-60)
         m0 = dt.date.fromisoformat(monday)
         lo_c = (floor['bot'] if floor else spot) ; hi_c = (ceil['top'] if ceil else spot)
-        cage = [l for l in X['L'] if l.get('cut') and l.get('tier', 9) <= 2 and l['cut'] >= monday and lo_c - l.get('band', 0.0) <= l['p'] <= hi_c + l.get('band', 0.0)]
+        cage = [l for l in X['L'] if l.get('cut') and l.get('usd', 0.0) >= 1.5 and l['cut'] >= monday and lo_c - l.get('band', 0.0) <= l['p'] <= hi_c + l.get('band', 0.0)]
         if cage:
             k_c = (dt.date.fromisoformat(max(l['cut'] for l in cage)) - m0).days
             if 0 <= k_c <= 4:
                 fa9 = raw_day if s0.get('phase') == 'post-energy' else 0
                 adj_day = max(k_c + 1, fa9)
-                audit.append(f"NY Cut Cage (P533:690-691): {len(cage)} wall(s) of $850M+ inside the range, last 10:00 NY cut {DAYS[k_c]} -> Spring Release {DAYS[k_c]} 10:01 NY, + 1 day (6.10) = transition on "
+                audit.append(f"NY Cut Cage (P533:690-691): {len(cage)} wall(s) of USD 1.5bn+ inside the range, last 10:00 NY cut {DAYS[k_c]} -> Spring Release {DAYS[k_c]} 10:01 NY, + 1 day (6.10) = transition on "
                              f"{DAYS[adj_day] if adj_day < 5 else 'next week'}")
         if adj_day > 4:
             add('SS', 'range', 0, len(S), floor, ceil, 'HIGH', f"the {'ceiling' if bdir == 'up' else 'floor'} goes, but after this week (6.10): SS continues", role='ss_all')

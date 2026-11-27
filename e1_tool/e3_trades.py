@@ -330,7 +330,7 @@ def _confidence(s, X, E2, pair):
         parts.append(('zone-direction alignment', 8))         # E3C:396 '+8 (SUPPLY->SHORT or DEMAND->LONG)': a supply / demand or resistance / support zone only (G2 round 2 N-33)
     story = E2.get('storyline')
     if story:
-        parts.append(('storyline', 5 if (story == 'up') == (s['dir'] == 'LONG') else 0))
+        parts.append(('storyline', 5 if (story == 'up') == (s['dir'] == 'LONG') else -5))      # E3C:245 layer 7 '+5 (aligned) / -5 (counter-trend, requires exceptional confluence)' (A-20)
     parts.append(('RRR', 5 if s['rrr'] >= 3 else 3 if s['rrr'] >= 2 else 0))
     slp = s['sl_pips']
     parts.append(('SL distance', -10 if slp > 80 else -5 if slp > 50 else 0))
@@ -447,6 +447,10 @@ def _build(pair, monday, X, E2, tag):
         # Phase 2 gates
         if 'tf' in a and a.get('mit', 0) >= 3:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: FRESHNESS - {a.get('label', '')} tested {a['mit']}x (E3C:150 'index i > 2 skipped')"); continue
+        if a.get('ip') and (a.get('mech') or {}).get('reactions', 0) == 3:
+            # E3C:1052 ZONE_DEPLETED 'reactionCount >= 3 (TP-only)'; lifecycle E3C:158-161 (3 battles = DEPLETED, the fourth strong battle = FORTRESS): a pressure-zone anchor is gated like a
+            # candle zone (G2 round 2 A-16)
+            log.append(f"{c['days'][0]} {c['shape']} {direction}: ZONE_DEPLETED - {a.get('name', '')} has 3 reactions (TP only, E3C:1052)"); continue
         if a.get('kind') == 'MoM' and cat in ('Reversal', 'HTF Swing') and (c['shape'] != 'BS' or a.get('tf') == '240'):     # E3C:1032 '4H MoM One-and-Done | Scalp-only at 4H MoM' holds for breakouts too (N-27)
             log.append(f"{c['days'][0]} {c['shape']} {direction}: MOM_REVERSAL - {a.get('label', '')} (FA 7 'Do not take reversal entries on MoM zones'; E2X:239 'scalp only at most')"); continue
         ecands = _entries(a, direction, c['shape'], env, pair)
