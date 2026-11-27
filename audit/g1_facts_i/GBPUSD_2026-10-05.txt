@@ -1,0 +1,43 @@
+GBPUSD 2026-10-05 anchor price 1.32090 | chart shows zones between 1.31630 and 1.32535 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  pressure zone UPPER RESISTANCE 1.32457-1.32535 MODERATE | 30-50% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 1.32526-1.32636
+      part: sweep zone Supply-side 1.32510-1.32580 | sweep reach to 1.32680 (dotted outline)
+      part: sweep zone Supply-side 1.32450-1.32500 | sweep reach to 1.32600 (dotted outline)
+  supply/demand 1H (Unmitigated) | BoM Supply 1.32319-1.32395
+      part: gap in-fill level 1.32270-1.32330 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, option strike (Tier 3 / 4)
+  gap in-fill level 1.32124-1.32184 MODERATE | 30-50% ZFP | signals: daily pivot, extended daily close
+      part: sweep zone Demand-side 1.32183-1.32276 | sweep reach to 1.32083 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 1.32121-1.32231
+  pressure zone MID-RANGE SUPPORT 1.31991-1.32051 MODERATE | 30-50% ZFP | MoM
+      part: sweep zone Demand-side 1.32021-1.32071 | sweep reach to 1.31921 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 1.31932-1.32042
+      part: sweep zone Demand-side 1.31899-1.31949 | sweep reach to 1.31799 (dotted outline)
+  sweep zone Demand-side 1.31806-1.31864 | sweep reach to 1.31706 (dotted outline)
+  (5 zones, 9 parts)
+DISCOVERY ZONES (thin dashed grey lines; canon: pre-week 'levels to watch' flagged where the zone map is EMPTY - major round numbers, untraded weekly-close extremes, MA convergences, structural extremes; not pressure zones, not used by Engines 2 / 3):
+  discovery zone 1.31630 | Liquidity Sweep Target
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 30-50% | 10-02 LON: spike up through UPPER RESISTANCE (ZFP 30), every 1H close back at a sweep target [the row's ZFP condition is not met: best description, one tier lower] | FA 
+   Ceiling: 1H (Unmitigated) | BoM [SD BoM Virgin] -> HOLD (BoM zone: always reacts if unmitigated (E2X:149))
+   Floor: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Breakout direction: none | pair translation of the DXY chain: DXY ranges all week (Part IX: DXY gives direction and timing, the pair its levels)
+   chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range box 1.31799-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32390 L 1.31900 C 1.32211
+  Tue forecast SS         range box 1.31799-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32856 L 1.32013 C 1.32742
+  Wed forecast SS         range box 1.31799-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32761 L 1.31935 C 1.32126
+  Thu forecast SS         range box 1.31799-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32485 L 1.31843 C 1.32268
+  Fri forecast SS         range box 1.31799-1.32395 key zone 1H (Unmitigated) | BoM             | actual H 1.32503 L 1.32057 C 1.32242
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  GB1      Mon SS     SHORT E 1.32329 SL 1.32425 TP 1.32014 3.28R | filled Mon 07:45 -> TP HIT Mon 13:15
+  GB2      Mon SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled Mon 13:45 -> TP HIT Tue 01:30
+  GB1.Tue    Tue SS     SHORT E 1.32329 SL 1.32425 TP 1.32014 3.28R | filled Tue 01:30 -> TP HIT Tue 06:15
+  GB2.Tue    Tue SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled - -> not filled inside its bracket (order expires)
+  GB1.Wed    Wed SS     SHORT E 1.32329 SL 1.32425 TP 1.32014 3.28R | void: the anchor zone was closed through on 1H Tue 08:00 (VIOLATED, E3C:150)
+  GB2.Wed    Wed SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled - -> not filled inside its bracket (order expires)
+  GB1.Thu    Thu SS     SHORT E 1.32329 SL 1.32425 TP 1.32014 3.28R | void: the anchor zone was closed through on 1H Tue 08:00 (VIOLATED, E3C:150)
+  GB2.Thu    Thu SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled Thu 07:00 -> TP HIT Thu 14:15
+  GB1.Fri    Fri SS     SHORT E 1.32329 SL 1.32425 TP 1.32014 3.28R | void: the anchor zone was closed through on 1H Tue 08:00 (VIOLATED, E3C:150)
+  GB2.Fri    Fri SS     LONG  E 1.31899 SL 1.31769 TP 1.32304 3.12R | filled - -> not filled
