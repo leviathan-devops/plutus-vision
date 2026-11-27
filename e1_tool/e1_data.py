@@ -20,11 +20,23 @@ def bars(pair, tf):
     return _cache[k]
 
 
+def day_anchor_ms(monday, i):
+    """London open (02:00 New York) of trading day i (0 = Monday) of the week: the anchor of that day's orders under daily anchoring (L-47, operator M-58 item 2: Tuesday-Friday orders
+    and the Engine 2 line from each day's London-open position against the fixed Monday map; Fibonacci Spiderwebs items 3-5 'London Session open position = Trade Setup Anchor';
+    E3C:115 WorkingDayMap.dayOpenSpot)"""
+    d = dt.date.fromisoformat(monday) + dt.timedelta(days=i)
+    return int(dt.datetime(d.year, d.month, d.day, 2, 0, tzinfo=NY).timestamp() * 1000)
+
+
+def closed_until(pair, tf, ms):
+    """bars of timeframe tf that had closed by the instant ms (daily anchoring: a day's London open)"""
+    return [b for b in bars(pair, tf) if b['time'] + TFMS[tf] <= ms]
+
+
 def boundary_ms(monday):
     """THE TEMPORAL ANCHOR = Monday London open of the target week, 02:00 New York (P533 session table: London Open 02:00-05:00 ET; CLAUDE.md hard constraint
     "Temporal anchor = Monday, start of the trading week"; R-15 "rewind to Monday London open"). Nothing stamped at or after it may feed the map."""
-    d = dt.date.fromisoformat(monday)
-    return int(dt.datetime(d.year, d.month, d.day, 2, 0, tzinfo=NY).timestamp() * 1000)
+    return day_anchor_ms(monday, 0)
 
 
 def week_start_ms(monday):

@@ -1,7 +1,7 @@
 """plutus.py - ONE command per week / pair -> ONE Pine v6 script (S6): Engine 1 map + Engine 2 shape chain + Engine 3 trade setups, every number from data closed before the Monday anchor.
 usage: python3 plutus.py MONDAY PAIR [out.pine]      (PAIR = DXY | EURUSD | GBPUSD; default output e1_tool/out/PLUTUS_<PAIR>_<MONDAY>.pine)"""
 import sys, os
-import e1_pine as EP, e2_chain as E2
+import e1_pine as EP, e2_chain as E2, e1_data as D
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -10,14 +10,24 @@ _MEMO = {}
 
 
 def _setups(pair, monday):
-    if (pair, monday) not in _MEMO:
-        _MEMO[(pair, monday)] = run(pair, monday)[2]
-    return _MEMO[(pair, monday)]
+    """the setups of a source pair for the Phase 10 cascade, at the week anchor"""
+    k = ('setups', pair, monday)
+    if k not in _MEMO:
+        _MEMO[k] = run(pair, monday)[2]
+    return _MEMO[k]
 
 
-def run(pair, monday):
-    X = EP.run(pair, monday)
-    lead = E2.build('DXY', monday, EP.run('DXY', monday)) if pair != 'DXY' else None      # DXY = master direction (P533:1899-1917; GS Law 7)
+def _map(pair, monday):
+    """the Engine 1 map of the week (built at the Monday anchor)"""
+    k = ('map', pair, monday)
+    if k not in _MEMO:
+        _MEMO[k] = EP.run(pair, monday)
+    return _MEMO[k]
+
+
+def engines(pair, monday, X, XD=None):
+    """Engine 2 + Engine 3 on the Engine 1 map X (XD = the DXY map: the master direction for a pair)"""
+    lead = E2.build('DXY', monday, XD) if pair != 'DXY' else None      # DXY = master direction (P533:1899-1917; GS Law 7)
     chain = E2.build(pair, monday, X, lead)
     if lead is not None:
         chain['divergence'] = divergence(lead, E2.build(pair, monday, X, None))
@@ -34,11 +44,100 @@ def run(pair, monday):
     source = None
     if pair != 'DXY':
         # Phase 10 (E3C:723-770): DXY is processed first; EUR/USD mirrors the DXY setups, GBP/USD mirrors the active EUR/USD mirrors
-        src_pair = 'DXY' if pair == 'EURUSD' else 'EURUSD'
-        source = _setups(src_pair, monday)
-    setups = E3.build(pair, monday, X, chain, source)
+        source = _setups('DXY' if pair == 'EURUSD' else 'EURUSD', monday)
+    return chain, E3.build(pair, monday, X, chain, source)
+
+
+def _cut(path, t0, t1):
+    """the part of a forecast path between t0 and t1, with its ends interpolated"""
+    if not path or path[-1][0] < t0 or path[0][0] > t1:
+        return []
+    def at(t):
+        for (ta, pa), (tb, pb) in zip(path, path[1:]):
+            if ta <= t <= tb:
+                return pa + (pb - pa) * ((t - ta) / (tb - ta) if tb > ta else 1.0)
+        return path[-1][1] if t > path[-1][0] else path[0][1]
+    a, b = max(t0, path[0][0]), min(t1, path[-1][0])
+    return [(a, at(a))] + [(t, p) for t, p in path if a < t < b] + [(b, at(b))]
+
+
+DAY_CONFIRM = 'start'      # 'start' = the trading day's open (17:00 New York the evening before) | 'london' = the day's London open (02:00 New York)
+
+
+def daily_anchor(pair, monday, chain, R):
+    """DAILY ANCHORING (L-47; operator M-58 item 2 approving 'Tuesday-Friday orders from each day's London-open position against the fixed Monday map' and the Engine 2 line redrawn
+    per day): the shape chain and the map stay Monday's (the chain leads, R-03); at each day's London open (02:00 New York; Fibonacci Spiderwebs items 3-5 'London Session open position
+    = Trade Setup Anchor'; E3C:115 WorkingDayMap.dayOpenSpot), with only the bars closed by then:
+    - the day's line restarts from the day's London-open price and runs on to the forecast's next point;
+    - each order of that day is CONFIRMED or dropped: an order block it stands on (a supply / demand candle zone) must still be one - one-time use, never closed through (P452:699-703;
+      L-38; e1_sd.valid 'never closed through'); liquidity bands and pressure zones are levels price revisits (L-23 / L-24) and are not used up; and the open price must stand on the
+      order's side of its entry (a limit order rests on its own side of price).
+    Monday = the week anchor itself. Returns the merged chain view, the confirmed setups and the per-day record."""
+    DAYS = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri')
+    f = (lambda v: '%.3f' % v) if pair == 'DXY' else (lambda v: '%.5f' % v)
+    b0 = D.boundary_ms(monday)
+    segs, alt_segs, audit, keep, log, parts = [], [], list(chain['audit']), [], list(R['log']), {}
+    for i in range(5):
+        t_a, t_e = D.day_anchor_ms(monday, i), D.week_start_ms(monday) + (i + 1) * 86400000
+        if i > 0 and DAY_CONFIRM == 'start':
+            t_a = D.week_start_ms(monday) + i * 86400000          # the trading day's open, 17:00 New York the evening before: the day's orders rest through the Asian session
+        b1 = D.closed_until(pair, '60', t_a)
+        op = b1[-1]['close']
+        since = [x for x in b1 if x['time'] >= b0]
+        seg = _cut(chain['path'], t_a, t_e)
+        if i > 0 and len(seg) > 1:
+            seg[0] = (t_a, op)
+        if len(seg) > 1:
+            segs.append(seg)
+        if chain.get('alt_chain'):
+            q = _cut(chain['alt_chain']['path'], t_a, t_e)
+            if i > 0 and len(q) > 1:
+                q[0] = (t_a, op)
+            if len(q) > 1:
+                alt_segs.append(q)
+        if i > 0:
+            audit.append(f"DAILY ANCHOR {DAYS[i]} {'trading-day open' if DAY_CONFIRM == 'start' else 'London open'} {D.ts(t_a)} UTC: price {f(op)}")
+        kept, dropped = [], []
+        # an order resting from an earlier day (D-76 'rest_from') belongs to the day it starts resting: it is confirmed at that day's anchor
+        for s in [x for x in R['setups'] if (x.get('rest_from') or x['day']) == DAYS[i]]:
+            why = None
+            if i > 0 and not s.get('alt') and s.get('category') != 'Reinforcement':
+                z = s.get('anchor') or {}
+                sd = 'bot' in z and 'top' in z and (z.get('src') == 'SD' or ('tf' in z and not z.get('liq')))     # an order block (supply / demand candle zone): one-time use
+                lo_, hi_ = (z['bot'], z['top']) if sd else (None, None)
+                brk = next((x for x in since if ((x['close'] < lo_) if s['dir'] == 'LONG' else (x['close'] > hi_))), None) if sd else None
+                if brk is not None:
+                    why = f"anchor zone {f(lo_)}-{f(hi_)} closed through {D.ts(brk['time'] + 3600000)} UTC (one-time use)"
+                elif (op <= s['entry']) if s['dir'] == 'LONG' else (op >= s['entry']):
+                    why = f"London-open price {f(op)} already on the far side of the entry {f(s['entry'])}"
+            if s.get('parent_ref') is not None and s['parent_ref'] not in kept and s['parent_ref'] in R['setups'] and (s['parent_ref'].get('rest_from') or s['parent_ref']['day']) == DAYS[i]:
+                why = why or 'its parent was not confirmed'
+            if why:
+                dropped.append(s)
+                log.append(f"{DAYS[i]} {s['id']} {s['dir']} {f(s['entry'])}: NOT CONFIRMED at the {DAYS[i]} anchor {D.ts(t_a)} UTC - {why}")
+            else:
+                if i > 0:
+                    s['day_anchor'] = t_a
+                kept.append(s)
+        keep += kept
+        parts[i] = {'open': op, 'segment': seg, 'orders': [(s['id'], s['dir'], s['entry'], s['sl'], s['tp']) for s in kept], 'dropped': [s['id'] for s in dropped]}
+    keep = [s for s in keep if s.get('parent_ref') is None or s['parent_ref'] in keep]
+    out = dict(chain)
+    out.update(segments=segs, alt_segments=alt_segs, audit=audit, daily=parts)
+    R2 = dict(R)
+    R2.update(setups=keep, log=log)
+    return out, R2
+
+
+def run(pair, monday, daily=False):
+    X = _map(pair, monday)
+    XD = _map('DXY', monday) if pair != 'DXY' else None
+    chain, setups = engines(pair, monday, X, XD)
+    if daily:
+        chain, setups = daily_anchor(pair, monday, chain, setups)
     # the day tags of Engine 2 as label extents (same placement as e2_chain.pine: one row above the envelope, odd days one row higher when a tag is composite; two text lines each;
     # Pinebox draws the text from the label's point to the right, 1.65 one-hour bars per character) - Engine 3's labels keep clear of them
+    import e3_trades as E3
     if chain.get('days'):
         y_t = max(d['hi'] for d in chain['days']); lo_t = min(d['lo'] for d in chain['days'])
         y_t += 0.06 * (y_t - lo_t) + 1e-9
@@ -226,7 +325,9 @@ def table(pair, monday, X, chain, R):
 
 if __name__ == '__main__':
     monday, pair = sys.argv[1], sys.argv[2]
-    out = sys.argv[3] if len(sys.argv) > 3 else os.path.join(HERE, 'out', f'PLUTUS_{pair}_{monday}.pine')
-    X, chain, setups, src = run(pair, monday)
+    args_ = [a for a in sys.argv[1:] if not a.startswith('--')]
+    out = args_[2] if len(args_) > 2 else os.path.join(HERE, 'out', f'PLUTUS_{pair}_{monday}.pine')
+    daily = '--daily' in sys.argv
+    X, chain, setups, src = run(pair, monday, daily=daily)
     open(out, 'w').write(src)
     print(out)

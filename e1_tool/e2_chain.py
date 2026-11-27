@@ -894,11 +894,10 @@ def pine(pair, monday, E2):
         y_d = y_tag + (0.09 * span if (k_ % 2 and any(len(x['shapes']) > 1 for x in E2['days'])) else 0.0)     # composite tags ('Tue SS+RWL+BS') are wider than a day: odd days stand one row higher
         o.append(f"        box.new({d['t0']}, {g(d['hi'])}, {d['t1']}, {g(d['lo'])}, bgcolor=color.new(color.rgb({c}), 88), border_color=color.new(color.rgb({c}), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)")
         o.append(f"        label.new({(d['t0'] + d['t1']) // 2 if d['day'] != 'Fri' else d['t0'] + (d['t1'] - d['t0']) // 4}, {g(y_d)}, \"{d['day']} {'+'.join(d['shapes'])}\\n{arrow[d['dir']].strip()} {int(d['conf'] * 100)}%\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb({c}), size=size.small)")
-    p = E2['path']
-    for (t0, p0), (t1, p1) in zip(p, p[1:]):
-        o.append(f"        line.new({t0}, {g(p0)}, {t1}, {g(p1)}, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)")
-    if E2.get('alt_chain'):
-        q = E2['alt_chain']['path']
+    for p in (E2.get('segments') or [E2['path']]):           # daily anchoring (L-47): one segment per day, each starting at that day's London-open price
+        for (t0, p0), (t1, p1) in zip(p, p[1:]):
+            o.append(f"        line.new({t0}, {g(p0)}, {t1}, {g(p1)}, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)")
+    for q in (E2['alt_segments'] if 'alt_segments' in E2 else ([E2['alt_chain']['path']] if E2.get('alt_chain') else [])):
         for (t0, p0), (t1, p1) in zip(q, q[1:]):
             o.append(f"        line.new({t0}, {g(p0)}, {t1}, {g(p1)}, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)")
     if len(o) == 1:

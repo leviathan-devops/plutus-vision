@@ -220,6 +220,8 @@ def _steps(X):
 
 
 ZR6B = True
+REVERSAL_B = False                                # P533:506 reversal / correction entries: stop 1-2 pips inside the next zone (D-130)
+REVERSAL_SHAPES = ('SS', 'RWL', 'R', 'WL')        # P533 6.1: swing scalps turn at a bound, the reverse whiplash / whiplash / recovery are reversals or corrections; BS / PBS / ladders follow the move
 SWEEP_EXT = True
 GOLD_FALLBACK = True       # D-102: golden stop fallback when no ladder step gives a stop (E3C:262, :289-294)
 MID_KEY = True
@@ -248,7 +250,7 @@ def _mirror_conf(c, a, direction, E2):
     return round(sc, 2)
 
 
-def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, conf=None, envelope=True):
+def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, conf=None, envelope=True, reversal=False):
     """E3C:247-256 SL ladder steps. (b) '1-2 pips INSIDE the CLOSE edge of the NEXT STEP away', the step that may shield a stop being THICK (FA 2.1 'Thin liquidity zones are NEVER allowed as entry or SL
     zones'): the first V1 4H band or the SECOND 1H rung beyond the entry's own (smallest) step; (a) '3 pips OUTSIDE the FAR edge of the CURRENT entry step'. EUR/USD has no shield (NO_SHIELD): (a).
     D17 ceiling 36 pips; golden minimum 4 pips (E3C:279-293). Returns (sl, why) or (None, reason)."""
@@ -307,6 +309,14 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
     env_ok = [q for q in ok if abs(q[0] - entry) / pip <= GOLD_MAX + 1e-9]
     if env_ok and pair != 'GBPUSD' and envelope:
         ok = env_ok
+    if ok and reversal and REVERSAL_B and pair not in NO_SHIELD:
+        # P533:506 'SL correction/reentry exception: When trying to catch a CORRECTION/REVERSAL - ALWAYS make sure SL is 1-2 pips INSIDE THE NEXT ZONE. This is when price is likely to pierce the
+        # entry zone slightly and breathing room is needed. Standard SL rules (outside the zone) apply for trend-following entries.' Operator M-58 item 1: 'it is either 2-3 pips outside the
+        # entry zone or 1-2 pips inside the next zone'. A reversal entry takes rule (b) on the first shielding zone (a thick step: FA 2.1 'Thin liquidity zones are NEVER allowed as entry or
+        # SL zones'); the RR-tight branch of ZR-6B stays for trend-following entries (D-130)
+        nb = [q for q in ok if q[1].startswith('(b)')]
+        if nb:
+            return nb[0][0], nb[0][1] + ' [P533:506 reversal entry: inside the next zone]'
     if ok and conf is not None and conf >= 0.6 and ZR6B and pair not in NO_SHIELD:
         # ZR-6B Rule S3 (E3C:284-286): 'confidence >= 0.6 -> RR-tight (3p back edge); confidence < 0.6 -> safety (next-rung)'. RR-tight = the tighter of the first shield stop (b) and
         # rule (a) on the ENTRY ZONE (E3C:249 '3 pips outside the back edge of the entry zone'; E3C:259 'S/D PRESSURE_STRUCTURE (the S/D itself acting as the backstop)') - not on the thin
@@ -544,7 +554,7 @@ def _build(pair, monday, X, E2, tag):
         s, why_fail = None, 'TP_NULL'
         for entry, step, how in ecands[:3]:                  # E3C:386 '3 attempts on each anchor (3 E, 3 SL, 3 TP)'
             stop, why_sl = _stop(entry, direction, step if 'bot' in step else a, X, pair, dmin=12.0 if c.get('role') == 'transition' else None, zone=a,   # GS Law 3 table 'Breakout | SL 12-20 pips'
-                                 conf=_mirror_conf(c, a, direction, E2))
+                                 conf=_mirror_conf(c, a, direction, E2), reversal=c['shape'] in REVERSAL_SHAPES and c.get('role') != 'transition')
             if stop is None:
                 why_fail = why_sl; continue
             tps = [t for t in _target(dict(c, shape=c.get('shape_tp', c['shape'])), entry, direction, E2, X, env, set(), pair) if ((t[0] < entry) if direction == 'down' else (t[0] > entry))]
@@ -913,6 +923,8 @@ def pine(pair, monday, R):
         cond = s['category'] == 'Reinforcement'               # a rocket is a CONDITIONAL order (live only once its parent is filled, E3C:625): dashed outline, lighter fill, 'if <parent>' in its label
         if cond or s.get('rest_from'):                        # a resting order is drawn from the day it starts to rest (D-76), not from the day of its tag
             x0 = max(s.get('valid_from') or x0, b0)
+        if s.get('day_anchor'):                               # daily anchoring (L-47): an order exists from the London open it was built at
+            x0 = max(x0, s['day_anchor'])
         x1 = min(max(s['t1'] if s.get('t1') is not None else s['valid_to'], x0 + 6 * 3600000), wk1)
         o.append(f"        // {s['id']} {s['day']} {s['shape']} {s['dir']} E {g(s['entry'])} SL {g(s['sl'])} TP {g(s['tp'])} RRR {s['rrr']} | {s['category']} / {s['session']} | {s['why']}")
         o.append(f"        box.new({x0}, {g(max(s['entry'], s['sl']))}, {x1}, {g(min(s['entry'], s['sl']))}, bgcolor=color.new(color.rgb(242,54,69), {92 if (s.get('alt') or cond) else 84}), border_color=color.rgb(242,54,69), border_width=1, border_style={'line.style_dashed' if (s.get('alt') or cond) else 'line.style_solid'}, xloc=xloc.bar_time)")
