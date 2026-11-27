@@ -244,7 +244,7 @@ def _mirror_conf(c, a, direction, E2):
     return round(sc, 2)
 
 
-def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, conf=None):
+def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, conf=None, envelope=True):
     """E3C:247-256 SL ladder steps. (b) '1-2 pips INSIDE the CLOSE edge of the NEXT STEP away', the step that may shield a stop being THICK (FA 2.1 'Thin liquidity zones are NEVER allowed as entry or SL
     zones'): the first V1 4H band or the SECOND 1H rung beyond the entry's own (smallest) step; (a) '3 pips OUTSIDE the FAR edge of the CURRENT entry step'. EUR/USD has no shield (NO_SHIELD): (a).
     D17 ceiling 36 pips; golden minimum 4 pips (E3C:279-293). Returns (sl, why) or (None, reason)."""
@@ -296,6 +296,11 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
             ok.append((sl, why))
     if every:
         return ok
+    # E3C 12.2 floor invariant 'SL envelope (within GOLDEN_SL_MAX_PIPS = 9.5)'; E3C:293 'the operator-measured golden SLs are 4-9.5 pips; 36 is the safety ceiling': a ladder stop inside
+    # the envelope is taken before one outside it. Not on GBP/USD (his own golden stops there are 10.6-14.1 pips) and not for rockets (own rule, E3C:302; his Thursday rocket 11.5) (D-111)
+    env_ok = [q for q in ok if abs(q[0] - entry) / pip <= GOLD_MAX + 1e-9]
+    if env_ok and pair != 'GBPUSD' and envelope:
+        ok = env_ok
     if ok and conf is not None and conf >= 0.6 and ZR6B and pair not in NO_SHIELD:
         # ZR-6B Rule S3 (E3C:284-286): 'confidence >= 0.6 -> RR-tight (3p back edge); confidence < 0.6 -> safety (next-rung)'. RR-tight = the tighter of the first shield stop (b) and
         # rule (a) on the ENTRY ZONE (E3C:249 '3 pips outside the back edge of the entry zone'; E3C:259 'S/D PRESSURE_STRUCTURE (the S/D itself acting as the backstop)') - not on the thin
@@ -712,7 +717,7 @@ def _reinforce(s, X, E2, env, pair, log):
         e2 = (r['bot'] + r['top']) / 2
         if last is not None and abs(e2 - last) < 20 * pip:
             continue
-        sl2, why2 = _stop(e2, 'down' if dn else 'up', r, X, pair)    # the same ladder-step stop as a primary (E3C:247-256; his Thursday rocket's stop stands 1-2 pips inside the 4H band above, D-54)
+        sl2, why2 = _stop(e2, 'down' if dn else 'up', r, X, pair, envelope=False)    # the same ladder-step stop as a primary (E3C:247-256; his Thursday rocket's stop stands 1-2 pips inside the 4H band above, D-54)
         if grid is not None and r is grid[2]:
             sl2, why2 = grid[0] + 0.618 * (grid[1] - grid[0]), 'the 0.618 level of the retest-leg Fib grid'
         if sl2 is None:
