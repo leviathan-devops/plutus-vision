@@ -21,6 +21,15 @@ def run(pair, monday):
     chain = E2.build(pair, monday, X, lead)
     if lead is not None:
         chain['divergence'] = divergence(lead, E2.build(pair, monday, X, None))
+        # the pair's alternative chains = the DXY alternatives translated onto the pair's own zones (P533 6.6 v5.0.0 pair translation; Step 4); Decision Zone = the pair's own
+        # bound on the failing side (D-110)
+        chain['alts'] = []
+        for a_ in lead.get('alts') or []:
+            pa = E2.build(pair, monday, X, a_['chain'])
+            nz = pa.get('near')
+            if nz is not None and pa.get('bdir') in ('up', 'down'):
+                chain['alts'].append({'alt': {'decision_zone': nz.get('name', ''), 'zone': (nz['bot'], nz['top']), 'reach': nz.get('reach'), 'dir': pa['bdir'], 'threshold': '1H close beyond it',
+                                              'text': f"ALTERNATIVE (DXY alternative translated): {' -> '.join(c['shape'] for c in pa['chain'])}"}, 'chain': pa})
     import e3_trades as E3
     source = None
     if pair != 'DXY':

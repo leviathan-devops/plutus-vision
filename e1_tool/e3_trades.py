@@ -739,12 +739,12 @@ def build(pair, monday, X, E2, source=None):
     MIRROR_OF = (source or {}).get('keys') if pair != 'DXY' else None
     R = _build(pair, monday, X, E2, '')
     MIRROR_OF = None
-    alt = E2.get('alt_chain')
-    if ALT_SETUPS and alt is not None:
-        A = _build(pair, monday, X, alt, 'A')
+    alts = E2.get('alts') or ([{'alt': E2.get('alt'), 'chain': E2.get('alt_chain')}] if E2.get('alt_chain') is not None else [])
+    for k_, a_ in enumerate(alts if ALT_SETUPS else []):
+        alt, ameta = a_['chain'], a_['alt'] or {}
+        A = _build(pair, monday, X, alt, 'AB'[k_ % 2])
         keep = [s for s in A['setups'] if s['shape'] in ('RWL', 'BS', 'PBS', 'WL', 'Ladder')]
-        az = (E2.get('alt') or {}).get('zone')
-        ad = (E2.get('alt') or {}).get('dir')
+        az, ad = ameta.get('zone'), ameta.get('dir')
         keep = keep if (az and ad) else []
         uniq = []
         for s in keep:                                        # the breakout and its transition entry can resolve to the same order: one of them (E3C:463 duplicate)
@@ -755,7 +755,15 @@ def build(pair, monday, X, E2, source=None):
             s['alt'] = True
             # P533 6.6 Step 4 'construct at least one alternative chain that activates if the primary fails at a specific Decision Zone': the order is live only after a 1H close
             # beyond the Decision Zone in the alternative's direction
-            s['trigger'] = {'dir': ad, 'level': az[1] if ad == 'up' else az[0], 'zone': (E2.get('alt') or {}).get('decision_zone')}
+            lvl_ = az[1] if ad == 'up' else az[0]
+            # the primary chain itself retests the liquidity beyond this bound before it breaks the other way (6.4.2 'Consolidation ends in price retesting opposing liquidity'):
+            # that retest is not the primary failing - the trigger stands beyond the retested liquidity (and beyond a sweep bound's reach, Step 0.45a)
+            fl_ = E2.get('far_liq')
+            if fl_ is not None and E2.get('bdir') in ('up', 'down') and ad != E2.get('bdir'):
+                lvl_ = max(lvl_, fl_.get('reach', fl_['top']), fl_['top']) if ad == 'up' else min(lvl_, fl_.get('reach', fl_['bot']), fl_['bot'])
+            if ameta.get('reach') is not None:
+                lvl_ = max(lvl_, ameta['reach']) if ad == 'up' else min(lvl_, ameta['reach'])
+            s['trigger'] = {'dir': ad, 'level': lvl_, 'zone': ameta.get('decision_zone')}
             s['why'] = f"ALTERNATIVE chain - live only after a 1H close {'above' if ad == 'up' else 'below'} {s['trigger']['level']:.5f} ({s['trigger']['zone']}): " + s['why']
         R['setups'] = R['setups'] + keep                      # contingency orders: not counted among the week's trades until triggered (7S.2 'Map the SS->BS Transition Setup as a contingency')
         R['log'] += ['ALT ' + l for l in A['log']]

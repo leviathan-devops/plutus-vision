@@ -805,23 +805,32 @@ def build(pair, monday, X, lead=None, force_dir=None):
         days.append({'day': DAYS[i], 'date': (dt.date.fromisoformat(monday) + dt.timedelta(days=i)).isoformat(), 'shapes': shapes, 'dir': dirs[-1] if dirs else 'range',
                      'lo': lo, 'hi': hi, 'key': key, 'conf': di[-1]['cum'], 'triggers': _triggers(X, (dt.date.fromisoformat(monday) + dt.timedelta(days=i)).isoformat()), 't0': dt0, 't1': dt1})
     alt = alt_chain = None
+    alts = []
     if force_dir is None and lead is None and mode == 'ss':
         if bdir is not None and far is not None:
             ib = info(far)
             thr = f"ZFP {ib['zfp']}% > 45 or a 1H close beyond it" if ib and ib['zfp'] is not None else '1H close beyond it'
             alt_chain = build(pair, monday, X, None, force_dir=inv[bdir])
-            alt = {'decision_zone': far['name'], 'zone': (far['bot'], far['top']), 'dir': inv[bdir], 'threshold': thr, 'conf': alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else None,
+            alt = {'decision_zone': far['name'], 'zone': (far['bot'], far['top']), 'reach': far.get('reach'), 'dir': inv[bdir], 'threshold': thr, 'conf': alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else None,
                    'text': f"PRIMARY: {' -> '.join(c['shape'] for c in chain)} | DECISION ZONE: {far['name']} {thr} -> ALTERNATIVE: {' -> '.join(c['shape'] for c in alt_chain['chain'])} "
                            f"[confidence {alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else '-'}]"}
         elif bdir is None and ceil is not None and floor is not None:
             cand = sorted([(PIERCE_ORDER.get(b[0], 9), side, z) for side, z, b in (('up', ceil, bc), ('down', floor, bf))], key=lambda x: x[0])[0]
             alt_chain = build(pair, monday, X, None, force_dir=cand[1])
-            alt = {'decision_zone': cand[2]['name'], 'zone': (cand[2]['bot'], cand[2]['top']), 'dir': cand[1], 'threshold': '1H close beyond it', 'conf': alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else None,
+            alt = {'decision_zone': cand[2]['name'], 'zone': (cand[2]['bot'], cand[2]['top']), 'reach': cand[2].get('reach'), 'dir': cand[1], 'threshold': '1H close beyond it', 'conf': alt_chain['chain'][-1]['cum'] if alt_chain['chain'] else None,
                    'text': f"PRIMARY: SS | DECISION ZONE: {cand[2]['name']} 1H close beyond it -> ALTERNATIVE: {' -> '.join(c['shape'] for c in alt_chain['chain'])}"}
-        if alt:
-            audit.append(alt['text'])
+        alts = [{'alt': alt, 'chain': alt_chain}] if alt else []
+        if bdir is None and ceil is not None and floor is not None and alt:
+            # 'at least one alternative chain' (6.6 Step 4): a range whose two bounds both hold has TWO Decision Zones - the second alternative is the other bound failing (D-110)
+            side2, z2 = next((sd, z) for sd, z in (('up', ceil), ('down', floor)) if sd != alt['dir'])
+            ac2 = build(pair, monday, X, None, force_dir=side2)
+            a2 = {'decision_zone': z2['name'], 'zone': (z2['bot'], z2['top']), 'reach': z2.get('reach'), 'dir': side2, 'threshold': '1H close beyond it', 'conf': ac2['chain'][-1]['cum'] if ac2['chain'] else None,
+                  'text': f"SECOND DECISION ZONE: {z2['name']} 1H close beyond it -> ALTERNATIVE: {' -> '.join(c['shape'] for c in ac2['chain'])}"}
+            alts.append({'alt': a2, 'chain': ac2})
+        for a_ in alts:
+            audit.append(a_['alt']['text'])
     return {'pair': pair, 'monday': monday, 's0': s0, 'storyline': story, 'bdir': bdir, 'kind': kind, 'mode': mode, 'chain': chain, 'days': days, 'path': pts, 'legs': legs,
-            'alt': alt, 'alt_chain': alt_chain, 'audit': audit, 'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'target2': tgt2, 'far_liq': far_liq,
+            'alt': alt, 'alt_chain': alt_chain, 'alts': alts, 'audit': audit, 'ceil': ceil, 'floor': floor, 'pivot': pivot, 'target': tgt, 'target2': tgt2, 'far_liq': far_liq,
             'near': near, 'far': far, 'mid': mid, 'range': (f_edge, c_edge), 'n_real': n_real, 'raw_day': raw_day, 'adj_day': adj_day}
 
 
