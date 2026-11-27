@@ -88,7 +88,10 @@ def _entries(anchor, direction, shape, env, pair):
     inner.sort(key=lambda r: r['bot'] if direction == 'down' else -r['top'])
     for r in inner[:1]:
         out.append((r['bot'] if direction == 'down' else r['top'] - inset, r, 'internal LQZ rung'))
-    out.append((anchor['bot'] if direction == 'down' else anchor['top'], anchor, 'zone edge (TS-1)'))
+    if direction == 'down' and anchor.get('type') == 'Supply' and 'tf' in anchor:
+        out.append((anchor['bot'] + 1 * pip, anchor, 'zone edge + 1 pip (TS-1; F1-A, E3C:186)'))       # 'For OB SHORT only, lift the entry 1 pip above the supply zone's bottom edge' (N-20)
+    else:
+        out.append((anchor['bot'] if direction == 'down' else anchor['top'], anchor, 'zone edge (TS-1)'))
     return out
 
 
@@ -255,13 +258,14 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
     step_a = cur if cur is not None else anchor
     # P533 7.1 Rule 2.5 'LIQUIDITY SWEEP ZONE SL PLACEMENT ... If the LSZ has been extended per LSZ Bottom Edge Extension (sweep scan 0.05-0.10 ...), use the extended range for SL placement';
     # E3C:1027 'LSZ Zones (with bottom edge extension) | Phase 4 | SL ladder-steps model': a sweep zone carrying its extension ('reach', Step 0.45a) is ONE step up to the end of the reach -
-    # the stop stands 1 pip outside it (the operator's own DXY long of 2026-04-20: entry 98.02 at the sweep zone, SL 97.87 = the end of the extension; P533 7.1 operator proof
-    # 'LONG SL ... = 97.87 - 0.01 = 97.86'; E3C:304 '1-2 pips OUTSIDE THE BACK EDGE OF THE STOP-LOSS ZONE'), and a shield inside the reach is not a 'NEXT step away'. The same holds
-    # for a breakout entry resting on an opposing SWEEP zone (e2_chain.liquidity_beyond, 'lsz') (D-84, D-87)
+    # the stop stands 3 pips outside it (Rule 2.5 'LSZ boundary + 3 pip buffer'), and a shield inside the reach is not a 'NEXT step away'. The same holds for a breakout entry
+    # resting on an opposing SWEEP zone (e2_chain.liquidity_beyond, 'lsz') (D-84, D-87). The 'reach' itself = P533:1286 'Institutions often sweep 0.05-0.10 beyond the visible
+    # extreme before reversing. Record as "LSZ Extended: ... sweep scan 0.05-0.10 DXY beyond swing [high/low]"' (G2 round 2 N-01 reads the same paragraph's first sentence, the
+    # zone's inward widening, which Engine 1 draws; this is its outward breach)
     zr = anchor if (anchor is not None and anchor.get('reach') is not None) else zone
     ext = zr.get('reach') if (zr is not None and (zr.get('sweep') or zr.get('lsz') or zr.get('edge_sweep')) and SWEEP_EXT) else None
     if ext is not None:
-        cands.append(((ext + 1 * pip) if dn else (ext - 1 * pip), "(a) 1 pip outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027; E3C:304)"))
+        cands.append(((ext + 3 * pip) if dn else (ext - 3 * pip), "(a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027)"))
         th = [s_ for s_ in th if ((s_['bot'] > ext) if dn else (s_['top'] < ext))]
         tk = [s_ for s_ in tk if ((s_['bot'] > ext) if dn else (s_['top'] < ext))]
         step_a = None
@@ -321,8 +325,9 @@ def _confidence(s, X, E2, pair):
     elif cls == 'MoM':
         parts.append(('MoM (Phase 4.1 layer 3)', -10))
     side = a.get('type') if a.get('type') in ('Supply', 'Demand') else {'RES': 'Supply', 'SUP': 'Demand'}.get(a.get('cat'), 'Supply' if s['dir'] == 'SHORT' else 'Demand')   # IP: by role; the pivot serves both
-    if (side == 'Supply' and s['dir'] == 'SHORT') or (side == 'Demand' and s['dir'] == 'LONG') or a.get('sweep') or a.get('liq'):
-        parts.append(('zone-direction alignment', 8))
+    typed = a.get('type') in ('Supply', 'Demand') or a.get('cat') in ('RES', 'SUP')
+    if typed and ((side == 'Supply' and s['dir'] == 'SHORT') or (side == 'Demand' and s['dir'] == 'LONG')):
+        parts.append(('zone-direction alignment', 8))         # E3C:396 '+8 (SUPPLY->SHORT or DEMAND->LONG)': a supply / demand or resistance / support zone only (G2 round 2 N-33)
     story = E2.get('storyline')
     if story:
         parts.append(('storyline', 5 if (story == 'up') == (s['dir'] == 'LONG') else 0))
@@ -331,8 +336,8 @@ def _confidence(s, X, E2, pair):
     parts.append(('SL distance', -10 if slp > 80 else -5 if slp > 50 else 0))
     smax = {'EURUSD': 100, 'GBPUSD': 120, 'DXY': 30}[pair]  # E3C:407-410 three-band SL-distance confidence (DXY in index points of 0.01)
     parts.append(('SL band', -10 if slp > smax else 10 if slp < 30 else 5 if slp < 60 else 0))
-    if pair != 'DXY':
-        parts.append(('DXY cascade (E3C:412)', 10))          # the pair setups come from the DXY chain: DXY -> EU inverse, EU -> GU kept
+    if s.get('cascade'):
+        parts.append(('DXY cascade (E3C:412)', 10))          # '+10 if setup is cascade-source (DXY -> EU inverse or EU -> GU kept)': the mirror of a source setup of the same chain step (Phase 10; N-07)
     if pair == 'GBPUSD' and s['dir'] == 'LONG':
         parts.append(('GU short-squeeze (E3C:414)', 5))
     dist = abs(s['entry'] - X['spot']) / pip
@@ -416,6 +421,9 @@ def _cands(E2, monday, X):
     return out, log
 
 
+MIRROR_OF = None          # set by build(): the source pair's setup keys (shape, role, day, direction)
+
+
 def _build(pair, monday, X, E2, tag):
     env = _env(X, pair)
     pip, rungs, blocks, sd = env
@@ -439,7 +447,7 @@ def _build(pair, monday, X, E2, tag):
         # Phase 2 gates
         if 'tf' in a and a.get('mit', 0) >= 3:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: FRESHNESS - {a.get('label', '')} tested {a['mit']}x (E3C:150 'index i > 2 skipped')"); continue
-        if a.get('kind') == 'MoM' and cat in ('Reversal', 'HTF Swing') and c['shape'] != 'BS':
+        if a.get('kind') == 'MoM' and cat in ('Reversal', 'HTF Swing') and (c['shape'] != 'BS' or a.get('tf') == '240'):     # E3C:1032 '4H MoM One-and-Done | Scalp-only at 4H MoM' holds for breakouts too (N-27)
             log.append(f"{c['days'][0]} {c['shape']} {direction}: MOM_REVERSAL - {a.get('label', '')} (FA 7 'Do not take reversal entries on MoM zones'; E2X:239 'scalp only at most')"); continue
         ecands = _entries(a, direction, c['shape'], env, pair)
         if c['shape'] in ('BS', 'PBS') and setups and setups[-1]['shape'] == 'RWL' and setups[-1]['dir'] == ('LONG' if direction == 'up' else 'SHORT') is False:
@@ -513,18 +521,20 @@ def _build(pair, monday, X, E2, tag):
                         if floor_rrr <= r2 <= MAX_RRR:
                             stop, why_sl, rrr = sl2, why2 + ' (re-anchored outward: RRR over the 15R ceiling, E3C:365)', r2
                             break
-                if floor_rrr <= rrr <= MAX_RRR:
-                    # Fibonacci Spiderwebs (operator): 'Make sure there is a 1.5-2 pip buffer in front of the TP or you will miss it. MANDATORY ... If you skip this you will miss 60% of TPs';
-                    # E3C:324 'add a 1-2 pip spread so you dont miss the exit'. The order's TP stands TP_BUF pips in front of the target level (a level that already carries the 1-pip
-                    # spread gets the rest); the level itself stays the Law-27 link to the next trade (D-82)
+                # Fibonacci Spiderwebs (operator): 'Make sure there is a 1.5-2 pip buffer in front of the TP or you will miss it. MANDATORY ... If you skip this you will miss 60% of TPs';
+                # E3C:324 'add a 1-2 pip spread so you dont miss the exit'. The order's TP stands TP_BUF pips in front of the target level (a level that already carries the 1-pip
+                # spread gets the rest); the level itself stays the Law-27 link to the next trade (D-82). E3C:362 'Emission floor: RRR >= 3.0 ... the gate': the floor is tested on the
+                # RRR of the order AS EMITTED, i.e. with the buffered TP (G2 round 2 N-03)
+                extra = (TP_BUF - (1.0 if '+ 1 pip' in why_tp else 0.0)) * pip
+                tp_o = tp + extra if direction == 'down' else tp - extra
+                rrr_o = abs(tp_o - entry) / abs(entry - stop)
+                if floor_rrr <= rrr_o and rrr <= MAX_RRR:
                     lvl_tp = tp
-                    extra = (TP_BUF - (1.0 if '+ 1 pip' in why_tp else 0.0)) * pip
-                    tp = tp + extra if direction == 'down' else tp - extra
-                    rrr = abs(tp - entry) / abs(entry - stop)
+                    tp, rrr = tp_o, rrr_o
                     s = {'dir': 'SHORT' if direction == 'down' else 'LONG', 'entry': entry, 'sl': stop, 'tp': tp, 'tp_level': lvl_tp, 'rrr': round(rrr, 2), 'tp_zone': tz, 'attempts': tries,
                          'why': f"entry {how}; SL {why_sl}; TP {why_tp}", 'src': (round(step['bot'], 6), round(step['top'], 6)) if 'bot' in step else None}
                     break
-                why_fail = f"RRR {rrr:.2f} outside [{floor_rrr}, {MAX_RRR}]"
+                why_fail = f"RRR {min(rrr, rrr_o) if rrr <= MAX_RRR else rrr:.2f} outside [{floor_rrr}, {MAX_RRR}]"
             if s is not None:
                 break
         if s is None:
@@ -559,6 +569,12 @@ def _build(pair, monday, X, E2, tag):
         misaligned = story in ('up', 'down') and (story == 'up') != (s['dir'] == 'LONG')
         if misaligned and ipz is not None and ipz['zfp_num'] > 30 and not a.get('sweep'):
             log.append(f"{s['day']} {s['shape']} {s['dir']} {s['entry']:.5f}: NARRATIVE - anchor zone {ipz['name']} ZFP {ipz['zfp_num']}% > 30 (E3C:874-876 'suppress > 30 (WEAK)')"); continue
+        # Phase 10 (E3C:723-770): the pair's setup of a chain step is the mirror of the source pair's setup of the SAME step and day - DXY -> EU inverse direction, EU -> GU kept
+        # ('GU mirrors ACTIVE EU mirrors, NEVER raw DXY'); a pair setup with no source setup behind it is an emergent trade (10.6) and carries no cascade bonus
+        if MIRROR_OF is not None:
+            inv_ = {'LONG': 'SHORT', 'SHORT': 'LONG'}
+            want = inv_[s['dir']] if pair == 'EURUSD' else s['dir']
+            s['cascade'] = (s['shape'], c.get('role'), s['day'], want) in MIRROR_OF
         s['confidence'], s['conf_parts'] = _confidence(s, X, E2, pair)
         if s['confidence'] < INCLUDE:
             log.append(f"{s['day']} {s['shape']} {s['dir']} {s['entry']:.5f}: CONFIDENCE {s['confidence']} < {INCLUDE} (E3C:1011)"); continue
@@ -665,10 +681,13 @@ def _reinforce(s, X, E2, env, pair, log):
     return out
 
 
-def build(pair, monday, X, E2):
+def build(pair, monday, X, E2, source=None):
     """primary chain + the conditional setups of the ALTERNATIVE chain (P533 6.6 Step 4: 'For every primary chain, construct at least one alternative chain that activates if the primary
     fails at a specific Decision Zone'): only its breakout family (RWL / BS / WL) - the swing scalps are the same range for both readings"""
+    global MIRROR_OF
+    MIRROR_OF = (source or {}).get('keys') if pair != 'DXY' else None
     R = _build(pair, monday, X, E2, '')
+    MIRROR_OF = None
     alt = E2.get('alt_chain')
     if ALT_SETUPS and alt is not None:
         A = _build(pair, monday, X, alt, 'A')
@@ -725,6 +744,8 @@ def build(pair, monday, X, E2):
         if q.get('parent_ref') is not None:
             q['parent'] = q['parent_ref']['id']
     R['setups'] = out
+    # the keys a receiving pair mirrors: every DXY setup; on EUR/USD only its ACTIVE mirrors (E3C:760 'GU mirrors ACTIVE EU mirrors, NEVER raw DXY')
+    R['keys'] = {(q['shape'], q.get('role'), q['day'], q['dir']) for q in out if not q.get('alt') and (pair == 'DXY' or q.get('cascade'))}
     return R
 
 

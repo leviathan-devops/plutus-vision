@@ -6,18 +6,28 @@ import e1_pine as EP, e2_chain as E2
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
+_MEMO = {}
+
+
+def _setups(pair, monday):
+    if (pair, monday) not in _MEMO:
+        _MEMO[(pair, monday)] = run(pair, monday)[2]
+    return _MEMO[(pair, monday)]
+
+
 def run(pair, monday):
     X = EP.run(pair, monday)
     lead = E2.build('DXY', monday, EP.run('DXY', monday)) if pair != 'DXY' else None      # DXY = master direction (P533:1899-1917; GS Law 7)
     chain = E2.build(pair, monday, X, lead)
     if lead is not None:
         chain['divergence'] = divergence(lead, E2.build(pair, monday, X, None))
-    setups = []
-    try:
-        import e3_trades as E3
-        setups = E3.build(pair, monday, X, chain)
-    except ImportError:
-        E3 = None
+    import e3_trades as E3
+    source = None
+    if pair != 'DXY':
+        # Phase 10 (E3C:723-770): DXY is processed first; EUR/USD mirrors the DXY setups, GBP/USD mirrors the active EUR/USD mirrors
+        src_pair = 'DXY' if pair == 'EURUSD' else 'EURUSD'
+        source = _setups(src_pair, monday)
+    setups = E3.build(pair, monday, X, chain, source)
     extra = E2.pine(pair, monday, chain) + (E3.pine(pair, monday, setups) if E3 else []) + table(pair, monday, X, chain, setups)
     src = EP.generate(pair, monday, X, extra, EP.reach(X, chain))
     return X, chain, setups, src + '\n' + '\n'.join('// ' + l for l in report(pair, monday, X, chain, setups)) + '\n'
