@@ -37,6 +37,19 @@ def run(pair, monday):
         src_pair = 'DXY' if pair == 'EURUSD' else 'EURUSD'
         source = _setups(src_pair, monday)
     setups = E3.build(pair, monday, X, chain, source)
+    # the day tags of Engine 2 as label extents (same placement as e2_chain.pine: one row above the envelope, odd days one row higher when a tag is composite; two text lines each;
+    # Pinebox draws the text from the label's point to the right, 1.65 one-hour bars per character) - Engine 3's labels keep clear of them
+    if chain.get('days'):
+        y_t = max(d['hi'] for d in chain['days']); lo_t = min(d['lo'] for d in chain['days'])
+        y_t += 0.06 * (y_t - lo_t) + 1e-9
+        sp_t = y_t - lo_t
+        comp = any(len(x['shapes']) > 1 for x in chain['days'])
+        setups['avoid'] = []
+        for k_, d in enumerate(chain['days']):
+            y_d = y_t + (0.09 * sp_t if (k_ % 2 and comp) else 0.0)
+            x_d = (d['t0'] + d['t1']) // 2 if d['day'] != 'Fri' else d['t0'] + (d['t1'] - d['t0']) // 4
+            w_d = int(1.65 * len(f"{d['day']} {'+'.join(d['shapes'])}") * 3600000)
+            setups['avoid'] += [(x_d, w_d, y_d), (x_d, w_d, y_d - 0.05 * sp_t)]
     extra = E2.pine(pair, monday, chain) + (E3.pine(pair, monday, setups) if E3 else []) + table(pair, monday, X, chain, setups)
     # the zones Engine 2 designates (bounds, pivot, targets, the from / to zone of every chain step): a V1 liquidity band among them is drawn by the tool even when it stands alone (D-107)
     des = [chain.get(k) for k in ('ceil', 'floor', 'pivot', 'target', 'target2', 'far_liq', 'near', 'far')] + [st.get(k) for st in chain['chain'] for k in ('frm', 'to')]

@@ -903,7 +903,7 @@ def pine(pair, monday, R):
     o = ['    if show_e3']
     if not R['setups']:
         o.append('        na')
-    seen_day, starts, placed = set(), {}, []
+    seen_day, starts, placed = set(), {}, list(R.get('avoid') or [])      # 'avoid' = the day tags of Engine 2 (x, width, y): no order label prints over a day tag (outside count 11)
     span = (max([max(s['entry'], s['sl'], s['tp']) for s in R['setups']]) - min([min(s['entry'], s['sl'], s['tp']) for s in R['setups']])) if R['setups'] else 0.0
     txt_h = 0.035 * span                                      # one line of label text against the price span the setups cover
     for s in R['setups']:
@@ -929,10 +929,11 @@ def pine(pair, monday, R):
                                               + ((' if ' + str(s.get('parent'))) if cond else '')
                                               + ((' if 1H ' + ('>' if s['trigger']['dir'] == 'up' else '<') + ' ' + g(s['trigger']['level'])) if s.get('trigger') else ''))
         wx = int(1.65 * len(txt) * 3600000)                   # Pinebox draws the text from the label's point to the right, about 1.65 one-hour bars per character (memory/08 label quirks; D-127)
+        lx = max(b0, min(lx, wk1 - wx - 2 * 3600000))         # the whole text stays inside the week: no label cut by the chart's right edge (outside count 11)
         for _try in range(10):
             if not any(lx < px + pw and px < lx + wx and abs(ly - py) < txt_h for px, pw, py in placed):
                 break
-            if _try % 2 == 0 and lx + 15 * 3600000 <= min(x1 - 3600000, wk1 - 14 * 3600000):
+            if _try % 2 == 0 and lx + 15 * 3600000 <= min(x1 - 3600000, wk1 - wx - 2 * 3600000):
                 lx += 15 * 3600000
             else:
                 ly += 1.1 * txt_h * (1 if s['tp'] > s['entry'] else -1)
