@@ -364,10 +364,10 @@ if barstate.islast and isPair
 // Weekend: Close ALL positions by NY close Friday - per pair
 // 
 // --- DISCARDED (reason on every discard) ---
-// Mon SS down: REJECT RRR 1.27 outside [2.5, 15.0] (entry 99.40900)
-// Mon SS up: REJECT RRR 0.67 outside [2.5, 15.0] (entry 99.24400)
-// Mon SS up: REJECT RRR 0.05 outside [2.5, 15.0] (entry 99.29800)
-// Mon SS up: REJECT RRR 2.35 outside [2.5, 15.0] (entry 99.03800)
+// Mon SS down: REJECT RRR 1.27 outside [2.5, 15.0] (SL 99.53900 = 13.0p, TP 99.24402 = 16.5p: LQZ inside the opposing zone: midpoint) (entry 99.40900)
+// Mon SS up: REJECT RRR 0.67 outside [2.5, 15.0] (SL 99.16900 = 7.5p, TP 99.29400 = 5.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.24400)
+// Mon SS up: REJECT RRR 0.05 outside [2.5, 15.0] (SL 99.22100 = 7.7p, TP 99.29400 = 0.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.29800)
+// Mon SS up: REJECT RRR 2.35 outside [2.5, 15.0] (SL 98.92900 = 10.9p, TP 99.29400 = 25.6p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.03800)
 // 
 // --- WEEKLY STATS ---
 // Total Setups: 1 | HTF: 0 | Scalps: 1 | Reinforcements: 0 | Transitions: 0

@@ -2,6 +2,7 @@
 indicator("PLUTUS VISION EURUSD 2026-10-05", overlay=true, max_boxes_count=2000, max_labels_count=2000, max_lines_count=2000)
 // week of 2026-10-05 (EURUSD); every number computed by e1_tool from data closed before the anchor 2026-10-05 06:00 UTC (Monday London open)
 show_ip = input.bool(true, "E1 IP Zones")
+show_disc = input.bool(true, "E1 Discovery Zones (levels to watch)")
 show_lv = input.bool(true, "E1 levels inside IP zones")
 show_lsz = input.bool(true, "E1 LSZ")
 show_opt = input.bool(true, "E1 Option Strikes")
@@ -180,9 +181,8 @@ if barstate.islast and isPair
         box.new(1790542800000, 1.12258, 1791579600000, 1.12208, bgcolor=color.new(color.rgb(80,230,100), 78), border_color=color.rgb(80,230,100), border_width=2, xloc=xloc.bar_time)
         box.new(1790542800000, 1.12208, 1791579600000, 1.12108, bgcolor=color.new(color.rgb(80,230,100), 100), border_color=color.new(color.rgb(80,230,100), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         label.new(1790571600000, 1.12233, "LSZ demand-side | sweep to 1.12108", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(80,230,100), size=size.small)
-        box.new(1790542800000, 1.13167, 1791579600000, 1.13117, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
+        box.new(1790542800000, 1.13167, 1791579600000, 1.13117, bgcolor=color.new(color.rgb(40,180,80), 92), border_color=color.new(color.rgb(40,180,80), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1790542800000, 1.13117, 1791579600000, 1.13017, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1790715600000, 1.13142, "LSZ demand-side | sweep to 1.13017", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1790542800000, 1.13273, 1791579600000, 1.13223, bgcolor=color.new(color.rgb(40,180,80), 92), border_color=color.new(color.rgb(40,180,80), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1790542800000, 1.13223, 1791579600000, 1.13123, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1790542800000, 1.13581, 1791579600000, 1.13531, bgcolor=color.new(color.rgb(40,180,80), 92), border_color=color.new(color.rgb(40,180,80), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
@@ -193,7 +193,7 @@ if barstate.islast and isPair
         box.new(1790542800000, 1.12953, 1791579600000, 1.12853, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1790542800000, 1.13367, 1791579600000, 1.13317, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1790542800000, 1.13467, 1791579600000, 1.13367, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1790859600000, 1.13342, "LSZ supply-side | sweep to 1.13467", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
+        label.new(1790715600000, 1.13342, "LSZ supply-side | sweep to 1.13467", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1790542800000, 1.13743, 1791579600000, 1.13693, bgcolor=color.new(color.rgb(40,180,80), 92), border_color=color.new(color.rgb(40,180,80), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1790542800000, 1.13843, 1791579600000, 1.13743, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1790542800000, 1.13803, 1791579600000, 1.13753, bgcolor=color.new(color.rgb(40,180,80), 92), border_color=color.new(color.rgb(40,180,80), 45), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
@@ -201,13 +201,13 @@ if barstate.islast and isPair
     if show_lsz and show_far
         box.new(1790542800000, 1.13913, 1791579600000, 1.13863, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1790542800000, 1.14013, 1791579600000, 1.13913, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1790571600000, 1.13888, "LSZ supply-side + 4H BoM (confluent) | sweep to 1.14013", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
+        label.new(1790859600000, 1.13888, "LSZ supply-side + 4H BoM (confluent) | sweep to 1.14013", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1790542800000, 1.16541, 1791579600000, 1.16491, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1790542800000, 1.16641, 1791579600000, 1.16541, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1790715600000, 1.16516, "LSZ supply-side | sweep to 1.16641", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
+        label.new(1790571600000, 1.16516, "LSZ supply-side | sweep to 1.16641", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
         box.new(1790542800000, 1.17115, 1791579600000, 1.17065, bgcolor=color.new(color.rgb(40,180,80), 84), border_color=color.rgb(40,180,80), border_width=1, xloc=xloc.bar_time)
         box.new(1790542800000, 1.17215, 1791579600000, 1.17115, bgcolor=color.new(color.rgb(40,180,80), 100), border_color=color.new(color.rgb(40,180,80), 30), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        label.new(1790859600000, 1.17090, "LSZ supply-side | sweep to 1.17215", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
+        label.new(1790715600000, 1.17090, "LSZ supply-side | sweep to 1.17215", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(40,180,80), size=size.small)
     if show_ip
         // #3 UPPER RESISTANCE 1.13708-1.13773 MODERATE 7.5/14 Standard Wall Tier 2 | BoM Active 2 reactions | ENTRY-PRIMARY
         box.new(1790542800000, 1.13773, 1791579600000, 1.13708, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
@@ -223,7 +223,7 @@ if barstate.islast and isPair
         label.new(1790758800000, 1.12972, "UPPER RESISTANCE | MODERATE | 15-30% ZFP | Tier 2 BoM", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #4 UPPER RESISTANCE 1.12451-1.12530 MODERATE 7.0/14 Standard Wall Tier 2 | MoM Active 1 reactions | TP-TARGET
         box.new(1790542800000, 1.12530, 1791579600000, 1.12451, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
-        label.new(1790758800000, 1.12490, "UPPER RESISTANCE | MODERATE | 15-30% ZFP | Tier 2 MoM + 1H supply", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1790758800000, 1.12490, "UPPER RESISTANCE | MODERATE | 15-30% ZFP | Tier 2 MoM + 1H supply, sweep zone", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip and show_far
         // #5 RESISTANCE CEILING 1.14997-1.15057 MODERATE 7.0/14 Soft Wall Tier 2 | BoM Active 1 reactions | ENTRY-PRIMARY
         box.new(1790542800000, 1.15057, 1791579600000, 1.14997, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
@@ -234,7 +234,16 @@ if barstate.islast and isPair
     if show_ip
         box.new(1790542800000, 1.12866, 1791579600000, 1.12806, bgcolor=color.new(color.rgb(220,100,50), 93), border_color=color.new(color.rgb(220,100,50), 50), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
         box.new(1790542800000, 1.12671, 1791579600000, 1.12611, bgcolor=color.new(color.rgb(220,100,50), 82), border_color=color.new(color.rgb(220,100,50), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
-        label.new(1790888400000, 1.12641, "GAP IN-FILL | MODERATE | 30-50% ZFP + sweep zone", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1790888400000, 1.12641, "GAP IN-FILL | MODERATE | 30-50% ZFP", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+    if show_disc
+        line.new(1791007200000, 1.11000, 1791579600000, 1.11000, xloc=xloc.bar_time, color=color.new(color.rgb(200,200,200), 35), style=line.style_dashed, width=1)
+        label.new(1791072000000, 1.11000, "DISCOVERY ZONE | round number .00", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.rgb(200,200,200), 10), size=size.tiny)
+        line.new(1791007200000, 1.11500, 1791579600000, 1.11500, xloc=xloc.bar_time, color=color.new(color.rgb(200,200,200), 35), style=line.style_dashed, width=1)
+        label.new(1791072000000, 1.11500, "DISCOVERY ZONE | round number .50", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.rgb(200,200,200), 10), size=size.tiny)
+        line.new(1791007200000, 1.12000, 1791579600000, 1.12000, xloc=xloc.bar_time, color=color.new(color.rgb(200,200,200), 35), style=line.style_dashed, width=1)
+        label.new(1791072000000, 1.12000, "DISCOVERY ZONE | round number .00", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.rgb(200,200,200), 10), size=size.tiny)
+        line.new(1791007200000, 1.12364, 1791579600000, 1.12364, xloc=xloc.bar_time, color=color.new(color.rgb(200,200,200), 35), style=line.style_dashed, width=1)
+        label.new(1791072000000, 1.12364, "DISCOVERY ZONE | MA convergence", xloc=xloc.bar_time, style=label.style_none, textcolor=color.new(color.rgb(200,200,200), 10), size=size.tiny)
     if show_ip and show_lv
         line.new(1791147600000, 1.13708, 1791579600000, 1.13708, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Prior daily close 09-28
         line.new(1791147600000, 1.13743, 1791579600000, 1.13743, xloc=xloc.bar_time, color=color.new(color.rgb(120,220,255), 35), width=1, style=line.style_dotted)   // Prior daily high 09-29
@@ -285,59 +294,59 @@ if barstate.islast and isPair
         label.new(1791450000000, 1.12784, "Thu SS\n 80%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(120,144,156), size=size.small)
         box.new(1791493200000, 1.12712, 1791579600000, 1.11510, bgcolor=color.new(color.rgb(120,144,156), 88), border_color=color.new(color.rgb(120,144,156), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1791514800000, 1.12784, "Fri SS\n 80%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(120,144,156), size=size.small)
-        line.new(1791180000000, 1.11920, 1791234000000, 1.11660, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1791234000000, 1.11660, 1791302400000, 1.12491, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1791302400000, 1.12491, 1791352800000, 1.11660, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1791352800000, 1.11660, 1791406800000, 1.12491, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1791406800000, 1.12491, 1791475200000, 1.11660, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1791475200000, 1.11660, 1791525600000, 1.12491, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1791525600000, 1.12491, 1791579600000, 1.11660, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1791180000000, 1.11920, 1791234000000, 1.11710, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1791234000000, 1.11710, 1791302400000, 1.12491, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1791302400000, 1.12491, 1791352800000, 1.11710, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1791352800000, 1.11710, 1791406800000, 1.12491, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1791406800000, 1.12491, 1791475200000, 1.11710, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1791475200000, 1.11710, 1791525600000, 1.12491, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1791525600000, 1.12491, 1791579600000, 1.11710, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
     if show_e3
-        // EU1 Mon SS LONG E 1.11660 SL 1.11480 TP 1.12476 RRR 4.53 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
-        box.new(1791180000000, 1.11660, 1791234000000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1791180000000, 1.11670, 1791234000000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1791180000000, 1.12476, 1791234000000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791190800000, 1.11774, "EU1 SS L 4.5R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // EU2 Tue SS SHORT E 1.12585 SL 1.12742 TP 1.11675 RRR 5.8 | Swing Scalp / London Open | entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge)
+        // EU1 Mon SS LONG E 1.11710 SL 1.11480 TP 1.12476 RRR 3.33 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
+        box.new(1791180000000, 1.11710, 1791234000000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1791180000000, 1.11720, 1791234000000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1791180000000, 1.12476, 1791234000000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791190800000, 1.11817, "EU1 SS L 3.3R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // EU2 Tue SS SHORT E 1.12585 SL 1.12742 TP 1.11725 RRR 5.48 | Swing Scalp / London Open | entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge)
         box.new(1791234000000, 1.12742, 1791320400000, 1.12585, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1791234000000, 1.12585, 1791320400000, 1.12565, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1791234000000, 1.12585, 1791320400000, 1.11675, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791244800000, 1.12458, "EU2 SS S 5.8R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // EU1.Tue Tue SS LONG E 1.11660 SL 1.11480 TP 1.12476 RRR 4.53 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
-        box.new(1791234000000, 1.11660, 1791320400000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1791234000000, 1.11670, 1791320400000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1791234000000, 1.12476, 1791320400000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791277200000, 1.11937, "EU1.Tue", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // EU2.Wed Wed SS SHORT E 1.12585 SL 1.12742 TP 1.11675 RRR 5.8 | Swing Scalp / London Open | entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge)
+        box.new(1791234000000, 1.12585, 1791320400000, 1.11725, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791244800000, 1.12465, "EU2 SS S 5.5R", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // EU1.Tue Tue SS LONG E 1.11710 SL 1.11480 TP 1.12476 RRR 3.33 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
+        box.new(1791234000000, 1.11710, 1791320400000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1791234000000, 1.11720, 1791320400000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1791234000000, 1.12476, 1791320400000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791277200000, 1.11970, "EU1.Tue", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // EU2.Wed Wed SS SHORT E 1.12585 SL 1.12742 TP 1.11725 RRR 5.48 | Swing Scalp / London Open | entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge)
         box.new(1791320400000, 1.12742, 1791406800000, 1.12585, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1791320400000, 1.12585, 1791406800000, 1.12565, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1791320400000, 1.12585, 1791406800000, 1.11675, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791331200000, 1.12276, "EU2.Wed", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // EU1.Wed Wed SS LONG E 1.11660 SL 1.11480 TP 1.12476 RRR 4.53 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
-        box.new(1791320400000, 1.11660, 1791406800000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1791320400000, 1.11670, 1791406800000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1791320400000, 1.12476, 1791406800000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791363600000, 1.11774, "EU1.Wed", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // EU2.Thu Thu SS SHORT E 1.12585 SL 1.12742 TP 1.11675 RRR 5.8 | Swing Scalp / London Open | entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge)
+        box.new(1791320400000, 1.12585, 1791406800000, 1.11725, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791331200000, 1.12293, "EU2.Wed", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // EU1.Wed Wed SS LONG E 1.11710 SL 1.11480 TP 1.12476 RRR 3.33 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
+        box.new(1791320400000, 1.11710, 1791406800000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1791320400000, 1.11720, 1791406800000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1791320400000, 1.12476, 1791406800000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791363600000, 1.11817, "EU1.Wed", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // EU2.Thu Thu SS SHORT E 1.12585 SL 1.12742 TP 1.11725 RRR 5.48 | Swing Scalp / London Open | entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge)
         box.new(1791406800000, 1.12742, 1791493200000, 1.12585, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1791406800000, 1.12585, 1791493200000, 1.12565, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1791406800000, 1.12585, 1791493200000, 1.11675, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791417600000, 1.12458, "EU2.Thu", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // EU1.Thu Thu SS LONG E 1.11660 SL 1.11480 TP 1.12476 RRR 4.53 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
-        box.new(1791406800000, 1.11660, 1791493200000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1791406800000, 1.11670, 1791493200000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1791406800000, 1.12476, 1791493200000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791450000000, 1.11856, "EU1.Thu", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // EU2.Fri Fri SS SHORT E 1.12585 SL 1.12742 TP 1.11675 RRR 5.8 | Swing Scalp / London Open | entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge)
+        box.new(1791406800000, 1.12585, 1791493200000, 1.11725, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791417600000, 1.12465, "EU2.Thu", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // EU1.Thu Thu SS LONG E 1.11710 SL 1.11480 TP 1.12476 RRR 3.33 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
+        box.new(1791406800000, 1.11710, 1791493200000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1791406800000, 1.11720, 1791493200000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1791406800000, 1.12476, 1791493200000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791450000000, 1.11894, "EU1.Thu", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // EU2.Fri Fri SS SHORT E 1.12585 SL 1.12742 TP 1.11725 RRR 5.48 | Swing Scalp / London Open | entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge)
         box.new(1791493200000, 1.12742, 1791579600000, 1.12585, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
         box.new(1791493200000, 1.12585, 1791579600000, 1.12565, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1791493200000, 1.12585, 1791579600000, 1.11675, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791504000000, 1.12367, "EU2.Fri", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
-        // EU1.Fri Fri SS LONG E 1.11660 SL 1.11480 TP 1.12476 RRR 4.53 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
-        box.new(1791493200000, 1.11660, 1791579600000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        box.new(1791493200000, 1.11670, 1791579600000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
-        box.new(1791493200000, 1.12476, 1791579600000, 1.11660, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
-        label.new(1791529200000, 1.11937, "EU1.Fri", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        box.new(1791493200000, 1.12585, 1791579600000, 1.11725, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791504000000, 1.12379, "EU2.Fri", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        // EU1.Fri Fri SS LONG E 1.11710 SL 1.11480 TP 1.12476 RRR 3.33 | Swing Scalp / London Open | entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
+        box.new(1791493200000, 1.11710, 1791579600000, 1.11480, bgcolor=color.new(color.rgb(242,54,69), 84), border_color=color.rgb(242,54,69), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        box.new(1791493200000, 1.11720, 1791579600000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 70), border_color=color.new(color.rgb(8,153,129), 40), border_width=1, border_style=line.style_dotted, xloc=xloc.bar_time)
+        box.new(1791493200000, 1.12476, 1791579600000, 1.11710, bgcolor=color.new(color.rgb(8,153,129), 88), border_color=color.rgb(8,153,129), border_width=1, border_style=line.style_solid, xloc=xloc.bar_time)
+        label.new(1791529200000, 1.11970, "EU1.Fri", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_tbl
         var table tb = table.new(position.top_right, 2, 17, bgcolor=color.new(color.black, 10), border_color=color.rgb(40,40,45), border_width=1)
         table.cell(tb, 0, 0, "TRIDENT v8", text_color=color.rgb(80,140,255), bgcolor=color.rgb(10,30,60), text_size=size.small, text_halign=text.align_left)
@@ -365,21 +374,21 @@ if barstate.islast and isPair
         table.cell(tb, 0, 11, "Short EU2", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 1, 11, "Entry 1.1259", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 12, "SL | TP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 12, "1.1274 | 1.1168", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 12, "1.1274 | 1.1173", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 13, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 13, "Tue SS | 5.8R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 13, "Tue SS | 5.5R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 14, "Long EU1", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 14, "Entry 1.1166", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 14, "Entry 1.1171", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 15, "SL | TP", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 1, 15, "1.1148 | 1.1248", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 0, 16, "Day | RRR", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 16, "Mon SS | 4.5R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
+        table.cell(tb, 1, 16, "Mon SS | 3.3R", text_color=color.white, bgcolor=color.new(color.black, 10), text_size=size.small, text_halign=text.align_left)
 
 // ENGINE 3 - FULL-SPECTRUM TRADE MAP | WEEK OF 2026-10-05 | EUR/USD
 // 
 // === WEEKLY EXECUTION CALENDAR ===
 // Day | Pair | Dir | Setup Type | Entry | Shape | Session | Conf | Notes
-// Mon | EUR/USD | LONG | Swing Scalp | 1.11660 | SS | London Open | 82 | EU1 repeated Tue, Wed, Thu, Fri
+// Mon | EUR/USD | LONG | Swing Scalp | 1.11710 | SS | London Open | 90 | EU1 repeated Tue, Wed, Thu, Fri
 // Tue | EUR/USD | SHORT | Swing Scalp | 1.12585 | SS | London Open | 100 | EU2 repeated Wed, Thu, Fri
 // Wed | EUR/USD | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
 // Thu | EUR/USD | - | - | - | SS | - | - | No qualifying setups - no anchor of this day's shape passed the gates (see DISCARDED)
@@ -390,12 +399,12 @@ if barstate.islast and isPair
 // 
 // --- SWING SCALP SETUPS ---
 // EU1 | EUR/USD | LONG | Swing Scalp | Day: Mon | Session: London Open | Shape: SS
-//   Entry: 1.11660 | SL: 1.11480 | TP: 1.12476 | RRR: 4.53 / blended 4.97 | Quality: HIGH | Confidence: 82
+//   Entry: 1.11710 | SL: 1.11480 | TP: 1.12476 | RRR: 3.33 / blended 4.22 | Quality: HIGH | Confidence: 90
 //   Anchor Zone: Liquidity Sweep Zone [LSZ] | Shape Trigger: SS @ Mon London Open | Day Catalysts: 10:00 NY cut 1.1400 4.1bn, 10:00 NY cut 1.1375 2.9bn, 10:00 NY cut 1.1325 1.1bn, red folder: NO DATA
 //   Audit Trail: entry sweep zone near edge (TS-1); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5) | attempts 1
 //   Cascade Source: DXY->EU | Parent Trade Ref: - | Anchor Hit Window: Mon London Open 06:00-09:00 UTC | repeated: Tue, Wed, Thu, Fri
 // EU2 | EUR/USD | SHORT | Swing Scalp | Day: Tue | Session: London Open | Shape: SS
-//   Entry: 1.12585 | SL: 1.12742 | TP: 1.11675 | RRR: 5.80 / blended 5.82 | Quality: HIGH | Confidence: 100
+//   Entry: 1.12585 | SL: 1.12742 | TP: 1.11725 | RRR: 5.48 / blended 5.50 | Quality: HIGH | Confidence: 100
 //   Anchor Zone: 1H (Unmitigated) | MoM [MoM, tested 0x] | Shape Trigger: SS @ Tue London Open | Day Catalysts: red folder: NO DATA
 //   Audit Trail: entry 30m order block bottom + 1 pip (F1-A); SL (a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027) [ZR-6B safety, mirror confidence 1.00]; TP bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ edge) | attempts 1
 //   Cascade Source: DXY->EU | Parent Trade Ref: - | Anchor Hit Window: Tue London Open 06:00-09:00 UTC | repeated: Wed, Thu, Fri
@@ -421,5 +430,5 @@ if barstate.islast and isPair
 // 
 // --- WEEKLY STATS ---
 // Total Setups: 2 | HTF: 0 | Scalps: 2 | Reinforcements: 0 | Transitions: 0
-// Average RRR: 5.17 | Median RRR: 5.17
+// Average RRR: 4.41 | Median RRR: 4.41
 // f(T) Acceptance (E3C:996: 8 per pair minimum): 2 setups on EUR/USD - NOT met
