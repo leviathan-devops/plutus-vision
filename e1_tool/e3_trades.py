@@ -907,7 +907,7 @@ def pine(pair, monday, R):
             else:
                 ly += 1.1 * txt_h * (1 if s['tp'] > s['entry'] else -1)
         placed.append((lx, ly))
-        o.append(f"        label.new({lx}, {g(ly)}, \"{s['id'] if s.get('clone') else (s['id'] + ' ' + ('ALT ' if s.get('alt') else '') + s['shape'] + ' ' + ('S' if s['dir'] == 'SHORT' else 'L') + ' ' + format(s['rrr'], '.1f') + 'R' + ((' if ' + str(s.get('parent'))) if cond else '') + ((' if 1H close ' + ('>' if s['trigger']['dir'] == 'up' else '<') + ' ' + g(s['trigger']['level'])) if s.get('trigger') else ''))}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
+        o.append(f"        label.new({lx}, {g(ly)}, \"{s['id'] if s.get('clone') else (s['id'] + ' ' + ('ALT ' if s.get('alt') else '') + s['shape'] + ' ' + ('S' if s['dir'] == 'SHORT' else 'L') + ' ' + format(s['rrr'], '.1f') + 'R' + ((' if ' + str(s.get('parent'))) if cond else '') + ((' if 1H ' + ('>' if s['trigger']['dir'] == 'up' else '<') + ' ' + g(s['trigger']['level'])) if s.get('trigger') else ''))}\", xloc=xloc.bar_time, style=label.style_none, textcolor=color.{'gray' if s.get('alt') else 'white'}, size=size.small)")
     return o
 
 
