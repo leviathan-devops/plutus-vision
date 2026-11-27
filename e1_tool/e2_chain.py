@@ -791,7 +791,10 @@ def build(pair, monday, X, lead=None, force_dir=None):
             def far_of(z, up):
                 if z.get('reach') is not None:
                     return z['reach']
-                lb = liquidity_beyond(X, z, up, lim=None) if (info(z) or {}).get('counter') == 'Depleted' else None
+                # GBP/USD (FA 10): 'LIQUIDITY is the only thing respected ... Expect S/D to get pierced & price absorbs nearest liquidity before moving': a supply / demand candle zone
+                # bounding the pair's range is pierced as far as the nearest liquidity beyond it - the day box runs there (D-108)
+                gu = pair == 'GBPUSD' and 'tf' in z and not z.get('liq') and not z.get('sweep')
+                lb = liquidity_beyond(X, z, up, lim=None) if ((info(z) or {}).get('counter') == 'Depleted' or gu) else None
                 if lb is not None:
                     return lb['top'] if up else lb['bot']
                 return z['top'] if up else z['bot']             # (a swing extreme at the bound's back edge gives the bound its 'reach' in bounds(), D-88)
