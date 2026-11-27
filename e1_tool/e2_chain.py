@@ -226,33 +226,36 @@ def _ema(v, n):
     return e
 
 
+def structure_4h(pair, monday):
+    """P533:2649 'Check 1: 4H Trend Direction. Determine the 4H trend: higher highs + higher lows = bullish (favors LONG), lower highs + lower lows = bearish (favors SHORT). The 4H trend is the
+    structural truth - it takes days/weeks to complete, not hours' (P533:476 'Market structure determines direction'): the last two 4H swing highs and swing lows (a swing = the extreme of five
+    4H bars, two each side) - both higher = up, both lower = down, mixed = ranging (None)"""
+    b = D.closed(pair, '240', monday)[-90:]
+    hs = [i for i in range(2, len(b) - 2) if b[i]['high'] == max(x['high'] for x in b[i - 2:i + 3])]
+    ls = [i for i in range(2, len(b) - 2) if b[i]['low'] == min(x['low'] for x in b[i - 2:i + 3])]
+    if len(hs) >= 2 and len(ls) >= 2:
+        hh, hl = b[hs[-1]]['high'] > b[hs[-2]]['high'], b[ls[-1]]['low'] > b[ls[-2]]['low']
+        return 'up' if (hh and hl) else 'down' if (not hh and not hl) else None
+    return None
+
+
 def trend_4h(pair, monday):
-    """E3C:1086 '4H Trend: Bullish/Bearish/Ranging': 4H close vs EMA 50 vs EMA 200 (the trend rule Engine 1 applies on D1, here on 4H; D-36)"""
-    c = [x['close'] for x in D.closed(pair, '240', monday)]
-    e50, e200 = _ema(c, 50), _ema(c, 200)
-    if e50 is None or e200 is None:
-        return None
-    return 'up' if c[-1] > e50 > e200 else 'down' if c[-1] < e50 < e200 else None
+    """E3C:1086 '4H Trend: Bullish/Bearish/Ranging' = P533:2649 higher highs + higher lows / lower highs + lower lows (structure_4h)"""
+    return structure_4h(pair, monday)
 
 
 def storyline(pair, monday, spot, U):
     """E2X:258 '4H storyline tiebreaker: When in doubt, the 4H storyline bias decides. The weekly trend is identified on the 4H - it takes days and weeks to complete.'
     = the side of the most recent 4H BoM zone still STANDING at the anchor (e1_sd.valid) = the origin of the leg price is in; none standing -> 4H swing structure
     (last two 2-bar swing highs / lows: higher + higher = up, lower + lower = down) (C-02, D-36)"""
+    st = structure_4h(pair, monday)
+    if st:
+        return st, ('4H higher highs + higher lows' if st == 'up' else '4H lower highs + lower lows')
     b0 = D.week_start_ms(monday)
     zs = [z for z in SD.scan(pair, monday, '240') if z['kind'] == 'BoM' and SD.valid(z, spot, b0, U)]
     if zs:
         z = max(zs, key=lambda z: z['origin_time'])
-        return ('down' if z['type'] == 'Supply' else 'up'), f"standing 4H BoM {z['type']} {z['bot']:.5g}-{z['top']:.5g}"
-    b = D.closed(pair, '240', monday)[-90:]
-    hs = [i for i in range(2, len(b) - 2) if b[i]['high'] == max(x['high'] for x in b[i - 2:i + 3])]
-    ls = [i for i in range(2, len(b) - 2) if b[i]['low'] == min(x['low'] for x in b[i - 2:i + 3])]
-    if len(hs) >= 2 and len(ls) >= 2:
-        hh, hl = b[hs[-1]]['high'] > b[hs[-2]]['high'], b[ls[-1]]['low'] > b[ls[-2]]['low']
-        if hh and hl:
-            return 'up', '4H higher highs + higher lows'
-        if not hh and not hl:
-            return 'down', '4H lower highs + lower lows'
+        return ('down' if z['type'] == 'Supply' else 'up'), f"4H structure mixed; standing 4H BoM {z['type']} {z['bot']:.5g}-{z['top']:.5g}"
     return None, 'no 4H storyline'
 
 

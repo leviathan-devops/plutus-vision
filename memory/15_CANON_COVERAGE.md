@@ -97,7 +97,7 @@ RULE: re-read the cited lines in full before coding a row. A row is not "B" unle
 | E2-CP | 1946-1960 | consolidation phase detection -> valid setup types | NB |
 | E2-1D | 1961-1964 | 4H MoM one-and-done: minor WL then BS/PBS through it | NB |
 | E2-TFM | 1965-1975; FA:281-287 | timeframe element matching (4H->4H, 1H->1H, 15m -> at most 1H) | NB |
-| E2-PR | 1976-1983 | pressure reading rules; 4H storyline tiebreaker | PB |
+| E2-PR | 1976-1983 | pressure reading rules; 4H storyline tiebreaker | PB [2026-11-27 D-115: storyline / 4H trend = swing structure per P533:2649, standing 4H BoM only when the structure is mixed] |
 | E2-69 | 1984-2039 | output format incl. day-by-day decomposition (feeds E3) | PB |
 | E2-610 | 2040-2057; FA:574-590 | trading speed rule; conservation of energy (after 2 strong piercing moves 1-2 days of consolidation) | PB |
 | E2-TRV | GS LAW2 | expected travel per shape per day | NB |
