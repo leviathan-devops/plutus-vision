@@ -1,0 +1,60 @@
+DXY 2026-05-18 anchor price 99.301 | chart shows zones between 98.844 and 99.695 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  sweep zone Supply-side 99.359-99.409 | sweep reach to 99.509 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 99.449-99.503
+      part: liquidity band (sealed V1, 4H) 99.359-99.413
+  supply/demand 1H (Unmitigated) | MoM Demand 99.174-99.244
+      part: sweep zone Supply-side 99.270-99.320 | sweep reach to 99.420 (dotted outline)
+      part: sweep zone Demand-side 99.251-99.301 | sweep reach to 99.151 (dotted outline)
+      part: supply/demand 1H (Unmitigated) | MoM Demand 99.251-99.298
+      part: liquidity band (sealed V1, 4H) 99.244-99.298
+      part: gap in-fill level 99.144-99.204 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot 05-14, daily pivot 05-15, minor swing
+      part: liquidity band (sealed V1, 4H) 99.125-99.179
+  pressure zone MID-RANGE SUPPORT 98.963-99.037 MODERATE | 15-30% ZFP | MoM
+      part: supply/demand 1H (Mitigated 2x) | MoM Demand 99.001-99.097
+      part: liquidity band (sealed V1, 4H) 98.996-99.050
+  supply/demand 1H (Unmitigated) | MoM Demand 98.844-98.889
+      part: liquidity band (sealed V1, 4H) 98.885-98.939
+      part: sweep zone Supply-side 98.857-98.907 | sweep reach to 99.007 (dotted outline)
+      part: sweep zone Demand-side 98.844-98.894 | sweep reach to 98.744 (dotted outline)
+  (4 zones, 13 parts)
+DISCOVERY ZONES (thin dashed grey lines; canon: pre-week 'levels to watch' flagged where the zone map is EMPTY - major round numbers, untraded weekly-close extremes, MA convergences, structural extremes; not pressure zones, not used by Engines 2 / 3):
+  discovery zone 99.695 | Supply Ceiling Target
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: Liquidity Sweep Zone | ZFP: - | price between MID-RANGE SUPPORT and Liquidity Sweep Zone, no breakout in the last two sessions [the row's ZFP condition is not met: best description, one tier lower]
+   Ceiling: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Floor: MID-RANGE SUPPORT [IP MoM Fortress ZFP 22] -> HOLD (5 strong reactions = FORTRESS (E3C lifecycle: 95% direction flip))
+   Breakout direction: none - both bounds hold | 
+   chain: SS [HIGH, cum 0.8]
+   PRIMARY: SS | DECISION ZONE: Liquidity Sweep Zone 1H close beyond it -> ALTERNATIVE: SS -> BS -> R
+  Mon forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.307 L 98.946 C 98.983
+  Tue forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.434 L 98.944 C 99.315
+  Wed forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.472 L 98.966 C 99.136
+  Thu forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.515 L 99.064 C 99.203
+  Fri forecast SS         range box 98.963-99.509 key zone Liquidity Sweep Zone               | actual H 99.412 L 99.172 C 99.319
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  DX1      Mon SS     LONG  E 99.050 SL 98.971 TP 99.294 3.09R | filled Mon 11:30 -> STOPPED Mon 16:15
+  DX1.Tue    Tue SS     LONG  E 99.050 SL 98.971 TP 99.294 3.09R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
+  DX1.Wed    Wed SS     LONG  E 99.050 SL 98.971 TP 99.294 3.09R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
+  DXA2 ALT Wed BS     LONG  E 99.359 SL 99.288 TP 99.635 3.89R | not triggered: no 1H close above 99.509 (Liquidity Sweep Zone) during the week
+  DX1.Thu    Thu SS     LONG  E 99.050 SL 98.971 TP 99.294 3.09R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
+  DXB2 ALT Thu RWL    LONG  E 98.869 SL 98.826 TP 99.279 9.54R | triggered Mon 23:00 | filled - -> not filled inside its bracket (order expires)
+  DX1.Fri    Fri SS     LONG  E 99.050 SL 98.971 TP 99.294 3.09R | void: the anchor zone was closed through on 1H Mon 20:00 (VIOLATED, E3C:150)
+  ! Mon SS down: REJECT RRR 1.27 outside [2.5, 15.0] (SL 99.53900 = 13.0p, TP 99.24402 = 16.5p: LQZ inside the opposing zone: midpoint) (entry 99.40900)
+  ! Mon SS up: REJECT RRR 0.67 outside [2.5, 15.0] (SL 99.16900 = 7.5p, TP 99.29400 = 5.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.24400)
+  ! Mon SS up: REJECT RRR 0.05 outside [2.5, 15.0] (SL 99.22100 = 7.7p, TP 99.29400 = 0.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.29800)
+  ! Mon SS LONG 99.06100: DUPLICATE of SS 99.05000 (E3C:463)
+  ! ALT R ['Fri']: recovery - no designated swing (6.1.3 transitional)
+  ! ALT Mon SS down: REJECT RRR 1.27 outside [3.0, 15.0] (SL 99.53900 = 13.0p, TP 99.24402 = 16.5p: LQZ inside the opposing zone: midpoint) (entry 99.40900)
+  ! ALT Mon SS up: REJECT RRR 0.67 outside [3.0, 15.0] (SL 99.16900 = 7.5p, TP 99.29400 = 5.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.24400)
+  ! ALT Mon SS up: REJECT RRR 0.05 outside [3.0, 15.0] (SL 99.22100 = 7.7p, TP 99.29400 = 0.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.29800)
+  ! ALT Mon SS LONG 99.06100: DUPLICATE of SS 99.05000 (E3C:463)
+  ! ALT Mon SS down: REJECT RRR 1.27 outside [3.0, 15.0] (SL 99.53900 = 13.0p, TP 99.24402 = 16.5p: LQZ inside the opposing zone: midpoint) (entry 99.40900)
+  ! ALT Mon SS up: REJECT RRR 0.67 outside [3.0, 15.0] (SL 99.16900 = 7.5p, TP 99.29400 = 5.0p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.24400)
+  ! ALT Mon SS up: REJECT RRR 0.05 outside [3.0, 15.0] (SL 99.22100 = 7.7p, TP 99.29400 = 0.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.29800)
+  ! ALT Wed BS down: REJECT RRR 2.08 outside [3.0, 15.0] (SL 99.08000 = 5.7p, TP 98.90400 = 11.9p: E2 target near edge + 1 pip) (entry 99.02282)
+  ! ALT Fri SS down: REJECT RRR 1.99 outside [3.0, 15.0] (SL 99.08000 = 5.7p, TP 98.90900 = 11.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 99.02282)
+  ! ALT Fri SS up: REJECT RRR 1.83 outside [3.0, 15.0] (SL 98.82600 = 4.3p, TP 98.94750 = 7.9p: bounding zone near edge + 1 pip (strong zone)) (entry 98.86900)
+  ! ALT Mon SS LONG 99.06100: DUPLICATE of SS 99.05000 (E3C:463)

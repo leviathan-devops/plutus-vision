@@ -1,0 +1,63 @@
+EURUSD 2026-07-06 anchor price 1.14235 | chart shows zones between 1.13815 and 1.14807 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  supply/demand 1H (Unmitigated) | BoM Supply 1.14738-1.14807
+      part: gap in-fill level 1.14777-1.14837 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot 07-02, daily pivot 07-03, minor swing
+  supply/demand 1H (Mitigated 4x) | MoM Supply 1.14601-1.14677
+      part: sweep zone Supply-side 1.14678-1.14728 | sweep reach to 1.14828 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 1.14658-1.14728
+      part: gap in-fill level 1.14593-1.14653 MODERATE | 30-50% ZFP | signals: 1H zone, 4H zone, daily pivot 07-02, daily pivot 07-03, minor swing
+      part: sweep zone Supply-side 1.14573-1.14623 | sweep reach to 1.14723 (dotted outline)
+  pressure zone UPPER RESISTANCE 1.14444-1.14533 MODERATE | 15-30% ZFP | MoM
+      part: supply/demand 4H (Mitigated 2x) | MoM Supply 1.14475-1.14635
+      part: supply/demand 1H (Unmitigated) | BoM Supply 1.14375-1.14421
+      part: sweep zone Supply-side 1.14316-1.14410 | sweep reach to 1.14510 (dotted outline)
+  gap in-fill level 1.14220-1.14280 MODERATE | 30-50% ZFP | signals: daily pivot 07-01, daily pivot 07-02, daily pivot 07-03, extended daily close, option strike (Tier 3 / 4), round number
+      part: liquidity band (sealed V1, 4H) 1.14269-1.14339
+      part: sweep zone Supply-side 1.14255-1.14305 | sweep reach to 1.14405 (dotted outline)
+      part: sweep zone Demand-side 1.14206-1.14256 | sweep reach to 1.14106 (dotted outline)
+      part: sweep zone Supply-side 1.14178-1.14228 | sweep reach to 1.14328 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 1.14108-1.14178
+  pressure zone MID-RANGE SUPPORT 1.13977-1.14053 MODERATE-HEAVY | 15-30% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | MoM Demand 1.14004-1.14147
+  supply/demand 4H (Unmitigated) | BoM Demand 1.13721-1.13832
+      part: supply/demand 1H (Unmitigated) | BoM Demand 1.13815-1.13886
+      part: liquidity band (sealed V1, 4H) 1.13810-1.13880
+      part: sweep zone Demand-side 1.13790-1.13876 | sweep reach to 1.13690 (dotted outline) | confluent with a 4H BoM zone
+  (6 zones, 17 parts)
+ENGINE 2:
+   Current Shape: SS range (HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 15-30% | price between MID-RANGE SUPPORT and UPPER RESISTANCE, no breakout in the last two sessions | FA 9: 2 piercing sessions -> 'EXPECT 1-2 FULL DAYS OF HTF CONSOLIDATION'
+   Ceiling: UPPER RESISTANCE [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity 1H liquidity (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+   Floor: MID-RANGE SUPPORT [IP MoM Active ZFP 22] -> SLOW (active MoM (1 reactions), opposing liquidity sweep zone (opposing) beyond the other bound: slow consolidation ends retesting it, then pierce (6.4.2))
+   Breakout direction: up | pair translation of the DXY chain (down inverted)
+   chain: SS [HIGH, cum 0.8] -> RWL [MODERATE, cum 0.4] -> BS [MODERATE, cum 0.4] -> WL [HIGH, cum 0.32] -> RWL [HIGH, cum 0.32]
+  Mon forecast SS         range box 1.13977-1.14533 key zone UPPER RESISTANCE                   | actual H 1.14449 L 1.14083 C 1.14413
+  Tue forecast SS         range box 1.13977-1.14533 key zone UPPER RESISTANCE                   | actual H 1.14480 L 1.14080 C 1.14122
+  Wed forecast SS+RWL+BS  up    box 1.13902-1.14339 key zone Liquidity Sweep Zone               | actual H 1.14315 L 1.13911 C 1.14160
+  Thu forecast BS         up    box 1.13972-1.14308 key zone Liquidity Sweep Zone               | actual H 1.14494 L 1.14141 C 1.14299
+  Fri forecast BS+WL+RWL  up    box 1.14308-1.14623 key zone UPPER RESISTANCE                   | actual H 1.14608 L 1.14114 C 1.14147
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  EU1      Mon SS     SHORT E 1.14442 SL 1.14508 TP 1.14068 5.66R | filled Mon 18:30 -> TP HIT Tue 21:15
+  EU2      Mon SS     SHORT E 1.14385 SL 1.14451 TP 1.14068 4.8R | filled Mon 17:15 -> STOPPED Mon 21:45
+  EU3      Mon SS     LONG  E 1.14018 SL 1.13960 TP 1.14429 7.14R | filled - -> not filled inside its bracket (order expires)
+  EU4      Mon SS     LONG  E 1.14095 SL 1.14037 TP 1.14429 5.8R | filled Mon 10:00 -> TP HIT Mon 18:45
+  EU1.Tue    Tue SS     SHORT E 1.14442 SL 1.14508 TP 1.14068 5.66R | filled Mon 21:00 -> TP HIT Tue 21:15
+  EU3.Tue    Tue SS     LONG  E 1.14018 SL 1.13960 TP 1.14429 7.14R | filled - -> not filled inside its bracket (order expires)
+  EU4.Tue    Tue SS     LONG  E 1.14095 SL 1.14037 TP 1.14429 5.8R | filled Tue 19:15 -> STOPPED Tue 21:30
+  EU5      Wed RWL    SHORT E 1.14269 SL 1.14369 TP 1.13940 3.29R | filled Wed 07:15 -> TP HIT Wed 11:30
+  EU6      Wed BS     LONG  E 1.13940 SL 1.13872 TP 1.14555 9.11R | filled Wed 11:30 -> TP HIT Fri 02:00
+  EU7      Wed SS     LONG  E 1.14018 SL 1.13960 TP 1.14254 4.1R | filled Tue 21:30 -> TP HIT Wed 07:15
+  EUA5 ALT Wed BS     SHORT E 1.14573 SL 1.14753 TP 1.13837 4.09R | not triggered: no 1H close below 1.13902 (MID-RANGE SUPPORT) during the week
+  EU8      Thu Ladder LONG  E 1.14239 SL 1.14172 TP 1.14555 4.71R | filled Thu 00:00 -> TP HIT Fri 02:00
+  EUA7 ALT Thu Ladder SHORT E 1.14352 SL 1.14396 TP 1.13837 11.77R | not triggered: no 1H close below 1.13902 (MID-RANGE SUPPORT) during the week
+  EU9      Fri RWL    SHORT E 1.14598 SL 1.14653 TP 1.14239 6.52R | filled Fri 02:15 -> TP HIT Fri 12:45
+  EUA9 ALT Fri RWL    LONG  E 1.13851 SL 1.13793 TP 1.14164 5.45R | not triggered: no 1H close below 1.13902 (MID-RANGE SUPPORT) during the week
+  EUA8 ALT Fri Ladder SHORT E 1.14081 SL 1.14125 TP 1.13837 5.58R | not triggered: no 1H close below 1.13902 (MID-RANGE SUPPORT) during the week
+  ! reinforcement at 1.14498: REJECT RRR 1.30 / SL 4.4p
+  ! Wed BS up: REJECT RRR 0.35 outside [3.0, 15.0] (SL 1.14367 = 16.5p, TP 1.14591 = 5.8p: target zone near edge + 1 pip) (entry 1.14533)
+  ! ALT Wed SS down: REJECT RRR 1.61 outside [3.0, 15.0] (SL 1.14753 = 18.0p, TP 1.14284 = 28.9p: weak zone far edge) (entry 1.14573)
+  ! ALT Wed SS down: REJECT RRR 0.14 outside [3.0, 15.0] (SL 1.14753 = 18.0p, TP 1.14548 = 2.5p: bounding zone near edge + 1 pip (strong zone)) (entry 1.14573)
+  ! ALT Wed SS up: REJECT RRR 2.04 outside [3.0, 15.0] (SL 1.14454 = 5.8p, TP 1.14629 = 11.7p: LQZ inside the opposing zone: midpoint) (entry 1.14512)
+  ! ALT Wed BS down: REJECT RRR 0.97 outside [3.0, 15.0] (SL 1.14115 = 13.8p, TP 1.13842 = 13.5p: 4H target zone near edge + 1 pip (strong zone)) (entry 1.13977)
+  ! Tue SS SHORT 1.14385: EMISSION_CAPPED - more than 11 trades this week (L-04)

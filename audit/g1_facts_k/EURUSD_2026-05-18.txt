@@ -1,0 +1,68 @@
+EURUSD 2026-05-18 anchor price 1.16231 | chart shows zones between 1.15470 and 1.16785 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  pressure zone UPPER RESISTANCE 1.16641-1.16726 MODERATE-HEAVY | 30-50% ZFP | MoM
+      part: gap in-fill level 1.16744-1.16804 MODERATE | 20-40% ZFP | signals: 1H zone, daily pivot 05-14, minor swing, round number
+      part: supply/demand 1H (Unmitigated) | MoM Supply 1.16738-1.16785
+      part: liquidity band (sealed V1, 4H) 1.16705-1.16773
+      part: supply/demand 1H (Unmitigated) | MoM Supply 1.16655-1.16726
+      part: sweep zone Supply-side 1.16676-1.16726 | sweep reach to 1.16826 (dotted outline)
+      part: sweep zone Demand-side 1.16657-1.16707 | sweep reach to 1.16557 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 1.16604-1.16672
+  pressure zone UPPER RESISTANCE 1.16493-1.16562 EXTREME | 5-15% ZFP | MoM
+      part: supply/demand 1H (Mitigated 2x) | MoM Supply 1.16456-1.16574
+      part: liquidity band (sealed V1, 4H) 1.16477-1.16545
+  pressure zone EQUILIBRIUM ZONE 1.16219-1.16296 MODERATE-HEAVY | 30-50% ZFP | MoM
+      part: liquidity band (sealed V1, 4H) 1.16327-1.16395
+      part: supply/demand 1H (Unmitigated) | MoM Supply 1.16266-1.16356
+      part: liquidity band (sealed V1, 4H) 1.16203-1.16271
+      part: sweep zone Supply-side 1.16211-1.16261 | sweep reach to 1.16361 (dotted outline)
+      part: sweep zone Demand-side 1.16168-1.16218 | sweep reach to 1.16068 (dotted outline)
+  pressure zone MID-RANGE SUPPORT 1.15970-1.16036 MODERATE | 15-30% ZFP | BoM
+      part: sweep zone Demand-side 1.16083-1.16133 | sweep reach to 1.15983 (dotted outline)
+  liquidity band (sealed V1, 4H) 1.15747-1.15815
+  (5 zones, 16 parts)
+DISCOVERY ZONES (thin dashed grey lines; canon: pre-week 'levels to watch' flagged where the zone map is EMPTY - major round numbers, untraded weekly-close extremes, MA convergences, structural extremes; not pressure zones, not used by Engines 2 / 3):
+  discovery zone 1.15500 | round number .50
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: EQUILIBRIUM ZONE | ZFP: 30-50% | 05-15 LON: spike down through EQUILIBRIUM ZONE (ZFP 30), every 1H close back at a sweep target [the row's ZFP condition is not met: best description, one tier lower] | F
+   Ceiling: UPPER RESISTANCE [IP MoM Depleted ZFP 10] -> PIERCED (MoM with 3 reactions: depleted -> PIERCED branch (6.4.2; P533:1159))
+   Floor: MID-RANGE SUPPORT [IP BoM Depleted ZFP 37] -> PIERCED (BoM with 3 reactions: depleted, likely to fail on the next test (P533:1159))
+   Breakout direction: none | pair translation of the DXY chain: DXY ranges all week (Part IX: DXY gives direction and timing, the pair its levels)
+   chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range box 1.15747-1.16672 key zone UPPER RESISTANCE                   | actual H 1.16608 L 1.16219 C 1.16556
+  Tue forecast SS         range box 1.15747-1.16672 key zone UPPER RESISTANCE                   | actual H 1.16617 L 1.15921 C 1.16047
+  Wed forecast SS         range box 1.15747-1.16672 key zone UPPER RESISTANCE                   | actual H 1.16448 L 1.15827 C 1.16235
+  Thu forecast SS         range box 1.15747-1.16672 key zone UPPER RESISTANCE                   | actual H 1.16353 L 1.15762 C 1.16168
+  Fri forecast SS         range box 1.15747-1.16672 key zone UPPER RESISTANCE                   | actual H 1.16205 L 1.15882 C 1.16017
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  EU1      Mon SS     SHORT E 1.16604 SL 1.16702 TP 1.15985 6.29R | filled Mon 20:15 -> TP HIT Tue 14:15
+  EU2      Mon SS     SHORT E 1.16297 SL 1.16386 TP 1.15985 3.51R | filled Mon 06:00 -> STOPPED Mon 07:15
+  EU1.Tue    Tue SS     SHORT E 1.16604 SL 1.16702 TP 1.15985 6.29R | filled Mon 21:45 -> TP HIT Tue 14:15
+  EU2.Tue    Tue SS     SHORT E 1.16297 SL 1.16386 TP 1.15985 3.51R | void: the anchor zone was closed through on 1H Mon 06:00 (VIOLATED, E3C:150)
+  EU3      Tue SS     LONG  E 1.15815 SL 1.15717 TP 1.16285 4.78R | filled - -> not filled inside its bracket (order expires)
+  EU1.Wed    Wed SS     SHORT E 1.16604 SL 1.16702 TP 1.15985 6.29R | filled - -> not filled inside its bracket (order expires)
+  EU2.Wed    Wed SS     SHORT E 1.16297 SL 1.16386 TP 1.15985 3.51R | void: the anchor zone was closed through on 1H Mon 06:00 (VIOLATED, E3C:150)
+  EU3.Wed    Wed SS     LONG  E 1.15815 SL 1.15717 TP 1.16285 4.78R | filled - -> not filled inside its bracket (order expires)
+  EU1.Thu    Thu SS     SHORT E 1.16604 SL 1.16702 TP 1.15985 6.29R | filled - -> not filled inside its bracket (order expires)
+  EU2.Thu    Thu SS     SHORT E 1.16297 SL 1.16386 TP 1.15985 3.51R | void: the anchor zone was closed through on 1H Mon 06:00 (VIOLATED, E3C:150)
+  EU3.Thu    Thu SS     LONG  E 1.15815 SL 1.15717 TP 1.16285 4.78R | filled Thu 13:30 -> TP HIT Thu 17:45
+  EUB4 ALT Thu RWL    SHORT E 1.16701 SL 1.16756 TP 1.16155 9.92R | triggered Mon 22:00 | filled - -> not filled inside its bracket (order expires)
+  ! SS down: ZONE_DEPLETED - UPPER RESISTANCE has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! SS up: ZONE_DEPLETED - MID-RANGE SUPPORT has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT SS down: ZONE_DEPLETED - UPPER RESISTANCE has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT SS up: ZONE_DEPLETED - MID-RANGE SUPPORT has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT R ['Fri']: recovery - no designated swing (6.1.3 transitional)
+  ! ALT Mon SS LONG 1.15815: DIRECTION_VALIDATION_FAILED - 4 of the 6 checks disagree (E3C 8.18)
+  ! ALT Wed BS down: ZONE_DEPLETED - MID-RANGE SUPPORT has 3 reactions (TP only, E3C:1052)
+  ! ALT SS down: ZONE_DEPLETED - UPPER RESISTANCE has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT SS up: ZONE_DEPLETED - MID-RANGE SUPPORT has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT SS up: ZONE_DEPLETED - UPPER RESISTANCE has 3+ reactions (TP only, P533:1159) -> entry at 4H liquidity (opposing) beyond it (6.4.2)
+  ! ALT Wed BS up: ZONE_DEPLETED - UPPER RESISTANCE has 3 reactions (TP only, E3C:1052)
+  ! ALT Fri SS up: REJECT RRR 1.18 outside [3.0, 15.0] (SL 1.16447 = 9.8p, TP 1.16661 = 11.6p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 1.16545)
+  ! ALT Fri SS SHORT 1.16676: DUPLICATE of SS 1.16697 (E3C:463)
+  ! Mon SS LONG 1.15815: NOT REACHABLE - the day's path stays more than 30 pips away (law 2)
+  ! Fri SS LONG 1.15815: EMISSION_CAPPED - more than 11 trades this week (L-04)
+  ! Fri SS SHORT 1.16604: EMISSION_CAPPED - more than 11 trades this week (L-04)
+  ! Fri SS SHORT 1.16297: EMISSION_CAPPED - more than 11 trades this week (L-04)

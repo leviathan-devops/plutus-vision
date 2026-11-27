@@ -1,0 +1,47 @@
+DXY 2026-10-05 anchor price 102.308 | chart shows zones between 101.543 and 102.635 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  sweep zone Supply-side 102.485-102.535 | sweep reach to 102.635 (dotted outline)
+  gap in-fill level 102.314-102.374 MODERATE | 30-50% ZFP | signals: daily pivot 10-01, daily pivot 10-02
+  sweep zone Supply-side 102.157-102.207 | sweep reach to 102.307 (dotted outline)
+  pressure zone MID-RANGE SUPPORT 101.961-102.051 MODERATE | 30-50% ZFP | MoM
+      part: sweep zone Supply-side 102.082-102.132 | sweep reach to 102.232 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 101.916-101.996
+  pressure zone KEY SUPPORT BAND 101.750-101.843 MODERATE | 30-50% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | MoM Demand 101.855-101.926
+      part: sweep zone Demand-side 101.855-101.905 | sweep reach to 101.755 (dotted outline)
+      part: supply/demand 1H (Unmitigated) | BoM Demand 101.668-101.798
+      part: sweep zone Demand-side 101.668-101.718 | sweep reach to 101.568 (dotted outline)
+  pressure zone KEY SUPPORT BAND 101.479-101.565 MODERATE-HEAVY | 15-30% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | MoM Demand 101.543-101.612
+      part: sweep zone Supply-side 101.562-101.612 | sweep reach to 101.712 (dotted outline)
+  (6 zones, 8 parts)
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: MID-RANGE SUPPORT | ZFP: 30-50% | 10-05 TKY: 1H close through MID-RANGE SUPPORT (ZFP 30), price still beyond [the row's ZFP condition is not met: best description, one tier lower] | FA 9: 3 piercing ses
+   Ceiling: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Floor: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+   Breakout direction: none - both bounds hold | 
+   chain: SS [HIGH, cum 0.8]
+   PRIMARY: SS | DECISION ZONE: Liquidity Sweep Zone 1H close beyond it -> ALTERNATIVE: SS -> BS
+  Mon forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.433 L 102.084 C 102.113
+  Tue forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.285 L 101.754 C 101.841
+  Wed forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.499 L 101.822 C 102.277
+  Thu forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.467 L 102.033 C 102.124
+  Fri forecast SS         range box 101.755-102.635 key zone Liquidity Sweep Zone               | actual H 102.335 L 101.920 C 102.232
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  DX1      Mon SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | filled Mon 06:30 -> TP HIT Tue 11:15
+  DX1.Tue    Tue SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | filled - -> not filled inside its bracket (order expires)
+  DX2      Tue SS     LONG  E 101.926 SL 101.725 TP 102.420 2.93R | filled Tue 11:00 -> TP HIT Wed 12:00
+  DX1.Wed    Wed SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | filled Wed 12:00 -> TP HIT Fri 05:30
+  DX2.Wed    Wed SS     LONG  E 101.926 SL 101.725 TP 102.420 2.93R | filled Tue 21:00 -> TP HIT Wed 12:00
+  DX1.Thu    Thu SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | filled Thu 09:45 -> TP HIT Fri 05:30
+  DX2.Thu    Thu SS     LONG  E 101.926 SL 101.725 TP 102.420 2.93R | filled - -> not filled inside its bracket (order expires)
+  DXA2 ALT Thu BS     LONG  E 102.535 SL 102.405 TP 103.155 4.77R | not triggered: no 1H close above 102.635 (Liquidity Sweep Zone) during the week
+  DX1.Fri    Fri SS     SHORT E 102.435 SL 102.665 TP 101.941 2.64R | skipped: 4th battle at this anchor (E3C:150 'index i > 2 skipped')
+  DX2.Fri    Fri SS     LONG  E 101.926 SL 101.725 TP 102.420 2.93R | filled Fri 05:30 -> filled, still open at the week end
+  DXB2 ALT Fri RWL    LONG  E 101.693 SL 101.636 TP 102.091 6.93R | not triggered: no 1H close below 101.755 (1H (Unmitigated) | MoM) during the week
+  ! ALT Mon SS up: REJECT RRR 2.46 outside [3.0, 15.0] (SL 101.72500 = 20.1p, TP 102.42000 = 49.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 101.92600)
+  ! ALT Mon SS up: REJECT RRR 2.46 outside [3.0, 15.0] (SL 101.72500 = 20.1p, TP 102.42000 = 49.4p: bounding sweep zone near edge (rule 5; P533 7.1 Rule 3 LSZ e) (entry 101.92600)
+  ! ALT Thu BS down: REJECT RRR 0.66 outside [3.0, 15.0] (SL 101.92605 = 7.1p, TP 101.80800 = 4.7p: E2 target near edge + 1 pip) (entry 101.85500)
+  ! Mon SS LONG 101.92600: NOT REACHABLE - the day's path stays more than 30 pips away (law 2)

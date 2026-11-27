@@ -178,13 +178,13 @@ if barstate.islast and isPair
     if show_ip
         // #1 UPPER RESISTANCE 1.34497-1.34557 MODERATE-HEAVY 9.0/14 Soft Wall Tier 2 | BoM Depleted 7 reactions | TP-TARGET
         box.new(1778446800000, 1.34557, 1779483600000, 1.34497, bgcolor=color.new(color.rgb(210,80,40), 70), border_color=color.rgb(210,80,40), border_width=2, xloc=xloc.bar_time)
-        label.new(1778493600000, 1.34527, "UPPER RESISTANCE | MODERATE-HEAVY | 30-50% ZFP | Tier 2 BoM + LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1778677200000, 1.34527, "UPPER RESISTANCE | MODERATE-HEAVY\n30-50% ZFP | Tier 2 BoM + LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #2 UPPER RESISTANCE 1.33950-1.34037 MODERATE 7.0/14 Soft Wall Tier 2 | MoM Depleted 7 reactions | REJECT
         box.new(1778446800000, 1.34037, 1779483600000, 1.33950, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
-        label.new(1778464800000, 1.33994, "UPPER RESISTANCE | MODERATE | 30-50% ZFP | Tier 2 MoM + 1H S, LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1778634000000, 1.33994, "UPPER RESISTANCE | MODERATE | 30-50% ZFP\nTier 2 MoM + 1H S, LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
         // #6 MID-RANGE SUPPORT 1.32995-1.33055 MODERATE 6.0/14 Standard Wall Tier 2 | MoM Depleted 8 reactions | REJECT
         box.new(1778446800000, 1.33055, 1779483600000, 1.32995, bgcolor=color.new(color.rgb(40,190,180), 70), border_color=color.rgb(40,190,180), border_width=2, xloc=xloc.bar_time)
-        label.new(1778493600000, 1.33025, "MID-RANGE SUPPORT | MODERATE | 15-30% ZFP | Tier 2 MoM + LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
+        label.new(1778677200000, 1.33025, "MID-RANGE SUPPORT | MODERATE\n15-30% ZFP | Tier 2 MoM + LSZ, LQ", xloc=xloc.bar_time, style=label.style_none, textcolor=color.white, size=size.small)
     if show_ip and show_far
         // #5 RESISTANCE CEILING 1.35705-1.35765 MODERATE 6.5/14 Soft Wall Tier 2 | BoM Depleted 8 reactions | TP-TARGET
         box.new(1778446800000, 1.35765, 1779483600000, 1.35705, bgcolor=color.new(color.rgb(220,100,50), 70), border_color=color.rgb(220,100,50), border_width=2, xloc=xloc.bar_time)
