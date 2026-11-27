@@ -188,6 +188,22 @@ def _new_zones_pine(pair, monday, adds):
     return o
 
 
+def _day_line(ch, d, monday, t0, t1, price, X):
+    """L-51 + L-53: a swing-scalp day's line redrawn from the day's own anchor price, session by session (e2_chain._session_path, P452 6.6 session rules): the first swing goes to the
+    bound NEARER that price (P533 2.3 'magnetize toward the IL levels', D-41), the next to the other bound. Other day shapes keep the chain's own path."""
+    if not E2.SESSION_PATH or d is None or d.get('shapes') != ['SS'] or not ch.get('range'):
+        return None
+    lo, hi = min(ch['range']), max(ch['range'])
+    if not (lo < hi):
+        return None
+    first = 'up' if abs(hi - price) < abs(price - lo) else 'down'
+    m0 = __import__('datetime').date.fromisoformat(monday)
+    n_slots = sum(1 for k in range(5) for a_, b_ in ((E2._ms(m0 + __import__('datetime').timedelta(days=k), 2), E2._ms(m0 + __import__('datetime').timedelta(days=k), 8)),
+                                                      (E2._ms(m0 + __import__('datetime').timedelta(days=k), 10), E2._ms(m0 + __import__('datetime').timedelta(days=k), 17))) if b_ > t0 and a_ < t1)
+    last = first if n_slots % 2 == 1 else ('down' if first == 'up' else 'up')
+    return [(t0, price)] + E2._session_path(X, monday, t0, t1, price, lo, hi, last, None)
+
+
 def daily_anchor(pair, monday, chain, R):
     """DAILY ANCHORING (L-47 / L-53; D-131, D-132, D-134, D-136). The Monday map and chain hold while they hold. Every trading day:
     at its TRADING-DAY OPEN (17:00 New York the evening before; the day's orders rest through the Asian session), with only bars closed by then:
@@ -248,6 +264,8 @@ def daily_anchor(pair, monday, chain, R):
         seg = _cut(view['path'], t_a, t_e)
         if i > 0 and len(seg) > 1:
             seg[0] = (t_a, op)
+        if i > 0:
+            seg = _day_line(view, d, monday, t_a, t_e, op, X0) or seg
         if cur['active'] is None and view.get('alt_chain'):
             q = _cut(view['alt_chain']['path'], t_a, t_e)
             if i > 0 and len(q) > 1:
@@ -314,7 +332,7 @@ def daily_anchor(pair, monday, chain, R):
                 if d2 is not None:
                     days[-1:] = [d2] if (days and days[-1]['day'] == DAYS[i]) else days[-1:] + [d2]
                 seg = _cut(seg, t_a, t_L) if len(seg) > 1 else seg
-                seg2 = _cut(ch_i['path'], t_L, t_e)
+                seg2 = _day_line(ch_i, d2, monday, t_L, t_e, opL, X0) or _cut(ch_i['path'], t_L, t_e)
                 if len(seg2) > 1:
                     segs.append(seg2)
                 newk = []
