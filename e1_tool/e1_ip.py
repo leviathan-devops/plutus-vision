@@ -85,6 +85,10 @@ def levels(pair, monday, side):
         lv = {'p': p, 'pillar': 8, 'kind': f"{'EUR/USD ' if pair == 'DXY' else ''}{e['strike']:.4f} {e['notional_m']}M {e.get('cut_date', '')[5:]} (Tier {t})", 'tier': t, 'usd': usd,
               'band': {1: 0.07, 2: 0.10, 3: 0.15}[t] * U, 'expired': e.get('state') == 'ghost', 'strike': e['strike'], 'notional_m': e['notional_m'], 'cut': e.get('cut_date', '')}
         (L if t < 3 else t3).append(lv)
+    # ── Pillar 4 (P533:1169-1202; L-32 optional input: used when the sidecar returned it): explicit analyst levels of this pair, published before the anchor (D-104)
+    for a in (side.get('analyst_levels') or {}).get(pair, []):
+        if isinstance(a, dict) and isinstance(a.get('price'), (int, float)):
+            L.append({'p': float(a['price']), 'pillar': 4, 'kind': f"Analyst level ({a.get('role', 'level')}) {a.get('source_url', '').split('/')[2] if a.get('source_url', '').count('/') > 2 else ''}", 'src': a.get('source_url', '')})
     # ── Pillar 5 (P533:1205-1423; recipe :304-477)
     win = daily[-90:]
     sess = D.forming(pair, monday)                               # the D1 bar in progress at the anchor (D-25): data available at Monday London open (L-05)
@@ -335,6 +339,11 @@ def score(p, by, U):
     for l in by.get(8, []):
         if near(l, l['band']):
             pillars.add(8); opt = max(opt, 2 if l['tier'] == 1 else 1); tally = max(tally, {1: 3.0, 2: 2.0, 3: 1.0}[l['tier']]); members.append(l)
+    # Analyst Consensus (P533:1471; P533:1200 'Scoring: 2+ Tier-1 sources agree = 2 pts; 1 source = 1 pt; no coverage = 0 pts'): the harvest holds no Tier-1 source (ING / forex.com), so a
+    # level an analyst article names scores 1 (D-104)
+    for l in by.get(4, []):
+        if near(l, ZN):
+            pillars.add(4); anal = max(anal, 1.0); members.append(l)
     # Structural (P533:1472): 2 = exact price anchor + structural extreme (both within 3 pips); 1 = proximity (10 pips) to an anchor or a structural extreme; 4H zone edge 1, minor swing 0.5 (U-10)
     anc_ex = ext_ex = False
     for l in by.get(5, []):
