@@ -330,6 +330,8 @@ def target(X, side, bound, src_tf=None):
         if z['tf'] in ('240', '60') and z['type'] == ('Demand' if dn else 'Supply') and ((z['top'] <= bound['top'] and z['bot'] < bound['bot']) if dn else (z['bot'] >= bound['bot'] and z['top'] > bound['top'])):
             if z['kind'] == 'MoM' and not any(q['bot'] <= z['top'] and q['top'] >= z['bot'] and q['zfp_num'] < 30 for q in X['zones']):
                 continue                                     # 6.4.2 'pierce through zone until reaching BoM Liquidity ... (breakout to BoM target)'; P533:491 'MoM zones tend to get PIERCED': a standalone MoM candle zone is passed (D-49)
+            if z['kind'] == 'MoM' and (((bound['bot'] - z['top']) < 0.15 * U) if dn else ((z['bot'] - bound['top']) < 0.15 * U)):
+                continue                                     # a MoM zone lying against / within the cluster distance (P533 zone assembly 'cluster within 0.10-0.15') of the failing bound is pierced WITH it (6.4.2 'pierce through zone until reaching BoM Liquidity'): not where the surge ends (D-121)
             if src_tf is None or z['tf'] in TF_MATCH.get(src_tf, ('240', '60')):
                 cands.append((z['top'] if dn else z['bot'], 1, {'bot': z['bot'], 'top': z['top'], 'name': z['label'], 'src': 'SD', 'cls': z['kind'], 'rx': z['mit'], 'tf': z['tf'], 'sd': z}))
     for l in X['lsz']:
