@@ -1,0 +1,48 @@
+EURUSD 2026-10-05 anchor price 1.11920 | chart shows zones between 1.11500 and 1.12853 (the week's reach; zones beyond it sit behind a toggle)
+ENGINE 1 ZONES ON THE CHART (one line = one zone = one labelled box; the indented lines are its PARTS, drawn light and dotted inside / against it - operator: "a pressure zone = candle structure + level cluster joined, the parts visibly distinct"):
+  supply/demand 1H (Unmitigated) | BoM Supply 1.12716-1.12853
+      part: gap in-fill level 1.12806-1.12866 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot, minor swing
+      part: sweep zone Supply-side 1.12803-1.12853 | sweep reach to 1.12953 (dotted outline)
+      part: gap in-fill level 1.12611-1.12671 MODERATE | 30-50% ZFP | signals: 1H zone, daily pivot
+  pressure zone UPPER RESISTANCE 1.12451-1.12530 MODERATE | 15-30% ZFP | MoM
+      part: supply/demand 1H (Unmitigated) | MoM Supply 1.12491-1.12612
+      part: sweep zone Supply-side 1.12562-1.12612 | sweep reach to 1.12712 (dotted outline)
+  sweep zone Demand-side 1.12208-1.12258 | sweep reach to 1.12108 (dotted outline)
+  sweep zone Demand-side 1.12149-1.12199 | sweep reach to 1.12049 (dotted outline)
+      part: liquidity band (sealed V1, 4H) 1.12039-1.12149
+  sweep zone Demand-side 1.11610-1.11660 | sweep reach to 1.11510 (dotted outline)
+  (5 zones, 6 parts)
+DISCOVERY ZONES (thin dashed grey lines; canon: pre-week 'levels to watch' flagged where the zone map is EMPTY - major round numbers, untraded weekly-close extremes, MA convergences, structural extremes; not pressure zones, not used by Engines 2 / 3):
+  discovery zone 1.12364 | MA convergence
+  discovery zone 1.12137 | MA convergence
+  discovery zone 1.12000 | round number .00
+  discovery zone 1.11500 | round number .50
+ENGINE 2:
+   Current Shape: SS range (MODERATE-HIGH) | Anchoring Zone: UPPER RESISTANCE | ZFP: 15-30% | 10-05 TKY: 1H close through UPPER RESISTANCE, UPPER RESISTANCE (ZFP 22/30), price still beyond [the row's ZFP condition is not met: best description, one tier lower] | F
+   Ceiling: 1H (Unmitigated) | MoM [SD MoM Virgin] -> HOLD-LONG (virgin MoM: most likely MINOR REACTION branch - zone holds, long consolidation (6.4.2))
+   Floor: Liquidity Sweep Zone [LSZ LSZ Virgin] -> HOLD (sweep zone: brief breach then reversal (P452 Pillar 9))
+   Breakout direction: none | pair translation of the DXY chain: DXY ranges all week (Part IX: DXY gives direction and timing, the pair its levels)
+   chain: SS [HIGH, cum 0.8]
+  Mon forecast SS         range box 1.11510-1.12712 key zone 1H (Unmitigated) | MoM             | actual H 1.12249 L 1.11690 C 1.12218
+  Tue forecast SS         range box 1.11510-1.12712 key zone 1H (Unmitigated) | MoM             | actual H 1.12767 L 1.12028 C 1.12583
+  Wed forecast SS         range box 1.11510-1.12712 key zone 1H (Unmitigated) | MoM             | actual H 1.12629 L 1.11645 C 1.11953
+  Thu forecast SS         range box 1.11510-1.12712 key zone 1H (Unmitigated) | MoM             | actual H 1.12267 L 1.11719 C 1.12089
+  Fri forecast SS         range box 1.11510-1.12712 key zone 1H (Unmitigated) | MoM             | actual H 1.12427 L 1.11874 C 1.11973
+
+ENGINE 3 SETUPS (entry / SL / TP, then what the week's 15m candles did; an order is met at first contact = the zone edge moved toward price by the pair's forward spread (dotted band on the box);
+ 're-armed' = the same resting order filled again on a later day after a TP; lines starting with ! are setups the tool rejected, with the reason)
+  EU1      Mon SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | filled Mon 06:30 -> TP HIT Tue 09:45
+  EU2      Tue SS     SHORT E 1.12585 SL 1.12742 TP 1.11725 5.48R | filled Tue 11:15 -> STOPPED Tue 12:00
+  EU1.Tue    Tue SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | filled - -> not filled inside its bracket (order expires)
+  EU2.Wed    Wed SS     SHORT E 1.12585 SL 1.12742 TP 1.11725 5.48R | filled Tue 21:00 -> TP HIT Wed 12:15
+  EU1.Wed    Wed SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | filled Wed 12:15 -> filled, still open at the week end
+  EU2.Thu    Thu SS     SHORT E 1.12585 SL 1.12742 TP 1.11725 5.48R | filled - -> not filled inside its bracket (order expires)
+  EU1.Thu    Thu SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | filled Thu 11:30 -> filled, still open at the week end
+  EU2.Fri    Fri SS     SHORT E 1.12585 SL 1.12742 TP 1.11725 5.48R | filled - -> not filled
+  EU1.Fri    Fri SS     LONG  E 1.11710 SL 1.11480 TP 1.12476 3.33R | skipped: 4th battle at this anchor (E3C:150 'index i > 2 skipped')
+  EUB3 ALT Fri RWL    SHORT E 1.12828 SL 1.12883 TP 1.12461 6.67R | not triggered: no 1H close above 1.12712 (1H (Unmitigated) | MoM) during the week
+  ! ALT Thu BS down: REJECT SL_INVALID: no ladder-step stop between 4 and 36 pips (entry 1.11710)
+  ! ALT Thu BS down: REJECT SL_INVALID: no ladder-step stop between 4 and 36 pips (entry 1.11610)
+  ! ALT Thu BS up: REJECT SL_INVALID: no ladder-step stop between 4 and 36 pips (entry 1.12612)
+  ! ALT Thu BS up: REJECT SL_INVALID: no ladder-step stop between 4 and 36 pips (entry 1.12612)
+  ! Mon SS SHORT 1.12585: NOT REACHABLE - the day's path stays more than 30 pips away (law 2)
