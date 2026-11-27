@@ -207,7 +207,7 @@ def _target(leg, entry, direction, E2, X, env, used, pair):
 
 LAW7 = {'DXY': 5, 'EURUSD': 2, 'GBPUSD': 3}       # E3C:299-304 per-pair SL buffers (pips; DXY in index points of 0.01)
 LAW14 = True
-TP_BUF = 1.5                                     # pips in front of every take-profit level (Fibonacci Spiderwebs: '1.5-2 pip buffer in front of the TP ... MANDATORY')
+TP_BUF = 1.5                                     # pips in front of a SCALP's take-profit level (Fibonacci Spiderwebs item 4, SS / Recovery scalps: '1.5-2 pip buffer in front of the TP ... MANDATORY')
 MAX_RRR = 15.0                                   # E3C:365 'MAX_CHAIN_RRR ceiling: 15.0 (Law-13) - chains beyond 15R fill-and-stop'
 INCLUDE = 65                                     # E3C:1011 'confidence >= 65 required for inclusion'
 NO_SHIELD = ('EURUSD',)                          # E3C 8.19 pair table: EUR/USD 'DIRECT_ZONE_TEST, NO_SHIELD'; FA 10: 'PA often directly touches the overlap point ... No Liquidity Shield'
@@ -532,7 +532,8 @@ def _build(pair, monday, X, E2, tag):
                 # E3C:324 'add a 1-2 pip spread so you dont miss the exit'. The order's TP stands TP_BUF pips in front of the target level (a level that already carries the 1-pip
                 # spread gets the rest); the level itself stays the Law-27 link to the next trade (D-82). E3C:362 'Emission floor: RRR >= 3.0 ... the gate': the floor is tested on the
                 # RRR of the order AS EMITTED, i.e. with the buffered TP (G2 round 2 N-03)
-                extra = (TP_BUF - (1.0 if '+ 1 pip' in why_tp else 0.0)) * pip
+                # the PDF states the buffer for 'SS/Rcvry SCALP moves' (item 4); a swing's strong-zone TP carries its own 1-2 pip spread (E3C:324) and nothing more (G2 round 2 N-21, D-98)
+                extra = max(((TP_BUF if c['shape'] in ('SS', 'R') else 0.0) - (1.0 if '+ 1 pip' in why_tp else 0.0)) * pip, 0.0)
                 tp_o = tp + extra if direction == 'down' else tp - extra
                 rrr_o = abs(tp_o - entry) / abs(entry - stop)
                 if floor_rrr <= rrr_o and rrr <= MAX_RRR:

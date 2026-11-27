@@ -15,7 +15,7 @@ Rule (goal prompt section 7, G2): each finding is a bug - fix it, or answer it w
 | N-07 | FIXED (D-96) | +10 only on the mirror of a source setup of the same chain step and day (DXY -> EUR/USD inverse, EUR/USD active mirrors -> GBP/USD kept). |
 | N-08 | OPEN | the first-rocket band (D-83) was derived from his three rockets and his own grids; E3C:227 / 689 name 1.382-1.786 as the rocket entry zone with a 2.382-2.786 trip-wire. To rebuild from E3C 8R.7 alone. |
 | N-09 | ANSWERED with N-04 | every included setup is at or above his inclusion gate; rockets copy the parent's confidence (not scored on their own: OPEN). |
-| N-10 | OPEN | transition entry at an IP-zone edge; no Late-consolidation test. |
+| N-10 | ANSWERED / PART | E3C:457 'SS -> BS: Range boundary break becomes BS entry': the boundary of a swing-scalp range is its bounding zone (P533 6.5 'Ceiling and Floor zones define the range'), so the break level is that zone's far edge - a stop order through it, not a limit entry AT a pressure zone (E3C:136 is about entry anchors). The transition is emitted with the chain's breakout step, i.e. after the consolidation the chain forecasts; the Late-phase test by 'ZFP trending up' is not built (N-17: no ZFP history). |
 | N-11 | FIXED | TF_MATCH table: 4H -> 4H / 1H; 1H -> 1H / 4H / 30m (P533:1968 'they react interchangeably with 4H being dominant', P533:2276 '1H/4H can be used interchangeably'); 30m -> 30m / 15m; 15m -> 30m / 1H. Left: pressure-zone and sweep targets carry no timeframe and are not filtered (OPEN). |
 | N-12 | FIXED | virgin 4H MoM target -> WL (one session) then PBS through the zone (P533:1963). |
 | N-13 | FIXED / ANSWERED | the reaction at a BoM candle-zone target now runs the 6-check on the reversal (4+ against -> the move continues, P533:1873). The whiplash into an unswept sweep level lying against the target: P533 0.45d 'When a liquidity sweep zone overlaps with a 4H BoM demand/supply zone: CONFLUENT LIQUIDITY SWEEP + BoM ZONE', P452:968 'brief breach then reversal', 6.4 'WL -> RWL', and his own tag of the golden Friday 'WL + RWL'. The 0.10 distance is the sweep extension of P533:1286. |
@@ -26,7 +26,7 @@ Rule (goal prompt section 7, G2): each finding is a bug - fix it, or answer it w
 | N-18 | FIXED (D-96) | a swing-scalp order rests only on days whose E2 path comes within 30 pips of its entry. |
 | N-19 | ANSWERED | his golden GBPUSD #5 (Thursday short 1.34246 / 1.3436 / 1.33882) stands on the bottom edge of the 4H BoM supply 1.34272-1.34347 he drew himself (golden_week.json); the tool's GB6 is that trade. Left: swing scalps at inner 4H zones enter at the edge when no rung / block is inside (OPEN). |
 | N-20 | FIXED (D-96) | F1-A lift on a supply-zone short. |
-| N-21 | OPEN | TP buffer on every target (the PDF states it for scalp wormhole TPs). |
+| N-21 | FIXED (D-98) | buffer on swing-scalp / recovery TPs only. |
 | N-22 | OPEN | JOIN_TP (D-91) rests on L-39 (a drawing ruling) and an undefined label. |
 | N-23 | OPEN | pivot = V1 4H band within 0.30. |
 | N-24 | PART | the window now also runs to each bound's measured-move target (D-93); zones beyond stay behind show_far. |
