@@ -483,6 +483,47 @@ def current_shape(X, pair, monday, B):
     return s0
 
 
+SESSION_PATH = True     # L-51 (operator M-59): the line shows the price action candle by candle - session by session inside a swing-scalp range (P452 6.6 SESSION-LEVEL SHAPE MAPPING RULES)
+
+
+def _session_path(X, monday, t0, t1, pos, lo, hi, last_dir, end_at):
+    """L-51 'inside the swing scalps box draw each swing. The line is supposed to show the actual price action that is going to materialize candle by candle' - the swings of a
+    consolidation drawn by the canon's SESSION-LEVEL SHAPE MAPPING RULES (P452 6.6; P533 6.6 'unchanged'): 1 'Asian Session typically manifests SS or Minor WLS ... price stays within the prior
+    day's range' -> flat; 2 London: the session's swing to a bound of the range (02:00-08:00 New York); 3 'NY Pre-Cut (8:00-10:00 AM) creates the Option Cage ... dealers will pin price to
+    the largest strike' -> pinned at the day's largest option strike inside the range, if there is one; 4 / 5 '10:01 AM ... Spring Release' -> 'NY Post-Cut (10:01 AM-5:00 PM) ... free
+    movement toward the next IP zone' -> the swing to the other bound. Swings alternate bound to bound (6.1.1 'Price oscillates within a defined range'); counted back from the step's end so
+    the last one runs in `last_dir` and ends at `end_at` when a retest follows (as the swing template it replaces). Returns the path points after t0."""
+    m0 = dt.date.fromisoformat(monday)
+    slots = []                                               # (start, end, kind) of every swing slot between t0 and t1
+    for k in range(5):
+        d = m0 + dt.timedelta(days=k)
+        for a_, b_, kind in ((_ms(d, 2), _ms(d, 8), 'LON'), (_ms(d, 10), _ms(d, 17), 'NY')):
+            if b_ > t0 and a_ < t1:
+                slots.append((max(a_, t0), min(b_, t1), kind, d))
+    if not slots:
+        return [(t1, pos)]
+    dirs = [(last_dir if (len(slots) - 1 - j) % 2 == 0 else ('down' if last_dir == 'up' else 'up')) for j in range(len(slots))]
+    out = []
+    for j, ((a_, b_, kind, d), dj) in enumerate(zip(slots, dirs)):
+        if not out or out[-1][0] < a_:
+            out.append((a_, out[-1][1] if out else pos))       # Asia / between sessions: price stays (rule 1)
+        tgt = hi if dj == 'up' else lo
+        if j == len(slots) - 1 and end_at is not None:
+            tgt = end_at
+        if kind == 'LON':
+            out.append((b_, tgt))
+            cut = sorted([l for l in X['L'] if l['pillar'] == 8 and l.get('cut') == d.isoformat() and lo <= l['p'] <= hi], key=lambda l: -l.get('notional_m', 0))
+            pin_end = min(_ms(d, 10), t1)
+            if cut and pin_end > b_:
+                out.append((b_ + (pin_end - b_) // 4, cut[0]['p']))
+                out.append((pin_end, cut[0]['p']))            # rule 3: pinned at the largest strike until the cut
+        else:
+            out.append((b_, tgt))
+    if out[-1][0] < t1:
+        out.append((t1, out[-1][1]))
+    return [q for q in out if q[0] > t0] or [(t1, pos)]
+
+
 def _strong_4h_near(X):
     """E2X:235 key rule 'If not right near a strong 4H pressure zone right now - BS is most likely days away': a 4H BoM zone (0-1X) or a Tier-1 IP zone within the swing-scalp reach (GS Law 2: 30 pips)"""
     spot, U = X['spot'], X['U']
@@ -777,15 +818,20 @@ def build(pair, monday, X, lead=None, force_dir=None):
                     up0 = (lb[-1]['close'] >= (max(x['high'] for x in lb) + min(x['low'] for x in lb)) / 2) if lb else (abs(hi - pos) < abs(pos - lo))
                     dirs = [('up' if (j % 2 == 0) == up0 else 'down') for j in range(len(swings))]
                     end_piv = False
+                pos0, t_start = pos, pts[-1][0]
                 for j, (sw, dj) in enumerate(zip(swings, dirs)):
                     d_end = min(t1, S[sw[-1]]['t1'])
                     nxt = hi if dj == 'up' else lo
                     if end_piv and j == len(swings) - 1:
                         nxt = pivot['bot'] if dj == 'down' else pivot['top']
                     legs.append({'day': DAYS[S[sw[0]]['i']], 'shape': 'SS', 'dir': dj, 'from': pos, 'to': nxt, 'from_zone': None, 'to_zone': ceil if dj == 'up' else floor,
-                                 't0': pts[-1][0], 't1': d_end, 'pad': False})
+                                 't0': pts[-1][0] if not legs else max(legs[-1]['t1'], t_start), 't1': d_end, 'pad': False})
                     pos, last_dir = nxt, dj
-                    pts.append((d_end, pos))
+                if SESSION_PATH and dirs:
+                    pts += _session_path(X, monday, t_start, t1, pos0, lo, hi, dirs[-1], (pivot['bot'] if dirs[-1] == 'down' else pivot['top']) if end_piv else None)
+                    pos = pts[-1][1]
+                else:
+                    pts += [(l_['t1'], l_['to']) for l_ in legs if l_['t1'] > t_start]
                 continue
             for j, di in enumerate(days_in):                     # one swing per session-day (6.1.1 'Each swing typically spans 1-3 trading sessions')
                 d_end = min(t1, S[max(k for k in range(a, b) if S[k]['i'] == di)]['t1'])

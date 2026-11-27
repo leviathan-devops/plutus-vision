@@ -50,3 +50,4 @@
   My E3 broke every one of them (1H candle-edge limit, 3-pip stop with no shield, no Fib, no rockets, shapes not tied to reachability).
 
 - LS-34 (2026-11-26) I left a four-page source of truth (Fibonacci_Spiderwebs.pdf, goal prompt section 3 item 3) unread through ten compactions and four outside counts while trying E3 variants of my own. It holds the construction of every one of his trades (entry at a Fib level of a range between two Earth points, SL 1-2 levels back, TP one range away). Read every listed source in full BEFORE building the part it governs; a coverage row saying 'not yet read' is the first thing to clear.
+- L-50x (2026-11-27): a Pinebox render while another process uses the station (V1 harvests of a locator run) times out (CDP_TIMEOUT) and s3frames still writes a frame - the earlier pass's chart. Never render in parallel with a station user; check the 'pb ide' output (box counts) before citing a frame.
