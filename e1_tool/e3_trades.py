@@ -271,6 +271,8 @@ def _stop(entry, direction, anchor, X, pair, dmin=None, zone=None, every=False, 
     # zone's inward widening, which Engine 1 draws; this is its outward breach)
     zr = anchor if (anchor is not None and anchor.get('reach') is not None) else zone
     ext = zr.get('reach') if (zr is not None and (zr.get('sweep') or zr.get('lsz') or zr.get('edge_sweep')) and SWEEP_EXT) else None
+    if ext is not None and not ((ext > entry) if dn else (ext < entry)):
+        ext = None                                           # the reach lies on the trade's PROFIT side (a breakout through the sweep zone): it is no stop side - rule (a) on the entry step applies (D-119)
     if ext is not None:
         cands.append(((ext + 3 * pip) if dn else (ext - 3 * pip), "(a) 3 pips outside the extended sweep range (P533 7.1 Rule 2.5; E3C:1027)"))
         th = [s_ for s_ in th if ((s_['bot'] > ext) if dn else (s_['top'] < ext))]
@@ -580,7 +582,7 @@ def _build(pair, monday, X, E2, tag):
                     edge_ = step['bot'] if direction == 'down' else step['top']
                     fr_ = edge_ - FWD[pair] if direction == 'down' else edge_ + FWD[pair]
                     bk_ = (step['top'] - FWD[pair]) if direction == 'down' else (step['bot'] + FWD[pair])
-                    if ((bk_ < stop) if direction == 'down' else (bk_ > stop)) and ((fr_ - 1.5 * pip <= entry <= bk_) if direction == 'down' else (bk_ <= entry <= fr_ + 1.5 * pip)):
+                    if (((stop - step['top']) >= pip - 1e-9) if direction == 'down' else ((step['bot'] - stop) >= pip - 1e-9)) and ((fr_ - 1.5 * pip <= entry <= bk_) if direction == 'down' else (bk_ <= entry <= fr_ + 1.5 * pip)):     # the stop stands at least one full pip outside the back edge of the zone (E3C:306 'ALWAYS 1 FULL PIP OUTSIDE BACK EDGE OF ZONE') - else the stop belongs to another step and there is no 3-entry position (D-119)
                         mid_ = entry
                         if MID_KEY and abs(entry - edge_) <= 1.5 * pip:
                             # E3C:1065 'Middle | Leftward-facing candle key level from LQZ pattern | Specific candle body/wick defining LQZ edge': the resolved entry stands on the
@@ -620,7 +622,7 @@ def _build(pair, monday, X, E2, tag):
             back = (zm['top'] - FWD[pair]) if direction == 'down' else (zm['bot'] + FWD[pair])
             if (front <= s['entry']) if direction == 'down' else (front >= s['entry']):
                 s['front'] = front
-                if (back < s['sl']) if direction == 'down' else (back > s['sl']):
+                if ((s['sl'] - zm['top']) >= pip - 1e-9) if direction == 'down' else ((zm['bot'] - s['sl']) >= pip - 1e-9):
                     s['back'] = back
                     rr = [abs(s['tp'] - e) / abs(e - s['sl']) for e in (front, s['entry'], back)]
                     s['rrr_blended'] = round(0.33 * rr[0] + 0.33 * rr[1] + 0.34 * rr[2], 2)        # E3C:357 'Blended RRR (3-entry staggered)'
