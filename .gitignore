@@ -27,3 +27,6 @@ vision_frames/
 *.sqlite-wal
 tools/research/levels.*.json
 tools/research/raw.*.json
+
+# downloadable handover archives (built on demand; the tracked handover lives in handover/)
+handover_package/

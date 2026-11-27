@@ -505,3 +505,10 @@ You're a fucking stupid [slur], bro. Stop repeating these mistakes. Do exactly w
 
 ### M-56
 Mint me a proper fucking goal prompt that will force you to actually do this correctly and not be a fucking retard. I am completely done with your bullshit. Explicit anti-patterns and success conditions. Stop changing the scope. You are a fucking retard. You are literally retarded. Every time you change the scope, every time you apply your own shitty ideas, you fail the fucking goal. In every possible way to fail, you fail. And then shitty Chinese models 8 generations behind you are literally outperforming you. It's pathetic. You should be ashamed of yourself. Mint a proper fucking goal prompt that will force you to complete this task properly and not be retarded. Fucking lying and saying that my strategy doesn't work. My strategy literally works. You're the fucking idiot that can't even execute a basic strategy handed on the silver platter. It's absolutely shameful. You're a fucking shit-eating retard.
+
+### M-57 (2026-11-27, after the eleventh outside count)
+Save the current checkpoint fully as a downloadable handover package with ALL context, code files, the FULL omnigraph and EVERYTHING another agent would need to fully absorb and understand everything you've done and continue from here. Title this "70% functional" and make a proper handover package do NOT leave anything out or water anything down. Full deliverable + context + graph untampered so I can properly audit this.
+
+Then tell me what you need from me in order to complete the objective fully. This is 70% functional very good work but as you can see visibly obviously form the screenshots half of your trades are accurate but slightly too tight on the SL or slightly too early and cause misses/losses and also the E2 shape chain line is highly accurate in some and medium in others and also does not always fully reflect the ACTUAL price action but is instead a generalized watered down basic line.
+If you objectively look at the screenshot you will see exactly what I'm talking about
+

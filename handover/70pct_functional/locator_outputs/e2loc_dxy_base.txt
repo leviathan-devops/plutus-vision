@@ -1,0 +1,32 @@
+DXY 2026-04-06: 2/5 | Mon SS ok | Tue SS ok | Wed SS+BS up X | Thu BS+WL+RWL up X | Fri SS X
+DXY 2026-04-13: 0/5 | Mon SS X | Tue SS X | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-04-20: 5/5 | Mon SS ok | Tue SS+RWL+BS up ok | Wed BS up ok | Thu BS+RWL up ok | Fri RWL down ok
+DXY 2026-04-27: 2/5 | Mon SS ok | Tue SS ok | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-05-04: 5/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS ok | Fri SS ok
+DXY 2026-05-11: 1/5 | Mon SS ok | Tue SS X | Wed SS+BS down X | Thu BS down X | Fri BS+R down X
+DXY 2026-05-18: 5/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS ok | Fri SS ok
+DXY 2026-05-25: 4/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS X | Fri SS ok
+DXY 2026-06-01: 3/5 | Mon SS ok | Tue SS ok | Wed SS X | Thu SS+BS up X | Fri BS up ok
+DXY 2026-06-08: 5/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS ok | Fri SS ok
+DXY 2026-06-15: 2/5 | Mon SS ok | Tue SS ok | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-06-22: 1/5 | Mon SS ok | Tue SS X | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-06-29: 3/5 | Mon SS ok | Tue SS ok | Wed SS+RWL+BS down X | Thu BS down ok | Fri BS down X
+DXY 2026-07-06: 3/5 | Mon SS ok | Tue SS ok | Wed SS+RWL+BS down X | Thu BS down ok | Fri BS+WL+RWL down X
+DXY 2026-07-13: 1/5 | Mon SS X | Tue SS+BS up X | Wed BS up X | Thu BS+RWL up ok | Fri SS X
+DXY 2026-07-20: 1/5 | Mon SS ok | Tue SS+BS down X | Wed BS down X | Thu BS down X | Fri -
+DXY 2026-07-27: 0/5 | Mon SS X | Tue SS X | Wed SS+BS up X | Thu BS up X | Fri BS up X
+DXY 2026-08-03: 4/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS+BS down X | Fri BS down ok
+DXY 2026-08-10: 3/5 | Mon SS ok | Tue SS ok | Wed SS+BS down X | Thu BS down X | Fri BS down ok
+DXY 2026-08-17: 2/5 | Mon SS ok | Tue SS ok | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-08-24: 2/5 | Mon SS ok | Tue SS ok | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-08-31: 2/5 | Mon BS up X | Tue RWL+SS down X | Wed SS ok | Thu BS up X | Fri BS up ok
+DXY 2026-09-07: 1/5 | Mon SS X | Tue SS X | Wed SS+BS up X | Thu BS+WL+RWL up ok | Fri RWL down X
+DXY 2026-09-14: 0/5 | Mon SS X | Tue SS X | Wed SS X | Thu SS+BS up X | Fri BS up X
+DXY 2026-09-21: 2/5 | Mon SS ok | Tue SS ok | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-09-28: 1/5 | Mon SS ok | Tue SS X | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-10-05: 5/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS ok | Fri SS ok
+DXY 2026-10-12: 0/5 | Mon SS X | Tue SS X | Wed SS X | Thu SS X | Fri SS X
+DXY 2026-10-19: 3/5 | Mon SS ok | Tue SS ok | Wed SS ok | Thu SS X | Fri SS X
+DXY 2026-10-26: 2/5 | Mon SS X | Tue SS+BS down X | Wed BS down ok | Thu BS down ok | Fri BS down X
+DXY 2026-11-02: 2/5 | Mon SS ok | Tue SS ok | Wed SS X | Thu SS X | Fri SS X
+E2 LOCATOR 72/155
