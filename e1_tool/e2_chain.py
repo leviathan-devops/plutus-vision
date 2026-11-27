@@ -525,6 +525,36 @@ def _session_path(X, monday, t0, t1, pos, lo, hi, last_dir, end_at):
     return [q for q in out if q[0] > t0] or [(t1, pos)]
 
 
+def _ladder_path(X, S, a, b, t0, t1, pos, nxt, d):
+    """L-51 for a breakout running several sessions (the golden Thursday 'ladder short'): drawn session by session, not as one straight slide - Asia holds (P452 6.6 rule 1), each
+    London / NY session steps on toward the target (rules 2 / 5 'free movement toward the next IP zone'), each step ending at a mapped level in the way (an IP zone, a 1H / 4H supply or
+    demand zone, a V1 4H liquidity band: the ladder of FA 2.1 / GS Law 6), the last active session reaching the target"""
+    act = [k for k in range(a, b) if S[k]['s'] in ('LON', 'NY') and S[k]['t1'] > t0]
+    if len(act) <= 1:
+        return [(t1, nxt)]
+    lv = []
+    for z in [z for z in X.get('zones', []) if z.get('drawn')] + [z for z in X.get('sd', []) if z.get('tf') in ('60', '240')] + list((X.get('v1') or {}).get('240', {}).get('liquidity', [])):
+        e = z['top'] if d == 'down' else z['bot']
+        if (nxt < e < pos) if d == 'down' else (pos < e < nxt):
+            lv.append(e)
+    out, cur, span = [], pos, nxt - pos
+    for j, k in enumerate(act, 1):
+        te = min(S[k]['t1'], t1)
+        if S[k]['t0'] > t0 and (not out or out[-1][0] < S[k]['t0']):
+            out.append((max(S[k]['t0'], t0), cur))               # the session before this one (Asia) held
+        if j == len(act):
+            cur = nxt
+        else:
+            want = pos + span * j / len(act)
+            ahead = [e for e in lv if ((e < cur) if d == 'down' else (e > cur))]
+            near = min(ahead, key=lambda e: abs(e - want)) if ahead else None
+            cur = near if (near is not None and abs(near - want) <= 0.25 * abs(span)) else want
+        out.append((te, cur))
+    if out[-1][0] < t1:
+        out.append((t1, nxt))
+    return [q for q in out if q[0] > t0] or [(t1, nxt)]
+
+
 def _strong_4h_near(X):
     """E2X:235 key rule 'If not right near a strong 4H pressure zone right now - BS is most likely days away': a 4H BoM zone (0-1X) or a Tier-1 IP zone within the swing-scalp reach (GS Law 2: 30 pips)"""
     spot, U = X['spot'], X['U']
@@ -865,8 +895,11 @@ def build(pair, monday, X, lead=None, force_dir=None):
             if nxt is None:
                 nxt = pos
             legs.append({'day': DAYS[S[a]['i']], 'shape': st['shape'], 'dir': d, 'from': pos, 'to': nxt, 'from_zone': st['frm'], 'to_zone': st['to'], 't0': max(t0, pts[-1][0]), 't1': t1, 'pad': False})
+            if SESSION_PATH and st['shape'] in ('BS', 'PBS') and b - a > 1:
+                pts += _ladder_path(X, S, a, b, max(t0, pts[-1][0]), t1, pos, nxt, d)
+            else:
+                pts.append((t1, nxt))
             pos, last_dir = nxt, d
-            pts.append((t1, pos))
     last_t = chain[-1]['s1'] if chain else 0
     n_real = (S[last_t - 1]['i'] + 1) if chain else 0
     days = []

@@ -268,7 +268,13 @@ def daily_anchor(pair, monday, chain, R):
         if i > 0 and len(seg) > 1:
             seg[0] = (t_a, op)
         if i > 0:
-            seg = _day_line(view, d, monday, t_a, t_e, op, X0) or seg
+            dl = _day_line(view, d, monday, t_a, t_e, op, X0)
+            if dl:
+                seg = dl
+            elif E2.SESSION_PATH and len(seg) > 1:
+                # P452 6.6 rules 1 / 6: the Asian session holds the day's open price ('extends or consolidates the Day N move'); the chain's own legs run from the London open
+                rest = _cut(view['path'], t_L, t_e)
+                seg = [(t_a, op), (t_L, op)] + rest[1:] if len(rest) > 1 else seg
         if cur['active'] is None and view.get('alt_chain'):
             q = _cut(view['alt_chain']['path'], t_a, t_e)
             if i > 0 and len(q) > 1:
