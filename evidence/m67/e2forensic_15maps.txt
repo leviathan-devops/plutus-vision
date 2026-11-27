@@ -1,0 +1,280 @@
+=== DXY 2026-07-06 (GOLDEN) chain: SS range | RWL up | BS down | WL down | RWL up
+   Mon: forecast SS                 RIGHT  (actual O 101.028 C 100.871 H 101.145 L 100.838)
+   Tue: forecast SS                 RIGHT  (actual O 100.873 C 101.092 H 101.126 L 100.803)
+   Wed: forecast SS+RWL+BS down     WRONG  (actual O 101.088 C 101.069 H 101.275 L 100.946)
+   Thu: forecast BS down            RIGHT  (actual O 101.071 C 100.937 H 101.071 L 100.786)
+   Fri: forecast BS+WL+RWL down     WRONG  (actual O 100.934 C 100.965 H 100.997 L 100.598)
+   order DX1  Mon SS     SHORT E 101.20279 -> NOT FILLED filled -           (fill-day tag RIGHT)
+   order DX2  Mon SS     SHORT E 101.13800 -> TP         filled 07-06 10:00 (fill-day tag RIGHT)
+   order DX3  Mon SS     LONG  E 100.85100 -> TP         filled 07-06 18:45 (fill-day tag RIGHT)
+   order DX4  Wed BS     SHORT E 101.23483 -> TP         filled 07-08 09:00 (fill-day tag WRONG)
+   order DX5  Wed SS     SHORT E 101.20279 -> TP         filled 07-08 01:30 (fill-day tag WRONG)
+   order DX6  Wed RWL    LONG  E 100.98039 -> TP         filled 07-08 07:15 (fill-day tag WRONG)
+   order DX7  Thu Ladder SHORT E 100.98039 -> TP         filled 07-09 00:00 (fill-day tag RIGHT)
+   order DX8  Fri RWL    LONG  E 100.62800 -> TP         filled 07-10 02:15 (fill-day tag WRONG)
+   visible moves (1H 30p, 3h+): 3, caught by a TP order: 3
+      07-06 10:00 -> 07-07 01:00 DOWN    34p  caught by DX2
+      07-07 01:00 -> 07-08 15:00 UP      47p  caught by DX6
+      07-08 15:00 -> 07-10 02:00 DOWN    68p  caught by DX7
+   line vs 30m closes: mean miss 8.3p | closes within 10p of the line 62% | 2h direction agreement 57% | 30m turns 10: line vertex of the same kind within 1 candle 1, within 3 candles 2, none within 12h 2
+=== EURUSD 2026-07-06 (GOLDEN) chain: SS range | RWL down | BS up | WL up | RWL down
+   Mon: forecast SS                 RIGHT  (actual O 1.14235 C 1.14413 H 1.14449 L 1.14083)
+   Tue: forecast SS                 RIGHT  (actual O 1.14413 C 1.14122 H 1.14480 L 1.14080)
+   Wed: forecast SS+RWL+BS up       WRONG  (actual O 1.14122 C 1.14160 H 1.14315 L 1.13911)
+   Thu: forecast BS up              RIGHT  (actual O 1.14160 C 1.14299 H 1.14494 L 1.14141)
+   Fri: forecast BS+WL+RWL up       WRONG  (actual O 1.14299 C 1.14147 H 1.14608 L 1.14114)
+   order EU1  Mon SS     SHORT E 1.14442 -> TP         filled 07-06 18:45 (fill-day tag RIGHT)
+   order EU2  Mon SS     LONG  E 1.14018 -> NOT FILLED filled -           (fill-day tag RIGHT)
+   order EU3  Mon SS     LONG  E 1.14095 -> TP         filled 07-06 13:45 (fill-day tag RIGHT)
+   order EU4  Wed RWL    SHORT E 1.14269 -> TP         filled 07-08 07:15 (fill-day tag WRONG)
+   order EU5  Wed BS     LONG  E 1.13940 -> TP         filled 07-08 11:30 (fill-day tag WRONG)
+   order EU6  Wed SS     LONG  E 1.14018 -> TP         filled 07-07 21:30 (fill-day tag WRONG)
+   order EU7  Thu Ladder LONG  E 1.14239 -> TP         filled 07-09 00:00 (fill-day tag RIGHT)
+   order EU8  Fri RWL    SHORT E 1.14598 -> TP         filled 07-10 02:15 (fill-day tag WRONG)
+   visible moves (1H 30p, 3h+): 5, caught by a TP order: 3
+      07-06 13:00 -> 07-06 23:00 UP      40p  caught by EU3
+      07-06 23:00 -> 07-08 01:00 DOWN    50p  MISSED
+      07-08 01:00 -> 07-08 07:00 UP      33p  MISSED
+      07-08 07:00 -> 07-08 15:00 DOWN    40p  caught by EU4
+      07-08 15:00 -> 07-10 02:00 UP      70p  caught by EU7
+   line vs 30m closes: mean miss 9.5p | closes within 10p of the line 62% | 2h direction agreement 58% | 30m turns 12: line vertex of the same kind within 1 candle 1, within 3 candles 2, none within 12h 3
+=== GBPUSD 2026-07-06 (GOLDEN) chain: SS range | RWL down | BS up | WL up | RWL down
+   Mon: forecast SS                 RIGHT  (actual O 1.33362 C 1.33879 H 1.33972 L 1.33286)
+   Tue: forecast SS                 RIGHT  (actual O 1.33879 C 1.33589 H 1.34015 L 1.33487)
+   Wed: forecast SS+RWL+BS up       RIGHT  (actual O 1.33589 C 1.33877 H 1.34104 L 1.33222)
+   Thu: forecast BS up              RIGHT  (actual O 1.33877 C 1.34078 H 1.34308 L 1.33799)
+   Fri: forecast BS+WL+RWL up       WRONG  (actual O 1.34078 C 1.33968 H 1.34517 L 1.33917)
+   order GB1  Mon SS     SHORT E 1.33959 -> TP         filled 07-06 18:45 (fill-day tag RIGHT)
+   order GB2  Mon SS     LONG  E 1.33333 -> TP         filled 07-06 06:15 (fill-day tag RIGHT)
+   order GB3  Wed BS     LONG  E 1.33255 -> TP         filled 07-08 09:00 (fill-day tag RIGHT)
+   order GB4  Fri RWL    SHORT E 1.34254 -> TP         filled 07-09 06:15 (fill-day tag RIGHT)
+   visible moves (1H 30p, 3h+): 9, caught by a TP order: 3
+      07-06 07:00 -> 07-07 01:00 UP      73p  caught by GB2
+      07-07 01:00 -> 07-08 08:00 DOWN    64p  MISSED
+      07-08 09:00 -> 07-08 13:00 UP      56p  caught by GB3
+      07-08 13:00 -> 07-08 17:00 UP      70p  MISSED
+      07-08 17:00 -> 07-08 21:00 DOWN    30p  MISSED
+      07-08 21:00 -> 07-09 06:00 UP      51p  MISSED
+      07-09 06:00 -> 07-09 12:00 DOWN    50p  caught by GB4
+      07-09 12:00 -> 07-10 02:00 UP      71p  MISSED
+      07-10 02:00 -> 07-10 14:00 DOWN    60p  MISSED
+   line vs 30m closes: mean miss 13.8p | closes within 10p of the line 56% | 2h direction agreement 48% | 30m turns 12: line vertex of the same kind within 1 candle 0, within 3 candles 1, none within 12h 5
+=== DXY 2026-04-13 (OTHER) chain: SS range
+   Mon: forecast SS                 WRONG  (actual O 99.011 C 98.415 H 99.066 L 98.364)
+   Tue: forecast SS                 RIGHT  (actual O 98.418 C 98.099 H 98.439 L 97.969)
+   Wed: forecast SS                 RIGHT  (actual O 98.106 C 98.084 H 98.285 L 98.005)
+   Thu: forecast SS                 RIGHT  (actual O 98.079 C 98.203 H 98.292 L 97.832)
+   Fri: forecast SS                 RIGHT  (actual O 98.213 C 98.226 H 98.291 L 97.632)
+   order DX1  Mon SS     SHORT E 99.10700 -> NOT FILLED filled -           (fill-day tag WRONG)
+   order DX2  Mon SS     LONG  E 98.68500 -> SL         filled 04-13 14:45 (fill-day tag WRONG)
+   visible moves (1H 30p, 3h+): 5, caught by a TP order: 0
+      04-13 06:00 -> 04-14 14:00 DOWN   110p  MISSED
+      04-14 14:00 -> 04-15 10:00 UP      32p  MISSED
+      04-15 10:00 -> 04-16 03:00 DOWN    45p  MISSED
+      04-16 03:00 -> 04-16 17:00 UP      46p  MISSED
+      04-16 17:00 -> 04-17 13:00 DOWN    66p  MISSED
+   line vs 30m closes: mean miss 25.6p | closes within 10p of the line 28% | 2h direction agreement 39% | 30m turns 6: line vertex of the same kind within 1 candle 1, within 3 candles 1, none within 12h 0
+=== EURUSD 2026-04-13 (OTHER) chain: SS range
+   Mon: forecast SS                 WRONG  (actual O 1.16879 C 1.17583 H 1.17661 L 1.16780)
+   Tue: forecast SS                 WRONG  (actual O 1.17583 C 1.17953 H 1.18110 L 1.17527)
+   Wed: forecast SS                 RIGHT  (actual O 1.17953 C 1.17988 H 1.18080 L 1.17719)
+   Thu: forecast SS                 RIGHT  (actual O 1.17988 C 1.17811 H 1.18238 L 1.17668)
+   Fri: forecast SS                 WRONG  (actual O 1.17811 C 1.17624 H 1.18491 L 1.17592)
+   order EU1  Mon SS     SHORT E 1.17298 -> SL         filled 04-13 16:45 (fill-day tag WRONG)
+   order EU2  Mon SS     SHORT E 1.17226 -> SL         filled 04-13 16:30 (fill-day tag WRONG)
+   order EU3  Mon SS     LONG  E 1.16710 -> NOT FILLED filled -           (fill-day tag WRONG)
+   visible moves (1H 30p, 3h+): 6, caught by a TP order: 0
+      04-13 06:00 -> 04-13 18:00 UP      88p  MISSED
+      04-13 18:00 -> 04-14 14:00 UP      78p  MISSED
+      04-14 14:00 -> 04-15 10:00 DOWN    39p  MISSED
+      04-15 10:00 -> 04-16 03:00 UP      52p  MISSED
+      04-16 03:00 -> 04-16 13:00 DOWN    57p  MISSED
+      04-16 13:00 -> 04-17 12:00 UP      70p  MISSED
+   line vs 30m closes: mean miss 15.3p | closes within 10p of the line 50% | 2h direction agreement 34% | 30m turns 7: line vertex of the same kind within 1 candle 1, within 3 candles 1, none within 12h 1
+=== GBPUSD 2026-04-13 (OTHER) chain: SS range
+   Mon: forecast SS                 WRONG  (actual O 1.34059 C 1.35051 H 1.35086 L 1.34017)
+   Tue: forecast SS                 RIGHT  (actual O 1.35051 C 1.35657 H 1.35894 L 1.34952)
+   Wed: forecast SS                 RIGHT  (actual O 1.35657 C 1.35574 H 1.35793 L 1.35434)
+   Thu: forecast SS                 RIGHT  (actual O 1.35574 C 1.35255 H 1.35948 L 1.35163)
+   Fri: forecast SS                 WRONG  (actual O 1.35255 C 1.35106 H 1.35995 L 1.35044)
+   order GB1  Mon SS     LONG  E 1.32986 -> NOT FILLED filled -           (fill-day tag WRONG)
+   visible moves (1H 30p, 3h+): 8, caught by a TP order: 0
+      04-13 06:00 -> 04-13 13:00 UP      64p  MISSED
+      04-13 13:00 -> 04-13 16:00 UP      48p  MISSED
+      04-13 16:00 -> 04-14 12:00 UP     137p  MISSED
+      04-14 12:00 -> 04-15 10:00 DOWN    46p  MISSED
+      04-15 10:00 -> 04-16 03:00 UP      51p  MISSED
+      04-16 03:00 -> 04-16 14:00 DOWN    79p  MISSED
+      04-16 14:00 -> 04-17 06:00 DOWN    44p  MISSED
+      04-17 06:00 -> 04-17 12:00 UP      81p  MISSED
+   line vs 30m closes: mean miss 29.5p | closes within 10p of the line 39% | 2h direction agreement 44% | 30m turns 18: line vertex of the same kind within 1 candle 3, within 3 candles 3, none within 12h 6
+=== DXY 2026-04-20 (OTHER) chain: SS range | RWL down | BS up | RWL down
+   Mon: forecast SS                 RIGHT  (actual O 98.350 C 98.050 H 98.395 L 98.006)
+   Tue: forecast SS+RWL+BS up       RIGHT  (actual O 98.054 C 98.383 H 98.567 L 98.041)
+   Wed: forecast BS up              RIGHT  (actual O 98.386 C 98.616 H 98.643 L 98.211)
+   Thu: forecast BS+RWL up          RIGHT  (actual O 98.620 C 98.826 H 98.939 L 98.534)
+   Fri: forecast RWL down           RIGHT  (actual O 98.825 C 98.510 H 98.915 L 98.489)
+   order DX1  Tue BS     LONG  E 98.01900 -> TP         filled 04-20 15:30 (fill-day tag RIGHT)
+   order DX2  Thu RWL    SHORT E 98.87400 -> SL         filled 04-23 17:30 (fill-day tag RIGHT)
+   order DX3  Thu Ladder LONG  E 98.65959 -> SL         filled 04-23 00:00 (fill-day tag RIGHT)
+   visible moves (1H 30p, 3h+): 4, caught by a TP order: 1
+      04-20 06:00 -> 04-20 15:00 DOWN    39p  MISSED
+      04-20 15:00 -> 04-21 17:00 UP      56p  caught by DX1
+      04-21 19:00 -> 04-22 05:00 DOWN    36p  MISSED
+      04-22 05:00 -> 04-23 17:00 UP      73p  MISSED
+   line vs 30m closes: mean miss 9.2p | closes within 10p of the line 66% | 2h direction agreement 54% | 30m turns 9: line vertex of the same kind within 1 candle 0, within 3 candles 0, none within 12h 7
+=== EURUSD 2026-04-20 (OTHER) chain: SS range | RWL up | BS down | RWL up
+   Mon: forecast SS                 RIGHT  (actual O 1.17531 C 1.17881 H 1.17902 L 1.17475)
+   Tue: forecast SS+RWL+BS down     RIGHT  (actual O 1.17881 C 1.17424 H 1.17910 L 1.17187)
+   Wed: forecast BS down            RIGHT  (actual O 1.17424 C 1.17045 H 1.17624 L 1.17030)
+   Thu: forecast BS+RWL down        RIGHT  (actual O 1.17045 C 1.16832 H 1.17165 L 1.16691)
+   Fri: forecast RWL up             RIGHT  (actual O 1.16832 C 1.17171 H 1.17230 L 1.16729)
+   order EU1  Mon SS     SHORT E 1.17920 -> NOT FILLED filled -           (fill-day tag RIGHT)
+   order EU2  Mon SS     LONG  E 1.17207 -> NOT FILLED filled -           (fill-day tag RIGHT)
+   order EU3  Tue BS     SHORT E 1.17920 -> NOT FILLED filled -           (fill-day tag RIGHT)
+   order EU4  Thu RWL    LONG  E 1.17006 -> SL         filled 04-23 00:00 (fill-day tag RIGHT)
+   visible moves (1H 30p, 3h+): 6, caught by a TP order: 0
+      04-20 06:00 -> 04-20 23:00 UP      44p  MISSED
+      04-20 23:00 -> 04-21 17:00 DOWN    71p  MISSED
+      04-21 19:00 -> 04-22 05:00 UP      44p  MISSED
+      04-22 05:00 -> 04-23 11:00 DOWN    83p  MISSED
+      04-23 11:00 -> 04-23 14:00 UP      38p  MISSED
+      04-23 14:00 -> 04-23 17:00 DOWN    47p  MISSED
+   line vs 30m closes: mean miss 12.1p | closes within 10p of the line 56% | 2h direction agreement 45% | 30m turns 13: line vertex of the same kind within 1 candle 1, within 3 candles 3, none within 12h 2
+=== GBPUSD 2026-04-20 (OTHER) chain: SS range | RWL up | BS down | RWL up
+   Mon: forecast SS                 WRONG  (actual O 1.34915 C 1.35333 H 1.35444 L 1.34818)
+   Tue: forecast SS                 WRONG  (actual O 1.35333 C 1.35068 H 1.35396 L 1.34744)
+   Wed: forecast SS                 RIGHT  (actual O 1.35068 C 1.34998 H 1.35353 L 1.34901)
+   Thu: forecast SS                 WRONG  (actual O 1.34998 C 1.34665 H 1.35182 L 1.34476)
+   Fri: forecast SS+BS down         WRONG  (actual O 1.34665 C 1.35222 H 1.35370 L 1.34532)
+   order GB1  Tue BS     SHORT E 1.35163 -> SL         filled 04-20 07:15 (fill-day tag WRONG)
+   order GB2  Wed Ladder SHORT E 1.34818 -> NOT FILLED filled -           (fill-day tag RIGHT)
+   order GB3  Thu Ladder SHORT E 1.34557 -> NOT FILLED filled -           (fill-day tag WRONG)
+   visible moves (1H 30p, 3h+): 10, caught by a TP order: 0
+      04-20 06:00 -> 04-20 15:00 UP      63p  MISSED
+      04-20 15:00 -> 04-21 08:00 DOWN    62p  MISSED
+      04-21 08:00 -> 04-21 14:00 UP      57p  MISSED
+      04-21 14:00 -> 04-21 17:00 DOWN    64p  MISSED
+      04-21 20:00 -> 04-22 09:00 UP      58p  MISSED
+      04-22 09:00 -> 04-22 13:00 DOWN    43p  MISSED
+      04-22 14:00 -> 04-23 00:00 DOWN    45p  MISSED
+      04-23 00:00 -> 04-23 11:00 UP      34p  MISSED
+      04-23 14:00 -> 04-23 17:00 DOWN    71p  MISSED
+      04-23 17:00 -> 04-24 03:00 DOWN    40p  MISSED
+   line vs 30m closes: mean miss 17.7p | closes within 10p of the line 44% | 2h direction agreement 49% | 30m turns 21: line vertex of the same kind within 1 candle 0, within 3 candles 0, none within 12h 4
+=== DXY 2026-05-18 (OTHER) chain: SS range
+   Mon: forecast SS                 RIGHT  (actual O 99.303 C 98.983 H 99.307 L 98.946)
+   Tue: forecast SS                 RIGHT  (actual O 98.984 C 99.315 H 99.434 L 98.944)
+   Wed: forecast SS                 RIGHT  (actual O 99.320 C 99.136 H 99.472 L 98.966)
+   Thu: forecast SS                 RIGHT  (actual O 99.138 C 99.203 H 99.515 L 99.064)
+   Fri: forecast SS                 RIGHT  (actual O 99.200 C 99.319 H 99.412 L 99.172)
+   order DX1  Thu RWL    LONG  E 98.86900 -> NOT FILLED filled -           (fill-day tag RIGHT)
+   visible moves (1H 30p, 3h+): 4, caught by a TP order: 0
+      05-18 06:00 -> 05-18 22:00 DOWN    36p  MISSED
+      05-18 22:00 -> 05-20 14:00 UP      53p  MISSED
+      05-20 15:00 -> 05-21 13:00 UP      55p  MISSED
+      05-21 13:00 -> 05-21 17:00 DOWN    42p  MISSED
+   line vs 30m closes: mean miss 9.6p | closes within 10p of the line 64% | 2h direction agreement 46% | 30m turns 11: line vertex of the same kind within 1 candle 0, within 3 candles 1, none within 12h 3
+=== EURUSD 2026-05-18 (OTHER) chain: SS range
+   Mon: forecast SS                 RIGHT  (actual O 1.16231 C 1.16556 H 1.16608 L 1.16219)
+   Tue: forecast SS                 RIGHT  (actual O 1.16556 C 1.16047 H 1.16617 L 1.15921)
+   Wed: forecast SS                 RIGHT  (actual O 1.16047 C 1.16235 H 1.16448 L 1.15827)
+   Thu: forecast SS                 RIGHT  (actual O 1.16235 C 1.16168 H 1.16353 L 1.15762)
+   Fri: forecast SS                 RIGHT  (actual O 1.16168 C 1.16017 H 1.16205 L 1.15882)
+   order EU1  Mon SS     SHORT E 1.16604 -> TP         filled 05-18 20:15 (fill-day tag RIGHT)
+   order EU2  Mon SS     SHORT E 1.16297 -> SL         filled 05-18 06:15 (fill-day tag RIGHT)
+   order EU3  Mon SS     LONG  E 1.15815 -> NOT FILLED filled -           (fill-day tag RIGHT)
+   visible moves (1H 30p, 3h+): 6, caught by a TP order: 1
+      05-18 06:00 -> 05-18 22:00 UP      40p  MISSED
+      05-18 22:00 -> 05-20 14:00 DOWN    79p  caught by EU1
+      05-20 15:00 -> 05-21 07:00 DOWN    51p  MISSED
+      05-21 08:00 -> 05-21 13:00 DOWN    59p  MISSED
+      05-21 13:00 -> 05-21 17:00 UP      54p  MISSED
+      05-21 17:00 -> 05-22 14:00 DOWN    42p  MISSED
+   line vs 30m closes: mean miss 18.9p | closes within 10p of the line 39% | 2h direction agreement 39% | 30m turns 13: line vertex of the same kind within 1 candle 0, within 3 candles 1, none within 12h 4
+=== GBPUSD 2026-05-18 (OTHER) chain: SS range
+   Mon: forecast SS                 WRONG  (actual O 1.33230 C 1.34322 H 1.34494 L 1.33217)
+   Tue: forecast SS                 RIGHT  (actual O 1.34322 C 1.33943 H 1.34371 L 1.33785)
+   Wed: forecast SS                 WRONG  (actual O 1.33943 C 1.34331 H 1.34630 L 1.33750)
+   Thu: forecast SS                 RIGHT  (actual O 1.34331 C 1.34308 H 1.34548 L 1.33904)
+   Fri: forecast SS                 RIGHT  (actual O 1.34308 C 1.34195 H 1.34631 L 1.34132)
+   order GB1  Mon SS     SHORT E 1.33983 -> SL         filled 05-18 12:30 (fill-day tag WRONG)
+   order GB2  Mon SS     LONG  E 1.33247 -> TP         filled 05-18 06:00 (fill-day tag WRONG)
+   order GB3  Thu RWL    SHORT E 1.34487 -> TP         filled 05-20 15:15 (fill-day tag WRONG)
+   visible moves (1H 30p, 3h+): 13, caught by a TP order: 1
+      05-18 10:00 -> 05-18 15:00 UP      81p  MISSED
+      05-18 16:00 -> 05-18 19:00 DOWN    49p  MISSED
+      05-18 20:00 -> 05-19 09:00 DOWN    52p  MISSED
+      05-19 09:00 -> 05-19 12:00 UP      32p  MISSED
+      05-19 14:00 -> 05-19 17:00 UP      34p  MISSED
+      05-19 17:00 -> 05-20 06:00 DOWN    36p  MISSED
+      05-20 08:00 -> 05-20 14:00 UP      65p  MISSED
+      05-20 15:00 -> 05-21 07:00 DOWN    48p  caught by GB3
+      05-21 08:00 -> 05-21 13:00 DOWN    64p  MISSED
+      05-21 13:00 -> 05-21 17:00 UP      59p  MISSED
+      05-21 18:00 -> 05-22 07:00 DOWN    35p  MISSED
+      05-22 07:00 -> 05-22 13:00 UP      50p  MISSED
+      05-22 14:00 -> 05-22 17:00 UP      36p  MISSED
+   line vs 30m closes: mean miss 22.9p | closes within 10p of the line 36% | 2h direction agreement 53% | 30m turns 22: line vertex of the same kind within 1 candle 0, within 3 candles 2, none within 12h 3
+=== DXY 2026-10-05 (OTHER) chain: SS range
+   Mon: forecast SS                 RIGHT  (actual O 102.313 C 102.113 H 102.433 L 102.084)
+   Tue: forecast SS                 RIGHT  (actual O 102.115 C 101.841 H 102.285 L 101.754)
+   Wed: forecast SS                 RIGHT  (actual O 101.845 C 102.277 H 102.499 L 101.822)
+   Thu: forecast SS                 RIGHT  (actual O 102.277 C 102.124 H 102.467 L 102.033)
+   Fri: forecast SS                 RIGHT  (actual O 102.130 C 102.232 H 102.335 L 101.920)
+   order DX1  Mon SS     SHORT E 102.43500 -> TP         filled 10-07 12:15 (fill-day tag RIGHT)
+   order DX2  Mon SS     LONG  E 101.92600 -> TP         filled 10-06 11:15 (fill-day tag RIGHT)
+   visible moves (1H 30p, 3h+): 6, caught by a TP order: 2
+      10-05 06:00 -> 10-06 12:00 DOWN    68p  MISSED
+      10-06 12:00 -> 10-07 12:00 UP      74p  caught by DX2
+      10-07 12:00 -> 10-08 02:00 DOWN    37p  caught by DX1
+      10-08 02:00 -> 10-08 11:00 UP      33p  MISSED
+      10-08 11:00 -> 10-08 14:00 DOWN    43p  MISSED
+      10-08 16:00 -> 10-09 05:00 DOWN    45p  MISSED
+   line vs 30m closes: mean miss 14.6p | closes within 10p of the line 48% | 2h direction agreement 40% | 30m turns 12: line vertex of the same kind within 1 candle 0, within 3 candles 0, none within 12h 5
+=== EURUSD 2026-10-05 (OTHER) chain: SS range
+   Mon: forecast SS                 RIGHT  (actual O 1.11920 C 1.12218 H 1.12249 L 1.11690)
+   Tue: forecast SS                 RIGHT  (actual O 1.12218 C 1.12583 H 1.12767 L 1.12028)
+   Wed: forecast SS                 RIGHT  (actual O 1.12583 C 1.11953 H 1.12629 L 1.11645)
+   Thu: forecast SS                 RIGHT  (actual O 1.11953 C 1.12089 H 1.12267 L 1.11719)
+   Fri: forecast SS                 RIGHT  (actual O 1.12089 C 1.11973 H 1.12427 L 1.11874)
+   order EU1  Mon SS     SHORT E 1.12585 -> SL         filled 10-06 11:15 (fill-day tag RIGHT)
+   order EU2  Mon SS     LONG  E 1.11710 -> TP         filled 10-05 06:30 (fill-day tag RIGHT)
+   visible moves (1H 30p, 3h+): 10, caught by a TP order: 1
+      10-05 06:00 -> 10-05 09:00 UP      52p  caught by EU2
+      10-05 09:00 -> 10-05 14:00 DOWN    34p  MISSED
+      10-05 14:00 -> 10-06 07:00 UP      56p  MISSED
+      10-06 07:00 -> 10-06 11:00 UP      69p  MISSED
+      10-06 12:00 -> 10-07 07:00 DOWN    95p  MISSED
+      10-07 07:00 -> 10-07 12:00 DOWN    65p  MISSED
+      10-07 12:00 -> 10-08 02:00 UP      48p  MISSED
+      10-08 02:00 -> 10-08 11:00 DOWN    41p  MISSED
+      10-08 11:00 -> 10-08 14:00 UP      55p  MISSED
+      10-08 16:00 -> 10-09 05:00 UP      58p  MISSED
+   line vs 30m closes: mean miss 21.5p | closes within 10p of the line 40% | 2h direction agreement 48% | 30m turns 14: line vertex of the same kind within 1 candle 0, within 3 candles 0, none within 12h 8
+=== GBPUSD 2026-10-05 (OTHER) chain: SS range
+   Mon: forecast SS                 RIGHT  (actual O 1.32090 C 1.32211 H 1.32390 L 1.31900)
+   Tue: forecast SS                 WRONG  (actual O 1.32211 C 1.32742 H 1.32856 L 1.32013)
+   Wed: forecast SS                 WRONG  (actual O 1.32742 C 1.32126 H 1.32761 L 1.31935)
+   Thu: forecast SS                 WRONG  (actual O 1.32126 C 1.32268 H 1.32485 L 1.31843)
+   Fri: forecast SS                 WRONG  (actual O 1.32268 C 1.32242 H 1.32503 L 1.32057)
+   order GB1  Mon SS     SHORT E 1.32329 -> TP         filled 10-05 08:00 (fill-day tag RIGHT)
+   order GB2  Mon SS     LONG  E 1.31899 -> TP         filled 10-08 07:00 (fill-day tag WRONG)
+   order GB3  Fri RWL    SHORT E 1.32475 -> TP         filled 10-09 01:45 (fill-day tag WRONG)
+   visible moves (1H 30p, 3h+): 12, caught by a TP order: 1
+      10-05 06:00 -> 10-05 09:00 UP      34p  MISSED
+      10-05 09:00 -> 10-05 13:00 DOWN    49p  caught by GB1
+      10-05 13:00 -> 10-06 01:00 UP      42p  MISSED
+      10-06 01:00 -> 10-06 06:00 DOWN    30p  MISSED
+      10-06 06:00 -> 10-06 11:00 UP      80p  MISSED
+      10-06 11:00 -> 10-06 15:00 UP      42p  MISSED
+      10-06 15:00 -> 10-07 12:00 DOWN    92p  MISSED
+      10-07 12:00 -> 10-07 15:00 UP      31p  MISSED
+      10-07 15:00 -> 10-08 10:00 DOWN    40p  MISSED
+      10-08 10:00 -> 10-08 14:00 UP      64p  MISSED
+      10-08 16:00 -> 10-09 05:00 UP      47p  MISSED
+      10-09 05:00 -> 10-09 12:00 DOWN    45p  MISSED
+   line vs 30m closes: mean miss 22.3p | closes within 10p of the line 40% | 2h direction agreement 50% | 30m turns 14: line vertex of the same kind within 1 candle 0, within 3 candles 0, none within 12h 4
+
+TOTAL GOLDEN: day tags right 10/15 | visible moves caught 9/17 | orders drawn 20 filled 18 TP 18 SL 0 | fill-day tag right: TP 10/18, SL 0/0 | line: closes within 10p 60%, mean miss 10.5p, 2h direction agreement 54% | 30m turns 34: vertex within 1 candle 2, within 3 5
+TOTAL OTHER: day tags right 44/60 | visible moves caught 7/90 | orders drawn 30 filled 20 TP 10 SL 10 | fill-day tag right: TP 6/10, SL 5/10 | line: closes within 10p 46%, mean miss 18.3p, 2h direction agreement 45% | 30m turns 160: vertex within 1 candle 6, within 3 12
