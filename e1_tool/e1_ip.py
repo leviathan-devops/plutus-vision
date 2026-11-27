@@ -269,7 +269,8 @@ def gap_scan(X, final, by, U):
             sig += [(z['top'], '1H zone'), (z['bot'], '1H zone')]
     sig += [(l['p'], 'round number') for l in by.get(6, []) if l.get('round')]
     sig += [(l['p'], 'option strike (Tier 3 / 4)') for l in X['t3']]
-    sig += [(l['p'], 'daily pivot') for l in by.get(1, []) if l['kind'].startswith('pivot daily')]
+    # 9.5b 'Daily pivot level from Pillar 1 (any of the 5 daily sets)': each daily set is its own candidate - pivots of two different days meeting at one price are two supporting signals (D-114)
+    sig += [(l['p'], 'daily pivot ' + l['kind'].split()[2]) for l in by.get(1, []) if l['kind'].startswith('pivot daily')]
     sig += [(l['p'], 'minor swing') for l in by.get(5, []) if l['kind'].startswith('Minor Swing Level')]
     sig += [(d['close'], 'extended daily close') for d in X['daily'][-10:-5]]
     out = []
@@ -308,6 +309,18 @@ def gap_scan(X, final, by, U):
         fill(lo, z['bot']); fill(z['top'], hi)
     for a, b in list(zip(drawn, drawn[1:])):
         fill(a['top'], b['bot'])
+    # 9.5a 'gaps >= 0.20 DXY points between adjacent mapped zones': beyond the outermost pressure zone the map continues with its unswept liquidity sweep zones - 'LIQUIDITY SWEEP
+    # ZONE' is a zone of the map (zone naming list, P533:1503 / P452:1153) - so a gap between the outermost pressure zone and a sweep zone, or between two sweep zones out there,
+    # is a gap of the map too (the side where no pressure zone stands after a trend) (D-114)
+    if drawn:
+        top_, bot_ = max(z['top'] for z in drawn), min(z['bot'] for z in drawn)
+        lz = sorted([((l['level'] - 0.05 * U, l['level']) if l['side'] == 'Supply-side' else (l['level'], l['level'] + 0.05 * U)) for l in X['lsz'] if not l['swept']])
+        up = [(top_, top_)] + [m for m in lz if m[0] > top_]
+        dn = [m for m in lz if m[1] < bot_] + [(bot_, bot_)]
+        for seq in (up, dn):
+            for a, b in zip(seq, seq[1:]):
+                if b[0] > a[1]:
+                    fill(a[1], b[0])
     return out
 
 
