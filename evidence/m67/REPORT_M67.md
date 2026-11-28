@@ -182,4 +182,6 @@ Your two printed spiderwebs in the library (GBPUSD Mar 2-11 1H and Apr 16-17 15m
 - the swing scalp runs edge to edge (your Apr 17 long 1.3508 -> 1.35418 = level 1, stop 1.35028 just under level 0);
 - the breakout / whiplash continued to the **1.618** level (Mar 10, ~1.3488, inside a 4H MoM supply) and to the **2.618** level (Apr 17 spike to ~1.3600).
 
-My mechanical web tests anchored on the Asian range or the nearest 15m swings at each London open; yours is anchored on the range after it has formed. That is the next thing to build: the range from the day's candles, then entries at its edges and targets at 1 / 1.618 / 2.618.
+My mechanical web tests anchored on the Asian range or the nearest 15m swings at each London open; yours is anchored on the range after it has formed. I then tested exactly that as a mechanical rule (01:30 UTC). At each London open: the deepest low / highest high of the last 48-120 hours and the opposite extreme after it, entry at the 0.236 / 0.118 level from the edge, stop 2 pips past the edge, target the other edge. Result: dev 12-26%, golden 0 of 9-14. The stops just past the edges get swept.
+
+So your drawings show WHERE you anchor, but not WHEN you take the edge. That timing is the part I still need from you (the blocker above).
