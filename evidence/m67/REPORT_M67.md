@@ -17,7 +17,8 @@ All numbers come from the backtest you ordered (`tools/research/devset.py`): eve
   Better, not your 95%.
 - **Where the trades lose (33 stop-outs on dev + held-out):**
   - 18 hit the stop and then reached their TP later that week: direction and target right, stop or entry wrong;
-  - 9 more went 1.5R or more our way first;
+  - 5 more went 1.5R or more our way first, then reversed to the stop;
+  - 4 had no follow-through either way;
   - only 6 were the wrong zone or direction.
 - **Nothing regressed:** golden trades identical; Engine 1 locked byte for byte; every change behind a switch with its gates passed; leak checks clean.
 
@@ -97,8 +98,8 @@ Held-out week Jul 13-17 (the week after the golden week): the chain forecast a b
 ## Why the trades lose (all 33 stop-outs, dev + held-out)
 | What happened after the stop | Count | Examples |
 |---|---|---|
-| price hit the stop, then reached the TP later the same week | 14 (+4 that also first went 1.5R+ our way) | EURUSD 03-23 EU1, GBPUSD 03-23 GB1, DXY 04-20 DX3, EURUSD 05-18 EU2 |
-| went 1.5R or more our way, then reversed to the stop | 9 | DXY 03-02 DX1, EURUSD 09-21 EU2 / EU3, GBPUSD 04-20 GB1 |
+| price hit the stop, then reached the TP later the same week | 18 (4 of them had first gone 1.5R+ our way) | EURUSD 03-23 EU1, GBPUSD 03-23 GB1, DXY 04-20 DX3, EURUSD 05-18 EU2 |
+| went 1.5R or more our way, then reversed to the stop (TP never reached) | 5 | DXY 03-02 DX1, GBPUSD 04-20 GB1 |
 | the zone broke - price ran 2x the risk beyond the stop | 6 | DXY 04-13 DX2, EURUSD 07-13 EU5, GBPUSD 07-13 GB3 |
 | no follow-through either way | 4 | EURUSD 04-20 EU4, GBPUSD 05-18 GB1 |
 
