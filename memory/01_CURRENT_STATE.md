@@ -1,3 +1,7 @@
+## STATE (NEWEST, 2026-11-28) - M-69: EVERYTHING AFTER THE M-67 CHECKPOINT REJECTED; engine restored to 9a40e9b (commit 0660777); Engine 2 plan memory/17_PLAN_E2.md SENT IN CHAT - WAITING FOR HIS APPROVAL
+- Restore verified: golden Pine byte-identical to the checkpoint; 4 random weeks replay 30 drawn / 20 filled / 10 TP / 10 SL (50%). Spiderwebs out (L-64). Engine 1 lock kept (his M-67 order).
+- NEXT: his answer on memory/17 (approve / change). Build NOTHING before it; then follow it verbatim, step 1 -> 5 then 6, each measured with tools/research/devset.py.
+
 ## STATE (NEWEST, 2026-11-28 ~02:00 UTC) - night work done; report (with addenda) committed; waiting for the operator
 - Product = 3c4eb0d (D-147 / D-147b / D-148 ON, E1 locked). Dev 13 / 20 (39%), held-out 2 / 13 (13%), golden 18 / 0; line dev 59% / held-out 59% / golden 67%.
 - Library oracle COMPLETE (task 23): context_management/oracle/library/trades.json. Library-week V1 harvest still running in the background (scratchpad harvest_library.txt) - commit its caches when it ends.
