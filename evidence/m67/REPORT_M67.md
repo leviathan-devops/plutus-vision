@@ -161,7 +161,7 @@ Session facts measured on 420 sessions:
 - Voided duplicates: DXY Mar 23, GBPUSD Mar 23, EURUSD Apr 13.
 
 ## Addendum (01:45 UTC): your winning trade library vs my build (plan step M5, measuring only)
-Read so far into `context_management/oracle/library/trades.json`: 7 priced trades and 2 shape-box pictures.
+Read into `context_management/oracle/library/trades.json` (complete): 18 priced trades, 14 shape sequences, 2 printed webs.
 
 Your swing scalps are range trades: entry at the range edge, 6-10 pip stop, target at the far edge or the 4H liquidity, RR 6.5-11.
 
@@ -186,9 +186,8 @@ My mechanical web tests anchored on the Asian range or the nearest 15m swings at
 
 So your drawings show WHERE you anchor, but not WHEN you take the edge. That timing is the part I still need from you (the blocker above).
 
-The held-out week Jul 13-17 in your library (EURUSD root picture): your boxes are whiplashes UP Mon-Tue and a BREAKOUT SURGE UP on Wednesday. My chain forecast a breakout DOWN, and its shorts were stopped. That is Engine 2's direction, the 6 'wrong zone / direction' losses of the taxonomy.
+The held-out week Jul 13-17 in your library (EURUSD root picture): your boxes are whiplashes UP Mon-Tue and a BREAKOUT SURGE UP on Wednesday. My chain forecast a breakout DOWN, and its shorts were stopped. That week's losses come from Engine 2's direction (of its three stopped EURUSD shorts, one is in the 'zone broke' row; the other two reached their TP only after the stop).
 
-Library fully read: 18 trades, 14 shape sequences, 2 printed webs (`context_management/oracle/library/trades.json`).
 
 Your library weeks GBPUSD Feb 2, Feb 9 and Feb 16, run through the final code (02:10 UTC):
 - my build: 6 orders, 2 filled, 0 TP, 2 SL;
