@@ -1,0 +1,12 @@
+GBPUSD 2026-02-02  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  void 0  win   0.0%  moves  9 caught  0  line<=10p  39%  miss  17.1p  dir2h  48%  turns 21 vtx<=1c  6
+     GB1   Mon SS     ss_all     SHORT E 1.37414 SL 1.37707 TP 1.36631 -> NOT FILLED
+GBPUSD 2026-02-09  drawn  3  filled  1  TP  0  SL  1  open 0  never  2  void 0  win   0.0%  moves 13 caught  0  line<=10p  43%  miss  22.6p  dir2h  51%  turns 27 vtx<=1c  9
+     GB1   Mon SS     consol     SHORT E 1.36230 SL 1.36383 TP 1.35516 -> SL         fill 2026-02-09 11:30 RR 4.7 MFE 0.6R MAE 1.5R
+     GB2   Mon SS     consol     LONG  E 1.35501 SL 1.35297 TP 1.36147 -> NOT FILLED
+     GB3   Wed BS     bs         LONG  E 1.35367 SL 1.35281 TP 1.36516 -> NOT FILLED
+GBPUSD 2026-02-16  drawn  2  filled  1  TP  0  SL  1  open 0  never  1  void 0  win   0.0%  moves 10 caught  0  line<=10p  49%  miss  26.2p  dir2h  62%  turns 15 vtx<=1c  4
+     GB1   Mon SS     consol     LONG  E 1.36046 SL 1.35779 TP 1.36847 -> SL         fill 2026-02-17 05:15 RR 3.0 MFE 0.4R MAE 1.0R
+     GB2   Wed BS     bs         SHORT E 1.36914 SL 1.37094 TP 1.36022 -> NOT FILLED
+
+TOTAL GBPUSD       maps  3  drawn   6  filled   2 (0.7/pair-week)  TP   0  SL   2  open 0  never   4  void 0  win   0.0%  (mean of weekly win 0.0% over 2 maps)  moves caught 0/32  avg RR of TPs 0.00  line<=10p 44%  miss 21.9p  dir2h 53%  turn vtx<=1c 19/63
+TOTAL ALL (no gold) maps  3  drawn   6  filled   2 (0.7/pair-week)  TP   0  SL   2  open 0  never   4  void 0  win   0.0%  (mean of weekly win 0.0% over 2 maps)  moves caught 0/32  avg RR of TPs 0.00  line<=10p 44%  miss 21.9p  dir2h 53%  turn vtx<=1c 19/63

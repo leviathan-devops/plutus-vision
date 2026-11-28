@@ -189,3 +189,10 @@ So your drawings show WHERE you anchor, but not WHEN you take the edge. That tim
 The held-out week Jul 13-17 in your library (EURUSD root picture): your boxes are whiplashes UP Mon-Tue and a BREAKOUT SURGE UP on Wednesday. My chain forecast a breakout DOWN, and its shorts were stopped. That is Engine 2's direction, the 6 'wrong zone / direction' losses of the taxonomy.
 
 Library fully read: 18 trades, 14 shape sequences, 2 printed webs (`context_management/oracle/library/trades.json`).
+
+Your library weeks GBPUSD Feb 2, Feb 9 and Feb 16, run through the final code (02:10 UTC):
+- my build: 6 orders, 2 filled, 0 TP, 2 SL;
+- yours on the same weeks: 10 winning trades (the Feb 6 long + rocket; the Feb 9 long before the breakout surge; two Feb 10 shorts; the Feb 12 and Feb 13 longs, each with a rocket; the Feb 18 short), none of which my build emitted;
+- Feb 9 in short: my Monday order was a short at the range top (stopped) while you bought the range bottom ahead of the breakout UP.
+
+Outside the golden week, my chain's direction and Engine 3's entry both miss your reads.
