@@ -176,3 +176,10 @@ Measured, not adopted:
 - Orders from the re-anchored chain (REANCHOR on): dev 14 TP / 22 SL, same rate as now. It catches the short at the top of that EURUSD range (TP), not your long.
 
 Reading: on these weeks Engine 2 sees the move and the range. Engine 3 does not place your entry: the right range edge, after the range forms.
+
+Your two printed spiderwebs in the library (GBPUSD Mar 2-11 1H and Apr 16-17 15m), solved from the levels you printed:
+- each web is drawn on the **current consolidation range** itself: 0 = its low (1.32820; 1.35035), 1 = its high (~1.34096; ~1.3541);
+- the swing scalp runs edge to edge (your Apr 17 long 1.3508 -> 1.35418 = level 1, stop 1.35028 just under level 0);
+- the breakout / whiplash continued to the **1.618** level (Mar 10, ~1.3488, inside a 4H MoM supply) and to the **2.618** level (Apr 17 spike to ~1.3600).
+
+My mechanical web tests anchored on the Asian range or the nearest 15m swings at each London open; yours is anchored on the range after it has formed. That is the next thing to build: the range from the day's candles, then entries at its edges and targets at 1 / 1.618 / 2.618.
