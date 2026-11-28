@@ -180,8 +180,12 @@ Reading: on these weeks Engine 2 sees the move and the range. Engine 3 does not 
 Your two printed spiderwebs in the library (GBPUSD Mar 2-11 1H and Apr 16-17 15m), solved from the levels you printed:
 - each web is drawn on the **current consolidation range** itself: 0 = its low (1.32820; 1.35035), 1 = its high (~1.34096; ~1.3541);
 - the swing scalp runs edge to edge (your Apr 17 long 1.3508 -> 1.35418 = level 1, stop 1.35028 just under level 0);
-- the breakout / whiplash continued to the **1.618** level (Mar 10, ~1.3488, inside a 4H MoM supply) and to the **2.618** level (Apr 17 spike to ~1.3600).
+- the breakout / whiplash continued to the **1.618** level (Mar 10, ~1.3488, inside a 4H MoM supply) and to the **2.382** level (Apr 17 spike to ~1.3593; level 1.35922).
 
 My mechanical web tests anchored on the Asian range or the nearest 15m swings at each London open; yours is anchored on the range after it has formed. I then tested exactly that as a mechanical rule (01:30 UTC). At each London open: the deepest low / highest high of the last 48-120 hours and the opposite extreme after it, entry at the 0.236 / 0.118 level from the edge, stop 2 pips past the edge, target the other edge. Result: dev 12-26%, golden 0 of 9-14. The stops just past the edges get swept.
 
 So your drawings show WHERE you anchor, but not WHEN you take the edge. That timing is the part I still need from you (the blocker above).
+
+The held-out week Jul 13-17 in your library (EURUSD root picture): your boxes are whiplashes UP Mon-Tue and a BREAKOUT SURGE UP on Wednesday. My chain forecast a breakout DOWN, and its shorts were stopped. That is Engine 2's direction, the 6 'wrong zone / direction' losses of the taxonomy.
+
+Library fully read: 18 trades, 14 shape sequences, 2 printed webs (`context_management/oracle/library/trades.json`).

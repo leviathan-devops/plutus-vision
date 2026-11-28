@@ -1,6 +1,6 @@
 {
  "source": "/home/user/inputs/trades/WINNING_TRADE_LIBARARY (operator's winning trade library; L-48 / L-55). Read by eye from the TradingView position tools; chart clock UTC+4 (screenshot footer) converted to UTC; prices +-2 pips; RR and pip distances as printed on the tool.",
- "status": "partial - 2026-11-28 ~01:50 UTC: Swing Scalps, SS --> BS, R --> BS\\WL, R --> WL, BS --> R\\RWL, LIQUIDITY LADDERS read; open: PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
+ "status": "COMPLETE 2026-11-28 ~02:00 UTC: every library picture read (the golden-week folder earlier, memory/08 + golden_week.json). 18 trades (GBPUSD Feb 6 - Apr 17, EURUSD Apr 15), 14 shape sequences, 2 printed fib grids, repeats listed.",
  "trades": [
   {
    "pair": "GBPUSD",
@@ -335,6 +335,17 @@
    "pair": "GBPUSD",
    "picture": "LIQUIDITY LADDERS/Screenshot from 2026-07-13 19-13-10.png",
    "utc_plus4_sequence": "Apr 13-14: his hand-drawn LADDER of the Monday breakout up from ~1.3420 through '30m MoM Liquidity Shield', 'Liquidity Shield Zone' (~1.3455-1.3465), '15m (Unmitigated) | MoM ~ SHIELDED' (~1.3470-1.3480) to '1H (Unmitigated) | Bo2L' / '4H (Unmitigated) | MoM' (~1.3510-1.3525), '4H Liquidity' above"
+  },
+  {
+   "pair": "EURUSD",
+   "picture": "Screenshot from 2026-07-19 17-55-53.png (library root)",
+   "utc_plus4_sequence": "Fri Jul 10: WL (up) + RWL (down); Mon Jul 13: WL (up) + RWL (down to ~1.1380); Tue Jul 14: WL (up to ~1.1460); Wed Jul 15: BREAKOUT SURGE (up ~1.1410 -> ~1.1475); Thu Jul 16: WL (down to ~1.1435)",
+   "vs_my_E2": "HELD-OUT week 2026-07-13: my daily chain forecast a breakout DOWN; EURUSD shorts EU1 / EU2 / EU5 all stopped - his week is whiplashes UP and a breakout surge UP (Engine 2 direction wrong)"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "BS\\WL --> SS/Screenshot from 2026-07-13 19-07-25.png",
+   "utc_plus4_sequence": "Apr 8-11: SWING SCALPS (~1.3380-1.3480, '30m (1x Mitigated) | MoM ~ SHIELDED (Light)', '30m MoM Liquidity Shield', '1H (Unmitigated) | MoM', '15m (Unmitigated) | MoM ~ SHIELDED'); Apr 13-14: PIERCING BREAKOUT SURGE (up to ~1.3570 through '4H Liquidity Shield - ZoC - Bull Contesting'); Apr 14-15: SWING SCALPS (~1.3540-1.3575, '15m Refined 1H (Unmitigated) | MoM' / '1H (1x Mitigated) | Bo2L' / '4H (1x Mitigated) | MoM' under it)"
   }
  ],
  "fib_grids": [
@@ -374,13 +385,17 @@
    },
    "level_1_solved": 1.3541,
    "anchors": "0 = the range low 1.35035 (his Apr 17 long's stop 1.35028 sits just under it); 1 = ~1.3541 = that long's TP 1.35418 - the web is drawn on the recovery range low -> high",
-   "what_happened": "Apr 17: long 1.3508 -> TP 1.35418 (level 1); then the PIERCING WHIPLASH spiked to ~1.3600 = the 2.618 level, then a REVERSE WHIPLASH back down"
+   "what_happened": "Apr 17: long 1.3508 -> TP 1.35418 (level 1); then the PIERCING WHIPLASH spiked to ~1.3593 = the 2.382 level 1.35922 (zoom: WL --> RWL\\R/19-06-36.png), then a REVERSE WHIPLASH back to '4H Liquidity Shield - ZoC - Bull Contesting' ~1.3515"
   }
  ],
  "duplicates_seen": [
   "R --> BS\\WL/19-00-16 = SS --> BS/18-58-56 (Mar 11 fib grid)",
   "BS --> R\\RWL/19-04-51 = R --> WL/19-12-20 (Mar 23 - Apr 7)",
   "BS --> R\\RWL/19-04-58 = R --> WL/19-12-28 (Feb 25-27)",
-  "BS --> R\\RWL/19-05-07 = R --> BS\\WL/19-03-54 (Feb 10-11)"
+  "BS --> R\\RWL/19-05-07 = R --> BS\\WL/19-03-54 (Feb 10-11)",
+  "PBS --> R --> WL(S)/19-05-41, 19-05-55, 19-06-03 = Mar 23 - Apr 7, Mar 10-24, Feb 26 - Mar 3",
+  "BS\\WL --> SS/19-07-33 = Mar 23 - Apr 7",
+  "WL --> SS/19-07-04 = Mar 2-10",
+  "WL --> RWL\\R/19-06-36 = zoom of the Apr 16-17 grid"
  ]
 }
