@@ -1,0 +1,54 @@
+weeks 39 x 3 pairs, 585 trading days
+
+LINE THROUGH THE TRUE PRICES AT ... -> 30m closes within 10 pips | mean miss | vertices per day
+  A session clock 17/02/08/10/17                              82.8%    5.7 p    4.0
+  B + 12:00, 14:30                                            87.9%    4.6 p    6.0
+  C every 2 hours                                             94.1%    3.0 p   11.1
+  D every hour                                                97.9%    1.5 p   22.1
+  T true turns of 30+ pips                                    58.5%   11.2 p    1.5
+  T true turns of 20+ pips                                    68.9%    8.7 p    2.3
+  T true turns of 15+ pips                                    75.0%    7.4 p    3.1
+  T true turns of 10+ pips                                    83.9%    5.6 p    4.9
+  F flat from each London open (no forecast)                  35.2%   22.5 p    2.2
+  G flat from each session start 17/02/08/10 (no forecast)    64.5%   10.0 p    8.0
+
+30m TURNING POINTS (15+ pip swings) per trading day: {'DXY': 2.29, 'EURUSD': 2.86, 'GBPUSD': 3.89}
+TIME OF DAY of the turning points (New York), share of all turns per 30m slot (uniform = 2.1%):
+  17:00  0.7%   17:30  1.4%
+  18:00  1.1%   18:30  0.7%
+  19:00  0.7%   19:30  0.3%
+  20:00  0.8%   20:30  2.2%
+  21:00  0.8%   21:30  1.7%
+  22:00  0.8%   22:30  0.9%
+  23:00  1.1%   23:30  0.9%
+  00:00  0.9%   00:30  0.7%
+  01:00  1.1%   01:30  1.2%
+  02:00  4.6%   02:30  4.6%
+  03:00  3.2%   03:30  3.0%
+  04:00  2.4%   04:30  3.4%
+  05:00  2.5%   05:30  2.3%
+  06:00  2.1%   06:30  2.6%
+  07:00  2.5%   07:30  2.5%
+  08:00  3.9%   08:30  3.7%
+  09:00  4.0%   09:30  2.5%
+  10:00  4.3%   10:30  4.5%
+  11:00  4.1%   11:30  2.0%
+  12:00  2.2%   12:30  2.5%
+  13:00  1.7%   13:30  2.0%
+  14:00  1.3%   14:30  1.5%
+  15:00  1.9%   15:30  1.6%
+  16:00  1.2%   16:30  1.0%
+
+SESSION MOVES (pips): median net move | median range | share of sessions with net >= 10 pips
+  DXY     Asia 17-02     net   8.0  range  14.2  net>=10p  39%   n=156
+  DXY     London 02-08   net  11.4  range  19.6  net>=10p  55%   n=195
+  DXY     NY 10-17       net  11.3  range  19.4  net>=10p  55%   n=195
+  DXY     pre-cut 08-10  net   7.6  range  11.9  net>=10p  41%   n=195
+  EURUSD  Asia 17-02     net   9.8  range  16.4  net>=10p  49%   n=156
+  EURUSD  London 02-08   net  13.9  range  23.6  net>=10p  63%   n=195
+  EURUSD  NY 10-17       net  13.0  range  23.5  net>=10p  58%   n=195
+  EURUSD  pre-cut 08-10  net   9.6  range  14.6  net>=10p  48%   n=195
+  GBPUSD  Asia 17-02     net  13.0  range  21.8  net>=10p  64%   n=156
+  GBPUSD  London 02-08   net  15.9  range  31.2  net>=10p  71%   n=195
+  GBPUSD  NY 10-17       net  16.7  range  31.0  net>=10p  69%   n=195
+  GBPUSD  pre-cut 08-10  net  13.2  range  19.0  net>=10p  57%   n=195

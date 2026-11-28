@@ -1,0 +1,12 @@
+  cage  same as London (10+ p)                                                      107/ 199 =  54%
+  lon   same as the Asian session (10+ p)                                            71/ 158 =  45%
+  lon   same as the prior NY session (10+ p)                                        129/ 237 =  54%
+  lon   same as the prior day (10+ p)                                               172/ 301 =  57%
+  lon   side of the first Asian-range break in London (known only once it breaks)   186/ 281 =  66%
+  lon   toward the NEARER end of the Asian range                                    145/ 293 =  49%
+  ny    OPPOSITE of London (10+ p)                                                  122/ 234 =  52%
+  ny    back toward the middle of the day's range so far                            186/ 355 =  52%
+  ny    same as 02:00-10:00 net (10+ p)                                             128/ 260 =  49%
+  ny    same as London (10+ p)                                                      112/ 234 =  48%
+  ny    same as the pre-cut 08-10 (10+ p)                                            68/ 172 =  40%
+  ny    same as the prior day (10+ p)                                               148/ 283 =  52%

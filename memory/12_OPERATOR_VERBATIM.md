@@ -559,3 +559,6 @@ Spiderwebs are irrelevant. You don't need them in order to fix Engine 2. You sho
 
 ### M-70 (2026-11-28, after the Engine 2 plan in chat) - verbatim
 Log this exact data and plan to disk. This sounds good, this makes sense, but before I approve anything, I want you to give me a clear, practical example. Like, show me exactly what changes you're going to make, and then test it, and then give me a side-by-side visual comparison on the golden week of the previous E2 with the new E2, so that I can see exactly what changes you've made and directly audit apples to apples, side by side, and see if you've done it correctly or if there's an issue.
+
+### M-71 (2026-11-28, after the M-70 example + side-by-side frames) - verbatim
+Okay, I don't see any meaningful improvement at all whatsoever. So you need to rethink the strategy. Nothing was accomplished here. So tell me exactly, go review the context. What is the gap on engine 2 and how do we make it more accurate?

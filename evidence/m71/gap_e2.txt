@@ -1,0 +1,54 @@
+== 4 weeks: 30m closes within 10 pips | mean miss
+   0 PRODUCT line                                                        45.8%   18.3 p
+   1 no forecast: flat from each London open                             26.7%   23.4 p
+   2 no forecast: flat, restarted at each session start (17/02/08/10)    62.3%   10.4 p
+   3 PRODUCT legs, restarted at each session start                       50.1%   17.1 p
+   4 session restart + TRUE direction, typical size                      73.7%    7.7 p
+   5 session restart + TRUE end price (straight leg)                     85.3%    5.0 p
+   by session (product line): within 10 p | miss | direction right when the session moved 10+ pips | median size actual vs line
+   Asia 17-02      66.1%   11.3 p   dir 3/14 =  21%   actual   7.2 p  line   5.4 p  (mean line  17.5 p)
+   London 02-08    41.1%   17.2 p   dir 25/44 =  57%   actual  15.6 p  line  16.0 p  (mean line  20.8 p)
+   pre-cut 08-10   25.0%   29.5 p   dir 2/25 =   8%   actual   8.2 p  line   0.0 p  (mean line   1.1 p)
+   NY 10-17        35.6%   22.9 p   dir 21/35 =  60%   actual  13.7 p  line  40.0 p  (mean line  46.1 p)
+== golden: 30m closes within 10 pips | mean miss
+   0 PRODUCT line                                                        59.9%   10.5 p
+   1 no forecast: flat from each London open                             52.1%   14.0 p
+   2 no forecast: flat, restarted at each session start (17/02/08/10)    71.6%    8.5 p
+   3 PRODUCT legs, restarted at each session start                       70.6%    9.4 p
+   4 session restart + TRUE direction, typical size                      76.6%    7.0 p
+   5 session restart + TRUE end price (straight leg)                     85.4%    4.8 p
+   by session (product line): within 10 p | miss | direction right when the session moved 10+ pips | median size actual vs line
+   Asia 17-02      69.7%    8.1 p   dir 1/5 =  20%   actual   9.6 p  line   1.5 p  (mean line   6.0 p)
+   London 02-08    58.9%   10.2 p   dir 3/4 =  75%   actual   7.0 p  line  12.9 p  (mean line  12.8 p)
+   pre-cut 08-10   58.3%   11.1 p   dir 2/7 =  29%   actual   9.7 p  line   4.3 p  (mean line   4.8 p)
+   NY 10-17        50.0%   13.6 p   dir 7/7 = 100%   actual  14.3 p  line  33.2 p  (mean line  31.4 p)
+
+DAY BOXES: 37/65 days fully inside their box (3 p tolerance); 30m closes inside the box 86%; box height / actual day range: median 1.37; overshoot beyond the box on the other days: median 24 p
+
+ENGINE 1 LEVEL DENSITY: 3.5 zones / levels per 10 pips of the week's range
+WHERE THE WEEK'S 30m TURNING POINTS STAND: turns within 3 pips of ... | share of all prices within 3 pips of ... (chance) | lift
+   S/D 4H MoM                15.9%    11.4%   x1.40
+   S/D 15m BoM               15.9%    12.7%   x1.25
+   pressure zone             37.1%    34.0%   x1.09
+   option strike             12.5%    11.5%   x1.09
+   V1 1H liquidity rung      51.5%    54.5%   x0.95
+   ANY Engine 1 level        85.6%    91.3%   x0.94
+   S/D 15m MoM               18.7%    21.4%   x0.87
+   V1 4H liquidity band      54.1%    62.6%   x0.86
+   sweep level               22.2%    26.1%   x0.85
+   S/D 30m BoM               18.2%    22.1%   x0.82
+   S/D 30m MoM               19.2%    23.4%   x0.82
+   S/D 1H BoM                11.0%    15.0%   x0.73
+   S/D 1H MoM                20.8%    28.7%   x0.73
+   S/D 4H BoM                 4.5%    14.1%   x0.32
+
+FIRST TOUCH OF A ZONE from outside, next 4 hours: turned 15+ pips / (turned + closed through)
+   V1 1H liquidity rung                38/ 67 =  57%
+   V1 4H liquidity band                36/ 53 =  68%
+   S/D 30m MoM | Virgin                10/ 15 =  67%
+   pressure zone | Fortress             7/ 11 =  64%
+   S/D 30m BoM | Virgin                 9/ 11 =  82%
+   S/D 15m MoM | Virgin                 9/ 10 =  90%
+   S/D 15m MoM | Active                 5/  9 =  56%
+   S/D 1H BoM | Virgin                  6/  8 =  75%
+   pressure zone | Active               6/  8 =  75%

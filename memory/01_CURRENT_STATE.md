@@ -1,3 +1,9 @@
+## STATE (NEWEST, 2026-11-28) - M-71: the M-70 example judged 'no meaningful improvement' (L-66); Engine 2 GAP FORENSICS done (memory/18_E2_GAP.md) and the rethought strategy SENT IN CHAT - WAITING FOR HIS ANSWER
+- Product unchanged (E2_MICRO = False; D-149 code stays in the tree, off).
+- Gap (measured): one forecast a day with 3-4 vertices caps at ~83% even with perfect prices; the line meets the actual price only at 17:00 / 02:00 (a no-forecast flat line restarted at 4 session starts = 62% / 72% vs product 46% / 60%); NY legs 40 p vs actual 14 p; direction 57-60%; 9 of 12 chains 'SS all week'.
+- Strategy put to him: Engine 2 micro as an EVENT-DRIVEN walk on closed 30m candles (restart at the actual price at each session start and each zone event; leg = to the next reacting zone; direction from the event the canon names), always reported against the no-forecast line at the same anchors. Needs his ruling on anchors more often than the London open.
+- NEXT: his answer. Build nothing before it.
+
 ## STATE (NEWEST, 2026-11-28) - M-70 PRACTICAL EXAMPLE DONE (built, tested, side-by-side) - SENT; WAITING FOR HIS APPROVAL / CHANGES. Product unchanged (E2_MICRO = False).
 - Report evidence/m70/M70_EXAMPLE.md (steps, canon, code, per-step table, golden day-by-day, Apr 13 step-1 case, issues); diff evidence/m70/M70_code.diff; frames evidence/m70/*_side_by_side.png; raw rows evidence/m70/backtest/, leak outputs evidence/m70/leak/.
 - Numbers (15 pair-weeks; orders identical in every variant): previous 4 weeks 46% / 18.3 p / turns 6 of 160, golden 60% / 10.5 p / 2 of 34 -> whole new E2 50% / 14.5 p / 8, golden 62% / 10.6 p / 2. Per step: skeleton helps golden, steps 1-2 hurt golden (GBPUSD), step 3 = the main gain, step 4 small, step 5 ~0. Leak checks clean (golden x3, DXY Apr 13 with the step-1 switch).
