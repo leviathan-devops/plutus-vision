@@ -1,3 +1,7 @@
+## STATE (NEWEST, 2026-11-28 ~01:35 UTC) - report delivered (evidence/m67/REPORT_M67.md + 11 frames, SendUserFile); M5 library oracle in progress
+- M5: context_management/oracle/library/trades.json (7 trades, 2 shape-box pictures read). Finding: on GBPUSD 03-02 / 03-30 and EURUSD 04-13 my Engine 2 direction / re-anchored range matched his trade, Engine 3 had no order (IP gate, unconfirmed entry below the anchor price, REANCHOR off). RUNNING: devset with plutus.REANCHOR=1 as a locator (locked flag - report the number, do not flip without him); library-week V1 harvest (scratchpad harvest_library.txt).
+- NEXT: REANCHOR locator result -> addendum to the report (one short section, numbers only) + SendUserFile; keep reading library pictures (folders R --> BS\WL, R --> WL, BS --> R\RWL, LIQUIDITY LADDERS, PBS, BS\WL --> SS, WL --> *) into the oracle file; commit + push each step.
+
 ## STATE (NEWEST, 2026-11-28 ~00:45 UTC) - M-67 NIGHT RUN DONE; morning report ready (evidence/m67/REPORT_M67.md), frames evidence/m67b; waiting for the operator
 - Final code = 50ca1e3 + this commit: D-147 / D-147b micro path ON (anchors 02:00 / 08:00 / 10:00 NY, levels 2, clamp), D-148 one trade per move ON; Engine 1 locked (tools/locks).
 - Numbers (backtest of record tools/research/devset.py): dev 13 TP / 20 SL (39%), line 59% within 10 p; HELD-OUT 2 / 13 (13%), line 59%; golden 18 / 0, line 67%. Loss taxonomy: 18 of 33 stop-outs later reached their TP (stop / entry placement), 9 went >= 1.5R first, 6 wrong zone.
