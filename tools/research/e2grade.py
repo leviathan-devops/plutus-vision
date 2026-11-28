@@ -86,13 +86,14 @@ for pair, mon in MAPS:
     segs = ch.get('segments') or [ch['path']]
     V = vertices(segs)
     T = actual_turns(b30, b0, w1)
-    name = lambda p: next(((b, t, n) for b, t, n in Z if b - 1e-12 <= p <= t + 1e-12), None) or min(((b, t, n) for b, t, n in Z), key=lambda z: min(abs(z[0] - p), abs(z[1] - p)), default=None)
+    NZ = {round(n['p'], 7): (n['zb'], n['zt'], n['zone']) for n in ch.get('nodes', []) if 'zb' in n}          # a path node names its own Engine 1 zone
+    name = lambda p: NZ.get(round(p, 7)) or next(((b, t, n) for b, t, n in Z if b - 1e-12 <= p <= t + 1e-12), None) or min(((b, t, n) for b, t, n in Z), key=lambda z: min(abs(z[0] - p), abs(z[1] - p)), default=None)
     day_of = lambda t: (t - w0) // 86400000
     res = {'HIT': 0, 'WRONG ZONE': 0, 'WRONG TIME': 0, 'NONE': 0, 'NO ZONE': 0}
     detail = []
     for k, ta, tb, p in V:
         z = name(p)
-        if z is None or min(abs(z[0] - p), abs(z[1] - p), 0 if z[0] <= p <= z[1] else 9e9) > tol:
+        if z is None or (round(p, 7) not in NZ and min(abs(z[0] - p), abs(z[1] - p), 0 if z[0] <= p <= z[1] else 9e9) > tol):
             res['NO ZONE'] += 1; detail.append((k, ta, p, 'NO ZONE', '-')); continue
         near_t = [x for x in T if x[0] == k and ta - H2 <= x[1] <= tb + H2]
         at_z = lambda x: z[0] - tol <= x[2] <= z[1] + tol

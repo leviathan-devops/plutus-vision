@@ -1138,6 +1138,8 @@ def build(pair, monday, X, lead=None, force_dir=None):
             'near': near, 'far': far, 'mid': mid, 'range': (f_edge, c_edge), 'n_real': n_real, 'raw_day': raw_day, 'adj_day': adj_day}
 
 
+E2_PATH = False          # charter memory/22 steps 6-7: the drawn line built from PATH NODES (e2_path.py: zone ladder + five boundary states + session pace). OFF until he approves.
+PATH_UPDATES = (2,)      # charter step 8: New York hours at which the day's line is rebuilt from the actual price (2 = London open, exists today); (2, 5, 10) = the fixed-time updates
 LOOK_ORANGE = False      # charter memory/22 step 2 (operator M-77 / L-71): 'the orange solid line with hollow white frames replaces the current look entirely ... the orange line with the
                          # white boxes marking the actual shapes like you can see in the winning trade library' - 2px solid #E85D04 line, hollow white shape frames, nothing dashed or
                          # dotted; the alternative chain stays in the text report and is not drawn. OFF until he approves the frames.

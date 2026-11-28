@@ -34,3 +34,8 @@ At an update instant U (day open 17:00, London open 02:00; step 8 adds 05:00 and
 CALIBRATION (locator, build weeks only - never the golden / checkpoint / fresh test weeks): every first touch of a zone -> which of the five outcomes the candles showed -> which inputs separate them. Rules stay canon-grounded; the table shows where the encoding fails.
 
 ## Step 8 - fixed-time updates 05:00 and 10:00 NY (line only): steps 6-7 re-run from the actual price; frozen past.   Step 9 - pairs: DXY direction / shapes / clocks, own zones + own data per pair.
+
+## UPDATE after the calibration (memory/08 last section) - the builder's decisions (e1_tool/e2_path.py)
+HOLD / BREAK at a zone on the path: BREAK when the S/D zone has 3+ taps (P533:493) or the pressure zone's ZFP > 45 (6.4.1) or the parent shape's leg is a breakout in that direction and the zone is not its target; else HOLD.
+NODE when it holds (by width / timeframe, the strongest separator): under 8 pips -> the liquidity within 10 pips beyond the far edge (PIERCE_R), else the far edge; 8-15 pips -> the far edge (BODY_WL); 15+ pips or a 4H S/D zone -> the zone's inner level with dwell (BODY_CONSOL_R).
+WICK_RWL (node at the near edge) only for a stacked zone (3+ overlapping) met in the New York morning. LADDER = drawn pressure zones + 4H / 1H / 30m S/D of the side being met. TIME = distance / the pair's causal session pace.

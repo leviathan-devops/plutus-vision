@@ -323,6 +323,7 @@ def daily_anchor(pair, monday, chain, R, src_days=None):
             'ip': [z for z in X0.get('zones', []) if z.get('drawn')]}
     cur = {'chain': chain, 'R': R, 'anchor': b0, 'lvl': _levels(chain, R), 'active': None}
     vw = None          # D-138: the chain the LINE and DAY BOXES are drawn from once the chain in force has failed - re-anchored at a London open on the rebuilt map
+    nodes_all = []
     micro, mst = E2.E2_MICRO, {'switched': False, 'X_prev': X0}      # M-70 example (memory/17): the drawn line built by _micro_day - drawing only
 
     def alts_of(ch):
@@ -502,12 +503,41 @@ def daily_anchor(pair, monday, chain, R, src_days=None):
                     days[-1:] = [d2] if (days and days[-1]['day'] == DAYS[i]) else days[-1:] + [d2]
                 seg = _cut(seg, t_a, t_L) if len(seg) > 1 else seg
                 seg2 = _day_line(vw['chain'], d2, monday, t_L, t_e, Xi['spot'], X0) or _cut(vw['chain']['path'], t_L, t_e)
-                if len(seg2) > 1 and not micro:
+                if len(seg2) > 1 and not (micro or E2.E2_PATH):
                     if seg2[0][0] == t_L:
                         seg2[0] = (t_L, Xi['spot'])
                     segs.append(seg2)
             partsL[i] = {'adds': [(fam, round(z['bot'], 6), round(z['top'], 6)) for fam, z in new], 'reanchor': reanch}
-        if micro:
+        if E2.E2_PATH:
+            # charter steps 6-8 (memory/22; design memory/23): the day's drawn line = path nodes (e2_path.window), built at each update instant from the actual price and bars closed by
+            # then; Asia from the trading-day open on the map of the last London open, then one window per PATH_UPDATES hour. Drawing only - chain, day boxes, zones, orders untouched.
+            import e2_path as EPATH, datetime as _dt
+            XL = X0 if i == 0 else Xi
+            dL = days[-1] if (days and days[-1]['day'] == DAYS[i]) else d
+            cont = (dL['lo'], dL['hi']) if (dL is not None and dL.get('shapes') == ['SS']) else (None, None)
+            date = _dt.date.fromisoformat(monday) + _dt.timedelta(days=i)
+            wins = ([(t_a, t_L, mst['X_prev'])] if (i > 0 and t_L > t_a) else [])
+            ups = sorted({E2._ms(date, h) for h in E2.PATH_UPDATES if t_L <= E2._ms(date, h) < t_e} | {t_L})
+            wins += [(u0, u1, XL) for u0, u1 in zip(ups, ups[1:] + [t_e])]
+            for u0, u1, Xw in wins:
+                b30 = D.closed_until(pair, '30', u0)
+                p0 = op if u0 == t_a else (b30[-1]['close'] if b30 else XL['spot'])
+                ev = EPATH.last_event(pair, Xw, u0, p0)
+                if ev is not None:
+                    d0, why0 = ev[2], f"{ev[0]} at {ev[1]['_lab']}"
+                elif dL is not None and dL.get('dir') in ('up', 'down'):
+                    d0, why0 = dL['dir'], f"the day's shape direction ({'+'.join(dL['shapes'])})"
+                else:
+                    last = b30[-5:]
+                    d0 = 'up' if (len(last) > 1 and last[-1]['close'] >= last[0]['close']) else 'down'
+                    why0 = 'no zone event: the move in force continues (P452 6.6 rule 6)'
+                nd = EPATH.window(pair, Xw, u0, u1, p0, d0, cont[0], cont[1])
+                if len(nd) > 1:
+                    segs.append([(n['t'], n['p']) for n in nd])
+                    nodes_all.extend(dict(n, day=DAYS[i]) for n in nd)
+                    audit.append(f"PATH {DAYS[i]} {D.ts(u0)[11:16]} UTC from {f(p0)} first leg {d0} ({why0}): " + ' -> '.join(f"{f(n['p'])} {n['state']}" for n in nd[1:]))
+            mst['X_prev'] = XL
+        elif micro:
             # M-70 example (plan memory/17): the day's drawn line - Asia at the trading-day open price, London + NY built at the London open (_micro_day); the orders above are untouched
             XL = X0 if i == 0 else Xi
             dL = days[-1] if (days and days[-1]['day'] == DAYS[i]) else d
@@ -574,6 +604,8 @@ def daily_anchor(pair, monday, chain, R, src_days=None):
                    f"{'above' if tr.get('dir') == 'up' else 'below'} {f(tr['level']) if tr.get('level') is not None else '-'} ({tr.get('zone', '')}); not drawn unless activated")
     out = dict(chain)
     out.update(days=days, segments=segs, alt_segments=alt_segs, audit=audit, daily=parts, daily_L=partsL, n_real=len(days), zone_adds=adds)
+    if nodes_all:
+        out['nodes'] = nodes_all
     R2 = dict(R)
     R2.update(setups=keep, log=log, contingent=cont)
     return out, R2

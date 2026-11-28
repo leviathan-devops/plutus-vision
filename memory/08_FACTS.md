@@ -304,3 +304,12 @@ his MoM entries (a rung inside the zone, range day) from the losers (zone edge /
 
 ## TradingView-API installed (2026-11-28, operator M-77: 'Install this in your workspace correctly ... use this for everything')
 tools/tvapi (npm @mathieuc/tradingview 4.1.2; README there). Works through the session proxy with createProxy(HTTPS_PROXY, {tls:{ca}}). Hosts allowed in the environment: data.tradingview.com, symbol-search.tradingview.com. Free depth per request ~5,500 bars: futures CME:6E1! / CME:6B1! / ICEUS:DX1! 30m back to 2026-06-11 (1H deeper; replay mode for older), 2Y yields TVC:US02Y / DE02Y / GB02Y 1H back to Feb 2026, FX 5m ~4 weeks. The Pinebox bar store (spot, with tick volume) stays the candle source of the engines.
+
+## BOUNDARY-STATE CALIBRATION (2026-11-28, tools/research/e2_calib.py, evidence/e2/calib_build_weeks.txt; 12 BUILD weeks x 3 pairs, 414 first touches of week-anchor zones, 4-hour window on 30m candles)
+WEEK SETS (do not mix): BUILD = 02-02, 02-09, 02-16, 02-23, 03-02, 03-09, 03-16, 03-23, 04-06, 08-17, 08-31, 09-21 | GOLDEN 07-06 | CHECKPOINT 04-13, 04-20, 05-18, 10-05 | FRESH (confirm once, at the end) 03-30, 05-25, 07-13, 09-28.
+- All touches: wick-reverse 12%, body whiplash 11%, consolidation 9%, pierce beyond the far edge and back 35%, clean break 32% -> the zone HELD 68%.
+- Canon confirmed: S/D zones with 3+ taps break (BoM 80%, MoM 54%); 4H S/D zones hold 83% (consolidation 37%, body 22%); zones stacked with 3+ others hold 71% vs 54% with 1-2 (GS Law 1).
+- Width: under 8 pips -> pierce 45% + break 35% (price trades through a narrow zone's far edge); 15+ pips -> held 79% (body / consolidation 46%).
+- Session of the touch: New York morning 08:00-12:00 held 79% (with the 4H trend 89%, mostly pierce-and-return 66%); London 62%; Asia 59%. Weekday: Tuesday held 86%, Wednesday 50%.
+- NOT separating by itself (each within a few points of the base rate): BoM vs MoM at 0-2 taps, pressure-zone reaction counter (Fortress breaks 43-46%), approach with / against the 4H structure, option wall, rung on the near edge, liquidity beyond, high-volume node inside (zones with 1.5x+ the mean volume break MORE: 46%).
+- Reading: the hold / break decision at a zone comes from depletion, the zone's timeframe / width, stacking, and the context (session, day in the chain) - not from one microstructure reading. Node placement: narrow zone -> at the liquidity just beyond its far edge; wide / 4H zone -> inside it, with dwell.
