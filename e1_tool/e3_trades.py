@@ -534,7 +534,7 @@ def _build(pair, monday, X, E2, tag):
         # Phase 2 gates
         if 'tf' in a and a.get('mit', 0) >= 3:
             log.append(f"{c['days'][0]} {c['shape']} {direction}: FRESHNESS - {a.get('label', '')} tested {a['mit']}x (E3C:150 'index i > 2 skipped')"); continue
-        if a.get('ip') and a.get('score', 99) < 7:
+        if a.get('ip') and a.get('score', 99) < IP_CONF_MIN:
             # E3C:1022 'IP Zone Map | Phase 2 | Zone selection (confluence >= 7) generates trade candidates' (G2 round 2 N-25)
             log.append(f"{c['days'][0]} {c['shape']} {direction}: SOURCE_INVALID - {a.get('name', '')} confluence {a.get('score')} < 7 (E3C:1022)"); continue
         if a.get('ip') and (a.get('mech') or {}).get('reactions', 0) == 3:
@@ -959,6 +959,7 @@ def build(pair, monday, X, E2, source=None):
     return R
 
 
+IP_CONF_MIN = 7              # E3C:1022 'IP Zone Map | Phase 2 | Zone selection (confluence >= 7) generates trade candidates' (G2 N-25); 6 = P533:1486-1494 degree 'MODERATE' (6-7), the E1 'MODERATE and above' cut - MEASURED 6: dev +1 order (GBPUSD 03-02 Mon long 1.33811, SL), golden unchanged - kept 7
 ONE_PER_MOVE = True          # plan memory/16 / D-148 (L-52 'one unique trade per observable move ... explicitly forbidden and banned'; L-55x his golden weeks run one trade at a time):
                              # a primary order touched while a same-direction primary of the pair is OPEN is the same move - void (drawn as a stub), never filled later. ON since its gates held (memory/16 section 6; D-148 in memory/03).
 SPAN_BOXES = True            # D-146 (operator M-64): a position box covers its trade only - from the candle that touches the entry to the candle that touches the TP (or SL), one candle each side
