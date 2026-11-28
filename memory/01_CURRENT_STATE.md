@@ -1,3 +1,8 @@
+## STATE (NEWEST, 2026-11-28) - M-76 (L-70): his 7-pillar Engine 2 overhaul architecture absorbed; plan v4 = memory/21_PLAN_E2_OVERHAUL.md + 8 questions SENT IN CHAT - PLAN ONLY, WAITING FOR HIS ANSWERS
+- His document: canon/operator_uploads_2026-11-28/ENGINE_2_MICRO_INFRASTRUCTURE_OVERHAUL_CONTEXT_INJECTION.md (read in full before coding any pillar). Core: 5-state micro-transition at every zone boundary; 3-week context; PathNodes on structural intersections; free microstructure data; DXY compass; kill test + time-aligned grading.
+- Data fact: bar store bars carry tick volume (spot); no futures / delta / 2Y yields / COT.
+- NEXT: his answers (Q1 code from the Gemini build, Q2 locks, Q3 timing model, Q4 data, Q5 drawing, Q6 grading); then step 0 instruments -> blueprint -> pillars F, C, A, B, E, D, G behind switches.
+
 ## STATE (NEWEST, 2026-11-28) - M-74 / M-75 answered (L-69): two proper blueprints written and BENCHED (design/BLUEPRINT_SCALP_ENGINE_v1.md, design/BLUEPRINT_LIVE_TRIGGERS_v1.md); Engine 2 plan v3.1 (full component list, memory/19) sent in chat - STILL PLAN ONLY, WAITING FOR HIS GO
 - Simple architecture only: fixed-time line updates (17:00 / 02:00 / 05:00 / 10:00 NY), line only. No market-triggered updates, no scalping engine, no own ideas (L-69).
 - Steps when he says go: A fixed-time restart -> B telescoped containers + next zone of the same class -> C direction from the zone event + transition at an update + multi-touch state; each behind a switch, measured (devset + no-forecast line + leak check), reported.
