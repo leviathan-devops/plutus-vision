@@ -8,7 +8,7 @@ tools/leak_check.py removes the later bars; this test corrupts them instead - a 
 import sys, os, io, contextlib
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 sys.path.insert(0, os.path.join(ROOT, 'e1_tool'))
-import e1_data as D, plutus
+import e1_data as D, plutus, e2_data as E2D
 
 args = sys.argv[1:]
 while args and args[0] == '--switch':
@@ -18,6 +18,7 @@ while args and args[0] == '--switch':
     print(f"switch {mod}.{name} = {getattr(m_, name)!r}"); args = args[2:]
 weeks = [a.split(':') for a in args] or [['DXY', '2026-07-06']]
 orig = D.bars
+orig_ext = E2D.ext_bars
 SHOCK = 500
 bad = []
 
@@ -25,17 +26,20 @@ bad = []
 def shocked(T, pip):
     d = SHOCK * pip
     def f(p, tf, _o=orig):
-        return [x if x['time'] + D.TFMS[tf] <= T else dict(x, open=x['open'] + d, high=x['high'] + d, low=x['low'] + d, close=x['close'] + d) for x in _o(p, tf)]
+        return [x if x['time'] + D.TFMS[tf] <= T else dict(x, open=x['open'] + d, high=x['high'] + d, low=x['low'] + d, close=x['close'] + d, volume=(x.get('volume') or 0) * 7 + 1) for x in _o(p, tf)]
     return f
 
 
 def run(pair, monday, daily, bars_fn):
     D._cache.clear(); plutus._MEMO.clear(); D.bars = bars_fn
+    T_ = getattr(bars_fn, 'T', None)      # the Engine 2 data module's external series (futures, yields, COT) get the same shock: every bar not closed by T is corrupted
+    if T_ is not None:
+        E2D.ext_bars = lambda sym, tf, _T=T_: [x if x['time'] + E2D.EXT_TFMS[tf] <= _T else dict(x, open=x['open'] * 3 + 1, high=x['high'] * 3 + 1, low=x['low'] * 3 + 1, close=x['close'] * 3 + 1, volume=(x.get('volume') or 0) * 7 + 1) for x in orig_ext(sym, tf)]
     try:
         with contextlib.redirect_stdout(io.StringIO()):
             r = plutus.run(pair, monday, daily=daily)
     finally:
-        D.bars = orig; D._cache.clear(); plutus._MEMO.clear()
+        D.bars = orig; E2D.ext_bars = orig_ext; D._cache.clear(); plutus._MEMO.clear()
     return r
 
 
@@ -53,7 +57,9 @@ for pair, monday in weeks:
     # the shock moves every pair's later bars (the DXY master and the Phase 10 source pairs too): each pair by its own pip
     def all_pairs(T):
         fs = {p: shocked(T, D.PIP[p]) for p in D.PIP}
-        return lambda p, tf: fs[p](p, tf)
+        g = lambda p, tf: fs[p](p, tf)
+        g.T = T
+        return g
     a = run(pair, monday, False, orig)[3]
     b = run(pair, monday, False, all_pairs(b0))[3]
     if a != b:
