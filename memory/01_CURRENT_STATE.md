@@ -1,3 +1,8 @@
+## STATE (NEWEST, 2026-11-28 ~02:00 UTC) - night work done; report (with addenda) committed; waiting for the operator
+- Product = 3c4eb0d (D-147 / D-147b / D-148 ON, E1 locked). Dev 13 / 20 (39%), held-out 2 / 13 (13%), golden 18 / 0; line dev 59% / held-out 59% / golden 67%.
+- Library oracle COMPLETE (task 23): context_management/oracle/library/trades.json. Library-week V1 harvest still running in the background (scratchpad harvest_library.txt) - commit its caches when it ends.
+- NEXT: his answer to the blocker (anchor + stop + timing on 2-3 non-golden trades); then build the anchor / timing choice from it; compare the daily product with the 18 library trades on their weeks once the harvest is done (devset maps GBPUSD:2026-02-02 ... 04-06).
+
 ## STATE (NEWEST, 2026-11-28 ~01:10 UTC) - night run complete; report + addendum delivered; waiting for the operator (he wakes ~07:00-08:00 UTC)
 - Product = commit cd11353: D-147 / D-147b micro path ON (anchors 02:00 / 08:00 / 10:00 NY, levels 2, clamp), D-148 ON; E1 locked. Numbers: dev 13 TP / 20 SL (39%), held-out 2 / 13 (13%), golden 18 / 0; line dev 59% within 10 p (was 41%), held-out 59%, golden 67%.
 - Report: evidence/m67/REPORT_M67.md (sent twice; last with the library addendum). Frames evidence/m67b (+ before/).
