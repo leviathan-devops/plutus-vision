@@ -80,3 +80,7 @@ The order is 1 -> 2 -> 3 -> 4 -> 5, then 6. The target is yours: the line on 90-
 Approve this or tell me what to change. I'm building nothing until you answer, and then I'll follow it exactly. The plan is also saved in memory/17_PLAN_E2.md.
 
 ## M-70 (2026-11-28): 'This sounds good, this makes sense' - not yet approved; he asked for a practical example of the exact changes, tested, with a side-by-side golden-week visual (previous E2 vs new E2). Built behind the switch e2_chain.E2_MICRO (default OFF): the product is unchanged until he approves.
+
+## M-70 EXAMPLE (2026-11-28) - built, tested, NOT adopted
+- Code behind e2_chain.E2_MICRO = False (MICRO_STEPS selects steps 1-5); D-149 / D-149b. Report: evidence/m70/M70_EXAMPLE.md; diff evidence/m70/M70_code.diff; frames evidence/m70/*_side_by_side.png (golden, 3 pairs) + DXY Apr 13 (step 1 fires there).
+- Found while testing and fixed before delivery: step-1 target behind the breaking close; step-1 leg arrival (6.8 BS 1-3 sessions, rule 6 Asia extension); GS Law 2 SS reach (named in step 3) not applied at first.

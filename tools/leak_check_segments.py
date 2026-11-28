@@ -37,13 +37,23 @@ for m in args:
     full = run()
     m0 = dt.date.fromisoformat(monday)
     anchors = sorted({D.week_start_ms(monday) + i * 86400000 for i in range(1, 5)} | {D.day_anchor_ms(monday, i) for i in range(5)}
-                     | {E2._ms(m0 + dt.timedelta(days=i), h) for i in range(5) for h in getattr(E2, 'MICRO_ANCHOR_HOURS', (10,))})
+                     | {E2._ms(m0 + dt.timedelta(days=i), h) for i in range(5) for h in getattr(E2, 'MICRO_ANCHOR_HOURS', (10,))}
+                     | {s[0][0] for s in full if s})                 # M-70 example: every instant a drawn segment starts at (incl. a Decision-Zone break on a 30m close) is an anchor too
     n_bad = 0
+
+    def same(x, y, T):
+        # a segment the full run ended AFTER T (cut short by a later event, e.g. the 30m close that breaks the Decision Zone) must be the start of what the run cut at T drew
+        if x == y:
+            return True
+        if x and y and x[-1][0] > T and x[0][0] == y[0][0] and y[-1][0] >= x[-1][0]:
+            z = plutus._cut(y, x[0][0], x[-1][0])
+            return len(z) == len(x) and all(int(t) == tx and abs(float(v) - vx) <= 1e-6 for (t, v), (tx, vx) in zip(z, x))
+        return False
     for T in anchors:
         cut = run(T)
         a = [s for s in full if s and s[0][0] <= T]
         b = [s for s in cut if s and s[0][0] <= T]
-        if a != b:
+        if not (len(a) == len(b) and all(same(x, y, T) for x, y in zip(a, b))):
             n_bad += 1
             k = next((i for i, (x, y) in enumerate(zip(a, b)) if x != y), min(len(a), len(b)))
             bad.append(f"{pair} {monday}: drawn segments starting by {D.ts(T)} UTC change when the bars after it are removed (first differing segment #{k}: "

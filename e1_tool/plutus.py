@@ -264,6 +264,45 @@ def _flow27(pair, kept, live, seg, t_a, t_e, log, f, day, status):
     return [q for q in kept if q not in drop and not (q.get('parent_ref') is not None and q['parent_ref'] in drop)]
 
 
+def _micro_day(pair, monday, i, t_a, t_L, t_e, op, ch, d, X, carry=None):
+    """M-70 EXAMPLE (plan memory/17 steps 2-5; switch E2.E2_MICRO, default OFF; drawing only): the day's DRAWN line. Asia (trading-day open -> London open) holds the open price
+    (P452 6.6 rule 1 'price stays within the prior day's range'); London + NY are built AT THE LONDON OPEN from bars closed by then (the L-53 anchor; P452 rule 2 reads the Asian
+    session): a swing-scalp day walks the Engine 1 zones on the session clock (E2.micro_ss); any other day keeps the chain's own legs, on the trigger clock (E2.micro_clock).
+    carry = (arrival, target) of a breakout leg drawn the day before (plan step 1): the Asian session extends it (P452 6.6 rule 6 'if a shape is active at the close of Day N ...
+    Day N+1 opens with that shape continuing. The Asian session of Day N+1 typically extends or consolidates the Day N move'). Returns (segments, audit text)."""
+    import datetime as _dt
+    date = _dt.date.fromisoformat(monday) + _dt.timedelta(days=i)
+    out = [[(t_a, op), (t_L, op)]] if i > 0 and t_L > t_a else []
+    if out and carry is not None and carry[0] > t_a:
+        out = [_cut([(t_a, op), (carry[0], carry[1])], t_a, t_L)]
+    pL = X['spot']
+    if d is not None and d.get('shapes') == ['SS'] and ch.get('range'):
+        f_e, c_e = min(ch['range']), max(ch['range'])
+        cap_u = E2.micro_turn(pair, X, ch.get('ceil'), True) or c_e
+        cap_d = E2.micro_turn(pair, X, ch.get('floor'), False) or f_e
+        cap_u, cap_d = min(cap_u, d['hi']), max(cap_d, d['lo'])
+        if 3 in E2.MICRO_STEPS:                                 # GS Law 2 'The day's shape decides which zones are reachable (SS <= 30 pips from spot ...)' (plan step 3)
+            cap_u, cap_d = min(cap_u, pL + 0.30 * X['U']), max(cap_d, pL - 0.30 * X['U'])
+        nearer = 'up' if abs(cap_u - pL) < abs(pL - cap_d) else 'down'
+        if 4 in E2.MICRO_STEPS:
+            since = t_a if i > 0 else D.week_start_ms(monday)
+            first, why = _asof(monday, t_L, lambda: E2.micro_bias(pair, monday, since, nearer))
+        else:
+            first, why = nearer, 'toward the nearer bound (D-41; step 4 off)'
+        pts, txt = E2.micro_ss(pair, X, date, t_L, t_e, pL, first, cap_u, cap_d)
+        txt = f"first leg {first}: {why}; " + txt
+    else:
+        rest = _cut(ch['path'], t_L, t_e)
+        if len(rest) < 2:
+            return out, 'no chain leg this day'
+        pts = [(t_L, pL)] + rest[1:]
+        if 2 in E2.MICRO_STEPS:
+            pts = E2.micro_clock(pair, monday, ch, pts, date)
+        txt = f"{'+'.join(d['shapes']) if d else '-'}: the chain's legs from the London-open price" + (' on the trigger clock (10:01 release, NY swing time)' if 2 in E2.MICRO_STEPS else '')
+    out.append(pts)
+    return out, txt
+
+
 def daily_anchor(pair, monday, chain, R, src_days=None):
     """DAILY ANCHORING (L-47 / L-53; D-131, D-132, D-134, D-136). The Monday map and chain hold while they hold. Every trading day:
     at its TRADING-DAY OPEN (17:00 New York the evening before; the day's orders rest through the Asian session), with only bars closed by then:
@@ -284,6 +323,7 @@ def daily_anchor(pair, monday, chain, R, src_days=None):
             'ip': [z for z in X0.get('zones', []) if z.get('drawn')]}
     cur = {'chain': chain, 'R': R, 'anchor': b0, 'lvl': _levels(chain, R), 'active': None}
     vw = None          # D-138: the chain the LINE and DAY BOXES are drawn from once the chain in force has failed - re-anchored at a London open on the rebuilt map
+    micro, mst = E2.E2_MICRO, {'switched': False, 'X_prev': X0}      # M-70 example (memory/17): the drawn line built by _micro_day - drawing only
 
     def alts_of(ch):
         return [a_ for a_ in (ch.get('alts') or ([{'alt': ch.get('alt'), 'chain': ch.get('alt_chain')}] if ch.get('alt_chain') else [])) if a_.get('alt') and a_.get('chain')]
@@ -462,12 +502,45 @@ def daily_anchor(pair, monday, chain, R, src_days=None):
                     days[-1:] = [d2] if (days and days[-1]['day'] == DAYS[i]) else days[-1:] + [d2]
                 seg = _cut(seg, t_a, t_L) if len(seg) > 1 else seg
                 seg2 = _day_line(vw['chain'], d2, monday, t_L, t_e, Xi['spot'], X0) or _cut(vw['chain']['path'], t_L, t_e)
-                if len(seg2) > 1:
+                if len(seg2) > 1 and not micro:
                     if seg2[0][0] == t_L:
                         seg2[0] = (t_L, Xi['spot'])
                     segs.append(seg2)
             partsL[i] = {'adds': [(fam, round(z['bot'], 6), round(z['top'], 6)) for fam, z in new], 'reanchor': reanch}
-        if len(seg) > 1:
+        if micro:
+            # M-70 example (plan memory/17): the day's drawn line - Asia at the trading-day open price, London + NY built at the London open (_micro_day); the orders above are untouched
+            XL = X0 if i == 0 else Xi
+            dL = days[-1] if (days and days[-1]['day'] == DAYS[i]) else d
+            ms, txt = _micro_day(pair, monday, i, t_a, t_L, t_e, op, vw['chain'] if vw is not None else view, dL, XL, mst.get('carry'))
+            mst['carry'] = None
+            if 1 in E2.MICRO_STEPS and cur['active'] is None and not mst['switched'] and cur['lvl']:
+                # plan step 1 (6.6 Step 4, P533:1895): the alternative takes over the drawn line AT THE 30m CANDLE that closes beyond the Decision Zone - not at the next day's open
+                hit = next(((x['time'] + 1800000, x['close'], d_) for x in D.closed_until(pair, '30', t_e) if x['time'] + 1800000 > max(t_a, cur['anchor'])
+                            for d_, lv in cur['lvl'].items() if ((x['close'] > lv[0]) if d_ == 'up' else (x['close'] < lv[0]))), None)
+                a_ = next((a for a in alts_of(cur['chain']) if hit is not None and a['alt']['dir'] == hit[2]), None)
+                if a_ is not None:
+                    tc, c, d_ = hit
+                    tgt, shp = E2.micro_target(a_['chain'], d_, c)
+                    if tgt is not None:                             # GS Law 2: BS / RWL reach 100 pips
+                        tgt = min(tgt, c + XL['U']) if d_ == 'up' else max(tgt, c - XL['U'])
+                    pE, zE, whyE = E2.micro_walk(pair, XL if tc >= t_L else mst['X_prev'], c, d_ == 'up', tgt)
+                    T_arr = max(E2.micro_arrival(tc, E2.BS_SESSIONS), tc + 1)
+                    leg = [(tc, c), (T_arr, pE)]
+                    ms = [q for q in (_cut(s, s[0][0], tc) for s in ms if s and s[0][0] < tc) if len(q) > 1] + [_cut(leg, tc, max(t_e, tc + 1))]
+                    mst['switched'], mst['carry'] = True, ((T_arr, pE) if T_arr > t_e else None)
+                    if days and days[-1]['day'] == DAYS[i]:
+                        # the day's forecast box ends at the breaking candle; the alternative's shape gets its own box from that candle (nothing drawn before it uses it)
+                        q = days[-1]
+                        days[-1] = dict(q, t1=max(q['t0'] + 1, tc))
+                        p_e = ms[-1][-1][1]
+                        days.append(dict(q, shapes=[shp], dir=d_, lo=min(c, p_e), hi=max(c, p_e), t0=tc, t1=max(t_e, tc + 1), conf=a_['alt'].get('conf') or q['conf'],
+                                         key=a_['alt'].get('decision_zone') or q.get('key', '-')))
+                    txt += (f" | DECISION ZONE BROKEN: 30m close {f(c)} at {D.ts(tc)} UTC beyond {f(cur['lvl'][d_][0])} ({cur['lvl'][d_][1]}) -> the alternative {shp} {d_} draws the line "
+                            f"from that candle toward {f(pE)}, arriving {D.ts(T_arr)} UTC (6.8 BS 1-3 sessions) ({(zE.get('label') or zE.get('name')) if zE else ('its target' if tgt is not None else 'the BS reach')}: {whyE})")
+            segs += [s for s in ms if len(s) > 1]
+            audit.append(f"MICRO {DAYS[i]} (E2_MICRO example, drawing only): {txt}")
+            mst['X_prev'] = XL
+        elif len(seg) > 1:
             segs.append(seg)
     keep = [s for s in keep if s.get('parent_ref') is None or s['parent_ref'] in keep]
     trades = [q for q in keep if q.get('category') != 'Reinforcement' and not q.get('alt')]

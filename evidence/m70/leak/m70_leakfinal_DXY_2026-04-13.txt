@@ -1,0 +1,2 @@
+switch e2_chain.E2_MICRO = True
+leak_check_segments DXY 2026-04-13: 10 drawn segments; identical for all 15 anchors (trading-day opens, London opens, the micro-path session anchors)

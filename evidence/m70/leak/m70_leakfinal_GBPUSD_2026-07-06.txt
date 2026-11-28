@@ -1,0 +1,2 @@
+switch e2_chain.E2_MICRO = True
+leak_check_segments GBPUSD 2026-07-06: 9 drawn segments; identical for all 14 anchors (trading-day opens, London opens, the micro-path session anchors)

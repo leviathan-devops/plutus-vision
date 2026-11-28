@@ -1,3 +1,9 @@
+## STATE (NEWEST, 2026-11-28) - M-70 PRACTICAL EXAMPLE DONE (built, tested, side-by-side) - SENT; WAITING FOR HIS APPROVAL / CHANGES. Product unchanged (E2_MICRO = False).
+- Report evidence/m70/M70_EXAMPLE.md (steps, canon, code, per-step table, golden day-by-day, Apr 13 step-1 case, issues); diff evidence/m70/M70_code.diff; frames evidence/m70/*_side_by_side.png; raw rows evidence/m70/backtest/, leak outputs evidence/m70/leak/.
+- Numbers (15 pair-weeks; orders identical in every variant): previous 4 weeks 46% / 18.3 p / turns 6 of 160, golden 60% / 10.5 p / 2 of 34 -> whole new E2 50% / 14.5 p / 8, golden 62% / 10.6 p / 2. Per step: skeleton helps golden, steps 1-2 hurt golden (GBPUSD), step 3 = the main gain, step 4 small, step 5 ~0. Leak checks clean (golden x3, DXY Apr 13 with the step-1 switch).
+- Issues reported: P533:211 'liquidate that zone first' read as a turn cost GBPUSD golden Monday; pressure direction wrong on DXY golden Tue / Apr 13 Wed; clock hurt golden; target 90-95% far.
+- NEXT: his answer (approve / change which steps). Build nothing further before it. If approved: adopt per his words, then the plan's order with each step gated.
+
 ## STATE (NEWEST, 2026-11-28) - M-69: EVERYTHING AFTER THE M-67 CHECKPOINT REJECTED; engine restored to 9a40e9b (commit 0660777); Engine 2 plan memory/17_PLAN_E2.md SENT IN CHAT - WAITING FOR HIS APPROVAL
 - Restore verified: golden Pine byte-identical to the checkpoint; 4 random weeks replay 30 drawn / 20 filled / 10 TP / 10 SL (50%). Spiderwebs out (L-64). Engine 1 lock kept (his M-67 order).
 - NEXT: his answer on memory/17 (approve / change). Build NOTHING before it; then follow it verbatim, step 1 -> 5 then 6, each measured with tools/research/devset.py.

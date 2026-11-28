@@ -1,0 +1,315 @@
+diff --git a/e1_tool/e2_chain.py b/e1_tool/e2_chain.py
+index 3152b6d..7cd9ec7 100644
+--- a/e1_tool/e2_chain.py
++++ b/e1_tool/e2_chain.py
+@@ -555,6 +555,174 @@ def _ladder_path(X, S, a, b, t0, t1, pos, nxt, d):
+     return [q for q in out if q[0] > t0] or [(t1, nxt)]
+ 
+ 
++# ---------------------------------------------------------------- M-70 EXAMPLE - the Engine 2 MICRO PATH (plan memory/17 steps 1-5; NOT YET APPROVED by the operator, L-65)
++E2_MICRO = False                 # OFF = the product exactly as it is. ON = the DRAWN line is built by plutus._micro_day (drawing only: chain, day boxes, orders, Engine 3 unchanged)
++MICRO_STEPS = (1, 2, 3, 4, 5)    # the plan steps applied: 1 Decision-Zone switch on the 30m close, 2 trigger clock, 3 zone walk, 4 pressure direction, 5 pair mechanics
++
++
++def micro_reacts(z):
++    """plan step 3 - does an opposing Engine 1 zone in the line's way TURN it (True) or is it PIERCED (False)?
++    P533:491 'BoM zones are 100% GUARANTEED to react when touched if unmitigated ... MoM zones tend to get PIERCED'; P533:493 '0 reactions = virgin (strongest if BoM),
++    1-2 = active (still has juice), 3+ = depleted (about to fail - use for TP only)'; P533:211 'If a pressure zone with juice exists between current PA and the BoM zone,
++    price will liquidate that zone first'; 6.4.1 'bounding zone ZFP > 45% fails'"""
++    i = info(z)
++    if i['src'] == 'IP' and i['zfp'] is not None and i['zfp'] > 45:
++        return False, f"ZFP {i['zfp']}% > 45: fails (6.4.1)"
++    if i['counter'] == 'Depleted':
++        return False, f"{i['rx']} reactions: depleted (P533:493)"
++    if i['cls'] == 'BoM':
++        return True, f"BoM {i['counter'].lower()}: reacts when touched (P533:491)"
++    if i['src'] == 'IP' and i['rx'] >= 1:
++        return True, f"pressure zone with juice, {i['rx']} reactions (P533:211 / :493)"
++    return False, 'MoM: pierced (P533:491)'
++
++
++def micro_turn(pair, X, z, up):
++    """plan step 5 - WHERE an opposing zone turns the line (FA 10 pair profiles; operator L-50): DXY at the edge price meets first (P533:491 'react when touched');
++    EUR/USD inside the zone, at the liquidity that overlaps it (FA 10 'PA often directly touches the overlap point ... The S/D zone and the liquidity zone overlap directly';
++    L-50 'price mitigates inside the zone'); GBP/USD - a supply / demand zone is pierced to the nearest liquidity beyond it and the line turns there (FA 10 'Expect S/D to get
++    pierced & price absorbs nearest liquidity before moving'; L-50; as the day boxes, D-108). Sweep zones: at the swing extreme where the stops rest (P452 'brief breach then reversal')."""
++    if z is None or 'bot' not in z:
++        return None
++    near = z['bot'] if up else z['top']
++    if z.get('sweep'):
++        return z.get('ext', near)
++    if 5 not in MICRO_STEPS or 'tf' not in z or z.get('liq'):
++        return near
++    if pair == 'EURUSD':
++        ov = [b for tf in ('60', '240') for b in (X.get('v1') or {}).get(tf, {}).get('liquidity', []) if b['bot'] <= z['top'] and b['top'] >= z['bot']]
++        if ov:
++            b = min(ov, key=lambda b: b['bot']) if up else max(ov, key=lambda b: b['top'])
++            return min(max(b['bot'] if up else b['top'], z['bot']), z['top'])
++    if pair == 'GBPUSD':
++        lb = liquidity_beyond(X, z, up)
++        return (lb['bot'] if up else lb['top']) if lb is not None else (z['top'] if up else z['bot'])
++    return near
++
++
++def micro_walk(pair, X, p0, up, cap):
++    """plan step 3 - the line's next TURN moving from p0: the Engine 1 zones in its way, in sequence (P533:215 / :493 'Price ALWAYS sweeps liquidity zone by zone in sequential
++    order. It NEVER skips a zone'): drawn pressure zones and the 4H / 1H / 30m supply-demand zones of the opposing side (L-40: 4H overview, 1H work, 30m refinement; 15m is precision
++    only) lying wholly between p0 and the cap; the first that reacts (micro_reacts) turns the line where its pair turns (micro_turn); none -> the cap (the day's own bound, which holds
++    by the chain's branch, 6.4.2). Returns (price, zone, why)."""
++    if cap is None:
++        cap = p0 + (1.0 if up else -1.0) * X['U']                   # GS Law 2: BS / RWL reach 100 pips
++    if 3 not in MICRO_STEPS:
++        return cap, None, 'zone walk off (step 3)'
++    zs = [z for z in X.get('zones', []) if z.get('drawn')] + [z for z in X.get('sd', []) if z.get('tf') in ('240', '60', '30') and z['type'] == ('Supply' if up else 'Demand')]
++    ahead = sorted([z for z in zs if ((p0 < z['bot'] and z['bot'] < cap) if up else (cap < z['top'] and z['top'] < p0))], key=lambda z: z['bot'] if up else -z['top'])
++    for z in ahead:
++        ok, why = micro_reacts(z)
++        if ok:
++            t = micro_turn(pair, X, z, up)
++            return (min(t, cap) if up else max(t, cap)), z, why
++    return cap, None, "the day's bound (holds by the chain's branch, 6.4.2)"
++
++
++def micro_bias(pair, monday, since, nearer):
++    """plan step 4 - the direction of the day's first (London) leg: P452 6.6 rule 2 'The London BS trigger is typically: a bounding zone from the Asian SS range fails with increasing
++    momentum as London desks open' - WHICH bound fails = the pressure reading of the Asian session's 1H candles (P533:497 'look at which candles are obviously bigger ... Upper wicks
++    = buying pressure. Lower wicks = selling pressure. Triangle shapes: flat side = receiving pressure'; pressure_bias); unclear -> P533:499 'the 4H storyline bias decides'
++    (structure_4h); still unclear -> toward the nearer bound (D-41, the line as it is). Must run under plutus._asof(monday, London open) - bars closed by then only."""
++    d, votes = pressure_bias(pair, monday, since)
++    if d:
++        return d, 'Asian-session pressure ' + ', '.join(f"{k} {v}" for k, v in votes if v)
++    st = structure_4h(pair, monday)
++    if st:
++        return st, f"Asian pressure unclear -> 4H storyline {st}"
++    return nearer, 'pressure and 4H storyline unclear -> toward the nearer bound (D-41)'
++
++
++def micro_ss(pair, X, date, t0, t1, p0, first, cap_u, cap_d):
++    """plan steps 3-5 on a SWING-SCALP day, on the session clock of P452 6.6 (rules 2-5) - London 02:00-08:00: the first swing in `first` (step 4) to its turn (step 3 / 5);
++    NY pre-cut 08:00-10:00: the option cage holds price (P533 2.2 'pinning price within a tight horizontal range'; rule 3 'dealers will pin price to the largest strike ... price stuck
++    in a 5-15 pip range around the strike' -> pinned at the day's largest strike only when price is inside that range, i.e. within 7.5 pips = half its 15-pip width);
++    10:01 Spring Release (rule 4) -> NY post-cut 10:01-17:00 'free
++    movement toward the next IP zone' (rule 5): the swing back (6.1.1 'Price oscillates within a defined range') to its turn. Returns (points from t0, audit text)."""
++    pip = D.PIP[pair]
++    g = (lambda v: '%.3f' % v) if pair == 'DXY' else (lambda v: '%.5f' % v)
++    T8, T10 = _ms(date, 8), _ms(date, 10)
++    up = first == 'up'
++    pA, zA, whyA = micro_walk(pair, X, p0, up, cap_u if up else cap_d)
++    pts = [(t0, p0), (max(T8, t0 + 1), pA)]
++    cuts = sorted([l for l in X['L'] if l['pillar'] == 8 and l.get('cut') == date.isoformat()], key=lambda l: -l.get('notional_m', 0))
++    pin = cuts[0]['p'] if cuts and abs(cuts[0]['p'] - pA) <= 7.5 * pip else None
++    if pin is not None:
++        pts.append((T8 + (T10 - T8) // 4, pin))
++    pC = pin if pin is not None else pA
++    pts.append((max(T10, pts[-1][0] + 1), pC))
++    pB, zB, whyB = micro_walk(pair, X, pC, not up, cap_d if up else cap_u)
++    pts.append((max(t1, pts[-1][0] + 1), pB))
++    nm = lambda z: (z.get('label') or z.get('name') or '-') if z else 'bound'
++    txt = (f"London {first} to {g(pA)} ({nm(zA)}: {whyA}); cage 08:00-10:00 at {g(pC)}" + (f" (pinned at the {cuts[0].get('strike')} strike)" if pin is not None else ' (no strike within 7.5 pips)')
++           + f"; 10:01 release {'down' if up else 'up'} to {g(pB)} ({nm(zB)}: {whyB})")
++    return pts, txt
++
++
++def _trigger_times(monday, date):
++    """the day's volatility triggers after the anchor's harvest (6.6 Step 5(d); Protocols D / G as they stood at the anchor): coupon auction closes and the EIA release, epoch ms"""
++    P = protocols(monday)
++    if P is None:
++        return []
++    out = []
++    for s in [a['close_et'] for a in P['D']['week_auctions']] + [P['G']['week_release']['release_et']]:
++        try:
++            x = dt.datetime.strptime(s, '%Y-%m-%d %I:%M %p')
++        except (ValueError, TypeError):
++            continue
++        if x.date() == date:
++            out.append(_ms(x.date(), x.hour, x.minute))
++    return out
++
++
++def micro_clock(pair, monday, ch, pts, date):
++    """plan step 2 - a day that is not a plain swing-scalp day keeps the chain's own legs, moved onto the canon trigger clock: a vertex the chain puts on the NY session start
++    (12:00 New York, P533 2.2.1 session times) is drawn at the 10:01 Spring Release - the London leg arrives by the NY pre-cut (08:00, rule 3 cage) and holds to 10:00
++    (P452 6.6 rule 4 'If the weekly chain predicts any shape transition, 10:01 AM NY is the most likely trigger time'); a breakout leg (BS / PBS) running through the NY session then
++    holds until the NY swing time - 14:30 (P533 2.2.1 '95% of NY swings don't start until the 2nd half of NY session (after 2:30 PM ET)'), DXY 15:00 (FA 10 / P533 2.2.1 'breakout
++    doesn't start until ~3:00 PM ET') - or an earlier volatility trigger of the day after 10:01 (P533 2.2 'US Treasury auctions ... EIA ... fuel to violently drive spot prices out of
++    local intraday consolidations'; 6.6 Step 5(d))."""
++    T8, T10, T12 = _ms(date, 8), _ms(date, 10), _ms(date, 12)
++    T_sw = _ms(date, 15) if pair == 'DXY' else _ms(date, 14, 30)
++    trig = [t for t in _trigger_times(monday, date) if T10 < t < T_sw]
++    T_go = min(trig) if trig else T_sw
++    bs = [l for l in ch.get('legs', []) if l['shape'] in ('BS', 'PBS') and l['t0'] <= T12 < l['t1']]
++    out = []
++    for k, (t, p) in enumerate(pts):
++        if t == T12 and k > 0 and pts[k - 1][0] < T8:
++            out += [(T8, p), (T10, p)]
++            if bs and k + 1 < len(pts) and pts[k + 1][0] > T_go:
++                out.append((T_go, p))
++            if k == len(pts) - 1:
++                out.append((T12, p))
++        else:
++            out.append((t, p))
++    return [q for j, q in enumerate(out) if j == 0 or q[0] > out[j - 1][0]]
++
++
++def micro_arrival(t, n):
++    """plan step 1 - when a breakout leg that starts at instant t arrives: 6.8 'BS 1-3 sessions' read at the chain's own figure BS_SESSIONS (6.10 'Assume price moves at 30-50% of the
++    speed you think it will' -> the upper figure): the end of the n-th session counted from the one holding t (P533 2.2.1: Tokyo 17:00-02:00, London 02:00-12:00, NY 12:00-17:00 New York)"""
++    d, k, _ = _skey(t)
++    for _ in range(n - 1):
++        k += 1
++        if k > 2:
++            k, d = 0, d + dt.timedelta(days=1)
++            while d.weekday() >= 5:
++                d += dt.timedelta(days=1)
++    return _ms(d, {0: 2, 1: 12, 2: 17}[k])
++
++
++def micro_target(ach, d, p):
++    """plan step 1 - the alternative chain's breakout target: its first breakout / reversal leg in the Decision Zone's direction (6.6 Step 4 'the alternative chain') whose
++    target still lies BEYOND the breaking close p (a target price already passed is not ahead of the move); none -> (None, 'BS'): the walk then runs to the first reacting zone
++    within the GS Law 2 BS reach. Returns (price, shape)."""
++    for l in ach.get('legs', []):
++        if l['dir'] == d and l['shape'] in ('BS', 'PBS', 'RWL', 'WL', 'PWL') and ((l['to'] > p) if d == 'up' else (l['to'] < p)):
++            return l['to'], l['shape']
++    return None, 'BS'
++
++
+ def _strong_4h_near(X):
+     """E2X:235 key rule 'If not right near a strong 4H pressure zone right now - BS is most likely days away': a 4H BoM zone (0-1X) or a Tier-1 IP zone within the swing-scalp reach (GS Law 2: 30 pips)"""
+     spot, U = X['spot'], X['U']
+diff --git a/e1_tool/plutus.py b/e1_tool/plutus.py
+index 413d354..a4f4b63 100644
+--- a/e1_tool/plutus.py
++++ b/e1_tool/plutus.py
+@@ -264,6 +264,45 @@ def _flow27(pair, kept, live, seg, t_a, t_e, log, f, day, status):
+     return [q for q in kept if q not in drop and not (q.get('parent_ref') is not None and q['parent_ref'] in drop)]
+ 
+ 
++def _micro_day(pair, monday, i, t_a, t_L, t_e, op, ch, d, X, carry=None):
++    """M-70 EXAMPLE (plan memory/17 steps 2-5; switch E2.E2_MICRO, default OFF; drawing only): the day's DRAWN line. Asia (trading-day open -> London open) holds the open price
++    (P452 6.6 rule 1 'price stays within the prior day's range'); London + NY are built AT THE LONDON OPEN from bars closed by then (the L-53 anchor; P452 rule 2 reads the Asian
++    session): a swing-scalp day walks the Engine 1 zones on the session clock (E2.micro_ss); any other day keeps the chain's own legs, on the trigger clock (E2.micro_clock).
++    carry = (arrival, target) of a breakout leg drawn the day before (plan step 1): the Asian session extends it (P452 6.6 rule 6 'if a shape is active at the close of Day N ...
++    Day N+1 opens with that shape continuing. The Asian session of Day N+1 typically extends or consolidates the Day N move'). Returns (segments, audit text)."""
++    import datetime as _dt
++    date = _dt.date.fromisoformat(monday) + _dt.timedelta(days=i)
++    out = [[(t_a, op), (t_L, op)]] if i > 0 and t_L > t_a else []
++    if out and carry is not None and carry[0] > t_a:
++        out = [_cut([(t_a, op), (carry[0], carry[1])], t_a, t_L)]
++    pL = X['spot']
++    if d is not None and d.get('shapes') == ['SS'] and ch.get('range'):
++        f_e, c_e = min(ch['range']), max(ch['range'])
++        cap_u = E2.micro_turn(pair, X, ch.get('ceil'), True) or c_e
++        cap_d = E2.micro_turn(pair, X, ch.get('floor'), False) or f_e
++        cap_u, cap_d = min(cap_u, d['hi']), max(cap_d, d['lo'])
++        if 3 in E2.MICRO_STEPS:                                 # GS Law 2 'The day's shape decides which zones are reachable (SS <= 30 pips from spot ...)' (plan step 3)
++            cap_u, cap_d = min(cap_u, pL + 0.30 * X['U']), max(cap_d, pL - 0.30 * X['U'])
++        nearer = 'up' if abs(cap_u - pL) < abs(pL - cap_d) else 'down'
++        if 4 in E2.MICRO_STEPS:
++            since = t_a if i > 0 else D.week_start_ms(monday)
++            first, why = _asof(monday, t_L, lambda: E2.micro_bias(pair, monday, since, nearer))
++        else:
++            first, why = nearer, 'toward the nearer bound (D-41; step 4 off)'
++        pts, txt = E2.micro_ss(pair, X, date, t_L, t_e, pL, first, cap_u, cap_d)
++        txt = f"first leg {first}: {why}; " + txt
++    else:
++        rest = _cut(ch['path'], t_L, t_e)
++        if len(rest) < 2:
++            return out, 'no chain leg this day'
++        pts = [(t_L, pL)] + rest[1:]
++        if 2 in E2.MICRO_STEPS:
++            pts = E2.micro_clock(pair, monday, ch, pts, date)
++        txt = f"{'+'.join(d['shapes']) if d else '-'}: the chain's legs from the London-open price" + (' on the trigger clock (10:01 release, NY swing time)' if 2 in E2.MICRO_STEPS else '')
++    out.append(pts)
++    return out, txt
++
++
+ def daily_anchor(pair, monday, chain, R, src_days=None):
+     """DAILY ANCHORING (L-47 / L-53; D-131, D-132, D-134, D-136). The Monday map and chain hold while they hold. Every trading day:
+     at its TRADING-DAY OPEN (17:00 New York the evening before; the day's orders rest through the Asian session), with only bars closed by then:
+@@ -284,6 +323,7 @@ def daily_anchor(pair, monday, chain, R, src_days=None):
+             'ip': [z for z in X0.get('zones', []) if z.get('drawn')]}
+     cur = {'chain': chain, 'R': R, 'anchor': b0, 'lvl': _levels(chain, R), 'active': None}
+     vw = None          # D-138: the chain the LINE and DAY BOXES are drawn from once the chain in force has failed - re-anchored at a London open on the rebuilt map
++    micro, mst = E2.E2_MICRO, {'switched': False, 'X_prev': X0}      # M-70 example (memory/17): the drawn line built by _micro_day - drawing only
+ 
+     def alts_of(ch):
+         return [a_ for a_ in (ch.get('alts') or ([{'alt': ch.get('alt'), 'chain': ch.get('alt_chain')}] if ch.get('alt_chain') else [])) if a_.get('alt') and a_.get('chain')]
+@@ -462,12 +502,45 @@ def daily_anchor(pair, monday, chain, R, src_days=None):
+                     days[-1:] = [d2] if (days and days[-1]['day'] == DAYS[i]) else days[-1:] + [d2]
+                 seg = _cut(seg, t_a, t_L) if len(seg) > 1 else seg
+                 seg2 = _day_line(vw['chain'], d2, monday, t_L, t_e, Xi['spot'], X0) or _cut(vw['chain']['path'], t_L, t_e)
+-                if len(seg2) > 1:
++                if len(seg2) > 1 and not micro:
+                     if seg2[0][0] == t_L:
+                         seg2[0] = (t_L, Xi['spot'])
+                     segs.append(seg2)
+             partsL[i] = {'adds': [(fam, round(z['bot'], 6), round(z['top'], 6)) for fam, z in new], 'reanchor': reanch}
+-        if len(seg) > 1:
++        if micro:
++            # M-70 example (plan memory/17): the day's drawn line - Asia at the trading-day open price, London + NY built at the London open (_micro_day); the orders above are untouched
++            XL = X0 if i == 0 else Xi
++            dL = days[-1] if (days and days[-1]['day'] == DAYS[i]) else d
++            ms, txt = _micro_day(pair, monday, i, t_a, t_L, t_e, op, vw['chain'] if vw is not None else view, dL, XL, mst.get('carry'))
++            mst['carry'] = None
++            if 1 in E2.MICRO_STEPS and cur['active'] is None and not mst['switched'] and cur['lvl']:
++                # plan step 1 (6.6 Step 4, P533:1895): the alternative takes over the drawn line AT THE 30m CANDLE that closes beyond the Decision Zone - not at the next day's open
++                hit = next(((x['time'] + 1800000, x['close'], d_) for x in D.closed_until(pair, '30', t_e) if x['time'] + 1800000 > max(t_a, cur['anchor'])
++                            for d_, lv in cur['lvl'].items() if ((x['close'] > lv[0]) if d_ == 'up' else (x['close'] < lv[0]))), None)
++                a_ = next((a for a in alts_of(cur['chain']) if hit is not None and a['alt']['dir'] == hit[2]), None)
++                if a_ is not None:
++                    tc, c, d_ = hit
++                    tgt, shp = E2.micro_target(a_['chain'], d_, c)
++                    if tgt is not None:                             # GS Law 2: BS / RWL reach 100 pips
++                        tgt = min(tgt, c + XL['U']) if d_ == 'up' else max(tgt, c - XL['U'])
++                    pE, zE, whyE = E2.micro_walk(pair, XL if tc >= t_L else mst['X_prev'], c, d_ == 'up', tgt)
++                    T_arr = max(E2.micro_arrival(tc, E2.BS_SESSIONS), tc + 1)
++                    leg = [(tc, c), (T_arr, pE)]
++                    ms = [q for q in (_cut(s, s[0][0], tc) for s in ms if s and s[0][0] < tc) if len(q) > 1] + [_cut(leg, tc, max(t_e, tc + 1))]
++                    mst['switched'], mst['carry'] = True, ((T_arr, pE) if T_arr > t_e else None)
++                    if days and days[-1]['day'] == DAYS[i]:
++                        # the day's forecast box ends at the breaking candle; the alternative's shape gets its own box from that candle (nothing drawn before it uses it)
++                        q = days[-1]
++                        days[-1] = dict(q, t1=max(q['t0'] + 1, tc))
++                        p_e = ms[-1][-1][1]
++                        days.append(dict(q, shapes=[shp], dir=d_, lo=min(c, p_e), hi=max(c, p_e), t0=tc, t1=max(t_e, tc + 1), conf=a_['alt'].get('conf') or q['conf'],
++                                         key=a_['alt'].get('decision_zone') or q.get('key', '-')))
++                    txt += (f" | DECISION ZONE BROKEN: 30m close {f(c)} at {D.ts(tc)} UTC beyond {f(cur['lvl'][d_][0])} ({cur['lvl'][d_][1]}) -> the alternative {shp} {d_} draws the line "
++                            f"from that candle toward {f(pE)}, arriving {D.ts(T_arr)} UTC (6.8 BS 1-3 sessions) ({(zE.get('label') or zE.get('name')) if zE else ('its target' if tgt is not None else 'the BS reach')}: {whyE})")
++            segs += [s for s in ms if len(s) > 1]
++            audit.append(f"MICRO {DAYS[i]} (E2_MICRO example, drawing only): {txt}")
++            mst['X_prev'] = XL
++        elif len(seg) > 1:
+             segs.append(seg)
+     keep = [s for s in keep if s.get('parent_ref') is None or s['parent_ref'] in keep]
+     trades = [q for q in keep if q.get('category') != 'Reinforcement' and not q.get('alt')]
+diff --git a/tools/leak_check_segments.py b/tools/leak_check_segments.py
+index 913c45e..93348b1 100644
+--- a/tools/leak_check_segments.py
++++ b/tools/leak_check_segments.py
+@@ -37,13 +37,23 @@ for m in args:
+     full = run()
+     m0 = dt.date.fromisoformat(monday)
+     anchors = sorted({D.week_start_ms(monday) + i * 86400000 for i in range(1, 5)} | {D.day_anchor_ms(monday, i) for i in range(5)}
+-                     | {E2._ms(m0 + dt.timedelta(days=i), h) for i in range(5) for h in getattr(E2, 'MICRO_ANCHOR_HOURS', (10,))})
++                     | {E2._ms(m0 + dt.timedelta(days=i), h) for i in range(5) for h in getattr(E2, 'MICRO_ANCHOR_HOURS', (10,))}
++                     | {s[0][0] for s in full if s})                 # M-70 example: every instant a drawn segment starts at (incl. a Decision-Zone break on a 30m close) is an anchor too
+     n_bad = 0
++
++    def same(x, y, T):
++        # a segment the full run ended AFTER T (cut short by a later event, e.g. the 30m close that breaks the Decision Zone) must be the start of what the run cut at T drew
++        if x == y:
++            return True
++        if x and y and x[-1][0] > T and x[0][0] == y[0][0] and y[-1][0] >= x[-1][0]:
++            z = plutus._cut(y, x[0][0], x[-1][0])
++            return len(z) == len(x) and all(int(t) == tx and abs(float(v) - vx) <= 1e-6 for (t, v), (tx, vx) in zip(z, x))
++        return False
+     for T in anchors:
+         cut = run(T)
+         a = [s for s in full if s and s[0][0] <= T]
+         b = [s for s in cut if s and s[0][0] <= T]
+-        if a != b:
++        if not (len(a) == len(b) and all(same(x, y, T) for x, y in zip(a, b))):
+             n_bad += 1
+             k = next((i for i, (x, y) in enumerate(zip(a, b)) if x != y), min(len(a), len(b)))
+             bad.append(f"{pair} {monday}: drawn segments starting by {D.ts(T)} UTC change when the bars after it are removed (first differing segment #{k}: "
