@@ -22,21 +22,8 @@ e3bw = nz(time - time[1], 3600000)
 var int e3E0 = na
 var int e3X0 = na
 var int e3R0 = 0
-var int e3E1 = na
-var int e3X1 = na
-var int e3R1 = 0
-var int e3E2 = na
-var int e3X2 = na
-var int e3R2 = 0
-var int e3E3 = na
-var int e3X3 = na
-var int e3R3 = 0
-var bool e3V0 = false
-if isPair and na(e3E0) and not e3V0 and time >= 1783317600000 and time < 1783458000000 and high >= 1.33959
-    if (not na(e3E3) and na(e3X3))
-        e3V0 := true
-    else
-        e3E0 := time
+if isPair and na(e3E0) and time >= 1783317600000 and time < 1783458000000 and high >= 1.33959
+    e3E0 := time
 if isPair and not na(e3E0) and na(e3X0)
     if high >= 1.34155
         e3X0 := time
@@ -44,12 +31,11 @@ if isPair and not na(e3E0) and na(e3X0)
     else if low <= 1.33348
         e3X0 := time
         e3R0 := 1
-var bool e3V1 = false
-if isPair and na(e3E1) and not e3V1 and time >= 1783317600000 and time < 1783371600000 and low <= 1.33333
-    if (not na(e3E2) and na(e3X2))
-        e3V1 := true
-    else
-        e3E1 := time
+var int e3E1 = na
+var int e3X1 = na
+var int e3R1 = 0
+if isPair and na(e3E1) and time >= 1783317600000 and time < 1783371600000 and low <= 1.33333
+    e3E1 := time
 if isPair and not na(e3E1) and na(e3X1)
     if low <= 1.33235
         e3X1 := time
@@ -57,12 +43,11 @@ if isPair and not na(e3E1) and na(e3X1)
     else if high >= 1.33926
         e3X1 := time
         e3R1 := 1
-var bool e3V2 = false
-if isPair and na(e3E2) and not e3V2 and time >= 1783490400000 and time < 1783717200000 and low <= 1.33255
-    if (not na(e3E1) and na(e3X1))
-        e3V2 := true
-    else
-        e3E2 := time
+var int e3E2 = na
+var int e3X2 = na
+var int e3R2 = 0
+if isPair and na(e3E2) and time >= 1783490400000 and time < 1783717200000 and low <= 1.33255
+    e3E2 := time
 if isPair and not na(e3E2) and na(e3X2)
     if low <= 1.33125
         e3X2 := time
@@ -70,12 +55,11 @@ if isPair and not na(e3E2) and na(e3X2)
     else if high >= 1.34254
         e3X2 := time
         e3R2 := 1
-var bool e3V3 = false
-if isPair and na(e3E3) and not e3V3 and time >= 1783458000000 and time < 1783717200000 and high >= 1.34254
-    if (not na(e3E0) and na(e3X0))
-        e3V3 := true
-    else
-        e3E3 := time
+var int e3E3 = na
+var int e3X3 = na
+var int e3R3 = 0
+if isPair and na(e3E3) and time >= 1783458000000 and time < 1783717200000 and high >= 1.34254
+    e3E3 := time
 if isPair and not na(e3E3) and na(e3X3)
     if high >= 1.34396
         e3X3 := time
@@ -349,42 +333,22 @@ if barstate.islast and isPair
         label.new(1783587600000, 1.34524, "Thu BS\nup 40%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,167,38), size=size.small)
         box.new(1783630800000, 1.34340, 1783717200000, 1.33941, bgcolor=color.new(color.rgb(171,71,188), 88), border_color=color.new(color.rgb(171,71,188), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783652400000, 1.34411, "Fri BS+WL+RWL\nup 32%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(171,71,188), size=size.small)
-        line.new(1783317600000, 1.33362, 1783339200000, 1.33260, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783339200000, 1.33443, 1783346400000, 1.33443, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783346400000, 1.33455, 1783371600000, 1.33522, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783317600000, 1.33362, 1783339200000, 1.33333, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783339200000, 1.33333, 1783346400000, 1.33333, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783346400000, 1.33333, 1783371600000, 1.33941, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783371600000, 1.33879, 1783404000000, 1.33879, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783404000000, 1.33845, 1783425600000, 1.33941, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783425600000, 1.33880, 1783432800000, 1.33880, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783432800000, 1.33706, 1783458000000, 1.33630, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783404000000, 1.33879, 1783425600000, 1.33941, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783425600000, 1.33941, 1783432800000, 1.33941, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783432800000, 1.33941, 1783458000000, 1.33333, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783458000000, 1.33589, 1783490400000, 1.33589, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783490400000, 1.33563, 1783512000000, 1.33328, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783512000000, 1.33358, 1783519200000, 1.33242, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783519200000, 1.33708, 1783526400000, 1.33155, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783490400000, 1.33589, 1783526400000, 1.33155, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783526400000, 1.33155, 1783544400000, 1.33544, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783544400000, 1.33877, 1783576800000, 1.33877, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783576800000, 1.34043, 1783598400000, 1.33911, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783598400000, 1.33885, 1783605600000, 1.33922, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783605600000, 1.34009, 1783612800000, 1.33933, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783576800000, 1.33877, 1783612800000, 1.33933, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783612800000, 1.33933, 1783630800000, 1.34264, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783630800000, 1.34078, 1783663200000, 1.34078, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783663200000, 1.34269, 1783675200000, 1.34340, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783675200000, 1.34340, 1783684800000, 1.34180, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783684800000, 1.34261, 1783692000000, 1.34061, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783692000000, 1.34059, 1783699200000, 1.33941, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783339200000, 1.33260, 1783339200000, 1.33443, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783346400000, 1.33443, 1783346400000, 1.33455, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783404000000, 1.33879, 1783404000000, 1.33845, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783425600000, 1.33941, 1783425600000, 1.33880, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783432800000, 1.33880, 1783432800000, 1.33706, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783490400000, 1.33589, 1783490400000, 1.33563, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783512000000, 1.33328, 1783512000000, 1.33358, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783519200000, 1.33242, 1783519200000, 1.33708, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783576800000, 1.33877, 1783576800000, 1.34043, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783598400000, 1.33911, 1783598400000, 1.33885, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783605600000, 1.33922, 1783605600000, 1.34009, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783663200000, 1.34078, 1783663200000, 1.34269, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783684800000, 1.34180, 1783684800000, 1.34261, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
-        line.new(1783692000000, 1.34061, 1783692000000, 1.34059, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783663200000, 1.34078, 1783675200000, 1.34340, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783675200000, 1.34340, 1783699200000, 1.33941, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
     if show_e3
         // GB1 Mon SS SHORT E 1.33959 SL 1.34155 TP 1.33348 RRR 3.12 | Swing Scalp / London Open | entry internal LQZ rung; SL (b) 1 pip inside the close edge of the shield (4H band) [P533:506 reversal entry: inside the next zone]; TP E2 bounding supply / demand zone near edge (E3C:333, rule 5)
         e3a0 = not na(e3E0) ? e3E0 - e3bw : 1783317600000

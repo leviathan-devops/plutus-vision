@@ -1,3 +1,5 @@
+# REJECTED BY THE OPERATOR (M-69 / L-64, 2026-11-28): this overnight plan and everything built under it are rejected; the engine code is restored to the 9a40e9b checkpoint. Kept only as history.
+
 # 16 — THE PLAN FOR M-67 / M-68 (written 2026-11-27 ~23:10 UTC; the operator is asleep; THIS FILE GOVERNS THE WORK UNTIL HE SAYS OTHERWISE)
 
 He: "once we have written down the plan, obey the plan verbatim, religiously, do not fucking deviate from it" (M-67). "Do not fuck anything up while I'm gone ...

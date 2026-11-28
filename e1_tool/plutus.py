@@ -513,8 +513,6 @@ def run(pair, monday, daily=False):
     if daily:
         src_days = _src_days('DXY' if pair == 'EURUSD' else 'EURUSD', monday) if pair != 'DXY' else None
         chain, setups = daily_anchor(pair, monday, chain, setups, src_days)
-        if E2.MICRO_PATH:                                   # plan memory/16 M2 / D-147: the drawn line only (orders unchanged)
-            chain['segments'], chain['micro_links'] = E2.micro_path(pair, monday, chain, X)
     # the day tags of Engine 2 as label extents (same placement as e2_chain.pine: one row above the envelope, odd days one row higher when a tag is composite; two text lines each;
     # Pinebox draws the text from the label's point to the right, 1.65 one-hour bars per character) - Engine 3's labels keep clear of them
     import e3_trades as E3
@@ -711,13 +709,6 @@ if __name__ == '__main__':
     args_ = [a for a in sys.argv[1:] if not a.startswith('--')]
     out = args_[2] if len(args_) > 2 else os.path.join(HERE, 'out', f'PLUTUS_{pair}_{monday}.pine')
     daily = '--weekly' not in sys.argv              # daily anchoring is the default (D-131, L-47); --weekly = every order fixed at the Monday anchor
-    for a_ in sys.argv:                             # --switch=module.NAME=VALUE: a plan memory/16 switch for this run only (e.g. --switch=e2_chain.MICRO_PATH=1)
-        if a_.startswith('--switch='):
-            k_, v_ = a_[len('--switch='):].split('=')
-            m_, n_ = k_.split('.')
-            mod_ = sys.modules.get(m_) or __import__(m_)
-            o_ = getattr(mod_, n_)
-            setattr(mod_, n_, bool(int(v_)) if isinstance(o_, bool) else tuple(int(x) for x in v_.split(';')) if isinstance(o_, tuple) else type(o_)(v_))
     X, chain, setups, src = run(pair, monday, daily=daily)
     open(out, 'w').write(src)
     print(out)
