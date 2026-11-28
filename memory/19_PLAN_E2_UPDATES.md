@@ -27,3 +27,17 @@ architecture session by session - LOW frequency (2-4 a day, never more than 6), 
 4. MEASURE: tools/research/devset.py line metric always next to the no-forecast line at the same update times; leak check at every update instant; orders identical; switch default off until he approves the result.
 5. ORDER: step A the restart at the 4 times with the product's existing legs (expected ~ the no-forecast level); step B next-zone legs; step C event direction; each on golden + the 4 weeks, then 4 new weeks; report after each.
 Honest arithmetic: with 4 updates a day perfect legs give 80-87%; 80-85% therefore needs nearly every leg right, or a 5th update (perfect 84-90%).
+
+## v3.1 (2026-11-28, after M-73 / M-74 / M-75) - THE FULL COMPONENT LIST for Engine 2 (sent in chat; still PLAN ONLY, not approved)
+'Step B' (30m telescoping inside the swing-scalp box) was one piece. Simple architecture only: fixed-time updates; market-triggered updates and the scalping engine are BENCHED (design/BLUEPRINT_LIVE_TRIGGERS_v1.md, design/BLUEPRINT_SCALP_ENGINE_v1.md).
+| # | Component | His source | Coded today | To build |
+|---|---|---|---|---|
+| 1 | Fixed-time restart of the line (17:00 / 02:00 / 05:00 / 10:00 NY), line only, past frozen | M-72, L-53 | 17:00 only (02:00 in the M-70 example, off) | yes - step A |
+| 2 | Telescoped containers, parent constrains child: week (4H) -> day (1H: the day box's ceiling / floor zones) -> session leg (30m zones inside); a child leg does not leave its parent unless the parent's zone has failed | KCE 2.1 / 3.3 / 6A; SMC Top Down | no containment; E2 never reads 30m / 15m zones | yes - step B |
+| 3 | Leg end = the NEXT zone of the same timeframe class; hold / fail from the zone's Engine 1 state (BoM / MoM, reactions, ZFP, pressure degree, Refined) | FA 4.4; GS Part 7 / 8; P533:491-493 | outer zones of the day box; class matching only for breakout targets | yes - step B |
+| 4 | Direction from what happened at the last zone since the previous update: held -> back toward the opposite zone; failed -> on to the next defensive zone / the opposing BoM; plus the lower timeframe's structure shift at a higher-timeframe zone and alignment with the layer above; pairs follow DXY | GS Part 6 (ZoC); SMC Market Structure + Top Down; M-72 | nearer zone / template; my M-70 pressure reading (57-60%) | yes - step C |
+| 5 | Shape transition at an update: the day's ceiling / floor zone failed since the last update -> the alternative chain's shape takes the line at THAT update (today: next trading-day open) | P533:1895; GS Part 6 | next day only | yes - step C |
+| 6 | Repeated touches of one zone (2-3 vertex hits before a surge) = one state 'at the zone' | M-72 | not modelled | yes - step C |
+| 7 | Session roles and speed: London zone-to-zone, 08:00-10:00 breakout / whiplash triggers, NY swings; moves take longer than expected; two piercing moves -> 1-2 days of swing scalps | GS Part 10; P533 2.2.1; FA 9 | session clock in the template; FA 9 in the chain | reuse, no new rule |
+| 8 | The day-level forecast itself (day shape right 44 / 60; candles stay inside the day box on 37 / 65 days): a wrong parent gives a wrong child | - | macro chain (locked) | NOT in this plan - measured after steps A-C, reported |
+| 9 | Measurement: line metric next to the no-forecast line at the same instants; leak check per instant; orders identical; switch off until approved | L-65, L-67 | devset + leak tools | each step |

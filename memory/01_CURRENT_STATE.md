@@ -1,3 +1,9 @@
+## STATE (NEWEST, 2026-11-28) - M-74 / M-75 answered (L-69): two proper blueprints written and BENCHED (design/BLUEPRINT_SCALP_ENGINE_v1.md, design/BLUEPRINT_LIVE_TRIGGERS_v1.md); Engine 2 plan v3.1 (full component list, memory/19) sent in chat - STILL PLAN ONLY, WAITING FOR HIS GO
+- Simple architecture only: fixed-time line updates (17:00 / 02:00 / 05:00 / 10:00 NY), line only. No market-triggered updates, no scalping engine, no own ideas (L-69).
+- Steps when he says go: A fixed-time restart -> B telescoped containers + next zone of the same class -> C direction from the zone event + transition at an update + multi-touch state; each behind a switch, measured (devset + no-forecast line + leak check), reported.
+- Blueprint skill installed: .claude/skills/design-blueprint/SKILL.md (validator.py not on this machine). His three telescoping files: canon/operator_uploads_2026-11-28/ (facts in memory/08).
+- Do NOT raise: swing-scalp screenshots, the scalp build, market triggers (all later, his call).
+
 ## STATE (NEWEST, 2026-11-28) - M-73 answered in chat (L-68): swing scalps = LTF oscillation between ceiling / floor zones; phase 2 scalping engine blueprint minted (memory/20, NOT built); still PLAN ONLY for Engine 2 (memory/19) - WAITING FOR HIS APPROVAL
 - Told him what is coded for multi-timeframe: E1 scans S/D on 4H / 1H / 30m / 15m (Refined joins, nested_in); E2 uses pressure zones + 4H / 1H only (never 30m / 15m) for ceiling / floor and line; TF matching only on breakout targets; E3 SS entries at the bounds + 4H / 1H zones inside, LTF for entry refinement.
 - My answers to the plan-v3 decisions: times 17:00 / 02:00 / 05:00 / 10:00 yes; fixed times only (market-triggered = fired by price, e.g. a 30m close through the ceiling / floor); intraday update = the line only. Forex Factory still blocked (red folder NO DATA; auctions / EIA / RRP harvested). His 'additional context on telescoping' attachment did not arrive.

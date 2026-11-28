@@ -28,3 +28,6 @@ Everything is computed dynamically from market data available at the **Monday Lo
 - Original canon + weekly report oracles: git branch `origin/handover` (worktree `/home/user/handover-branch/Original_Canon_Data`).
 - Canon copy in this repo: `canon/Toolset/`. Spec digests + oracle data: `context_management/spec/`, `context_management/oracle/`.
 - The indicator: `indicator/` (V1 sealed baseline + engine layers). Evidence frames: `evidence/`.
+
+## Blueprints (operator ruling L-69, 2026-11-28)
+When the operator says 'blueprint': load the skill `.claude/skills/design-blueprint/SKILL.md` (his file) FIRST and build a proper CAD-grade design blueprint in `design/` (constraint first, planes, contracts + failure modes, traced numbers, wired anti-patterns, failable exits, risk register, one-paragraph summary). Never a note called a blueprint.
