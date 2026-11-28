@@ -1,3 +1,9 @@
+## STATE (NEWEST, 2026-11-28 ~01:10 UTC) - night run complete; report + addendum delivered; waiting for the operator (he wakes ~07:00-08:00 UTC)
+- Product = commit cd11353: D-147 / D-147b micro path ON (anchors 02:00 / 08:00 / 10:00 NY, levels 2, clamp), D-148 ON; E1 locked. Numbers: dev 13 TP / 20 SL (39%), held-out 2 / 13 (13%), golden 18 / 0; line dev 59% within 10 p (was 41%), held-out 59%, golden 67%.
+- Report: evidence/m67/REPORT_M67.md (sent twice; last with the library addendum). Frames evidence/m67b (+ before/).
+- Library oracle (task 23, context_management/oracle/library/trades.json): 11 trades, 5 shape-box pictures, 1 fib grid; 23 pictures left (folders listed in the file's 'status'). Library-week V1 harvest ran in the background (scratchpad harvest_library.txt) for a later daily-product comparison on those weeks.
+- NEXT: his answer to the blocker (anchors + stops on 2-3 non-golden trades); else continue task 23 and compare the library weeks with the daily product (devset --maps GBPUSD:2026-02-09,... once the harvest is complete).
+
 ## STATE (NEWEST, 2026-11-28 ~01:35 UTC) - report delivered (evidence/m67/REPORT_M67.md + 11 frames, SendUserFile); M5 library oracle in progress
 - M5: context_management/oracle/library/trades.json (7 trades, 2 shape-box pictures read). Finding: on GBPUSD 03-02 / 03-30 and EURUSD 04-13 my Engine 2 direction / re-anchored range matched his trade, Engine 3 had no order (IP gate, unconfirmed entry below the anchor price, REANCHOR off). RUNNING: devset with plutus.REANCHOR=1 as a locator (locked flag - report the number, do not flip without him); library-week V1 harvest (scratchpad harvest_library.txt).
 - NEXT: REANCHOR locator result -> addendum to the report (one short section, numbers only) + SendUserFile; keep reading library pictures (folders R --> BS\WL, R --> WL, BS --> R\RWL, LIQUIDITY LADDERS, PBS, BS\WL --> SS, WL --> *) into the oracle file; commit + push each step.
