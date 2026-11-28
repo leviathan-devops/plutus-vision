@@ -1,6 +1,6 @@
 {
  "source": "/home/user/inputs/trades/WINNING_TRADE_LIBARARY (operator's winning trade library; L-48 / L-55). Read by eye from the TradingView position tools; chart clock UTC+4 (screenshot footer) converted to UTC; prices +-2 pips; RR and pip distances as printed on the tool.",
- "status": "partial - 2026-11-28 01:30 UTC: 'Swing Scalps' (3) and 4 of 8 'SS --> BS' pictures read; the rest open (task 23)",
+ "status": "partial - 2026-11-28 ~01:00 UTC: 'Swing Scalps' 3/3, 'SS --> BS' 8/8 read; open: R --> BS\\WL 5, R --> WL 5, BS --> R\\RWL 5, LIQUIDITY LADDERS 5, PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
  "trades": [
   {
    "pair": "GBPUSD",
@@ -99,6 +99,21 @@
    "tp_pips": 43.8,
    "rr": 7.3,
    "zones": "entry at '30m Refined 1H (2x Mitigated) | MoM', '15m (Unmitigated) | MoM' above, TP at '4H Liquidity'"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-03-02",
+   "picture": "SS --> BS/Screenshot from 2026-07-13 18-58-36.png",
+   "fill_utc": "2026-03-03 ~12:50 (order ticket, TradeZella)",
+   "dir": "SHORT",
+   "entry": 1.33645,
+   "sl": 1.3372,
+   "tp": 1.33215,
+   "sl_pips": 7.5,
+   "tp_pips": 43.0,
+   "rr": 5.7,
+   "zones": "entry at '15m (Consolidating' under '30m (Unmitigated) | MoM' and '1H (Unmitigated) | MoM'; TP into '4H (2x Mitigated ~ Pierced) | BoM' / '4H Liquidity Shield ~ PIERCED'",
+   "his_note": "4H BoM Zone pierced = ALL 4H liquidity near the fallen zone will be swept. Bottom can be predicted this way even if no demand present. War pillaging. ZoC falls = pillage surrounding liquidity."
   }
  ],
  "comparison_with_my_build": {
@@ -115,6 +130,39 @@
    "pair": "GBPUSD",
    "picture": "SS --> BS/Screenshot from 2026-07-13 18-58-05.png",
    "utc_plus4_sequence": "Feb 4-5: BREAKOUT SURGE (down); Feb 6: RECOVERY SURGE; Feb 6-9: SWING SCALPS; Feb 9-10: BREAKOUT SURGE (up)"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "SS --> BS/Screenshot from 2026-07-13 18-59-07.png",
+   "utc_plus4_sequence": "Feb 20-25: SWING SCALPS (inside '4H Liquidity Shield - ZoC - Bull Contesting'); Feb 25-26: BREAKOUT SURGE (up to ~1.3565, '1H Liquidity'); Feb 26: REVERSE WHIPLASH; Feb 26: RECOVERY SURGE; Feb 26-27: PIERCING WHIPLASH (down to ~1.3450, 'Liquidity Shield Zone')"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "SS --> BS/Screenshot from 2026-07-13 18-59-15.png",
+   "utc_plus4_sequence": "Mar 2: PIERCING BREAKOUT SURGE (down); Mar 2-3: RECOVERY; Mar 3: WHIPLASH (down to ~1.3282); Mar 4-9: SWING SCALPS ('30m MoM Liquidity Shield', ~1.3282-1.3410); Mar 9-10: BREAKOUT SURGE (up to ~1.3485)",
+   "vs_my_E2": "my daily product 2026-03-02: Mon-Tue SS 1.33674-1.34658, Wed SS+BS down, Thu-Fri BS down - his Monday was the breakout (piercing, down) and Wed-Fri the swing-scalp range: both halves of my week are in the wrong order"
+  }
+ ],
+ "fib_grids": [
+  {
+   "pair": "GBPUSD",
+   "picture": "SS --> BS/Screenshot from 2026-07-13 18-58-56.png",
+   "timeframe": "1H",
+   "levels_printed": {
+    "0": 1.3282,
+    "0.236": 1.33121,
+    "0.382": 1.33307,
+    "0.5": 1.33458,
+    "0.618": 1.33608,
+    "0.786": 1.33822,
+    "1.382": 1.34582,
+    "1.618": 1.34883,
+    "1.786": 1.35097
+   },
+   "level_1_solved": 1.34096,
+   "anchors": "0 = the deepest low of the SWING SCALPS range (Mar 3-7, 1.32820); 1 = the range high (~1.3410) - the web is drawn on the consolidation range itself",
+   "what_happened": "BREAKOUT SURGE Mar 9-10 from the 0-0.382 area (a '1H (Unmitigated) | MoM' at ~1.3304-1.3310) up to the 1.618 level 1.34883, inside '4H (Unmitigated) | MoM' supply 1.3460-1.3490 (Air meets Fire), then a pullback",
+   "canon": "Spiderwebs PDF item 3 'Target 2 or 3 levels for swings from a SS anchor point'; FA 4.5 wormhole 0.618 -> 1.618; FA 2.4 'Air PIERCES through Fire'"
   }
  ]
 }
