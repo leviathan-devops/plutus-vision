@@ -1,6 +1,6 @@
 {
  "source": "/home/user/inputs/trades/WINNING_TRADE_LIBARARY (operator's winning trade library; L-48 / L-55). Read by eye from the TradingView position tools; chart clock UTC+4 (screenshot footer) converted to UTC; prices +-2 pips; RR and pip distances as printed on the tool.",
- "status": "partial - 2026-11-28 ~01:05 UTC: 'Swing Scalps' 3/3, 'SS --> BS' 8/8, 'R --> BS\\WL' 5/5 read (one repeats the Mar 11 fib grid); open: R --> WL 5, BS --> R\\RWL 5, LIQUIDITY LADDERS 5, PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
+ "status": "partial - 2026-11-28 ~01:20 UTC: Swing Scalps 3/3, SS --> BS 8/8, R --> BS\\WL 5/5, R --> WL 5/5 read; open: BS --> R\\RWL 5, LIQUIDITY LADDERS 5, PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
  "trades": [
   {
    "pair": "GBPUSD",
@@ -191,6 +191,27 @@
    "pair": "GBPUSD",
    "picture": "R --> BS\\WL/Screenshot from 2026-07-13 19-00-33.png + 19-03-54.png",
    "utc_plus4_sequence": "Feb 9: BREAKOUT SURGE (up); Feb 10: RECOVERY; Feb 10-11: BREAKOUT SURGE (Reverse, down, two shorts laddered); Feb 11: RECOVERY SURGE (to '4H (Unmitigated) | MoM' and above); Feb 11 15:00 on: WHIPLASH (down)"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "R --> WL/Screenshot from 2026-07-13 19-11-49.png",
+   "utc_plus4_sequence": "Apr 13-14: PIERCING BREAKOUT SURGE (up); Apr 14-15: SWING SCALPS; Apr 15-16: RECOVERY SURGE (down); Apr 16-17: PIERCING WHIPLASH (up to ~1.3630)",
+   "vs_my_E2": "my daily product 2026-04-13: SS range all week - his Monday breakout missed (forensics: Mon day tag wrong, 0 TP / 3 SL that week)"
+  },
+  {
+   "pair": "DXY",
+   "picture": "R --> WL/Screenshot from 2026-07-13 19-12-00.png",
+   "utc_plus4_sequence": "Apr 16: RECOVERY SURGE (up, into '15m (Unmitigated)' / '1H (Unmitigated) | MoM'); Apr 16-17: PIERCING WHIPLASH (down to ~97.78)"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "R --> WL/Screenshot from 2026-07-13 19-12-20.png",
+   "utc_plus4_sequence": "Mar 23-31: PIERCING BREAKOUT SURGE (down ~1.3460 -> ~1.3180, under 'Liquidity Shield Zone' / '30m MoM Liquidity Shield'); Mar 31 - Apr 1: RECOVERY SURGE; Apr 1-2: WHIPLASH; Apr 2-7: SWING SCALPS (~1.3185-1.3285)"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "R --> WL/Screenshot from 2026-07-13 19-12-28.png",
+   "utc_plus4_sequence": "Feb 25-26: BREAKOUT SURGE; Feb 26: REVERSE WHIPLASH; Feb 26: RECOVERY SURGE; Feb 26-27: PIERCING WHIPLASH (down to the 'Liquidity Shield Zone' ~1.3455) - zoom of the Feb 20-27 picture"
   }
  ],
  "fib_grids": [
@@ -213,6 +234,24 @@
    "anchors": "0 = the deepest low of the SWING SCALPS range (Mar 3-7, 1.32820); 1 = the range high (~1.3410) - the web is drawn on the consolidation range itself",
    "what_happened": "BREAKOUT SURGE Mar 9-10 from the 0-0.382 area (a '1H (Unmitigated) | MoM' at ~1.3304-1.3310) up to the 1.618 level 1.34883, inside '4H (Unmitigated) | MoM' supply 1.3460-1.3490 (Air meets Fire), then a pullback",
    "canon": "Spiderwebs PDF item 3 'Target 2 or 3 levels for swings from a SS anchor point'; FA 4.5 wormhole 0.618 -> 1.618; FA 2.4 'Air PIERCES through Fire'"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "R --> WL/Screenshot from 2026-07-13 19-12-06.png",
+   "timeframe": "15m",
+   "levels_printed": {
+    "0": 1.35035,
+    "1.618": 1.35635,
+    "1.786": 1.357,
+    "2.382": 1.35922,
+    "2.618": 1.3601,
+    "2.786": 1.36073,
+    "3.382": 1.36298,
+    "3.618": 1.36383
+   },
+   "level_1_solved": 1.3541,
+   "anchors": "0 = the range low 1.35035 (his Apr 17 long's stop 1.35028 sits just under it); 1 = ~1.3541 = that long's TP 1.35418 - the web is drawn on the recovery range low -> high",
+   "what_happened": "Apr 17: long 1.3508 -> TP 1.35418 (level 1); then the PIERCING WHIPLASH spiked to ~1.3600 = the 2.618 level, then a REVERSE WHIPLASH back down"
   }
  ]
 }
