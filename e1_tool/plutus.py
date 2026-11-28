@@ -717,7 +717,7 @@ if __name__ == '__main__':
             m_, n_ = k_.split('.')
             mod_ = sys.modules.get(m_) or __import__(m_)
             o_ = getattr(mod_, n_)
-            setattr(mod_, n_, bool(int(v_)) if isinstance(o_, bool) else type(o_)(v_))
+            setattr(mod_, n_, bool(int(v_)) if isinstance(o_, bool) else tuple(int(x) for x in v_.split(';')) if isinstance(o_, tuple) else type(o_)(v_))
     X, chain, setups, src = run(pair, monday, daily=daily)
     open(out, 'w').write(src)
     print(out)

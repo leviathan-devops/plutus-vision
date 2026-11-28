@@ -561,15 +561,19 @@ SS_REACH_PIPS = 30      # GS Law 2 'The day's shape decides which zones are reac
 MICRO_SS_FIRST = True   # D-147 reading: the first piece of a swing-scalp day (from its own anchor) is re-targeted too (False = kept as the plan draws it)
 MICRO_NONSS = 'clamp'   # D-147 reading for any other day: 'plan' = from the anchor price to the plan's next level, then the plan; 'clamp' = the same with every level held inside the
                         # day's Law-2 reach of the anchor price; 'farthest' = a level outside the reach replaced by the farthest Engine 1 level inside it
+MICRO_ANCHOR_HOURS = (2, 8, 10)   # D-147 session anchors (New York hours): the London open and the cut (P452 6.6 rules 2 / 4); (2, 8, 10) adds the NY pre-cut cage start (rule 3)
 MICRO_LEVELS = 2        # D-147 reading of a swing-scalp leg's length: it ends at the n-th distinct Engine 1 level in its direction (Spiderwebs PDF item 3 'Target 2 or 3 levels for swings
                         # from a SS anchor point'; 1 = the nearest level, P533:215 'zone by zone'); levels closer than 3 pips count as one
+MICRO_ACTIVE = False    # MEASURED, NOT ADOPTED (dev miss 15.1 -> 14.9 p, golden identical, GBPUSD 03-23 untouched: drawn from another chain). D-147 reading on a COMPOSITE day (e.g. SS+BS): each leg takes the reach of the chain step ACTIVE at its start (the week-anchor chain's steps by session;
+                        # used only where the day's shapes are that chain's) - GS Law 2 'The day's shape decides which zones are reachable'
 REACH_PIPS = {'SS': 30, 'R': 50, 'RS': 80, 'BS': 100, 'PBS': 100, 'RWL': 100, 'PRWL': 100, 'WL': 200, 'PWL': 200, 'WLS': 200}   # GS Law 2: 'SS <= 30 pips from spot, R <= 50, RS <= 80, BS / RWL <= 100, WL <= 200'
 
 
 def micro_path(pair, monday, chain, X):
     """Plan memory/16 M2 (operator M-67 'build the micro infrastructure for Engine 2 ... accurately plot the actual price action inside of the shape chain'; L-51 'if the candles don't
     match the exact lines that you're drawing, then your lines are not as accurate as they should be'). The day segments Engine 2 draws (one per trading day, from its open) are cut at
-    each SESSION ANCHOR of the day - the London open (02:00 NY; Fibonacci Spiderwebs items 3-5 'London Session open position = Trade Setup Anchor'; L-53 daily update at London open) and
+    each SESSION ANCHOR of the day (MICRO_ANCHOR_HOURS) - the London open (02:00 NY; Fibonacci Spiderwebs items 3-5 'London Session open position = Trade Setup Anchor'; L-53 daily update
+    at London open), the NY pre-cut (08:00 NY; P452 6.6 rule 3 'NY Pre-Cut (8:00-10:00 AM) creates the Option Cage ... dealers will pin price to the largest strike') and
     the cut (10:00 NY; P452 6.6 rule 4 'NY Spring Release (10:01 AM) is the DECISIVE moment', rule 5 'NY Post-Cut ... free movement toward the next IP zone') - and each piece restarts
     at the last 15m close before its anchor (only bars closed by then: D.closed_until). Every leg keeps the direction and the time of the planned leg; its level obeys GS Law 2 (the day's
     shape decides the reach from the anchor price, REACH_PIPS):
@@ -585,7 +589,7 @@ def micro_path(pair, monday, chain, X):
     lv = sorted({round(v, 6) for z in X['sd'] for v in (z['bot'], z['top'])}
                 | {round(v, 6) for h in X['v1'].values() for z in h['liquidity'] for v in (z['bot'], z['top'])})
     m0 = dt.date.fromisoformat(monday)
-    anchors = sorted(_ms(m0 + dt.timedelta(days=k), h) for k in range(5) for h in (2, 10))
+    anchors = sorted(_ms(m0 + dt.timedelta(days=k), h) for k in range(5) for h in MICRO_ANCHOR_HOURS)
     days = {x['day']: x for x in chain.get('days', [])}
     w0 = D.week_start_ms(monday)
 
@@ -605,11 +609,24 @@ def micro_path(pair, monday, chain, X):
                 dist.append(v)
         return dist[min(MICRO_LEVELS, len(dist)) - 1]
 
+    S_w = week_sessions(monday)
+    steps = [(S_w[st['s0']]['t0'], S_w[min(st['s1'], len(S_w)) - 1]['t1'], st['shape'], S_w[st['s0']]['i'], S_w[min(st['s1'], len(S_w)) - 1]['i'])
+             for st in chain.get('chain', []) if st.get('s0') is not None and st.get('s1') and st['s0'] < len(S_w)]
+
+    def active(d, t):
+        if not MICRO_ACTIVE or d is None or len(d.get('shapes', [])) < 2:
+            return None
+        i = DAYS.index(d['day'])
+        if [x[2] for x in steps if x[3] <= i <= x[4]] != d['shapes']:
+            return None                                        # the day is drawn from another chain (alternative / re-anchored): no step timing here
+        return next((x[2] for x in steps if x[0] <= t < x[1]), None)
+
     def legs(orig, start, d, p_anchor):
         piece = [(orig[0][0], start)]
-        ss = d is not None and d.get('shapes') == ['SS']
-        reach = (SS_REACH_PIPS if ss else max([REACH_PIPS.get(x, 100) for x in (d or {}).get('shapes', [])] or [100])) * pip
         for (ta, va), (tb, vb) in zip(orig, orig[1:]):
+            sh = active(d, ta)
+            ss = (sh == 'SS') if sh is not None else (d is not None and d.get('shapes') == ['SS'])
+            reach = (SS_REACH_PIPS if ss else (REACH_PIPS.get(sh, 100) if sh is not None else max([REACH_PIPS.get(x, 100) for x in (d or {}).get('shapes', [])] or [100]))) * pip
             cur = piece[-1][1]
             if not ss and MICRO_NONSS in ('plan', 'clamp'):
                 piece.append((tb, vb if MICRO_NONSS == 'plan' else min(max(vb, p_anchor - reach), p_anchor + reach)))

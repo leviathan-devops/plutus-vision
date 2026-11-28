@@ -28,7 +28,7 @@ for kv in filter(None, os.environ.get('PLUTUS_SWITCHES', '').split(',')):
     mod, name = k.split('.')
     m_ = sys.modules.get(mod) or __import__(mod)
     old = getattr(m_, name)                                   # an unknown switch name raises here (no silent typo)
-    setattr(m_, name, bool(int(v)) if isinstance(old, bool) else int(v) if isinstance(old, int) else float(v) if isinstance(old, float) else v)
+    setattr(m_, name, bool(int(v)) if isinstance(old, bool) else int(v) if isinstance(old, int) else float(v) if isinstance(old, float) else tuple(int(x) for x in v.split(';')) if isinstance(old, tuple) else v)
     print(f"switch {mod}.{name} = {getattr(m_, name)!r} (was {old!r})")
 
 
