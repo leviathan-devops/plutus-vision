@@ -51,44 +51,61 @@ def zigzag(b, thr, hk='high', lk='low'):
 
 
 def replay(pair, mon, S):
+    """bar by bar over ALL orders in list order - the same evaluation order as the Pine (e3_trades.pine_state): per bar, per order: alternative trigger, fill (a resting limit
+    through its entry inside its life; a rocket after its parent's fill bar and before the parent's exit), then SL first / TP on the same bar. With e3_trades.ONE_PER_MOVE a primary
+    touched while a same-direction primary is open is void (D-148)."""
     b0, wk1 = D.boundary_ms(mon), D.week_end_ms(mon)
     b15 = [x for x in D.bars(pair, '15') if D.week_start_ms(mon) - 86400000 <= x['time'] < wk1 + 3 * 86400000]
     b60 = [x for x in D.bars(pair, '60') if D.week_start_ms(mon) - 86400000 <= x['time'] < wk1 + 3 * 86400000]
     pip = D.PIP[pair]
-    st, out = {}, []
+    n = len(S)
+    E, X, RES, V = [None] * n, [None] * n, ['NOT FILLED'] * n, [False] * n
+    mfe, mae = [0.0] * n, [0.0] * n
+    x0 = [E3._order_start(s, mon, b0) for s in S]
+    par = [next((i for i, q in enumerate(S) if q is s.get('parent_ref')), None) if s.get('parent_ref') is not None else None for s in S]
+    trig = [None] * n
     for k, s in enumerate(S):
-        x0 = E3._order_start(s, mon, b0)
-        par = s.get('parent_ref'); j = next((i for i, q in enumerate(S) if q is par), None) if par is not None else None
-        lng = s['dir'] == 'LONG'; rocket = s.get('category') == 'Reinforcement'
-        trig = None
         if s.get('alt') and s.get('trigger'):
             lv, up = s['trigger']['level'], s['trigger']['dir'] == 'up'
-            trig = next((x['time'] + H for x in b60 if x['time'] >= x0 and ((x['close'] > lv) if up else (x['close'] < lv))), None)
-            if trig is None:
-                st[k] = (None, None, 'NOT FILLED'); out.append({'res': 'NOT FILLED'}); continue
-        e = x = None; res = 'NOT FILLED'; mfe = mae = 0.0
-        for b in b15:
-            if e is None:
-                if b['time'] < x0 or (trig is not None and b['time'] < trig): continue
+            trig[k] = next((x['time'] + H for x in b60 if x['time'] >= x0[k] and ((x['close'] > lv) if up else (x['close'] < lv))), 'never')
+    prim = [s.get('category') != 'Reinforcement' for s in S]
+    opm = getattr(E3, 'ONE_PER_MOVE', False)
+    for b in b15:
+        t = b['time']
+        for k, s in enumerate(S):
+            lng = s['dir'] == 'LONG'
+            if E[k] is None and not V[k]:
+                if t < x0[k] or trig[k] == 'never' or (trig[k] is not None and t < trig[k]):
+                    continue
+                j = par[k]
                 if j is not None:
-                    pe, px, _ = st[j]
-                    if pe is None or b['time'] <= pe or (px is not None and b['time'] > px): continue
-                elif b['time'] >= min(s.get('valid_to') or wk1, wk1): break
+                    if E[j] is None or t <= E[j] or X[j] is not None:
+                        continue
+                elif t >= min(s.get('valid_to') or wk1, wk1):
+                    continue
+                rocket = not prim[k]
                 hit = ((b['low'] <= s['entry']) if lng else (b['high'] >= s['entry'])) if not rocket else ((b['high'] >= s['entry']) if lng else (b['low'] <= s['entry']))
-                if hit: e = b['time']
-                else: continue
-            fav = (b['high'] - s['entry']) if lng else (s['entry'] - b['low'])
-            adv = (s['entry'] - b['low']) if lng else (b['high'] - s['entry'])
-            if (b['low'] <= s['sl']) if lng else (b['high'] >= s['sl']):
-                x = b['time']; res = 'SL'; mae = max(mae, adv); break
-            mfe = max(mfe, fav); mae = max(mae, adv)
-            if (b['high'] >= s['tp']) if lng else (b['low'] <= s['tp']):
-                x = b['time']; res = 'TP'; break
-        if e is not None and x is None: res = 'OPEN'
-        st[k] = (e, x, res)
+                if not hit:
+                    continue
+                if opm and prim[k] and any(i != k and prim[i] and S[i]['dir'] == s['dir'] and E[i] is not None and X[i] is None for i in range(n)):
+                    V[k] = True; RES[k] = 'VOID'
+                    continue
+                E[k] = t
+            if E[k] is not None and X[k] is None:
+                fav = (b['high'] - s['entry']) if lng else (s['entry'] - b['low'])
+                adv = (s['entry'] - b['low']) if lng else (b['high'] - s['entry'])
+                if (b['low'] <= s['sl']) if lng else (b['high'] >= s['sl']):
+                    X[k] = t; RES[k] = 'SL'; mae[k] = max(mae[k], adv)
+                    continue
+                mfe[k] = max(mfe[k], fav); mae[k] = max(mae[k], adv)
+                if (b['high'] >= s['tp']) if lng else (b['low'] <= s['tp']):
+                    X[k] = t; RES[k] = 'TP'
+    out = []
+    for k, s in enumerate(S):
+        res = RES[k] if not (E[k] is not None and X[k] is None) else 'OPEN'
         risk = abs(s['entry'] - s['sl'])
-        out.append({'res': res, 'fill': e, 'exit': x, 'mfe_r': mfe / risk if risk else 0, 'mae_r': mae / risk if risk else 0, 'rr': abs(s['tp'] - s['entry']) / risk if risk else 0,
-                    'risk_p': risk / pip})
+        out.append({'res': res, 'fill': E[k], 'exit': X[k], 'mfe_r': mfe[k] / risk if risk else 0, 'mae_r': mae[k] / risk if risk else 0,
+                    'rr': abs(s['tp'] - s['entry']) / risk if risk else 0, 'risk_p': risk / pip})
     return out
 
 
@@ -144,11 +161,11 @@ for pair, mon in MAPS:
     L = line_metrics(pair, mon, ch)
     nm, cm = moves(pair, mon, S, R)
     row = {'pair': pair, 'mon': mon, 'drawn': len(S), 'filled': sum(r['res'] in ('TP', 'SL', 'OPEN') for r in R), 'TP': sum(r['res'] == 'TP' for r in R),
-           'SL': sum(r['res'] == 'SL' for r in R), 'OPEN': sum(r['res'] == 'OPEN' for r in R), 'NF': sum(r['res'] == 'NOT FILLED' for r in R),
+           'SL': sum(r['res'] == 'SL' for r in R), 'OPEN': sum(r['res'] == 'OPEN' for r in R), 'NF': sum(r['res'] == 'NOT FILLED' for r in R), 'VOID': sum(r['res'] == 'VOID' for r in R),
            'moves': nm, 'caught': cm, 'rr_tp': [r['rr'] for r in R if r['res'] == 'TP'], **L}
     rows.append(row)
     wr = 100 * row['TP'] / max(1, row['TP'] + row['SL'])
-    print(f"{pair:<6} {mon}  drawn {row['drawn']:2d}  filled {row['filled']:2d}  TP {row['TP']:2d}  SL {row['SL']:2d}  open {row['OPEN']}  never {row['NF']:2d}  win {wr:5.1f}%  "
+    print(f"{pair:<6} {mon}  drawn {row['drawn']:2d}  filled {row['filled']:2d}  TP {row['TP']:2d}  SL {row['SL']:2d}  open {row['OPEN']}  never {row['NF']:2d}  void {row['VOID']}  win {wr:5.1f}%  "
           f"moves {nm:2d} caught {cm:2d}  line<=10p {100 * L['within10'] / max(1, L['n30']):3.0f}%  miss {L['miss'] / max(1, L['n30']):5.1f}p  dir2h {100 * L['dir_ok'] / max(1, L['dir_n']):3.0f}%  "
           f"turns {L['turns']:2d} vtx<=1c {L['turn1']:2d}", flush=True)
     for s, r in zip(S, R):
@@ -163,10 +180,10 @@ for pair, mon in MAPS:
 def total(name, rs):
     rs = [r for r in rs if 'error' not in r]
     if not rs: return
-    t = {k: sum(r[k] for r in rs) for k in ('drawn', 'filled', 'TP', 'SL', 'OPEN', 'NF', 'moves', 'caught', 'n30', 'within10', 'miss', 'dir_ok', 'dir_n', 'turns', 'turn1')}
+    t = {k: sum(r.get(k, 0) for r in rs) for k in ('drawn', 'filled', 'TP', 'SL', 'OPEN', 'NF', 'VOID', 'moves', 'caught', 'n30', 'within10', 'miss', 'dir_ok', 'dir_n', 'turns', 'turn1')}
     rr = [x for r in rs for x in r['rr_tp']]
     wr = [100 * r['TP'] / (r['TP'] + r['SL']) for r in rs if r['TP'] + r['SL']]
-    print(f"TOTAL {name:<12} maps {len(rs):2d}  drawn {t['drawn']:3d}  filled {t['filled']:3d} ({t['filled'] / len(rs):.1f}/pair-week)  TP {t['TP']:3d}  SL {t['SL']:3d}  open {t['OPEN']}  never {t['NF']:3d}  "
+    print(f"TOTAL {name:<12} maps {len(rs):2d}  drawn {t['drawn']:3d}  filled {t['filled']:3d} ({t['filled'] / len(rs):.1f}/pair-week)  TP {t['TP']:3d}  SL {t['SL']:3d}  open {t['OPEN']}  never {t['NF']:3d}  void {t['VOID']}  "
           f"win {100 * t['TP'] / max(1, t['TP'] + t['SL']):5.1f}%  (mean of weekly win {sum(wr) / max(1, len(wr)):.1f}% over {len(wr)} maps)  moves caught {t['caught']}/{t['moves']}  "
           f"avg RR of TPs {sum(rr) / max(1, len(rr)):.2f}  line<=10p {100 * t['within10'] / max(1, t['n30']):.0f}%  miss {t['miss'] / max(1, t['n30']):.1f}p  dir2h {100 * t['dir_ok'] / max(1, t['dir_n']):.0f}%  "
           f"turn vtx<=1c {t['turn1']}/{t['turns']}")

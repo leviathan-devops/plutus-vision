@@ -959,6 +959,8 @@ def build(pair, monday, X, E2, source=None):
     return R
 
 
+ONE_PER_MOVE = True          # plan memory/16 / D-148 (L-52 'one unique trade per observable move ... explicitly forbidden and banned'; L-55x his golden weeks run one trade at a time):
+                             # a primary order touched while a same-direction primary of the pair is OPEN is the same move - void (drawn as a stub), never filled later. ON since its gates held (memory/16 section 6; D-148 in memory/03).
 SPAN_BOXES = True            # D-146 (operator M-64): a position box covers its trade only - from the candle that touches the entry to the candle that touches the TP (or SL), one candle each side
 
 
@@ -982,11 +984,15 @@ def pine_state(pair, monday, R):
     b0, wk1 = D.boundary_ms(monday), D.week_end_ms(monday)
     idx = {id(s): k for k, s in enumerate(R['setups'])}
     o = ['// E3 trade spans (D-146): the bar each order fills and the bar it exits, tracked on the chart\'s own candles', 'e3bw = nz(time - time[1], 3600000)']
+    if ONE_PER_MOVE:                 # D-148: an order's fill reads the state of the others - every state variable is declared first (Pine: declaration before use)
+        for k in range(len(R['setups'])):
+            o += [f"var int e3E{k} = na", f"var int e3X{k} = na", f"var int e3R{k} = 0"]
     for k, s in enumerate(R['setups']):
         x0 = _order_start(s, monday, b0)
-        o.append(f"var int e3E{k} = na")
-        o.append(f"var int e3X{k} = na")
-        o.append(f"var int e3R{k} = 0")
+        if not ONE_PER_MOVE:
+            o.append(f"var int e3E{k} = na")
+            o.append(f"var int e3X{k} = na")
+            o.append(f"var int e3R{k} = 0")
         if s.get('alt') and s.get('trigger'):
             o.append(f"var bool e3T{k} = false")
         live = [f"time >= {x0}"]
@@ -1000,8 +1006,18 @@ def pine_state(pair, monday, R):
             live.append(f"not na(e3E{j}) and time > e3E{j} and na(e3X{j})")
         else:
             live.append(f"time < {min(s.get('valid_to') or wk1, wk1)}")
-        o.append(f"if isPair and na(e3E{k}) and {' and '.join(live)} and {_fill_cond(s).replace('%.5f' % s['entry'], g(s['entry']))}")
-        o.append(f"    e3E{k} := time")
+        prim = s.get('category') != 'Reinforcement'
+        same = [j for j, q in enumerate(R['setups']) if j != k and q.get('category') != 'Reinforcement' and q['dir'] == s['dir']] if (ONE_PER_MOVE and prim) else []
+        if same:
+            o.append(f"var bool e3V{k} = false")
+            o.append(f"if isPair and na(e3E{k}) and not e3V{k} and {' and '.join(live)} and {_fill_cond(s).replace('%.5f' % s['entry'], g(s['entry']))}")
+            o.append(f"    if {' or '.join(f'(not na(e3E{j}) and na(e3X{j}))' for j in same)}")
+            o.append(f"        e3V{k} := true")
+            o.append(f"    else")
+            o.append(f"        e3E{k} := time")
+        else:
+            o.append(f"if isPair and na(e3E{k}) and {' and '.join(live)} and {_fill_cond(s).replace('%.5f' % s['entry'], g(s['entry']))}")
+            o.append(f"    e3E{k} := time")
         lng = s['dir'] == 'LONG'
         o.append(f"if isPair and not na(e3E{k}) and na(e3X{k})")
         o.append(f"    if {'low <= ' + g(s['sl']) if lng else 'high >= ' + g(s['sl'])}")

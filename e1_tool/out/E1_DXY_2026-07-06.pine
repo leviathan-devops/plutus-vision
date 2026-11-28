@@ -22,8 +22,33 @@ e3bw = nz(time - time[1], 3600000)
 var int e3E0 = na
 var int e3X0 = na
 var int e3R0 = 0
-if isPair and na(e3E0) and time >= 1783317600000 and time < 1783458000000 and high >= 101.203
-    e3E0 := time
+var int e3E1 = na
+var int e3X1 = na
+var int e3R1 = 0
+var int e3E2 = na
+var int e3X2 = na
+var int e3R2 = 0
+var int e3E3 = na
+var int e3X3 = na
+var int e3R3 = 0
+var int e3E4 = na
+var int e3X4 = na
+var int e3R4 = 0
+var int e3E5 = na
+var int e3X5 = na
+var int e3R5 = 0
+var int e3E6 = na
+var int e3X6 = na
+var int e3R6 = 0
+var int e3E7 = na
+var int e3X7 = na
+var int e3R7 = 0
+var bool e3V0 = false
+if isPair and na(e3E0) and not e3V0 and time >= 1783317600000 and time < 1783458000000 and high >= 101.203
+    if (not na(e3E1) and na(e3X1)) or (not na(e3E3) and na(e3X3)) or (not na(e3E4) and na(e3X4))
+        e3V0 := true
+    else
+        e3E0 := time
 if isPair and not na(e3E0) and na(e3X0)
     if high >= 101.255
         e3X0 := time
@@ -31,11 +56,12 @@ if isPair and not na(e3E0) and na(e3X0)
     else if low <= 100.830
         e3X0 := time
         e3R0 := 1
-var int e3E1 = na
-var int e3X1 = na
-var int e3R1 = 0
-if isPair and na(e3E1) and time >= 1783317600000 and time < 1783458000000 and high >= 101.138
-    e3E1 := time
+var bool e3V1 = false
+if isPair and na(e3E1) and not e3V1 and time >= 1783317600000 and time < 1783458000000 and high >= 101.138
+    if (not na(e3E0) and na(e3X0)) or (not na(e3E3) and na(e3X3)) or (not na(e3E4) and na(e3X4))
+        e3V1 := true
+    else
+        e3E1 := time
 if isPair and not na(e3E1) and na(e3X1)
     if high >= 101.213
         e3X1 := time
@@ -43,11 +69,12 @@ if isPair and not na(e3E1) and na(e3X1)
     else if low <= 100.830
         e3X1 := time
         e3R1 := 1
-var int e3E2 = na
-var int e3X2 = na
-var int e3R2 = 0
-if isPair and na(e3E2) and time >= 1783317600000 and time < 1783458000000 and low <= 100.851
-    e3E2 := time
+var bool e3V2 = false
+if isPair and na(e3E2) and not e3V2 and time >= 1783317600000 and time < 1783458000000 and low <= 100.851
+    if (not na(e3E5) and na(e3X5)) or (not na(e3E7) and na(e3X7))
+        e3V2 := true
+    else
+        e3E2 := time
 if isPair and not na(e3E2) and na(e3X2)
     if low <= 100.743
         e3X2 := time
@@ -55,11 +82,12 @@ if isPair and not na(e3E2) and na(e3X2)
     else if high >= 101.184
         e3X2 := time
         e3R2 := 1
-var int e3E3 = na
-var int e3X3 = na
-var int e3R3 = 0
-if isPair and na(e3E3) and time >= 1783490400000 and time < 1783717200000 and high >= 101.235
-    e3E3 := time
+var bool e3V3 = false
+if isPair and na(e3E3) and not e3V3 and time >= 1783490400000 and time < 1783717200000 and high >= 101.235
+    if (not na(e3E0) and na(e3X0)) or (not na(e3E1) and na(e3X1)) or (not na(e3E4) and na(e3X4))
+        e3V3 := true
+    else
+        e3E3 := time
 if isPair and not na(e3E3) and na(e3X3)
     if high >= 101.322
         e3X3 := time
@@ -67,11 +95,12 @@ if isPair and not na(e3E3) and na(e3X3)
     else if low <= 100.685
         e3X3 := time
         e3R3 := 1
-var int e3E4 = na
-var int e3X4 = na
-var int e3R4 = 0
-if isPair and na(e3E4) and time >= 1783458000000 and time < 1783544400000 and high >= 101.203
-    e3E4 := time
+var bool e3V4 = false
+if isPair and na(e3E4) and not e3V4 and time >= 1783458000000 and time < 1783544400000 and high >= 101.203
+    if (not na(e3E0) and na(e3X0)) or (not na(e3E1) and na(e3X1)) or (not na(e3E3) and na(e3X3))
+        e3V4 := true
+    else
+        e3E4 := time
 if isPair and not na(e3E4) and na(e3X4)
     if high >= 101.255
         e3X4 := time
@@ -79,11 +108,12 @@ if isPair and not na(e3E4) and na(e3X4)
     else if low <= 100.995
         e3X4 := time
         e3R4 := 1
-var int e3E5 = na
-var int e3X5 = na
-var int e3R5 = 0
-if isPair and na(e3E5) and time >= 1783458000000 and time < 1783544400000 and low <= 100.980
-    e3E5 := time
+var bool e3V5 = false
+if isPair and na(e3E5) and not e3V5 and time >= 1783458000000 and time < 1783544400000 and low <= 100.980
+    if (not na(e3E2) and na(e3X2)) or (not na(e3E7) and na(e3X7))
+        e3V5 := true
+    else
+        e3E5 := time
 if isPair and not na(e3E5) and na(e3X5)
     if low <= 100.906
         e3X5 := time
@@ -91,9 +121,6 @@ if isPair and not na(e3E5) and na(e3X5)
     else if high >= 101.235
         e3X5 := time
         e3R5 := 1
-var int e3E6 = na
-var int e3X6 = na
-var int e3R6 = 0
 if isPair and na(e3E6) and time >= 1783544400000 and not na(e3E3) and time > e3E3 and na(e3X3) and low <= 100.980
     e3E6 := time
 if isPair and not na(e3E6) and na(e3X6)
@@ -103,11 +130,12 @@ if isPair and not na(e3E6) and na(e3X6)
     else if low <= 100.685
         e3X6 := time
         e3R6 := 1
-var int e3E7 = na
-var int e3X7 = na
-var int e3R7 = 0
-if isPair and na(e3E7) and time >= 1783630800000 and time < 1783717200000 and low <= 100.628
-    e3E7 := time
+var bool e3V7 = false
+if isPair and na(e3E7) and not e3V7 and time >= 1783630800000 and time < 1783717200000 and low <= 100.628
+    if (not na(e3E2) and na(e3X2)) or (not na(e3E5) and na(e3X5))
+        e3V7 := true
+    else
+        e3E7 := time
 if isPair and not na(e3E7) and na(e3X7)
     if low <= 100.548
         e3X7 := time
@@ -345,23 +373,35 @@ if barstate.islast and isPair
         label.new(1783587600000, 101.406, "Thu BS\ndown 40%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(255,167,38), size=size.small)
         box.new(1783630800000, 100.815, 1783717200000, 100.654, bgcolor=color.new(color.rgb(171,71,188), 88), border_color=color.new(color.rgb(171,71,188), 20), border_width=1, border_style=line.style_dashed, xloc=xloc.bar_time)
         label.new(1783652400000, 101.344, "Fri BS+WL+RWL\ndown 32%", xloc=xloc.bar_time, style=label.style_none, textcolor=color.rgb(171,71,188), size=size.small)
-        line.new(1783317600000, 101.025, 1783339200000, 101.199, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783339200000, 101.199, 1783341000000, 100.977, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783341000000, 100.977, 1783346400000, 100.977, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783346400000, 100.977, 1783371600000, 100.815, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783317600000, 101.025, 1783339200000, 101.097, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783339200000, 101.097, 1783341000000, 101.034, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783341000000, 101.034, 1783346400000, 101.034, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783346400000, 101.107, 1783371600000, 101.034, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783371600000, 100.871, 1783404000000, 100.871, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783404000000, 100.871, 1783425600000, 100.815, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783425600000, 100.815, 1783432800000, 100.815, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783432800000, 100.815, 1783458000000, 101.199, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783404000000, 100.922, 1783425600000, 100.851, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783425600000, 100.851, 1783432800000, 100.851, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783432800000, 100.917, 1783458000000, 100.992, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783458000000, 101.092, 1783490400000, 101.092, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783490400000, 101.092, 1783526400000, 101.305, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783490400000, 101.054, 1783519200000, 101.262, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783519200000, 101.113, 1783526400000, 101.305, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783526400000, 101.305, 1783544400000, 101.127, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783544400000, 101.069, 1783576800000, 101.069, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783576800000, 101.069, 1783612800000, 100.851, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783576800000, 100.935, 1783605600000, 100.895, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783605600000, 100.900, 1783612800000, 100.851, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783612800000, 100.851, 1783630800000, 100.748, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
         line.new(1783630800000, 100.937, 1783663200000, 100.937, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783663200000, 100.937, 1783675200000, 100.654, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
-        line.new(1783675200000, 100.654, 1783699200000, 100.815, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783663200000, 100.778, 1783675200000, 100.654, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783675200000, 100.654, 1783692000000, 100.766, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783692000000, 100.927, 1783699200000, 100.815, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)
+        line.new(1783346400000, 101.034, 1783346400000, 101.107, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783404000000, 100.871, 1783404000000, 100.922, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783432800000, 100.851, 1783432800000, 100.917, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783490400000, 101.092, 1783490400000, 101.054, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783519200000, 101.262, 1783519200000, 101.113, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783576800000, 101.069, 1783576800000, 100.935, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783605600000, 100.895, 1783605600000, 100.900, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783663200000, 100.937, 1783663200000, 100.778, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
+        line.new(1783692000000, 100.766, 1783692000000, 100.927, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1783317600000, 101.025, 1783339200000, 100.815, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1783339200000, 100.815, 1783341000000, 100.977, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)
         line.new(1783341000000, 100.977, 1783346400000, 100.977, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)

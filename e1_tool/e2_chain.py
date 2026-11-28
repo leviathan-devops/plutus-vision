@@ -555,6 +555,102 @@ def _ladder_path(X, S, a, b, t0, t1, pos, nxt, d):
     return [q for q in out if q[0] > t0] or [(t1, nxt)]
 
 
+MICRO_PATH = True       # plan memory/16 M2 / D-147: the DRAWN line re-anchored at each session open (London 02:00 NY, the 10:00 NY cut) from the price closed by then; swing-scalp legs zone to zone
+                        # within the Law-2 reach. Drawing only (the orders and the Law-27 flow keep the day line built at the trading-day open). ON since its gates held (memory/16 section 6; D-147 in memory/03).
+SS_REACH_PIPS = 30      # GS Law 2 'The day's shape decides which zones are reachable (SS <= 30 pips from spot ...)'
+MICRO_SS_FIRST = True   # D-147 reading: the first piece of a swing-scalp day (from its own anchor) is re-targeted too (False = kept as the plan draws it)
+MICRO_NONSS = 'clamp'   # D-147 reading for any other day: 'plan' = from the anchor price to the plan's next level, then the plan; 'clamp' = the same with every level held inside the
+                        # day's Law-2 reach of the anchor price; 'farthest' = a level outside the reach replaced by the farthest Engine 1 level inside it
+MICRO_LEVELS = 2        # D-147 reading of a swing-scalp leg's length: it ends at the n-th distinct Engine 1 level in its direction (Spiderwebs PDF item 3 'Target 2 or 3 levels for swings
+                        # from a SS anchor point'; 1 = the nearest level, P533:215 'zone by zone'); levels closer than 3 pips count as one
+REACH_PIPS = {'SS': 30, 'R': 50, 'RS': 80, 'BS': 100, 'PBS': 100, 'RWL': 100, 'PRWL': 100, 'WL': 200, 'PWL': 200, 'WLS': 200}   # GS Law 2: 'SS <= 30 pips from spot, R <= 50, RS <= 80, BS / RWL <= 100, WL <= 200'
+
+
+def micro_path(pair, monday, chain, X):
+    """Plan memory/16 M2 (operator M-67 'build the micro infrastructure for Engine 2 ... accurately plot the actual price action inside of the shape chain'; L-51 'if the candles don't
+    match the exact lines that you're drawing, then your lines are not as accurate as they should be'). The day segments Engine 2 draws (one per trading day, from its open) are cut at
+    each SESSION ANCHOR of the day - the London open (02:00 NY; Fibonacci Spiderwebs items 3-5 'London Session open position = Trade Setup Anchor'; L-53 daily update at London open) and
+    the cut (10:00 NY; P452 6.6 rule 4 'NY Spring Release (10:01 AM) is the DECISIVE moment', rule 5 'NY Post-Cut ... free movement toward the next IP zone') - and each piece restarts
+    at the last 15m close before its anchor (only bars closed by then: D.closed_until). Every leg keeps the direction and the time of the planned leg; its level obeys GS Law 2 (the day's
+    shape decides the reach from the anchor price, REACH_PIPS):
+      swing-scalp day (shapes == SS): the leg ends at the NEAREST Engine 1 level in its direction - a supply / demand zone edge or a V1 liquidity band edge, at least 3 pips away and at most
+      the SS reach - inside the day box (P533:215 / :2269 'Price ALWAYS sweeps liquidity zone by zone in sequential order - it NEVER skips a zone'); flat legs (Asia hold, pre-cut pin) stay flat;
+      any other day: the leg ends at the plan's own level (the chain's target) when that level lies within the day's reach of the anchor price, else at the farthest Engine 1 level
+      within the reach in its direction (else at the reach itself).
+    Returns (segments, links): the new segments and, for each re-anchor, (time, level the previous piece reached, anchor price) so the drawing can join them (a dotted step)."""
+    segs = chain.get('segments')
+    if not segs:
+        return segs, []
+    pip = D.PIP[pair]
+    lv = sorted({round(v, 6) for z in X['sd'] for v in (z['bot'], z['top'])}
+                | {round(v, 6) for h in X['v1'].values() for z in h['liquidity'] for v in (z['bot'], z['top'])})
+    m0 = dt.date.fromisoformat(monday)
+    anchors = sorted(_ms(m0 + dt.timedelta(days=k), h) for k in range(5) for h in (2, 10))
+    days = {x['day']: x for x in chain.get('days', [])}
+    w0 = D.week_start_ms(monday)
+
+    def at(pts, t):
+        for (ta, va), (tb, vb) in zip(pts, pts[1:]):
+            if ta <= t <= tb:
+                return va if tb == ta else va + (vb - va) * (t - ta) / (tb - ta)
+        return pts[-1][1]
+
+    def nearest(p, up, lo, hi, reach):
+        c = sorted(v for v in lv if p + 3 * pip <= v <= min(p + reach, hi)) if up else sorted((v for v in lv if max(p - reach, lo) <= v <= p - 3 * pip), reverse=True)
+        if not c:
+            return min(p + reach, hi) if up else max(p - reach, lo)
+        dist = [c[0]]
+        for v in c[1:]:
+            if abs(v - dist[-1]) >= 3 * pip:
+                dist.append(v)
+        return dist[min(MICRO_LEVELS, len(dist)) - 1]
+
+    def legs(orig, start, d, p_anchor):
+        piece = [(orig[0][0], start)]
+        ss = d is not None and d.get('shapes') == ['SS']
+        reach = (SS_REACH_PIPS if ss else max([REACH_PIPS.get(x, 100) for x in (d or {}).get('shapes', [])] or [100])) * pip
+        for (ta, va), (tb, vb) in zip(orig, orig[1:]):
+            cur = piece[-1][1]
+            if not ss and MICRO_NONSS in ('plan', 'clamp'):
+                piece.append((tb, vb if MICRO_NONSS == 'plan' else min(max(vb, p_anchor - reach), p_anchor + reach)))
+            elif abs(vb - va) < 0.5 * pip:
+                piece.append((tb, cur))
+            elif ss:
+                piece.append((tb, nearest(cur, vb > va, d['lo'], d['hi'], reach)))
+            elif abs(vb - p_anchor) <= reach and (vb - cur) * (vb - va) > 0:
+                piece.append((tb, vb))
+            else:
+                up = vb > va
+                c = [v for v in lv if (cur + 3 * pip <= v <= p_anchor + reach) if up] if up else [v for v in lv if p_anchor - reach <= v <= cur - 3 * pip]
+                piece.append((tb, (max(c) if up else min(c)) if c else (max(cur, p_anchor + reach) if up else min(cur, p_anchor - reach))))
+        return piece
+
+    out, links = [], []
+    for seg in segs:
+        pts = sorted(seg)
+        t0, t1 = pts[0][0], pts[-1][0]
+        cuts = [T for T in anchors if t0 < T < t1]
+        edges = [t0] + cuts + [t1]
+        for a_, b_ in zip(edges, edges[1:]):
+            orig = [(a_, at(pts, a_))] + [q for q in pts if a_ < q[0] < b_] + [(b_, at(pts, b_))]
+            d = days.get(DAYS[min(4, max(0, (a_ - w0) // 86400000))])
+            if a_ == t0:
+                p = pts[0][1]                                   # the segment's own anchor price (the trading-day open / the re-anchored chain's start)
+                if not (MICRO_SS_FIRST and d is not None and d.get('shapes') == ['SS']):
+                    out.append(orig)                            # kept as the plan draws it
+                    continue
+            else:
+                bars = D.closed_until(pair, '15', a_)
+                if not bars:
+                    out.append(orig)
+                    continue
+                p = bars[-1]['close']
+                if out and out[-1][-1][0] == a_:
+                    links.append((a_, out[-1][-1][1], p))
+            out.append(legs(orig, p, d, p))
+    return out, links
+
+
 def _strong_4h_near(X):
     """E2X:235 key rule 'If not right near a strong 4H pressure zone right now - BS is most likely days away': a 4H BoM zone (0-1X) or a Tier-1 IP zone within the swing-scalp reach (GS Law 2: 30 pips)"""
     spot, U = X['spot'], X['U']
@@ -988,6 +1084,8 @@ def pine(pair, monday, E2):
     for p in (E2.get('segments') or [E2['path']]):           # daily anchoring (L-47): one segment per day, each starting at that day's London-open price
         for (t0, p0), (t1, p1) in zip(p, p[1:]):
             o.append(f"        line.new({t0}, {g(p0)}, {t1}, {g(p1)}, xloc=xloc.bar_time, color=color.rgb(255,235,59), width=2)")
+    for (t_, v0_, v1_) in (E2.get('micro_links') or []):          # D-147: the re-anchor step of the micro path (the line restarts at the price closed by the anchor)
+        o.append(f"        line.new({t_}, {g(v0_)}, {t_}, {g(v1_)}, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)")
     for q in (E2['alt_segments'] if 'alt_segments' in E2 else ([E2['alt_chain']['path']] if E2.get('alt_chain') else [])):
         for (t0, p0), (t1, p1) in zip(q, q[1:]):
             o.append(f"        line.new({t0}, {g(p0)}, {t1}, {g(p1)}, xloc=xloc.bar_time, color=color.new(color.rgb(255,235,59), 55), width=1, style=line.style_dotted)")
