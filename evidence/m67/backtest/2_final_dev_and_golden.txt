@@ -1,0 +1,34 @@
+switch e2_chain.MICRO_ANCHOR_HOURS = (2, 8, 10) (was (2, 10))
+DXY    2026-07-06  drawn  8  filled  7  TP  7  SL  0  open 0  never  1  void 0  win 100.0%  moves  3 caught  3  line<=10p  76%  miss   6.7p  dir2h  59%  turns 10 vtx<=1c  3
+EURUSD 2026-07-06  drawn  8  filled  7  TP  7  SL  0  open 0  never  1  void 0  win 100.0%  moves  5 caught  3  line<=10p  67%  miss   8.4p  dir2h  62%  turns 12 vtx<=1c  4
+GBPUSD 2026-07-06  drawn  4  filled  4  TP  4  SL  0  open 0  never  0  void 0  win 100.0%  moves  9 caught  3  line<=10p  58%  miss  13.1p  dir2h  53%  turns 12 vtx<=1c  2
+DXY    2026-03-02  drawn  2  filled  2  TP  0  SL  2  open 0  never  0  void 0  win   0.0%  moves 10 caught  0  line<=10p  56%  miss  13.0p  dir2h  56%  turns 22 vtx<=1c  5
+EURUSD 2026-03-02  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  void 0  win   0.0%  moves 13 caught  0  line<=10p  34%  miss  24.7p  dir2h  44%  turns 28 vtx<=1c  6
+GBPUSD 2026-03-02  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  void 0  win   0.0%  moves 13 caught  0  line<=10p  35%  miss  20.1p  dir2h  48%  turns 36 vtx<=1c  8
+DXY    2026-03-23  drawn  4  filled  1  TP  1  SL  0  open 0  never  2  void 1  win 100.0%  moves  6 caught  0  line<=10p  53%  miss  14.7p  dir2h  42%  turns 22 vtx<=1c  7
+EURUSD 2026-03-23  drawn  7  filled  3  TP  1  SL  2  open 0  never  4  void 0  win  33.3%  moves 10 caught  0  line<=10p  46%  miss  18.6p  dir2h  55%  turns 22 vtx<=1c  6
+GBPUSD 2026-03-23  drawn  5  filled  3  TP  1  SL  2  open 0  never  1  void 1  win  33.3%  moves 10 caught  0  line<=10p  38%  miss  27.1p  dir2h  60%  turns 30 vtx<=1c  6
+DXY    2026-04-13  drawn  2  filled  1  TP  0  SL  1  open 0  never  1  void 0  win   0.0%  moves  5 caught  0  line<=10p  69%  miss   9.5p  dir2h  57%  turns  6 vtx<=1c  3
+EURUSD 2026-04-13  drawn  3  filled  1  TP  0  SL  1  open 0  never  1  void 1  win   0.0%  moves  6 caught  0  line<=10p  63%  miss  12.0p  dir2h  49%  turns  7 vtx<=1c  2
+GBPUSD 2026-04-13  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  void 0  win   0.0%  moves  8 caught  0  line<=10p  50%  miss  14.2p  dir2h  54%  turns 18 vtx<=1c  7
+DXY    2026-04-20  drawn  3  filled  3  TP  1  SL  2  open 0  never  0  void 0  win  33.3%  moves  4 caught  1  line<=10p  74%  miss   7.6p  dir2h  51%  turns  9 vtx<=1c  1
+EURUSD 2026-04-20  drawn  4  filled  1  TP  0  SL  1  open 0  never  3  void 0  win   0.0%  moves  6 caught  0  line<=10p  62%  miss   9.7p  dir2h  63%  turns 13 vtx<=1c  2
+GBPUSD 2026-04-20  drawn  3  filled  1  TP  0  SL  1  open 0  never  2  void 0  win   0.0%  moves 10 caught  0  line<=10p  54%  miss  12.1p  dir2h  58%  turns 21 vtx<=1c  5
+DXY    2026-05-18  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  void 0  win   0.0%  moves  4 caught  0  line<=10p  79%  miss   6.2p  dir2h  56%  turns 11 vtx<=1c  0
+EURUSD 2026-05-18  drawn  3  filled  2  TP  1  SL  1  open 0  never  1  void 0  win  50.0%  moves  6 caught  1  line<=10p  66%  miss  10.2p  dir2h  57%  turns 13 vtx<=1c  1
+GBPUSD 2026-05-18  drawn  3  filled  3  TP  2  SL  1  open 0  never  0  void 0  win  66.7%  moves 13 caught  1  line<=10p  56%  miss  12.4p  dir2h  56%  turns 22 vtx<=1c  2
+DXY    2026-08-31  drawn  3  filled  1  TP  0  SL  1  open 0  never  2  void 0  win   0.0%  moves  3 caught  0  line<=10p  50%  miss  24.0p  dir2h  47%  turns  4 vtx<=1c  0
+EURUSD 2026-08-31  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  void 0  win   0.0%  moves  4 caught  0  line<=10p  61%  miss  14.7p  dir2h  61%  turns  7 vtx<=1c  3
+GBPUSD 2026-08-31  drawn  2  filled  1  TP  0  SL  1  open 0  never  1  void 0  win   0.0%  moves  5 caught  0  line<=10p  63%  miss  11.8p  dir2h  59%  turns 11 vtx<=1c  7
+DXY    2026-09-21  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  void 0  win   0.0%  moves  2 caught  0  line<=10p  77%  miss   6.4p  dir2h  65%  turns  6 vtx<=1c  2
+EURUSD 2026-09-21  drawn  3  filled  3  TP  0  SL  3  open 0  never  0  void 0  win   0.0%  moves  5 caught  0  line<=10p  71%  miss   8.0p  dir2h  55%  turns 15 vtx<=1c  4
+GBPUSD 2026-09-21  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  void 0  win   0.0%  moves  8 caught  0  line<=10p  55%  miss  11.6p  dir2h  59%  turns 18 vtx<=1c  4
+DXY    2026-10-05  drawn  2  filled  2  TP  2  SL  0  open 0  never  0  void 0  win 100.0%  moves  6 caught  2  line<=10p  66%  miss   9.0p  dir2h  59%  turns 12 vtx<=1c  5
+EURUSD 2026-10-05  drawn  2  filled  2  TP  1  SL  1  open 0  never  0  void 0  win  50.0%  moves 10 caught  1  line<=10p  58%  miss  11.4p  dir2h  55%  turns 14 vtx<=1c  6
+GBPUSD 2026-10-05  drawn  3  filled  3  TP  3  SL  0  open 0  never  0  void 0  win 100.0%  moves 12 caught  1  line<=10p  69%  miss   8.2p  dir2h  52%  turns 14 vtx<=1c  4
+
+TOTAL DXY          maps  8  drawn  18  filled  10 (1.2/pair-week)  TP   4  SL   6  open 0  never   7  void 1  win  40.0%  (mean of weekly win 38.9% over 6 maps)  moves caught 3/40  avg RR of TPs 3.18  line<=10p 66%  miss 11.3p  dir2h 54%  turn vtx<=1c 23/92
+TOTAL EURUSD       maps  8  drawn  24  filled  12 (1.5/pair-week)  TP   3  SL   9  open 0  never  11  void 1  win  25.0%  (mean of weekly win 22.2% over 6 maps)  moves caught 2/60  avg RR of TPs 7.15  line<=10p 58%  miss 13.5p  dir2h 54%  turn vtx<=1c 30/119
+TOTAL GBPUSD       maps  8  drawn  19  filled  11 (1.4/pair-week)  TP   6  SL   5  open 0  never   7  void 1  win  54.5%  (mean of weekly win 40.0% over 5 maps)  moves caught 2/79  avg RR of TPs 3.72  line<=10p 53%  miss 14.6p  dir2h 56%  turn vtx<=1c 43/170
+TOTAL ALL (no gold) maps 24  drawn  61  filled  33 (1.4/pair-week)  TP  13  SL  20  open 0  never  25  void 3  win  39.4%  (mean of weekly win 33.3% over 17 maps)  moves caught 7/179  avg RR of TPs 4.34  line<=10p 59%  miss 13.1p  dir2h 55%  turn vtx<=1c 96/381
+TOTAL GOLDEN       maps  3  drawn  20  filled  18 (6.0/pair-week)  TP  18  SL   0  open 0  never   2  void 0  win 100.0%  (mean of weekly win 100.0% over 3 maps)  moves caught 9/17  avg RR of TPs 4.81  line<=10p 67%  miss 9.4p  dir2h 58%  turn vtx<=1c 9/34

@@ -1,0 +1,71 @@
+DXY    2026-07-06  drawn  8  filled  7  TP  7  SL  0  open 0  never  1  win 100.0%  moves  3 caught  3  line<=10p  62%  miss   8.3p  dir2h  57%  turns 10 vtx<=1c  1
+     DX1   Mon SS     consol     SHORT E 101.20279 SL 101.25483 TP 100.82970 -> NOT FILLED
+     DX2   Mon SS     consol     SHORT E 101.13800 SL 101.21279 TP 100.82970 -> TP         fill 2026-07-06 10:00 RR 4.1 MFE 4.3R MAE 0.1R
+     DX3   Mon SS     consol     LONG  E 100.85100 SL 100.74300 TP 101.18387 -> TP         fill 2026-07-06 18:45 RR 3.1 MFE 3.2R MAE 0.4R
+     DX4   Wed BS     bs         SHORT E 101.23483 SL 101.32179 TP 100.68539 -> TP         fill 2026-07-08 09:00 RR 6.3 MFE 6.8R MAE 0.5R
+     DX5   Wed SS     last-swing SHORT E 101.20279 SL 101.25483 TP 100.99539 -> TP         fill 2026-07-08 01:30 RR 4.0 MFE 4.1R MAE 0.2R
+     DX6   Wed RWL    retest     LONG  E 100.98039 SL 100.90600 TP 101.23483 -> TP         fill 2026-07-08 07:15 RR 3.4 MFE 3.5R MAE 0.4R
+     DX7   Thu Ladder            SHORT E 100.98039 SL 101.07683 TP 100.68539 -> TP         fill 2026-07-09 00:00 RR 3.1 MFE 3.5R MAE 0.6R
+     DX8   Fri RWL    rwl        LONG  E 100.62800 SL 100.54800 TP 100.94039 -> TP         fill 2026-07-10 02:15 RR 3.9 MFE 4.1R MAE 0.4R
+EURUSD 2026-07-06  drawn  8  filled  7  TP  7  SL  0  open 0  never  1  win 100.0%  moves  5 caught  3  line<=10p  62%  miss   9.5p  dir2h  58%  turns 12 vtx<=1c  1
+     EU1   Mon SS     consol     SHORT E 1.14442 SL 1.14508 TP 1.14068 -> TP         fill 2026-07-06 18:45 RR 5.7 MFE 6.0R MAE 0.6R
+     EU2   Mon SS     consol     LONG  E 1.14018 SL 1.13960 TP 1.14429 -> NOT FILLED
+     EU3   Mon SS     consol     LONG  E 1.14095 SL 1.14037 TP 1.14429 -> TP         fill 2026-07-06 13:45 RR 5.8 MFE 6.2R MAE 0.2R
+     EU4   Wed RWL    retest     SHORT E 1.14269 SL 1.14369 TP 1.13940 -> TP         fill 2026-07-08 07:15 RR 3.3 MFE 3.4R MAE 0.5R
+     EU5   Wed BS     bs         LONG  E 1.13940 SL 1.13872 TP 1.14555 -> TP         fill 2026-07-08 11:30 RR 9.1 MFE 9.2R MAE 0.4R
+     EU6   Wed SS     last-swing LONG  E 1.14018 SL 1.13960 TP 1.14254 -> TP         fill 2026-07-07 21:30 RR 4.1 MFE 4.6R MAE 0.6R
+     EU7   Thu Ladder            LONG  E 1.14239 SL 1.14172 TP 1.14555 -> TP         fill 2026-07-09 00:00 RR 4.7 MFE 4.8R MAE 0.6R
+     EU8   Fri RWL    rwl        SHORT E 1.14598 SL 1.14653 TP 1.14239 -> TP         fill 2026-07-10 02:15 RR 6.5 MFE 6.7R MAE 0.2R
+GBPUSD 2026-07-06  drawn  4  filled  4  TP  4  SL  0  open 0  never  0  win 100.0%  moves  9 caught  3  line<=10p  56%  miss  13.8p  dir2h  48%  turns 12 vtx<=1c  0
+     GB1   Mon SS     consol     SHORT E 1.33959 SL 1.34155 TP 1.33348 -> TP         fill 2026-07-06 18:45 RR 3.1 MFE 3.8R MAE 0.3R
+     GB2   Mon SS     consol     LONG  E 1.33333 SL 1.33235 TP 1.33926 -> TP         fill 2026-07-06 06:15 RR 6.1 MFE 6.5R MAE 0.5R
+     GB3   Wed BS     bs         LONG  E 1.33255 SL 1.33125 TP 1.34254 -> TP         fill 2026-07-08 09:00 RR 7.7 MFE 7.9R MAE 0.3R
+     GB4   Fri RWL    rwl        SHORT E 1.34254 SL 1.34396 TP 1.33888 -> TP         fill 2026-07-09 06:15 RR 2.6 MFE 2.8R MAE 0.4R
+DXY    2026-04-13  drawn  2  filled  1  TP  0  SL  1  open 0  never  1  win   0.0%  moves  5 caught  0  line<=10p  28%  miss  25.6p  dir2h  39%  turns  6 vtx<=1c  1
+     DX1   Mon SS     ss_all     SHORT E 99.10700 SL 99.23117 TP 98.79300 -> NOT FILLED
+     DX2   Mon SS     ss_all     LONG  E 98.68500 SL 98.51500 TP 99.17711 -> SL         fill 2026-04-13 14:45 RR 2.9 MFE 0.8R MAE 1.4R
+EURUSD 2026-04-13  drawn  3  filled  2  TP  0  SL  2  open 0  never  1  win   0.0%  moves  6 caught  0  line<=10p  50%  miss  15.3p  dir2h  34%  turns  7 vtx<=1c  1
+     EU1   Mon SS     ss_all     SHORT E 1.17298 SL 1.17363 TP 1.16763 -> SL         fill 2026-04-13 16:45 RR 8.2 MFE 0.8R MAE 1.2R
+     EU2   Mon SS     ss_all     SHORT E 1.17226 SL 1.17425 TP 1.16763 -> SL         fill 2026-04-13 16:30 RR 2.3 MFE 0.5R MAE 1.4R
+     EU3   Mon SS     ss_all     LONG  E 1.16710 SL 1.16508 TP 1.17237 -> NOT FILLED
+GBPUSD 2026-04-13  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  win   0.0%  moves  8 caught  0  line<=10p  39%  miss  29.5p  dir2h  44%  turns 18 vtx<=1c  3
+     GB1   Mon SS     ss_all     LONG  E 1.32986 SL 1.32677 TP 1.34464 -> NOT FILLED
+DXY    2026-04-20  drawn  3  filled  3  TP  1  SL  2  open 0  never  0  win  33.3%  moves  4 caught  1  line<=10p  66%  miss   9.2p  dir2h  54%  turns  9 vtx<=1c  0
+     DX1   Tue BS     bs         LONG  E 98.01900 SL 97.83900 TP 98.87400 -> TP         fill 2026-04-20 15:30 RR 4.8 MFE 5.0R MAE 0.1R
+     DX2   Thu RWL    rwl        SHORT E 98.87400 SL 99.12483 TP 98.41613 -> SL         fill 2026-04-23 17:30 RR 1.8 MFE 1.5R MAE 1.9R
+     DX3   Thu Ladder            LONG  E 98.65959 SL 98.61500 TP 98.87400 -> SL         fill 2026-04-23 00:00 RR 4.8 MFE 0.0R MAE 1.3R
+EURUSD 2026-04-20  drawn  4  filled  1  TP  0  SL  1  open 0  never  3  win   0.0%  moves  6 caught  0  line<=10p  56%  miss  12.1p  dir2h  45%  turns 13 vtx<=1c  1
+     EU1   Mon SS     consol     SHORT E 1.17920 SL 1.17996 TP 1.17222 -> NOT FILLED
+     EU2   Mon SS     consol     LONG  E 1.17207 SL 1.17131 TP 1.17832 -> NOT FILLED
+     EU3   Tue BS     bs         SHORT E 1.17920 SL 1.17996 TP 1.17006 -> NOT FILLED
+     EU4   Thu RWL    rwl        LONG  E 1.17006 SL 1.16779 TP 1.17372 -> SL         fill 2026-04-23 00:00 RR 1.6 MFE 0.7R MAE 1.3R
+GBPUSD 2026-04-20  drawn  3  filled  1  TP  0  SL  1  open 0  never  2  win   0.0%  moves 10 caught  0  line<=10p  44%  miss  17.7p  dir2h  49%  turns 21 vtx<=1c  0
+     GB1   Tue BS     bs         SHORT E 1.35163 SL 1.35243 TP 1.34083 -> SL         fill 2026-04-20 07:15 RR 13.5 MFE 2.9R MAE 1.0R
+     GB2   Wed Ladder            SHORT E 1.34818 SL 1.34983 TP 1.34083 -> NOT FILLED
+     GB3   Thu Ladder            SHORT E 1.34557 SL 1.34701 TP 1.34083 -> NOT FILLED
+DXY    2026-05-18  drawn  1  filled  0  TP  0  SL  0  open 0  never  1  win   0.0%  moves  4 caught  0  line<=10p  64%  miss   9.6p  dir2h  46%  turns 11 vtx<=1c  0
+     DX1   Thu RWL    rwl        LONG  E 98.86900 SL 98.82600 TP 99.27941 -> NOT FILLED
+EURUSD 2026-05-18  drawn  3  filled  2  TP  1  SL  1  open 0  never  1  win  50.0%  moves  6 caught  1  line<=10p  39%  miss  18.9p  dir2h  39%  turns 13 vtx<=1c  0
+     EU1   Mon SS     ss_all     SHORT E 1.16604 SL 1.16702 TP 1.15985 -> TP         fill 2026-05-18 20:15 RR 6.3 MFE 6.7R MAE 0.1R
+     EU2   Mon SS     ss_all     SHORT E 1.16297 SL 1.16386 TP 1.15985 -> SL         fill 2026-05-18 06:15 RR 3.5 MFE 0.2R MAE 1.1R
+     EU3   Mon SS     ss_all     LONG  E 1.15815 SL 1.15717 TP 1.16285 -> NOT FILLED
+GBPUSD 2026-05-18  drawn  3  filled  3  TP  2  SL  1  open 0  never  0  win  66.7%  moves 13 caught  1  line<=10p  36%  miss  22.9p  dir2h  53%  turns 22 vtx<=1c  0
+     GB1   Mon SS     ss_all     SHORT E 1.33983 SL 1.34232 TP 1.33262 -> SL         fill 2026-05-18 12:30 RR 2.9 MFE 0.7R MAE 1.2R
+     GB2   Mon SS     ss_all     LONG  E 1.33247 SL 1.32963 TP 1.33926 -> TP         fill 2026-05-18 06:00 RR 2.4 MFE 2.6R MAE 0.1R
+     GB3   Thu RWL    rwl        SHORT E 1.34487 SL 1.34633 TP 1.33924 -> TP         fill 2026-05-20 15:15 RR 3.8 MFE 3.9R MAE 1.0R
+DXY    2026-10-05  drawn  2  filled  2  TP  2  SL  0  open 0  never  0  win 100.0%  moves  6 caught  2  line<=10p  48%  miss  14.6p  dir2h  40%  turns 12 vtx<=1c  0
+     DX1   Mon SS     ss_all     SHORT E 102.43500 SL 102.66500 TP 101.94100 -> TP         fill 2026-10-07 12:15 RR 2.1 MFE 2.2R MAE 0.3R
+     DX2   Mon SS     ss_all     LONG  E 101.92600 SL 101.72500 TP 102.42000 -> TP         fill 2026-10-06 11:15 RR 2.5 MFE 2.5R MAE 0.9R
+EURUSD 2026-10-05  drawn  2  filled  2  TP  1  SL  1  open 0  never  0  win  50.0%  moves 10 caught  1  line<=10p  40%  miss  21.5p  dir2h  48%  turns 14 vtx<=1c  0
+     EU1   Mon SS     ss_all     SHORT E 1.12585 SL 1.12742 TP 1.11725 -> SL         fill 2026-10-06 11:15 RR 5.5 MFE 0.5R MAE 1.2R
+     EU2   Mon SS     ss_all     LONG  E 1.11710 SL 1.11480 TP 1.12476 -> TP         fill 2026-10-05 06:30 RR 3.3 MFE 3.4R MAE 0.1R
+GBPUSD 2026-10-05  drawn  3  filled  3  TP  3  SL  0  open 0  never  0  win 100.0%  moves 12 caught  1  line<=10p  40%  miss  22.3p  dir2h  50%  turns 14 vtx<=1c  0
+     GB1   Mon SS     ss_all     SHORT E 1.32329 SL 1.32437 TP 1.32014 -> TP         fill 2026-10-05 08:00 RR 2.9 MFE 3.0R MAE 0.6R
+     GB2   Mon SS     ss_all     LONG  E 1.31899 SL 1.31769 TP 1.32304 -> TP         fill 2026-10-08 07:00 RR 3.1 MFE 3.6R MAE 0.4R
+     GB3   Fri RWL    rwl        SHORT E 1.32475 SL 1.32536 TP 1.32097 -> TP         fill 2026-10-09 01:45 RR 6.2 MFE 6.9R MAE 0.5R
+
+TOTAL DXY          maps  4  drawn   8  filled   6 (1.5/pair-week)  TP   3  SL   3  open 0  never   2  win  50.0%  (mean of weekly win 44.4% over 3 maps)  moves caught 3/19  avg RR of TPs 3.12  line<=10p 52%  miss 14.8p  dir2h 45%  turn vtx<=1c 1/38
+TOTAL EURUSD       maps  4  drawn  12  filled   7 (1.8/pair-week)  TP   2  SL   5  open 0  never   5  win  28.6%  (mean of weekly win 25.0% over 4 maps)  moves caught 2/28  avg RR of TPs 4.81  line<=10p 46%  miss 17.0p  dir2h 42%  turn vtx<=1c 2/47
+TOTAL GBPUSD       maps  4  drawn  10  filled   7 (1.8/pair-week)  TP   5  SL   2  open 0  never   3  win  71.4%  (mean of weekly win 55.6% over 3 maps)  moves caught 2/43  avg RR of TPs 3.70  line<=10p 40%  miss 23.1p  dir2h 49%  turn vtx<=1c 3/75
+TOTAL ALL (no gold) maps 12  drawn  30  filled  20 (1.7/pair-week)  TP  10  SL  10  open 0  never  10  win  50.0%  (mean of weekly win 40.0% over 10 maps)  moves caught 7/90  avg RR of TPs 3.75  line<=10p 46%  miss 18.3p  dir2h 45%  turn vtx<=1c 6/160
+TOTAL GOLDEN       maps  3  drawn  20  filled  18 (6.0/pair-week)  TP  18  SL   0  open 0  never   2  win 100.0%  (mean of weekly win 100.0% over 3 maps)  moves caught 9/17  avg RR of TPs 4.81  line<=10p 60%  miss 10.5p  dir2h 54%  turn vtx<=1c 2/34
