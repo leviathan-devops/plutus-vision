@@ -1,0 +1,272 @@
+{
+ "CME:6E1!|15": {
+  "symbol": "CME:6E1!",
+  "tf": "15",
+  "count": 5000,
+  "first": "2026-09-14T10:45:00.000Z",
+  "last": "2026-11-27T19:30:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:08.586Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "CME:6E1!|30": {
+  "symbol": "CME:6E1!",
+  "tf": "30",
+  "count": 5546,
+  "first": "2026-06-11T22:00:00.000Z",
+  "last": "2026-11-27T19:30:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:09.299Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "CME:6E1!|60": {
+  "symbol": "CME:6E1!",
+  "tf": "60",
+  "count": 4999,
+  "first": "2026-01-27T23:00:00.000Z",
+  "last": "2026-11-27T19:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:10.103Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "CME:6E1!|240": {
+  "symbol": "CME:6E1!",
+  "tf": "240",
+  "count": 2825,
+  "first": "2025-02-02T23:00:00.000Z",
+  "last": "2026-11-27T19:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:10.538Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "CME:6E1!|D": {
+  "symbol": "CME:6E1!",
+  "tf": "D",
+  "count": 459,
+  "first": "2025-02-02T23:00:00.000Z",
+  "last": "2026-11-25T23:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:10.808Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "CME:6B1!|15": {
+  "symbol": "CME:6B1!",
+  "tf": "15",
+  "count": 5000,
+  "first": "2026-09-14T10:45:00.000Z",
+  "last": "2026-11-27T19:30:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:11.345Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "CME:6B1!|30": {
+  "symbol": "CME:6B1!",
+  "tf": "30",
+  "count": 5546,
+  "first": "2026-06-11T22:00:00.000Z",
+  "last": "2026-11-27T19:30:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:12.108Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "CME:6B1!|60": {
+  "symbol": "CME:6B1!",
+  "tf": "60",
+  "count": 4999,
+  "first": "2026-01-27T23:00:00.000Z",
+  "last": "2026-11-27T19:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:12.580Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "CME:6B1!|240": {
+  "symbol": "CME:6B1!",
+  "tf": "240",
+  "count": 2825,
+  "first": "2025-02-02T23:00:00.000Z",
+  "last": "2026-11-27T19:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:12.967Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "CME:6B1!|D": {
+  "symbol": "CME:6B1!",
+  "tf": "D",
+  "count": 459,
+  "first": "2025-02-02T23:00:00.000Z",
+  "last": "2026-11-25T23:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:13.236Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "ICEUS:DX1!|15": {
+  "symbol": "ICEUS:DX1!",
+  "tf": "15",
+  "count": 4999,
+  "first": "2026-09-08T02:15:00.000Z",
+  "last": "2026-11-27T18:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:13.957Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "ICEUS:DX1!|30": {
+  "symbol": "ICEUS:DX1!",
+  "tf": "30",
+  "count": 5152,
+  "first": "2026-06-12T00:00:00.000Z",
+  "last": "2026-11-27T18:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:14.716Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "ICEUS:DX1!|60": {
+  "symbol": "ICEUS:DX1!",
+  "tf": "60",
+  "count": 5016,
+  "first": "2026-01-02T09:00:00.000Z",
+  "last": "2026-11-27T18:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:15.785Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "ICEUS:DX1!|240": {
+  "symbol": "ICEUS:DX1!",
+  "tf": "240",
+  "count": 2820,
+  "first": "2025-02-02T23:00:00.000Z",
+  "last": "2026-11-27T17:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:16.822Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "ICEUS:DX1!|D": {
+  "symbol": "ICEUS:DX1!",
+  "tf": "D",
+  "count": 472,
+  "first": "2025-02-02T23:00:00.000Z",
+  "last": "2026-11-27T01:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:17.254Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "TVC:US02Y|60": {
+  "symbol": "TVC:US02Y",
+  "tf": "60",
+  "count": 9898,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-27T22:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:17.826Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "TVC:US02Y|D": {
+  "symbol": "TVC:US02Y",
+  "tf": "D",
+  "count": 454,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-27T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:18.222Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "TVC:DE02Y|60": {
+  "symbol": "TVC:DE02Y",
+  "tf": "60",
+  "count": 6272,
+  "first": "2025-02-03T07:00:00.000Z",
+  "last": "2026-11-27T20:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:18.702Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "TVC:DE02Y|D": {
+  "symbol": "TVC:DE02Y",
+  "tf": "D",
+  "count": 464,
+  "first": "2025-02-03T07:00:00.000Z",
+  "last": "2026-11-27T07:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:18.969Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "TVC:GB02Y|60": {
+  "symbol": "TVC:GB02Y",
+  "tf": "60",
+  "count": 4610,
+  "first": "2025-02-03T08:00:00.000Z",
+  "last": "2026-11-27T17:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:19.472Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "TVC:GB02Y|D": {
+  "symbol": "TVC:GB02Y",
+  "tf": "D",
+  "count": 462,
+  "first": "2025-02-03T08:00:00.000Z",
+  "last": "2026-11-27T08:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:19.789Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "COT:099741_F_NCP_L|W": {
+  "symbol": "COT:099741_F_NCP_L",
+  "tf": "W",
+  "count": 94,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-16T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:20.437Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "COT:099741_F_NCP_S|W": {
+  "symbol": "COT:099741_F_NCP_S",
+  "tf": "W",
+  "count": 94,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-16T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:20.827Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "COT:099741_F_OI|W": {
+  "symbol": "COT:099741_F_OI",
+  "tf": "W",
+  "count": 94,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-16T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:21.276Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "COT:096742_F_NCP_L|W": {
+  "symbol": "COT:096742_F_NCP_L",
+  "tf": "W",
+  "count": 94,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-16T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:21.703Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "COT:096742_F_NCP_S|W": {
+  "symbol": "COT:096742_F_NCP_S",
+  "tf": "W",
+  "count": 94,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-16T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:22.119Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "COT:096742_F_OI|W": {
+  "symbol": "COT:096742_F_OI",
+  "tf": "W",
+  "count": 94,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-16T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:22.567Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "COT:098662_F_NCP_L|W": {
+  "symbol": "COT:098662_F_NCP_L",
+  "tf": "W",
+  "count": 94,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-16T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:22.808Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "COT:098662_F_NCP_S|W": {
+  "symbol": "COT:098662_F_NCP_S",
+  "tf": "W",
+  "count": 94,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-16T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:23.188Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ },
+ "COT:098662_F_OI|W": {
+  "symbol": "COT:098662_F_OI",
+  "tf": "W",
+  "count": 94,
+  "first": "2025-02-03T00:00:00.000Z",
+  "last": "2026-11-16T00:00:00.000Z",
+  "fetchedAt": "2026-11-28T12:46:23.437Z",
+  "source": "TradingView-API (@mathieuc/tradingview), free access"
+ }
+}

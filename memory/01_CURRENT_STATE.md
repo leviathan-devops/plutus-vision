@@ -1,3 +1,8 @@
+## STATE (NEWEST, 2026-11-28) - M-78 (L-72): data fetched (data/tvapi, 30 series); CHARTER memory/22_E2_CHARTER.md sent in chat - WAITING FOR HIS APPROVAL of the statement; then step 1 of memory/21 v5
+- Read memory/22 before every step (goal, constraints C1-C9, rules R1-R7, forbidden F1-F9, tests T1-T7, success S-a..S-e, oracles O1-O4).
+- Open point he must confirm: the 80-85% definition (S-a).
+- NEXT on approval: step 1 grader + kill test + baseline (tools only) and step 2 the orange / white look with side-by-side frames.
+
 ## STATE (NEWEST, 2026-11-28) - M-77 (L-71): answers received; EXECUTION PLAN v5 (memory/21, 9 steps) sent in chat - WAITING FOR HIS GO (no engine edits yet)
 - Governs: this session's infrastructure; the Gemini document = context only. Macro lock lifted for classifier + 3-week context. Engine 1: ZERO regressions. Look = orange solid line + hollow white frames. Grading = time-aligned, mechanics-based (pips cosmetic).
 - TradingView-API installed and working (tools/tvapi; README has the proxy recipe + measured depth). Environment hosts added: data.tradingview.com, symbol-search.tradingview.com.
