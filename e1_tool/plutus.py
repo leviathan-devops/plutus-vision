@@ -522,15 +522,8 @@ def daily_anchor(pair, monday, chain, R, src_days=None):
             for u0, u1, Xw in wins:
                 b30 = D.closed_until(pair, '30', u0)
                 p0 = op if u0 == t_a else (b30[-1]['close'] if b30 else XL['spot'])
-                ev = EPATH.last_event(pair, Xw, u0, p0)
-                if ev is not None:
-                    d0, why0 = ev[2], f"{ev[0]} at {ev[1]['_lab']}"
-                elif dL is not None and dL.get('dir') in ('up', 'down'):
-                    d0, why0 = dL['dir'], f"the day's shape direction ({'+'.join(dL['shapes'])})"
-                else:
-                    last = b30[-5:]
-                    d0 = 'up' if (len(last) > 1 and last[-1]['close'] >= last[0]['close']) else 'down'
-                    why0 = 'no zone event: the move in force continues (P452 6.6 rule 6)'
+                wk_open = next((x['open'] for x in D.closed_until(pair, '30', u0) if x['time'] >= b0), None)
+                d0, why0 = EPATH.first_direction(pair, Xw, u0, p0, wk_open, dL.get('dir') if dL is not None else None)
                 nd = EPATH.window(pair, Xw, u0, u1, p0, d0, cont[0], cont[1])
                 if len(nd) > 1:
                     segs.append([(n['t'], n['p']) for n in nd])

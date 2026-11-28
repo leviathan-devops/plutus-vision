@@ -1,0 +1,43 @@
+build sessions graded: 306
+
+(1) NEXT-SESSION DIRECTION from a fact known at the update instant: right / cases
+  London  pressing within 3 pips under a zone -> up into it / over a zone -> down into it      23/  33 =  70%
+  London  same as the week so far                                                              67/ 103 =  65%
+  London  against the day so far (since 17:00)                                                 65/ 111 =  59%
+  London  toward the NEARER ladder zone                                                        64/ 117 =  55%
+  London  2Y spread change over the week (dollar side)                                         80/ 148 =  54%
+  London  against the last 2 hours                                                             58/ 108 =  54%
+  London  delta proxy of the last 4 hours (buying -> up)                                       75/ 148 =  51%
+  London  4H structure direction                                                               43/  88 =  49%
+  London  last zone event = broken -> onward                                                   31/  64 =  48%
+  London  inverse of DXY, last 2 hours                                                         33/  69 =  48%
+  London  same as the last 2 hours                                                             50/ 108 =  46%
+  London  same as the last 4 hours                                                             44/  98 =  45%
+  London  toward the FARTHER ladder zone (room to move)                                        52/ 117 =  44%
+  London  last zone event, away direction (rejected / inside)                                  37/  84 =  44%
+  London  same as the day so far (since 17:00)                                                 46/ 111 =  41%
+  London  price INSIDE a supply zone -> down / demand zone -> up                               11/  34 =  32%
+  NY      pressing within 3 pips under a zone -> up into it / over a zone -> down into it      25/  41 =  61%
+  NY      toward the NEARER ladder zone                                                        71/ 126 =  56%
+  NY      same as the day so far (since 17:00)                                                 71/ 129 =  55%
+  NY      against the last 2 hours                                                             76/ 141 =  54%
+  NY      price INSIDE a supply zone -> down / demand zone -> up                               23/  45 =  51%
+  NY      same as the last 4 hours                                                             63/ 124 =  51%
+  NY      last zone event, away direction (rejected / inside)                                  51/ 101 =  50%
+  NY      delta proxy of the last 4 hours (buying -> up)                                       79/ 158 =  50%
+  NY      2Y spread change over the week (dollar side)                                         78/ 158 =  49%
+  NY      same as the week so far                                                              66/ 135 =  49%
+  NY      inverse of DXY, last 2 hours                                                         45/  94 =  48%
+  NY      same as the last 2 hours                                                             65/ 141 =  46%
+  NY      against the day so far (since 17:00)                                                 58/ 129 =  45%
+  NY      toward the FARTHER ladder zone (room to move)                                        55/ 126 =  44%
+  NY      4H structure direction                                                               37/  88 =  42%
+  NY      last zone event = broken -> onward                                                   19/  57 =  33%
+
+(2) LADDER ZONES REACHED by the session's move (0 = turned before the first zone ... 5 = five or more): share of sessions
+  London  pressure + 4H/1H S/D         0:  33%  1:  29%  2:  22%  3:   7%  4:   7%  5:   1%   n=148
+  London  pressure + 4H/1H/30m S/D     0:  30%  1:  25%  2:   9%  3:  16%  4:   7%  5:  14%   n=148
+  London  pressure zones only          0:  44%  1:  47%  2:   8%  3:   1%  4:   1%  5:   0%   n=148
+  NY      pressure + 4H/1H S/D         0:  34%  1:  34%  2:  13%  3:   9%  4:   5%  5:   5%   n=158
+  NY      pressure + 4H/1H/30m S/D     0:  32%  1:  30%  2:   9%  3:   9%  4:   7%  5:  13%   n=158
+  NY      pressure zones only          0:  43%  1:  43%  2:  11%  3:   3%  4:   0%  5:   0%   n=158

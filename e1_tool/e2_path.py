@@ -20,6 +20,9 @@ import e2_chain as E2
 NARROW, WIDE = 8, 15            # pips: the calibration's width classes (memory/08): under 8 pierce-through, 15+ work-inside
 STACK = 3                       # GS Law 1: zones from 3+ sources overlapping = a wall
 DWELL_BARS = 3                  # his context document: consolidation = 3+ candles (30m)
+LADDER_TFS = ('240', '60')      # the session ladder: pressure zones + 4H / 1H supply-demand (build weeks, memory/08: a session's move ends within 0-2 of these in ~85%; with 30m zones the
+                                # count spreads to 5+). L-40: 4H overview, 1H work; 30m = refinement (the scalping engine's stack, benched)
+PRESS = 3                       # pips: price 'pressing' at a zone edge (goal prompt 3-pip tolerance)
 SES = (('asia', 17, 2), ('london', 2, 8), ('precut', 8, 10), ('ny', 10, 17))
 
 
@@ -45,7 +48,7 @@ def pace(pair, t0):
 def ladder(X, up, lo=None, hi=None):
     """the zones a leg meets going up (supply side) or down (demand side), nearest first is decided by the caller; each with its class and stack count"""
     ip = [dict(z, _k='IP', _lab=z['name']) for z in X.get('zones', []) if z.get('drawn')]
-    sd = [dict(z, _k='SD', _lab=z.get('label', z['tf'])) for z in X.get('sd', []) if z['tf'] in ('240', '60', '30') and z['type'] == ('Supply' if up else 'Demand')]
+    sd = [dict(z, _k='SD', _lab=z.get('label', z['tf'])) for z in X.get('sd', []) if z['tf'] in LADDER_TFS and z['type'] == ('Supply' if up else 'Demand')]
     allz = [(q['bot'], q['top']) for q in X.get('zones', []) if q.get('drawn')] + [(q['bot'], q['top']) for q in X.get('sd', [])] + [(b['bot'], b['top']) for b in X['v1']['240']['liquidity']]
     pip = X['U'] / 100.0
     out = []
@@ -140,3 +143,27 @@ def window(pair, X, t0, t1, price, first_dir, lo=None, hi=None, max_nodes=8):
     if nodes[-1]['t'] < t1:
         nodes.append({'t': t1, 'p': nodes[-1]['p'], 'zone': nodes[-1]['zone'], 'state': 'HOLD', 'why': 'no further zone inside the container'})
     return nodes
+
+
+def first_direction(pair, X, t0, price, week_open, day_dir=None):
+    """the first leg's direction at an update instant, from facts closed by t0 (build-week calibration, memory/08; each with its canon line):
+    1 price pressing within 3 pips of a zone's edge -> into that zone (P533:497 'flat side = receiving pressure'; 61-70%);
+    2 a day whose shape has a direction (BS / WL / RWL ...) -> that direction (the chain);
+    3 at the London open: the direction of the week so far, when it has moved 10+ pips (P533:499 'the trend for the week ... takes days'; P452 6.6 rule 6; 65%);
+    4 else toward the nearer ladder zone (P533 2.3 'magnetize toward the IL levels', D-41; 55%). Returns (direction, why)."""
+    pip = X['U'] / 100.0
+    lu = sorted([z for z in ladder(X, True) if z['bot'] > price], key=lambda z: z['bot'])
+    ld = sorted([z for z in ladder(X, False) if z['top'] < price], key=lambda z: -z['top'])
+    du = (lu[0]['bot'] - price) if lu else None
+    dd = (price - ld[0]['top']) if ld else None
+    hu, hd = du is not None and du <= PRESS * pip, dd is not None and dd <= PRESS * pip
+    if hu != hd:
+        z = lu[0] if hu else ld[0]
+        return ('up' if hu else 'down'), f"pressing at {z['_lab']} (P533:497)"
+    if day_dir in ('up', 'down'):
+        return day_dir, "the day's shape direction (chain)"
+    if _ses(t0) == 'london' and week_open is not None and abs(price - week_open) >= 10 * pip:
+        return ('up' if price > week_open else 'down'), 'the week so far (P533:499; rule 6)'
+    if du is not None and dd is not None:
+        return ('up' if du < dd else 'down'), 'toward the nearer zone (P533 2.3)'
+    return ('up' if du is not None else 'down'), 'the only side with a zone'

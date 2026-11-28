@@ -313,3 +313,12 @@ WEEK SETS (do not mix): BUILD = 02-02, 02-09, 02-16, 02-23, 03-02, 03-09, 03-16,
 - Session of the touch: New York morning 08:00-12:00 held 79% (with the 4H trend 89%, mostly pierce-and-return 66%); London 62%; Asia 59%. Weekday: Tuesday held 86%, Wednesday 50%.
 - NOT separating by itself (each within a few points of the base rate): BoM vs MoM at 0-2 taps, pressure-zone reaction counter (Fortress breaks 43-46%), approach with / against the 4H structure, option wall, rung on the near edge, liquidity beyond, high-volume node inside (zones with 1.5x+ the mean volume break MORE: 46%).
 - Reading: the hold / break decision at a zone comes from depletion, the zone's timeframe / width, stacking, and the context (session, day in the chain) - not from one microstructure reading. Node placement: narrow zone -> at the liquidity just beyond its far edge; wide / 4H zone -> inside it, with dwell.
+
+## SESSION DIRECTION + LADDER REACH CALIBRATION (2026-11-28, tools/research/e2_calib_dir.py, evidence/e2/calib_dir_build_weeks.txt; 12 BUILD weeks x 3 pairs, 306 sessions that moved 5+ pips; week-anchor map)
+Direction of the session that follows the update instant (London 02:00-08:00 / New York 10:00-17:00), share right:
+- pressing within 3 pips of a zone -> into it: London 70% (33 cases), NY 61% (41).   same as the week so far: London 65%, NY 49%.   against the day so far (Asia): London 59%; same as the day so far: NY 55%.
+- toward the nearer ladder zone 55% / 56%.   4H structure 49% / 42%.   last zone event 'rejected -> away' 44% / 50%; 'broken -> onward' 48% / 33%.   same as the last 2 h 46% / 46%; against 54% / 54%.
+- delta proxy of the last 4 h 51% / 50%; 2Y spread change 54% / 49%; inverse of DXY's last 2 h 48% / 48%.
+=> none of the facts encoded so far tells a session's direction better than 55-70%; my e2_path 'last zone event' rule is at or below chance.
+Ladder zones reached by the session's move, counted from the price: PRESSURE ZONES ONLY -> 0 zones 44%, 1 zone 47% / 43%, 2+ 9% / 13% (a session ends at or before the next pressure zone in ~90%);
+pressure + 4H / 1H S/D -> 0: 33%, 1: 29-34%, 2: 13-22%, 3+: 15-19%; with 30m S/D the count spreads to 5+ (14%).

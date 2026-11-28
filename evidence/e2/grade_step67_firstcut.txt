@@ -1,0 +1,12 @@
+switch e2_chain.E2_PATH = True (was False)
+DXY    2026-07-06  line turns 12: HIT  2  wrong zone  7  wrong time  2  none  1  no zone  0 | actual turns 32, forecast  2 | hourly r 0.48 | week dir - | days 3/5 | orders 8 0168055d6b
+EURUSD 2026-07-06  line turns 10: HIT  1  wrong zone  2  wrong time  5  none  2  no zone  0 | actual turns 32, forecast  1 | hourly r 0.0 | week dir - | days 3/5 | orders 8 640f85039f
+GBPUSD 2026-07-06  line turns 14: HIT  2  wrong zone  6  wrong time  5  none  1  no zone  0 | actual turns 37, forecast  2 | hourly r 0.77 | week dir RIGHT | days 4/5 | orders 4 64a5c50496
+DXY    2026-04-13  line turns  8: HIT  2  wrong zone  3  wrong time  3  none  0  no zone  0 | actual turns 36, forecast  2 | hourly r 0.82 | week dir RIGHT | days 4/5 | orders 2 2fefa356c3
+EURUSD 2026-04-13  line turns  8: HIT  1  wrong zone  3  wrong time  2  none  2  no zone  0 | actual turns 37, forecast  1 | hourly r 0.84 | week dir RIGHT | days 2/5 | orders 3 56e970c432
+GBPUSD 2026-04-13  line turns  8: HIT  1  wrong zone  7  wrong time  0  none  0  no zone  0 | actual turns 37, forecast  1 | hourly r 0.85 | week dir RIGHT | days 3/5 | orders 1 ec85ed2dc5
+DXY    2026-04-20  line turns 10: HIT  0  wrong zone  5  wrong time  4  none  1  no zone  0 | actual turns 36, forecast  0 | hourly r 0.78 | week dir RIGHT | days 5/5 | orders 3 4631143133
+EURUSD 2026-04-20  line turns  9: HIT  1  wrong zone  4  wrong time  3  none  1  no zone  0 | actual turns 34, forecast  1 | hourly r 0.7 | week dir RIGHT | days 5/5 | orders 4 3be289620b
+GBPUSD 2026-04-20  line turns 13: HIT  1  wrong zone  3  wrong time  2  none  7  no zone  0 | actual turns 34, forecast  1 | hourly r 0.49 | week dir RIGHT | days 1/5 | orders 3 84ac40ce64
+DXY    2026-05-18  line turns  2: HIT  0  wrong zone  1  wrong time  0  none  1  no zone  0 | actual turns 39, forecast  0 | hourly r 0.43 | week dir - | days 5/5 | orders 1 c082a31ee5
+EURUSD 2026-05-18  line turns  9: HIT  1  wrong zone  4  wrong time  2  none  2  no zone  0 | actual turns 37, forecast  2 | hourly r 0.4 | week dir RIGHT | days 5/5 | orders 3 4cbc6b2a28
