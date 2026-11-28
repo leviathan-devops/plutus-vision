@@ -1,0 +1,43 @@
+MEAN SIZE OF EACH HOUR'S CANDLE (pips; New York time; hour = the candle that STARTS then) - recent 3 months | Feb-Jul
+  17:00  DXY   3.3 |   4.1   EURUSD   6.4 |   7.8   GBPUSD  11.2 |  12.8
+  18:00  DXY   3.2 |   4.6   EURUSD   7.1 |   9.0   GBPUSD  10.1 |  12.7
+  19:00  DXY   4.0 |   4.2   EURUSD   6.1 |   7.7   GBPUSD   6.6 |   9.6
+  20:00  DXY   8.0 |   8.7   EURUSD   8.6 |  10.7   GBPUSD   9.5 |  13.5
+  21:00  DXY   7.7 |   8.5   EURUSD   8.7 |  10.4   GBPUSD   9.6 |  13.5
+  22:00  DXY   7.9 |   6.9   EURUSD   8.9 |   8.3   GBPUSD   9.5 |  10.9
+  23:00  DXY   6.3 |   6.4   EURUSD   7.2 |   7.6   GBPUSD   8.1 |   9.9
+  00:00  DXY   5.4 |   6.3   EURUSD   6.1 |   7.3   GBPUSD   6.8 |   9.6
+  01:00  DXY   6.4 |   7.9   EURUSD   7.4 |   9.8   GBPUSD   8.5 |  13.0
+  02:00  DXY   9.3 |  10.5   EURUSD  11.1 |  13.1   GBPUSD  14.5 |  18.2
+  03:00  DXY  10.8 |  11.7   EURUSD  13.9 |  14.9   GBPUSD  15.9 |  20.5
+  04:00  DXY  10.0 |  12.0   EURUSD  12.7 |  15.2   GBPUSD  15.1 |  21.1
+  05:00  DXY   8.8 |   9.5   EURUSD  10.7 |  12.5   GBPUSD  13.4 |  16.9
+  06:00  DXY   8.0 |   9.8   EURUSD   9.9 |  12.6   GBPUSD  12.8 |  17.7
+  07:00  DXY   9.3 |  11.5   EURUSD  11.3 |  14.8   GBPUSD  14.9 |  20.5
+  08:00  DXY  15.8 |  14.9   EURUSD  18.3 |  19.4   GBPUSD  22.1 |  24.6
+  09:00  DXY  12.7 |  14.8   EURUSD  15.5 |  18.8   GBPUSD  19.4 |  25.1
+  10:00  DXY  12.8 |  16.2   EURUSD  15.8 |  20.7   GBPUSD  19.9 |  29.1
+  11:00  DXY  11.3 |  13.2   EURUSD  14.0 |  16.8   GBPUSD  17.0 |  22.9
+  12:00  DXY   8.9 |   9.9   EURUSD  11.2 |  12.6   GBPUSD  13.3 |  17.7
+  13:00  DXY   8.2 |  10.1   EURUSD   9.8 |  12.7   GBPUSD  11.5 |  16.7
+  14:00  DXY   8.4 |  10.1   EURUSD   9.9 |  12.7   GBPUSD  11.2 |  15.7
+  15:00  DXY   6.0 |   8.7   EURUSD   7.0 |  10.9   GBPUSD   8.2 |  13.5
+  16:00  DXY   4.9 |   6.3   EURUSD   6.2 |   8.4   GBPUSD   8.1 |  12.0
+
+UPDATE TIMES: share of 30m closes within 10 pips of (a) a line that only restarts flat at those times = NO forecast, (b) a line with the correct price at each of those times = PERFECT forecast of every leg
+  recent approved today: 17:00 day open + 02:00 London open: no forecast 55.0%  perfect 78.7%
+  check  approved today: 17:00 day open + 02:00 London open: no forecast 47.3%  perfect 69.3%
+  + 05:00  -> 3 a day [17:00, 02:00, 05:00]: recent no forecast 63.5% perfect 84.1%   | check no forecast 54.3% perfect 76.0%
+  + 12:00  -> 4 a day [17:00, 02:00, 05:00, 12:00]: recent no forecast 71.1% perfect 86.9%   | check no forecast 61.8% perfect 81.1%
+  + 23:00  -> 5 a day [17:00, 23:00, 02:00, 05:00, 12:00]: recent no forecast 75.6% perfect 88.3%   | check no forecast 66.2% perfect 83.5%
+  + 09:00  -> 6 a day [17:00, 23:00, 02:00, 05:00, 09:00, 12:00]: recent no forecast 78.1% perfect 91.4%   | check no forecast 68.6% perfect 86.4%
+  named sets (recent | check):
+   17 / 02 / 05                               no forecast 63.5% | 54.3%   perfect 84.1% | 76.0%
+   17 / 02 / 10                               no forecast 62.2% | 53.5%   perfect 82.8% | 75.6%
+   17 / 02 / 05 / 10 / 12                     no forecast 73.3% | 64.0%   perfect 89.9% | 83.7%
+   17 / 02 / 05 / 10 / 13                     no forecast 74.0% | 64.4%   perfect 90.0% | 83.7%
+   17 / 02 / 05 / 08 / 10                     no forecast 69.4% | 60.0%   perfect 89.0% | 82.7%
+   17 / 02 / 08 / 10 (session starts + cut)   no forecast 64.8% | 56.3%   perfect 86.7% | 79.8%
+   17 / 02 / 05 / 10                          no forecast 68.2% | 58.6%   perfect 86.7% | 80.1%
+   17 / 02 / 08 / 10 / 13                     no forecast 70.6% | 62.1%   perfect 90.1% | 83.4%
+   17 / 02 / 05 / 08 / 10 / 13                no forecast 75.1% | 65.8%   perfect 92.3% | 86.3%

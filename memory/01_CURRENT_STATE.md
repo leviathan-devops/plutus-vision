@@ -1,3 +1,9 @@
+## STATE (NEWEST, 2026-11-28) - M-72: target 80-85% first; PLAN ONLY, NO EDITS until he approves (L-67). Plan v3 = memory/19_PLAN_E2_UPDATES.md, SENT IN CHAT - WAITING FOR HIS ANSWER
+- Plan v3: only the Engine 2 line's forward part updates, at FIXED times 17:00 / 02:00 / 05:00 / 10:00 NY (4 a day); each update reads the zone event since the last one (rejected / broken / none), draws ONE leg from the actual price to the NEXT Engine 1 zone of the same timeframe class; everything already drawn, zones, boxes, orders frozen.
+- Corrections given to him: 'range bound' = my word for the box's two outer E1 zones (the line skips the zones between - flaw); 'level every 3 pips' was a flattened count (session-scale zones are ~1 per 18 pips).
+- Research he asked for: evidence/m72/gap_hours.txt (volatile hours 02:00-04:00 and 08:00-11:00 NY; update-set table).
+- NEXT: his answer (approve / change the times, count, rules). Build nothing before it. Product unchanged (E2_MICRO off).
+
 ## STATE (NEWEST, 2026-11-28) - M-71: the M-70 example judged 'no meaningful improvement' (L-66); Engine 2 GAP FORENSICS done (memory/18_E2_GAP.md) and the rethought strategy SENT IN CHAT - WAITING FOR HIS ANSWER
 - Product unchanged (E2_MICRO = False; D-149 code stays in the tree, off).
 - Gap (measured): one forecast a day with 3-4 vertices caps at ~83% even with perfect prices; the line meets the actual price only at 17:00 / 02:00 (a no-forecast flat line restarted at 4 session starts = 62% / 72% vs product 46% / 60%); NY legs 40 p vs actual 14 p; direction 57-60%; 9 of 12 chains 'SS all week'.
