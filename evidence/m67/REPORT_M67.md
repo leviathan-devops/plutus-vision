@@ -159,3 +159,20 @@ Session facts measured on 420 sessions:
 - Golden: DXY, EURUSD, GBPUSD Jul 6.
 - Line change: EURUSD Oct 5, GBPUSD May 18, DXY Aug 31.
 - Voided duplicates: DXY Mar 23, GBPUSD Mar 23, EURUSD Apr 13.
+
+## Addendum (01:45 UTC): your winning trade library vs my build (plan step M5, measuring only)
+Read so far into `context_management/oracle/library/trades.json`: 7 priced trades and 2 shape-box pictures.
+
+Your swing scalps are range trades: entry at the range edge, 6-10 pip stop, target at the far edge or the 4H liquidity, RR 6.5-11.
+
+| Your trade | My Engine 2 that week | My Engine 3 |
+|---|---|---|
+| GBPUSD Mar 4 S 1.3398 -> 1.3300, Mar 5 L 1.3300 -> 1.3408 | Wed-Thu breakout DOWN to 1.3317-1.3342: right | no short (IP floor gate E3C:1022 "confluence >= 7"; zone scored 6.0); no orders in the new 1.3300-1.3408 range |
+| GBPUSD Apr 2 S 1.3248 -> 1.3188 | Thu-Fri breakout DOWN to 1.3185: right | Thursday short at 1.32325 never confirmed (below the price at the anchor) |
+| EURUSD Apr 15 L 1.1773 -> 1.18168 | re-anchored drawing: Wed-Fri range 1.17594-1.18210, your exact range | no order in it: orders stay with the failed chain (flag REANCHOR off since D-137) |
+
+Measured, not adopted:
+- IP gate at 6 instead of 7: adds one stopped trade.
+- Orders from the re-anchored chain (REANCHOR on): dev 14 TP / 22 SL, same rate as now. It catches the short at the top of that EURUSD range (TP), not your long.
+
+Reading: on these weeks Engine 2 sees the move and the range. Engine 3 does not place your entry: the right range edge, after the range forms.
