@@ -22,6 +22,10 @@ STACK = 3                       # GS Law 1: zones from 3+ sources overlapping = 
 DWELL_BARS = 3                  # his context document: consolidation = 3+ candles (30m)
 LADDER_TFS = ('240', '60')      # the session ladder: pressure zones + 4H / 1H supply-demand (build weeks, memory/08: a session's move ends within 0-2 of these in ~85%; with 30m zones the
                                 # count spreads to 5+). L-40: 4H overview, 1H work; 30m = refinement (the scalping engine's stack, benched)
+HOLD_WITHOUT_RULE = True        # a leg is drawn only where a rule gives its direction (pressing at a zone, the day's shape, the Asian-range break, the week so far); otherwise the line holds
+                                # (build weeks, memory/08: 'toward the nearer zone' is right 55% - not a direction)
+ASIA_HOLD = True                # P452 6.6 rule 1 'Asian Session ... price stays within the prior day's range': the Asian window holds unless price is pressing at a zone
+CONTROL_FLAT = False            # locator only (charter R3): the no-forecast line - a flat line restarted at the same update instants
 PRESS = 3                       # pips: price 'pressing' at a zone edge (goal prompt 3-pip tolerance)
 SES = (('asia', 17, 2), ('london', 2, 8), ('precut', 8, 10), ('ny', 10, 17))
 
@@ -107,6 +111,8 @@ def last_event(pair, X, t0, price, lookback=8):
 
 def window(pair, X, t0, t1, price, first_dir, lo=None, hi=None, max_nodes=8):
     """the nodes of [t0, t1): from `price` in `first_dir`, zone to zone, each boundary state deciding where the node sits and which way the line leaves; time by the session pace"""
+    if CONTROL_FLAT or first_dir == 'hold':
+        return [{'t': t0, 'p': price, 'zone': None, 'state': 'START', 'why': ''}, {'t': t1, 'p': price, 'zone': None, 'state': 'HOLD', 'why': 'control: no forecast'}]
     pc = pace(pair, t0)
     nodes = [{'t': t0, 'p': price, 'zone': None, 'state': 'START', 'why': ''}]
     p, t, up = price, t0, first_dir == 'up'
@@ -160,10 +166,28 @@ def first_direction(pair, X, t0, price, week_open, day_dir=None):
     if hu != hd:
         z = lu[0] if hu else ld[0]
         return ('up' if hu else 'down'), f"pressing at {z['_lab']} (P533:497)"
+    if ASIA_HOLD and _ses(t0) == 'asia':
+        return 'hold', 'Asian session: price stays within the prior range (P452 6.6 rule 1)'
     if day_dir in ('up', 'down'):
         return day_dir, "the day's shape direction (chain)"
+    hr = dt.datetime.fromtimestamp(t0 / 1000, D.NY).hour
+    if 2 < hr < 12:
+        # P452 6.6 rule 2 'a bounding zone from the Asian SS range fails ... as London desks open': the side on which London first CLOSED beyond the Asian session's range is the side
+        # the session runs (candle-only check on all 2026 weeks: 66%)
+        d0 = dt.datetime.fromtimestamp(t0 / 1000, D.NY).date()
+        a0, a1 = E2._ms(d0 - dt.timedelta(days=1), 17), E2._ms(d0, 2)
+        b30 = D.closed_until(pair, '30', t0)
+        asia = [x for x in b30 if a0 <= x['time'] < a1]
+        lon = [x for x in b30 if x['time'] >= a1]
+        if len(asia) >= 4 and lon:
+            hi, lo = max(x['high'] for x in asia), min(x['low'] for x in asia)
+            brk = next((('up' if x['close'] > hi else 'down') for x in lon if x['close'] > hi or x['close'] < lo), None)
+            if brk:
+                return brk, 'London closed beyond the Asian range on that side (P452 6.6 rule 2)'
     if _ses(t0) == 'london' and week_open is not None and abs(price - week_open) >= 10 * pip:
         return ('up' if price > week_open else 'down'), 'the week so far (P533:499; rule 6)'
+    if HOLD_WITHOUT_RULE:
+        return 'hold', 'no direction rule applies: price holds where it is until the next update'
     if du is not None and dd is not None:
         return ('up' if du < dd else 'down'), 'toward the nearer zone (P533 2.3)'
     return ('up' if du is not None else 'down'), 'the only side with a zone'

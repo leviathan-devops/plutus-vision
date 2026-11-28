@@ -1,3 +1,10 @@
+## STATE (NEWEST, 2026-11-28 late) - M-80 (L-74): he saw NO tangible improvement after steps 1-3 ('only the colour changed'). Since then: STEP 8 BUILT on the node line (still behind switches, product unchanged)
+- Switches for the new line: e2_chain.E2_PATH=1, e2_chain.PATH_UPDATES=(2,5,10), e2_chain.LOOK_ORANGE=1. e2_path: HOLD_WITHOUT_RULE (a leg only where a rule gives direction), ASIA_HOLD, CONTROL_FLAT (locator).
+- MEASURED (15 pair-weeks, orders identical; devset + e2grade; evidence/e2/dev_path_u2.txt, grade_path_u2.txt): 4 checkpoint weeks closes within 10 p 46 -> 64%, miss 18.3 -> 9.9 p, turns with a vertex within one candle 6 -> 33 / 160, turns at the right zone +-2 h 12 -> 28% (15 / 53), hourly r 0.54 -> 0.82, week dir 9 / 9.
+  Golden: 60 -> 66%, 10.5 -> 9.2 p, right-zone turns 42 -> 56% (9 / 16), r 0.76 -> 0.62. CONTROL (no forecast, flat restart at the same times): 66% / 73% - the legs still add nothing to closeness; the gain is the restarts + shorter legs.
+- Kill test with the switches on: PASS (golden DXY, EURUSD; GBPUSD 04-13). Frames evidence/e2/step8 (ledger 123 / 123b): near the candles, but short separate legs; wrong-way legs on trend days; golden DXY's old line reads better.
+- UNSOLVED: session direction (55-65%); day-level steps 4-5 not started; step 9 not started. NEXT: make the legs one continuous path per day (carry the leg across updates when not contradicted), day-level direction from the chain for trend days (Monday 04-13 breakout = swing scalps forecast all week), steps 4-5.
+
 ## STATE (NEWEST, 2026-11-28) - M-79: CHARTER APPROVED (memory/22) - EXECUTING memory/21 v5 steps 1-9. Read memory/22 before every step.
 - STEP LOG (update after each):
   * step 1 DONE: tools/research/e2grade.py (time-aligned, zone-based), tools/kill_test.py (golden x3 PASS), tools/locks/e1_output.py (snapshot of 85 pair-weeks; check = IDENTICAL). BASELINE (evidence/e2/grade_step1_baseline.txt): golden line turns 12, HIT 5 = 42% (wrong zone 3, wrong time 4), actual turns forecast 5 / 101, hourly r 0.76, days 10 / 15; 4 weeks line turns 40, HIT 5 = 12% (wrong zone 29), actual turns forecast 6 / 430, r 0.54, week dir 8 / 9, days 44 / 60.

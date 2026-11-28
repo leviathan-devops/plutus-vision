@@ -1,0 +1,5 @@
+switch e2_chain.E2_PATH = True
+switch e2_chain.PATH_UPDATES = (2, 5, 10)
+kill_test DXY 2026-07-06: +500-pip shock after the week anchor and after each of 18 later anchors - nothing decided before the shock changed
+kill_test EURUSD 2026-07-06: +500-pip shock after the week anchor and after each of 18 later anchors - nothing decided before the shock changed
+kill_test GBPUSD 2026-04-13: +500-pip shock after the week anchor and after each of 18 later anchors - nothing decided before the shock changed
