@@ -1,3 +1,8 @@
+## STATE (NEWEST, 2026-11-28) - M-77 (L-71): answers received; EXECUTION PLAN v5 (memory/21, 9 steps) sent in chat - WAITING FOR HIS GO (no engine edits yet)
+- Governs: this session's infrastructure; the Gemini document = context only. Macro lock lifted for classifier + 3-week context. Engine 1: ZERO regressions. Look = orange solid line + hollow white frames. Grading = time-aligned, mechanics-based (pips cosmetic).
+- TradingView-API installed and working (tools/tvapi; README has the proxy recipe + measured depth). Environment hosts added: data.tradingview.com, symbol-search.tradingview.com.
+- NEXT on his go: step 1 grader + kill test + baseline (tools only), step 2 the new look with side-by-side frames; then steps 3-9 one at a time, each gated and reported.
+
 ## STATE (NEWEST, 2026-11-28) - M-76 (L-70): his 7-pillar Engine 2 overhaul architecture absorbed; plan v4 = memory/21_PLAN_E2_OVERHAUL.md + 8 questions SENT IN CHAT - PLAN ONLY, WAITING FOR HIS ANSWERS
 - His document: canon/operator_uploads_2026-11-28/ENGINE_2_MICRO_INFRASTRUCTURE_OVERHAUL_CONTEXT_INJECTION.md (read in full before coding any pillar). Core: 5-state micro-transition at every zone boundary; 3-week context; PathNodes on structural intersections; free microstructure data; DXY compass; kill test + time-aligned grading.
 - Data fact: bar store bars carry tick volume (spot); no futures / delta / 2Y yields / COT.
