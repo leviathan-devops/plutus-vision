@@ -1,6 +1,6 @@
 {
  "source": "/home/user/inputs/trades/WINNING_TRADE_LIBARARY (operator's winning trade library; L-48 / L-55). Read by eye from the TradingView position tools; chart clock UTC+4 (screenshot footer) converted to UTC; prices +-2 pips; RR and pip distances as printed on the tool.",
- "status": "partial - 2026-11-28 ~01:40 UTC: Swing Scalps 3/3, SS --> BS 8/8, R --> BS\\WL 5/5, R --> WL 5/5, BS --> R\\RWL 5/5 read; open: LIQUIDITY LADDERS 5, PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
+ "status": "partial - 2026-11-28 ~01:50 UTC: Swing Scalps, SS --> BS, R --> BS\\WL, R --> WL, BS --> R\\RWL, LIQUIDITY LADDERS read; open: PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
  "trades": [
   {
    "pair": "GBPUSD",
@@ -159,6 +159,113 @@
    "rr": 9.2,
    "approx": "+-3 pips; the second (ladder) short of the same surge",
    "zones": "rung under the first short's entry zone"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-03-02",
+   "picture": "LIQUIDITY LADDERS/Screenshot from 2026-07-13 19-13-03.png",
+   "fill_utc": "order ticket Wed 2026-03-04 ~11:30 (TradeZella)",
+   "dir": "LONG",
+   "entry": 1.3313,
+   "sl": 1.33,
+   "tp": 1.34015,
+   "sl_pips": 13.0,
+   "tp_pips": 88.5,
+   "rr": 6.8,
+   "zones": "buy limit under '15m (Unmitigated) | BoM' / '4H Liquidity Shield - ZoC - BEAR CONQUERED'; a second limit laddered at ~1.3319-1.3321"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-02-02",
+   "picture": "LIQUIDITY LADDERS/Screenshot from 2026-07-13 19-13-39.png",
+   "fill_utc": "2026-02-06 ~00:15",
+   "dir": "LONG",
+   "entry": 1.3512,
+   "sl": 1.3503,
+   "tp": 1.3622,
+   "sl_pips": 8.6,
+   "tp_pips": 110.0,
+   "rr": 12.84,
+   "approx": "+-3 pips",
+   "role": "primary",
+   "zones": "'5m Refined 15m (Unmitigated) | BoM' at the swing low, '4H (Unmitigated) | BoM' just above"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-02-02",
+   "picture": "LIQUIDITY LADDERS/Screenshot from 2026-07-13 19-13-39.png",
+   "fill_utc": "2026-02-06 ~05:45",
+   "dir": "LONG",
+   "entry": 1.3558,
+   "sl": 1.355,
+   "tp": 1.3621,
+   "sl_pips": 8.0,
+   "tp_pips": 62.5,
+   "rr": 7.81,
+   "approx": "+-3 pips",
+   "role": "rocket (ladder) on the primary above",
+   "zones": "'30m (Unmitigated) | MoM' / '30m Refined 1H (Unmitigated)' - MoM as a LADDER STEP in the move (FA 7)"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-02-09",
+   "picture": "LIQUIDITY LADDERS/Screenshot from 2026-07-13 19-13-22.png",
+   "fill_utc": "2026-02-12 ~06:30",
+   "dir": "LONG",
+   "entry": 1.3608,
+   "sl": 1.35935,
+   "tp": 1.36646,
+   "sl_pips": 14.5,
+   "tp_pips": 56.6,
+   "rr": 3.9,
+   "approx": "+-3 pips",
+   "role": "primary",
+   "zones": "'15m (Unmitigated) | MoM' below, TP under '30m (Unmitigated) | BoM'"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-02-09",
+   "picture": "LIQUIDITY LADDERS/Screenshot from 2026-07-13 19-13-22.png",
+   "fill_utc": "2026-02-12 ~11:00",
+   "dir": "LONG",
+   "entry": 1.3624,
+   "sl": 1.36205,
+   "tp": 1.36627,
+   "sl_pips": 3.5,
+   "tp_pips": 38.7,
+   "rr": 11.06,
+   "approx": "+-3 pips",
+   "role": "rocket at '30m (Unmitigated) | MoM'"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-02-09",
+   "picture": "LIQUIDITY LADDERS/Screenshot from 2026-07-13 19-13-30.png",
+   "fill_utc": "2026-02-13 ~06:30",
+   "dir": "LONG",
+   "entry": 1.3594,
+   "sl": 1.3586,
+   "tp": 1.36552,
+   "sl_pips": 8.0,
+   "tp_pips": 61.2,
+   "rr": 7.65,
+   "approx": "+-3 pips",
+   "role": "primary"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-02-09",
+   "picture": "LIQUIDITY LADDERS/Screenshot from 2026-07-13 19-13-30.png",
+   "fill_utc": "2026-02-13 ~12:00",
+   "dir": "LONG",
+   "entry": 1.3611,
+   "sl": 1.3606,
+   "tp": 1.3656,
+   "sl_pips": 5.0,
+   "tp_pips": 45.0,
+   "rr": 9.0,
+   "approx": "+-3 pips",
+   "role": "rocket"
   }
  ],
  "comparison_with_my_build": {
@@ -223,6 +330,11 @@
    "pair": "GBPUSD",
    "picture": "BS --> R\\RWL/Screenshot from 2026-07-13 19-04-42.png",
    "utc_plus4_sequence": "Mar 10-14: PIERCING BREAKOUT SURGE (down ~1.3480 -> ~1.3245); Mar 16-18: RECOVERY SURGE; Mar 18-23: MAJOR WHIPLASH STORM (~1.3290 <-> ~1.3470)"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "LIQUIDITY LADDERS/Screenshot from 2026-07-13 19-13-10.png",
+   "utc_plus4_sequence": "Apr 13-14: his hand-drawn LADDER of the Monday breakout up from ~1.3420 through '30m MoM Liquidity Shield', 'Liquidity Shield Zone' (~1.3455-1.3465), '15m (Unmitigated) | MoM ~ SHIELDED' (~1.3470-1.3480) to '1H (Unmitigated) | Bo2L' / '4H (Unmitigated) | MoM' (~1.3510-1.3525), '4H Liquidity' above"
   }
  ],
  "fib_grids": [
