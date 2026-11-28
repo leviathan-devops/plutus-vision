@@ -1,4 +1,4 @@
-# 22 - ENGINE 2 OVERHAUL CHARTER (M-78, 2026-11-28) - stated before his approval. READ BEFORE EVERY STEP. Plan detail: memory/21 (v5). Gap data: memory/18. His context document: canon/operator_uploads_2026-11-28/.
+# 22 - ENGINE 2 OVERHAUL CHARTER (M-78, 2026-11-28) - APPROVED BY THE OPERATOR (M-79: 'Good. Persist this exact plan to disk. Make sure you don't derail from this. Persist all durable facts and begin. Complete the full objective as you laid it out here.'). THE GOVERNING PLAN - obey it verbatim; no deviation. READ BEFORE EVERY STEP. Plan detail: memory/21 (v5). Gap data: memory/18. His context document: canon/operator_uploads_2026-11-28/.
 
 ## GOAL
 Engine 2's forward line shows what price will do before it happens: zone to zone, shape by shape, every turn at the right Engine 1 zone at the right time. Measured with time-aligned, mechanics-based grading it reaches 80-85%,

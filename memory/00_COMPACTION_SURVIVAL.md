@@ -35,3 +35,5 @@ After a compaction or a container reset, do exactly this, in order, before any o
 - (2026-11-26) THE STANDING ORDER is `memory/14_GOAL_PROMPT.md` (full indicator E1+E2+E3, autonomous until verified). Read it right after 10. E2/E3 are IN scope again (M-53 supersedes L-30's 'E1 only'). L-40: 4H overview, work on 1H.
 
 - (2026-11-28) 'Blueprint' = the design-blueprint skill (.claude/skills/design-blueprint/SKILL.md, L-69); existing ones in design/. Engine 2 plan in force = memory/19 (v3.1 component list); gap data memory/18; BENCHED for phase 2: scalping engine + live triggers (design/BLUEPRINT_*.md). Telescoping facts: memory/08 last section.
+
+- (2026-11-28) THE GOVERNING PLAN NOW = memory/22_E2_CHARTER.md (approved M-79) + step detail memory/21 v5 + step log at the top of memory/01. Read 22 right after 14. Data: data/tvapi (tools/tvapi). Grader: tools/research/e2grade.py; kill test: tools/kill_test.py.

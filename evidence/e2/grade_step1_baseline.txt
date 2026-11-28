@@ -1,0 +1,70 @@
+DXY    2026-07-06  line turns  4: HIT  1  wrong zone  2  wrong time  1  none  0  no zone  0 | actual turns 32, forecast  1 | hourly r 0.75 | week dir - | days 3/5 | orders 8 0168055d6b
+      H Mon 08:00 101.199 WRONG ZONE UPPER RESISTANCE
+      L Tue 08:00 100.815 WRONG ZONE MID-RANGE SUPPORT
+      H Wed 12:00 101.305 HIT        15m (Unmitigated) | MoM
+      L Fri 05:20 100.654 WRONG TIME 1H (Unmitigated) | BoM
+EURUSD 2026-07-06  line turns  4: HIT  3  wrong zone  0  wrong time  1  none  0  no zone  0 | actual turns 32, forecast  3 | hourly r 0.72 | week dir - | days 3/5 | orders 8 640f85039f
+      L Mon 08:00 1.14053 HIT        MID-RANGE SUPPORT
+      H Tue 08:00 1.14444 HIT        UPPER RESISTANCE
+      L Wed 12:00 1.13902 HIT        15m (Unmitigated) | MoM
+      H Fri 05:20 1.14623 WRONG TIME 4H (Mitigated 2x) | MoM
+GBPUSD 2026-07-06  line turns  4: HIT  1  wrong zone  1  wrong time  2  none  0  no zone  0 | actual turns 37, forecast  1 | hourly r 0.82 | week dir RIGHT | days 4/5 | orders 4 64a5c50496
+      L Mon 08:00 1.33333 WRONG TIME 1H (Unmitigated) | MoM
+      H Tue 08:00 1.33941 HIT        UPPER RESISTANCE
+      L Wed 12:00 1.33155 WRONG TIME 1H (Unmitigated) | MoM
+      H Fri 05:20 1.34340 WRONG ZONE 4H (Unmitigated) | BoM
+DXY    2026-04-13  line turns  5: HIT  0  wrong zone  4  wrong time  0  none  1  no zone  0 | actual turns 36, forecast  0 | hourly r 0.59 | week dir RIGHT | days 4/5 | orders 2 2fefa356c3
+      H Mon 08:00 99.192 WRONG ZONE UPPER RESISTANCE
+      H Tue 08:00 98.675 NONE       4H (Unmitigated) | BoM
+      H Wed 08:00 98.675 WRONG ZONE 4H (Unmitigated) | BoM
+      L Thu 08:00 97.589 WRONG ZONE sweep zone
+      H Fri 08:00 98.675 WRONG ZONE 4H (Unmitigated) | BoM
+EURUSD 2026-04-13  line turns  3: HIT  1  wrong zone  1  wrong time  1  none  0  no zone  0 | actual turns 37, forecast  1 | hourly r 0.82 | week dir RIGHT | days 2/5 | orders 3 56e970c432
+      L Mon 08:00 1.16748 HIT        MID-RANGE SUPPORT
+      H Wed 08:00 1.18010 WRONG ZONE RESISTANCE CEILING
+      L Fri 08:00 1.17695 WRONG TIME V1 4H liquidity
+GBPUSD 2026-04-13  line turns  4: HIT  0  wrong zone  4  wrong time  0  none  0  no zone  0 | actual turns 37, forecast  0 | hourly r 0.84 | week dir RIGHT | days 3/5 | orders 1 ec85ed2dc5
+      L Mon 08:00 1.32998 WRONG ZONE 1H (Unmitigated) | MoM
+      H Tue 08:00 1.35649 WRONG ZONE sweep zone
+      H Wed 08:00 1.35892 WRONG ZONE V1 4H liquidity
+      H Thu 08:00 1.35892 WRONG ZONE V1 4H liquidity
+DXY    2026-04-20  line turns  2: HIT  1  wrong zone  1  wrong time  0  none  0  no zone  0 | actual turns 36, forecast  1 | hourly r 0.88 | week dir RIGHT | days 5/5 | orders 3 4631143133
+      L Mon 08:00 98.045 HIT        1H (Unmitigated) | MoM
+      L Tue 12:00 97.969 WRONG ZONE 1H (Unmitigated) | MoM
+EURUSD 2026-04-20  line turns  2: HIT  0  wrong zone  1  wrong time  1  none  0  no zone  0 | actual turns 34, forecast  0 | hourly r 0.93 | week dir RIGHT | days 5/5 | orders 4 3be289620b
+      H Mon 08:00 1.17847 WRONG TIME 1H (Unmitigated) | MoM
+      H Tue 12:00 1.17966 WRONG ZONE 1H (Unmitigated) | MoM
+GBPUSD 2026-04-20  line turns  3: HIT  0  wrong zone  2  wrong time  0  none  1  no zone  0 | actual turns 34, forecast  0 | hourly r 0.23 | week dir WRONG | days 1/5 | orders 3 84ac40ce64
+      L Tue 08:00 1.35019 NONE       UPPER RESISTANCE
+      H Wed 08:00 1.35400 WRONG ZONE 1H (Unmitigated) | MoM
+      H Fri 08:00 1.35400 WRONG ZONE 1H (Unmitigated) | MoM
+DXY    2026-05-18  line turns  3: HIT  1  wrong zone  2  wrong time  0  none  0  no zone  0 | actual turns 39, forecast  2 | hourly r 0.52 | week dir - | days 5/5 | orders 1 c082a31ee5
+      H Mon 08:00 99.309 HIT        sweep zone
+      H Thu 08:00 99.334 WRONG ZONE V1 1H rung
+      H Fri 08:00 99.334 WRONG ZONE V1 1H rung
+EURUSD 2026-05-18  line turns  4: HIT  0  wrong zone  3  wrong time  1  none  0  no zone  0 | actual turns 37, forecast  0 | hourly r 0.32 | week dir RIGHT | days 5/5 | orders 3 4cbc6b2a28
+      L Mon 08:00 1.16036 WRONG ZONE MID-RANGE SUPPORT
+      H Wed 08:00 1.16300 WRONG ZONE 1H (Unmitigated) | MoM
+      H Thu 08:00 1.16300 WRONG TIME 1H (Unmitigated) | MoM
+      H Fri 08:00 1.16300 WRONG ZONE 1H (Unmitigated) | MoM
+GBPUSD 2026-05-18  line turns  3: HIT  0  wrong zone  3  wrong time  0  none  0  no zone  0 | actual turns 37, forecast  0 | hourly r 0.58 | week dir RIGHT | days 3/5 | orders 3 2a40035b4f
+      L Tue 08:00 1.34029 WRONG ZONE UPPER RESISTANCE
+      L Thu 08:00 1.34029 WRONG ZONE UPPER RESISTANCE
+      L Fri 08:00 1.34029 WRONG ZONE UPPER RESISTANCE
+DXY    2026-10-05  line turns  4: HIT  1  wrong zone  2  wrong time  1  none  0  no zone  0 | actual turns 34, forecast  1 | hourly r 0.27 | week dir - | days 5/5 | orders 2 75096767f4
+      L Mon 08:00 101.926 WRONG ZONE 1H (Unmitigated) | MoM
+      L Tue 08:00 101.926 WRONG ZONE 1H (Unmitigated) | MoM
+      H Thu 08:00 102.435 HIT        sweep zone
+      L Fri 08:00 101.926 WRONG TIME 1H (Unmitigated) | MoM
+EURUSD 2026-10-05  line turns  4: HIT  1  wrong zone  3  wrong time  0  none  0  no zone  0 | actual turns 34, forecast  1 | hourly r 0.38 | week dir - | days 5/5 | orders 2 21ef589327
+      H Mon 08:00 1.12491 WRONG ZONE UPPER RESISTANCE
+      H Tue 08:00 1.12491 WRONG ZONE UPPER RESISTANCE
+      L Thu 08:00 1.11710 HIT        sweep zone
+      L Fri 08:00 1.11710 WRONG ZONE sweep zone
+GBPUSD 2026-10-05  line turns  3: HIT  0  wrong zone  3  wrong time  0  none  0  no zone  0 | actual turns 35, forecast  0 | hourly r 0.13 | week dir RIGHT | days 1/5 | orders 3 374fb5daa7
+      H Mon 08:00 1.32319 WRONG ZONE 1H (Unmitigated) | BoM
+      H Tue 08:00 1.32319 WRONG ZONE 1H (Unmitigated) | BoM
+      L Wed 08:00 1.32461 WRONG ZONE UPPER RESISTANCE
+
+TOTAL GOLDEN     maps  3 | line turns  12: HIT   5 =  42%  (wrong zone 3, wrong time 4, none 0, no zone 0) | actual turns 101, forecast 5 =   5% | hourly r mean 0.76 | week dir 1/1 | days 10/15 = 67%
+TOTAL OTHER      maps 12 | line turns  40: HIT   5 =  12%  (wrong zone 29, wrong time 4, none 2, no zone 0) | actual turns 430, forecast 6 =   1% | hourly r mean 0.54 | week dir 8/9 | days 44/60 = 73%

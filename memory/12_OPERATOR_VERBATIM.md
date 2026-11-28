@@ -612,3 +612,6 @@ I'm intentionally keeping you sandboxed from anything that Gemini did because I 
 Just get all of the needed data right now in a series of requests so that you have it in your environment.
 
 Go ahead and begin this. Before I approve, state in your own words exactly what is the goal to be accomplished, exactly what are the immutable constraints within which you must operate, rules you must follow, forbidden actions, and then the exact step-by-step plan and process of exactly what you're going to do, and then how you're going to test it, and what are the success conditions, and what are the oracles that you're evaluating against.
+
+### M-79 (2026-11-28, after the charter statement) - verbatim
+Good. Persist this exact plan to disk. Make sure you don't derail from this. Persist all durable facts and begin. Complete the full objective as you laid it out here.

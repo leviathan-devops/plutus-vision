@@ -1,3 +1,10 @@
+## STATE (NEWEST, 2026-11-28) - M-79: CHARTER APPROVED (memory/22) - EXECUTING memory/21 v5 steps 1-9. Read memory/22 before every step.
+- STEP LOG (update after each):
+  * step 1 DONE: tools/research/e2grade.py (time-aligned, zone-based), tools/kill_test.py (golden x3 PASS), tools/locks/e1_output.py (snapshot of 85 pair-weeks; check = IDENTICAL). BASELINE (evidence/e2/grade_step1_baseline.txt): golden line turns 12, HIT 5 = 42% (wrong zone 3, wrong time 4), actual turns forecast 5 / 101, hourly r 0.76, days 10 / 15; 4 weeks line turns 40, HIT 5 = 12% (wrong zone 29), actual turns forecast 6 / 430, r 0.54, week dir 8 / 9, days 44 / 60.
+  * step 2 DONE behind e2_chain.LOOK_ORANGE (off): orange #E85D04 2px solid line, hollow white frames, no alternative line; frames evidence/e2/step2 (ledger 122 / 122b); NOT adopted - his word needed.
+  * step 3 data module = NEXT (new file e1_tool/e2_micro_data.py; data/tvapi + bar store volume).
+- Rules that bite: Engine 1 zero regressions (lock + byte-identity); every step behind a switch (off); golden orders identical; report after each step with before / after + frames; adoption on his word; no market triggers, no scalping engine, no own ideas.
+
 ## STATE (NEWEST, 2026-11-28) - M-78 (L-72): data fetched (data/tvapi, 30 series); CHARTER memory/22_E2_CHARTER.md sent in chat - WAITING FOR HIS APPROVAL of the statement; then step 1 of memory/21 v5
 - Read memory/22 before every step (goal, constraints C1-C9, rules R1-R7, forbidden F1-F9, tests T1-T7, success S-a..S-e, oracles O1-O4).
 - Open point he must confirm: the 80-85% definition (S-a).
