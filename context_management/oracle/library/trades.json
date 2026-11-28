@@ -1,6 +1,6 @@
 {
  "source": "/home/user/inputs/trades/WINNING_TRADE_LIBARARY (operator's winning trade library; L-48 / L-55). Read by eye from the TradingView position tools; chart clock UTC+4 (screenshot footer) converted to UTC; prices +-2 pips; RR and pip distances as printed on the tool.",
- "status": "partial - 2026-11-28 ~01:00 UTC: 'Swing Scalps' 3/3, 'SS --> BS' 8/8 read; open: R --> BS\\WL 5, R --> WL 5, BS --> R\\RWL 5, LIQUIDITY LADDERS 5, PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
+ "status": "partial - 2026-11-28 ~01:05 UTC: 'Swing Scalps' 3/3, 'SS --> BS' 8/8, 'R --> BS\\WL' 5/5 read (one repeats the Mar 11 fib grid); open: R --> WL 5, BS --> R\\RWL 5, LIQUIDITY LADDERS 5, PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
  "trades": [
   {
    "pair": "GBPUSD",
@@ -114,6 +114,51 @@
    "rr": 5.7,
    "zones": "entry at '15m (Consolidating' under '30m (Unmitigated) | MoM' and '1H (Unmitigated) | MoM'; TP into '4H (2x Mitigated ~ Pierced) | BoM' / '4H Liquidity Shield ~ PIERCED'",
    "his_note": "4H BoM Zone pierced = ALL 4H liquidity near the fallen zone will be swept. Bottom can be predicted this way even if no demand present. War pillaging. ZoC falls = pillage surrounding liquidity."
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-02-16",
+   "picture": "R --> BS\\WL/Screenshot from 2026-07-13 19-00-04.png",
+   "fill_utc": "order ticket shown Wed 2026-02-18 ~18:40 (TradeZella)",
+   "dir": "SHORT",
+   "entry": 1.36615,
+   "sl": 1.3674,
+   "tp": 1.35255,
+   "sl_pips": 12.5,
+   "tp_pips": 136.0,
+   "rr": 10.9,
+   "approx": "ticket values as printed; the entry lies above the visible chart",
+   "zones": "'30m (Unmitigated) | MoM' above, '30m (1x Mitigated) | MoM' below"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-02-09",
+   "picture": "R --> BS\\WL/Screenshot from 2026-07-13 19-03-44.png",
+   "fill_utc": "2026-02-10 ~12:45",
+   "dir": "SHORT",
+   "entry": 1.368,
+   "sl": 1.3688,
+   "tp": 1.3618,
+   "sl_pips": 8.0,
+   "tp_pips": 62.0,
+   "rr": 10.3,
+   "approx": "+-3 pips (read from the 15m tool + his E / SL / T marks)",
+   "zones": "BREAKOUT SURGE (Reverse) from '15m Refined 30m (Unmitigated) | MoM' / '5m (Unmitigated) | MoM'; TP at '30m (Unmitigated) | MoM'"
+  },
+  {
+   "pair": "GBPUSD",
+   "week": "2026-02-09",
+   "picture": "R --> BS\\WL/Screenshot from 2026-07-13 19-03-44.png",
+   "fill_utc": "2026-02-10 ~17:00",
+   "dir": "SHORT",
+   "entry": 1.3658,
+   "sl": 1.3663,
+   "tp": 1.3612,
+   "sl_pips": 5.0,
+   "tp_pips": 46.0,
+   "rr": 9.2,
+   "approx": "+-3 pips; the second (ladder) short of the same surge",
+   "zones": "rung under the first short's entry zone"
   }
  ],
  "comparison_with_my_build": {
@@ -141,6 +186,11 @@
    "picture": "SS --> BS/Screenshot from 2026-07-13 18-59-15.png",
    "utc_plus4_sequence": "Mar 2: PIERCING BREAKOUT SURGE (down); Mar 2-3: RECOVERY; Mar 3: WHIPLASH (down to ~1.3282); Mar 4-9: SWING SCALPS ('30m MoM Liquidity Shield', ~1.3282-1.3410); Mar 9-10: BREAKOUT SURGE (up to ~1.3485)",
    "vs_my_E2": "my daily product 2026-03-02: Mon-Tue SS 1.33674-1.34658, Wed SS+BS down, Thu-Fri BS down - his Monday was the breakout (piercing, down) and Wed-Fri the swing-scalp range: both halves of my week are in the wrong order"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "R --> BS\\WL/Screenshot from 2026-07-13 19-00-33.png + 19-03-54.png",
+   "utc_plus4_sequence": "Feb 9: BREAKOUT SURGE (up); Feb 10: RECOVERY; Feb 10-11: BREAKOUT SURGE (Reverse, down, two shorts laddered); Feb 11: RECOVERY SURGE (to '4H (Unmitigated) | MoM' and above); Feb 11 15:00 on: WHIPLASH (down)"
   }
  ],
  "fib_grids": [
