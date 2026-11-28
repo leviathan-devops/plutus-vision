@@ -1,6 +1,6 @@
 {
  "source": "/home/user/inputs/trades/WINNING_TRADE_LIBARARY (operator's winning trade library; L-48 / L-55). Read by eye from the TradingView position tools; chart clock UTC+4 (screenshot footer) converted to UTC; prices +-2 pips; RR and pip distances as printed on the tool.",
- "status": "partial - 2026-11-28 ~01:20 UTC: Swing Scalps 3/3, SS --> BS 8/8, R --> BS\\WL 5/5, R --> WL 5/5 read; open: BS --> R\\RWL 5, LIQUIDITY LADDERS 5, PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
+ "status": "partial - 2026-11-28 ~01:40 UTC: Swing Scalps 3/3, SS --> BS 8/8, R --> BS\\WL 5/5, R --> WL 5/5, BS --> R\\RWL 5/5 read; open: LIQUIDITY LADDERS 5, PBS 3, BS\\WL --> SS 2, WL --> RWL\\R 1, WL --> SS 1, root 1",
  "trades": [
   {
    "pair": "GBPUSD",
@@ -212,6 +212,17 @@
    "pair": "GBPUSD",
    "picture": "R --> WL/Screenshot from 2026-07-13 19-12-28.png",
    "utc_plus4_sequence": "Feb 25-26: BREAKOUT SURGE; Feb 26: REVERSE WHIPLASH; Feb 26: RECOVERY SURGE; Feb 26-27: PIERCING WHIPLASH (down to the 'Liquidity Shield Zone' ~1.3455) - zoom of the Feb 20-27 picture"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "BS --> R\\RWL/Screenshot from 2026-07-13 19-04-33.png",
+   "utc_plus4_sequence": "Apr 7 ~18:00 - Apr 8 15:00: BREAKOUT SURGE (up ~1.3240 -> ~1.3488) from '4H (Unmitigated) | BoM' + '1H (Unmitigated) | BoM' (~1.3270-1.3305; his ellipse at ~1.3275 Apr 7 ~21:00) to '1H Refined 4H (3x Mitigated ~ HTF Resistance) | BoM' (~1.3480-1.3500) through 'Liquidity Shield Zone' / '30m MoM Liquidity Shield'; Apr 8-9: RECOVERY SURGE (down to ~1.3400)",
+   "note": "BoM demand -> BoM supply, FA 4.2 'beginning of move to beginning of move'"
+  },
+  {
+   "pair": "GBPUSD",
+   "picture": "BS --> R\\RWL/Screenshot from 2026-07-13 19-04-42.png",
+   "utc_plus4_sequence": "Mar 10-14: PIERCING BREAKOUT SURGE (down ~1.3480 -> ~1.3245); Mar 16-18: RECOVERY SURGE; Mar 18-23: MAJOR WHIPLASH STORM (~1.3290 <-> ~1.3470)"
   }
  ],
  "fib_grids": [
@@ -253,5 +264,11 @@
    "anchors": "0 = the range low 1.35035 (his Apr 17 long's stop 1.35028 sits just under it); 1 = ~1.3541 = that long's TP 1.35418 - the web is drawn on the recovery range low -> high",
    "what_happened": "Apr 17: long 1.3508 -> TP 1.35418 (level 1); then the PIERCING WHIPLASH spiked to ~1.3600 = the 2.618 level, then a REVERSE WHIPLASH back down"
   }
+ ],
+ "duplicates_seen": [
+  "R --> BS\\WL/19-00-16 = SS --> BS/18-58-56 (Mar 11 fib grid)",
+  "BS --> R\\RWL/19-04-51 = R --> WL/19-12-20 (Mar 23 - Apr 7)",
+  "BS --> R\\RWL/19-04-58 = R --> WL/19-12-28 (Feb 25-27)",
+  "BS --> R\\RWL/19-05-07 = R --> BS\\WL/19-03-54 (Feb 10-11)"
  ]
 }
